@@ -30,9 +30,9 @@ function dv_check_convergence(Xnew,eps,N1,N2,id) result(convergence)
      err= M/S
      Xold=Xnew
      if(err > eps)then
-        write(*,"(A,E18.9)")bold_red("error="),err
+        write(*,"(A,F18.12)")bold_red("error="),err
      else
-        write(*,"(A,E18.9)")bold_green("error="),err
+        write(*,"(A,F18.12)")bold_green("error="),err
      endif
      open(10,file="errorVSiloop.err",access="append")
      write(10,*)check,err
@@ -72,9 +72,9 @@ function zv_check_convergence(Xnew,eps,N1,N2,id) result(convergence)
      err= M/S
      Xold=Xnew
      if(err > eps)then
-        write(*,"(A,E18.9)")bold_red("error="),err
+        write(*,"(A,F18.12)")bold_red("error="),err
      else
-        write(*,"(A,E18.9)")bold_green("error="),err
+        write(*,"(A,F18.12)")bold_green("error="),err
      endif
      open(10,file="errorVSiloop.err",access="append")
      write(10,*)check,err
@@ -123,13 +123,13 @@ function dm_check_convergence(Xnew,eps,N1,N2,id,tight) result(convergence)
      Xold=Xnew
      !
      if(err > eps)then
-        write(*,"(A,E18.9)")bold_red("max error="),error(1)
-        write(*,"(A,E18.9)")bold_red("    error="),err
-        write(*,"(A,E18.9)")bold_red("min error="),error(2)
+        write(*,"(A,F18.12)")bold_red("max error="),error(1)
+        write(*,"(A,F18.12)")bold_red("    error="),err
+        write(*,"(A,F18.12)")bold_red("min error="),error(2)
      else
-        write(*,"(A,E18.9)")bold_green("max error="),error(1)
-        write(*,"(A,E18.9)")bold_green("    error="),err
-        write(*,"(A,E18.9)")bold_green("min error="),error(2)
+        write(*,"(A,F18.12)")bold_green("max error="),error(1)
+        write(*,"(A,F18.12)")bold_green("    error="),err
+        write(*,"(A,F18.12)")bold_green("min error="),error(2)
      endif
      !
      open(10,file="max_errorVSiloop.err",access="append")
@@ -188,13 +188,13 @@ function zm_check_convergence(Xnew,eps,N1,N2,id,tight) result(convergence)
      Xold=Xnew
      !
      if(err > eps)then
-        write(*,"(A,E18.9)")bold_red("max error="),error(1)
-        write(*,"(A,E18.9)")bold_red("    error="),err
-        write(*,"(A,E18.9)")bold_red("min error="),error(2)
+        write(*,"(A,F18.12)")bold_red("max error="),error(1)
+        write(*,"(A,F18.12)")bold_red("    error="),err
+        write(*,"(A,F18.12)")bold_red("min error="),error(2)
      else
-        write(*,"(A,E18.9)")bold_green("max error="),error(1)
-        write(*,"(A,E18.9)")bold_green("    error="),err
-        write(*,"(A,E18.9)")bold_green("min error="),error(2)
+        write(*,"(A,F18.12)")bold_green("max error="),error(1)
+        write(*,"(A,F18.12)")bold_green("    error="),err
+        write(*,"(A,F18.12)")bold_green("min error="),error(2)
      endif
      !
      open(10,file="max_errorVSiloop.err",access="append")
