@@ -1,0 +1,3518 @@
+ 2 January 2011   3:58:20.567 PM
+ 
+CHRPAK_PRB:
+  FORTRAN90 version:
+ 
+  Test the routines in the CHRPAK library.
+ 
+TEST001
+  A_TO_I4: Alphabetic character => I
+  I4_TO_A: I => Alphabetic character
+ 
+  1:26 = A:Z
+  27:52 = a:z
+ 
+   I  ==>  A  ==>  I
+ 
+       0                  0
+       3     C            3
+       6     F            6
+       9     I            9
+      12     L           12
+      15     O           15
+      18     R           18
+      21     U           21
+      24     X           24
+      27     a           27
+      30     d           30
+      33     g           33
+      36     j           36
+      39     m           39
+      42     p           42
+      45     s           45
+      48     v           48
+      51     y           51
+      54                  0
+ 
+TEST002
+  B4_IEEE_TO_R4:  32 bit string => R4
+  R4_TO_B4_IEEE:  R4 => 32 bit string
+ 
+    R1               --------------Word--------------      R2
+ 
+  0.250000000000      00111110100000000000000000000000    0.250000000000    
+  0.500000000000      00111111000000000000000000000000    0.500000000000    
+   1.00000000000      00111111100000000000000000000000     1.00000000000    
+   2.00000000000      01000000000000000000000000000000     2.00000000000    
+   4.00000000000      01000000100000000000000000000000     4.00000000000    
+   1.50000000000      00111111110000000000000000000000     1.50000000000    
+   1.75000000000      00111111111000000000000000000000     1.75000000000    
+   1.87500000000      00111111111100000000000000000000     1.87500000000    
+   6.50000000000      01000000110100000000000000000000     6.50000000000    
+  -6.50000000000      11000000110011111111111111111111    -6.50000000000    
+   99.0000000000      01000010110001100000000000000000     99.0000000000    
+   100.000000000      01000010110010000000000000000000     100.000000000    
+   101.000000000      01000010110010100000000000000000     101.000000000    
+   0.00000000000      00000000000000000000000000000000     0.00000000000    
+  -1.00000000000      10111111011111111111111111111111    -1.00000000000    
+  0.340282346639E+39  01111111011111111111111111111111    0.340282346639E+39
+  0.705296610493E-37  00000001110000000000000000000000     0.00000000000    
+  0.176324152623E-37  00000000110000000000000000000000     0.00000000000    
+   0.00000000000      00000000000000000000000000000000     0.00000000000    
+   0.00000000000      00000000000000000000000000000000     0.00000000000    
+   0.00000000000      00000000000000000000000000000000     0.00000000000    
+ 
+TEST003
+  B4_IEEE_TO_SEF converts a real IEEE word to SEF form.
+  SEF_TO_B4_IEEE converts SEF form to a real IEEE word.
+ 
+  S is the sign bit (0 = positive, 1 = negative)
+  E is the exponent base 2
+  F is the mantissa
+ 
+   S    E         F  SEEEEEEEEFFFFFFFFFFFFFFFFFFFFFFF  S2   E2        F2
+ 
+   0   -2         1  00111110100000000000000000000000   0   -2         1
+   0   -1         1  00111111000000000000000000000000   0   -1         1
+   0    0         1  00111111100000000000000000000000   0    0         1
+   0    1         1  01000000000000000000000000000000   0    1         1
+   0    2         1  01000000100000000000000000000000   0    2         1
+   0   -1         3  00111111110000000000000000000000   0   -1         3
+   0   -2         7  00111111111000000000000000000000   0   -2         7
+   0   -3        15  00111111111100000000000000000000   0   -3        15
+   0   -1        13  01000000110100000000000000000000   0   -1        13
+   1   -1        13  11000000110011111111111111111111   1   -1        13
+   0    0        99  01000010110001100000000000000000   0    0        99
+   0    2        25  01000010110010000000000000000000   0    2        25
+   0    0       101  01000010110010100000000000000000   0    0       101
+   0    0         0  00000000000000000000000000000000   0    0         0
+   1    0         1  10111111011111111111111111111111   1    0         1
+   0  104  16777215  01111111011111111111111111111111   0  104  16777215
+   0 -125         3  00000001110000000000000000000000   0 -125         3
+   0 -127         3  00000000110000000000000000000000   0 -127         3
+   0 -129         3  00000000011000000000000000000000   0 -129         3
+   0 -132         7  00000000000111000000000000000000   0 -132         7
+   0 -135        15  00000000000001111000000000000000   0 -135        15
+   0    0         0  00000000000000000000000000000000   0    0         0
+   1    0         0  11111111111111111111111111111111   1    0         0
+   0  128         1  01111111111111111111111111111111   0  128   8388607
+   1  128         1  11111111111111111111111111111110   1  128   8388607
+   0  128         0  01111111100000000000000000000000   0  128         0
+ 
+TEST005
+  BASE_TO_I4 converts an integer in some other
+    base into base 10.
+  I4_TO_BASE converts an integer base 10 to 
+    its representation in another base;
+ 
+  BASE, I, I4_TO_BASE(I), BASE_TO_I4(I4_TO_BASE(I))
+ 
+      -1         5             101010101       5
+       1         5                 11111       5
+       2        21                 10101      21
+       3      -243               -100000    -243
+       4        16                   100      16
+       8        15                    17      15
+ 
+TEST006
+  BINARY_TO_I4 converts a binary to an integer.
+  I4_TO_BINARY converts an integer to binary,
+ 
+        I4  ==> BINARY    ==> I4
+ 
+        21       10101        21
+       -32     -100000       -32
+         2          10         2
+       128    10000000       128
+ 
+TEST007
+  BINARY_TO_R4: binary string => R4.
+  R4_TO_BINARY: R4 => binary string;
+ 
+    R4   =>    S   =>   R4
+ 
+  -10.750000  -1010.11                -10.750000
+    0.407813  0.011010000110011001      0.407810
+    0.666666  0.101010101010101010      0.666664
+ 
+TEST008
+  BINARY_TO_R8: binary string => R8.
+  R8_TO_BINARY: R8 => binary string;
+ 
+    R8   =>    S   =>   R8
+ 
+  -10.750000  -1010.11                -10.750000
+    0.407813  0.011010000110011001      0.407810
+    0.666666  0.101010101010101010      0.666664
+ 
+TEST011
+  CH_CAP uppercases a character.
+ 
+  C  CH_CAP(C)
+ 
+  F  F
+  f  F
+  1  1
+  b  B
+  B  B
+ 
+TEST012
+  CH_COUNT_FILE_ADD adds the characters in a file
+  to a character count.
+ 
+CH_COUNT_FILE_ADD - Fatal error!
+  Could not open the file:
+    chrpak_prb.f90
+ 
+Raw character count data:
+ 
+  Char  Count  Percentages.
+ 
+ 
+chrpak_prb.f90
+ 
+  Character Histogram (Percentages).
+ 
+    0 to  15   ^@  ^A  ^B  ^C  ^D  ^E  ^F  ^G  ^H  ^I  ^J  ^K  ^L  ^M  ^N  ^O  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+   16 to  31   ^P  ^Q  ^R  ^S  ^T  ^U  ^V  ^W  ^X  ^Y  ^Z  ^[  ^\  ^]  ^^  ^_  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+   32 to  47   SP  !   "   #   $   %   &   '   (   )   *   +   ,   -   .   /   
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+   48 to  63   0   1   2   3   4   5   6   7   8   9   :   ;   <   =   >   ?   
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+   64 to  79   @   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+   80 to  95   P   Q   R   S   T   U   V   W   X   Y   Z   [   \   ]   ^   _   
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+   96 to 111   `   a   b   c   d   e   f   g   h   i   j   k   l   m   n   o   
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  112 to 127   p   q   r   s   t   u   v   w   x   y   z   {   |   }   ~   DEL 
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  128 to 143   !^@ !^A !^B !^C !^D !^E !^F !^G !^H !^I !^J !^K !^L !^M !^N !^O 
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  144 to 159   !^P !^Q !^R !^S !^T !^U !^V !^W !^X !^Y !^Z !^[ !^\ !^] !^^ !^_ 
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  160 to 175   !SP !!  !"  !#  !$  !%  !&  !'  !(  !)  !*  !+  !,  !-  !.  !/  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  176 to 191   !0  !1  !2  !3  !4  !5  !6  !7  !8  !9  !:  !;  !<  !=  !>  !?  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  192 to 207   !@  !A  !B  !C  !D  !E  !F  !G  !H  !I  !J  !K  !L  !M  !N  !O  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  208 to 223   !P  !Q  !R  !S  !T  !U  !V  !W  !X  !Y  !Z  ![  !\  !]  !^  !_  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  224 to 239   !`  !a  !b  !c  !d  !e  !f  !g  !h  !i  !j  !k  !l  !m  !n  !o  
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+  240 to 255   !p  !q  !r  !s  !t  !u  !v  !w  !x  !y  !z  !{  !|  !}  !~  !DEL
+               .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+ 
+TEST013
+  CH_EXTRACT extracts characters from a string.
+ 
+  The string: "  A  bc $"
+ 
+    A
+    b
+    c
+    $
+ 
+  Reached the last character.
+ 
+TEST014
+  CH_INDEX_FIRST searches a string for a character.
+ 
+  String =    "Joel prefers graphics to graphs."
+  Character = g
+  Character occurs at location       14
+ 
+TEST015
+  CH_INDEX_LAST finds the LAST occurrence of a character.
+ 
+  String =    "HELLO World, how ARE you?"
+  Character = o
+  Character occurs last at location       23
+ 
+TEST016
+  CH_LOW lowercases a character.
+ 
+  C  CH_LOW(C)
+ 
+  F  f
+  f  f
+  1  1
+  b  b
+  B  b
+ 
+TEST017
+  CH_NEXT returns characters from a string.
+ 
+  Input: "A B, C  DE  F"
+  A
+  B
+  C
+  D
+  E
+  F
+  No more characters.
+ 
+TEST018
+  CH_ROMAN_TO_I4 converts a Roman numeral character
+  to its corresponding integer value.
+ 
+  Input: "IJVXLCDMijvxlcdm0 W%"
+  I         1
+  J         1
+  V         5
+  X        10
+  L        50
+  C       100
+  D       500
+  M      1000
+  i         1
+  j         1
+  v         5
+  x        10
+  l        50
+  c       100
+  d       500
+  m      1000
+  0         0
+  W         0
+  %         0
+ 
+TEST019
+  CH_TO_BRAILLE converts a character to Braille.
+ 
+  Here is the string to be converted:
+ 
+  "SOS Titanic!"
+ 
+  Braille translation:
+ 
+        *    *      *       *  *  * *  **  * **    
+       *      *    *       ** *  **     * *     ** 
+     * *   * *   * *     * *     *     *        *  
+ 
+TEST020
+  CH_TO_CH3_AMINO converts a 1 character amino
+    acid code to 3 characters,
+  CH3_TO_CH_AMINO converts a 3 character amino
+    acid code to 1 character.
+  CH_TO_AMINO_NAME converts a 1 character amino
+    acid code to an amino acid name.
+  I4_TO_AMINO_CODE converts an integer to an
+    amino code.
+ 
+   I -> A -> CCC -> C
+ 
+   1    A    Ala    A
+   2    B    Asx    B
+   3    C    Cys    C
+   4    D    Asp    D
+   5    E    Glu    E
+   6    F    Phe    F
+   7    G    Gly    G
+   8    H    His    H
+   9    I    Ise    I
+  10    J    ???    ?
+  11    K    Lys    K
+  12    L    Leu    L
+  13    M    Met    M
+  14    N    Asn    N
+  15    O    ???    ?
+  16    P    Pro    P
+  17    Q    Gln    Q
+  18    R    Arg    R
+  19    S    Ser    S
+  20    T    Thr    T
+  21    U    ???    ?
+  22    V    Val    V
+  23    W    Trp    W
+  24    X    X      X
+  25    Y    Tyr    Y
+  26    Z    Glx    Z
+ 
+   I -> Alpha -> AMINO_NAME
+ 
+   1    A    Alanine                    
+   2    B    Aspartic acid or Asparagine
+   3    C    Cysteine                   
+   4    D    Aspartic acid              
+   5    E    Glutamic acid              
+   6    F    Phenylalanine              
+   7    G    Glycine                    
+   8    H    Histidine                  
+   9    I    Isoleucine                 
+  10    J    ???                        
+  11    K    Lysine                     
+  12    L    Leucine                    
+  13    M    Methionine                 
+  14    N    Asparagine                 
+  15    O    ???                        
+  16    P    Proline                    
+  17    Q    Glutamine                  
+  18    R    Arginine                   
+  19    S    Serine                     
+  20    T    Threonine                  
+  21    U    ???                        
+  22    V    Valine                     
+  23    W    Tryptophan                 
+  24    X    Undetermined amino acid    
+  25    Y    Tyrosine                   
+  26    Z    Glutamic acid or Glutamine 
+ 
+   I -> AMINO_CODE -> AMINO_NAME
+ 
+   1    A    Alanine                    
+   2    B    Aspartic acid or Asparagine
+   3    C    Cysteine                   
+   4    D    Aspartic acid              
+   5    E    Glutamic acid              
+   6    F    Phenylalanine              
+   7    G    Glycine                    
+   8    H    Histidine                  
+   9    I    Isoleucine                 
+  10    K    Lysine                     
+  11    L    Leucine                    
+  12    M    Methionine                 
+  13    N    Asparagine                 
+  14    P    Proline                    
+  15    Q    Glutamine                  
+  16    R    Arginine                   
+  17    S    Serine                     
+  18    T    Threonine                  
+  19    V    Valine                     
+  20    W    Tryptophan                 
+  21    X    Undetermined amino acid    
+  22    Y    Tyrosine                   
+  23    Z    Glutamic acid or Glutamine 
+ 
+TEST021
+  CH_TO_DIGIT: character -> decimal digit
+  DIGIT_TO_C: decimal digit -> character.
+ 
+        -2     *      -1
+        -1     *      -1
+         0     0       0
+         1     1       1
+         2     2       2
+         3     3       3
+         4     4       4
+         5     5       5
+         6     6       6
+         7     7       7
+         8     8       8
+         9     9       9
+        10     *      -1
+        11     *      -1
+ 
+TEST022
+  HEX_DIGIT_TO_I4: hexadecimal digit -> I4,
+  I4_TO_HEX_DIGIT: I4 -> hexadecimal digit.
+ 
+        -2     *      -1
+        -1     *      -1
+         0     0       0
+         1     1       1
+         2     2       2
+         3     3       3
+         4     4       4
+         5     5       5
+         6     6       6
+         7     7       7
+         8     8       8
+         9     9       9
+        10     A      10
+        11     B      11
+        12     C      12
+        13     D      13
+        14     E      14
+        15     F      15
+        16     *      -1
+        17     *      -1
+ 
+TEST023
+  CH_TO_DIGIT_OCT: character -> hexadecimal
+  DIGIT_OCT_TO_C: hexadecimal -> character.
+ 
+        -2     *      -1
+        -1     *      -1
+         0     0       0
+         1     1       1
+         2     2       2
+         3     3       3
+         4     4       4
+         5     5       5
+         6     6       6
+         7     7       7
+         8     *      -1
+         9     *      -1
+ 
+TEST024
+  CH_TO_MILITARY converts a character to military code.
+  MILITARY_TO_CH converts a military code to a character.
+ 
+   I -> C -> Mil -> C
+ 
+     1    A    Alpha       A
+     5    E    Echo        E
+     9    I    India       I
+    13    M    Mike        M
+    17    Q    Quebec      Q
+    21    U    Uniform     U
+    25    Y    Yankee      Y
+    29    c    charlie     c
+    33    g    golf        g
+    37    k    kilo        k
+    41    o    oscar       o
+    45    s    sierra      s
+    49    w    whiskey     w
+ 
+TEST025
+  CH_TO_MORSE converts ASCII to Morse.
+  S_CAT1 concatenates strings with a blank separator.
+ 
+  The string to be converted:
+ 
+  "SOS Titanic!"
+ 
+  Morse translation:
+ 
+    ... --- ... - .. - .- -. .. -.-.
+ 
+TEST026
+  CH_TO_ROT13 "encodes" a character using ROT13.
+ 
+             CH  :ABCDEFGHIJKLMNOPQRSTUVQXYZ
+       ROT13(CH) :NOPQRSTUVWXYZABCDEFGHIDKLM
+ ROT13(ROT13(CH)):ABCDEFGHIJKLMNOPQRSTUVQXYZ
+ 
+             CH  :  CH_TO_ROT13 "encodes" a character using ROT13.
+       ROT13(CH) :  PU_GB_EBG68 "rapbqrf" n punenpgre hfvat EBG68.
+ ROT13(ROT13(CH)):  CH_TO_ROT13 "encodes" a character using ROT13.
+ 
+TEST027
+  CH_TO_SOUNDEX converts ASCII characters
+  to Soundex characters (digits).
+ 
+  Here is the string to be converted:
+ 
+    SOS - Titanic & Mayflower!
+ 
+  Soundex translation:
+ 
+    202   3030502   500140006
+ 
+TEST028
+  CH_TO_SYM converts ANY charcter to a printable symbol.
+  SYM_TO_CH converts a printable symbol to a character.
+ 
+  OK      0       ^@  
+  OK      1       ^A  
+  OK      2       ^B  
+  OK      3       ^C  
+  OK      4       ^D  
+  OK      5       ^E  
+  OK      6       ^F  
+  OK      7       ^G  
+  OK      8       ^H  
+  OK      9       ^I  
+  OK     10       ^J  
+  OK     11       ^K  
+  OK     12       ^L  
+  OK     13       ^M  
+  OK     14       ^N  
+  OK     15       ^O  
+  OK     16       ^P  
+  OK     17       ^Q  
+  OK     18       ^R  
+  OK     19       ^S  
+  OK     20       ^T  
+  OK     21       ^U  
+  OK     22       ^V  
+  OK     23       ^W  
+  OK     24       ^X  
+  OK     25       ^Y  
+  OK     26       ^Z  
+  OK     27       ^[  
+  OK     28       ^\  
+  OK     29       ^]  
+  OK     30       ^^  
+  OK     31       ^_  
+  OK     32       SP       
+  OK     33  !    !       !
+  OK     34  "    "       "
+  OK     35  #    #       #
+  OK     36  $    $       $
+  OK     37  %    %       %
+  OK     38  &    &       &
+  OK     39  '    '       '
+  OK     40  (    (       (
+  OK     41  )    )       )
+  OK     42  *    *       *
+  OK     43  +    +       +
+  OK     44  ,    ,       ,
+  OK     45  -    -       -
+  OK     46  .    .       .
+  OK     47  /    /       /
+  OK     48  0    0       0
+  OK     49  1    1       1
+  OK     50  2    2       2
+  OK     51  3    3       3
+  OK     52  4    4       4
+  OK     53  5    5       5
+  OK     54  6    6       6
+  OK     55  7    7       7
+  OK     56  8    8       8
+  OK     57  9    9       9
+  OK     58  :    :       :
+  OK     59  ;    ;       ;
+  OK     60  <    <       <
+  OK     61  =    =       =
+  OK     62  >    >       >
+  OK     63  ?    ?       ?
+  OK     64  @    @       @
+  OK     65  A    A       A
+  OK     66  B    B       B
+  OK     67  C    C       C
+  OK     68  D    D       D
+  OK     69  E    E       E
+  OK     70  F    F       F
+  OK     71  G    G       G
+  OK     72  H    H       H
+  OK     73  I    I       I
+  OK     74  J    J       J
+  OK     75  K    K       K
+  OK     76  L    L       L
+  OK     77  M    M       M
+  OK     78  N    N       N
+  OK     79  O    O       O
+  OK     80  P    P       P
+  OK     81  Q    Q       Q
+  OK     82  R    R       R
+  OK     83  S    S       S
+  OK     84  T    T       T
+  OK     85  U    U       U
+  OK     86  V    V       V
+  OK     87  W    W       W
+  OK     88  X    X       X
+  OK     89  Y    Y       Y
+  OK     90  Z    Z       Z
+  OK     91  [    [       [
+  OK     92  \    \       \
+  OK     93  ]    ]       ]
+  OK     94  ^    ^       ^
+  OK     95  _    _       _
+  OK     96  `    `       `
+  OK     97  a    a       a
+  OK     98  b    b       b
+  OK     99  c    c       c
+  OK    100  d    d       d
+  OK    101  e    e       e
+  OK    102  f    f       f
+  OK    103  g    g       g
+  OK    104  h    h       h
+  OK    105  i    i       i
+  OK    106  j    j       j
+  OK    107  k    k       k
+  OK    108  l    l       l
+  OK    109  m    m       m
+  OK    110  n    n       n
+  OK    111  o    o       o
+  OK    112  p    p       p
+  OK    113  q    q       q
+  OK    114  r    r       r
+  OK    115  s    s       s
+  OK    116  t    t       t
+  OK    117  u    u       u
+  OK    118  v    v       v
+  OK    119  w    w       w
+  OK    120  x    x       x
+  OK    121  y    y       y
+  OK    122  z    z       z
+  OK    123  {    {       {
+  OK    124  |    |       |
+  OK    125  }    }       }
+  OK    126  ~    ~       ~
+  OK    127       DEL 
+  OK    128       !^@ 
+  OK    129       !^A 
+  OK    130       !^B 
+  OK    131       !^C 
+  OK    132       !^D 
+  OK    133       !^E 
+  OK    134       !^F 
+  OK    135       !^G 
+  OK    136       !^H 
+  OK    137       !^I 
+  OK    138       !^J 
+  OK    139       !^K 
+  OK    140       !^L 
+  OK    141       !^M 
+  OK    142       !^N 
+  OK    143       !^O 
+  OK    144       !^P 
+  OK    145       !^Q 
+  OK    146       !^R 
+  OK    147       !^S 
+  OK    148       !^T 
+  OK    149       !^U 
+  OK    150       !^V 
+  OK    151       !^W 
+  OK    152       !^X 
+  OK    153       !^Y 
+  OK    154       !^Z 
+  OK    155       !^[ 
+  OK    156       !^\ 
+  OK    157       !^] 
+  OK    158       !^^ 
+  OK    159       !^_ 
+  OK    160       !SP 
+  OK    161       !!  
+  OK    162       !"  
+  OK    163       !#  
+  OK    164       !$  
+  OK    165       !%  
+  OK    166       !&  
+  OK    167       !'  
+  OK    168       !(  
+  OK    169       !)  
+  OK    170       !*  
+  OK    171       !+  
+  OK    172       !,  
+  OK    173       !-  
+  OK    174       !.  
+  OK    175       !/  
+  OK    176       !0  
+  OK    177       !1  
+  OK    178       !2  
+  OK    179       !3  
+  OK    180       !4  
+  OK    181       !5  
+  OK    182       !6  
+  OK    183       !7  
+  OK    184       !8  
+  OK    185       !9  
+  OK    186       !:  
+  OK    187       !;  
+  OK    188       !<  
+  OK    189       !=  
+  OK    190       !>  
+  OK    191       !?  
+  OK    192       !@  
+  OK    193       !A  
+  OK    194       !B  
+  OK    195       !C  
+  OK    196       !D  
+  OK    197       !E  
+  OK    198       !F  
+  OK    199       !G  
+  OK    200       !H  
+  OK    201       !I  
+  OK    202       !J  
+  OK    203       !K  
+  OK    204       !L  
+  OK    205       !M  
+  OK    206       !N  
+  OK    207       !O  
+  OK    208       !P  
+  OK    209       !Q  
+  OK    210       !R  
+  OK    211       !S  
+  OK    212       !T  
+  OK    213       !U  
+  OK    214       !V  
+  OK    215       !W  
+  OK    216       !X  
+  OK    217       !Y  
+  OK    218       !Z  
+  OK    219       ![  
+  OK    220       !\  
+  OK    221       !]  
+  OK    222       !^  
+  OK    223       !_  
+  OK    224       !`  
+  OK    225       !a  
+  OK    226       !b  
+  OK    227       !c  
+  OK    228       !d  
+  OK    229       !e  
+  OK    230       !f  
+  OK    231       !g  
+  OK    232       !h  
+  OK    233       !i  
+  OK    234       !j  
+  OK    235       !k  
+  OK    236       !l  
+  OK    237       !m  
+  OK    238       !n  
+  OK    239       !o  
+  OK    240       !p  
+  OK    241       !q  
+  OK    242       !r  
+  OK    243       !s  
+  OK    244       !t  
+  OK    245       !u  
+  OK    246       !v  
+  OK    247       !w  
+  OK    248       !x  
+  OK    249       !y  
+  OK    250       !z  
+  OK    251       !{  
+  OK    252       !|  
+  OK    253       !}  
+  OK    254       !~  
+  OK    255       !DEL
+ 
+TEST029
+  CH_UNIFORM returns a random character.
+ 
+   I  A  Count
+ 
+   1  A      0
+   2  B      0
+   3  C      0
+   4  D   5069
+   5  E   4973
+   6  F   4897
+   7  G   4959
+   8  H   5024
+   9  I   5161
+  10  J   4981
+  11  K   5019
+  12  L   4974
+  13  M   5002
+  14  N   5034
+  15  O   5174
+  16  P   4955
+  17  Q   5045
+  18  R   4926
+  19  S   4938
+  20  T   5020
+  21  U   4990
+  22  V   5056
+  23  W   4803
+  24  X      0
+  25  Y      0
+  26  Z      0
+ 
+TEST030
+  I4_TO_CH4: Integer -> 4 characters;
+  CH4_TO_I4: 4 characters -> Integer.
+ 
+  CH4 --> CH4_TO_I4(CH4) --> I4_TO_CH4(CH4_TO_I4(CH4))
+ 
+  Adam    1835099201  Adam
+  Bill    1819044162  Bill
+  Crow    2003792451  Crow
+  Dave    1702256964  Dave
+  madA    1097097581  madA
+  lliB    1114205292  lliB
+  worC    1131573111  worC
+  evaD    1147237989  evaD
+ 
+TEST031
+  CH4_TO_R4: 4 character => R4.
+  R4_TO_CH4: R4 => 4 character.
+ 
+  word --> CH4_TO_R4(word) --> R4_TO_CH4(CH4_TO_R4(word))
+ 
+  Adam    0.435971E+28  Adam
+  Bill    0.114321E+28  Bill
+  Crow    0.485655E+34  Crow
+  Dave    0.727185E+23  Dave
+ 
+TEST032
+   For vectors of integers and character*4 strings:
+  CH4VEC_TO_I4VEC: CH4 => I.
+  I4VEC_TO_CH4VEC: I => CH4.
+ 
+  I  Input  Output
+ 
+    1        -4        -4
+    2        -3        -3
+    3        -2        -2
+    4        -1        -1
+    5         0         0
+    6         1         1
+    7         2         2
+    8         3         3
+    9         4         4
+   10         5         5
+   11         6         6
+ 
+TEST033
+   For vectors of integers and character*4 strings:
+  CH4VEC_TO_I4VEC: CH4 => I4.
+  I4VEC_TO_CH4VEC: I4 => CH4.
+ 
+  Input string:  Bartleby !
+ 
+  Integer vector:
+ 
+       1 1953653058
+       2 2036491628
+       3  538976544
+ 
+  Output string: Bartleby !
+ 
+TEST034
+  CHR8_TO_4 convert characters to pairs of hexadecimals.
+  CHR4_TO_8 converts pairs of hexadecimals to characters.
+ 
+ 
+  Coded characters that can't be printed are shown as blanks.
+ 
+   ASCII  Coded  Decoded
+ 
+    0        00        
+    1        01        
+    2        02        
+    3        03        
+    4        04        
+    5        05        
+    6        06        
+    7        07        
+    8        08        
+    9        09        
+   10        0A        
+   11        0B        
+   12        0C        
+   13        0D        
+   14        0E        
+   15        0F        
+   16        10        
+   17        11        
+   18        12        
+   19        13        
+   20        14        
+   21        15        
+   22        16        
+   23        17        
+   24        18        
+   25        19        
+   26        1A        
+   27        1B        
+   28        1C        
+   29        1D        
+   30        1E        
+   31        1F        
+   32        20        
+   33 !      21       !
+   34 "      22       "
+   35 #      23       #
+   36 $      24       $
+   37 %      25       %
+   38 &      26       &
+   39 '      27       '
+   40 (      28       (
+   41 )      29       )
+   42 *      2A       *
+   43 +      2B       +
+   44 ,      2C       ,
+   45 -      2D       -
+   46 .      2E       .
+   47 /      2F       /
+   48 0      30       0
+   49 1      31       1
+   50 2      32       2
+   51 3      33       3
+   52 4      34       4
+   53 5      35       5
+   54 6      36       6
+   55 7      37       7
+   56 8      38       8
+   57 9      39       9
+   58 :      3A       :
+   59 ;      3B       ;
+   60 <      3C       <
+   61 =      3D       =
+   62 >      3E       >
+   63 ?      3F       ?
+   64 @      40       @
+   65 A      41       A
+   66 B      42       B
+   67 C      43       C
+   68 D      44       D
+   69 E      45       E
+   70 F      46       F
+   71 G      47       G
+   72 H      48       H
+   73 I      49       I
+   74 J      4A       J
+   75 K      4B       K
+   76 L      4C       L
+   77 M      4D       M
+   78 N      4E       N
+   79 O      4F       O
+   80 P      50       P
+   81 Q      51       Q
+   82 R      52       R
+   83 S      53       S
+   84 T      54       T
+   85 U      55       U
+   86 V      56       V
+   87 W      57       W
+   88 X      58       X
+   89 Y      59       Y
+   90 Z      5A       Z
+   91 [      5B       [
+   92 \      5C       \
+   93 ]      5D       ]
+   94 ^      5E       ^
+   95 _      5F       _
+   96 `      60       `
+   97 a      61       a
+   98 b      62       b
+   99 c      63       c
+  100 d      64       d
+  101 e      65       e
+  102 f      66       f
+  103 g      67       g
+  104 h      68       h
+  105 i      69       i
+  106 j      6A       j
+  107 k      6B       k
+  108 l      6C       l
+  109 m      6D       m
+  110 n      6E       n
+  111 o      6F       o
+  112 p      70       p
+  113 q      71       q
+  114 r      72       r
+  115 s      73       s
+  116 t      74       t
+  117 u      75       u
+  118 v      76       v
+  119 w      77       w
+  120 x      78       x
+  121 y      79       y
+  122 z      7A       z
+  123 {      7B       {
+  124 |      7C       |
+  125 }      7D       }
+  126 ~      7E       ~
+  127       7F       
+  128        80        
+  129        81        
+  130        82        
+  131        83        
+  132        84        
+  133        85        
+  134        86        
+  135        87        
+  136        88        
+  137        89        
+  138        8A        
+  139        8B        
+  140        8C        
+  141        8D        
+  142        8E        
+  143        8F        
+  144        90        
+  145        91        
+  146        92        
+  147        93        
+  148        94        
+  149        95        
+  150        96        
+  151        97        
+  152        98        
+  153        99        
+  154        9A        
+  155        9B        
+  156        9C        
+  157        9D        
+  158        9E        
+  159        9F        
+  160        A0        
+  161        A1        
+  162        A2        
+  163        A3        
+  164        A4        
+  165        A5        
+  166        A6        
+  167        A7        
+  168        A8        
+  169        A9        
+  170        AA        
+  171        AB        
+  172        AC        
+  173        AD        
+  174        AE        
+  175        AF        
+  176        B0        
+  177        B1        
+  178        B2        
+  179        B3        
+  180        B4        
+  181        B5        
+  182        B6        
+  183        B7        
+  184        B8        
+  185        B9        
+  186        BA        
+  187        BB        
+  188        BC        
+  189        BD        
+  190        BE        
+  191        BF        
+  192        C0        
+  193        C1        
+  194        C2        
+  195        C3        
+  196        C4        
+  197        C5        
+  198        C6        
+  199        C7        
+  200        C8        
+  201        C9        
+  202        CA        
+  203        CB        
+  204        CC        
+  205        CD        
+  206        CE        
+  207        CF        
+  208        D0        
+  209        D1        
+  210        D2        
+  211        D3        
+  212        D4        
+  213        D5        
+  214        D6        
+  215        D7        
+  216        D8        
+  217        D9        
+  218        DA        
+  219        DB        
+  220        DC        
+  221        DD        
+  222        DE        
+  223        DF        
+  224        E0        
+  225        E1        
+  226        E2        
+  227        E3        
+  228        E4        
+  229        E5        
+  230        E6        
+  231        E7        
+  232        E8        
+  233        E9        
+  234        EA        
+  235        EB        
+  236        EC        
+  237        ED        
+  238        EE        
+  239        EF        
+  240        F0        
+  241        F1        
+  242        F2        
+  243        F3        
+  244        F4        
+  245        F5        
+  246        F6        
+  247        F7        
+  248        F8        
+  249        F9        
+  250        FA        
+  251        FB        
+  252        FC        
+  253        FD        
+  254        FE        
+  255        FF        
+ 
+TEST035
+  CHRASS parses an assignment statement.
+ 
+  S                  LHS(S)                   RHS(S)
+ 
+  a = 1.0               a                     1.0                 
+  n = -17               n                     -17                 
+  scale = +5.3E-2       scale                 +5.3E-2             
+  filename = myprog.f   filename              myprog.f            
+   =  A pot of gold                           A pot of gold       
+  Fred                  Fred                                      
+   =  Bob                                     Bob                 
+  1 = 2, 2 = 3, 3 = 4   1                     2, 2 = 3, 3 = 4     
+ 
+TEST036
+  CHRCTP accepts a string of characters
+  and extracts a complex value from them,
+  assuming the format (A,B) for complex numbers.
+ 
+  STRING                        CVAL    IERROR   LENGTH
+ 
+  (1,1)                      1.0     1.0   0       5
+  (,)                        0.0     0.0   0       4
+  ( 20 , 99 )               20.0    99.0   0      11
+  (-1.2E+2, +30E-2)       -120.0     0.3   0      17
+  (1)                        0.0     0.0   4       0
+  (1,2,3)                    0.0     0.0   6       0
+  (4,5(                      0.0     0.0   6       0
+  (6,)                       6.0     0.0   0       5
+  (7;8)                      0.0     0.0   4       0
+  9                          0.0     0.0   2       0
+ 
+TEST037
+  CHVEC_PERMUTE permutes a character vector.
+ 
+  Using random number seed SEED =    123456789
+ 
+  The random permutation:
+ 
+       1    3
+       2   10
+       3    9
+       4    7
+       5    4
+       6    6
+       7    8
+       8    5
+       9    1
+      10    2
+ 
+  CHVEC before permutation:
+ 
+ABCDEFGHIJ
+ 
+  CHVEC after permutation:
+ 
+CJIGDFHEAB
+ 
+TEST038
+  CHVEC_TO_S: character vector => string;
+  S_TO_CHVEC: string to character vector.
+ 
+  String: Yabba Blabba
+ 
+  CHVEC:  Y a b b a   B l a b b a
+ 
+  Recovered string: "Yabba Blabba"
+ 
+TEST039
+  COMMA shifts commas left through blanks.
+ 
+  --------Input-------  -------Output-------
+ 
+   To Henry , our dog ,            To Henry,  our dog,          
+   14 , 15  , 16   ,               14,  15,   16,               
+   ,  ,  ,                        , ,  ,                        
+ 
+TEST040
+  For decimals I * 10**J,
+  DEC_TO_S_LEFT: -> decimal to left string;
+  S_TO_DEC: string to decimal.
+ 
+   I         J                 S_LEFT        LENGTH     I2     J2
+--------- ---------  ----------------------  ------  --------------
+ 
+           0         0  0                         1           0         0
+          21         3  21000                     5          21         3
+          -3         0  -3                        2          -3         0
+         -31        -2  -0.31                     5         -31        -2
+         147        -2  1.47                      4         147        -2
+          16        -5  0.00016                   7          16        -5
+          34        30  Inf                       0           0         0
+         123       -19  0.0000000000000000123    21         123       -19
+         123       -20  0.00000000000000000123   22         123       -20
+         123       -21  0.00000000000000000012   22          12       -20
+         123       -22  0.00000000000000000001   22           1       -20
+         123       -23  0.0                       3           0         0
+        -123       -19  -0.0000000000000000123   22        -123       -19
+        -123       -20  -0.0000000000000000012   22         -12       -19
+        -123       -21  -0.0000000000000000001   22          -1       -19
+        -123       -22  0.0                       3           0         0
+        -123       -23  0.0                       3           0         0
+          34       -30  0.0                       3           0         0
+          99       -99  0.0                       3           0         0
+          99        99  Inf                       0           0         0
+ 
+TEST041
+  For decimals I * 10**J,
+  DEC_TO_S_RIGHT: -> decimal to right string.
+  S_TO_DEC: string to decimal.
+ 
+   I         J                S_RIGHT        LENGTH     I2     J2
+--------- ---------  ----------------------  ------  --------------
+ 
+           0         0                       0   22           0         0
+          21         3                   21000   22          21         3
+          -3         0                      -3   22          -3         0
+         -31        -2                   -0.31   22         -31        -2
+         147        -2                    1.47   22         147        -2
+          16        -5                 0.00016   22          16        -5
+          34        30                     Inf   19           0         0
+         123       -19   0.0000000000000000123   22         123       -19
+         123       -20  0.00000000000000000123   22         123       -20
+         123       -21  0.00000000000000000012   22          12       -20
+         123       -22  0.00000000000000000001   22           1       -20
+         123       -23                     0.0   22           0         0
+        -123       -19  -0.0000000000000000123   22        -123       -19
+        -123       -20  -0.0000000000000000012   22         -12       -19
+        -123       -21  -0.0000000000000000001   22          -1       -19
+        -123       -22                     0.0   22           0         0
+        -123       -23                     0.0   22           0         0
+          34       -30                     0.0   22           0         0
+          99       -99                     0.0   22           0         0
+          99        99                     Inf   19           0         0
+ 
+TEST042
+  For decimals I * 10**J,
+  DEC_TO_S_LEFT: -> decimal to left string;
+  S_TO_DEC: string to decimal.
+ 
+          S in               I       J  LENGTH           S out       
+----------------------  ------  ------  ------  ---------------------
+ 
+  1                  1         0         1  1                     
+  1A                 1         0         1  1                     
+  +12,34,56         12         0         4  12                    
+    34 7            34         0         4  34                    
+  -1 E2ABCD         -1         0         2  -1                    
+  -1 X2ABCD         -1         0         2  -1                    
+   2E-1              2        -1         5  0.2                   
+  23.45           2345        -2         5  23.45                 
+  Inf                0         0         0  0                     
+  NaN                0         0         0  0                     
+    &#99             0         0         2  0                     
+ 
+TEST043
+  EBCDIC_TO_S converts a EBCDIC string to ASCII.
+ 
+  We will not print out the "before" string!
+ 
+  After conversion:
+ 
+  "Hello, world!"
+ 
+TEST045
+  R4_TO_FLT: real -> scientific representation;
+  FLT_TO_S: scientific representation -> string:
+ 
+  The number of digits used is        5
+ 
+      RVAL      ISGN  MANT  IEXP  S
+ 
+     1.00000       1         1         0  1.e000                                  
+     10.0000       1         1         1  1.e001                                  
+     100.000       1         1         2  1.e002                                  
+     101.000       1       101         0  1.01e002                                
+     99.0000       1        99         0  9.9e001                                 
+     0.00000       0         0         0  0                                       
+    -1.00000      -1        -1         0  -1.e000                                 
+    -123.456      -1    -12346        -2  -1.2346e002                             
+   -0.123456      -1    -12346        -5  -1.2346e-01                             
+    0.123456E-06   1     12346       -11  1.2346e-07                              
+ 
+TEST046
+  HEX_TO_I4, hexadecimal->integer.
+  I4_TO_HEX, integer->hexadecimal
+ 
+  I  I4_TO_HEX(I)  HEX_TO_I4(I4_TO_HEX(I)) 
+ 
+        21        15        21
+       -32       -20       -32
+      1776       6F0      1776
+ 
+TEST047
+  S_TO_HEX: string -> hexadecimal;
+  HEX_TO_S: hexadecimal -> string.
+ 
+  String  Hexadecimal  Recovered string
+ 
+  ABC    414243      ABC  
+  Wow!!  576F772121  Wow!!
+  1234   31323334    1234 
+ 
+TEST048
+  I4_BYTE_SWAP swaps bytes in a 4 byte word.
+ 
+  Data from a different computer can be
+  read this way, if necessary.
+ 
+  Here is the data written to the file:
+ 
+  -3.14159    
+   9.86961    
+  -31.0063    
+   97.4091    
+  -306.020    
+   961.389    
+  -3020.29    
+   9488.53    
+  -29809.1    
+   93648.1    
+ 
+TEST049
+  I4_BYTE_SWAP swaps bytes.
+ 
+  Read the data in CHRPRB.DAT.
+ 
+Here is the plain data from the file:
+ 
+  -3.14159    
+   9.86961    
+  -31.0063    
+   97.4091    
+  -306.020    
+   961.389    
+  -3020.29    
+   9488.53    
+  -29809.1    
+   93648.1    
+ 
+  Using byte order:
+ 
+  4321
+  our data becomes:
+ 
+ -0.403320E+17
+ -0.220170E+25
+ -0.158720E+18
+  0.212721E+34
+ -0.982530E-34
+ -0.104663E+28
+ -0.365521E-06
+  0.263026E-17
+  0.270497E-04
+  0.224094E-31
+ 
+  Using byte order:
+ 
+  2143
+  our data becomes:
+ 
+  0.157987E+07
+  0.256632E-20
+ -0.314555E+35
+  -48.6160    
+ -0.202171E-22
+  0.243779E+30
+  0.241340E-01
+  0.100032E-25
+ -0.748848E+25
+ -0.296597E-05
+ 
+  Using byte order:
+ 
+  3412
+  our data becomes:
+ 
+  0.216691E-28
+ -0.349462E+26
+  0.340131E-30
+ -0.661051E+11
+  0.199487E-36
+  0.207823E+16
+  -1446.16    
+   40.5684    
+ -0.847522E+21
+ -0.261204E+25
+ 
+  Using byte order:
+ 
+  2224
+  our data becomes:
+ 
+  -2.23529    
+   29.2392    
+  -8.75294    
+   104.910    
+  -130.008    
+   865.380    
+  -6296.60    
+   12432.6    
+  -29041.4    
+   119250.    
+ 
+TEST050
+  I4_EXTRACT extracts integers from a string.
+ 
+  "  123    45   789"
+ 
+       123
+        45
+       789
+ 
+  Reached the last integer.
+ 
+TEST051
+  I4_LENGTH computes an integer's "length".
+ 
+        I4    Length
+ 
+         0         1
+         1         1
+        -1         2
+       140         3
+     -1952         5
+    123456         6
+ 
+TEST052
+  I4_NEXT_READ extracts integers from a string.
+ 
+  String to be analyzed:
+ 
+  "Data set #12 extends from (5,-43) and is worth $4.56"
+ 
+  #  Integer
+ 
+    1          12
+    2           5
+    3         -43
+    4           4
+    5          56
+ 
+  Number of integers found was        5
+ 
+TEST054
+  I4_TO_BINHEX: I => BINHEX character
+ 
+  The BINHEX alphabet
+ 
+  !"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTVWXYZ[`abcdefhijklmnpq
+ 
+TEST055
+  I4_TO_MONTH_NAME: I => Month_Name
+  MONTH_NAME_TO_I4: Month_Name => I.
+ 
+  J    -1  ?????????
+  Feb   2  February 
+  Dec  12  December 
+  Apr   4  April    
+  Aug   8  August   
+  Mar   3  March    
+  May   5  May      
+  o    10  October  
+  nO   11  November 
+ 
+TEST056
+  I4_TO_NUNARY converts an integer to negative unary.
+ 
+      I4    NUNARY
+ 
+        -5            1010101010
+         0                     0
+         7         1010101010101
+ 
+TEST057
+  I4_TO_OCT, integer->octal
+  OCT_TO_I4, octal->integer.
+ 
+      I4  ==>  OCT   ==>  I4
+ 
+        21          25        21
+       -32         -40       -32
+      1776        3360      1776
+ 
+TEST058
+  I4_TO_S_LEFT: I4 -> left-justified string;
+  S_TO_I4:      string->I4.
+ 
+    STRING ==> S_TO_I4 ==> I4_TO_S_LEFT
+ 
+   -124 56 AbC              -124  -124                
+  25,50,5                     25  25                  
+  +15.9                       15  15                  
+    123abc                   123  123                 
+ 
+TEST059
+  I4_TO_S_LEFT:  I4 -> Left-justified string;
+ 
+  I4       S_LEFT
+ 
+         0  "0     "
+         1  "1     "
+        -1  "-1    "
+       140  "140   "
+     -1952  "-1952 "
+    123456  "123456"
+   1234567  "******"
+ 
+TEST060
+  I4_TO_S_RIGHT:  I4 -> Right-justified string;
+ 
+  I4       S_RIGHT
+ 
+         0  "     0"
+         1  "     1"
+        -1  "    -1"
+       140  "   140"
+     -1952  " -1952"
+    123456  "123456"
+   1234567  "******"
+ 
+TEST061
+  I4_TO_S_RIGHT_COMMA:
+  I4 -> Right-justified string with commas;
+ 
+  I4       S_RIGHT_COMMA
+ 
+           0  "              0"
+           1  "              1"
+          -1  "             -1"
+         140  "            140"
+       -1952  "         -1,952"
+      123456  "        123,456"
+     1234567  "      1,234,567"
+   123456789  "    123,456,789"
+  1234567890  "  1,234,567,890"
+ 
+TEST062
+  I4_TO_S_ROMAN: Integer -> Roman Numerals
+  S_ROMAN_TO_I4: Roman Numerals -> Integer.
+ 
+    I4 ==> S
+ 
+        -5  -V                           0
+        -4  -IV                          0
+        -3  -III                         0
+        -2  -II                          0
+        -1  -I                           0
+         0  0                            0
+         1  I                            1
+         2  II                           2
+         3  III                          3
+         4  IV                           4
+         5  V                            5
+         6  VI                           6
+         7  VII                          7
+         8  VIII                         8
+         9  IX                           9
+        10  X                           10
+        99  XCIX                        99
+       157  CLVII                      157
+       486  CDLXXXVI                   486
+      1999  MCMXCIX                   1999
+      4999  MMMMCMXCIX                4999
+ 
+TEST063
+  I4_TO_S_ZERO:  I4 -> Zero-padded string;
+ 
+  I4       S_ZERO
+ 
+         0  "000000"
+         1  "000001"
+        -1  "-00001"
+       140  "000140"
+     -1952  "-01952"
+    123456  "123456"
+   1234567  "******"
+ 
+TEST064
+  I4_TO_S32: integer => character ( len = 32 );
+  S32_TO_I4: character ( len = 32 ) => integer.
+ 
+            I4  ---------------S32--------------            I4
+ 
+             0  00000000000000000000000000000000             0
+             1  00000000000000000000000000000001             1
+            -1  11111111111111111111111111111110            -1
+            15  00000000000000000000000000001111            15
+ 
+TEST065
+  I4_TO_UNARY converts an integer to unary.
+ 
+        I4     UNARY
+ 
+        -5      -11111
+         0           0
+         7     1111111
+ 
+TEST066
+  I4_TO_UUDECODE: I => UUDECODE character
+ 
+  The UUDECODE alphabet
+ 
+  `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_
+ 
+TEST067
+  I4_TO_XXDECODE: I => XXDECODE character
+ 
+  The XXDECODE alphabet
+ 
+  +-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+ 
+TEST068
+  ISTRCMP, C-like string comparison.
+  ISTRNCMP, C-like string comparisons.
+ 
+String1        String2      ISTRNCMP          ISTRCMP
+ 
+  Alex             Alexander        -1  -1
+  Barney           Babushka          1   1
+  Cray YMP         Zulu             -1  -1
+  ZULU             Zulu             -1  -1
+  BeHanna          BeHanna           0   0
+ 
+TEST070
+  NAMEFL takes a name in the 
+  last name, first name order and restores the
+  first name, last name order.
+ 
+  Brown, Charlie                  Brown Charlie                 
+  Cher                            Cher                          
+  Howell, James Thurston          Howell James Thurston         
+  Shakespeare Joe Bob             Joe Bob Shakespeare           
+ 
+TEST071
+  NAMELF moves a last name first.
+ 
+  Charlie Brown                   Charli, Brown,                
+  Cher                            Cher                          
+  James Thurston Howell           Thursto, Howell, Jame,        
+ 
+TEST072
+  NEXCHR finds the next nonblank in a string.
+ 
+ 
+  String is "Here I am!"
+ 
+  Next character is "H".
+  Next character is "e".
+  Next character is "r".
+  Next character is "e".
+  Next character is "I".
+  Next character is "a".
+  Next character is "m".
+  Next character is "!".
+  No more nonblanks!
+ 
+  String is "   O  !"
+ 
+  Next character is "O".
+  Next character is "!".
+  No more nonblanks!
+ 
+  String is "D o u b l e"
+ 
+  Next character is "D".
+  Next character is "o".
+  Next character is "u".
+  Next character is "b".
+  Next character is "l".
+  Next character is "e".
+  No more nonblanks!
+ 
+  String is "T  r  i  p  l  e"
+ 
+  Next character is "T".
+  Next character is "r".
+  Next character is "i".
+  Next character is "p".
+  Next character is "l".
+  Next character is "e".
+  No more nonblanks!
+ 
+  String is "F           a  r"
+ 
+  Next character is "F".
+  Next character is "a".
+  Next character is "r".
+  No more nonblanks!
+ 
+  String is "         1"
+ 
+  Next character is "1".
+  No more nonblanks!
+ 
+TEST073
+  NEXSTR finds the next several characters in a string.
+ 
+ 
+  String is "Here I am!"
+ 
+  Next substring: He
+  Next substring: re
+  Next substring: Ia
+  Next substring: m!
+  No more nonblanks!
+ 
+  String is "   O  !"
+ 
+  Next substring: O!
+  No more nonblanks!
+ 
+  String is "D o u b l e"
+ 
+  Next substring: Do
+  Next substring: ub
+  Next substring: le
+  No more nonblanks!
+ 
+  String is "T  r  i  p  l  e"
+ 
+  Next substring: Tr
+  Next substring: ip
+  Next substring: le
+  No more nonblanks!
+ 
+  String is "F           a  r"
+ 
+  Next substring: Fa
+  Next substring: r
+  No more nonblanks!
+ 
+  String is "         1"
+ 
+  Next substring: 1
+  No more nonblanks!
+ 
+TEST074
+  R4_TO_FLT computes the scientific representation
+  (floating point, base 10) of a real number.
+ 
+ 
+  The number of digits used is        1
+ 
+     RVAL        ISGN    MANT    IEXP      SVAL
+ 
+   1.00000           1       1       0   1.00000    
+   10.0000           1       1       1   10.0000    
+   100.000           1       1       2   100.000    
+   101.000           1       1       2   100.000    
+   99.0000           1       1       2   100.000    
+   0.00000           0       0       0   0.00000    
+  -1.00000          -1       1       0  -1.00000    
+  -123.456          -1       1       2  -100.000    
+ -0.123456          -1       1      -1 -0.100000    
+  0.123456E-06       1       1      -7  0.100000E-06
+ 
+  The number of digits used is        2
+ 
+     RVAL        ISGN    MANT    IEXP      SVAL
+ 
+   1.00000           1       1       0   1.00000    
+   10.0000           1       1       1   10.0000    
+   100.000           1       1       2   100.000    
+   101.000           1       1       2   100.000    
+   99.0000           1      99       0   99.0000    
+   0.00000           0       0       0   0.00000    
+  -1.00000          -1       1       0  -1.00000    
+  -123.456          -1      12       1  -120.000    
+ -0.123456          -1      12      -2 -0.120000    
+  0.123456E-06       1      12      -8  0.120000E-06
+ 
+  The number of digits used is        3
+ 
+     RVAL        ISGN    MANT    IEXP      SVAL
+ 
+   1.00000           1       1       0   1.00000    
+   10.0000           1       1       1   10.0000    
+   100.000           1       1       2   100.000    
+   101.000           1     101       0   101.000    
+   99.0000           1      99       0   99.0000    
+   0.00000           0       0       0   0.00000    
+  -1.00000          -1       1       0  -1.00000    
+  -123.456          -1     123       0  -123.000    
+ -0.123456          -1     123      -3 -0.123000    
+  0.123456E-06       1     123      -9  0.123000E-06
+ 
+  The number of digits used is        4
+ 
+     RVAL        ISGN    MANT    IEXP      SVAL
+ 
+   1.00000           1       1       0   1.00000    
+   10.0000           1       1       1   10.0000    
+   100.000           1       1       2   100.000    
+   101.000           1     101       0   101.000    
+   99.0000           1      99       0   99.0000    
+   0.00000           0       0       0   0.00000    
+  -1.00000          -1       1       0  -1.00000    
+  -123.456          -1    1235      -1  -123.500    
+ -0.123456          -1    1235      -4 -0.123500    
+  0.123456E-06       1    1235     -10  0.123500E-06
+ 
+  The number of digits used is        5
+ 
+     RVAL        ISGN    MANT    IEXP      SVAL
+ 
+   1.00000           1       1       0   1.00000    
+   10.0000           1       1       1   10.0000    
+   100.000           1       1       2   100.000    
+   101.000           1     101       0   101.000    
+   99.0000           1      99       0   99.0000    
+   0.00000           0       0       0   0.00000    
+  -1.00000          -1       1       0  -1.00000    
+  -123.456          -1   12346      -2  -123.460    
+ -0.123456          -1   12346      -5 -0.123460    
+  0.123456E-06       1   12346     -11  0.123460E-06
+ 
+  The number of digits used is        6
+ 
+     RVAL        ISGN    MANT    IEXP      SVAL
+ 
+   1.00000           1       1       0   1.00000    
+   10.0000           1       1       1   10.0000    
+   100.000           1       1       2   100.000    
+   101.000           1     101       0   101.000    
+   99.0000           1      99       0   99.0000    
+   0.00000           0       0       0   0.00000    
+  -1.00000          -1       1       0  -1.00000    
+  -123.456          -1  123456      -3  -123.456    
+ -0.123456          -1  123456      -6 -0.123456    
+  0.123456E-06       1  123456     -12  0.123456E-06
+ 
+TEST075
+  R4_TO_S_LEFT: real -> left justified string;
+  R4_TO_S_RIGHT: real -> right justified string.
+  S_BLANKS_INSERT inserts blanks in a string;
+ 
+  Before call, STRING1 = "There were guests."
+ 
+  After inserting blanks into positions 11 through 25,
+  STRING1 = "There were                guests."
+ 
+  Now use R4_TO_S_RIGHT to turn the real value
+  R =    78.2500     into a right-justified string:
+ 
+  STRING2 = "     78.250000"
+ 
+  Now insert STRING2 into STRING1.
+  The resulting string is "There were      78.250000 guests."
+ 
+  Repeating for R4_TO_S_LEFT:
+  The resulting string is "There were 78.250000      guests."
+ 
+TEST076
+  S_TO_R4, string -> real number;
+  R4_TO_S_LEFT, real number -> string.
+ 
+  S --> S_TO_R4 --> R4_TO_S_LEFT
+ 
+   52.134ABCDE  
+   52.134ABCDE     52.1340    
+   52.134ABCDE     52.1340    52.133999     
+   8.0/2.0      
+   8.0/2.0         8.00000    
+   8.0/2.0         8.00000    8             
+  12E1, 34, 56  
+  12E1, 34, 56     120.000    
+  12E1, 34, 56     120.000    120           
+ 
+TEST077
+  R4_TO_S32 converts a real to a string
+  S32_TO_R4 converts a string to a real.
+ 
+  R   R4_TO_S32(R)   S32_TO_R4(R4_TO_S32(R))
+ 
+     0.00000      00000000000000000000000000000000     0.00000    
+     1.00000      01000000000000000000000000000000     1.00000    
+     7.00000      01111111100000000000000000000000    0.170141E+39
+     15.0000      01111111100000000000000000000000    0.170141E+39
+ 
+TEST078
+  R4_TO_SEF converts an R4 to SEF form.
+  SEF_TO_R4 converts SEF form to an R4.
+ 
+  S is the sign bit (0 = positive, 1 = negative)
+  E is the exponent base 2
+  F is the mantissa
+ 
+    R           S       E           F     R2
+ 
+    0.25000000     0      -2           1  0.25000000    
+    0.50000000     0      -1           1  0.50000000    
+     1.0000000     0       0           1   1.0000000    
+     2.0000000     0       1           1   2.0000000    
+     4.0000000     0       2           1   4.0000000    
+     1.5000000     0      -1           3   1.5000000    
+     1.7500000     0      -2           7   1.7500000    
+     1.8750000     0      -3          15   1.8750000    
+     6.5000000     0      -1          13   6.5000000    
+    -6.5000000     1      -1          13  -6.5000000    
+     99.000000     0       0          99   99.000000    
+     100.00000     0       2          25   100.00000    
+     101.00000     0       0         101   101.00000    
+     0.0000000     0       0           0   0.0000000    
+    -1.0000000     1       0           1  -1.0000000    
+    0.34028235E+39 0     104    16777215  0.34028235E+39
+ 
+  S    E         F     R        S2   E2        F2
+ 
+   0 -125         3  0.705297E-37 0 -125         3
+   0 -127         3  0.176324E-37 0 -127         3
+   0 -129         3   0.00000     0    0         0
+   0 -132         7   0.00000     0    0         0
+   0 -135        15   0.00000     0    0         0
+ 
+TEST079
+  R8_EXTRACT extracts reals from a string.
+ 
+  Our string: "  12.3    45   -0.789"
+ 
+     12.3000    
+     45.0000    
+   -0.789000    
+ 
+S_TO_R8 - Serious error!
+  Illegal or nonnumeric input:
+    
+ 
+  Reached the last real value.
+ 
+TEST080
+  S_TO_R8,       string -> R8;
+  R8_TO_S_LEFT,  R8 -> left string.
+  R8_TO_S_RIGHT, R8 -> right string.
+ 
+  S --> S_TO_R8 --> R8_TO_S_LEFT
+ 
+  52.134ABCDE              52.1340      52.1340       
+   2.0/6.0                 2.00000      2.00000       
+     12D-1, 34, 56         1.20000      1.20000       
+  0.0001234               0.123400E-03  0.123400E-03  
+ 
+  S --> S_TO_R8 --> R8_TO_S_RIGHT
+ 
+  52.134ABCDE              52.1340             52.1340
+   2.0/6.0                 2.00000             2.00000
+     12D-1, 34, 56         1.20000             1.20000
+  0.0001234               0.123400E-03    0.123400E-03
+ 
+TEST081
+  R8VEC_TO_S writes an R8VEC to a string.
+ 
+  The real vector data:
+ 
+         1     1234.56    
+         2   -0.125000E-02
+         3     0.00000    
+         4    0.102030E+11
+         5     77.0000    
+         6     1.50000    
+ 
+  The string: "1234.56, -0.125000E-02, 0, 0.102030E+11, 77, 1.5"
+ 
+TEST082
+  RANGER interprets a range description.
+ 
+ 
+  The input string is " 4:8 2 14:20 2:-1 81:81 10"
+ 
+  RANGER found       19 integers:
+ 
+         4
+         5
+         6
+         7
+         8
+         2
+        14
+        15
+        16
+        17
+        18
+        19
+        20
+         2
+         1
+         0
+        -1
+        81
+        10
+ 
+TEST083
+  RAT_TO_S_LEFT prints a ratio left justified,
+  RAT_TO_S_RIGHT prints it right justified.
+ 
+   IVAL      JVAL            Right                   Left         
+  --------- ---------  ----------------------  ----------------------
+ 
+          12        10                   12/10  12/10                 
+          48       -96                  48/-96  48/-96                
+         -44       -44                 -44/-44  -44/-44               
+          23         0                     Inf  Inf                   
+         -99         0                    -Inf  -Inf                  
+           0         0                     NaN  NaN                   
+   123456789 987654321     123456789/987654321  123456789/987654321   
+           0       909                       0  0                     
+ 
+TEST085
+  S_ADJUSTL justifies a string to the left;
+ 
+   Original   S_ADJUSTL
+  ----------  ---------- 
+ 
+    Hello!    Hello!    
+  Ouch!       Ouch!     
+    A B C     A B C     
+ 
+TEST086
+  S_ADJUSTR justifies a string to the right.
+ 
+   Original   S_ADJUSTR
+  ----------  ----------
+ 
+    Hello!        Hello!
+  Ouch!            Ouch!
+    A B C          A B C
+ 
+TEST087
+  S_BEFORE_SS_COPY copies a string
+    before the first occurrence of a substring.
+  S_AFTER_SS_COPY copies a string
+    after the first occurrence of a substring.
+ 
+ 
+  Our flag string is (
+ 
+  String                          Copy
+ 
+  John (or Jack)                  John                          
+  Jill St John (her real name)    Jill St John                  
+  Jeff is OK (Rather!)            Jeff is OK                    
+  FUNCTION SDOT(N,X,INCX,Y,INCY)  FUNCTION SDOT                 
+  Another remarkable string.      Another remarkable string.    
+  On the (other (hand!!)          On the                        
+ 
+  Our flag string is her
+ 
+  String                          Copy
+ 
+  John (or Jack)                  John (or Jack)                
+  Jill St John (her real name)    Jill St John (                
+  Jeff is OK (Rather!)            Jeff is OK (Rat               
+  FUNCTION SDOT(N,X,INCX,Y,INCY)  FUNCTION SDOT(N,X,INCX,Y,INCY)
+  Another remarkable string.      Anot                          
+  On the (other (hand!!)          On the (ot                    
+ 
+  Our flag string is (
+ 
+  String                          Copy
+ 
+  John (or Jack)                  or Jack)                      
+  Jill St John (her real name)    her real name)                
+  Jeff is OK (Rather!)            Rather!)                      
+  FUNCTION SDOT(N,X,INCX,Y,INCY)  N,X,INCX,Y,INCY)              
+  Another remarkable string.                                    
+  On the (other (hand!!)          other (hand!!)                
+ 
+  Our flag string is her
+ 
+  String                          Copy
+ 
+  John (or Jack)                                                
+  Jill St John (her real name)     real name)                   
+  Jeff is OK (Rather!)            !)                            
+  FUNCTION SDOT(N,X,INCX,Y,INCY)                                
+  Another remarkable string.       remarkable string.           
+  On the (other (hand!!)           (hand!!)                     
+ 
+TEST088
+  S_ALPHA_LAST returns the location of the 
+  last alphabetic character;
+ 
+  ------String------  S_ALPHA_LAST
+ 
+  HELLO World   !! !          11
+  12345678901234567890         0
+  0.314159E+01                 9
+  !@#$%a^&A(){}[]\\|<>         9
+ 
+TEST089
+  S_ANY_ALPHA reports if a string
+  contains any alphabetic characters
+ 
+  ------String------  --S_ANY_ALPHA--
+ 
+  HELLO World   !! !    T
+  12345678901234567890  F
+  0.314159E+01          T
+  !@#$%a^&A(){}[]\\|<>  T
+ 
+TEST090
+  S_BEGIN checks the beginning of a string for a
+  substring, ignoring case and spaces.
+ 
+     S1          S2     S_BEGIN(S1,S2)
+ 
+  Bob           BOB           T
+   B  o b        bo b         T
+  Bob           BOBBY         T
+  Bobo          Bobb          F
+                Bob           F
+  cubic meter   cubic meter   T
+ 
+TEST091
+  S_BEHEAD_SUBSTRING removes an initial substring from a 
+  string, if it occurs
+ 
+  ------String--------  -----SUB------------  ---Beheaded----
+ 
+      HELLO World!      HELLO                 World!              
+  12345678901234567890  12345                 678901234567890     
+  0.314159E+01          314                   0.314159E+01        
+  !@#$%a^&A(){}[]\\|<>  !@#$%a^&A(){}[]\\|<>                      
+ 
+TEST092
+  S_BLANK_DELETE removes all blanks.
+ 
+  Input:  "HELLO World   !! !"
+  Output: "HELLOWorld!!!"
+ 
+TEST093
+  S_BLANKS_DELETE removes double blanks.
+ 
+  Input:  HELLO World   !! !
+  Output: HELLO World !! !
+ 
+TEST094
+  S_CAP capitalizes all characters in a string;
+  S_LOW lowercases all characters;
+  S_WORD_CAP initial-capitalizes words in a string;
+ 
+  ------Original------  -----Capitalized----------Lower Cased-----  -----Word_Caps-----
+ 
+  HELLO World   !! !    HELLO WORLD   !! !    hello world   !! !    Hello World   !! !  
+  12345678901234567890  12345678901234567890  12345678901234567890  12345678901234567890
+  Abc Def Ghi Jkl Mno   ABC DEF GHI JKL MNO   abc def ghi jkl mno   Abc Def Ghi Jkl Mno 
+  !@#$%a^&A(){}[]\\|<>  !@#$%A^&A(){}[]\\|<>  !@#$%a^&a(){}[]\\|<>  !@#$%a^&a(){}[]\\|<>
+  a waste is a terribl  A WASTE IS A TERRIBL  a waste is a terribl  A Waste Is A Terribl
+ 
+TEST095
+  // concatenates two strings;
+  S_CAT concatenates two strings, trimming blanks;
+  S_CAT1 concatenates two strings with a
+    single blank separator.
+ 
+  --S1-  --S2-   --S1//S2--   --S_CAT--  --S_CAT1--
+ 
+  Cat       fish      Cat  fish      Catfish        Cat fish  
+ 
+TEST096
+  S_CENTER centers a string.
+ 
+   12345677654321
+  "A             "
+  "      A       "
+   12345677654321
+ 
+   12345677654321
+  "  B  C        "
+  "     B  C     "
+   12345677654321
+ 
+   12345677654321
+  "     67   4   "
+  "    67   4    "
+   12345677654321
+ 
+TEST097
+  S_LEFT_INSERT inserts a string left of another;
+  S_CENTER_INSERT inserts it in the center;
+  S_RIGHT_INSERT inserts it to the right.
+ 
+  The string to be inserted is: ZOWIE
+  The string in which we insert is: 123456789012345678901234567890
+ 
+  After calling S_LEFT_INSERT:
+  "ZOWIE6789012345678901234567890"
+ 
+  After calling S_CENTER_INSERT: 
+  "123456789012ZOWIE8901234567890"
+ 
+  After calling S_RIGHT_INSERT:  
+  "1234567890123456789012345ZOWIE"
+ 
+TEST0975
+  S_CH_COUNT counts occurrences of a character.
+ 
+  String =     "Bob is debobbing the bobber!".
+  Character is "b".
+  Number of occurrences =        7
+ 
+TEST098
+  S_CH_DELETE removes a character from a string.
+ 
+ 
+  Remove " " from "A man, a plan, a canal, Panama!"
+
+  Result: Aman,aplan,acanal,Panama!
+ 
+  Remove "a" from "A man, a plan, a canal, Panama!"
+
+  Result: A mn,  pln,  cnl, Pnm!
+ 
+  Remove "n" from "A man, a plan, a canal, Panama!"
+
+  Result: A ma, a pla, a caal, Paama!
+ 
+  Remove "n" from "aaaaannnnnQ!"
+
+  Result: aaaaaQ!
+ 
+TEST099
+  S_CH_LAST returns the last nonblank in a string.
+ 
+  ------String------       Last
+ 
+  HELLO World   !! !            !
+  12345678901234567890          0
+  Abc Def Ghi Jkl Mno           o
+  !@#$%a^&A(){}[]\\|<>          ?
+  a taste is a wearabl          .
+ 
+TEST100
+  S_CHOP chops out part of a string.
+ 
+  Original string = "CHRPAK is not working today!"
+    We delete entries       11 to       14
+  Chopped string = "CHRPAK is working today!"
+ 
+TEST101
+  S_DETAG removes HTML tags from a string.
+ 
+  Original string:
+ 
+  "This is <I>italic</I> whereas this <B>boldly</B> goes on!"
+ 
+  Detagged string:
+ 
+  "This is italic whereas this boldly goes on!"
+ 
+  Original string:
+ 
+  "This is an example <A HREF = "stuff.html">of a link </A>."
+ 
+  Detagged string:
+ 
+  "This is an example of a link ."
+ 
+TEST1013
+  S_DETROFF deletes CHARACTER+Backspace pairs.
+ 
+  String with symbolic backspaces:
+    "_#T_#e_#x_#t ##is## B#B#B#Bo#o#o#ol#l#l#ld#d#d#d".
+  Length is       48
+ 
+  String with actual backspaces
+    "_T_e_x_t is BBBBoooolllldddd".
+  Length is       48
+ 
+  De-TROFF'ed string:
+    "Tex Bold".
+  Length is        8
+ 
+TEST1015
+  S_EQI compares two strings for equality,
+  ignoring case and trailing blanks.
+ 
+   A      B    S_EQI(A,B)
+ 
+  NixoN       niXon       T
+  animal      CRACKER     F
+  Yes         y           F
+  ALPHA       zeta        F
+  NIX on      Nixon       F
+  blank       blank       T
+ 
+TEST102
+  S_ESCAPE_TEX "protects" characters in a string
+  that might otherwise be interpreted as TeX
+  escape characters.
+ 
+  Original string:
+ 
+  "The file A_B.TXT is {I think__so} of size 2^8 or C\B."
+ 
+  De-escaped string:
+ 
+  "The file A\_B.TXT is \{I think\_\_so\} of size 2\^8 or C\\B."
+ 
+TEST103
+  S_FILL fills a string with a character.
+ 
+    Before: My word!
+    After:  $$$$$$$$$$
+ 
+TEST104
+  For implicitly capitalized strings S1 and S2
+  S_EQI,   S1 =  S2
+  S_EQIDB, S1 =  S2, blank insensitive
+  S_GEI    S1 >= S2
+  S_GTI    S1 >  S2
+  S_LEI    S1 <= S2
+  S_LTI    S1 <  S2
+  S_NEQI   S1 != S2
+ 
+  Results of    "A compare B"
+  First line is FORTRAN (case sensitive)
+  Second line is CHRPAK (case insensitive)
+ 
+   A      B    =   =  = >  >   < =   <    = / = 
+ 
+  NixoN    niXon     F   F   F   F   T   T   T
+                     T   T   T   F   T   F   F
+ 
+  animal   CRACKER   F   F   T   T   F   F   T
+                     F   F   F   T   T   T   T
+ 
+  Yes      y         F   F   F   F   T   T   T
+                     F   F   T   F   F   F   T
+ 
+  ALPHA    zeta      F   F   F   F   T   T   T
+                     F   F   F   F   T   T   T
+ 
+  NIX on   Nixon     F   F   F   F   T   T   T
+                     F   T   F   F   T   T   T
+ 
+ 
+TEST105
+  S_INC_C can "increment" the characters in a string.
+ 
+  Starting string: "Tax"
+ 
+  Incremented forms:
+ 
+    "Tay"
+    "Taz"
+    "Tba"
+    "Tbb"
+    "Tbc"
+ 
+  Starting string: "aB34c* 8zY"
+ 
+  Incremented forms:
+ 
+    "aB34c* 8zZ"
+    "aB34d* 8aA"
+    "aB34d* 8aB"
+    "aB34d* 8aC"
+    "aB34d* 8aD"
+ 
+TEST1055
+  S_INC_N can "increment" the numeric part
+  of a file name.
+ 
+  Starting string: "data01.txt"
+ 
+  Incremented forms:
+ 
+    "data02.txt"
+    "data03.txt"
+    "data04.txt"
+    "data05.txt"
+    "data06.txt"
+ 
+  Starting string: "mat09lab98.txt"
+ 
+  Incremented forms:
+ 
+    "mat09lab99.txt"
+    "mat10lab00.txt"
+    "mat10lab01.txt"
+    "mat10lab02.txt"
+    "mat10lab03.txt"
+ 
+TEST106
+  S_INDEX reports the first occurrence of a substring.
+    The comparison ignores trailing blanks.
+ 
+  String =     Bob is debobbing the bobber!
+  Substring is bob
+ 
+    INDEX ( S, TRIM ( SUBSTRING ) ) =       10
+  S_INDEX ( S, TRIM ( SUBSTRING ) ) =       10
+    INDEX ( S,        SUBSTRING   ) =        0
+  S_INDEX ( S,        SUBSTRING   ) =       10
+ 
+TEST107
+  S_INDEX_SET searches a string for any character
+    in a given set.
+ 
+  String: 1 way 4 U 2 deb8 of10 is 2 Rgu!
+  Set:	0123456789
+ 
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+^
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+      ^
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+          ^
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+               ^
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+                   ^
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+                    ^
+ 
+  "1 way 4 U 2 deb8 of10 is 2 Rgu!"
+                         ^
+ 
+  No more matches found.
+ 
+TEST108
+  S_INDEXI reports the first occurrence of a
+    substring, case and trailing space
+    insensitive.
+  S_INDEX_LAST reports the LAST occurrence
+    of a substring.
+  INDEX is a case and trailing space sensitive
+    routine which reports the first occurrence
+    of a substring.
+ 
+  String =     Bob is debobbing the bobber!
+  Substring is bob
+ 
+  INDEX =                     0
+  INDEX (restricted) =       10
+  INDEXI =                    1
+  S_INDEX_LAST =             22
+ 
+TEST109
+  S_INDEX_LAST_C reports the LAST occurrence
+    of a character.
+ 
+  String =     The quick brown fox jumps right over the big lazy dog!
+ 
+     I     C     J
+ 
+        27     a      47
+        28     b      42
+        29     c       8
+        30     d      51
+        31     e      40
+        32     f      17
+        33     g      53
+        34     h      39
+        35     i      43
+        36     j      21
+        37     k       9
+        38     l      46
+        39     m      23
+        40     n      15
+        41     o      52
+        42     p      24
+        43     q       5
+        44     r      36
+        45     s      25
+        46     t      38
+        47     u      22
+        48     v      34
+        49     w      14
+        50     x      19
+        51     y      49
+        52     z      48
+ 
+TEST110
+  S_IS_DIGIT reports whether a string
+    contains only digits.
+  S_IS_I reports whether a string
+    represents a single integer.
+ 
+  123         T  T       123
+   1.2 - 3    F  F         0
+   A4         F  F         0
+  -3.14E+2    F  F         0
+   2 3 4      F  F         0
+   +2,        F  F         0
+ 
+TEST111
+  S_IS_F77_NAME reports if a string is a
+    legal FORTRAN-77 identifier.
+  S_IS_F90_NAME reports if a string is a
+    legal FORTRAN-90 identifier.
+ 
+  -------String-------  F77?     F90?
+ 
+  arthur         T         T
+  art hur        F         F
+      Mario      F         F
+  3.14159        F         F
+  zo#wy          F         F
+                 F         F
+  R2D2           T         T
+  A_1            F         T
+  _A1            F         F
+ 
+TEST112
+  S_IS_R reports whether a string
+    represents a single real value.
+ 
+  123         T     123.000    
+   1.2 - 3    F     0.00000    
+   A4.5       F     0.00000    
+  -3.14E+2    T    -314.000    
+   2 3 4      F     0.00000    
+   +2.3,      T     2.30000    
+ 
+TEST113
+  S_ONLY_ALPHAB reports if a string is only
+    alphabetic and blanks.
+  S_ONLY_DIGITB reports if a string is only digits and blanks.
+ 
+  S       S_ONLY_DIGITB  S_ONLY_ALPHAB
+ 
+     1984     T     F
+     Fred     F     T
+     C3PO     F     F
+     /#4D     F     F
+      Bc      F     T
+     2 34     T     F
+     -198     F     F
+     8 +4     F     F
+     10*8     F     F
+ 
+TEST114
+  S_OVERLAP measures the overlap between two strings.
+ 
+  S1          S2          Overlap
+ 
+  timber       beret         3
+  timber       timber        6
+  beret        timber        1
+  beret        berets        5
+  beret        berth         0
+ 
+TEST115
+  S_REPLACE_CH replaces one character by another;
+ 
+    C1  C2  Original String  Modified String
+ 
+     n   t  No pennies now.  No petties tow.
+ 
+TEST116
+  S_REPLACE_ONE replaces one occurrence of a string.
+ 
+  Replace the first occurrence of 
+    "an by "ORK" in "A man, a plan, a canal - Panama!"
+ 
+  Result:
+    "A mORK, a plan, a canal - Panama!"
+ 
+TEST117
+  S_REPLACE_REC recursively replaces a string.
+ 
+  Replace all occurrences of 
+    an by a in aaaaannnnnBC
+ 
+  Result "aaaaaBC"
+         5 replacements were made.
+ 
+TEST118
+  S_REPLACE replaces a pattern in a string.
+ 
+ 
+  Replace all occurrences of 
+    an by &@ in A man, a plan, a canal, Panama!
+
+  Result: A m&@, a pl&@, a c&@al, P&@ama!
+         4 replacements were made.
+ 
+  Replace all occurrences of 
+    an, by 8 in A man, a plan, a canal, Panama!
+
+  Result: A m8 a pl8 a canal, Panama!
+         2 replacements were made.
+ 
+  Replace all occurrences of 
+    a by oro in A man, a plan, a canal, Panama!
+
+  Result: A moron, oro ploron, oro coronorol,
+         6 replacements were made.
+ 
+TEST119
+  S_REVERSE reverses a string.
+ 
+    Before: "A man, a plan, a canal, Panama!"
+    After: "!amanaP ,lanac a ,nalp a ,nam A"
+ 
+TEST120
+  S_S_DELETE removes a substring;
+ 
+ 
+  Remove "," from "A man, a plan, a canal, Panama!"
+
+  Result: A man, a plan, a canal, Panama!
+         3 removals
+ 
+  Remove "an" from "A man, a plan, a canal, Panama!"
+
+  Result: A man, a plan, a canal, Panama!
+         4 removals
+ 
+  Remove "canal" from "A man, a plan, a canal, Panama!"
+
+  Result: A man, a plan, a canal, Panama!
+         1 removals
+ 
+  Remove "an" from "aaaaannnnnQ!"
+
+  Result: aaaaannnnnQ!
+         1 removals
+ 
+TEST121
+  S_S_DELETE2 recursively removes a substring;
+ 
+ 
+  Remove "," from "A man, a plan, a canal, Panama!"
+ 
+  Result: A man a plan a canal Panama!
+         3 removals
+ 
+  Remove "an" from "A man, a plan, a canal, Panama!"
+ 
+  Result: A m, a pl, a cal, Pama!
+         4 removals
+ 
+  Remove "canal" from "A man, a plan, a canal, Panama!"
+ 
+  Result: A man, a plan, a , Panama!
+         1 removals
+ 
+  Remove "an" from "aaaaannnnnQ!"
+ 
+  Result: Q!
+         5 removals
+ 
+TEST122
+  S_S_INSERT inserts one string into another.
+ 
+  Insert 'plow" into position       19 of 
+  "Where are the snows of yesteryear?"
+ 
+  Result:
+  "Where are the snowplows of yesteryear?"
+ 
+TEST1225
+  S_S_SUBANAGRAM is TRUE if S2 is a "subanagram"
+  of S1.
+ 
+  "Get a priest!"  "stripe"  T
+  "Get a priest!"  "pastor"  F
+  "Get a priest!"  "a sip"  T
+  "Get a priest!"  "tag!"  F
+ 
+TEST123
+  S_SET_DELETE removes all occurrences of a set
+    of characters.
+ 
+  String: "1 way 4 U 2 deb8"
+  Set:    "0123456789"
+ 
+  Result:
+ 
+  " way  U  deb"
+ 
+TEST124
+  S_SHIFT_CIRCULAR, right circular shift.
+  S_SHIFT_LEFT, left shift, blank pad.
+  S_SHIFT_RIGHT, right shift, blank pad.
+ 
+  String   Shift  Shift_Circular   Shift_Right  Shift_Left
+ 
+  Abcde          2  e Abcd    Abcd  cde   
+  123456         3  456123     123  456   
+  Shazam        -2  azamSh  azam      Shaz
+ 
+TEST125
+  S_SKIP_SET finds the next character that 
+    IS NOT part of a given set of characters;
+ 
+  Our string is
+  "1 way 4 U 2 deb8!"
+ 
+  Our character set is
+  "0123456789"
+ 
+  "1 way 4 U 2 deb8!"
+ ^
+ 
+  "1 way 4 U 2 deb8!"
+  ^
+ 
+  "1 way 4 U 2 deb8!"
+   ^
+ 
+  "1 way 4 U 2 deb8!"
+    ^
+ 
+  "1 way 4 U 2 deb8!"
+     ^
+ 
+  "1 way 4 U 2 deb8!"
+       ^
+ 
+  "1 way 4 U 2 deb8!"
+        ^
+ 
+  "1 way 4 U 2 deb8!"
+         ^
+ 
+  "1 way 4 U 2 deb8!"
+           ^
+ 
+  "1 way 4 U 2 deb8!"
+            ^
+ 
+  "1 way 4 U 2 deb8!"
+             ^
+ 
+  "1 way 4 U 2 deb8!"
+              ^
+ 
+  "1 way 4 U 2 deb8!"
+                ^
+ 
+  No more matches.
+ 
+TEST1255
+  S_SORT_A ascending sorts a string.
+ 
+  -------String-------  -------Sorted-------
+ 
+  "HELLO World   !! !  "  "       !!!EHLLOWdlor"
+  "12345678901234567890"  "00112233445566778899"
+  "Abc Def Ghi Jkl Mno "  "     ADGJMbcefhiklno"
+  "AbleBakerCharlieDelt"  "ABCDaabeeeehiklllrrt"
+  "What? You have seen?"  "   ??WYaaeeehhnostuv"
+ 
+TEST126
+  S_SPLIT splits a string at a substring.
+ 
+ 
+  String = "      REAL FUNCTION GRAMMA ( X, Y, Z )"
+  Substring = real function
+  // REAL FUNCTION // GRAMMA ( X, Y, Z )
+ 
+  String = "      real  function   gramma ( x, y, z )"
+  Substring = real function
+  No match
+ 
+  String = "      REAL FUNCTION GRAMMA ( X, Y, Z )"
+  Substring = unc
+  REAL F // UNC // TION GRAMMA ( X, Y, Z )
+ 
+  String = "      real  function   gramma ( x, y, z )"
+  Substring = lemon
+  No match
+ 
+TEST127
+  S_TAB_BLANKS replaces TAB's by 6 spaces.
+ 
+    "No tabs in me."
+    "No tabs in me."
+ 
+    "I've got one	tab here!"
+    "I've got one      tab here!"
+ 
+    "I	have	three	!"
+    "I      have      three      !"
+ 
+    "	I begin and end with them!	"
+    "      I begin and end with them!"
+ 
+TEST128
+  S_TO_C4 accepts a string of characters
+  and extracts a complex value from them,
+  assuming a format of A+BI for complex values.
+ 
+  String              CVAL    IERROR   LENGTH
+ 
+  1                1.0     0.0   0       1
+  2+I              2.0     1.0   0       3
+  3 + 4 I          3.0     4.0   0       6
+  5 + 6*I          5.0     6.0   0       6
+  I                0.0     1.0   0       1
+  7 I              0.0     7.0   0       3
+  -8 * I           0.0    -8.0   0       6
+  44 * 99         44.0     0.0   0       3
+ 
+TEST129
+  S_TO_FORMAT, string -> FORTRAN format RcW.M;
+ 
+  --------String------     R  c     W      M
+ 
+  a80                        1  a      80       0
+  f8.4                       1  f       8       4
+  3g14.6                     3  g      14       6
+  i12                        1  i      12       0
+  12l1                      12  l       1       0
+  (10o11)                   10  o      11       0
+   ( 5 z 11.7  )             5  z      11       7
+ 
+TEST130
+  S_TO_L reads logical data from a string.
+ 
+  S   L
+ 
+  0           F
+  F           F
+  f           F
+  1           T
+  T           T
+  t           T
+    0         F
+    1  0      T
+    01        F
+    Talse     T
+ 
+TEST131
+  S_TO_R4VEC, string -> R4VEC;
+ 
+  --------String------   R(1)      R(2)      R(3)
+ 
+   1 2 3                  1.0000    2.0000    3.0000
+  1.5 2.25 3.75           1.5000    2.2500    3.7500
+  10, 21.0, 32.0, 43.0   10.0000   21.0000   32.0000
+ 
+TEST132
+  S_TO_ROT13 encrypts a string.
+ 
+ 
+  Original:          abcdefghijklmnopqrstuvwxyz
+  Rotated once:      nopqrstuvwxyzabcdefghijklm
+  Rotated twice:     abcdefghijklmnopqrstuvwxyz
+ 
+  Original:                                Cher
+  Rotated once:                            Pure
+  Rotated twice:                           Cher
+ 
+  Original:               James Thurston Howell
+  Rotated once:           Wnzrf Guhefgba Ubjryy
+  Rotated twice:          James Thurston Howell
+ 
+TEST133
+  S_TO_SOUNDEX converts a string to a Soundex code.
+ 
+ Test      String      Code
+ 
+    1  Ellery           E460
+    2  Euler            E460
+    3  Gauss            G200
+    4  Ghosh            G200
+    5  Heilbronn        H416
+    6  hi-lo-ball       H414
+    7  Hilbert          H416
+    8  Kant             K530
+    9  Knuth            K530
+   10  Ladd             L300
+   11  Lloyd            L300
+   12  Lissajous        L222
+   13  Lukasiewicz      L222
+   14  Bob              B100
+ 
+TEST134
+  S_TO_W accepts a string of characters
+  and extracts blank-delimited words.
+ 
+ 
+  Test string S = "This is simple."
+ 
+    1  This
+    1  is
+    1  simple.
+ 
+  Test string S = "  HERE's a  har*der_one!"
+ 
+    1  HERE's
+    1  a
+    1  har*der_one!
+ 
+  Test string S = "  what       now?"
+ 
+    1  what
+    1  now?
+ 
+TEST135
+  S_TOKEN_EQUAL searches for whether
+  a string is in a set.  Here, the string is
+  "verONICa"
+  and the set is
+  Bob
+  Archie
+  Veronica
+  Jughead
+  Betty
+ 
+  The matching entry is Veronica
+ 
+TEST136
+  S_TOKEN_MATCH finds longest token match.
+ 
+ Our string is
+  "TommyGun"
+ 
+  Our tokens are:
+ 
+  Tom                 
+  Zebra               
+  TommY               
+  TommyKnocker        
+ 
+  Maximum match occurs with token        3
+ 
+TEST137
+  S_WORD_COUNT counts the words in a string
+ 
+  STRING                                    Words
+ 
+  ?                                            1
+  A man, a plan, a canal - Panama!             8
+   justone!word,-@#$                           1
+  How about a day in the park?                 7
+ 
+TEST138
+  S_WORD_EXTRACT_FIRST extracts the first word
+  from a string.
+ 
+  Our input string is:
+  "Just an incontrovertible sample of text!"
+ 
+  "Just"
+  "an"
+  "incontrovertible"
+  "sample"
+  "of"
+  "text!"
+ 
+  Reached the last word.
+ 
+TEST139
+  S_WORD_FIND looks for a particular word in a string.
+ 
+  string = Fred is following me around!  
+  We want to find word number        4
+  Word has length        2
+  The requested word is me
+ 
+TEST140
+  S_WORD_INDEX finds the Nth word in a string.
+ 
+  String = Fred is following me around!
+  We want to find word number        4
+  Word lies between locations       19 and       20
+  The requested word is me
+ 
+TEST141
+  S_WORD_NEXT returns each word 
+  in order, from a string.
+ 
+  Input string:
+  "Just, an incontrovertible (sample of) text!"
+    Just
+    an
+    incontrovertible
+    (
+    sample
+    of
+    )
+    text!
+ 
+  No more words in the string.
+ 
+  Input string:
+  "A "second" string."
+    A
+    "
+    second
+    "
+    string.
+ 
+  No more words in the string.
+ 
+TEST142
+  S_WORD_PERMUTE permutes the words in a string.
+ 
+ 
+  The permutation is:
+ 
+   1   2   3   4   5   6
+   3   4   1   2   6   5
+ 
+  Our input string is:
+  "Just an incontrovertible sample of text!"
+ 
+ 
+  Our output string is:
+  " incontrovertible sampleJust an text! of"
+ 
+TEST143
+  SVEC_LAB marks unique strings in a list.
+ 
+  Number of unique entries =        6
+ 
+  String, ID
+ 
+  ALPHA                        1
+  BETA                         2
+                               0
+  ALPHA                       -1
+  Alpha                        3
+  GAMMA                        4
+  BETA                        -2
+  BETA                        -2
+  ALPHA                       -1
+  GAMMA                       -4
+                               0
+                               0
+  RHO                          5
+  EPSILON                      6
+  Alpha                       -3
+ 
+TEST144
+  SVEC_MERGE_A merges two sorted character arrays.
+ 
+ 
+  Input vector A:
+ 
+  Adam
+  Bill
+  Bob 
+  Carl
+  Carl
+  Earl
+  Fred
+  Jean
+  Lynn
+  Zeke
+ 
+  Input vector B:
+ 
+  Ada 
+  Barb
+  Cath
+  Deb 
+  Eve 
+  Inez
+  Jane
+  Jean
+  Jill
+  Lynn
+ 
+  Call SVEC_MERGE_A to merge the two lists.
+ 
+  Merged output vector C:
+ 
+  Ada 
+  Adam
+  Barb
+  Bill
+  Bob 
+  Carl
+  Cath
+  Deb 
+  Earl
+  Eve 
+  Fred
+  Inez
+  Jane
+  Jean
+  Jill
+  Lynn
+  Zeke
+ 
+TEST145
+  SVEC_SORT_HEAP_A sorts a string vector.
+  SVEC_REVERSE reverses a string vector.
+ 
+  Unsorted list:
+ 
+    FRED      
+    fred      
+    Abacus    
+    beetles   
+    XYLOPHONE 
+    banana    
+    goofball  
+    abbot     
+    BARBECUE  
+    abbots    
+ 
+  Sorted list:
+ 
+    Abacus    
+    BARBECUE  
+    FRED      
+    XYLOPHONE 
+    abbot     
+    abbots    
+    banana    
+    beetles   
+    fred      
+    goofball  
+ 
+  Reversed sorted list:
+ 
+    goofball  
+    fred      
+    beetles   
+    banana    
+    abbots    
+    abbot     
+    XYLOPHONE 
+    FRED      
+    BARBECUE  
+    Abacus    
+ 
+TEST146
+  For ascending order:
+  SVEC_SORT_HEAP_A sorts a character array;
+  SVEC_MERGE_A merges two sorted character 
+    arrays into a single sorted array.
+  SVEC_SEARCH_BINARY_A searches a string array for
+    a particular value.
+ 
+ 
+  Sorted vector A:
+ 
+    ADAC
+    ADBA
+    BEAB
+    BEEC
+    CABA
+    CDDA
+    EBAA
+    EBDC
+    ECEC
+    EEAA
+ 
+  Sorted vector B:
+ 
+    BBBB
+    BCCF
+    BEEC
+    CBCC
+    CEBC
+    DCEC
+    EFDC
+    FDBD
+    FEED
+    FFBE
+ 
+  Merged output vector C = A + B:
+ 
+    ADAC
+    ADBA
+    BBBB
+    BCCF
+    BEAB
+    BEEC
+    CABA
+    CBCC
+    CDDA
+    CEBC
+    DCEC
+    EBAA
+    EBDC
+    ECEC
+    EEAA
+    EFDC
+    FDBD
+    FEED
+    FFBE
+ 
+  Search C for value ADBA
+ 
+  The value occurs at index        2
+ 
+TEST147
+  SVEC_SORT_HEAP_A sorts a character array;
+  SVEC_SORTED_UNIQUE finds the unique entries in a
+    sorted character array.
+ 
+ 
+  Input vector A:
+ 
+    Ax 
+    Ax 
+    Ax 
+    Bat
+    Bat
+    Cat
+    Mat
+    Pyx
+    Tab
+    Tab
+ 
+  Unique entries:
+ 
+    Ax 
+    Bat
+    Cat
+    Mat
+    Pyx
+    Tab
+ 
+TEST148
+  Sort an array of character strings:
+  SVEC_SORT_HEAP_A, case-sensitive;
+  SVECI_SORT_HEAP_A, case-insensitive.
+ 
+ 
+  Unsorted list:
+ 
+  FRED      
+  fred      
+  Abacus    
+  beetles   
+  XYLOPHONE 
+  banana    
+  goofball  
+  abbot     
+  BARBECUE  
+  abbots    
+   indented 
+  123456    
+  beetles   
+  Abacus    
+ 
+  Sorted list:
+ 
+   indented 
+  123456    
+  Abacus    
+  Abacus    
+  BARBECUE  
+  FRED      
+  XYLOPHONE 
+  abbot     
+  abbots    
+  banana    
+  beetles   
+  beetles   
+  fred      
+  goofball  
+ 
+  Now do a case-insensitive sort:
+ 
+  Unsorted list:
+ 
+  FRED      
+  fred      
+  Abacus    
+  beetles   
+  XYLOPHONE 
+  banana    
+  goofball  
+  abbot     
+  BARBECUE  
+  abbots    
+   indented 
+  123456    
+  beetles   
+  Abacus    
+ 
+  Sorted list:
+ 
+   indented 
+  123456    
+  Abacus    
+  Abacus    
+  abbot     
+  abbots    
+  banana    
+  BARBECUE  
+  beetles   
+  beetles   
+  fred      
+  FRED      
+  goofball  
+  XYLOPHONE 
+ 
+TEST149
+  Indexed heap sort of strings:
+  SVEC_SORT_HEAP_A_INDEX, case-sensitive;
+  SVECI_SORT_HEAP_A_INDEX, case-insensitive.
+ 
+ 
+  Unsorted list:
+ 
+  FRED      
+  fred      
+  Abacus    
+  beetles   
+  XYLOPHONE 
+  banana    
+  goofball  
+  abbot     
+  BARBECUE  
+  abbots    
+   indented 
+  123456    
+  beetles   
+  Abacus    
+ 
+  Sorted list:
+ 
+   indented 
+  123456    
+  Abacus    
+  Abacus    
+  BARBECUE  
+  FRED      
+  XYLOPHONE 
+  abbot     
+  abbots    
+  banana    
+  beetles   
+  beetles   
+  fred      
+  goofball  
+ 
+  Now do a case-insensitive sort:
+ 
+  Unsorted list:
+ 
+  FRED      
+  fred      
+  Abacus    
+  beetles   
+  XYLOPHONE 
+  banana    
+  goofball  
+  abbot     
+  BARBECUE  
+  abbots    
+   indented 
+  123456    
+  beetles   
+  Abacus    
+ 
+  Sorted list:
+ 
+   indented 
+  123456    
+  Abacus    
+  Abacus    
+  abbot     
+  abbots    
+  banana    
+  BARBECUE  
+  beetles   
+  beetles   
+  fred      
+  FRED      
+  goofball  
+  XYLOPHONE 
+ 
+TEST150
+  For implicitly capitalized strings,
+  SVECI_SORT_HEAP_A sorts;
+  SVECI_SEARCH_BINARY_A searches.
+ 
+  Unsorted list:
+ 
+    FRED      
+    fred      
+    Abacus    
+    beetles   
+    XYLOPHONE 
+    banana    
+    goofball  
+    abbot     
+    BARBECUE  
+    abbots    
+ 
+  Sorted list:
+ 
+    Abacus
+    abbot
+    abbots
+    banana
+    BARBECUE
+    beetles
+    fred
+    FRED
+    goofball
+    XYLOPHONE
+ 
+  Now search for the string ABBoT
+ 
+  The search string occurs in index        2
+ 
+TEST152
+  WORD_LAST_READ returns the last word from a string.
+ 
+  Input string:
+  "Just, an incontrovertible (sample of) text!"
+ 
+  Last word:  "text!"
+ 
+  Input string:
+  "A "second" string."
+ 
+  Last word:  "string."
+ 
+TEST153
+  WORD_NEXT returns each "word" from a string.
+ 
+  We use the following string:
+    "  Just an incontrovertible ,   sample of text!"
+ 
+  Here are the individual words:
+ 
+  "Just"
+  "an"
+  "incontrovertible"
+  ","
+  "sample"
+  "of"
+  "text!"
+ 
+  There are no more words in the string.
+ 
+TEST154
+  WORD_NEXT_READ returns each "word" from a string.
+  It pays attention to various parentheses and brackets.
+ 
+  We use the following string:
+    "  Here is a string, (you see) with x[1] = {gamma}!"
+ 
+  Here are the individual words:
+ 
+         1  "Here"
+         2  "is"
+         3  "a"
+         4  "string"
+         5  "("
+         6  "you"
+         7  "see"
+         8  ")"
+         9  "with"
+        10  "x"
+        11  "["
+        12  "1"
+        13  "]"
+        14  "="
+        15  "{"
+        16  "gamma"
+        17  "}"
+        18  "!"
+ 
+  Number of words was       18
+ 
+TEST155
+  WORD_NEXT2 returns each word from a string.
+ 
+    Just an incontrovertible sample of text!                                        
+ 
+    Just
+    an
+    incontrovertible
+    sample
+    of
+    text!
+ 
+  Reached the last word.
+ 
+TEST156
+  WORD_SWAP swaps two words in a string
+    This is the true story of six roommates who
+ 
+  Now swap words        4 and        8
+ 
+    This is the roommates story of six true who
+ 
+CHRPAK_PRB:
+  Normal end of execution.
+ 
+ 2 January 2011   3:58:20.590 PM

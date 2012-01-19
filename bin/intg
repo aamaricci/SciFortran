@@ -1,0 +1,173 @@
+#!/usr/bin/perl
+use Math::Trig;
+# Script integrates data of input file using trapezoid or simpsons rule
+# default range is equal to the range of input file. Alternatively, one can set
+# integration limits by -xa:b, for example -x-1:1
+# Usage is very similar to usage of strans routine. Few examples are:
+#           intg '#1' '#2' datafile
+#           intg -x-1:1 -simpson '#1' '#2/2' '#3*2' data*
+#           intg  '#1' 'sqrt(#2**2+#3**2)' '#4' data*
+
+
+$stdin = -t STDIN;
+if ($stdin ne "1")
+{
+    open(G, ">integ.stdin");
+    while (<STDIN>)
+    {
+	print G $_;
+    }
+    close(G);
+    $ARGV[$#ARGV + 1] = "integ.stdin";
+}
+
+$r_n = "-?[0-9]+\.?[0-9]*[e|E]?-?[0-9]*";
+$pat_borders = "-x($r_n):($r_n)";
+$trapez = 1;
+foreach $_ (@ARGV)
+{
+    if (/\#/)
+    {
+	push(@argum,$_);
+    } elsif(/simpson/){
+	$simpson = 1;
+	$trapez=0;
+    } elsif(/$pat_borders/)
+    {
+	$xstart = $1;
+	$xend = $2;
+    } else
+    {
+	push(@filen,$_);
+    }
+}
+
+# print "$#argum\n\n";
+if (not defined @argum)
+{
+    @argum = ("\#1","\#2");
+}
+
+foreach $col (@argum)
+{
+    $col =~ s/#(\d+)/\$spl\[${\($1-1)}\]/g;
+}
+
+$first = shift @argum;
+
+$fn=0;
+foreach $f (@filen)
+{
+    open (G, "<$f");
+    $i=0;
+    while (<G>)
+    {
+	if (/^\#/){} else{
+	    @spl = split(' ', $_);
+	    push(@omega, eval $first);
+	    $j=0;
+	    foreach $col (@argum)
+	    {
+		$values[$j++][$i] = eval $col;
+	    }
+	    $i++;
+	}
+    }
+
+    if (defined $xstart){
+	if ($xstart<=$omega[0]){
+	    undef $xstart;
+	    $istart = -1;
+	} else {
+	    $l=0;
+	    while ($omega[$l+1]<$xstart && $l<$#omega)
+	    {
+		$l++;
+	    }
+	    $istart = $l;
+	}
+    } else {
+	$istart = -1;
+    }
+    
+    if (defined $xend){
+	if ($xend>=$omega[$#omega]){
+	    undef $xend;
+	    $iend = $#omega+1;
+	} else {
+	    $l=0;
+	    while ($omega[$l]<$xend && $l<$#omega)
+	    {
+		$l++;
+	    }
+	    $iend = $l;
+	}
+    } else {
+	$iend = $#omega+1;
+    }
+
+    if ($trapez){
+	for ($h=0; $h<$j; $h++)
+	{
+	    if ($istart+1 == $iend)
+	    {
+		$wx = 0.5*($xend-$xstart)/($omega[$iend]-$omega[$istart]);
+		$w1 = $values[$h][$istart]*(2*$omega[$iend]-$xstart-$xend);
+		$w2 = $values[$h][$iend]*($xstart+$xend-2*$omega[$istart]);
+		$sum[$h] += $wx*($w1+$w2);
+	    } else
+	    {
+		if (defined $xstart){
+		    $x0 = $omega[$istart];
+		    $x1 = $omega[$istart+1];
+		    $g0 = 0.5*($x1-$xstart)*($x1-$xstart)/($x1-$x0);
+		    $g1 = 0.5*($x1-$xstart)*($x1+$xstart-2*$x0)/($x1-$x0);
+		    $sum[$h] += $values[$h][$istart]*$g0+$values[$h][$istart+1]*$g1;
+		}
+		for ($k=$istart+1; $k<$iend-1; $k++)
+		{
+		    $deps = 0.5*($omega[$k+1]-$omega[$k]);
+		    $sum[$h] += ($values[$h][$k+1]+$values[$h][$k])*$deps;
+		}
+		if (defined $xend){
+		    $x0 = $omega[$iend-1];
+		    $x1 = $omega[$iend];
+		    $g0 = 0.5*($xend-$x0)*(2*$x1-$xend-$x0)/($x1-$x0);
+		    $g1 = 0.5*($xend-$x0)*($xend-$x0)/($x1-$x0);	   
+		    $sum[$h] += $values[$h][$iend-1]*$g0+$values[$h][$iend]*$g1;
+		}
+	    }
+	}
+    }
+    
+    if ($simpson){
+	for ($k=1; $k<$i-1; $k+=2)
+	{
+	    $h1 = $omega[$k]-$omega[$k-1];
+	    $h2 = $omega[$k+1]-$omega[$k];
+	    $a = ($h1+$h2)*(2*$h1-$h2)/(6*$h1);
+	    $b = ($h1+$h2)*($h1+$h2)*($h1+$h2)/(6*$h1*$h2);
+	    $c = ($h1+$h2)*(2*$h2-$h1)/(6*$h2);
+	    for ($h=0; $h<$j; $h++)
+	    {
+		$sum[$h] += $a*$values[$h][$k-1]+$b*$values[$h][$k]+$c*$values[$h][$k+1];
+	    }
+	}
+    }
+    
+#    print "$fn  ";
+    for ($h=0; $h<$j; $h++)
+    {
+	print "$sum[$h] ";
+    }
+    print "\n";
+    undef @omega;
+    undef @sum;
+    $fn++;
+}
+
+qx{rm -f integ.stdin};
+
+sub ferm{
+    return 1.0/(exp(@_[0])+1);
+}

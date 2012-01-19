@@ -1,0 +1,83 @@
+(amaricci : 2011-12-14 17:34:09 +0100)
+- CONVERGENCE/TOOLS:
+  We changed the convergence check routines. A flag has been added to get a more tight error test on the maximum value of the 
+  passed array when dealign with 2dim arrays. This comes out to be helpful in some circumstances.
+  A second change is achieved building new routines that make use of a different error scheme:
+  $\Sum[Y^New(:) - Y^Old(:)/Y^New(:)]$
+  
+  A suitable hint from Antonio is: generate a general class of convergence routines that make use of user definded 
+  "distance function" so that a more flexible error check can be obtained.
+  This step is easy but requries some coding I do not have tiem to do now.
+  We will end up having 3 convergence classes, namely check_convergence_relative_error (default), 
+  check_convergence_local_error, check_convergence
+
+(amaricci : 2011-12-14 11:27:43 +0100)
+- LIBRARY: 
+  I tested the library against gfortran compiler. It does not compile as it is. In addition 
+  the actual structure of the codes requires an MPI compiler. This is a major limitation, because 
+  not everyone has or is able to get mpi libraries compiler against intel fortran.
+  To overcome this difficulty one has to:
+  1. change the codes everywhere required (e.g. abort(string) --> perror(string))
+  2. add a pre-compilation label both for ifort && MPI (one may not want to use MPI).
+  3. write a script in mylibvars.sh that take care of moving FFTGF link the proper (available) 
+  FFTGF
+
+(amaricci : 2011-12-07 12:25:21 +0100)
+- FFTGF:
+  While working on the IPT T=0 code I discovered a major bug in the fft routines. 
+  More details can be found in the notebook. I resume here.
+  The FFT take an array Y(1:N) and gives back an array Y(1:N) reshaped to be
+  [Y(1)...Y(N/2-1);Y(-N/2)...Y(-1)] == Y(-N/2:N/2-1).
+  The original routines have been developed having in mind the real-time/real-freq. problem,
+  so the IN array has been chosen to have dim(2*N) (to be sure it is even) and the OUT array
+  dim(-N:N). This is correct since so far, keeping in mind to finx the endpoint (that was not done!).
+  At some point in the history, I decided to convert all the subroutines to the (-N:N)-(-N:N) dimensions
+  so that time/freq. had same dimension. While this seems an improvement to have more homogeneous data
+  it introduces some form of errors, because of the weird dimensionality.
+  I worked all-night to restore the good old 2*N-->-N:N routines, with some improvements.
+  I tested them (MKL,NR,FGSL,FFTW3) against a simple code.
+  I changed the routines in DMFT_IPT lib and GREENFUNX, but thorough tests MUST be done.  
+
+  A major update would be to convert all the subroutines to the the N--->N syntax.
+  I have the routines written (project_Ldependence) that have been testes already, but
+  I still can not use it as it appears to be crucial in some codes (eg. noneqDMFT).
+
+- FFT:
+  It remains true that a more general FFT library, wrapping the MKL,GSL,FFTW routines 
+  should be written. As usual SCIPT can be taken as inspiration.
+  To this end it would be very nice to have Ldependence (as above) working, not to change again
+  and again the codes. POSTPONED.
+
+
+(amaricci : 2011-12-05 23:59:41 +0100)
+- CMDPARSE:
+  I regularized little bit the interface to parse command line parameter.
+  Now it has a useful help_buffer, to be prepared locally, and a true parsing for the variables.
+  The module COMVARS.f90 also define a structure to handle the name AND the value of a commandline variables.
+  The Unix (like kracken) syntax still has to come, but I do not feel it necessary.
+   
+		 	
+(amaricci : 2011-12-05 14:53:26 +0100) 
+- FFT:
+   reshape the FFTW modules so to include generic fft
+   routines/functions and separates them from those acting on GF.
+   The idea is to write a module FFT as a wrapper/interface to the
+   most common routines for fft (MKL,FFTW,FGSL,NR) for both x1D/x2D,
+   x=d,z, while keeping the FFTW_GF separated (using the FFT module).
+
+- FFT_2:
+   to better fit the library into the system it would be nice to have
+   an automatic loading system, that select ONE module as the default
+   FFT library between those available (MKL,FGSL,FFTW,NR). This should
+   be loaded in the libvars.sh script and should link one module
+   directory into the standard one + change the updating script
+
+- CMDPARSE:
+   It would be nice to write a library with the routines used in
+   command line parsing. Now this task is performed specifically in
+   any code, but it should be possible to write general routines here
+   and to make them available in the library, something similar to
+   kracken, but using the non-std convention var=value that seems more
+   easy for mathemtical stuff. It should be also easy to have
+   something very like kracken using the common GNU syntax --var value
+   

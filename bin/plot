@@ -1,0 +1,165 @@
+#!/usr/bin/perl
+
+# This script plots data file using gnuplot. It is compatible with gnuplot 4.0
+
+$home = $ENV{HOME};		# home directory is stored in $home 
+$tmpdir = "/tmp/";   # directory name for creating temporary files (needs to be changed if necessary)
+$path = "$home/.bin"; # path to some additional configuration files for printing
+$using = "1:2";      # default plots first and second column of the file
+$with = "l";         # default it plots with lines
+$xr = "";            # there is no default x-range, gnuplot will choose one
+$stdinf = $tmpdir . "gnuplot.stdin." . getlogin();  # name of temporary file
+$gdatf = $tmpdir . "gnuplot.dat." . getlogin();     # name of temporary file
+
+$stdin = -t STDIN;               # STDIN is treated like any other file - one can pipe output to script
+if ($stdin ne "1"){              # If STDIN is piped into the script
+    open(G, ">" . $stdinf);      # the data from STDIN is saved in a temporary file
+    while (<STDIN>) { print G $_; }
+    close(G);
+    $ARGV[$#ARGV + 1] = $stdinf; # We add one argument for plotting, the temporary file created
+}
+
+$i = 0;
+$all = "0";
+$deftail = "pause -1";
+$prog = "p ";
+foreach $f (@ARGV)   # over all arguments
+{
+  $i++;
+  if (substr($f, 0, 2) eq "-c") { # if the argument is -cpcolor, configuration file pcolor                              
+      $conf = substr($f, 2);      # will be used
+      next;
+  }
+  if (substr($f, 0, 2) eq "-g") { # argumen -g adds grid to the plot
+      $prep .= "set grid \n";
+      next;
+  }
+  if (substr($f, 0, 2) eq "-t") { # -t omits title
+      $notitle = 1;
+      next;
+  }
+  if (substr($f, 0, 3) eq "-xt") { # -xt sets xtics in gnuplot, for example "-xt0.1" sets xtics to 0.1
+      $vw = substr($f, 3);
+      $prep .= "set xtics $vw\n";
+      next;
+  }
+  if (substr($f, 0, 3) eq "-yt") { # sets ytics in the same way
+      $vw = substr($f, 3);
+      $prep .= "set ytics $vw\n";
+      next;
+  }
+  if (substr($f, 0, 2) eq "-h") { # print help
+      print "*************** PLOT *******************\n";
+      print "**   gnuplot from command-line        **\n";
+      print "** Copyright Kristjan Haule, 5.3.1999 **\n";
+      print "****************************************\n";
+      print "\n";
+      print "[... |] plot [-xy] [-uw file] [-uw file] [-uw]\n" ;
+      print "Options:   -x     x-interval    -x0:10\n";
+      print "           -y     y-interval    -y-2.5:0.75\n";
+      print "           -u     x, y column   -u1:3; -uall\n";
+      print "           -w     style         -wp; -wd; -wl; -wlinesp; -ws\n";
+      print "           -cfile use configuration file\n";
+      print "\n";
+      print "Examples:  plot data\n";
+      print "           plot -u1:3 -wp -x-1:1 data.1* -u1:2 -wl data.0\n";
+      print "           prog | plot -uall\n";
+      print "           prog | plot -wl test.dat -wp\n"; 
+      exit;
+  }  
+  if (substr($f, 0, 2) eq "-u"){ # this sets which columns will be plotted 
+       $using = substr($f, 2);   # example of usage -u1:2,1:3,1:5
+      if ($using eq "all"){      # -uall means -u1:2,....1:n where n is number of all columns
+          $all = "1";
+      }else{
+          $all = "0";
+	  $_ = $using;
+	  $#uss=-1;
+	  while (/([0-9]+(:[0-9]+)+)/g){
+	      $uss[++$#uss] = "u $1";
+	  }
+      }
+      next;
+  } 
+  if (substr($f, 0, 2) eq "-w"){ # this sets plotting style, for example
+      $with = substr($f, 2);     # -wl plots with lines, -wlp with lines and points
+      next;                      # -wsteps with steps. Here any gnuplot command can be used
+  }
+  if (substr($f, 0, 2) eq "-x"){ # x-range can be set here
+      $xr = substr($f, 2);       # -x-1:1 is transformed to gnuplot command [-1:1]
+      $prog .= "[$xr] ";
+      next;
+  }
+  if (substr($f, 0, 2) eq "-y"){ # y-range
+      $yr = substr($f, 2);
+      if ($xr eq "")
+      {
+	  $prog .= "[] ";
+      }
+      $prog .= "[$yr] ";      
+      next;
+  }
+  if ($all eq "1"){  # in case of all, all columns in a file are plotted, equivalent to -u1:2,1:3,...,1:n
+      open (G, "<$f");
+      while (<G>){
+	  if(/^[ |\t]*\#/) {next;}
+          @temp = split(' ', $_);
+          $nall = $#temp + 1;
+          last;
+      }
+      close (G);
+      $#uss=-1;
+      for ($j=2; $j<=$nall; $j++){
+	  $uss[++$#uss] = "u 1:$j"; 
+      }
+  }
+
+  if ($#uss<0) {$uss[0]="u 1:2";}
+  for ($j = 0; $j <= $#uss; $j++){
+      if ($notitle){
+          $prog .= "\"$f\" $uss[$j] t \"\" w $with";
+      } else{
+	  $prog .= "\"$f\" $uss[$j] t \"$f $uss[$j]\" w $with";
+      }
+      ($j != $#uss) && ($prog .= ", ");
+  }
+  if ($i <= $#ARGV){
+      $prog .= ", ";
+  }
+}
+
+if ($conf eq ""){
+    $head = $defhead . $prep;   # command line consist of head and tail and prog
+    $tail = $deftail;
+}else{                          # configuration files for printing are added to the command line
+    open(G, "$path/$conf");
+    $head = $prep;
+    $tail = "";
+    $ht = "h";
+    while (<G>){
+	if ($_ eq "-\n"){
+	    $ht = "t";
+	    next;
+	}
+	if ($ht eq "h"){
+	    $head .= $_;
+	}
+	if ($ht eq "t"){
+	    $tail .= $_;
+	}
+    }
+    close($G);
+}
+$prog = $head . $prog . "\n" . $tail; # command line is constructed
+
+open(F,">" . $gdatf);   # command line is printed to temporary file
+print F "$prog";
+close(F);
+
+if ($stdin ne "1"){
+    qx{gnuplot -persist $gdatf}; # in case of STIND input one needs to add -persist in the command line
+} else{
+    qx{gnuplot $gdatf};          # runs gnuplot through system command 
+}
+qx{rm -f $gdatg $stdinf};  # runs the system command which removes temporary files
+qx{rm -f @gfilename};
