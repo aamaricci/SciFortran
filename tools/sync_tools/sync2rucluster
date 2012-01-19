@@ -1,0 +1,15 @@
+#!/bin/bash
+HERE=`pwd`
+LIST=`ls -l |egrep '^d' |awk '{print $8}'`
+EXCLUDED='wannab_lib LIBGPU NR man MKL*' 
+for DIR in $EXCLUDED
+do 
+    LIST=`echo $LIST | sed "s/\b$DIR\b//g"`
+done
+echo $LIST > $HERE/file_to_sync
+echo "sync the following dirs: $LIST"
+rsync -avPh --del  -e "ssh -l amaricci" $LIST physsun.rutgers.edu:./lib
+ssh physsun.rutgers.edu  rsync -avPh -del -e "ssh -l amaricci" lib/ rupc04.rutgers.edu:./lib
+rm $HERE/file_to_sync
+
+

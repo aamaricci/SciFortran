@@ -1,0 +1,130 @@
+include $(HOME)/lib/flag.mk
+
+#########################################################################
+include $(HOME)/lib/lib.mk
+#########################################################################
+
+OBJS=IPT_VARS_GLOBAL.o \
+IPT_FUNX_MATS.o    \
+IPT_FUNX_KELDYSH.o \
+IPT_FUNX_ZEROT.o   \
+IPT_FUNX_SOPT.o    \
+IPT_SC_FUNX_SOPT.o \
+IPT_SC_FUNX_MATS.o \
+MPT_FUNX_SOPT.o    \
+MPT_FUNX_MATS.o    \
+MPT_SC_FUNX_SOPT.o \
+MPT_SC_FUNX_MATS.o \
+DMFT_IPT.o
+#MPT_DISORDER_FUNX_SOPT.o \
+
+
+
+OBJS_DEB=IPT_VARS_GLOBAL_DEB.o \
+IPT_FUNX_MATS_DEB.o    \
+IPT_FUNX_KELDYSH_DEB.o \
+IPT_FUNX_ZEROT_DEB.o   \
+IPT_FUNX_SOPT_DEB.o    \
+IPT_SC_FUNX_SOPT_DEB.o \
+IPT_SC_FUNX_MATS_DEB.o \
+MPT_FUNX_SOPT_DEB.o    \
+MPT_FUNX_MATS_DEB.o    \
+MPT_SC_FUNX_SOPT_DEB.o \
+MPT_SC_FUNX_MATS_DEB.o \
+DMFT_IPT_DEB.o
+#MPT_DISORDER_FUNX_SOPT_DEB.o \
+
+
+all: autoclean libdmft_ipt.a libdmft_ipt_deb.a
+
+autoclean: 
+	@rm -fv *.o *.mod $(MYLIB)/libdfmt_ipt*.a
+
+libdmft_ipt.a: 	$(OBJS)
+	ar cvq $@ `ls *.o | sort | uniq`  
+	${RANLIB} $@			  
+	@mv -fv *.a $(MYLIB)/		  
+	@mv -fv *.mod $(MYINCLUDE)/	  
+	@rm -f *.o			  
+	@echo 'LIBRARY IS DONE.........'
+	@echo ' '	
+
+
+libdmft_ipt_deb.a: $(OBJS_DEB)
+	ar cvq $@ `ls *.o | sort | uniq`  
+	${RANLIB} $@	  
+	@mv -fv *.a $(MYLIB)/		  
+	@mv -fv *.mod $(MYINCLUDE)/debug/	  
+	@rm -f *.o			  
+	@echo 'LIBRARY IS DONE.........'
+	@echo ' '
+
+
+IPT_VARS_GLOBAL.o: IPT_VARS_GLOBAL.f90
+	$(FC) $(FFLAG) -c IPT_VARS_GLOBAL.f90 $(MODS) 
+IPT_FUNX_KELDYSH.o: IPT_FUNX_KELDYSH.f90
+	$(FC) $(FFLAG) -c IPT_FUNX_KELDYSH.f90 $(MODS) 
+IPT_FUNX_MATS.o: IPT_FUNX_MATS.f90
+	$(FC) $(FFLAG) -c IPT_FUNX_MATS.f90 $(MODS)
+IPT_FUNX_SOPT.o: IPT_FUNX_SOPT.f90
+	$(FC) $(FFLAG) -c IPT_FUNX_SOPT.f90 $(MODS)
+IPT_FUNX_ZEROT.o: IPT_FUNX_ZEROT.f90
+	$(FC) $(FFLAG) -c IPT_FUNX_ZEROT.f90 $(MODS)
+IPT_SC_FUNX_SOPT.o: IPT_SC_FUNX_SOPT.f90
+	$(FC) $(FFLAG) -c IPT_SC_FUNX_SOPT.f90 $(MODS)
+IPT_SC_FUNX_MATS.o: IPT_SC_FUNX_MATS.f90
+	$(FC) $(FFLAG) -c IPT_SC_FUNX_MATS.f90 $(MODS)
+#
+MPT_FUNX_SOPT.o: MPT_FUNX_SOPT.f90
+	$(FC) $(FFLAG) -c MPT_FUNX_SOPT.f90 $(MODS)
+MPT_FUNX_MATS.o: MPT_FUNX_MATS.f90
+	$(FC) $(FFLAG) -c MPT_FUNX_MATS.f90 $(MODS)
+MPT_SC_FUNX_SOPT.o: MPT_SC_FUNX_SOPT.f90
+	$(FC) $(FFLAG) -c MPT_SC_FUNX_SOPT.f90 $(MODS)
+MPT_SC_FUNX_MATS.o: MPT_SC_FUNX_MATS.f90
+	$(FC) $(FFLAG) -c MPT_SC_FUNX_MATS.f90 $(MODS)
+#
+MPT_DISORDER_FUNX_SOPT.o: MPT_DISORDER_FUNX_SOPT.f90
+	$(FC) $(FFLAG) -c MPT_DISORDER_FUNX_SOPT.f90 $(MODS)
+#
+DMFT_IPT.o: DMFT_IPT.f90 
+	$(FC) $(FFLAG) -c DMFT_IPT.f90 $(MODS)
+
+
+IPT_VARS_GLOBAL_DEB.o: IPT_VARS_GLOBAL.f90
+	$(FC) $(DFLAG) -c IPT_VARS_GLOBAL.f90 $(MODS_DEB) -o IPT_VARS_GLOBAL_DEB.o
+IPT_FUNX_KELDYSH_DEB.o: IPT_FUNX_KELDYSH.f90
+	$(FC) $(DFLAG) -c IPT_FUNX_KELDYSH.f90 $(MODS_DEB) -o IPT_FUNX_KELDYSH_DEB.o
+IPT_FUNX_MATS_DEB.o: IPT_FUNX_MATS.f90
+	$(FC) $(DFLAG) -c IPT_FUNX_MATS.f90 $(MODS_DEB) -o IPT_FUNX_MATS_DEB.o
+IPT_FUNX_SOPT_DEB.o: IPT_FUNX_SOPT.f90
+	$(FC) $(DFLAG) -c IPT_FUNX_SOPT.f90 $(MODS_DEB) -o IPT_FUNX_SOPT_DEB.o
+IPT_FUNX_ZEROT_DEB.o: IPT_FUNX_ZEROT.f90
+	$(FC) $(DFLAG) -c IPT_FUNX_ZEROT.f90 $(MODS_DEB) -o IPT_FUNX_ZEROT_DEB.o
+IPT_SC_FUNX_SOPT_DEB.o: IPT_SC_FUNX_SOPT.f90
+	$(FC) $(DFLAG) -c IPT_SC_FUNX_SOPT.f90 $(MODS_DEB) -o  IPT_SC_FUNX_SOPT_DEB.o
+IPT_SC_FUNX_MATS_DEB.o: IPT_SC_FUNX_MATS.f90
+	$(FC) $(DFLAG) -c IPT_SC_FUNX_MATS.f90 $(MODS_DEB) -o  IPT_SC_FUNX_MATS_DEB.o
+#
+MPT_FUNX_SOPT_DEB.o: MPT_FUNX_SOPT.f90
+	$(FC) $(DFLAG) -c MPT_FUNX_SOPT.f90 $(MODS_DEB) -o MPT_FUNX_SOPT_DEB.o
+MPT_FUNX_MATS_DEB.o: MPT_FUNX_MATS.f90
+	$(FC) $(DFLAG) -c MPT_FUNX_MATS.f90 $(MODS_DEB) -o MPT_FUNX_MATS_DEB.o
+MPT_SC_FUNX_SOPT_DEB.o: MPT_SC_FUNX_SOPT.f90
+	$(FC) $(DFLAG) -c MPT_SC_FUNX_SOPT.f90 $(MODS_DEB) -o  MPT_SC_FUNX_SOPT_DEB.o
+MPT_SC_FUNX_MATS_DEB.o: MPT_SC_FUNX_MATS.f90
+	$(FC) $(DFLAG) -c MPT_SC_FUNX_MATS.f90 $(MODS_DEB) -o  MPT_SC_FUNX_MATS_DEB.o
+#
+MPT_DISORDER_FUNX_SOPT_DEB.o: MPT_DISORDER_FUNX_SOPT.f90
+	$(FC) $(DFLAG) -c MPT_DISORDER_FUNX_SOPT.f90 $(MODS_DEB) -o MPT_DISORDER_FUNX_SOPT_DEB.o
+#
+DMFT_IPT_DEB.o: DMFT_IPT.f90
+	$(FC) $(DFLAG) -c DMFT_IPT.f90 $(MODS_DEB) -o DMFT_IPT_DEB.o
+
+
+
+clean: 
+	@echo 'removing *.mod *.o *~'
+	@rm -f *.mod
+	@rm -f *.o
+	@rm -f *~
