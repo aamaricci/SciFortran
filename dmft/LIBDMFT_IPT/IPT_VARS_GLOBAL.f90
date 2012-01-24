@@ -62,7 +62,7 @@ contains
   subroutine read_input(inputFILE)
     character(len=*) :: inputFILE
     integer :: i
-    logical :: back
+    logical :: back,control
 
     !variables: default values
     U     = 2.d0
@@ -82,9 +82,7 @@ contains
     deltasc  = 0.1d0
     label    = ""
 
-    open(10,file=adjustl(trim(inputFILE)))
-    read(10,nml=variables)
-    close(10)
+
 
     allocate(help_buffer(39))
     help_buffer=([&
@@ -129,8 +127,20 @@ contains
          '  '])
 
     call parse_cmd_help(help_buffer,status=back)
-    deallocate(help_buffer)
+    deallocate(help_buffer) ; 
     if(back)return
+
+    inquire(file=adjustl(trim(inputFILE)),exist=control)
+    if(control)then
+       open(10,file=adjustl(trim(inputFILE)))
+       read(10,nml=variables)
+       close(10)
+    else
+       open(10,file="default."//adjustl(trim(inputFILE)))
+       write(10,nml=variables)
+       close(10)
+       call abort("can not open INPUT file, dumping a default version in default."//adjustl(trim(inputFILE)))
+    endif
 
     call parse_cmd_variable(u,"U")
     call parse_cmd_variable(beta,"BETA")
