@@ -22,8 +22,8 @@ contains
   !PURPOSE  : 
   !+-------------------------------------------------------------------+
   function solve_ipt_sc_matsubara(fg0_,delta_) result(sigma_)
-    complex(8)                :: fg0_(2,L),sigma_(2,L)
-    real(8)                   :: delta_
+    complex(8),dimension(2,L)  :: fg0_,sigma_
+    real(8)                    :: delta_
     if(loop==1)then
        if(.not.fg0(1)%status)call allocate_gf(fg0(1),L)
        if(.not.fg0(2)%status)call allocate_gf(fg0(2),L)
@@ -63,7 +63,6 @@ contains
        if(.not.calG22%status)call allocate_gf(calG22,L)
        if(.not.calF%status)call allocate_gf(calF,L)
     endif
-
     fg0(1)%iw = fg0_(1,:) ; fg0(2)%iw = fg0_(2,:)
     n     = n_     ; n0    = n0_
     delta = delta_ ; delta0= delta0_
@@ -95,14 +94,14 @@ contains
     call fftgf_iw2tau(calG11%iw,calG11%tau,beta)
     call fftgf_iw2tau(calG22%iw,calG22%tau,beta)
     call fftgf_iw2tau(calF%iw,calF%tau,beta,notail=.true.)!;calF%tau =-calF%tau
-    !call fft_iw2tau(calF%iw,calF%tau,beta,L) !; calF%tau =-calF%tau
-    forall(i=1:L-1)sigma(1)%tau(i)=  U**2*(calG11%tau(i)*calG22%tau(i) -&
-         calF%tau(i)**2)*calG22%tau(L-i)
-    forall(i=0:L) sigma(2)%tau(i) =  U**2*(calG11%tau(i)*calG22%tau(i) -&
-         calF%tau(i)**2)*calF%tau(i) !get rid of wrong sign (arbitrary) in FFT
+    forall(i=0:L)
+       sigma(1)%tau(i)=  U**2*(calG11%tau(i)*calG22%tau(i) -&
+            calF%tau(i)**2)*calG22%tau(L-i)
+       sigma(2)%tau(i) =  U**2*(calG11%tau(i)*calG22%tau(i) -&
+            calF%tau(i)**2)*calF%tau(i) !get rid of wrong sign (arbitrary) in FFT
+    end forall
     call fftgf_tau2iw(sigma(1)%tau,sigma(1)%iw,beta)
     call fftgf_tau2iw(sigma(2)%tau,sigma(2)%iw,beta)
-    !sigma(2)%iw=sigma(2)%iw - delta
   end subroutine Simpurity
 
 
