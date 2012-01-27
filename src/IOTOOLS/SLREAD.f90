@@ -1,11 +1,11 @@
 !###############################################################
 !     PROGRAM  : SLREAD
-!     TYPE     : Module
-!     PURPOSE  : SIMPLE READING LIBRARY FOR FORTRAN 90/95
-!     AUTHORS  : Adriano Amaricci (SISSA)
+!     PURPOSE  : VERY SIMPLE READING LIBRARY FOR FORTRAN 90/95
+!     AUTHORS  : A.Amaricci (SISSA)
 !###############################################################
 module SLREAD
-  USE IOTOOLS
+  USE IOFILE
+  USE COMMON_VARS
   implicit none
   private
   logical           :: control

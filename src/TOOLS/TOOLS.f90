@@ -93,10 +93,10 @@
       if(mpiID==id_)then
          write(unit_,*)
          if(.not.present(max))then
-            write(unit_,"(A,I5)")"-----"//trim(adjustl(trim(loop_name))),loop,"-----"
+            write(unit_,"(A,I5)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,bold("-----")
          else
-            write(unit_,"(A,I5,A,I5,A)")"-----"//trim(adjustl(trim(loop_name))),loop,&
-                 " (max:",max,")-----"
+            write(unit_,"(A,I5,A,I5,A)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,&
+                 bold(" (max:"),max,bold(")-----")
          endif
          call start_timer
       endif
@@ -113,7 +113,7 @@
       unit_=6 ; if(present(unit))unit_=unit
       id_  =0 ; if(present(id))id_=id
       if(mpiID==id_)then
-         write(unit_,"(A)")"========================================"
+         write(unit_,"(A)")bold("=====================================")
          call stop_timer
          write(unit_,*)
          write(unit_,*)
