@@ -91,12 +91,15 @@ module COMMON_VARS
 contains
 
 
-  subroutine abort(text,id)
+  subroutine abort(text,id,stop)
     character(len=*) :: text
     character(len=4) :: char_id
     integer,optional :: id
     integer          :: i,id_
+    logical,optional :: stop
+    logical          :: stop_
     id_=0;if(present(id))id_=id
+    stop_=.true.;if(present(stop))stop_=stop
     if(id_ > mpiSIZE)id_=0
     if(mpiID==id_)then
        if(mpiID==0)then
@@ -107,7 +110,7 @@ contains
        endif
        write(*,'(A)')bg_red(text)
     endif
-    stop
+    if(stop_)stop
   end subroutine abort
 
 
