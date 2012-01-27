@@ -8,8 +8,7 @@ FFTGF     =  -lfftgf
 IOTOOLS   =  -liotools
 COMVARS   =  -lcomvars
 LIST	  =  -llist
-BROYDN	  =  -lbroydn
-#CGFIT	  =  -lcgfit
+ROOTFIND  =  -lroot
 GREENFUNX =  -lgfunx
 LATTICE   =  -llattice
 TOOLS     =  -ltools
@@ -63,9 +62,9 @@ endif
 
 ##################################################################################################################################################################################
 
-LIBS 	 = ${LIST} ${FFTGF} ${TOOLS} ${BROYDN}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${LATTICE} ${FFTW3} ${MATHLIB} ${FGSL}
+LIBS 	 = ${LIST} ${FFTGF} ${TOOLS} ${ROOTFIND}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${LATTICE} ${FFTW3} ${MATHLIB} ${FGSL}
 
-LIBS_DEB = ${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${BROYDN}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${LATTICE}_deb ${FFTW3} ${MATHLIB} ${FGSL}
+LIBS_DEB = ${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${ROOTFIND}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${LATTICE}_deb ${FFTW3} ${MATHLIB} ${FGSL}
 
 
 
