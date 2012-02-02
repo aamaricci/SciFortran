@@ -249,7 +249,7 @@ subroutine sreadV_RC(pname,X,Y1,Y2,Y3,Y4)
   if(present(Y4))then
      allocate(reY(4,size(X)),imY(4,size(X)))
      do i=1,Np
-        read(719,"(F18.12,8(F18.12))")X(i),reY(1,i),imY(1,i),reY(2,i),imY(2,i),reY(3,i),imY(3,i),reY(4,i),imY(4,i)
+        read(719,"(F18.12,8(F18.12))")X(i),imY(1,i),reY(1,i),imY(2,i),reY(2,i),imY(3,i),reY(3,i),imY(4,i),reY(4,i)
      enddo
      Y1=cmplx(reY(1,:),imY(1,:),8)
      Y2=cmplx(reY(2,:),imY(2,:),8)
@@ -258,7 +258,7 @@ subroutine sreadV_RC(pname,X,Y1,Y2,Y3,Y4)
   elseif(present(Y3))then
      allocate(reY(3,size(X)),imY(3,size(X)))
      do i=1,Np
-        read(719,"(F18.12,6(F18.12))")X(i),reY(1,i),imY(1,i),reY(2,i),imY(2,i),reY(3,i),imY(3,i)
+        read(719,"(F18.12,6(F18.12))")X(i),imY(1,i),reY(1,i),imY(2,i),reY(2,i),imY(3,i),reY(3,i)
      enddo
      Y1=cmplx(reY(1,:),imY(1,:),8)
      Y2=cmplx(reY(2,:),imY(2,:),8)
@@ -266,14 +266,14 @@ subroutine sreadV_RC(pname,X,Y1,Y2,Y3,Y4)
   elseif(present(Y2))then
      allocate(reY(2,size(X)),imY(2,size(X)))
      do i=1,Np
-        read(719,"(F18.12,4(F18.12))")X(i),reY(1,i),imY(1,i),reY(2,i),imY(2,i)
+        read(719,"(F18.12,4(F18.12))")X(i),imY(1,i),reY(1,i),imY(2,i),reY(2,i)
      enddo
      Y1=cmplx(reY(1,:),imY(1,:),8)
      Y2=cmplx(reY(2,:),imY(2,:),8)
   else
      allocate(reY(1,size(X)),imY(1,size(X)))
      do i=1,Np
-        read(719,*)X(i),reY(1,i),imY(1,i)
+        read(719,*)X(i),imY(1,i),reY(1,i)
      enddo
      Y1=cmplx(reY(1,:),imY(1,:),8)
   endif

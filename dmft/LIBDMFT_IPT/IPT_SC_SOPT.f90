@@ -17,7 +17,7 @@ module IPT_SC_SOPT
   integer,save                          :: loop=1
   complex(8),allocatable,dimension(:,:) :: fg0,sigma
   real(8)                               :: n,n0,delta,delta0
-  integer                               :: M
+  integer                               :: MM
   public                                :: solve_ipt_sc_sopt
   public                                :: solve_mpt_sc_sopt
 
@@ -33,11 +33,11 @@ contains
     complex(8),dimension(size(fg0_,1),size(fg0_,2)) :: sigma_
     real(8),dimension(size(fg0_,2))                 :: wr_
     real(8)                    :: delta_
-    M=size(fg0_,2)
+    MM=size(fg0_,2)
     if(loop==1)then
-       if(.not.allocated(fg0))allocate(fg0(2,M))
-       if(.not.allocated(sigma))allocate(sigma(2,M))
-       if(.not.allocated(wr))allocate(wr(M))
+       if(.not.allocated(fg0))allocate(fg0(2,MM))
+       if(.not.allocated(sigma))allocate(sigma(2,MM))
+       if(.not.allocated(wr))allocate(wr(MM))
        call get_frequency_index
     endif
     fg0=fg0_ ; delta=delta_ ; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
@@ -66,11 +66,11 @@ contains
     real(8),dimension(size(fg0_,2))                 :: wr_
     real(8)                                         :: n_,n0_,delta_,delta0_
     real(8)                                         :: A,B
-    M=size(fg0_,2)
+    MM=size(fg0_,2)
     if(loop==1) then
-       if(.not.allocated(fg0))allocate(fg0(2,M))
-       if(.not.allocated(sigma))allocate(sigma(2,M))
-       if(.not.allocated(wr))allocate(wr(M))
+       if(.not.allocated(fg0))allocate(fg0(2,MM))
+       if(.not.allocated(sigma))allocate(sigma(2,MM))
+       if(.not.allocated(wr))allocate(wr(MM))
        call get_frequency_index  
     endif
     fg0=fg0_  ; wr=wr_ ; n=n_ ; n0=n0_ ; delta=delta_ ; delta0=delta0_
@@ -98,31 +98,31 @@ contains
   !+-------------------------------------------------------------------+
   subroutine get_frequency_index()
     integer :: ix,iy,iz
-    allocate(iy_m_ix(M,M))
+    allocate(iy_m_ix(MM,MM))
     iy_m_ix=0
-    do ix=1,M
-       do iy=1,M
-          iz = iy - ix + M/2
-          if(iz<1 .OR. iz>M) iz=-M-10
+    do ix=1,MM
+       do iy=1,MM
+          iz = iy - ix + MM/2
+          if(iz<1 .OR. iz>MM) iz=-MM-10
           iy_m_ix(iy,ix)=iz
        enddo
     enddo
-    if(.not.allocated(A0p11))allocate(A0p11(M))
-    if(.not.allocated(A0m11))allocate(A0m11(M))
-    if(.not.allocated(A0p22))allocate(A0p22(M))
-    if(.not.allocated(A0m22))allocate(A0m22(M))
-    if(.not.allocated(B0p))allocate(B0p(M))
-    if(.not.allocated(B0m))allocate(B0m(M))
-    if(.not.allocated(C0p))allocate(C0p(M))
-    if(.not.allocated(C0m))allocate(C0m(M))
-    if(.not.allocated(P1))allocate(P1(M))
-    if(.not.allocated(P2))allocate(P2(M))
-    if(.not.allocated(Q1))allocate(Q1(M))
-    if(.not.allocated(Q2))allocate(Q2(M))
-    if(.not.allocated(R1))allocate(R1(M))
-    if(.not.allocated(R2))allocate(R2(M))
-    if(.not.allocated(T1))allocate(T1(M))
-    if(.not.allocated(T2))allocate(T2(M))
+    if(.not.allocated(A0p11))allocate(A0p11(MM))
+    if(.not.allocated(A0m11))allocate(A0m11(MM))
+    if(.not.allocated(A0p22))allocate(A0p22(MM))
+    if(.not.allocated(A0m22))allocate(A0m22(MM))
+    if(.not.allocated(B0p))allocate(B0p(MM))
+    if(.not.allocated(B0m))allocate(B0m(MM))
+    if(.not.allocated(C0p))allocate(C0p(MM))
+    if(.not.allocated(C0m))allocate(C0m(MM))
+    if(.not.allocated(P1))allocate(P1(MM))
+    if(.not.allocated(P2))allocate(P2(MM))
+    if(.not.allocated(Q1))allocate(Q1(MM))
+    if(.not.allocated(Q2))allocate(Q2(MM))
+    if(.not.allocated(R1))allocate(R1(MM))
+    if(.not.allocated(R2))allocate(R2(MM))
+    if(.not.allocated(T1))allocate(T1(MM))
+    if(.not.allocated(T2))allocate(T2(MM))
   end subroutine get_frequency_index
   !******************************************************************
   !******************************************************************
@@ -157,12 +157,12 @@ contains
   !+-------------------------------------------------------------------+
   subroutine getAs
     integer :: i
-    real(8) :: w,dos11(M),dos22(M),dosF1(M),dosF2(M)
-    do i=1,M
+    real(8) :: w,dos11(MM),dos22(MM),dosF1(MM),dosF2(MM)
+    do i=1,MM
        dos11(i) = -aimag(fg0(1,i))/pi
-       dos22(i) = -aimag(-conjg(fg0(1,M-i+1)))/pi
+       dos22(i) = -aimag(-conjg(fg0(1,MM-i+1)))/pi
        dosF1(i) = -aimag(fg0(2,i))/pi
-       dosF2(i) = -aimag(fg0(2,M-i+1))/pi
+       dosF2(i) = -aimag(fg0(2,MM-i+1))/pi
     enddo
     A0p11(:) = dos11*fermi(wr,beta)
     A0m11(:) = dos11*(1.d0-fermi(wr,beta))
@@ -197,8 +197,8 @@ contains
     R2=zero
     T1=zero
     T2=zero
-    do ix=1,M
-       do iy=1,M
+    do ix=1,MM
+       do iy=1,MM
           iz= iy_m_ix(iy,ix)
           if(iz>-L)then
              P1(ix)=P1(ix) + A0p11(iy)*A0m22(iz)*fmesh
@@ -233,9 +233,9 @@ contains
     real(8) :: sumQ1,sumQ2
     real(8) :: sumR1,sumR2
     real(8) :: sumT1,sumT2
-    real(8),dimension(M) :: reSig,imSig
-    real(8),dimension(M) :: reS,imS
-    do ix=1,M
+    real(8),dimension(MM) :: reSig,imSig
+    real(8),dimension(MM) :: reS,imS
+    do ix=1,MM
        sumP1=zero
        sumP2=zero
        sumQ1=zero
@@ -244,7 +244,7 @@ contains
        sumR2=zero
        sumT1=zero
        sumT2=zero
-       do iy=1,M
+       do iy=1,MM
           iz= iy_m_ix(iy,ix)
           if(iz>-L)then
              sumP1=sumP1 + A0m22(iy)*P1(iz)*fmesh 

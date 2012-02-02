@@ -1,7 +1,9 @@
 include $(HOME)/lib/opt.mk
 
+#MODULES:
 MODS 	= -I$(MYINCLUDE)
 MODS_DEB= -I$(MYINCLUDE)/debug
+
 
 #MYLIBS:
 FFTGF     =  -lfftgf
@@ -19,7 +21,6 @@ MATRIX    =  -lmatrix
 CHRONO    =  -lchrono
 STRINGPACK=  -lstringpack
 STATISTICS=  -lstat
-#FFTPACK   =  -L$(LIBOPT)/fftpack -lfftpack
 
 
 ifdef MKLDIR
@@ -34,7 +35,6 @@ FGSL	  = -lfgsl_intel -L$(GSLDIR)/lib -lgsl -lgslcblas
 MODS 	 += -I$(FGSLDIR)/include
 MODS_DEB += -I$(FGSLDIR)/include
 endif
-
 
 ifdef FFTW3DIR
 FFTW3	 =  -lfftw3
@@ -66,9 +66,5 @@ endif
 LIBS 	 = ${LIST} ${FFTGF} ${TOOLS} ${ROOTFIND}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${STATISTICS} ${LATTICE} ${FFTW3} ${MATHLIB} ${FGSL}
 
 LIBS_DEB = ${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${ROOTFIND}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${STATISTICS}_deb ${LATTICE}_deb ${FFTW3} ${MATHLIB} ${FGSL}
-
-
-
-
 
 

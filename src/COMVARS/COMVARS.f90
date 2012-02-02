@@ -86,11 +86,93 @@ module COMMON_VARS
   INTEGER :: OMP_ID
   INTEGER :: OMP_SIZE
 
-  private :: s_cap,ch_cap
+  INTEGER(4),DIMENSION(8),SAVE             :: DATA
+  INTEGER(4),SAVE                          :: YEAR
+  INTEGER(4),SAVE                          :: MESE
+  INTEGER(4),SAVE                          :: DAY
+  INTEGER(4),SAVE                          :: H
+  INTEGER(4),SAVE                          :: M
+  INTEGER(4),SAVE                          :: S
+  INTEGER(4),SAVE                          :: MS
+  CHARACTER(LEN=9),PARAMETER,DIMENSION(12) :: MONTH = (/ &
+       'January  ', 'February ', 'March    ', 'April    ', &
+       'May      ', 'June     ', 'July     ', 'August   ', &
+       'September', 'October  ', 'November ', 'December ' /)
+
+
+  PRIVATE :: s_cap,ch_cap
+  PRIVATE :: print_date
 
 contains
 
 
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : print actual version of the software (if any)
+  !+-------------------------------------------------------------------+
+  subroutine version(revision)
+    character(len=*) :: revision
+    write(*,"(A)")bg_green("GIT REVISION: "//trim(adjustl(trim(revision))))
+    call timestamp
+    open(10,file="version.inc")
+    write(10,"(A)")"GIT REVISION: "//trim(adjustl(trim(revision)))
+    call timestamp(unit=10)
+    close(10)
+  end subroutine version
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : prints the current YMDHMS date as a time stamp.
+  ! Example: 31 May 2001   9:45:54.872 AM
+  !+-------------------------------------------------------------------+
+  subroutine timestamp(unit)
+    integer,optional :: unit
+    integer          :: unit_
+    unit_=6;if(present(unit))unit_=unit
+    if(mpiID==0)then
+       call date_and_time(values=data)
+       call print_date(data,unit_)
+    endif
+  end subroutine timestamp
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : print actual date
+  !+-------------------------------------------------------------------+
+  subroutine print_date(dummy,unit)
+    integer(4),dimension(8) :: dummy
+    integer                 :: unit
+    year = dummy(1)
+    mese = dummy(2)
+    day  = dummy(3)
+    h    = dummy(5)
+    m    = dummy(6)
+    s    = dummy(7)
+    ms   = dummy(8)
+    write(unit,"(A,A,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3)")&
+         bg_green("Timestamp"),": +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
+    write(unit,*)""
+  end subroutine print_date
+
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+
+
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : send abort message to std.out and exit 
+  !+-------------------------------------------------------------------+
   subroutine abort(text,id,stop)
     character(len=*) :: text
     character(len=4) :: char_id

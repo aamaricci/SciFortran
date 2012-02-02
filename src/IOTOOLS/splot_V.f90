@@ -277,19 +277,19 @@ subroutine splotV_RC(pname,X,Y1,Y2,Y3,Y4,append)
   endif
   if(present(Y4))then
      do i=1,Np
-        write(719,"(F18.12,8(F18.12))")X(i),real(Y1(i),8),dimag(Y1(i)),real(Y2(i),8),dimag(Y2(i)),real(Y3(i),8),dimag(Y3(i)),real(Y4(i),8),dimag(Y4(i))
+        write(719,"(F18.12,8(F18.12))")X(i),aimag(Y1(i)),real(Y1(i)),aimag(Y2(i)),real(Y2(i)),aimag(Y3(i)),real(Y3(i)),aimag(Y4(i)),real(Y4(i))
      enddo
   elseif(present(Y3))then
      do i=1,Np
-        write(719,"(F18.12,6(F18.12))")X(i),real(Y1(i),8),dimag(Y1(i)),real(Y2(i),8),dimag(Y2(i)),real(Y3(i),8),dimag(Y3(i))
+        write(719,"(F18.12,6(F18.12))")X(i),aimag(Y1(i)),real(Y1(i)),aimag(Y2(i)),real(Y2(i)),aimag(Y3(i)),real(Y3(i))
      enddo
   elseif(present(Y2))then
      do i=1,Np
-        write(719,"(F18.12,4(F18.12))")X(i),real(Y1(i),8),dimag(Y1(i)),real(Y2(i),8),dimag(Y2(i))
+        write(719,"(F18.12,4(F18.12))")X(i),aimag(Y1(i)),real(Y1(i)),aimag(Y2(i)),real(Y2(i))
      enddo
   else
      do i=1,Np
-        write(719,*)X(i),real(Y1(i),8),dimag(Y1(i))
+        write(719,*)X(i),aimag(Y1(i)),real(Y1(i))
      enddo
   endif
   close(719)
