@@ -31,49 +31,50 @@ else
 fi
 
 
-#ADD MPI
+#ADD MPI if defined
 if [ ! -z "${MPIDIR}" ];then
     export PATH=$MPIDIR/bin:$PATH
     export MANPATH=$MPIDIR/share/man:$MANPATH
 fi
 
 
-#ADD FortranGSL (local ver. unless stated otherwise):
-if [ -z "${FGSLDIR}" ];then
-    export FGSLDIR=${LIBOPT}/fgsl
+#ADD FortranGSL if definted
+if [ ! -z "${FGSLDIR}" ];then
+    #export FGSLDIR=${LIBOPT}/fgsl
+    export INCLUDE="${FGSLDIR}/include:${INCLUDE}"
+    export LD_LIBRARY_PATH="${FGSLDIR}/lib:$LD_LIBRARY_PATH"
+    export LIBRARY_PATH="${FGSLDIR}/lib:$LIBRARY_PATH"
 fi
-export INCLUDE="${FGSLDIR}/include:${INCLUDE}"
-export LD_LIBRARY_PATH="${FGSLDIR}/lib:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="${FGSLDIR}/lib:$LIBRARY_PATH"
 
 
-#ADD GSL (local ver. unless stated otherwise)
-if [ -z "$GSLDIR}" ];then
-    export GSLDIR=${LIBOPT}/gsl
+
+#ADD GSL if defined
+if [ ! -z "$GSLDIR}" ];then
+    #export GSLDIR=${LIBOPT}/gsl
+    export INCLUDE="${GSLDIR}/include:${INCLUDE}"
+    export LD_LIBRARY_PATH="${GSLDIR}/lib:$LD_LIBRARY_PATH"
+    export LIBRARY_PATH="${GSLDIR}/lib:$LIBRARY_PATH"
+    export MANPATH=$GSLDIR/share/man:$MANPATH
 fi
-export INCLUDE="${GSLDIR}/include:${INCLUDE}"
-export LD_LIBRARY_PATH="${GSLDIR}/lib:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="${GSLDIR}/lib:$LIBRARY_PATH"
-export MANPATH=$GSLDIR/share/man:$MANPATH
 
 
-
-#ADD FFTW3 (if needed use local ver.):
-if [ -z "${FFTW3DIR}" ];then
-    export FFTW3DIR=${LIBOPT}/fftw3
+#ADD FFTW3 if defined
+if [ ! -z "${FFTW3DIR}" ];then
+    #export FFTW3DIR=${LIBOPT}/fftw3
+    export INCLUDE="${FFTW3DIR}/include:${INCLUDE}"
+    export LD_LIBRARY_PATH="${FFTW3DIR}/lib:$LD_LIBRARY_PATH"
+    export LIBRARY_PATH="${FFTW3DIR}/lib:$LIBRARY_PATH"
+    export MANPATH=$FFTW3DIR/share/man:$MANPATH
 fi
-export INCLUDE="${FFTW3DIR}/include:${INCLUDE}"
-export LD_LIBRARY_PATH="${FFTW3DIR}/lib:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="${FFTW3DIR}/lib:$LIBRARY_PATH"
-export MANPATH=$FFTW3DIR/share/man:$MANPATH
 
 
+#IF MKL is not available set standard LAPACK/BLAS as default MATH library:
 if [ -z "${MKLDIR}" ];then
     export MANPATH=${LIBOPT}/lapack/share/man:${LIBOPT}/blas/share/man:$MANPATH
 fi
 
 
-#ADD DISLIN 
+#ADD DISLIN if defined
 if [ ! -z "${DISLIN}" ];then
     export PATH=$DISLIN/bin:$PATH
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$DISLIN"
@@ -81,9 +82,9 @@ if [ ! -z "${DISLIN}" ];then
 fi
 
 
-#ADD CUDA (C.Weber)
-if [ -z "${CUDADIR}" ]; then
-    export CUDADIR=$LIBOPT/cuda
+#ADD CUDA (C.Weber) if defined
+if [ ! -z "${CUDADIR}" ]; then
+    #export CUDADIR=$LIBOPT/cuda
     export PATH=$CUDADIR/bin:$PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDADIR/lib64
     export LIBRARY_PATH=$LIBRARY_PATH:$CUDADIR/lib64

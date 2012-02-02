@@ -15,7 +15,7 @@ module IPT_SOPT
   complex(8),dimension(:),allocatable :: fg0,sigma
   real(8),dimension(:),allocatable    :: wr
   real(8)                             :: n,n0,xmu0
-  integer                             :: M
+  integer                             :: MM
 
   public :: solve_ipt_sopt
   public :: solve_mpt_sopt
@@ -29,11 +29,11 @@ contains
     complex(8),dimension(:)          :: fg0_
     complex(8),dimension(size(fg0_)) :: sigma_
     real(8),dimension(size(fg0_))    :: wr_
-    M=size(fg0_)
+    MM=size(fg0_)
     if(loop==1)then
-       if(.not.allocated(wr))allocate(wr(M))
-       if(.not.allocated(fg0))allocate(fg0(M))
-       if(.not.allocated(sigma))allocate(sigma(M))
+       if(.not.allocated(wr))allocate(wr(MM))
+       if(.not.allocated(fg0))allocate(fg0(MM))
+       if(.not.allocated(sigma))allocate(sigma(MM))
        call get_frequency_index       
     endif
     fg0=fg0_; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
@@ -60,11 +60,11 @@ contains
     complex(8),dimension(size(fg0_)) :: sigma_
     real(8),dimension(size(fg0_))    :: wr_
     real(8)                          :: A,B,n_,n0_,xmu0_
-    M=size(fg0_)
+    MM=size(fg0_)
     if(loop==1) then
-       if(.not.allocated(fg0))allocate(fg0(M))
-       if(.not.allocated(sigma))allocate(sigma(M))
-       if(.not.allocated(wr))allocate(wr(M))
+       if(.not.allocated(fg0))allocate(fg0(MM))
+       if(.not.allocated(sigma))allocate(sigma(MM))
+       if(.not.allocated(wr))allocate(wr(MM))
        call get_frequency_index
     endif
     fg0=fg0_; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
@@ -107,19 +107,19 @@ contains
   !+-------------------------------------------------------------------+
   subroutine get_frequency_index()
     integer :: ix,iy,iz
-    if(.not.allocated(iy_m_ix))allocate(iy_m_ix(M,M))
+    if(.not.allocated(iy_m_ix))allocate(iy_m_ix(MM,MM))
     iy_m_ix=0
-    do ix=1,M
-       do iy=1,M
-          iz = iy - ix + M/2 
-          if(iz<1 .OR. iz>M) iz=-M-10 !out of range-> if(iz>-L)
+    do ix=1,MM
+       do iy=1,MM
+          iz = iy - ix + MM/2 
+          if(iz<1 .OR. iz>MM) iz=-MM-10 !out of range-> if(iz>-L)
           iy_m_ix(iy,ix)=iz
        enddo
     enddo
-    if(.not.allocated(A0m))allocate(A0m(M))
-    if(.not.allocated(A0p))allocate(A0p(M))
-    if(.not.allocated(P1)) allocate(P1(M))
-    if(.not.allocated(P2)) allocate(P2(M))
+    if(.not.allocated(A0m))allocate(A0m(MM))
+    if(.not.allocated(A0p))allocate(A0p(MM))
+    if(.not.allocated(P1)) allocate(P1(MM))
+    if(.not.allocated(P2)) allocate(P2(MM))
   end subroutine get_frequency_index
 
 
@@ -132,7 +132,7 @@ contains
 
 
   subroutine getAs
-    real(8) :: dos(M)
+    real(8) :: dos(MM)
     dos(:) =-aimag(fg0(:))/pi
     A0p(:) = dos(:)*fermi(wr(:),beta)
     A0m(:) = dos(:)*(1.d0-fermi(wr(:),beta))
@@ -149,12 +149,12 @@ contains
   subroutine getPolarization
     integer :: ix,iy,iz
     real(8) :: sum1,sum2
-    do ix=1,M
+    do ix=1,MM
        sum1=zero
        sum2=zero
-       do iy=1,M
+       do iy=1,MM
           iz= iy_m_ix(iy,ix)
-          if(iz>-M)then
+          if(iz>-MM)then
              sum1=sum1 + A0m(iy)*A0p(iz)
              sum2=sum2 + A0p(iy)*A0m(iz)
           endif
@@ -180,13 +180,13 @@ contains
   subroutine Sopt
     integer :: ix,iy,iz
     real(8) :: sum1,sum2
-    real(8),dimension(M) :: reS,imS
-    do ix=1,M
+    real(8),dimension(MM) :: reS,imS
+    do ix=1,MM
        sum1=zero
        sum2=zero
-       do iy=1,M
+       do iy=1,MM
           iz= iy_m_ix(iy,ix)
-          if(iz>-M)then
+          if(iz>-MM)then
              sum1=sum1+A0p(iy)*P1(iz)*fmesh
              sum2=sum2+A0m(iy)*P2(iz)*fmesh
           end if

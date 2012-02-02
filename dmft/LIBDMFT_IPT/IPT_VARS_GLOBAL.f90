@@ -29,7 +29,6 @@ module IPT_VARS_GLOBAL
   integer               :: Nsuccess
   real(8)               :: weigth
   real(8)               :: deltasc
-  character(len=64)     :: label
 
   !real(8),allocatable,dimension(:) :: wr,wm,t,tau
 
@@ -49,8 +48,8 @@ module IPT_VARS_GLOBAL
        weigth,   &
        eps_error,&
        Nsuccess, &
-       deltasc,  &
-       label
+       deltasc
+
 
 contains
 
@@ -80,7 +79,6 @@ contains
     eps_error= 1.d-4
     Nsuccess = 2
     deltasc  = 0.1d0
-    label    = ""
 
 
 
@@ -103,7 +101,6 @@ contains
          '  tsp=[0]    -- n.n.n. hopping parameter',&
          '  nx=[20]    -- number of points in energy/k-grid',&
          '  wmax=[5]   -- max frequency on real axis',&
-         '  label=[""] -- a useful label',&
          '  eps=[0.01] -- broadening parameter',&
          '  deltasc=[0.1]     -- breaking symmetry parameter',&
          '  eps_error=[1.D-4] -- error treshold',&
@@ -157,32 +154,7 @@ contains
     call parse_cmd_variable(eps_error,"EPS_ERROR")
     call parse_cmd_variable(nsuccess,"NSUCCESS")
     call parse_cmd_variable(deltasc,"DELTASC")
-    call parse_cmd_variable(label,"LABEL")
 
-
-    ! !Process command line variable change:
-    ! do i=1,command_argument_count()
-    !    nml_var=get_cmd_variable(i)
-    !    select case(nml_var%name)
-    !    case("U")     ;read(nml_var%value,*)U
-    !    case("BETA")  ;read(nml_var%value,*)beta
-    !    case("TS")    ;read(nml_var%value,*)ts
-    !    case("TSP")   ;read(nml_var%value,*)tsp
-    !    case("XMU")   ;read(nml_var%value,*)xmu
-    !    case("NX")    ;read(nml_var%value,*)Nx
-    !    case("NLOOP") ;read(nml_var%value,*)nloop
-    !    case("L")     ;read(nml_var%value,*)L
-    !    case("EPS")   ;read(nml_var%value,*)eps
-    !    case("WMAX")  ;read(nml_var%value,*)wmax
-    !    case("PRINTF");read(nml_var%value,*)printf
-    !    case("EPS_ERROR");read(nml_var%value,*)eps_error
-    !    case("NSUCCESS");read(nml_var%value,*)Nsuccess
-    !    case("DELTASC");read(nml_var%value,*)deltasc
-    !    case("LABEL");read(nml_var%value,*)label
-    !    case default
-    !       print*,"No corresponging variable in NML"
-    !    end select
-    ! enddo
 
     if(mpiID==0)then
        write(*,nml=variables)
