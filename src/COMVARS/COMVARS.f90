@@ -8,6 +8,8 @@ module COMMON_VARS
   USE OMP_LIB
   implicit none
 
+  include "scifor_version.inc"
+
   !PARAMETERS
   !===============================================================
   COMPLEX(8),PARAMETER :: ZERO=(0.D0,0.D0)
@@ -111,12 +113,17 @@ contains
   !+-------------------------------------------------------------------+
   subroutine version(revision)
     character(len=*) :: revision
-    write(*,"(A)")bg_green("GIT REVISION: "//trim(adjustl(trim(revision))))
-    call timestamp
-    open(10,file="version.inc")
-    write(10,"(A)")"GIT REVISION: "//trim(adjustl(trim(revision)))
-    call timestamp(unit=10)
-    close(10)
+    if(mpiID==0)then
+       write(*,"(A)")bg_green("SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version))))
+       write(*,"(A)")bg_green("CODE VERSION (GIT): "//trim(adjustl(trim(revision))))
+       call timestamp
+
+       open(10,file="version.inc")
+       write(10,"(A)")"SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version)))
+       write(10,"(A)")"CODE VERSION (GIT): "//trim(adjustl(trim(revision)))
+       call timestamp(unit=10)
+       close(10)
+    endif
   end subroutine version
 
 
@@ -157,8 +164,8 @@ contains
     m    = dummy(6)
     s    = dummy(7)
     ms   = dummy(8)
-    write(unit,"(A,A,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3)")&
-         bg_green("Timestamp"),": +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
+    write(unit,"(A,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3)")&
+         "Timestamp: +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
     write(unit,*)""
   end subroutine print_date
 
