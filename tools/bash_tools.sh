@@ -18,10 +18,14 @@ cmplx()
 {
 if [ "$1" = "--help" -o "$1" = "-h" ];then
    echo "cmplx: format two columns in a fortran complex column:"	
-   echo "cmplx <col1> <col2>"
+   echo "cmplx [-e/--exchange] <col1> <col2>"
    return
 fi
-awk '{print "("$1","$2")"}'
+if [ "$1" = "-e" -o "$1" = "--exchange" ];then
+    awk '{print "("$2","$1")"}'
+else
+    awk '{print "("$1","$2")"}'
+fi
 }
 
 fcmplx()
