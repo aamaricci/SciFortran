@@ -42,7 +42,7 @@ contains
     endif
     fg0=fg0_ ; delta=delta_ ; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
     call simpurity 
-    sigma_(1,:) = sigma(1,:)
+    sigma_(1,:) =          sigma(1,:)
     sigma_(2,:) = -delta + sigma(2,:)
     loop=loop+1
   end function solve_ipt_sc_sopt
@@ -78,7 +78,7 @@ contains
     call simpurity
     A = U**2*n*(1.d0-n)-delta**2
     B = U**2*n0*(1.d0-n0)-delta0**2
-    sigma_(1,:) =  u*(n-0.5d0)   + sigma(1,:)*A/B
+    sigma_(1,:) = -u*(n-0.5d0)   + sigma(1,:)*A/B
     sigma_(2,:) = -delta         + sigma(2,:)*A/B
     loop=loop+1
   end function solve_mpt_sc_sopt
