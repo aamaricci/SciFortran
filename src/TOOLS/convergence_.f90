@@ -27,19 +27,13 @@ function dv_check_convergence_local(Xnew,eps,N1,N2,id) result(convergence)
         M=M + abs(Xnew(i)-Xold(i)/abs(Xnew(i)))
      enddo
      err= M/real(Msize,8)
-     Xold=Xnew
-     if(err > eps)then
-        write(*,"(A,F18.12)")bold_red("error="),err
-     else
-        write(*,"(A,F18.12)")bold_green("error="),err
-     endif
-     open(10,file="errorVSiloop.err",access="append")
-     write(10,*)check,err
-     close(10)
+     Xold=Xnew    
+     include "convergence_write_error_file_V.f90"
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
      if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_print_error_msg_V.f90"
      check=check+1
   endif
 end function dv_check_convergence_local
@@ -69,18 +63,12 @@ function zv_check_convergence_local(Xnew,eps,N1,N2,id) result(convergence)
      enddo
      err= M/real(Msize,8)
      Xold=Xnew
-     if(err > eps)then
-        write(*,"(A,F18.12)")bold_red("error="),err
-     else
-        write(*,"(A,F18.12)")bold_green("error="),err
-     endif
-     open(10,file="errorVSiloop.err",access="append")
-     write(10,*)check,err
-     close(10)
+     include "convergence_write_error_file_V.f90"
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
      if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_print_error_msg_V.f90"
      check=check+1
   endif
 end function zv_check_convergence_local
@@ -117,33 +105,13 @@ function dm_check_convergence_local(Xnew,eps,N1,N2,id,tight) result(convergence)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
      Xold=Xnew
-     !
-     if(err > eps)then
-        write(*,"(A,F18.12)")bold_red("max error="),error(1)
-        write(*,"(A,F18.12)")bold_red("    error="),err
-        write(*,"(A,F18.12)")bold_red("min error="),error(2)
-     else
-        write(*,"(A,F18.12)")bold_green("max error="),error(1)
-        write(*,"(A,F18.12)")bold_green("    error="),err
-        write(*,"(A,F18.12)")bold_green("min error="),error(2)
-     endif
-     !
-     open(10,file="max_errorVSiloop.err",access="append")
-     open(11,file="min_errorVSiloop.err",access="append")
-     open(12,file="errorVSiloop.err",access="append")
-     open(13,file="errorVSsite.err")
-     write(10,*)check,error(1)
-     write(11,*)check,error(2)
-     write(12,*)check,err
-     do i=1,Msize2
-        write(13,*)Verror(i)
-     enddo
-     close(10);close(11);close(12);close(13)
+     include "convergence_write_error_file_M.f90"
      if(strict)err=error(1)
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
      if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_print_error_msg_M.f90"
      check=check+1
   endif
 end function dm_check_convergence_local
@@ -180,33 +148,13 @@ function zm_check_convergence_local(Xnew,eps,N1,N2,id,tight) result(convergence)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
      Xold=Xnew
-     !
-     if(err > eps)then
-        write(*,"(A,F18.12)")bold_red("max error="),error(1)
-        write(*,"(A,F18.12)")bold_red("    error="),err
-        write(*,"(A,F18.12)")bold_red("min error="),error(2)
-     else
-        write(*,"(A,F18.12)")bold_green("max error="),error(1)
-        write(*,"(A,F18.12)")bold_green("    error="),err
-        write(*,"(A,F18.12)")bold_green("min error="),error(2)
-     endif
-     !
-     open(10,file="max_errorVSiloop.err",access="append")
-     open(11,file="min_errorVSiloop.err",access="append")
-     open(12,file="errorVSiloop.err",access="append")
-     open(13,file="errorVSsite.err")
-     write(10,*)check,error(1)
-     write(11,*)check,error(2)
-     write(12,*)check,err
-     do i=1,Msize1
-        write(13,*)Verror(i)
-     enddo
-     close(10);close(11);close(12);close(13)
+     include "convergence_write_error_file_M.f90"
      if(strict)err=error(1)
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
      if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_print_error_msg_M.f90"
      check=check+1
   endif
   call MPI_BCAST(convergence,1,MPI_LOGICAL,0,MPI_COMM_WORLD,mpiERR)

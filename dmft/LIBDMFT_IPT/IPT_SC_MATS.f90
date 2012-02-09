@@ -69,8 +69,8 @@ contains
     call simpurity
     A=U**2*n*(1.d0-n)-delta**2
     B=U**2*n0*(1.d0-n0)-delta0**2
-    sigma_(1,:) = u*(n-0.5d0) + sigma(1)%iw*A/B !put a minus sign in front of U
-    sigma_(2,:) =-delta      + sigma(2)%iw*A/B
+    sigma_(1,:) =-u*(n-0.5d0) + sigma(1)%iw*A/B
+    sigma_(2,:) =-delta       + sigma(2)%iw*A/B
     loop=loop+1
   end function solve_mpt_sc_matsubara
 

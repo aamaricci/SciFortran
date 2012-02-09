@@ -38,17 +38,17 @@ subroutine sreadP_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
   real(8),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   open(719,file=trim(adjustl(trim(pname))))
   if(present(Y8))then
-     read(719,"(I15,8(F14.9))")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
+     read(719,"(I15,8(F18.10))")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
   elseif(present(Y7))then
-     read(719,"(I15,7(F14.9))")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7
+     read(719,"(I15,7(F18.10))")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7
   elseif(present(Y6))then
-     read(719,"(I15,6(F14.9))")X,Y1,Y2,Y3,Y4,Y5,Y6
+     read(719,"(I15,6(F18.10))")X,Y1,Y2,Y3,Y4,Y5,Y6
   elseif(present(Y5))then
-     read(719,"(I15,5(F14.9))")X,Y1,Y2,Y3,Y4,Y5
+     read(719,"(I15,5(F18.10))")X,Y1,Y2,Y3,Y4,Y5
   elseif(present(Y4))then
-     read(719,"(I15,4(F14.9))")X,Y1,Y2,Y3,Y4
+     read(719,"(I15,4(F18.10))")X,Y1,Y2,Y3,Y4
   elseif(present(Y3))then
-     read(719,"(I15,3(F14.9))")X,Y1,Y2,Y3
+     read(719,"(I15,3(F18.10))")X,Y1,Y2,Y3
   elseif(present(Y2))then
      read(719,*)X,Y1,Y2
   else
@@ -68,13 +68,13 @@ subroutine sreadP_IC(pname,X,Y1,Y2,Y3,Y4)
   real(8)             :: reY2,imY2,reY3,imY3,reY4,imY4
   open(719,file=trim(adjustl(trim(pname))))
   if(present(Y4))then
-     read(719,"(I15,8(F14.9))")X,reY1,imY1,reY2,imY2,reY3,imY3,reY4,imY4
+     read(719,"(I15,8(F18.10))")X,reY1,imY1,reY2,imY2,reY3,imY3,reY4,imY4
      Y1=cmplx(reY1,imY1);Y2=cmplx(reY2,imY2);Y3=cmplx(reY3,imY3);Y4=cmplx(reY4,imY4)
   elseif(present(Y3))then
-     read(719,"(I15,8(F14.9))")X,reY1,imY1,reY2,imY2,reY3,imY3
+     read(719,"(I15,8(F18.10))")X,reY1,imY1,reY2,imY2,reY3,imY3
      Y1=cmplx(reY1,imY1);Y2=cmplx(reY2,imY2);Y3=cmplx(reY3,imY3)
   elseif(present(Y2))then
-     read(719,"(I15,8(F14.9))")X,reY1,imY1,reY2,imY2
+     read(719,"(I15,8(F18.10))")X,reY1,imY1,reY2,imY2
      Y1=cmplx(reY1,imY1);Y2=cmplx(reY2,imY2)
   else
      read(719,*)X,reY1,imY1 ; Y1=cmplx(reY1,imY1)
@@ -91,17 +91,17 @@ subroutine sreadP_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
   integer,optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   open(719,file=trim(adjustl(trim(pname))))
   if(present(Y8))then
-     read(719,"(F14.9,8I15)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
+     read(719,"(F18.10,8I15)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
   elseif(present(Y7))then
-     read(719,"(F14.9,7I15)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7
+     read(719,"(F18.10,7I15)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7
   elseif(present(Y6))then
-     read(719,"(F14.9,6I15)")X,Y1,Y2,Y3,Y4,Y5,Y6
+     read(719,"(F18.10,6I15)")X,Y1,Y2,Y3,Y4,Y5,Y6
   elseif(present(Y5))then
-     read(719,"(F14.9,5I15)")X,Y1,Y2,Y3,Y4,Y5
+     read(719,"(F18.10,5I15)")X,Y1,Y2,Y3,Y4,Y5
   elseif(present(Y4))then
-     read(719,"(F14.9,4I15)")X,Y1,Y2,Y3,Y4
+     read(719,"(F18.10,4I15)")X,Y1,Y2,Y3,Y4
   elseif(present(Y3))then
-     read(719,"(F14.9,3I15)")X,Y1,Y2,Y3
+     read(719,"(F18.10,3I15)")X,Y1,Y2,Y3
   elseif(present(Y2))then
      read(719,*)X,Y1,Y2
   else
@@ -119,17 +119,17 @@ subroutine sreadP_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
   real(8),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   open(719,file=trim(adjustl(trim(pname))))
   if(present(Y8))then
-     write(719,"(9F14.9)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
+     write(719,"(9F18.10)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
   elseif(present(Y7))then
-     write(719,"(8F14.9)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7
+     write(719,"(8F18.10)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7
   elseif(present(Y6))then
-     write(719,"(7F14.9)")X,Y1,Y2,Y3,Y4,Y5,Y6
+     write(719,"(7F18.10)")X,Y1,Y2,Y3,Y4,Y5,Y6
   elseif(present(Y5))then
-     write(719,"(6F14.9)")X,Y1,Y2,Y3,Y4,Y5
+     write(719,"(6F18.10)")X,Y1,Y2,Y3,Y4,Y5
   elseif(present(Y4))then
-     write(719,"(5F14.9)")X,Y1,Y2,Y3,Y4
+     write(719,"(5F18.10)")X,Y1,Y2,Y3,Y4
   elseif(present(Y3))then
-     write(719,"(4F14.9)")X,Y1,Y2,Y3
+     write(719,"(4F18.10)")X,Y1,Y2,Y3
   elseif(present(Y2))then
      write(719,*)X,Y1,Y2
   else
@@ -148,13 +148,13 @@ subroutine sreadP_RC(pname,X,Y1,Y2,Y3,Y4)
   real(8)             :: reY2,imY2,reY3,imY3,reY4,imY4
   open(719,file=trim(adjustl(trim(pname))))
   if(present(Y4))then
-     read(719,"(I15,8(F14.9))")X,reY1,imY1,reY2,imY2,reY3,imY3,reY4,imY4
+     read(719,"(I15,8(F18.10))")X,reY1,imY1,reY2,imY2,reY3,imY3,reY4,imY4
      Y1=cmplx(reY1,imY1);Y2=cmplx(reY2,imY2);Y3=cmplx(reY3,imY3);Y4=cmplx(reY4,imY4)
   elseif(present(Y3))then
-     read(719,"(I15,8(F14.9))")X,reY1,imY1,reY2,imY2,reY3,imY3
+     read(719,"(I15,8(F18.10))")X,reY1,imY1,reY2,imY2,reY3,imY3
      Y1=cmplx(reY1,imY1);Y2=cmplx(reY2,imY2);Y3=cmplx(reY3,imY3)
   elseif(present(Y2))then
-     read(719,"(I15,8(F14.9))")X,reY1,imY1,reY2,imY2
+     read(719,"(I15,8(F18.10))")X,reY1,imY1,reY2,imY2
      Y1=cmplx(reY1,imY1);Y2=cmplx(reY2,imY2)
   else
      read(719,*)X,reY1,imY1 ; Y1=cmplx(reY1,imY1)
