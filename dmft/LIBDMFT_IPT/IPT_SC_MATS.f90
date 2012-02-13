@@ -92,11 +92,10 @@ contains
     call fftgf_iw2tau(calG11%iw,calG11%tau,beta)
     call fftgf_iw2tau(calG22%iw,calG22%tau,beta)
     call fftgf_iw2tau(calF%iw,calF%tau,beta,notail=.true.)!;calF%tau =-calF%tau
+
     forall(i=0:L)
-       sigma(1)%tau(i)=  U**2*(calG11%tau(i)*calG22%tau(i) -&
-            calF%tau(i)**2)*calG22%tau(L-i)
-       sigma(2)%tau(i) =  U**2*(calG11%tau(i)*calG22%tau(i) -&
-            calF%tau(i)**2)*calF%tau(i) !get rid of wrong sign (arbitrary) in FFT
+       sigma(1)%tau(i)=  U**2*(calG11%tau(i)*calG22%tau(i) - calF%tau(i)**2)*calG22%tau(L-i)
+       sigma(2)%tau(i)= -U**2*(calF%tau(i)**2 - calG11%tau(i)*calG22%tau(i))*calF%tau(i)
     end forall
     call fftgf_tau2iw(sigma(1)%tau,sigma(1)%iw,beta)
     call fftgf_tau2iw(sigma(2)%tau,sigma(2)%iw,beta)
