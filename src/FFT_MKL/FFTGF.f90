@@ -6,13 +6,41 @@
     private
     public :: fftgf_rw2rt  , fftgf_rt2rw
     public :: fftgf_iw2tau , fftgf_tau2iw
-    !public :: fft_iw2tau   , fft_tau2iw
     public :: swap_fftrt2rw,four1
 
     integer                        :: status
     type(DFTI_DESCRIPTOR), pointer :: Handle
 
+
   contains
+
+
+
+    !+-------------------------------------------------------------------+
+    !PURPOSE  : Evaluate forward and backward FFT using MKL routines.
+    !+-------------------------------------------------------------------+
+    subroutine cfft_1d_forward(func)
+      complex(8),dimension(:),intent(inout) :: func
+      Status   = DftiCreateDescriptor(Handle,DFTI_DOUBLE,DFTI_COMPLEX,1,size(func))
+      Status   = DftiCommitDescriptor(Handle)
+      Status   = DftiComputeForward(Handle,func)
+      Status   = DftiFreeDescriptor(Handle)      
+    end subroutine cfft_1d_forward
+
+    subroutine cfft_1d_backward(func)
+      complex(8),dimension(:),intent(inout) :: func
+      Status = DftiCreateDescriptor(Handle,DFTI_DOUBLE,DFTI_COMPLEX,1,size(func))
+      Status = DftiCommitDescriptor(Handle)
+      Status = DftiComputeBackward(Handle,func)
+      Status = DftiFreeDescriptor(Handle)
+    end subroutine cfft_1d_backward
+
+    !*******************************************************************
+    !*******************************************************************
+    !*******************************************************************
+
+
+
 
     !+-------------------------------------------------------------------+
     !PURPOSE  : Evaluate the FFT of a given Green's function from 
@@ -28,10 +56,7 @@
       complex(8),dimension(2*M)              :: dummy_in
       complex(8),dimension(-M:M)             :: dummy_out
       dummy_in = func_in
-      Status   = DftiCreateDescriptor(Handle,DFTI_DOUBLE,DFTI_COMPLEX,1,2*M)
-      Status   = DftiCommitDescriptor(Handle)
-      Status   = DftiComputeForward(Handle,dummy_in)
-      Status   = DftiFreeDescriptor(Handle)
+      call cfft_1d_forward(dummy_in(1:2*M))
       forall(i=1:2*M)dummy_out(i-M-1)=dummy_in(i) ![1,2*M]---> [-M,M-1]
       forall(i=-M:-1)func_out(i+M)=dummy_out(i)   !g[0,M-1]<--- x[-M,-1]
       forall(i=0:M-1)func_out(i-M)=dummy_out(i)   !g[-L,-1]<--- x[0,L-1]
@@ -61,10 +86,7 @@
       complex(8),dimension(2*M),intent(out) :: func_out
       complex(8),dimension(2*M)             :: dummy_out
       forall(i=1:2*M)dummy_out(i) = func_in(i-M-1)
-      Status = DftiCreateDescriptor(Handle,DFTI_DOUBLE,DFTI_COMPLEX,1,2*M)
-      Status = DftiCommitDescriptor(Handle)
-      Status = DftiComputeBackward(Handle,dummy_out)
-      Status = DftiFreeDescriptor(Handle)
+      call cfft_1d_backward(dummy_out)
       ex=-1.d0
       do i=1,2*M
          ex=-ex
@@ -103,9 +125,11 @@
       notail_=.false.;if(present(notail))notail_=notail
       pi=acos(-1.d0)
       n=size(gw)    ; L=size(gt)-1 ; dtau=beta/dble(L) 
+      !
       allocate(tmpGw(2*L),tmpGt(-L:L))
       wmax=pi/beta*dble(2*L-1) ; mues=-real(gw(L))*wmax**2
       tmpGw=(0.d0,0.d0)
+      !
       select case(notail_)
       case default
          do i=1,L
@@ -115,6 +139,8 @@
             if(i>n)tmpGw(2*i)=tail
          enddo
          call fftgf_rw2rt(tmpGw,tmpGt,L) ;tmpGt=2.d0*tmpGt/beta
+         ! call cfft_1d_forward(tmpGw)
+         ! forall(i=1:2*L)tmpGt(i-L-1)=2.d0*real(tmpGw(i),8)/beta
          do i=0,L-1
             tau=dble(i)*dtau
             if(mues > 0.d0)then
@@ -130,12 +156,21 @@
                   At = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
                endif
             endif
-            gt(i)=real(tmpGt(i))+At
+            gt(i)=real(tmpGt(i),8)+At
          enddo
          gt(L)=-(gt(0)+1.d0)
+
       case(.true.)
          if(L>n)call abort("error in fftgf_iw2tau: call w/ notail and L>n")
-         call fft_iw2tau(gw(1:L),gt(0:L),beta,L)
+         forall(i=1:L)tmpGw(2*i)  = gw(i)
+
+         call fftgf_rw2rt(tmpGw,tmpGt,L) ;tmpGt=2.d0*tmpGt/beta
+
+         ! call cfft_1d_forward(tmpGw)
+         ! forall(i=1:2*L)tmpGt(i-L-1)=2.d0*real(tmpGw(i),8)/beta
+
+         gt(0:L-1) = real(tmpGt(0:L-1),8)
+         gt(L)=-gt(0) !fix the end point:
       end select
     end subroutine fftgf_iw2tau
 
@@ -209,11 +244,6 @@
          func_in(Nhalf+i)=dummy(i)
       enddo
     end subroutine swap_fftrt2rw
-
-
-
-
-    include "fftgf_no_correction.f90"
 
 
 
