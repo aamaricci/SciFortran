@@ -91,14 +91,35 @@ contains
     calF%iw   =  fg0(2)%iw
     call fftgf_iw2tau(calG11%iw,calG11%tau,beta)
     call fftgf_iw2tau(calG22%iw,calG22%tau,beta)
-    call fftgf_iw2tau(calF%iw,calF%tau,beta,notail=.true.)!;calF%tau =-calF%tau
+    call fftgf_iw2tau(calF%iw,calF%tau,beta,notail=.true.)
 
     forall(i=0:L)
        sigma(1)%tau(i)=  U**2*(calG11%tau(i)*calG22%tau(i) - calF%tau(i)**2)*calG22%tau(L-i)
        sigma(2)%tau(i)= -U**2*(calF%tau(i)**2 - calG11%tau(i)*calG22%tau(i))*calF%tau(i)
     end forall
+
+
     call fftgf_tau2iw(sigma(1)%tau,sigma(1)%iw,beta)
-    call fftgf_tau2iw(sigma(2)%tau,sigma(2)%iw,beta)
+    call fftgf_tau2iw(sigma(2)%tau,sigma(2)%iw,beta,normal=.false.)
+
+
+    open(11,file="Sigma2_tau.ipt",access="append")
+    open(12,file="Self2_tau.ipt",access="append")
+    ! open(13,file="Sigma2_iw.ipt",access="append")
+    ! open(14,file="Self2_iw.ipt",access="append")
+    do i=0,L
+       write(11,*)dble(i)*beta/dble(L),sigma(1)%tau(i)
+       write(12,*)dble(i)*beta/dble(L),sigma(2)%tau(i)
+    enddo
+    ! do i=1,L
+    !    write(13,*)pi/beta*dble(2*i-1),aimag(sigma(1)%iw(i)),real(sigma(1)%iw(i))
+    !    write(14,*)pi/beta*dble(2*i-1),aimag(sigma(2)%iw(i)),real(sigma(2)%iw(i))
+    ! enddo
+    do i=11,12
+       write(i,*)""
+       close(i)
+    enddo
+
   end subroutine Simpurity
 
 

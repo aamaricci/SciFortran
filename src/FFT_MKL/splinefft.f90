@@ -1,6 +1,6 @@
 subroutine interp(FctL1,FctL2,L1,L2)
   integer             :: L1, L2
-  real(8)             :: FctL1(-L1:L1), FctL2(-L2:L2)
+  real(8)             :: FctL1(0:L1), FctL2(0:L2)
   real(8),allocatable :: xa(:), ya(:,:), y2(:)
   integer             :: L11, L12, L13
   real(8)             :: x, y
@@ -10,20 +10,18 @@ subroutine interp(FctL1,FctL2,L1,L2)
   L13 = L1 + 3
   allocate(xa(L11),ya(4,L11),y2(L11))
   do i=1, L11
-     xa(i)=dble(i-1)/dble(L1)
+     xa(i)=real(i-1,8)/real(L1,8)
      ya(1,i)=FctL1(i-1)
   enddo
-  !call spline(xa,ya,L11,2.0d30,2.0d30,y2)
   call CUBSPL(xa,ya,L11,0,0)
   do i=1, L2
-     x=dble(i)/dble(L2)
-     !call splint(xa,ya,y2,L11,x,y)
+     x=real(i,8)/real(L2,8)
      FctL2(i)=PPVALU(xa,ya,L1,4,x,0)
   enddo
   FctL2(0)=FctL1(0)
-  do i=1, L2
-     FctL2(-i)=-FctL2(L2-i)
-  enddo
+  ! do i=1, L2
+  !    FctL2(-i)=-FctL2(L2-i)
+  ! enddo
 end subroutine interp
 !-----------------------    
 !-----------------------    
