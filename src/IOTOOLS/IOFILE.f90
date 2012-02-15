@@ -42,7 +42,7 @@ contains
     logical               :: control
     inquire(file=trim(adjustl(trim(file))),exist=control)
     if(.not.control)then
-       print*,'Cannot read ',trim(adjustl(trim(file))),': skip file_size'
+       call msg('Cannot read '//trim(adjustl(trim(file)))//'. Skip file_size')
        return
     endif
     open(10,file=trim(adjustl(trim(file))))
@@ -113,7 +113,7 @@ contains
     logical :: IOfile
     inquire(file=trim(adjustl(trim(file))),exist=IOfile)
     if(.not.IOfile)then
-       write(*,"(A,A,A)"),'Cannot read +',trim(adjustl(trim(file))),': skip file_size'
+       call msg('Cannot read +'//trim(adjustl(trim(file)))//'. Skip file_size')
        length=0
        return
     endif
@@ -163,7 +163,7 @@ contains
     logical           :: control
     character(len=9)  :: csize 
     integer           :: cstatus,fsize
-    write(*,"(A,A)")"store:     ",file
+    call msg("store: "//file)
     !Check file exists:
     inquire(file=reg_filename(file),exist=control)
     if(control)then
@@ -203,7 +203,7 @@ contains
        if(.not.compressed)return
     endif
 
-    write(*,"(A,A)"),"deflate:  "//reg_filename(filename)//reg_filename(type)
+    call msg("deflate: "//reg_filename(filename)//reg_filename(type))
     call system("gunzip "//reg_filename(filename)//reg_filename(type))
     return
   end subroutine data_open
