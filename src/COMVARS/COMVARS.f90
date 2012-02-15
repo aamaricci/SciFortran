@@ -7,68 +7,67 @@ module COMMON_VARS
   USE MPI
   USE OMP_LIB
   implicit none
+  private
 
   include "scifor_version.inc"
 
   !PARAMETERS
   !===============================================================
-  COMPLEX(8),PARAMETER :: ZERO=(0.D0,0.D0)
-  COMPLEX(8),PARAMETER :: XI=(0.D0,1.D0)
-  COMPLEX(8),PARAMETER :: ONE=(1.D0,0.D0)
-  REAL(8),PARAMETER    :: SQRT2 = 1.41421356237309504880169D0
-  REAL(8),PARAMETER    :: SQRT3 = 1.73205080756887729352745D0
-  REAL(8),PARAMETER    :: SQRT6 = 2.44948974278317809819728D0
-  REAL(8),PARAMETER    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
-  REAL(8),PARAMETER    :: PI2   = 6.28318530717959D0
-  REAL(8),PARAMETER    :: GAMMA_EULER = 0.57721566490153286060D0  !EULER S CONSTANT
-  REAL(8),PARAMETER    :: EULER= 2.7182818284590452353602874713526624977572470936999595749669676277240766303535D0
-  INTEGER,PARAMETER    :: MAX_INT  = HUGE(1) 
-  REAL(8),PARAMETER    :: MAX_REAL = HUGE(1.D0)
-  REAL(8),PARAMETER    :: MAX_EXP  =  700.D0
-  REAL(8),PARAMETER    :: MIN_EXP  = -700.D0
-  REAL(8),PARAMETER    :: MAX_EXP_QUAD = 11000.D0
-  REAL(8),PARAMETER    :: MIN_EXP_QUAD =-11000.D0
-  REAL(8),PARAMETER    :: MAX_EXP_R =  81.D0
-  REAL(8),PARAMETER    :: MIN_EXP_R = -81.D0
-  !REAL(8),PARAMETER    :: ERROR=EPSILON(1.D0)*100.D0
-  REAL(8),PARAMETER    :: EPSILONR=EPSILON(1.D0),EPSILONQ=1.D-30
-  INTEGER,PARAMETER    :: DBL=8,DP=8        ! "DOUBLE" PRECISION
-  INTEGER,PARAMETER    :: DDP=16            ! "QUAD"   PRECISION
-  INTEGER,PARAMETER    :: SP = KIND(1.0)    ! "SINGLE" PRECISION
-  REAL(DBL),PARAMETER  :: TINY_   = 1.D-12
-  REAL(DBL),PARAMETER  :: HUGE_   = 1.D+12
-  REAL(DBL),PARAMETER  :: QUARTER = 0.25_DBL
-  REAL(DBL),PARAMETER  :: THIRD   = 0.3333333333333_DBL
-  REAL(DBL),PARAMETER  :: HALF    = 0.5_DBL
-  LOGICAL,PARAMETER    :: TT=.TRUE., FF=.FALSE.
+  COMPLEX(8),PARAMETER,public :: ZERO=(0.D0,0.D0)
+  COMPLEX(8),PARAMETER,public :: XI=(0.D0,1.D0)
+  COMPLEX(8),PARAMETER,public :: ONE=(1.D0,0.D0)
+  REAL(8),PARAMETER,public    :: SQRT2 = 1.41421356237309504880169D0
+  REAL(8),PARAMETER,public    :: SQRT3 = 1.73205080756887729352745D0
+  REAL(8),PARAMETER,public    :: SQRT6 = 2.44948974278317809819728D0
+  REAL(8),PARAMETER,public    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
+  REAL(8),PARAMETER,public    :: PI2   = 6.28318530717959D0
+  REAL(8),PARAMETER,public    :: GAMMA_EULER = 0.57721566490153286060D0  !EULER S CONSTANT
+  REAL(8),PARAMETER,public    :: EULER= 2.7182818284590452353602874713526624977572470936999595749669676277240766303535D0
+  INTEGER,PARAMETER,public    :: MAX_INT  = HUGE(1) 
+  REAL(8),PARAMETER,public    :: MAX_REAL = HUGE(1.D0)
+  REAL(8),PARAMETER,public    :: MAX_EXP  =  700.D0
+  REAL(8),PARAMETER,public    :: MIN_EXP  = -700.D0
+  REAL(8),PARAMETER,public    :: MAX_EXP_QUAD = 11000.D0
+  REAL(8),PARAMETER,public    :: MIN_EXP_QUAD =-11000.D0
+  REAL(8),PARAMETER,public    :: MAX_EXP_R =  81.D0
+  REAL(8),PARAMETER,public    :: MIN_EXP_R = -81.D0
+  !REAL(8),PARAMETER,public    :: ERROR=EPSILON(1.D0)*100.D0
+  REAL(8),PARAMETER,public    :: EPSILONR=EPSILON(1.D0),EPSILONQ=1.D-30
+  INTEGER,PARAMETER,public    :: DBL=8,DP=8        ! "DOUBLE" PRECISION
+  INTEGER,PARAMETER,public    :: DDP=16            ! "QUAD"   PRECISION
+  INTEGER,PARAMETER,public    :: SP = KIND(1.0)    ! "SINGLE" PRECISION
+  REAL(DBL),PARAMETER,public  :: TINY_   = 1.D-12
+  REAL(DBL),PARAMETER,public  :: HUGE_   = 1.D+12
+  REAL(DBL),PARAMETER,public  :: QUARTER = 0.25_DBL
+  REAL(DBL),PARAMETER,public  :: THIRD   = 0.3333333333333_DBL
+  REAL(DBL),PARAMETER,public  :: HALF    = 0.5_DBL
+  LOGICAL,PARAMETER,public    :: TT=.TRUE., FF=.FALSE.
 
 
   !GLOABL  VARIABLES
   !=========================================================
-  INTEGER  :: ILOOP,NLOOP    !DMFT LOOP VARIABLES
-  REAL(8)  :: D              !BANDWIDTH
-  REAL(8)  :: TS,TSP,TPP     !N.N./N.N.N. HOPPING AMPLITUDE
-  REAL(8)  :: U,V            !LOCAL,NON-LOCAL INTERACTION
-  REAL(8)  :: TPD,VPD        !HYBRIDIZATION,BAND-BAND COUPLING
-  REAL(8)  :: ED0,EP0        !ORBITAL ENERGIES
-  REAL(8)  :: XMU            !CHEMICAL POTENTIAL
-  REAL(8)  :: DT,DTAU        !TIME STEP
-  REAL(8)  :: FMESH          !FREQ. STEP
-  REAL(8)  :: BETA           !INVERSE TEMPERATURE
-  REAL(8)  :: TEMP           !TEMPERATURE
-  REAL(8)  :: EPS            !BROADENING
+  INTEGER,public  :: ILOOP,NLOOP    !DMFT LOOP VARIABLES
+  REAL(8),public  :: D              !BANDWIDTH
+  REAL(8),public  :: TS,TSP,TPP     !N.N./N.N.N. HOPPING AMPLITUDE
+  REAL(8),public  :: U,V            !LOCAL,NON-LOCAL INTERACTION
+  REAL(8),public  :: TPD,VPD        !HYBRIDIZATION,BAND-BAND COUPLING
+  REAL(8),public  :: ED0,EP0        !ORBITAL ENERGIES
+  REAL(8),public  :: XMU            !CHEMICAL POTENTIAL
+  REAL(8),public  :: DT,DTAU        !TIME STEP
+  REAL(8),public  :: FMESH          !FREQ. STEP
+  REAL(8),public  :: BETA           !INVERSE TEMPERATURE
+  REAL(8),public  :: TEMP           !TEMPERATURE
+  REAL(8),public  :: EPS            !BROADENING
 
 
   !CMD LINE VARIABLES:
   !=========================================================
-  TYPE CMD_VARIABLE
+  TYPE,public:: CMD_VARIABLE
      CHARACTER(LEN=64)           :: NAME
      CHARACTER(LEN=64)           :: VALUE
   END TYPE CMD_VARIABLE
-  CHARACTER(LEN=512),ALLOCATABLE :: HELP_BUFFER(:)
-  TYPE(CMD_VARIABLE)             :: CMD_VAR,NML_VAR
-  ! CHARACTER(LEN=64)              :: NML_NAME,NML_VALUE
-  ! CHARACTER(LEN=512)             :: ARG_BUFFER
+  CHARACTER(LEN=512),ALLOCATABLE,public :: HELP_BUFFER(:)
+  TYPE(CMD_VARIABLE),public             :: CMD_VAR,NML_VAR
 
   INTERFACE PARSE_CMD_VARIABLE
      MODULE PROCEDURE D_PARSE_VARIABLE,&
@@ -78,32 +77,44 @@ module COMMON_VARS
 
   !MPI VARS:
   !=========================================================
-  INTEGER          :: MPIERR,MPISIZE,MPIID
-  CHARACTER(LEN=3) :: MPICHAR
+  INTEGER,public          :: MPIERR,MPISIZE,MPIID
+  CHARACTER(LEN=3),public :: MPICHAR
 
 
   !OMP VARS:
   !=========================================================
-  INTEGER :: OMP_NUM_THREADS
-  INTEGER :: OMP_ID
-  INTEGER :: OMP_SIZE
+  INTEGER,public :: OMP_NUM_THREADS,OMP_ID,OMP_SIZE
 
-  INTEGER(4),DIMENSION(8),SAVE             :: DATA
-  INTEGER(4),SAVE                          :: YEAR
-  INTEGER(4),SAVE                          :: MESE
-  INTEGER(4),SAVE                          :: DAY
-  INTEGER(4),SAVE                          :: H
-  INTEGER(4),SAVE                          :: M
-  INTEGER(4),SAVE                          :: S
-  INTEGER(4),SAVE                          :: MS
-  CHARACTER(LEN=9),PARAMETER,DIMENSION(12) :: MONTH = (/ &
+  !Date variables:
+
+  integer(4)                          :: year
+  integer(4)                          :: mese
+  integer(4)                          :: day
+  integer(4)                          :: h
+  integer(4)                          :: m
+  integer(4)                          :: s
+  integer(4)                          :: ms
+  character(len=9),parameter,dimension(12) :: month = (/ &
        'January  ', 'February ', 'March    ', 'April    ', &
        'May      ', 'June     ', 'July     ', 'August   ', &
        'September', 'October  ', 'November ', 'December ' /)
 
 
-  PRIVATE :: s_cap,ch_cap
-  PRIVATE :: print_date
+  !===============================================
+  public :: parse_cmd_variable,parse_cmd_help,get_cmd_variable
+  public :: version
+  public :: timestamp
+  public :: abort
+  public :: msg
+  public :: start_mpi,close_mpi
+  public :: bold
+  public :: underline
+  public :: highlight
+  public :: erased
+  public :: red,green,yellow,blue,purple,cyan
+  public :: bold_red,bold_green,bold_yellow,bold_blue,bold_purple,bold_cyan
+  public :: bg_red,bg_green,bg_yellow,bg_blue,bg_purple,bg_cyan
+
 
 contains
 
@@ -137,8 +148,9 @@ contains
   ! Example: 31 May 2001   9:45:54.872 AM
   !+-------------------------------------------------------------------+
   subroutine timestamp(unit)
-    integer,optional :: unit
-    integer          :: unit_
+    integer,optional        :: unit
+    integer                 :: unit_
+    integer(4),dimension(8) :: data
     unit_=6;if(present(unit))unit_=unit
     if(mpiID==0)then
        call date_and_time(values=data)
@@ -157,6 +169,17 @@ contains
   subroutine print_date(dummy,unit)
     integer(4),dimension(8) :: dummy
     integer                 :: unit
+    integer(4)                          :: year
+    integer(4)                          :: mese
+    integer(4)                          :: day
+    integer(4)                          :: h
+    integer(4)                          :: m
+    integer(4)                          :: s
+    integer(4)                          :: ms
+    character(len=9),parameter,dimension(12) :: month = (/ &
+         'January  ', 'February ', 'March    ', 'April    ', &
+         'May      ', 'June     ', 'July     ', 'August   ', &
+         'September', 'October  ', 'November ', 'December ' /)
     year = dummy(1)
     mese = dummy(2)
     day  = dummy(3)
