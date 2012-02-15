@@ -7,7 +7,7 @@ all: libcomvars.a libcomvars_deb.a
 
 libcomvars.a:
 	@rm -fv *.o *.mod $(MYLIB)/$@
-	@echo 'character(len=41),parameter :: sf_version = "$(REV)"' > scifor_version.inc
+	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > scifor_version.inc
 	$(FC) -c $(FFLAG) $(ROUTINES) 
 	ar cvq $@ `ls *.o | sort | uniq`  
 	ranlib $@			  

@@ -1,5 +1,19 @@
 #!/bin/bash
 
+get_line()
+{
+if [ "$1" = "--help" -o "$1" = "-h" ];then
+   echo "get_line: select given lines from file or pipe"	
+   echo "cat ...|get_line 1 2 3... >"
+   return
+fi
+
+for LINE in "$@"
+do
+    ARG="$ARG${LINE}p;"
+done
+sed -n "$ARG"
+}
 
 pack()
 {
