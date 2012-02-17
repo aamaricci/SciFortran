@@ -33,7 +33,7 @@ function dv_check_convergence(Xnew,eps,N1,N2,id) result(convergence)
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
-     if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_check.f90"
      include "convergence_print_error_msg_V.f90"
      check=check+1
   endif
@@ -69,7 +69,7 @@ function zv_check_convergence(Xnew,eps,N1,N2,id) result(convergence)
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
-     if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_check.f90"
      include "convergence_print_error_msg_V.f90"
      check=check+1
   endif
@@ -114,7 +114,7 @@ function dm_check_convergence(Xnew,eps,N1,N2,id,tight) result(convergence)
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
-     if(success > N1 .OR. check>=N2)convergence=.true.
+include "convergence_check.f90"
      include "convergence_print_error_msg_M.f90"
      check=check+1
   endif
@@ -159,7 +159,7 @@ function zm_check_convergence(Xnew,eps,N1,N2,id,tight) result(convergence)
      if(err < eps)success=success+1
      if(err > eps)success=0
      convergence=.false.
-     if(success > N1 .OR. check>=N2)convergence=.true.
+     include "convergence_check.f90"
      include "convergence_print_error_msg_M.f90"
      check=check+1
   endif
