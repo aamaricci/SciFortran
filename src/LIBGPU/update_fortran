@@ -1,7 +1,0 @@
-#!/bin/bash
-ifort  -c -O0 -I./opt/cuda/include $1.f90 -I./ -I./MODFILES 
-echo $1
-echo `ls $1.o`
-ar ru libgpu.a $1.o 
-rm $1.o
-mv *.mod ./MODFILES 

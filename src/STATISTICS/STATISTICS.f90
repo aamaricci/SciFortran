@@ -3,40 +3,86 @@ MODULE STATISTICS
   private
 
   public :: get_moments
+  public :: get_mean,get_sd,get_var,get_skew,get_curt
   public :: get_covariance
+
 
 contains
 
-  
 
   subroutine get_moments(data,ave,sdev,var,skew,curt)
-    REAL(8), INTENT(OUT)              :: ave,sdev,var,skew,curt
-    REAL(8), DIMENSION(:), INTENT(IN) :: data
-    INTEGER                           :: n
-    REAL(8)                           :: ep,adev
-    REAL(8), DIMENSION(size(data))    :: p,s
+    real(8), intent(out),optional     :: ave,sdev,var,skew,curt
+    real(8)                           :: ave_,sdev_,var_,skew_,curt_
+    real(8), dimension(:), intent(in) :: data
+    integer                           :: n
+    real(8)                           :: ep,adev
+    real(8), dimension(size(data))    :: p,s
     n=size(data)
-    if (n <= 1) call abort('data.size must be at least 2')
-    ave=sum(data(:))/n
-    s(:)=data(:)-ave
+    if (n <= 1) then
+       print*,'data.size must be at least 2'
+       stop
+    endif
+    ave_=sum(data(:))/n
+    s(:)=data(:)-ave_
     ep=sum(s(:))
     adev=sum(abs(s(:)))/n
     p(:)=s(:)*s(:)
-    var=sum(p(:))
+    var_=sum(p(:))
     p(:)=p(:)*s(:)
-    skew=sum(p(:))
+    skew_=sum(p(:))
     p(:)=p(:)*s(:)
-    curt=sum(p(:))
-    var=(var-ep**2/n)/(n-1)
-    sdev=sqrt(var)
-    if (var /= 0.0) then
-       skew=skew/(n*sdev**3)
-       curt=curt/(n*var**2)-3.0d0
+    curt_=sum(p(:))
+    var_=(var_-ep**2/n)/(n-1)
+    sdev_=sqrt(var_)
+    if (var_ /= 0.0) then
+       skew_=skew_/(n*sdev_**3)
+       curt_=curt_/(n*var_**2)-3.0d0
     else
-       skew=0.d0
-       curt=0.d0
+       skew_=0.d0
+       curt_=0.d0
     endif
+    if(present(ave))ave=ave_
+    if(present(sdev))sdev=sdev_
+    if(present(var))var=var_
+    if(present(skew))skew=skew_
+    if(present(curt))curt=curt_
   end subroutine get_moments
+
+
+  function get_mean(data) result(mean)
+    real(8), dimension(:), intent(in) :: data
+    real(8)                           :: mean
+    call get_moments(data,ave=mean)
+  end function get_mean
+
+
+  function get_sd(data) result(sd)
+    real(8), dimension(:), intent(in) :: data
+    real(8)                           :: sd
+    call get_moments(data,sdev=sd)
+  end function get_sd
+
+
+  function get_var(data) result(var)
+    real(8), dimension(:), intent(in) :: data
+    real(8)                           :: var
+    call get_moments(data,var=var)
+  end function get_var
+
+
+  function get_skew(data) result(skew)
+    real(8), dimension(:), intent(in) :: data
+    real(8)                           :: skew
+    call get_moments(data,skew=skew)
+  end function get_skew
+
+
+  function get_curt(data) result(curt)
+    real(8), dimension(:), intent(in) :: data
+    real(8)                           :: curt
+    call get_moments(data,curt=curt)
+  end function get_curt
+
 
   function get_covariance(data,mean) result(covariance)
     real(8),dimension(:,:),intent(in)            :: data

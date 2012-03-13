@@ -48,7 +48,7 @@ contains
     open(10,file=trim(adjustl(trim(file))))
     call fstat(10,buff,status)
     size=nint(buff(8)/dble(1024))
-    if(present(printf).AND.printf==.true.)&
+    if(present(printf).AND.printf.eqv..true.)&
          write(*,"(A,A,A,f9.6,A)")"file: **",trim(adjustl(trim(file))),"** is ",size," Kb"
   end function file_size
 

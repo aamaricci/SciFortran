@@ -8,7 +8,7 @@ subroutine splotP_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   integer          :: Y1
   integer,optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
-  if(present(append).AND. append==.true.)then
+  if(present(append).AND. append.eqv..true.)then
      open(719,file=adjustl(trim(pname)),access="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -41,7 +41,7 @@ subroutine splotP_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   real(8)          :: Y1
   real(8),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
-  if(present(append).AND. append==.true.)then
+  if(present(append).AND. append.eqv..true.)then
      open(719,file=adjustl(trim(pname)),access="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -74,7 +74,7 @@ subroutine splotP_IC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8)       :: Y1
   complex(8),optional:: Y2,Y3,Y4
   logical,optional :: append
-  if(present(append).AND. append==.true.)then
+  if(present(append).AND. append.eqv..true.)then
      open(719,file=adjustl(trim(pname)),access="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -101,7 +101,7 @@ subroutine splotP_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   integer          :: Y1
   integer,optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
-  if(present(append).AND. append==.true.)then
+  if(present(append).AND. append.eqv..true.)then
      open(719,file=adjustl(trim(pname)),access="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -134,7 +134,7 @@ subroutine splotP_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   real(8)          :: Y1
   real(8),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
-  if(present(append).AND. append==.true.)then
+  if(present(append).AND. append.eqv..true.)then
      open(719,file=adjustl(trim(pname)),access="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -167,7 +167,7 @@ subroutine splotP_RC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8)          :: Y1
   complex(8),optional :: Y2,Y3,Y4
   logical,optional    :: append
-  if(present(append).AND. append==.true.)then
+  if(present(append).AND. append.eqv..true.)then
      open(719,file=adjustl(trim(pname)),access="append")
   else
      open(719,file=adjustl(trim(pname)))

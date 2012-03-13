@@ -1,13 +1,65 @@
 module FFTGF
   implicit none 
   private
+  public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
   public :: fftgf_rw2rt  , fftgf_rt2rw
   public :: fftgf_iw2tau , fftgf_tau2iw
-  public :: fft_iw2tau   , fft_tau2iw
-  public :: swap_fftrt2rw
   public :: four1
 
+  REAL(8),PARAMETER    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
 contains
+
+
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : Evaluate forward and backward FFT using MKL routines.
+  !+-------------------------------------------------------------------+
+  subroutine nr_radix2_test(M)
+    integer :: M
+    if(IAND(M,M-1)/=0)then
+       print*,"This FFT  is radix_2! abort"
+       stop
+    endif
+  end subroutine nr_radix2_test
+
+  subroutine cfft_1d_forward(func)
+    complex(8),dimension(:),intent(inout) :: func
+    call nr_radix2_test(size(func))
+    call four1(func,size(func),1)
+  end subroutine cfft_1d_forward
+
+  subroutine cfft_1d_backward(func)
+    complex(8),dimension(:),intent(inout) :: func
+    call nr_radix2_test(size(func))
+    call four1(func,size(func),-1)
+  end subroutine cfft_1d_backward
+
+  function cfft_1d_shift(fin,L) result(fout)
+    complex(8),dimension(2*L) :: fin
+    complex(8),dimension(-L:L):: fout,dout
+    integer                   :: i,L
+    forall(i=1:2*L)dout(i-L-1)=fin(i) ![1,2*L]---> [-L,L-1]
+    forall(i=-L:-1)fout(i+L)=dout(i)   !g[0,M-1]<--- x[-M,-1]
+    forall(i=0:L-1)fout(i-L)=dout(i)   !g[-L,-1]<--- x[0,L-1]
+  end function cfft_1d_shift
+
+  subroutine swap_fftrt2rw(func_in)
+    integer                             :: i,Nsize,Nhalf
+    complex(8),dimension(:)             :: func_in
+    complex(8),dimension(size(func_in)) :: dummy
+    Nsize=size(func_in) ; Nhalf=Nsize/2
+    dummy=func_in
+    do i=1,Nhalf
+       func_in(i)=dummy(Nhalf+i)
+       func_in(Nhalf+i)=dummy(i)
+    enddo
+  end subroutine swap_fftrt2rw
+
+
+
+  !*******************************************************************
+  !*******************************************************************
+  !*******************************************************************
+
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : Evaluate the FFT of a given Green's function from 
@@ -21,18 +73,12 @@ contains
     complex(8),dimension(2*M),intent(in)   :: func_in
     complex(8),dimension(-M:M),intent(out) :: func_out
     complex(8),dimension(2*M)              :: dummy_in
-    complex(8),dimension(-M:M)             :: dummy_out,fout
-    if(IAND(M,M-1)/=0)then
-       print*,"This FFT  is radix_2! abort"
-       stop
-    endif
+    complex(8),dimension(-M:M)             :: dummy_out
     dummy_in = func_in
-    call four1(dummy_in,2*M,1)
-    forall(i=1:2*M)dummy_out(i-M-1)=dummy_in(i) ![1,2*M]---> [-M,M-1]
-    forall(i=-M:-1)fout(i+M)=dummy_out(i)   !g[0,M-1]<--- x[-M,-1]
-    forall(i=0:M-1)fout(i-M)=dummy_out(i)   !g[-L,-1]<--- x[0,L-1]
-    fout(M)=fout(M-1)
-    forall(i=-M:M)func_out(i)=fout(-i)
+    call cfft_1d_forward(dummy_in(1:2*M))
+    dummy_out = cfft_1d_shift(dummy_in,M)
+    dummy_out(M)=dummy_out(M-1)
+    forall(i=-M:M)func_out(i)=dummy_out(-i)
   end subroutine fftgf_rw2rt
 
 
@@ -57,12 +103,9 @@ contains
     complex(8),dimension(-M:M),intent(in) :: func_in
     complex(8),dimension(2*M),intent(out) :: func_out
     complex(8),dimension(2*M)             :: dummy_out
-    if(IAND(M,M-1)/=0)then
-       print*,"This FFT  is radix_2! abort"
-       stop
-    endif
+
     forall(i=1:2*M)dummy_out(i) = func_in(i-M-1)
-    call four1(dummy_out,2*M,-1)
+    call cfft_1d_backward(dummy_out)
     ex=-1.d0
     do i=1,2*M
        ex=-ex
@@ -89,44 +132,54 @@ contains
   !if g(-tau) is required this has to be implemented in the calling code
   !using the transformation: g(-tau)=-g(beta-tau) for tau>0
   !+-------------------------------------------------------------------+
-  subroutine fftgf_iw2tau(gw,gt,beta)
+  subroutine fftgf_iw2tau(gw,gt,beta,notail)
     implicit none
-    complex(8),dimension(:)    :: gw
-    real(8),dimension(0: )     :: gt
-    complex(8),dimension(:),allocatable  :: tmpGw
+    integer                             :: i,n,L
+    logical,optional                    :: notail
+    logical                             :: notail_
+    complex(8),dimension(:)             :: gw
+    real(8),dimension(0:)               :: gt
+    complex(8),dimension(:),allocatable :: tmpGw
     real(8),dimension(:),allocatable    :: tmpGt
-    integer    :: i,L,N
-    real(8)    :: pi,wmax,beta,mues,tau,dtau,At,w,zmu
-    complex(8) :: tail,zero
-    L=size(gt)-1 ; N=size(gw)
+    complex(8)                          :: tail
+    real(8)                             :: wmax,beta,mues,tau,dtau,At,w
+    notail_=.false.;if(present(notail))notail_=notail
+    !
+    n=size(gw)     ; L=size(gt)-1 ; dtau=beta/real(L,8) 
+    !
     allocate(tmpGw(2*L),tmpGt(-L:L))
-    pi=acos(-1.d0) ; dtau=beta/dble(L)
-    wmax=pi/beta*dble(2*L-1)
-    mues=-real(gw(L))*wmax**2
-    tmpGw(:)= (0.d0,0.d0)
-    do i=1,L
-       w=pi/beta*dble(2*i-1)
-       tail=-(mues+w*(0.d0,1.d0))/(mues**2+w**2)
-       if(i<=n)tmpGw(2*i)= gw(i)-tail
-       if(i>n)tmpGw(2*i)=tail
-    enddo
-    call four1(tmpGw,2*L,-1) 
-    forall(i=1:2*L)tmpGt(i-L-1)=2.d0*dble(tmpGw(i))/beta
-    do i=0,L
-       tau=dble(i)*beta/dble(L)
-       if(tau.lt.0.d0)then
-          At=exp(-mues*tau)/(exp(beta*mues)+1.d0)
-       else
+    !
+    wmax = pi/beta*real(2*L-1,8)
+    mues =-real(gw(L),8)*wmax**2
+    tmpGw= (0.d0,0.d0)
+    !
+    select case(notail_)
+    case default
+       do i=1,L
+          w=pi/beta*dble(2*i-1)
+          tail=-(mues+w*(0.d0,1.d0))/(mues**2+w**2)
+          if(i<=n)tmpGw(2*i)= gw(i)-tail
+          if(i>n)tmpGw(2*i) = tail
+       enddo
+       call cfft_1d_backward(tmpGw)
+       tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
+       do i=0,L
+          tau=dble(i)*beta/dble(L)
           At=-exp((beta-tau)*mues)/(exp(beta*mues)+1.d0)
-       endif
-       tmpGt(i)=tmpGt(i)-At
-    enddo
-    gt(0:L-1) = tmpGt(0:L-1)
-    gt(L)=1.d0-gt(0)
-    gt=-gt
+          tmpGt(i)=tmpGt(i)+At
+       enddo
+       gt(0:L-1) = tmpGt(0:L-1)
+       gt(L)=1.d0-gt(0)
+    case(.true.)
+       if(L>n)call abort("error in fftgf_iw2tau: call w/ notail and L>n")
+       forall(i=1:L)tmpGw(2*i)  = gw(i)
+       call cfft_1d_forward(tmpGw)
+       tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
+       gt(0:L-1) = -tmpGt(0:L-1)
+       gt(L)=-gt(0)
+    end select
+
   end subroutine fftgf_iw2tau
-
-
 
   !*******************************************************************
   !*******************************************************************
@@ -139,131 +192,38 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : 
   !+-------------------------------------------------------------------+
-  subroutine fftgf_tau2iw(gt,gw,beta)
-    implicit none
+
+  subroutine fftgf_tau2iw(gt,gw,beta,normal)
     real(8)                :: gt(0:)
-    complex(8)             :: gw(:),one=(1.d0,0.d0)
+    complex(8)             :: gw(:)
     real(8)                :: beta
+    logical,optional       :: normal
+    logical                :: normal_
     integer                :: i,L,n,M
-    complex(8),allocatable :: xgw(:),Igw(:)
-    real(8),allocatable    :: xgt(:),Igt(:)
-    L=size(gt)-1  !
-    n=size(gw)    !=2*L
-    !eXtend G(tau) 0:L --> -L:L 
-    allocate(xgt(-L:L)) 
-    xgt(0:L)=gt(0:L) ; forall(i=1:L)xgt(-i)=-xgt(L-i)
-    !Fit to get rid of the 2*i problem
-    M=4*L !; if(M < 4*n)M=4*n    !long enough to get back gw(1:n)
-    allocate(Igt(-M:M),Igw(2*M)) !allocate the long arrays 
-    call interp(xgt,Igt,L,M)     !w/ interpolation to treat long tails
-    !FFT to Matsubara freq.
-    call fftgf_rt2rw(one*Igt,Igw,M)
-    Igw=Igw*beta/dble(M)/2.d0
+    complex(8),allocatable :: Igw(:)
+    real(8),allocatable    :: Igt(:)
+    !
+    L=size(gt)-1    ; N=size(gw)
+    normal_=.true.  ; if(present(normal))normal_=normal
+    !
+    M=32*L
+    allocate(Igt(-M:M),Igw(2*M))
+    call interp(gt(0:L),Igt(0:M),L,M)
+    !
+    if(normal_)then
+       forall(i=1:M)Igt(-i)=-Igt(M-i)
+    else
+       forall(i=1:M)Igt(-i)=Igt(M-i)
+    endif
+    !
+    call fftgf_rt2rw((1.d0,0.d0)*Igt,Igw,M)
+    Igw=Igw*beta/real(M,8)/2.d0
     forall(i=1:n)gw(i)=-Igw(2*i)
-    deallocate(xgt,Igt,Igw)
+    deallocate(Igt,Igw)
   contains
-    include "splinefft.f90"
+    include "splinefft.f90" !This is taken from SPLINE to make this module independent    
   end subroutine fftgf_tau2iw
 
-  ! subroutine fftgf_tau2iw_(gt,gw,beta,L)
-  !   implicit none
-  !   real(8)                :: gt(0:L),xgt(-L:L)
-  !   complex(8)             :: gw(2*L),xgw(2*L)
-  !   real(8)                :: beta
-  !   integer                :: i,L,n,M
-  !   !Get eXtended G(tau) 0:L --> -L:L 
-  !   xgt(0:L)=gt(0:L) ; forall(i=1:L)xgt(-i)=-xgt(L-i)
-  !   !FFT to Matsubara freq.
-  !   forall(i=1:2*L)xgw(i)=(1.d0,0.d0)*xgt(i-L-1)
-  !   call four1(xgw,2*L,1)
-  !   !Exit:
-  !   forall(i=1:L)gw(2*i)=xgw(2*i)*beta/dble(L)/2.d0
-  ! end subroutine fftgf_tau2iw_
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : sometime a swap of the two halfs of the output array 
-  ! from cfft_rt2rw is needed. THis is implemented in this routine.
-  !COMMENTS : func_in should have dimension (2*N), swapped around N
-  !+-------------------------------------------------------------------+
-  subroutine swap_fftrt2rw(func_in)
-    integer                             :: i,Nsize,Nhalf
-    complex(8),dimension(:)             :: func_in
-    complex(8),dimension(size(func_in)) :: dummy
-    Nsize=size(func_in) ; Nhalf=Nsize/2
-    dummy=func_in
-    do i=1,Nhalf
-       func_in(i)=dummy(Nhalf+i)
-       func_in(Nhalf+i)=dummy(i)
-    enddo
-  end subroutine swap_fftrt2rw
-
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : Evaluate the FFT of a given function from Matsubara frequencies
-  ! to imaginary time. 
-  !+-------------------------------------------------------------------+
-  subroutine fft_iw2tau(gw,gt,beta,L)
-    implicit none
-    complex(8),dimension(L)    :: gw
-    complex(8),dimension(2*L)  :: tmpGw
-    real(8),dimension(0:L)     :: gt
-    complex(8),dimension(-L:L) :: tmpGt
-    integer    :: i,L
-    real(8)    :: pi,beta
-    complex(8) :: tail,zero
-    pi=acos(-1.d0) ; zero=cmplx(0.d0,0.d0)
-    do i=1,L
-       tmpGw(2*i)  = gw(i)
-       tmpGw(2*i-1)= zero
-    enddo
-    call four1(tmpGw,2*L,-1)
-    forall(i=1:2*L)tmpGt(i-L-1)=2.d0*dble(tmpGw(i))/beta
-    gt(0:L-1) = real(tmpGt(0:L-1),8)
-    gt(L)=-gt(0) !fix the end point:
-  end subroutine fft_iw2tau
-
-
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  :  
-  !+-------------------------------------------------------------------+
-  subroutine fft_tau2iw(gt,gw,beta,L)
-    implicit none
-    real(8)                :: gt(0:L),xgt(-L:L)
-    complex(8)             :: gw(2*L),xgw(2*L)
-    real(8)                :: beta
-    integer                :: i,L,n,M
-    !Get eXtended G(tau) 0:L --> -L:L 
-    xgt(0:L)=gt(0:L) ; forall(i=1:L)xgt(-i)=-xgt(L-i)
-    !FFT to Matsubara freq.
-    forall(i=1:2*L)xgw(i)=(1.d0,0.d0)*xgt(i-L-1)
-    call four1(xgw,2*L,1)
-    !Exit:
-    forall(i=1:L)gw(2*i)=xgw(2*i)*beta/dble(L)/2.d0
-  end subroutine fft_tau2iw
 
 
 

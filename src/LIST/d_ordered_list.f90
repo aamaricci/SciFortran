@@ -58,7 +58,7 @@ module D_ORDERED_LIST
 
 contains        !some routine to perform simple operation on the lists
 
-  function init_list result(new_list)
+  function init_list() result(new_list)
     type(d_linked_list) :: new_list
     allocate(new_list%root)
     new_list%root%prev => null()
@@ -67,7 +67,7 @@ contains        !some routine to perform simple operation on the lists
 
 
   subroutine destroy_list(list)
-    type(d_linked_list),intent(in) :: list
+    type(d_linked_list),intent(inout) :: list
     type(d_list_node),pointer     :: current
     do
        current => list%root%next         !current is the first node (root's next)

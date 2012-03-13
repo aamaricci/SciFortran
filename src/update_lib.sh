@@ -1,7 +1,20 @@
 #!/bin/bash
 HERE=`pwd`
 LIST=`ls -l |egrep '^d' |awk '{print $8}'`
-EXCLUDED='LIBGPU MKL* COMVARS FFT_MKL FFT_NR FFT_FFTW3 FFT_GSL' 
+
+# for DIR in $LIST
+# do
+#     cd $HERE/$DIR
+#     cat Makefile |sed '/include/d' > tmp
+#     echo 'include $(SFDIR)/etc/opt.mk' > Makefile
+#     cat tmp >> Makefile
+#     rm -fv tmp
+# done
+# exit
+
+EXCLUDED='COMVARS FFT_MKL FFT_NR FFT_FFTW3 FFT_GSL' 
+
+
 
 for DIR in $EXCLUDED
 do 
