@@ -139,7 +139,7 @@ contains
     logical                             :: notail_
     complex(8),dimension(:)             :: gw
     real(8),dimension(0:)               :: gt
-    complex(8),dimension(:),allocatable :: tmpGw
+    complex(8),dimension(:),allocatable :: tmpGw,xGt
     real(8),dimension(:),allocatable    :: tmpGt
     complex(8)                          :: tail
     real(8)                             :: wmax,beta,mues,tau,dtau,At,w
@@ -169,16 +169,17 @@ contains
           tmpGt(i)=tmpGt(i)+At
        enddo
        gt(0:L-1) = tmpGt(0:L-1)
-       gt(L)=1.d0-gt(0)
+       gt(L)=-gt(0)-1.d0
     case(.true.)
        if(L>n)call abort("error in fftgf_iw2tau: call w/ notail and L>n")
+       allocate(xGt(-L:L))
        forall(i=1:L)tmpGw(2*i)  = gw(i)
-       call cfft_1d_forward(tmpGw)
-       tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
-       gt(0:L-1) = -tmpGt(0:L-1)
+       call fftgf_rw2rt(tmpGw,xGt,L)
+       gt(0:L-1)=real(xGt(0:L-1),8)*2.d0/beta
        gt(L)=-gt(0)
+       deallocate(xGt)
     end select
-
+    deallocate(tmpGw,tmpGt)
   end subroutine fftgf_iw2tau
 
   !*******************************************************************

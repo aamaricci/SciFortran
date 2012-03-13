@@ -197,6 +197,7 @@
          gt(L)=-gt(0)
 
       end select
+      deallocate(tmpGw,tmpGt)
     end subroutine fftgf_iw2tau
 
 

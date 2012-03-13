@@ -137,6 +137,7 @@ contains
     complex(8),dimension(:),allocatable :: tmpGw,tmpGt
     complex(8)                          :: tail
     real(8)                             :: wmax,beta,mues,tau,dtau,At,w
+
     notail_=.false.;if(present(notail))notail_=notail
     !
     n=size(gw)     ; L=size(gt)-1 ; dtau=beta/real(L,8) 
