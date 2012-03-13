@@ -29,21 +29,28 @@ else
 MATHLIB	 = -llapack -lblas
 endif
 
+SFLIBS 	 = ${LIST} ${FFTGF} ${TOOLS} ${ROOTFIND}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${STATISTICS} ${LATTICE} ${MATHLIB}
+
+SFLIBS_DEB = ${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${ROOTFIND}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${STATISTICS}_deb ${LATTICE}_deb ${MATHLIB}
+
+
 ifdef FFTW3DIR
 FFTW3	  =  -lfftw3
 FFTW3_MODS= -I$(FFTW3DIR)/include/
+SFLIBS += ${FFTW3}
+SFMODS += ${FFTW3_MODS}
 endif
 
 ifdef FGSLDIR
 FGSL	  = -lfgsl_intel -lgsl -lgslcblas
 FGSL_MODS = -I$(FGSLDIR)/include
+SFLIBS += ${FGSL}
+SFMODS += ${FGSL_MODS}
 endif
 
 
 
-SFLIBS 	 = ${LIST} ${FFTGF} ${TOOLS} ${ROOTFIND}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${STATISTICS} ${LATTICE} ${MATHLIB}
 
-SFLIBS_DEB = ${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${ROOTFIND}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${STATISTICS}_deb ${LATTICE}_deb ${MATHLIB}
 
 
 ###################################################################
