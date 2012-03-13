@@ -1,6 +1,0 @@
-#!/bin/bash
-nvcc  -c -arch sm_13 -O3 -I./opt/cuda/include $1.cu -I./
-echo $1
-echo `ls $1.o`
-ar ru libgpu.a $1.o 
-rm $1.o

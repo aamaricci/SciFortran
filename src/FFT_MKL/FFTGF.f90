@@ -4,9 +4,9 @@
     use MKL_DFT_TYPE
     implicit none 
     private
+    public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
     public :: fftgf_rw2rt  , fftgf_rt2rw
     public :: fftgf_iw2tau , fftgf_tau2iw
-    public :: swap_fftrt2rw
 
     REAL(8),PARAMETER    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
 
@@ -167,7 +167,7 @@
          call cfft_1d_forward(tmpGw)
          tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
          do i=0,L-1
-            tau=dble(i)*dtau
+            tau=real(i,8)*dtau
             if(mues > 0.d0)then
                if((mues*beta) > 30.d0)then
                   At = -exp(-mues*tau)
@@ -186,7 +186,10 @@
          gt(L)=-(gt(0)+1.d0)
 
       case(.true.)
-         if(L>n)call abort("error in fftgf_iw2tau: call w/ notail and L>n")
+         if(L>n)then
+            print*,"error in fftgf_iw2tau: call w/ notail and L>n"
+            stop
+         endif
          forall(i=1:L)tmpGw(2*i)  = gw(i)
          call cfft_1d_forward(tmpGw)
          tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta

@@ -168,7 +168,7 @@ subroutine eta(i,L,unit,file,step)
         if(unit_==5)unit_=6     !do not write to stdin
         if(present(file))then
            unit_=719
-           open(unit_,name=trim(adjustl(trim(file))))
+           open(unit_,file=trim(adjustl(trim(file))))
            write(unit_,*)
            write(*,"(2x,A)")"+ETA --> "//trim(adjustl(trim(file)))
         else
@@ -210,7 +210,8 @@ subroutine eta(i,L,unit,file,step)
      call date_and_time (values=dummy)
      if(fullprint)then
         write(message,"(1i3,1a7,i2,a1,i2.2,a1,i2.2,a1,i3.3,a2,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2)")&
-             percent,"% |ETA: ",h,":",m,":",s,".",ms," @",dummy(3),trim(month(dummy(2))),dummy(1), dummy(5),':',dummy(6),':',dummy(7)
+             percent,"% |ETA: ",h,":",m,":",s,".",ms," @",dummy(3),trim(month(dummy(2))),dummy(1), &
+             dummy(5),':',dummy(6),':',dummy(7)
      else
         write(message,"(1i3,1a7,i2,a1,i2.2,a1,i2.2,a1,i3.3)")percent,"% |ETA: ",h,":",m,":",s,".",ms
      endif

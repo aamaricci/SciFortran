@@ -112,7 +112,7 @@ contains
     do ix=1,MM
        do iy=1,MM
           iz = iy - ix + MM/2 
-          if(iz<1 .OR. iz>MM) iz=-MM-10 !out of range-> if(iz>-L)
+          if(iz<1 .OR. iz>MM) iz=-1 !out of range-> if(iz>-L)
           iy_m_ix(iy,ix)=iz
        enddo
     enddo
@@ -154,7 +154,7 @@ contains
        sum2=zero
        do iy=1,MM
           iz= iy_m_ix(iy,ix)
-          if(iz>-MM)then
+          if(iz>0)then
              sum1=sum1 + A0m(iy)*A0p(iz)
              sum2=sum2 + A0p(iy)*A0m(iz)
           endif
@@ -186,7 +186,7 @@ contains
        sum2=zero
        do iy=1,MM
           iz= iy_m_ix(iy,ix)
-          if(iz>-MM)then
+          if(iz>0)then
              sum1=sum1+A0p(iy)*P1(iz)*fmesh
              sum2=sum2+A0m(iy)*P2(iz)*fmesh
           end if

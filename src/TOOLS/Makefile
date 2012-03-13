@@ -1,26 +1,26 @@
-include $(HOME)/lib/opt.mk
+include $(SFDIR)/etc/opt.mk
 ROUTINES=TOOLS.f90 
 
 all: libtools.a libtools_deb.a
 
 libtools.a:
-	@rm -fv *.o *.mod $(MYLIB)/$@	  
-	$(FC) -c $(FFLAG) $(ROUTINES) -I$(MYINCLUDE)
+	@rm -fv *.o *.mod $(SFLIB)/$@	  
+	$(FC) -c $(FFLAG) $(ROUTINES) -I$(SFINCLUDE)
 	ar cvq $@ `ls *.o | sort | uniq`  
 	ranlib $@			  
-	@mv -fv *.a $(MYLIB)/		  
-	@mv -fv *.mod $(MYINCLUDE)/	  
+	@mv -fv *.a $(SFLIB)/		  
+	@mv -fv *.mod $(SFINCLUDE)/	  
 	@rm -f *.o			  
 	@echo 'LIBRARY IS DONE.........'
 	@echo ' '
 
 libtools_deb.a:
-	@rm -fv *.o *.mod $(MYLIB)/$@	  
-	$(FC) -c $(DFLAG) $(ROUTINES) -I$(MYINCLUDE)/debug
+	@rm -fv *.o *.mod $(SFLIB)/$@	  
+	$(FC) -c $(DFLAG) $(ROUTINES) -I$(SFINCLUDE)/debug
 	ar cvq $@ `ls *.o | sort | uniq`  
 	ranlib $@			  
-	@mv -fv *.a $(MYLIB)/		  
-	@mv -fv *.mod $(MYINCLUDE)/debug/	  
+	@mv -fv *.a $(SFLIB)/		  
+	@mv -fv *.mod $(SFINCLUDE)/debug/	  
 	@rm -f *.o			  
 	@echo 'LIBRARY IS DONE.........'
 	@echo ' '
