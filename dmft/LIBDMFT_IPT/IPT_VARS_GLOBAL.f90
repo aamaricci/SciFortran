@@ -25,7 +25,7 @@ module IPT_VARS_GLOBAL
   real(8) 	        :: wmin,wmax
   real(8)               :: eps_error
   integer               :: Nsuccess
-  real(8)               :: weigth
+  real(8)               :: weight
   real(8)               :: deltasc
 
   !real(8),allocatable,dimension(:) :: wr,wm,t,tau
@@ -43,7 +43,7 @@ module IPT_VARS_GLOBAL
        nloop,    &
        eps,      &
        printf,   &
-       weigth,   &
+       weight,   &
        eps_error,&
        Nsuccess, &
        deltasc
@@ -73,7 +73,7 @@ contains
     wmax  = 5.d0
     L     = 2048
     printf= .true.
-    weigth= 0.9d0
+    weight= 0.9d0
     eps_error= 1.d-4
     Nsuccess = 2
     deltasc  = 0.1d0
@@ -147,7 +147,7 @@ contains
     call parse_cmd_variable(L,"L")
     call parse_cmd_variable(eps,"EPS")
     call parse_cmd_variable(wmax,"WMAX")
-    call parse_cmd_variable(weigth,"WEIGTH","WEIGHT")
+    call parse_cmd_variable(weight,"WEIGTH","WEIGHT")
     call parse_cmd_variable(printf,"PRINTF")
     call parse_cmd_variable(eps_error,"EPS_ERROR")
     call parse_cmd_variable(nsuccess,"NSUCCESS")
