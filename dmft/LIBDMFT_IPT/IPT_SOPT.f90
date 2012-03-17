@@ -147,20 +147,17 @@ contains
 
 
   subroutine getPolarization
-    integer :: ix,iy,iz
-    real(8) :: sum1,sum2
+    integer :: ix,iy,iz    
+    P1=zero
+    P2=zero
     do ix=1,MM
-       sum1=zero
-       sum2=zero
        do iy=1,MM
           iz= iy_m_ix(iy,ix)
           if(iz>0)then
-             sum1=sum1 + A0m(iy)*A0p(iz)
-             sum2=sum2 + A0p(iy)*A0m(iz)
+             P1(ix)=P1(ix) + A0p(iy)*A0m(iz)*fmesh
+             P2(ix)=P2(ix) + A0m(iy)*A0p(iz)*fmesh
           endif
        enddo
-       P1(ix)=sum1*fmesh
-       P2(ix)=sum2*fmesh
     enddo
   end subroutine getPolarization
 
@@ -187,8 +184,8 @@ contains
        do iy=1,MM
           iz= iy_m_ix(iy,ix)
           if(iz>0)then
-             sum1=sum1+A0p(iy)*P1(iz)*fmesh
-             sum2=sum2+A0m(iy)*P2(iz)*fmesh
+             sum1=sum1+A0p(MM-iz+1)*P1(iy)*fmesh
+             sum2=sum2+A0m(MM-iz+1)*P2(iy)*fmesh
           end if
        enddo
        imS(ix)=-(U**2)*(sum1+sum2)*pi
