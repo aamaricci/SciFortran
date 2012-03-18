@@ -119,7 +119,7 @@ cd $SFBLAS
 pwd
 echo "output of the *make call is in make.log"
 cp make.inc.$FCTMP make.inc
-#make 2>&1 > make.log 
+make 2>&1 > make.log 
 DOBLAS=$?
 echo "Success: $DOBLAS"
 sleep 2
@@ -135,7 +135,7 @@ cd $SFLAPACK
 pwd
 echo "output of the *make call is in make.log"
 cp make.inc.$FCTMP make.inc
-#make 2>&1 > make.log
+make 2>&1 > make.log
 DOLAPACK=$?
 echo "Success: $DOLAPACK"
 sleep 2
@@ -149,9 +149,9 @@ cd $SFFFTW3
 sleep 1
 pwd
 echo "output of the *./configure;make;make install call is in make.log"
-#./configure --prefix=`pwd` FC=$FCTMP 2>&1 > make.log
-#make 2>&1 >> make.log
-#make install 2>&1 >> make.log
+./configure --prefix=`pwd` FC=$FCTMP 2>&1 > make.log
+make 2>&1 >> make.log
+make install 2>&1 >> make.log
 DOFFTW3=$?
 echo "Success: $DOFFTW3"
 sleep 2
@@ -202,12 +202,12 @@ else
 fi
 
 source $SFDIR/bin/mylibvars.sh
-sh update_lib.sh
+make 
 echo""
 echo""
 echo""
 
-echo"================================================================================================================"
+
 echo 'Please be sure to add the following line to your shell init file (e.g. .bashrc, .profile, .bash_profile,etc..)'
 echo "export SFDIR=$SFDIR"
 echo 'source $SFDIR/bin/mylibvars.sh'

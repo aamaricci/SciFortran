@@ -6,22 +6,21 @@ SFMODS_DEB= -I$(SFINCLUDE)/debug
 
 
 #SciFor LIBRARY:
-FFTGF     =  -lfftgf
-IOTOOLS   =  -liotools
-COMVARS   =  -lcomvars
-LIST	  =  -llist
-ROOTFIND  =  -lroot
-GREENFUNX =  -lgfunx
-LATTICE   =  -llattice
-TOOLS     =  -ltools
-SPLINE    =  -lspline
-INTEGRATE =  -lintegrate
-RANDOM    =  -lrandom
-MATRIX    =  -lmatrix
-CHRONO    =  -lchrono
-STRINGPACK=  -lstringpack
-STATISTICS=  -lstat
-
+# FFTGF     =  -lfftgf
+# IOTOOLS   =  -liotools
+# COMVARS   =  -lcomvars
+# LIST	  =  -llist
+# ROOTFIND  =  -lroot
+# GREENFUNX =  -lgfunx
+# LATTICE   =  -llattice
+# TOOLS     =  -ltools
+# SPLINE    =  -lspline
+# INTEGRATE =  -lintegrate
+# RANDOM    =  -lrandom
+# MATRIX    =  -lmatrix
+# CHRONO    =  -lchrono
+# STRINGPACK=  -lstringpack
+# STATISTICS=  -lstat
 
 ifdef MKLDIR
 MATHLIB  = -lmkl_em64t -lmkl_core -liomp5  -lpthread
@@ -29,9 +28,11 @@ else
 MATHLIB	 = -llapack -lblas
 endif
 
-SFLIBS 	 = ${LIST} ${FFTGF} ${TOOLS} ${ROOTFIND}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${STATISTICS} ${LATTICE} ${MATHLIB}
+SFLIBS 	 = -lscifor ${MATHLIB}
+#${LIST} ${FFTGF} ${TOOLS} ${ROOTFIND}  ${SPLINE} ${COMVARS} ${INTEGRATE} ${RANDOM} ${GREENFUNX} ${MATRIX} ${IOTOOLS} ${CHRONO} ${STRINGPACK} ${STATISTICS} ${LATTICE} 
 
-SFLIBS_DEB = ${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${ROOTFIND}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${STATISTICS}_deb ${LATTICE}_deb ${MATHLIB}
+SFLIBS_DEB = -lscifor_deb ${MATHLIB}
+#${LIST}_deb ${FFTGF}_deb ${TOOLS}_deb ${ROOTFIND}_deb ${SPLINE}_deb ${COMVARS}_deb ${INTEGRATE}_deb ${RANDOM}_deb ${GREENFUNX}_deb ${MATRIX}_deb ${IOTOOLS}_deb ${CHRONO}_deb ${STRINGPACK}_deb ${STATISTICS}_deb ${LATTICE}_deb ${MATHLIB}
 
 
 ifdef SFFFTW3
