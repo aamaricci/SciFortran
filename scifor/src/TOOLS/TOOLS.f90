@@ -8,7 +8,6 @@
   module TOOLS
     USE COMMON_VARS
     USE CHRONOBAR
-    !USE MPI
     implicit none
     private
 

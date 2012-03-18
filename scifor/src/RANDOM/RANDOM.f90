@@ -31,24 +31,6 @@ module RANDOM
 
 contains
 
-  !+-----------------------------------------------------------------+
-  !PURPOSE  : initialize the seed for the INTRINSIC RNG 
-  !+-----------------------------------------------------------------+
-  subroutine init_random_number(shift)
-    integer,optional :: shift
-    integer :: i, n, clock
-    integer,dimension(:),allocatable :: seed
-    call RANDOM_SEED(size = n)
-    allocate(seed(n))
-    call SYSTEM_CLOCK(COUNT=clock)
-    seed = clock + 37 * (/ (i - 1, i = 1, n) /)
-    if(present(shift))seed=seed+shift
-    call RANDOM_SEED(PUT = seed)
-    deallocate(seed)
-  end subroutine init_random_number
-
-
-
   function irand()
     integer :: irand
     real(8) :: r
@@ -64,7 +46,7 @@ contains
     real(8) :: re,im
     call random_number(re)
     call random_number(im)
-    crand=dcmplx(re,im)
+    crand=cmplx(re,im,8)
   end function crand
 
 
@@ -209,6 +191,21 @@ contains
 
 
 
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : initialize the seed for the INTRINSIC RNG 
+  !+-----------------------------------------------------------------+
+  subroutine init_random_number(shift)
+    integer,optional :: shift
+    integer :: i, n, clock
+    integer,dimension(:),allocatable :: seed
+    call RANDOM_SEED(size = n)
+    allocate(seed(n))
+    call SYSTEM_CLOCK(COUNT=clock)
+    seed = clock + 37 * (/ (i - 1, i = 1, n) /)
+    if(present(shift))seed=seed+shift
+    call RANDOM_SEED(PUT = seed)
+    deallocate(seed)
+  end subroutine init_random_number
 
 
 

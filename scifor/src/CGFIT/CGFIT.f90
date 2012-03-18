@@ -32,7 +32,7 @@
       INTEGER, INTENT(OUT)                 :: iter
       REAL(8), INTENT(OUT)                 :: fret
       INTEGER, PARAMETER                   :: ITMAX=10000
-      REAL(8), PARAMETER                   :: EPS=1.0e-6
+      REAL(8), PARAMETER                   :: EPS=1.0d-6
       INTEGER                              :: its
       REAL(8)                              :: dgg,fp,gam,gg
       REAL(8), DIMENSION(size(p))          :: g,h,xi
@@ -54,7 +54,7 @@
       do its=1,ITMAX
          iter=its
          call linmin(p,xi,fret)
-         if (2.0*abs(fret-fp) <= ftol*(abs(fret)+abs(fp)+EPS)) RETURN
+         if (2.d0*abs(fret-fp) <= ftol*(abs(fret)+abs(fp)+EPS)) RETURN
          !fp=fret
          fp = func(p) !========MODIFICATION=======
          xi = dfunc(p)        
@@ -93,13 +93,13 @@
     SUBROUTINE linmin(p,xi,fret)
       REAL(8), INTENT(OUT)                         :: fret
       REAL(8), DIMENSION(:), TARGET, INTENT(INOUT) :: p,xi
-      REAL(8), PARAMETER                           :: TOL=1.0e-4
+      REAL(8), PARAMETER                           :: TOL=1.0d-4
       REAL(8)                                      :: ax,bx,fa,fb,fx,xmin,xx
       ncom=size(p) ; if(ncom /= size(xi))stop "Error in LinMin"
       pcom=>p
       xicom=>xi
-      ax=0.0
-      xx=1.0
+      ax=0.d0
+      xx=1.d0
       call mnbrak(ax,xx,bx,fa,fx,fb,f1dim)
       fret=brent(ax,xx,bx,f1dim,TOL,xmin)
       !...construct the vector results to return

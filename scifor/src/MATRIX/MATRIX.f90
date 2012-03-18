@@ -145,7 +145,7 @@ contains
     character(len=*),optional        :: char
     character(len=1)                 :: uplo
     character(len=1)                 :: diag
-    integer                          :: ndim,ndim1,ndim2
+    integer                          :: ndim1,ndim2
     integer                          :: info
     real(8),dimension(:,:)           :: M
     ndim1=size(M,1);ndim2=size(M,2)
@@ -162,7 +162,7 @@ contains
     character(len=*),optional        :: char
     character(len=1)                 :: uplo
     character(len=1)                 :: diag
-    integer                          :: ndim,ndim1,ndim2
+    integer                          :: ndim1,ndim2
     integer                          :: info
     complex(8),dimension(:,:)        :: M
     ndim1=size(M,1);ndim2=size(M,2)
@@ -317,11 +317,11 @@ contains
        indxc(i)=icol
        IF (a(icol,icol) == zero) STOP 'gaussj:singular matrix (2)'
        pivinv=one/a(icol,icol)
-       a(icol,icol)=CMPLX(one,zero)
+       a(icol,icol)=CMPLX(one,zero,8)
        a(icol,:)=a(icol,:)*pivinv
        dumc=a(:,icol)
        !Next, we reduce the rows, except for the pivot one, of course.
-       a(:,icol)     = CMPLX(zero,zero)
+       a(:,icol)     = CMPLX(zero,zero,8)
        a(icol,icol)  = pivinv
        a(1:icol-1,:) = a(1:icol-1,:) - outerprod(dumc(1:icol-1),a(icol,:))
        a(icol+1:,:)  = a(icol+1:,:)  - outerprod(dumc(icol+1:),a(icol,:))
@@ -403,7 +403,7 @@ contains
        a(icol,:)=a(icol,:)*pivinv
        dumc=a(:,icol)
        !Next, we reduce the rows, except for the pivot one, of course.
-       a(:,icol)     = zero !CMPLX(zero,zero)
+       a(:,icol)     = zero !CMPLX
        a(icol,icol)  = pivinv
        a(1:icol-1,:) = a(1:icol-1,:) - outerprod(dumc(1:icol-1),a(icol,:))
        a(icol+1:,:)  = a(icol+1:,:)  - outerprod(dumc(icol+1:),a(icol,:))

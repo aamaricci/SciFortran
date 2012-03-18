@@ -135,13 +135,13 @@
       integer              :: Nx,Lk
       integer,optional     :: Ny
       real(8),dimension(Lk):: wt
-      integer              :: ik,ir,ix,iy,Nk,Lk_
+      integer              :: ik,ix,iy,Nk,Lk_
       real(8)              :: peso 
       real(8)              :: Kx,Ky
       type(vect2D)         :: ai,aj,bi,bj
 
       Nk=Nx/2+1 ; Lk_=Nk*(Nk+1)/2 ; if(present(Ny))Lk_=(Nx+1)*(Ny+1)
-      if(Lk_ /= Lk)call abort("LATTICE: the +input1.dimension in +build_2dsquare_lattice is wrong!")
+      if(Lk_ /= Lk)call error("LATTICE: the +input1.dimension in +build_2dsquare_lattice is wrong!")
 
       if(present(Ny))then
          write(*,"(A,I8,A)")"Full BZ:",Lk," k-points"
@@ -273,7 +273,7 @@
     function square_lattice_dispersion_array(Lk,ts,tsp) result(epsik)!,sorted_epsik,sorted_ik)
       integer                     :: Lk
       real(8),dimension(Lk)       :: epsik
-      integer                     :: ik,ix,iy,it
+      integer                     :: ik,ix,iy
       real(8),intent(in)          :: ts
       real(8),intent(in),optional :: tsp
       ! real(8),dimension(size(epsik)),optional    :: sorted_epsik

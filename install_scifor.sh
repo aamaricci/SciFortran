@@ -5,7 +5,7 @@
 #DEFINE SOME VARIABLES:
 #==============================
 HERE=`pwd`
-export SFDIR=$HERE/scifor
+SFDIR=$HERE/scifor
 SFLOCAL=$HERE/local
 SFETC=$SFDIR/etc
 SFSRC=$SFDIR/src
@@ -28,10 +28,9 @@ echo ""
 
 
 
-
 #ASK WHICH COMPILER TO USE:
 #==============================
-echo "Please choose compiler? [gfortran*,ifort,xlf,...]"
+echo "Please choose compiler? [gfortran(default),ifort] (others compiler not supported yet)"
 read FCTMP
 if [ -z $FCTMP ]; then
     FCTMP=gfortran
@@ -52,6 +51,8 @@ if [ -z $MKLANSWER ];then
     MKLANSWER=n
 fi
 if [ $MKLANSWER == "y" -o $MKLANSWER == "Y" ];then
+    echo "Possible directories are:"
+    locate mklvars
     echo "Please write the absolute path to MKL tree directory"
     read MKLDIR
     echo "Please, write the aboslute path to the MKL vars script (e.g. mklvarsem64t.sh)"
@@ -87,10 +88,11 @@ export MKLDIR=$MKLDIR
 source $MKLVARSH
 EOF
 fi
+cat library.conf
 echo ""
 echo ""
 echo ""
-
+sleep 2
 
 
 
@@ -118,16 +120,14 @@ DEB=
 EOF
 fi
 
-
-cat <<EOF >> opt.mk
-#########################################################################
-FFLAG += $(STD) -static
-DFLAG += $(DEB) -static
-EOF
+echo 'FFLAG += $(STD) -static' >> opt.mk
+echo 'DFLAG += $(DEB) -static' >> opt.mk
 echo ""
 echo ""
 echo ""
+cat opt.mk
 cd $SFDIR
+sleep 2
 
 
 #COMPILE THE BLAS/LAPACK/FFTW3 LIBRARIES
@@ -135,42 +135,48 @@ cd $SFDIR
 #start compiling the necessary libraries:
 #blas:
 echo "Compile local version of BLAS"
+sleep 1
 cd $SFBLAS
-##
 pwd
-##
-# cp make.inc.$FCTMP make.inc
-# make 2>&1 > make.log 
-
+echo "output of the *make call is in make.log"
+cp make.inc.$FCTMP make.inc
+make 2>&1 > make.log 
+echo "Success: $?"
+sleep 2
+echo ""
 
 # #lapack
 echo "Compile local version of LAPACK"
+sleep 1
 cd $SFLAPACK
-##
 pwd
-##
-# cp make.inc.$FCTMP make.inc
-# make 2>&1 > make.log
-
+echo "output of the *make call is in make.log"
+cp make.inc.$FCTMP make.inc
+make 2>&1 > make.log
+echo "Success: $?"
+sleep 2
+echo ""
 
 # #fftw3
 echo "Compile local version of FFTW3"
 cd $SFFFTW3
-##
+sleep 1
 pwd
-##
-# ./configure --prefix=`pwd` 2>&1 > make.log
-# make 2>&1 >> make.log
-# make install 2>&1 >> make.log
-#GET THE BOOLEAN $? ouput: check if compilation was ok or not, needed to setup FFT
-EFFTW3=1
-# cd $SFDIR
-# echo ""
-# echo ""
-# echo ""
+echo "output of the *./configure;make;make install call is in make.log"
+./configure --prefix=`pwd` 2>&1 > make.log
+make 2>&1 >> make.log
+make install 2>&1 >> make.log
+EFFTW3=$?
+echo "Success: $EFFTW3"
+sleep 2
+echo ""
+echo ""
+echo ""
+
 
 cd $SFDIR
 ln -s $SFLOCAL $SFDIR/local
+
 
 #COMPILE THE LIBRARY
 #=======================================
@@ -186,11 +192,18 @@ else
     ln -s ./FFT_NR ./FFT
 fi
 
+source $SFDIR/bin/mylibvars.sh
 sh update_lib.sh
 
 
+echo 'Please be sure to add the following line to your shell init file (e.g. .bashrc, .profile, .bash_profile,etc..)'
+echo "export SFDIR=$SFDIR"
+echo 'source $SFDIR/bin/mylibvars.sh'
 
-
+echo ""
+echo "done. good bye"
+echo "Please open a new terminal session"
+echo ""
 
 ##################################################################
 ###REPO

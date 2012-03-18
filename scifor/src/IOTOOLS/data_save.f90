@@ -1,5 +1,5 @@
 subroutine data_saveV_I(pname,Y1)
-  integer                          :: i,j,Np
+  integer                          :: i,Np
   character(len=*)                 :: pname
   integer,dimension(:)             :: Y1
   Np=size(Y1)  
@@ -12,7 +12,7 @@ subroutine data_saveV_I(pname,Y1)
 end subroutine data_saveV_I
 !----------------------------
 subroutine data_saveV_R(pname,Y1)
-  integer                          :: i,j,Np
+  integer                          :: i,Np
   character(len=*)                 :: pname
   real(8),dimension(:)             :: Y1
   Np=size(Y1)  
@@ -25,7 +25,7 @@ subroutine data_saveV_R(pname,Y1)
 end subroutine data_saveV_R
 !----------------------------
 subroutine data_saveV_C(pname,Y1)
-  integer                          :: i,j,Np
+  integer                          :: i,Np
   character(len=*)                 :: pname
   complex(8),dimension(:)          :: Y1
   Np=size(Y1)  

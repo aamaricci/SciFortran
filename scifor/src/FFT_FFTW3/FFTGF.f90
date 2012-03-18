@@ -7,7 +7,7 @@ module FFTGF
   public :: fftgf_iw2tau , fftgf_tau2iw
 
   REAL(8),PARAMETER    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
-  integer*8            :: plan
+  integer(8)            :: plan
 contains
 
   !+-------------------------------------------------------------------+
@@ -32,9 +32,9 @@ contains
   end subroutine cfft_1d_backward
 
   function cfft_1d_shift(fin,L) result(fout)
+    integer                   :: i,L    
     complex(8),dimension(2*L) :: fin
     complex(8),dimension(-L:L):: fout,dout
-    integer                   :: i,L
     forall(i=1:2*L)dout(i-L-1)=fin(i) ![1,2*L]---> [-L,L-1]
     forall(i=-L:-1)fout(i+L)=dout(i)   !g[0,M-1]<--- x[-M,-1]
     forall(i=0:L-1)fout(i-L)=dout(i)   !g[-L,-1]<--- x[0,L-1]
@@ -204,28 +204,28 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  :  
   !+-------------------------------------------------------------------+
-  subroutine fftgf_tau2iw(gt,gw,beta,normal)
+  subroutine fftgf_tau2iw(gt,gw,beta)!,normal)
     real(8)                :: gt(0:)
     complex(8)             :: gw(:)
     real(8)                :: beta
-    logical,optional       :: normal
-    logical                :: normal_
+    ! logical,optional       :: normal
+    ! logical                :: normal_
     integer                :: i,L,n,M
     complex(8),allocatable :: Igw(:)
     real(8),allocatable    :: Igt(:)
 
     L=size(gt)-1    ; N=size(gw)
-    normal_=.true.  ; if(present(normal))normal_=normal
+    ! normal_=.true.  ; if(present(normal))normal_=normal
 
     M=32*L
     allocate(Igt(-M:M),Igw(2*M))
     call interp(gt(0:L),Igt(0:M),L,M)
     !
-    if(normal_)then
-       forall(i=1:M)Igt(-i)=-Igt(M-i)
-    else
-       forall(i=1:M)Igt(-i)=Igt(M-i)
-    endif
+    ! if(normal_)then
+    forall(i=1:M)Igt(-i)=-Igt(M-i)
+    ! else
+    !    forall(i=1:M)Igt(-i)=Igt(M-i)
+    ! endif
     !
     call fftgf_rt2rw((1.d0,0.d0)*Igt,Igw,M)
     Igw=Igw*beta/real(M,8)/2.d0

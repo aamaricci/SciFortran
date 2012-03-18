@@ -3,8 +3,8 @@ subroutine interp(FctL1,FctL2,L1,L2)
   real(8)             :: FctL1(0:L1), FctL2(0:L2)
   real(8),allocatable :: xa(:), ya(:,:), y2(:)
   integer             :: L11, L12, L13
-  real(8)             :: x, y
-  integer             :: i, j
+  real(8)             :: x
+  integer             :: i
   L11 = L1 + 1
   L12 = L1 + 2
   L13 = L1 + 3
@@ -261,7 +261,7 @@ subroutine cubspl ( tau, c, n, ibcbeg, ibcend )
      go to 110
   end if
 
-90 continue
+!90 continue
   !
   !  Not-a-knot and 3 <= N, and either 3 < N or also not-a-knot
   !  at left end point.
@@ -279,7 +279,7 @@ subroutine cubspl ( tau, c, n, ibcbeg, ibcend )
   !
   !  N = 3 and not-a-knot also at left.
   !
-100 continue
+  !100 continue
 
   c(2,n) = 2.0D+00 * c(4,n)
   c(4,n) = 1.0D+00
@@ -441,7 +441,7 @@ function ppvalu ( break, coef, l, k, x, jderiv )
 
   value = 0.0D+00
 
-  fmmjdr = k - jderiv
+  fmmjdr = real(k - jderiv,8)
   !
   !  Derivatives of order K or higher are identically zero.
   !

@@ -1,5 +1,5 @@
 subroutine splot3D(pname,X1,X2,Y,wlines,nlines)
-  integer                              :: i,j,Ny,Nx1,Nx2,count,Nl
+  integer                              :: i,j,Nx1,Nx2,count,Nl
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: X1
   real(8),dimension(:)                 :: X2
@@ -59,16 +59,13 @@ end subroutine splot3D
 
 
 subroutine splot3D_(pname,X1,X2,Y,wlines,nlines)
-  integer                              :: i,j,Ny,Nx1,Nx2,count,Nl
+  integer                              :: i
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: X1
   real(8),dimension(:)                 :: X2
   complex(8),dimension(size(X1),size(X2)) :: Y
   integer,optional                     :: nlines
   logical,optional                     :: wlines
-  real(8)                              :: X1min,X1max
-  real(8)                              :: X2min,X2max
-  character(len=6)                     :: minx,miny,maxx,maxy
   if(present(nlines).and.present(wlines))then
      call splot3d("re"//pname,X1,X2,real(Y,8),wlines,nlines)
      call splot3d("im"//pname,X1,X2,dimag(Y),wlines,nlines)
@@ -86,7 +83,7 @@ end subroutine splot3D_
 
 
 subroutine splot3D__(pname,X1,X2,Y,wlines,nlines)
-  integer                              :: i,j,Ny,Nx1,Nx2,count,Nl,Nk
+  integer                              :: i,j,Nx1,count,Nl,Nk
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: X1 !(0:Nt)
   real(8),dimension(:,:)               :: X2 !(0:Nt,Lk)

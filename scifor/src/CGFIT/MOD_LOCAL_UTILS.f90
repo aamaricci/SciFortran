@@ -17,7 +17,7 @@ contains
     !...The first parameter is the default ratio by which successive intervals
     !   are magnified; the second is the maximum magnification allowed for a
     !   parabolic-fit step
-    REAL(8), PARAMETER     :: GOLD=1.618034,GLIMIT=100.0,TINY=1.0e-20
+    REAL(8), PARAMETER     :: GOLD=1.618034d0,GLIMIT=100.0d0,TINY=1.0d-20
     REAL(8)                :: fu,q,r,u,ulim
     INTERFACE
        FUNCTION func(x)
@@ -37,7 +37,7 @@ contains
        if (fb < fc) RETURN
        r=(bx-ax)*(fb-fc)
        q=(bx-cx)*(fb-fa)
-       u=bx-((bx-cx)*q-(bx-ax)*r)/(2.0*sign(max(abs(q-r),TINY),q-r))
+       u=bx-((bx-cx)*q-(bx-ax)*r)/(2.d0*sign(max(abs(q-r),TINY),q-r))
        ulim=bx+GLIMIT*(cx-bx)
        if ((bx-u)*(u-cx) > 0.0) then
           fu=func(u)
@@ -116,7 +116,7 @@ contains
     REAL(8), INTENT(OUT) :: xmin
     REAL(8)              :: brent
     INTEGER, PARAMETER   :: ITMAX=100
-    REAL(8), PARAMETER   :: CGOLD=0.3819660,ZEPS=1.0e-3*epsilon(ax)
+    REAL(8), PARAMETER   :: CGOLD=0.3819660d0,ZEPS=1.0d-3*epsilon(ax)
     INTEGER              :: iter
     REAL(8)              :: a,b,d,e,etemp,fu,fv,fw,fx,p,q,r,tol1,tol2,u,v,w,x,xm
     INTERFACE
@@ -130,15 +130,15 @@ contains
     v=bx
     w=v
     x=v
-    e=0.0
+    e=0.d0
     fx=func(x)
     fv=fx
     fw=fx
     do iter=1,ITMAX
-       xm=0.5*(a+b)
+       xm=0.5d0*(a+b)
        tol1=tol*abs(x)+ZEPS
-       tol2=2.0*tol1
-       if (abs(x-xm) <= (tol2-0.5*(b-a))) then
+       tol2=2.d0*tol1
+       if (abs(x-xm) <= (tol2-0.5d0*(b-a))) then
           xmin=x
           brent=fx
           RETURN
@@ -148,7 +148,7 @@ contains
           q=(x-v)*(fx-fw)
           p=(x-v)*q-(x-w)*r
           q=2.0*(q-r)
-          if (q > 0.0) p=-p
+          if (q > 0.d0) p=-p
           q=abs(q)
           etemp=e
           e=d
@@ -192,7 +192,7 @@ contains
           end if
        end if
     end do
-    pause 'brent: exceed maximum iterations'
+    print*,'brent: exceed maximum iterations'
   CONTAINS
     SUBROUTINE shft(a,b,c,d)
       REAL(8), INTENT(OUT) :: a

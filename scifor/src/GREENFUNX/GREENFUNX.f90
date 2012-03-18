@@ -75,10 +75,10 @@ contains
   !PURPOSE  : 
   !+----------------------------------------------------------------+
   function ret_component_t(fgkgtr,fgkless,t,L) result(fgkret)
+    integer :: i,L
     complex(8),dimension(-L:L),intent(in)  :: fgkless,fgkgtr
     complex(8),dimension(-L:L)             :: fgkret
     real(8),dimension(-L:L),intent(in)     :: t
-    integer :: i,L
     forall(i=-L:L)fgkret(i)=step(t(i))*(fgkgtr(i)-fgkless(i))
   contains
     pure function step(x)
@@ -98,11 +98,11 @@ contains
 
   !--------------------------------------------------------!
   function less_component_w(fret,wr,beta) result(fless)
+    integer :: i,L
     complex(8),dimension(:),intent(in)  :: fret
     complex(8),dimension(size(fret))    :: fless
     real(8),dimension(size(fret))       :: wr
     real(8) :: pi,A,beta,w
-    integer :: i,L
     pi=acos(-1.d0)
     L=size(fret)
     do i=1,L
@@ -125,11 +125,11 @@ contains
 
   !--------------------------------------------------------!
   function gtr_component_w(fret,wr,beta) result(fgtr)
+    integer :: i,L
     complex(8),dimension(:),intent(in)  :: fret
     complex(8),dimension(size(fret))    :: fgtr
     real(8),dimension(size(fret))       :: wr
     real(8) :: pi,A,beta,w
-    integer :: i,L
     pi=acos(-1.d0)
     L=size(fret)
     do i=1,L

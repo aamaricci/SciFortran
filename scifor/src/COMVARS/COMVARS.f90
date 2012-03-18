@@ -4,8 +4,6 @@
 !PURPOSE  : Declare all the common variables usually in use within codes
 !########################################################################
 module COMMON_VARS
-  !USE MPI
-  !USE OMP_LIB
   implicit none
   private
 
@@ -207,7 +205,7 @@ contains
     character(len=*) :: text
     character(len=4) :: char_id
     integer,optional :: id
-    integer          :: i,id_
+    integer          :: id_
     logical,optional :: stop
     logical          :: stop_
     id_=0;if(present(id))id_=id
@@ -334,7 +332,6 @@ contains
     integer,optional          :: default
     character(len=*)          :: name
     character(len=*),optional :: name2
-    character(len=512)        :: buffer
     type(cmd_variable)        :: var
     integer                   :: i
     if(present(default))variable=default
@@ -352,7 +349,6 @@ contains
     real(8),optional          :: default
     character(len=*)          :: name
     character(len=*),optional :: name2
-    character(len=512)        :: buffer
     type(cmd_variable)        :: var
     integer                   :: i
     if(present(default))variable=default
@@ -370,7 +366,6 @@ contains
     character(len=*),optional :: default
     character(len=*)          :: name
     character(len=*),optional :: name2
-    character(len=512)        :: buffer
     type(cmd_variable)        :: var
     integer                   :: i
     if(present(default))variable=default
@@ -388,7 +383,6 @@ contains
     logical,optional          :: default
     character(len=*)          :: name
     character(len=*),optional :: name2
-    character(len=512)        :: buffer
     type(cmd_variable)        :: var
     integer                   :: i
     if(present(default))variable=default

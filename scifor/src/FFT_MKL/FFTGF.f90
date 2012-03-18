@@ -26,7 +26,7 @@
       Status   = DftiCreateDescriptor(Handle,DFTI_DOUBLE,DFTI_COMPLEX,1,size(func))
       Status   = DftiCommitDescriptor(Handle)
       Status   = DftiComputeForward(Handle,func)
-      Status   = DftiFreeDescriptor(Handle)      
+      Status   = DftiFreeDescriptor(Handle)
     end subroutine cfft_1d_forward
 
     subroutine cfft_1d_backward(func)
@@ -38,9 +38,9 @@
     end subroutine cfft_1d_backward
 
     function cfft_1d_shift(fin,L) result(fout)
+      integer                   :: i,L
       complex(8),dimension(2*L) :: fin
       complex(8),dimension(-L:L):: fout,dout
-      integer                   :: i,L
       forall(i=1:2*L)dout(i-L-1)=fin(i) ![1,2*L]---> [-L,L-1]
       forall(i=-L:-1)fout(i+L)=dout(i)   !g[0,M-1]<--- x[-M,-1]
       forall(i=0:L-1)fout(i-L)=dout(i)   !g[-L,-1]<--- x[0,L-1]
@@ -75,11 +75,10 @@
     !           OUTPUT: func_out (-M:M)
     !+-------------------------------------------------------------------+
     subroutine fftgf_rw2rt(func_in,func_out,M)
-      integer                                :: i,M
+      integer                                :: M
       complex(8),dimension(2*M),intent(in)   :: func_in
       complex(8),dimension(-M:M),intent(out) :: func_out
       complex(8),dimension(2*M)              :: dummy_in
-      complex(8),dimension(-M:M)             :: dummy_out
       dummy_in = func_in
       call cfft_1d_forward(dummy_in(1:2*M))
       func_out = cfft_1d_shift(dummy_in,M)
@@ -152,7 +151,7 @@
       !
       allocate(tmpGw(2*L),tmpGt(-L:L))
       !
-      wmax = pi/beta*real(2*L-1,8)
+      wmax = pi/beta*real(2*L-1,8) !wm(L)
       mues =-real(gw(L),8)*wmax**2
       tmpGw= (0.d0,0.d0)
       !
@@ -211,28 +210,28 @@
     !+-------------------------------------------------------------------+
     !PURPOSE  :  
     !+-------------------------------------------------------------------+
-    subroutine fftgf_tau2iw(gt,gw,beta,normal)
+    subroutine fftgf_tau2iw(gt,gw,beta)!,normal)
       real(8)                :: gt(0:)
       complex(8)             :: gw(:)
       real(8)                :: beta
-      logical,optional       :: normal
-      logical                :: normal_
+      ! logical,optional       :: normal
+      ! logical                :: normal_
       integer                :: i,L,n,M
       complex(8),allocatable :: Igw(:)
       real(8),allocatable    :: Igt(:)
 
       L=size(gt)-1    ; N=size(gw)
-      normal_=.true.  ; if(present(normal))normal_=normal
+      ! normal_=.true.  ; if(present(normal))normal_=normal
 
       M=32*L
       allocate(Igt(-M:M),Igw(2*M))
       call interp(gt(0:L),Igt(0:M),L,M)
       !
-      if(normal_)then
-         forall(i=1:M)Igt(-i)=-Igt(M-i)
-      else
-         forall(i=1:M)Igt(-i)=Igt(M-i)
-      endif
+      ! if(normal_)then
+      forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)
+      ! else
+      !    forall(i=1:M)Igt(-i)=Igt(M-i)
+      ! endif
       !
       call fftgf_rt2rw((1.d0,0.d0)*Igt,Igw,M)
       Igw=Igw*beta/real(M,8)/2.d0
