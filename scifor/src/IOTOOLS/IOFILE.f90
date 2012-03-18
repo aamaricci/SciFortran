@@ -25,7 +25,7 @@ contains
 
   subroutine close_file(pname)
     character(len=*) :: pname
-    open(10,file=trim(adjustl(trim(pname))),access="append")
+    open(10,file=trim(adjustl(trim(pname))),access="APPEND")
     write(10,*)""
     close(10)
   end subroutine close_file
@@ -47,7 +47,7 @@ contains
     endif
     open(10,file=trim(adjustl(trim(file))))
     call fstat(10,buff,status)
-    size=nint(buff(8)/dble(1024))
+    size=nint(dble(buff(8))/dble(1024))
     if(present(printf).AND.printf.eqv..true.)&
          write(*,"(A,A,A,f9.6,A)")"file: **",trim(adjustl(trim(file))),"** is ",size," Kb"
   end function file_size
@@ -67,7 +67,7 @@ contains
     integer               :: file_info
     character(len=*)      :: file
     integer,dimension(13) :: buff
-    integer               :: status,ifile,ierr
+    integer               :: status,ifile
     logical               :: IOfile
     inquire(file=trim(adjustl(trim(file))),exist=IOfile)
     if(.not.IOfile)then
@@ -187,7 +187,6 @@ contains
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
   subroutine data_open(filename,tar)
-    integer                        :: i
     character(len=*)               :: filename
     character(len=10)              :: type
     logical                        :: compressed,control
@@ -222,7 +221,7 @@ contains
   subroutine create_data_dir(dir_name)
     character(len=*),optional :: dir_name
     character(len=256)        :: name
-    logical                   :: logical,control
+    logical                   :: control
     name="DATAsrc";if(present(dir_name))name=dir_name
     control = check_data_dir(name)
     if(control)then

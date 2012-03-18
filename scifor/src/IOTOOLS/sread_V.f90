@@ -1,7 +1,7 @@
 !----------------------------
 
 subroutine sreadV_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
-  integer                             :: i,j,Np!,Ny1,Ny2,Nx
+  integer                             :: i,Np
   character(len=*)                    :: pname
   integer,dimension(:)                :: X
   integer,dimension(size(X))          :: Y1
@@ -51,7 +51,7 @@ end subroutine sreadV_II
 !----------------------------
 
 subroutine sreadV_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
-  integer                             :: i,j,Np
+  integer                             :: i,Np
   character(len=*)                    :: pname
   integer,dimension(:)                :: X
   real(8),dimension(size(X))          :: Y1
@@ -99,7 +99,7 @@ end subroutine sreadV_IR
 !----------------------------
 
 subroutine sreadV_IC(pname,X,Y1,Y2,Y3,Y4)
-  integer                                :: i,j,Np
+  integer                                :: i,Np
   character(len=*)                       :: pname
   integer,dimension(:)                   :: X
   complex(8),dimension(size(X))          :: Y1
@@ -145,7 +145,7 @@ end subroutine sreadV_IC
 !----------------------------
 
 subroutine sreadV_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
-  integer                             :: i,j,Np
+  integer                             :: i,Np
   character(len=*)                    :: pname
   real(8),dimension(:)                :: X
   integer,dimension(size(X))          :: Y1
@@ -191,7 +191,7 @@ end subroutine sreadV_RI
 !----------------------------
 
 subroutine sreadV_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
-  integer                             :: i,j,Np
+  integer                             :: i,Np
   character(len=*)                    :: pname
   real(8),dimension(:)                :: X
   real(8),dimension(size(X))          :: Y1
@@ -237,7 +237,7 @@ end subroutine sreadV_RR
 !----------------------------
 
 subroutine sreadV_RC(pname,X,Y1,Y2,Y3,Y4)
-  integer                                :: i,j,Np
+  integer                                :: i,Np
   character(len=*)                       :: pname
   real(8),dimension(:)                   :: X
   complex(8),dimension(size(X))          :: Y1

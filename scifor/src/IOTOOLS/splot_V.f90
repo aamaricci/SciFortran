@@ -1,5 +1,5 @@
 subroutine splotV_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
-  integer                             :: i,j,Np!,Ny1,Ny2,Nx
+  integer                             :: i,Np!,Ny1,Ny2,Nx
   character(len=*)                    :: pname
   integer,dimension(:)                :: X,Y1
   integer,dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
@@ -58,7 +58,7 @@ end subroutine splotV_II
 !----------------------------
 
 subroutine splotV_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
-  integer                             :: i,j,Np
+  integer                             :: i,Np
   character(len=*)                    :: pname
   integer,dimension(:)                :: X
   real(8),dimension(size(X))          :: Y1
@@ -112,7 +112,7 @@ end subroutine splotV_IR
 !----------------------------
 
 subroutine splotV_IC(pname,X,Y1,Y2,Y3,Y4,append)
-  integer                                :: i,j,Np
+  integer                                :: i,Np
   character(len=*)                       :: pname
   integer,dimension(:)                   :: X
   complex(8),dimension(:)                :: Y1
@@ -153,7 +153,7 @@ end subroutine splotV_IC
 !----------------------------
 
 subroutine splotV_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
-  integer                             :: i,j,Np
+  integer                             :: i,Np
   character(len=*)                    :: pname
   real(8),dimension(:)                :: X
   integer,dimension(size(X))          :: Y1
@@ -207,7 +207,7 @@ end subroutine splotV_RI
 !----------------------------
 
 subroutine splotV_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
-  integer                       :: i,j,Np
+  integer                       :: i,Np
   character(len=*)              :: pname
   real(8),dimension(:)          :: X
   real(8),dimension(:)          :: Y1
@@ -261,7 +261,7 @@ end subroutine splotV_RR
 !----------------------------
 
 subroutine splotV_RC(pname,X,Y1,Y2,Y3,Y4,append)
-  integer                          :: i,j,Np
+  integer                          :: i,Np
   character(len=*)                 :: pname
   real(8),dimension(:)             :: X
   complex(8),dimension(:)          :: Y1

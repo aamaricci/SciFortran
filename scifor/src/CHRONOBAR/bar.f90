@@ -8,7 +8,7 @@ subroutine print_bar(i,imax,leta)
   logical,optional :: leta
   if(mpiID==0)then
      if(present(leta))then
-        call delete_bar_eta(i,imax)
+        call delete_bar_eta()
         old_time=time
         time=timer()
         dtime        = time-old_time     
@@ -34,14 +34,14 @@ end subroutine print_bar
 !PURPOSE  : 
 !+-------------------------------------------------------------------+
 subroutine plot_bar_eta(i,imax,time)
-  integer :: i,imax,k
+  integer :: i,imax!,k
   real    :: time
   character(len=1) :: bar
   bar = "="
-  ms=fraction(time)*1000
-  h=time/secs_in_one_hour
-  m=(time - h*secs_in_one_hour)/secs_in_one_min
-  s=time - h*secs_in_one_hour - m*secs_in_one_min
+  ms=int(fraction(time)*1000.0)
+  h=int(time/secs_in_one_hour)
+  m=int((time - h*secs_in_one_hour)/secs_in_one_min)
+  s=int(time - h*secs_in_one_hour - m*secs_in_one_min)
   write(*,'(2x,1i9,2x,1i3,1a7,i2,a1,i2.2,a1,i2.2,a1,i3.3,1a1,2x,1a2)', advance='no') &
        i,100*i/imax,"% |ETA:",h,":",m,":",s,".",ms,' |'
 end subroutine plot_bar_eta
@@ -56,8 +56,8 @@ end subroutine plot_bar_eta
 !TYPE     : Subroutine
 !PURPOSE  : 
 !+-------------------------------------------------------------------+
-subroutine delete_bar_eta(i,imax)
-  integer :: i,imax,k
+subroutine delete_bar_eta()
+  integer          :: k
   character(len=1) :: back
   back = char(8)
   write(*,'(40a1)', advance='no') (back, k =1,2+9+2+3+7+2+1+2+1+2+1+3+1+2+2)

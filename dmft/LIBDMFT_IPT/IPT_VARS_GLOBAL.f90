@@ -28,7 +28,7 @@ module IPT_VARS_GLOBAL
   real(8)               :: weight
   real(8)               :: deltasc
 
-  !real(8),allocatable,dimension(:) :: wr,wm,t,tau
+  real(8)               :: nread,nerror,ndelta
 
   !Namelists:
   !=========================================================
@@ -46,7 +46,8 @@ module IPT_VARS_GLOBAL
        weight,   &
        eps_error,&
        Nsuccess, &
-       deltasc
+       deltasc,&
+       nread,nerror,ndelta
 
 
 contains
@@ -77,11 +78,13 @@ contains
     eps_error= 1.d-4
     Nsuccess = 2
     deltasc  = 0.1d0
-
+    nread=0.d0
+    nerror=1.d-4
+    ndelta=0.1d0
 
 
     allocate(help_buffer(39))
-    help_buffer=([&
+    help_buffer=([character(len=512)::&
          'NAME',&
          '  library:dmft_ipt',&
          '  ',&
@@ -101,6 +104,9 @@ contains
          '  wmax=[5]   -- max frequency on real axis',&
          '  eps=[0.01] -- broadening parameter',&
          '  deltasc=[0.1]     -- breaking symmetry parameter',&
+         '  nread=[0.0]       -- required density look for mu',&
+         '  nerror=[1.d-4]    -- error treshold for mu-loop',&
+         '  ndelta=[0.1]      -- mu-step in mu-loop for fixed density',&
          '  eps_error=[1.D-4] -- error treshold',&
          '  success=[2]       -- number of converged events',&
          '  ',&
@@ -134,7 +140,7 @@ contains
        open(10,file="default."//adjustl(trim(inputFILE)))
        write(10,nml=variables)
        close(10)
-       call abort("can not open INPUT file, dumping a default version in default."//adjustl(trim(inputFILE)))
+       call error("can not open INPUT file, dumping a default version in default."//adjustl(trim(inputFILE)))
     endif
 
     call parse_cmd_variable(u,"U")
@@ -152,7 +158,9 @@ contains
     call parse_cmd_variable(eps_error,"EPS_ERROR")
     call parse_cmd_variable(nsuccess,"NSUCCESS")
     call parse_cmd_variable(deltasc,"DELTASC")
-
+    call parse_cmd_variable(nread,"NREAD")
+    call parse_cmd_variable(nerror,"NERROR")
+    call parse_cmd_variable(ndelta,"NDELTA")
 
     if(mpiID==0)then
        write(*,nml=variables)

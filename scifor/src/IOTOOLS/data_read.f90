@@ -1,5 +1,5 @@
 subroutine data_readV_I(pname,Y1)
-  integer               :: i,j,Np
+  integer               :: i,Np
   character(len=*)      :: pname
   integer,dimension(:)  :: Y1
   Np=size(Y1)  
@@ -14,7 +14,7 @@ subroutine data_readV_I(pname,Y1)
 end subroutine data_readV_I
 !------------------------------------------------------------------!
 subroutine data_readV_R(pname,Y1)
-  integer               :: i,j,Np
+  integer               :: i,Np
   character(len=*)      :: pname
   real(8),dimension(:)  :: Y1
   Np=size(Y1)
@@ -29,7 +29,7 @@ subroutine data_readV_R(pname,Y1)
 end subroutine data_readV_R
 !------------------------------------------------------------------!
 subroutine data_readV_C(pname,Y1)
-  integer                :: i,j,Np
+  integer                :: i,Np
   character(len=*)       :: pname
   complex(8),dimension(:):: Y1
   real(8)                :: reY1,imY1
@@ -50,7 +50,7 @@ end subroutine data_readV_C
 !------------------------------------------------------------------!
 
 subroutine data_readM_I(pname,Y1,X)
-  integer                       :: i,j,Ny1,Ny2,Nx
+  integer                       :: i,j,Ny1,Ny2
   character(len=*)              :: pname
   integer,dimension(:,:)        :: Y1
   real(8),optional,dimension(:) :: X(size(Y1,2))
@@ -72,7 +72,7 @@ subroutine data_readM_I(pname,Y1,X)
 end subroutine data_readM_I
 !------------------------------------------------------------------!
 subroutine data_readM_R(pname,Y1,X)
-  integer                       :: i,j,Ny1,Ny2,Nx
+  integer                       :: i,j,Ny1,Ny2
   character(len=*)              :: pname
   real(8),dimension(:,:)        :: Y1
   real(8),optional,dimension(:) :: X(size(Y1,2))
@@ -94,7 +94,7 @@ subroutine data_readM_R(pname,Y1,X)
 end subroutine data_readM_R
 !------------------------------------------------------------------!
 subroutine data_readM_C(pname,Y1,X)
-  integer                       :: i,j,Ny1,Ny2,Nx
+  integer                       :: i,j,Ny1,Ny2
   character(len=*)              :: pname
   complex(8),dimension(:,:)     :: Y1
   real(8),optional,dimension(:) :: X(size(Y1,2))
@@ -123,7 +123,7 @@ end subroutine data_readM_C
 
 
 subroutine data_readA3_I(pname,Y1,X)
-  integer                       :: i,j,k,Ny1,Ny2,Ny3,Nx
+  integer                       :: i,j,k,Ny1,Ny2,Ny3
   character(len=*)              :: pname
   integer,dimension(:,:,:)      :: Y1
   real(8),optional,dimension(:) :: X(size(Y1,3))
@@ -147,7 +147,7 @@ subroutine data_readA3_I(pname,Y1,X)
 end subroutine data_readA3_I
 !------------------------------------------------------------------!
 subroutine data_readA3_R(pname,Y1,X)
-  integer                       :: i,j,k,Ny1,Ny2,Ny3,Nx
+  integer                       :: i,j,k,Ny1,Ny2,Ny3
   character(len=*)              :: pname
   real(8),dimension(:,:,:)      :: Y1
   real(8),optional,dimension(:) :: X(size(Y1,3))
@@ -171,7 +171,7 @@ subroutine data_readA3_R(pname,Y1,X)
 end subroutine data_readA3_R
 !------------------------------------------------------------------!
 subroutine data_readA3_C(pname,Y1,X)
-  integer                       :: i,j,k,Ny1,Ny2,Ny3,Nx
+  integer                       :: i,j,k,Ny1,Ny2,Ny3
   character(len=*)              :: pname
   complex(8),dimension(:,:,:)   :: Y1
   real(8),optional,dimension(:) :: X(size(Y1,3))

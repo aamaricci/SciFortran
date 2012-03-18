@@ -6,7 +6,7 @@ subroutine start_timer
   if(mpiID==0)then
      timer_index=timer_index+1
      if(timer_index>size(timer_start,1))then
-        call abort("Error in cronograph: too many timer started")
+        call error("Error in cronograph: too many timer started")
      endif
      call date_and_time(values=timer_start(timer_index,:))
      timer0(timer_index,:)=timer_start(timer_index,:)
@@ -34,8 +34,8 @@ subroutine stop_timer
      call date_and_time(values=timer_stop(timer_index,:))
      itimer=time_difference(timer_stop(timer_index,:),timer_start(timer_index,:))
      call print_timer(itimer)
-     timer_start(timer_index,:)=0.0
-     timer_stop(timer_index,:)=0.0
+     timer_start(timer_index,:)=0
+     timer_stop(timer_index,:)=0
      if(timer_index>1)then
         timer_index=timer_index-1
      else
@@ -66,7 +66,11 @@ function timer()
   m    = dummy(6)
   s    = dummy(7)
   ms   = dummy(8)
-  timer= ms/dble(1000) + s + m*60 + h*60*60 + day*24*60*60 
+  timer= real(dble(ms)/1000.d0 &
+       + dble(s)               &
+       + dble(m)*60.d0         &
+       + dble(h)*60.d0**2      &
+       + dble(day)*24.d0*60.d0**2,4)
 end function timer
 !*********************************************************************
 !*********************************************************************
@@ -147,7 +151,7 @@ end subroutine print_timer
 !PURPOSE  : get Expected Time of Arrival
 !+-------------------------------------------------------------------+
 subroutine eta(i,L,unit,file,step)
-  integer                 :: i,L,k
+  integer                 :: i,L!,k
   integer,optional        :: step
   integer,save            :: mod_print
   integer                 :: percent,iprint
@@ -202,10 +206,10 @@ subroutine eta(i,L,unit,file,step)
      elapsed_time = elapsed_time + dtime
      dtime        = elapsed_time/real(i,4)
      eta_time     = dtime*L - elapsed_time
-     ms=fraction(eta_time)*1000
-     h=eta_time/secs_in_one_hour
-     m=(eta_time - h*secs_in_one_hour)/secs_in_one_min
-     s=eta_time - h*secs_in_one_hour - m*secs_in_one_min
+     ms=int(fraction(eta_time)*1000.0)
+     h =int(eta_time/secs_in_one_hour)
+     m =int((eta_time - h*secs_in_one_hour)/secs_in_one_min)
+     s =int(eta_time - h*secs_in_one_hour - m*secs_in_one_min)
 
      call date_and_time (values=dummy)
      if(fullprint)then

@@ -29,16 +29,16 @@ contains
   !PURPOSE  : 
   !+-------------------------------------------------------------------+
   function solve_ipt_sc_sopt(fg0_,wr_,delta_,L) result(sigma_)
-    integer                      :: L
-    complex(8),dimension(2,-L:L) :: fg0_
-    complex(8),dimension(2,-L:L) :: sigma_
-    real(8),dimension(-L:L)      :: wr_
-    real(8)                      :: delta_
+    integer                   :: L
+    complex(8),dimension(2,L) :: fg0_
+    complex(8),dimension(2,L) :: sigma_
+    real(8),dimension(L)      :: wr_
+    real(8)                   :: delta_
     Lm=L
     if(loop==1)then
-       if(.not.allocated(fg0))allocate(fg0(2,-Lm:Lm))
-       if(.not.allocated(sigma))allocate(sigma(2,-Lm:Lm))
-       if(.not.allocated(wr))allocate(wr(-Lm:Lm))
+       if(.not.allocated(fg0))allocate(fg0(2,Lm))
+       if(.not.allocated(sigma))allocate(sigma(2,Lm))
+       if(.not.allocated(wr))allocate(wr(Lm))
        call get_frequency_index
     endif
     fg0=fg0_ ; delta=delta_ ; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
@@ -62,17 +62,17 @@ contains
   !PURPOSE  : 
   !+-------------------------------------------------------------------+
   function solve_mpt_sc_sopt(fg0_,wr_,n_,n0_,delta_,delta0_,L) result(sigma_)
-    integer                      :: L
-    complex(8),dimension(2,-L:L) :: fg0_
-    complex(8),dimension(2,-L:L) :: sigma_
-    real(8),dimension(-L:L)      :: wr_
-    real(8)                      :: n_,n0_,delta_,delta0_
-    real(8)                      :: A,B
+    integer                   :: L
+    complex(8),dimension(2,L) :: fg0_
+    complex(8),dimension(2,L) :: sigma_
+    real(8),dimension(L)      :: wr_
+    real(8)                   :: n_,n0_,delta_,delta0_
+    real(8)                   :: A,B
     Lm=L
     if(loop==1) then
-       if(.not.allocated(fg0))allocate(fg0(2,-Lm:Lm))
-       if(.not.allocated(sigma))allocate(sigma(2,-Lm:Lm))
-       if(.not.allocated(wr))allocate(wr(-Lm:Lm))
+       if(.not.allocated(fg0))allocate(fg0(2,Lm))
+       if(.not.allocated(sigma))allocate(sigma(2,Lm))
+       if(.not.allocated(wr))allocate(wr(Lm))
        call get_frequency_index  
     endif
     fg0=fg0_  ; wr=wr_ 
@@ -101,31 +101,31 @@ contains
   !+-------------------------------------------------------------------+
   subroutine get_frequency_index()
     integer :: ix,iy,iz
-    allocate(iy_m_ix(-Lm:Lm,-Lm:Lm))
+    allocate(iy_m_ix(Lm,Lm))
     iy_m_ix=0
-    do ix=-Lm,Lm
-       do iy=-Lm,Lm
-          iz = iy - ix !+ MM/2 
+    do ix=1,Lm
+       do iy=1,Lm
+          iz = iy - ix + Lm/2
           ! if(iz<-Lm .OR. iz>Lm) iz=-1 !out of range, the same as the old if(iz>-L)
           iy_m_ix(iy,ix)=iz
        enddo
     enddo
-    if(.not.allocated(A0p11))allocate(A0p11(-Lm:Lm))
-    if(.not.allocated(A0m11))allocate(A0m11(-Lm:Lm))
-    if(.not.allocated(A0p22))allocate(A0p22(-Lm:Lm))
-    if(.not.allocated(A0m22))allocate(A0m22(-Lm:Lm))
-    if(.not.allocated(B0p))allocate(B0p(-Lm:Lm))
-    if(.not.allocated(B0m))allocate(B0m(-Lm:Lm))
-    if(.not.allocated(C0p))allocate(C0p(-Lm:Lm))
-    if(.not.allocated(C0m))allocate(C0m(-Lm:Lm))
-    if(.not.allocated(P1))allocate(P1(-Lm:Lm))
-    if(.not.allocated(P2))allocate(P2(-Lm:Lm))
-    if(.not.allocated(Q1))allocate(Q1(-Lm:Lm))
-    if(.not.allocated(Q2))allocate(Q2(-Lm:Lm))
-    if(.not.allocated(R1))allocate(R1(-Lm:Lm))
-    if(.not.allocated(R2))allocate(R2(-Lm:Lm))
-    if(.not.allocated(T1))allocate(T1(-Lm:Lm))
-    if(.not.allocated(T2))allocate(T2(-Lm:Lm))
+    if(.not.allocated(A0p11))allocate(A0p11(Lm))
+    if(.not.allocated(A0m11))allocate(A0m11(Lm))
+    if(.not.allocated(A0p22))allocate(A0p22(Lm))
+    if(.not.allocated(A0m22))allocate(A0m22(Lm))
+    if(.not.allocated(B0p))allocate(B0p(Lm))
+    if(.not.allocated(B0m))allocate(B0m(Lm))
+    if(.not.allocated(C0p))allocate(C0p(Lm))
+    if(.not.allocated(C0m))allocate(C0m(Lm))
+    if(.not.allocated(P1))allocate(P1(Lm))
+    if(.not.allocated(P2))allocate(P2(Lm))
+    if(.not.allocated(Q1))allocate(Q1(Lm))
+    if(.not.allocated(Q2))allocate(Q2(Lm))
+    if(.not.allocated(R1))allocate(R1(Lm))
+    if(.not.allocated(R2))allocate(R2(Lm))
+    if(.not.allocated(T1))allocate(T1(Lm))
+    if(.not.allocated(T2))allocate(T2(Lm))
   end subroutine get_frequency_index
   !******************************************************************
   !******************************************************************
@@ -160,17 +160,15 @@ contains
   !+-------------------------------------------------------------------+
   subroutine getAs
     integer :: i
-    real(8) :: w,dos11(-Lm:Lm),dos22(-Lm:Lm),dosF1(-Lm:Lm),dosF2(-Lm:Lm)
-    do i=-Lm,Lm
+    real(8) :: w,dos11(Lm),dos22(Lm),dosF1(Lm),dosF2(Lm)
+    do i=1,Lm
        dos11(i) = -aimag(fg0(1,i))/pi
-       dos22(i) = -aimag(-conjg(fg0(1,-i)))/pi
+       dos22(i) = -aimag(-conjg(fg0(1,Lm+1-i)))/pi
        dosF1(i) = -aimag(fg0(2,i))/pi
-       !dosF2(i) = -aimag(conjg(fg0(2,-i)))/pi    !  versione di BAUER
-       !dosF2(i) = -aimag(fg0(2,-i))/pi           !! versione in uso adesso in ahmmpt
-       dosF2(i) = -aimag(fg0(2,i))/pi            !  versione che avevo provato e non funza 
+       dosF2(i) = -aimag(fg0(2,i))/pi
        !OLD
        ! dos11(i) = -aimag(fg0(1,i))/pi
-       ! dos22(i) = -aimag(-conjg(fg0(1,-i)))/pi
+       ! dos22(i) = -aimag(-conjg(fg0(1,Lm+1-i)))/pi
        ! dosF1(i) = -aimag(fg0(2,i))/pi
        ! dosF2(i) = -aimag(fg0(2,i))/pi
     enddo
@@ -210,12 +208,12 @@ contains
     R2=zero
     T1=zero
     T2=zero
-    do ix=-Lm,Lm
-       do iy=-Lm,Lm
+    do ix=1,Lm
+       do iy=1,Lm
           iz= iy_m_ix(iy,ix)
           ! posso eliminare il check di prima perche i punti fuori  dai 
           ! boundaries non verranno calcolati comunque
-          if((iz>=-L).and.(iz<=L)) then    
+          if((iz>=1).and.(iz<=Lm)) then
              P2(ix)=P2(ix) + A0p11(iy)*A0m22(iz)*fmesh
              P1(ix)=P1(ix) + A0m11(iy)*A0p22(iz)*fmesh
              Q2(ix)=Q2(ix) + C0p(iy)*A0m22(iz)*fmesh     
@@ -270,9 +268,9 @@ contains
     real(8) :: sumQ1,sumQ2
     real(8) :: sumR1,sumR2
     real(8) :: sumT1,sumT2
-    real(8),dimension(-Lm:Lm) :: reSig,imSig
-    real(8),dimension(-Lm:Lm) :: reS,imS
-    do ix=-Lm,Lm
+    real(8),dimension(Lm) :: reSig,imSig
+    real(8),dimension(Lm) :: reS,imS
+    do ix=1,Lm
        sumP1=zero
        sumP2=zero
        sumQ1=zero
@@ -281,30 +279,30 @@ contains
        sumR2=zero
        sumT1=zero
        sumT2=zero
-       do iy=-Lm,Lm
+       do iy=1,Lm
           iz= iy_m_ix(iy,ix)
 
-          if((iz>=-L).and.(iz<=L)) then         ! in questo modo il contributo fuori da dove le polarizzazioni sono definite e' eliminato 
-             sumP1=sumP1 + A0m22(-iz)*P1(iy)*fmesh ! Adriano mi ha spiegato il senso di com'era prima ma  
-             sumP2=sumP2 + A0p22(-iz)*P2(iy)*fmesh ! questo mi sembra MORALMENTE 
-             sumQ1=sumQ1 + B0m(-iz)*Q1(iy)*fmesh   ! piu' chiaro per i posteri per cui... 
-             sumQ2=sumQ2 + B0p(-iz)*Q2(iy)*fmesh
-             sumR1=sumR1 + C0m(-iz)*R1(iy)*fmesh!C0m(iy)*R1(iz)*fmesh   !! DOUBLE CHECK
-             sumR2=sumR2 + C0p(-iz)*R2(iy)*fmesh!C0p(iy)*R2(iz)*fmesh
-             sumT1=sumT1 + A0m22(-iz)*T1(iy)*fmesh
-             sumT2=sumT2 + A0p22(-iz)*T2(iy)*fmesh
+          if((iz>=1).and.(iz<=Lm)) then         ! in questo modo il contributo fuori da dove le polarizzazioni sono definite e' eliminato 
+             sumP1=sumP1 + A0m22(Lm+1-iz)*P1(iy)*fmesh ! Adriano mi ha spiegato il senso di com'era prima ma  
+             sumP2=sumP2 + A0p22(Lm+1-iz)*P2(iy)*fmesh ! questo mi sembra MORALMENTE 
+             sumQ1=sumQ1 + B0m(Lm+1-iz)*Q1(iy)*fmesh   ! piu' chiaro per i posteri per cui... 
+             sumQ2=sumQ2 + B0p(Lm+1-iz)*Q2(iy)*fmesh
+             sumR1=sumR1 + C0m(Lm+1-iz)*R1(iy)*fmesh!C0m(iy)*R1(iz)*fmesh   !! DOUBLE CHECK
+             sumR2=sumR2 + C0p(Lm+1-iz)*R2(iy)*fmesh!C0p(iy)*R2(iz)*fmesh
+             sumT1=sumT1 + A0m22(Lm+1-iz)*T1(iy)*fmesh
+             sumT2=sumT2 + A0p22(Lm+1-iz)*T2(iy)*fmesh
           endif
 
           !OLDER
           ! if(iz>0)then
-          !    sumP1=sumP1 + A0m22(MM-iz+1)*P1(iy)*fmesh 
-          !    sumP2=sumP2 + A0p22(MM-iz+1)*P2(iy)*fmesh
-          !    sumQ1=sumQ1 + B0m(MM-iz+1)*Q1(iy)*fmesh
-          !    sumQ2=sumQ2 + B0p(MM-iz+1)*Q2(iy)*fmesh
-          !    sumR1=sumR1 + C0m(MM-iz+1)*R1(iy)*fmesh
-          !    sumR2=sumR2 + C0p(MM-iz+1)*R2(iy)*fmesh
-          !    sumT1=sumT1 + A0m22(MM-iz+1)*T1(iy)*fmesh
-          !    sumT2=sumT2 + A0p22(MM-iz+1)*T2(iy)*fmesh
+          !    sumP1=sumP1 + A0m22(Lm-iz+1)*P1(iy)*fmesh 
+          !    sumP2=sumP2 + A0p22(Lm-iz+1)*P2(iy)*fmesh
+          !    sumQ1=sumQ1 + B0m(Lm-iz+1)*Q1(iy)*fmesh
+          !    sumQ2=sumQ2 + B0p(Lm-iz+1)*Q2(iy)*fmesh
+          !    sumR1=sumR1 + C0m(Lm-iz+1)*R1(iy)*fmesh
+          !    sumR2=sumR2 + C0p(Lm-iz+1)*R2(iy)*fmesh
+          !    sumT1=sumT1 + A0m22(Lm-iz+1)*T1(iy)*fmesh
+          !    sumT2=sumT2 + A0p22(Lm-iz+1)*T2(iy)*fmesh
 
           !    !OLDER++ VERSION:
           !    ! sumP1=sumP1 + A0m22(iy)*P1(iz)*fmesh 

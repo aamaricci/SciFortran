@@ -79,9 +79,8 @@ contains        !some routine to perform simple operation on the lists
   end subroutine add_element
 
 
-  subroutine remove_element(list,obj,n)
+  subroutine remove_element(list,n)
     type(d_linked_list),intent(inout) :: list
-    real(8) ,intent(in)      :: obj
     integer,optional                  :: n
     integer                           :: i,pos
     type(d_list_node),pointer         :: previous,current
@@ -149,7 +148,7 @@ contains        !some routine to perform simple operation on the lists
   subroutine dump_list(list,vector)
     type(d_linked_list),intent(in) :: list
     type(d_list_node),pointer      :: current
-    integer                        :: i,N
+    integer                        :: i
     real(8),dimension(:)        :: vector
     current => list%root%next   !assume is associated,ie list exists
     if(size(vector) > list%size)then

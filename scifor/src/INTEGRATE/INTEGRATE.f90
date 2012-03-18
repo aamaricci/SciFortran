@@ -26,11 +26,10 @@
     !PURPOSE  :   
     !+-----------------------------------------------------------------+
     function kronig(fi,wr,M) result(fr)
+      integer :: i,j,M
       real(8),dimension(M) :: fi,wr,fr
       real(8),dimension(M) :: logo,deriv
       real(8) :: dh,sum
-      integer :: i,j,M
-
       dh=wr(2)-wr(1)
       logo=0.d0
       do i=2,M-1

@@ -1,11 +1,6 @@
 #!/bin/bash
 HERE=`pwd`
-#LIST=`ls -l |egrep '^d' |awk '{print $9}'`
-TMPLIST=`ls -d */`
-for DIR in $TMPLIST
-do
-    LIST="$LIST "`echo ${DIR%%/}`
-done
+LIST=`ls -l |egrep '^d' |awk '{print $8}'`
 
 # for DIR in $LIST
 # do
@@ -17,19 +12,18 @@ done
 # done
 # exit
 
-EXCLUDED='COMVARS FFT_MKL FFT_NR FFT_FFTW3 FFT SLREAD SLPLOT' 
+EXCLUDED='COMVARS FFT_MKL FFT_NR FFT_FFTW3 FFT_GSL' 
 
 
 
 for DIR in $EXCLUDED
 do 
-    LIST=`echo $LIST | sed "s/$DIR//g"`
+    LIST=`echo $LIST | sed "s/\b$DIR\b//g"`
 done
 
 LIST='COMVARS '`echo $LIST`' FFT'
 echo $LIST
 cd $HERE
-
 for DIR in $LIST
 do 
     echo "===========$DIR============="
