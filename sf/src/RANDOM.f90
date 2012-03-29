@@ -1,8 +1,8 @@
-  !###############################################################
-  !PROGRAM  : RANDOM
-  !TYPE     : Module
-  !PURPOSE  : Module for Random Number generators
-  !###############################################################
+!###############################################################
+!PROGRAM  : RANDOM
+!TYPE     : Module
+!PURPOSE  : Module for Random Number generators
+!###############################################################
 module RANDOM
   implicit none
   private
