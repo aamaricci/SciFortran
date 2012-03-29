@@ -7,7 +7,7 @@ if [ "$1" = "--help" -o "$1" = "-h" ];then
    echo "cat ...|get_line 1 2 3... >"
    return
 fi
-
+ARG=
 for LINE in "$@"
 do
     ARG="$ARG${LINE}p;"

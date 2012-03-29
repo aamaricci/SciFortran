@@ -103,22 +103,22 @@ contains
     call fftgf_tau2iw(sigma(2)%tau,sigma(2)%iw,beta) !,normal=.false.) keep in mind
 
 
-    open(11,file="Sigma2_tau.ipt",access="append")
-    open(12,file="Self2_tau.ipt",access="append")
-    ! open(13,file="Sigma2_iw.ipt",access="append")
-    ! open(14,file="Self2_iw.ipt",access="append")
-    do i=0,L
-       write(11,*)dble(i)*beta/dble(L),sigma(1)%tau(i)
-       write(12,*)dble(i)*beta/dble(L),sigma(2)%tau(i)
-    enddo
-    ! do i=1,L
-    !    write(13,*)pi/beta*dble(2*i-1),aimag(sigma(1)%iw(i)),real(sigma(1)%iw(i))
-    !    write(14,*)pi/beta*dble(2*i-1),aimag(sigma(2)%iw(i)),real(sigma(2)%iw(i))
+    ! open(11,file="Sigma_tau.ipt",access="append")
+    ! open(12,file="Self_tau.ipt",access="append")
+    ! ! open(13,file="Sigma2_iw.ipt",access="append")
+    ! ! open(14,file="Self2_iw.ipt",access="append")
+    ! do i=0,L
+    !    write(11,*)dble(i)*beta/dble(L),sigma(1)%tau(i)
+    !    write(12,*)dble(i)*beta/dble(L),sigma(2)%tau(i)
     ! enddo
-    do i=11,12
-       write(i,*)""
-       close(i)
-    enddo
+    ! ! do i=1,L
+    ! !    write(13,*)pi/beta*dble(2*i-1),aimag(sigma(1)%iw(i)),real(sigma(1)%iw(i))
+    ! !    write(14,*)pi/beta*dble(2*i-1),aimag(sigma(2)%iw(i)),real(sigma(2)%iw(i))
+    ! ! enddo
+    ! do i=11,12
+    !    write(i,*)""
+    !    close(i)
+    ! enddo
 
   end subroutine Simpurity
 

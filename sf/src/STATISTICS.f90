@@ -170,14 +170,14 @@ contains
     real(8),intent(in)                :: x
     integer,intent(out)               :: index
     integer                           :: i,upper,lower,mid
-    if((x<range(0)) .OR. (x>=range(n)))then
+    if((x<range(0)) .OR. (x>range(n)))then
        print*,"X out of range!"
        return
     endif
     upper=n
     lower=0
     do while((upper-lower>1))
-       mid = int(dble(upper + lower)/2.d0)
+       mid = (upper+lower)/2    !int(dble(upper + lower)/2.d0)
        if( x >= range(mid))then
           lower=mid
        else
@@ -185,7 +185,7 @@ contains
        endif
     enddo
     index=lower
-    if(x<range(lower) .OR. x>=range(lower+1))then
+    if(x<range(lower) .OR. x>range(lower+1))then
        print*,"error: x not found within range!"
        stop
     endif
@@ -223,12 +223,15 @@ contains
     integer                    :: i,n
     real(8)                    :: lower,upper,bin_value
     n=h%n
+    call histogram_get_range(h,i,lower,upper)
+    write(unit,"(2F12.7)")lower,0.d0
     do i=0,n-1
        call histogram_get_range(h,i,lower,upper)
        bin_value = histogram_get_value(h,i)
        write(unit,"(2F12.7)")lower,bin_value
        write(unit,"(2F12.7)")upper,bin_value
     enddo
+    write(unit,"(2F12.7)")upper,0.d0
   end subroutine histogram_print
 
 
