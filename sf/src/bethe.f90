@@ -19,8 +19,8 @@ subroutine bethe_lattice(dos,ome,Lk,D)
   call system("if [ ! -d LATTICEinfo ]; then mkdir LATTICEinfo; fi")
   open(10,file="LATTICEinfo/DOSbethe.lattice")
   do ie=1,Lk
-     e=-D + dble(ie-1)*de
-     dos(ie)=dens_bethe(e,D)*de
+     e=-D_ + dble(ie-1)*de
+     dos(ie)=dens_bethe(e,D_)*de
      ome(ie)=e
      ! zeta=cmplx(e,eps_)
      ! gf=gfbether(e,zeta,D)
