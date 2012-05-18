@@ -46,7 +46,6 @@
       forall(i=0:L-1)fout(i-L)=dout(i)   !g[-L,-1]<--- x[0,L-1]
     end function cfft_1d_shift
 
-
     subroutine swap_fftrt2rw(func_in)
       integer                             :: i,Nsize,Nhalf
       complex(8),dimension(:)             :: func_in

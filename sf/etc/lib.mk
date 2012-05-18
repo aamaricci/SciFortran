@@ -25,8 +25,15 @@ endif
 
 
 
-
-
+ifdef DISLIN
+DSL         =  -L$(DISLIN)/lib  -ldislin
+X11 	    =  -L/usr/lib -lX11 -lXt -lXext -lxcb -lX11-xcb -lXau -lXdmcp #-lxcb-xlib 
+DLPLOT      =  -ldlplot
+DLPLOT_DEB  =  -ldlplot_deb
+DSL_LIBS    = ${DLPLOT} ${DSL} ${X11}
+DSL_LIBS_DEB= ${DLPLOT_DEB} ${DSL} ${X11}
+DSL_MODS= -I${DISLIN}/ifc
+endif
 
 ###################################################################
 #REPO:

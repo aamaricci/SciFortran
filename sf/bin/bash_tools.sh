@@ -3,7 +3,7 @@
 get_line()
 {
 if [ "$1" = "--help" -o "$1" = "-h" ];then
-   echo "get_line: select given lines from file or pipe"	
+   echo "get_line: select given lines from file or pipe of a single column"	
    echo "cat ...|get_line 1 2 3... >"
    return
 fi
