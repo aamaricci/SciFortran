@@ -21,7 +21,7 @@
     public :: arange
 
     !SORT,UNIQE,SHUFFLE:
-    public :: sort, sort_array
+    public :: sort,sort_array
     public :: uniq,reshuffle
     public :: shiftFW,shiftBW
 
@@ -42,7 +42,7 @@
 
     !OTHER:
     public :: get_matsubara_gf_from_dos
-    public :: check_convergence,check_convergence_local
+    public :: check_convergence,check_convergence_scalar,check_convergence_local
     public :: get_free_dos
     public :: sum_overk_zeta
 
@@ -64,14 +64,25 @@
        module procedure i_sgn,d_sgn
     end interface sgn
 
+    interface check_convergence_scalar
+       module procedure &
+            i0_check_convergence_scalar,i1_check_convergence_scalar,i2_check_convergence_scalar, &
+            d0_check_convergence_scalar,d1_check_convergence_scalar,d2_check_convergence_scalar, &
+            z0_check_convergence_scalar,z1_check_convergence_scalar,z2_check_convergence_scalar
+    end interface check_convergence_scalar
+
     interface check_convergence
-       module procedure dv_check_convergence,zv_check_convergence,&
-            dm_check_convergence,zm_check_convergence
+       module procedure &
+            i0_check_convergence_function,i1_check_convergence_function,i2_check_convergence_function, &
+            d0_check_convergence_function,d1_check_convergence_function,d2_check_convergence_function, &
+            z0_check_convergence_function,z1_check_convergence_function,z2_check_convergence_function
     end interface check_convergence
 
     interface check_convergence_local
-       module procedure dv_check_convergence_local,zv_check_convergence_local,&
-            dm_check_convergence_local,zm_check_convergence_local
+       module procedure &
+            i0_check_convergence_function_local,i1_check_convergence_function_local,i2_check_convergence_function_local, &
+            d0_check_convergence_function_local,d1_check_convergence_function_local,d2_check_convergence_function_local, &
+            z0_check_convergence_function_local,z1_check_convergence_function_local,z2_check_convergence_function_local
     end interface check_convergence_local
 
 
@@ -145,8 +156,9 @@
     !###################################################################
     ! CONVERGENCE:
     !###################################################################
-    include "convergence.f90"
-    include "convergence_.f90"
+    include "convergence_check_scalar.f90"
+    include "convergence_check_function1d.f90"
+    include "convergence_check_function1d_local.f90"
 
     !###################################################################
     ! SORTING 1D:
@@ -175,10 +187,10 @@
       real(8),dimension(:)          :: ek,wk
       real(8),dimension(:),optional :: dos
       character(len=*),optional     :: file
-      character(len=32)             :: file_     
       logical,optional              :: store
-      logical                       :: store_
       real(8),optional              :: wmin,wmax,eps
+      character(len=32)             :: file_     
+      logical                       :: store_
       real(8)                       :: wini,wfin,eta
       integer,parameter             :: M=2048
       integer                       :: i,ik,Lk,L
