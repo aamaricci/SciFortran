@@ -23,7 +23,8 @@ function i0_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_))
         Xold=0.d0
      endif
-     err=abs(Xnew-Xold(index_))/abs(Xnew)
+     err=abs(Xnew-Xold(index_))
+     if(check==1)err=1.d0
      Xold(index_)=Xnew
      include "convergence_write_error_file_dim0.f90"
      if(err < eps)then
@@ -60,7 +61,8 @@ function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_,Msize1))
         Xold=0.d0
      endif
-     Verror=abs(Xnew-Xold(index_,:))/abs(Xnew)
+     Verror=abs(Xnew-Xold(index_,:))
+     if(check==1)Verror=1.d0
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
@@ -100,7 +102,8 @@ function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_,Msize1,Msize2))
         Xold=0.d0
      endif
-     Verror=abs(Xnew-Xold(index_,:,:))/abs(Xnew)
+     Verror=abs(Xnew-Xold(index_,:,:))
+     if(check==1)Verror=1.d0
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
@@ -142,7 +145,7 @@ function d0_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_))
         Xold=0.d0
      endif
-     err=abs(Xnew-Xold(index_))/abs(Xnew)
+     err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
      Xold(index_)=Xnew
      include "convergence_write_error_file_dim0.f90"
@@ -180,7 +183,8 @@ function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_,Msize1))
         Xold=0.d0
      endif
-     Verror=abs(Xnew-Xold(index_,:))/abs(Xnew)
+     Verror=abs(Xnew-Xold(index_,:))
+     if(check==1)Verror=1.d0
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
@@ -220,7 +224,8 @@ function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_,Msize1,Msize2))
         Xold=0.d0
      endif
-     Verror=abs(Xnew-Xold(index_,:,:))/abs(Xnew)
+     Verror=abs(Xnew-Xold(index_,:,:))
+     if(check==1)Verror=1.d0
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
@@ -262,7 +267,7 @@ function z0_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_))
         Xold=0.d0
      endif
-     err=abs(Xnew-Xold(index_))/abs(Xnew)
+     err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
      Xold(index_)=Xnew
      include "convergence_write_error_file_dim0.f90"
@@ -300,7 +305,8 @@ function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_,Msize1))
         Xold=0.d0
      endif
-     Verror=abs(Xnew-Xold(index_,:))/abs(Xnew)
+     Verror=abs(Xnew-Xold(index_,:))
+     if(check==1)Verror=1.d0
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
@@ -340,7 +346,8 @@ function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
         allocate(Xold(total_,Msize1,Msize2))
         Xold=0.d0
      endif
-     Verror=abs(Xnew-Xold(index_,:,:))/abs(Xnew)
+     Verror=abs(Xnew-Xold(index_,:,:))
+     if(check==1)Verror=1.d0
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
