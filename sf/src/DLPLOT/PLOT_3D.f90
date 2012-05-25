@@ -17,11 +17,11 @@ subroutine R_plot_dislin3D(pname,xname,yname,zname,X,Y,GF,theta,phi,rho,imovie)
   call system("rm -rf "//trim(pname))
   call system("mkdir "//trim(pname))
   write(*,"(A,A)")"print: ",adjustl(trim(pname))
-  call plot3Dintensity("3dPlot_"//adjustl(trim(pname))//".png",xname,yname,zname,real(X,4),real(Y,4),real(GF,4))
-  call plot3Dsurface("3dSurface_"//adjustl(trim(pname))//".png",xname,yname,zname,real(X,4),real(Y,4),real(GF,4),theta_,phi_,rho_)
+  call plot3Dintensity("3dPlot_"//adjustl(trim(pname))//".png",xname,yname,zname,X,Y,GF)
+  call plot3Dsurface("3dSurface_"//adjustl(trim(pname))//".png",xname,yname,zname,X,Y,GF,theta_,phi_,rho_)
   if(present(imovie))then!if imovie;Animated Gif
      write(*,"(A)")"get a movie too:        "
-     call plot3Dsurface_movie("3dSurface_"//adjustl(trim(pname)),xname,yname,zname,real(X,4),real(Y,4),real(GF,4))
+     call plot3Dsurface_rotating("3dSurface_"//adjustl(trim(pname)),xname,yname,zname,X,Y,GF)
   endif
   call system("mv *"//trim(pname)//".png *.gif "//trim(pname)//"/ 2>/dev/null")
 end subroutine R_plot_dislin3D
@@ -42,19 +42,19 @@ subroutine C_plot_dislin3D(pname,xname,yname,zname,X,Y,GF,theta,phi,rho,imovie)
   call system("rm -rf "//trim(pname))
   call system("mkdir "//trim(pname))
   write(*,"(A,A)")"print: ",adjustl(trim(pname))
-  call plot3Dintensity("3dPlot_Im"//adjustl(trim(pname))//".png",xname,yname,zname,real(X,4),real(Y,4),real(aimag(GF),4))
-  call plot3Dintensity("3dPlot_Re"//adjustl(trim(pname))//".png",xname,yname,zname,real(X,4),real(Y,4),real(real(GF),4))
-  call plot3Dsurface("3dSurface_Im"//adjustl(trim(pname))//".png",xname,yname,zname,real(X,4),real(Y,4),real(aimag(GF),4),&
+  call plot3Dintensity("3dPlot_Im"//adjustl(trim(pname))//".png",xname,yname,zname,X,Y,aimag(GF))
+  call plot3Dintensity("3dPlot_Re"//adjustl(trim(pname))//".png",xname,yname,zname,X,Y,real(GF,8))
+  call plot3Dsurface("3dSurface_Im"//adjustl(trim(pname))//".png",xname,yname,zname,X,Y,aimag(GF),&
        theta_,phi_,rho_)
-  call plot3Dsurface("3dSurface_Re"//adjustl(trim(pname))//".png",xname,yname,zname,real(X,4),real(Y,4),real(real(GF),4),&
+  call plot3Dsurface("3dSurface_Re"//adjustl(trim(pname))//".png",xname,yname,zname,X,Y,real(GF,8),&
        theta_,phi_,rho_)
   if(present(imovie))then
      write(*,"(A)")"get a movie too:       "
-     call plot3Dsurface_movie("3dSurface_Im"//adjustl(trim(pname)),xname,yname,zname,real(X,4),real(Y,4),real(aimag(GF),4))
-     call plot3Dsurface_movie("3dSurface_Re"//adjustl(trim(pname)),xname,yname,zname,real(X,4),real(Y,4),real(real(GF),4))
+     call plot3Dsurface_rotating("3dSurface_Im"//adjustl(trim(pname)),xname,yname,zname,X,Y,aimag(GF))
+     call plot3Dsurface_rotating("3dSurface_Re"//adjustl(trim(pname)),xname,yname,zname,X,Y,real(GF,8))
   endif
   call system("mv *"//trim(pname)//".png *.gif "//trim(pname)//"/ 2>/dev/null")
-  call system("mv *"//trim(pname)//"*_movie  "//trim(pname)//"/ 2>/dev/null")
+  call system("mv *"//trim(pname)//"*_rotating  "//trim(pname)//"/ 2>/dev/null")
 end subroutine C_plot_dislin3D
 !********************************************************************
 !********************************************************************
@@ -78,8 +78,8 @@ subroutine plot3Dintensity(pname,xname,yname,zname,X,Y,GF)
   real(4)               :: xmin,xmax,dex
   real(4)               :: ymin,ymax,dey
   real(4)               :: zmin,zmax,dez
-  real(4),dimension(:)  :: X,Y
-  real(4),dimension(:,:):: GF
+  real(8),dimension(:)  :: X,Y
+  real(8),dimension(:,:):: GF
 
   !Get dimension of the function to plot:
   Nx=size(GF,1)  ; Ny=size(GF,2)
@@ -147,7 +147,7 @@ subroutine plot3Dintensity(pname,xname,yname,zname,X,Y,GF)
   CALL INTAX
   CALL AUTRES(Nx,Ny)
   CALL GRAF3(xmin,xmax,xmin,dex,ymin,ymax,ymin,dey,0.,1.01,0.,1.)
-  CALL CRVMAT(GF,Nx,Ny,20,20)
+  CALL CRVMAT(real(GF,4),Nx,Ny,20,20)
 
   !DISLIN FINALIZE:
   CALL TITLE
@@ -173,8 +173,8 @@ subroutine plot3Dsurface(pname,xname,yname,zname,X,Y,GF,theta,phi,rho)
   real(4)               :: ymin,ymax,dey
   real(4)               :: zmin,zmax,dez
   real(4)               :: theta,phi,rho
-  real(4),dimension(:)  :: X,Y
-  real(4),dimension(:,:):: GF
+  real(8),dimension(:)  :: X,Y
+  real(8),dimension(:,:):: GF
   integer               :: sg1,sg2
 
   Nx=size(GF,1) ; Ny=size(GF,2)
@@ -225,8 +225,8 @@ subroutine plot3Dsurface(pname,xname,yname,zname,X,Y,GF,theta,phi,rho)
   CALL SETVLT('RAIN') !TEMP
   CALL GRAF3D(xmin,xmax,xmin,dex,ymin,ymax,ymin,dey,zmin,zmax,zmin,dez)
   CALL SHDMOD("SMOOTH","SURFACE")
-  CALL SURSHD(X,Nx,Y,Ny,GF)
-  CALL SURMAT(GF,Nx,Ny,1,1)
+  CALL SURSHD(real(X,4),Nx,real(Y,4),Ny,real(GF,4))
+  CALL SURMAT(real(GF,4),Nx,Ny,1,1)
   CALL TITLE
   CALL DISFIN
   return
@@ -239,11 +239,11 @@ end subroutine plot3Dsurface
 
 
 !+-----------------------------------------------------------------+
-!PROGRAM  : PLOT3DSURFACE_MOVIE
+!PROGRAM  : PLOT3DSURFACE_rotating
 !TYPE     : Subroutine
 !PURPOSE  : realizes an animated .gif out of the .png surface plots
 !+-----------------------------------------------------------------+
-subroutine plot3Dsurface_movie(pname,xname,yname,zname,X,Y,GF)
+subroutine plot3Dsurface_rotating(pname,xname,yname,zname,X,Y,GF)
   character(len=*) :: xname,yname,zname,pname
   character(len=7) :: char_temp
   character(len=32):: xsuff,ysuff
@@ -254,8 +254,8 @@ subroutine plot3Dsurface_movie(pname,xname,yname,zname,X,Y,GF)
   real(4) :: xmin,xmax,dex
   real(4) :: ymin,ymax,dey
   real(4) :: zmin,zmax,dez
-  real(4),dimension(:) :: X,Y
-  real(4),dimension(:,:) :: GF
+  real(8),dimension(:) :: X,Y
+  real(8),dimension(:,:) :: GF
 
   Nx=size(GF,1) ;Ny=size(GF,2)
   xmin=minval(X);xmax=maxval(X)
@@ -314,23 +314,23 @@ subroutine plot3Dsurface_movie(pname,xname,yname,zname,X,Y,GF)
           ymin,ymax,ymin,dey,  &
           zmin,zmax,zmin,dez)
      CALL SHDMOD("SMOOTH","SURFACE")
-     CALL SURSHD(X,Nx,Y,Ny,GF)
-     CALL SURMAT(GF,Nx,Ny,1,1)
+     CALL SURSHD(real(X,4),Nx,real(Y,4),Ny,real(GF,4))
+     CALL SURMAT(real(GF,4),Nx,Ny,1,1)
 
      CALL TITLE
      CALL DISFIN
   enddo
 
-  call system("if [ ! -d "//trim(pname)//"_movie ]; then mkdir "//trim(pname)//"_movie ; fi")
-  call system("mv *."//trim(pname)//".png "//trim(pname)//"_movie/ 2>/dev/null")    
+  call system("if [ ! -d "//trim(pname)//"_rotating ]; then mkdir "//trim(pname)//"_rotating ; fi")
+  call system("mv *."//trim(pname)//".png "//trim(pname)//"_rotating/ 2>/dev/null")    
   call system("echo '#!/bin/bash' > make_gif.sh")
   call system("echo 'echo 'Converting to .gif'' >> make_gif.sh")
   call system("echo 'convert -delay 50 `ls *.*.png|sort -n` -loop 0 "//trim(pname)//".gif' >> make_gif.sh")
   call system("echo 'if [ ! -d "//trim(pname)//".gif ]; then rm -f *.*.png ; fi' >> make_gif.sh")
   call system("chmod u+x make_gif.sh")
-  call system("mv make_gif.sh "//trim(pname)//"_movie/ 2>/dev/null")
+  call system("mv make_gif.sh "//trim(pname)//"_rotating/ 2>/dev/null")
 
-end subroutine plot3Dsurface_movie
+end subroutine plot3Dsurface_rotating
 !********************************************************************
 !********************************************************************
 !********************************************************************

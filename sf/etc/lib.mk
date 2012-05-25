@@ -37,17 +37,6 @@ endif
 
 ###################################################################
 #REPO:
-# ifdef DISLIN
-# DSL         =  -L$(DISLIN)/lib  -ldislin
-# X11 	    =  -L$(XLIB) -lX11 -lXt -lXext -lxcb -lX11-xcb -lXau -lXdmcp #-lxcb-xlib 
-# DLPLOT      =  -ldlplot
-# DLPLOT_DEB  =  -ldlplot_deb
-# DSL_LIBS    = ${DLPLOT} ${DSL} ${X11}
-# DSL_LIBS_DEB= ${DLPLOT_DEB} ${DSL} ${X11}
-# DSL_MODS= -I${DISLIN}/ifc
-# endif
-
-
 # ifdef CUDADIR
 # GPU     = -L$(SFLIB)/ 	-lgpu
 # CUDA    = -L/opt/cuda_2.3/lib64 -lcufft -lcuda -lcudart -lcublas

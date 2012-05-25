@@ -8,10 +8,10 @@ ROUTINES=DLPLOT.f90
 
 # # #These variables are defined only to compile test program: 
 # # #DISLIN=<path to DISLIN directory>
-# DSL      = -L${DISLIN} -ldislin
-# DLPLOT   = -L$(SFLIB) -ldlplot
-# TESTLIB  = ${DLPLOT} ${DSL} ${X11}
-# TESTMODS = -I$(HOME)/lib/src/MKL -I${DISLIN}/ifc -I$(MYINCLUDE)
+DSL      = -L${DISLIN} -ldislin
+DLPLOT   = -L$(SFLIB) -ldlplot
+TESTLIB  = ${DLPLOT} ${DSL} ${X11}
+TESTMODS = -I$(HOME)/lib/src/MKL -I${DISLIN}/ifc -I$(SFINCLUDE)
 
 
 #============COMPILE THE LIBRARY===============
@@ -41,11 +41,11 @@ libdlplot_deb.a:
 	@echo ' '
 
 # #============COMPILE TEST PROGRAM===============
-# test:	
-# 	@echo " ........... compile: TEST ........... "
-# 	${FC} test${ROUTINES} -o ./test ${TESTMODS} ${TESTLIB}
-# 	@mkdir TESTDIR
-# 	@mv test TESTDIR
-# 	@echo " ........... run TEST ........... "
-# 	@cd TESTDIR;./test
-# 	@echo "done............................."
+test:	
+	@echo " ........... compile: TEST ........... "
+	${FC} test${ROUTINES} -o ./test ${TESTMODS} ${TESTLIB}
+	@mkdir TESTDIR
+	@mv test TESTDIR
+	@echo " ........... run TEST ........... "
+	@cd TESTDIR;./test
+	@echo "done............................."

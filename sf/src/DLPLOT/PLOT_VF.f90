@@ -71,17 +71,14 @@ subroutine plot_dislinVF_(pname,X,Y,Vx,Vy,Xlabel,Ylabel)
   !===========================================================
   CALL GRAF(real(Xmin,4),real(Xmax,4),real(Xmin,4),real(dex,4),&
        real(Ymin,4),real(Ymax,4),real(Ymin,4),real(dey,4))
-  CALL VECCLR(-1)
-  !#CALL VECOPT(0.,"SCALE")
+  CALL VECCLR(-2)
+  CALL VECOPT(0.,"SCALE")
   CALL VECMAT(real(Vx,4),real(Vy,4),Nx,Ny,real(X,4),real(Y,4),-1)
-  !#CALL STREAM(real(V%x,4),real(V%y,4),N,N,X,Y,NULLX,NULLY,0)
 
 
   !Vector plot NEW type: vector intensity plot:
   !===========================================================
   !CALL TXTURE(ITMAT, Nx, Ny) !Generatet a random texture:
-  !We could do something better and faster using MKL random library
-  !This is not implemented yet to keep this module DISLIN dependent only
   ! do i=1,Nx
   !    do j=1,Ny
   !       ITMAT(i,j)=int(drand()*10)
@@ -179,11 +176,10 @@ subroutine plot_dislinVF__(pname,X,Y,Vx,Vy,Xlabel,Ylabel)
      !===========================================================
      CALL GRAF(real(Xmin,4),real(Xmax,4),real(Xmin,4),real(dex,4),&
           real(Ymin,4),real(Ymax,4),real(Ymin,4),real(dey,4))
-     CALL VECCLR(-1)
-     !#CALL VECOPT(0.,"SCALE")
+     CALL VECCLR(-2)
+     CALL VECOPT(0.,"SCALE")
      CALL VECMAT(real(Vx(I,:,:),4),real(Vy(I,:,:),4),&
           Nx,Ny,real(X,4),real(Y,4),-1)
-     !#CALL STREAM(real(V%x,4),real(V%y,4),N,N,X,Y,NULLX,NULLY,0)
 
      !Vector plot NEW type: vector intensity plot:
      !===========================================================

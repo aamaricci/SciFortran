@@ -10,31 +10,66 @@ module DLPLOT
   implicit none
   private
 
-  public :: dplot,plot_dislin,plot_xmgrace
-  public :: plot_dislin_movie
-  public :: plot_dislin_VF
-  public :: plot_dislin_3D,plot3Dsurface,plot3Dintensity
-  public :: plot_dislin_3D_movie,plot_3D_surface_movie
+  public :: plot_dislin
+  public :: plot_xmgrace
+  public :: dplot
+  public :: dplot_3d
+  public :: dplot_3d_surface
+  public :: dplot_3d_intensity
+  public :: dplot_3d_surface_rotating
+  public :: dplot_vector_field
+
+
+
+  public :: dplot_movie
+  public :: dplot_3d_intensity_animated
+  public :: dplot_3d_surface_animated
+
+
+
+  !I am lazy and I don't want to fix names of routines so I add 1000 interfaces here:
+  interface dumpxmgrace
+     module procedure dumpxmgrace_,dumpxmgrace__
+  end interface dumpxmgrace
 
   interface dplot
      module procedure D_plot, Z_plot, X_plot
   end interface dplot
 
-  interface plot_dislin_movie
-     module procedure plot_dislin2Dmovie_, plot_dislin2Dmovie__
-  end interface plot_dislin_movie
-
-  interface plot_dislin_VF
+  interface dplot_vector_field
      module procedure plot_dislinVF_,plot_dislinVF__
-  end interface plot_dislin_VF
+  end interface dplot_vector_field
 
-  interface plot_dislin_3D
+  interface dplot_3d
      module procedure R_plot_dislin3D, C_plot_dislin3D !
-  end interface plot_dislin_3D
+  end interface dplot_3D
 
-  interface dumpxmgrace
-     module procedure dumpxmgrace_,dumpxmgrace__
-  end interface dumpxmgrace
+  interface dplot_3d_surface
+     module procedure plot3Dsurface
+  end interface dplot_3d_surface
+
+  interface dplot_3d_intensity
+     module procedure plot3Dintensity
+  end interface dplot_3d_intensity
+
+  interface dplot_3d_surface_rotating
+     module procedure plot3Dsurface_rotating
+  end interface dplot_3d_surface_rotating
+
+  interface dplot_movie
+     module procedure plot_dislin2Dmovie_, plot_dislin2Dmovie__
+  end interface dplot_movie
+
+  interface dplot_3d_intensity_animated
+     module procedure plot_dislin_3D_movie
+  end interface dplot_3d_intensity_animated
+
+  interface dplot_3d_surface_animated
+     module procedure plot_3D_surface_movie
+  end interface dplot_3d_surface_animated
+
+
+
 contains
 
 
