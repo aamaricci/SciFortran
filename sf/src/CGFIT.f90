@@ -1,5 +1,5 @@
-  include "CGFIT_F1DIM_MOD.f90"
-  include "CGFIT_LOCAL_UTILS.f90"
+  include "cgfit_f1dim_mod.f90"
+  include "cgfit_local_utils.f90"
   module CGFIT
     USE CGFIT_F1DIM_MOD
     USE CGFIT_LOCAL_UTILS

@@ -1,5 +1,5 @@
-  include "SPLINE_NR_MOD.f90"
-  include "SPLINE_FINTER_MOD.f90"
+  include "spline_nr_mod.f90"
+  include "spline_finter_mod.f90"
   include "interp.f90"
   module SPLINE
     USE SPLINE_NR_MOD
