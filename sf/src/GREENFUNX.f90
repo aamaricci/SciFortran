@@ -1,11 +1,12 @@
+!###############################################################
+!     PROGRAM  : GREENFUNX
+!     TYPE     : Module
+!     PURPOSE  : a library for Green's functions type and related 
+!operations. This comes really handy when FFT must be used as it
+!automatically set the correct dimensions.
+!###############################################################
 module GREENFUNX
-  !###############################################################
-  !     PROGRAM  : GREENFUNX
-  !     TYPE     : Module
-  !     PURPOSE  : a library for Green's functions type and related 
-  !operations. This comes really handy when FFT must be used as it
-  !automatically set the correct dimensions.
-  !###############################################################
+  USE COMMON_VARS
   implicit none
   private 
 
@@ -102,13 +103,12 @@ contains
     complex(8),dimension(:),intent(in)  :: fret
     complex(8),dimension(size(fret))    :: fless
     real(8),dimension(size(fret))       :: wr
-    real(8) :: pi,A,beta,w
-    pi=acos(-1.d0)
+    real(8) :: A,beta,w
     L=size(fret)
     do i=1,L
        w       = wr(i)
        A       = -dimag(fret(i))/pi
-       fless(i)= fermi(w,beta)*A
+       fless(i)= pi2*xi*fermi(w,beta)*A
     enddo
   contains
     function fermi(x,beta)
@@ -129,13 +129,12 @@ contains
     complex(8),dimension(:),intent(in)  :: fret
     complex(8),dimension(size(fret))    :: fgtr
     real(8),dimension(size(fret))       :: wr
-    real(8) :: pi,A,beta,w
-    pi=acos(-1.d0)
+    real(8) :: A,beta,w
     L=size(fret)
     do i=1,L
        w      = wr(i)
        A      = -dimag(fret(i))/pi
-       fgtr(i)= (fermi(w,beta)-1.d0)*A
+       fgtr(i)= pi2*xi*(fermi(w,beta)-1.d0)*A
     enddo
   contains
     function fermi(x,beta)

@@ -254,25 +254,31 @@
     !+-----------------------------------------------------------------+
     subroutine get_matsubara_gf_from_dos(win,gin,gout,beta)
       implicit none
-      integer :: i,j
+      integer :: i,j,Nin,Nout
       real(8) :: w,wm,beta,A,wini,dw
       real(8) :: gmats_re,gmats_im
       real(8),dimension(:)    :: win
       complex(8),dimension(:) :: gin
       complex(8),dimension(:) :: gout
+      complex(8),dimension(:),allocatable :: dummy_out
       wini=minval(win)
       dw=abs(win(2)-win(1)) !Assume constant step in x-grid
-      do j=1,size(gout)
-         wm=pi/beta*dble(2*j-1)
-         gmats_re=(0.d0,0.d0);gmats_im=(0.d0,0.d0)
-         do i=1,size(gin)          
+      Nin=size(gin)
+      Nout=size(gout)
+      allocate(dummy_out(4*Nout))
+
+      do j=1,Nout
+         wm=pi/beta*real(2*j-1,8)
+         gmats_re=zero;gmats_im=zero
+         do i=1,Nin
             w=wini+dble(i)*dw
             A=aimag(gin(i))/pi !DOS
             gmats_im=gmats_im + dw*A*wm/(wm**2+w**2)
             gmats_re=gmats_re + dw*A*w/(wm**2+w**2)
          enddo
-         gout(j)=cmplx(gmats_re,gmats_im)
+         dummy_out(j)=cmplx(gmats_re,gmats_im)
       enddo
+      gout = dummy_out(1:Nout)
     end subroutine get_matsubara_gf_from_dos
 
 

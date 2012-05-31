@@ -14,7 +14,7 @@ module IPT_SOPT
   integer,save                        :: loop=1
   complex(8),dimension(:),allocatable :: fg0,sigma
   real(8),dimension(:),allocatable    :: wr
-  real(8)                             :: n,n0,xmu0
+  real(8)                             :: n,n0,xmu0,mesh
   integer                             :: MM
 
   public :: solve_ipt_sopt
@@ -36,7 +36,7 @@ contains
        if(.not.allocated(sigma))allocate(sigma(MM))
        call get_frequency_index       
     endif
-    fg0=fg0_; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
+    fg0=fg0_; wr=wr_ ; mesh=abs(wr(2)-wr(1))
     call getAs
     call getPolarization
     call Sopt
@@ -67,7 +67,7 @@ contains
        if(.not.allocated(wr))allocate(wr(MM))
        call get_frequency_index
     endif
-    fg0=fg0_; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
+    fg0=fg0_; wr=wr_ ; mesh=abs(wr(2)-wr(1))
     n=n_    ; n0=n0_ ; xmu0=xmu0_
     A=0.d0  ; B=0.d0
     call getAs
@@ -154,8 +154,8 @@ contains
        do iy=1,MM
           iz= iy_m_ix(iy,ix)
           if(iz>0)then
-             P1(ix)=P1(ix) + A0p(iy)*A0m(iz)*fmesh
-             P2(ix)=P2(ix) + A0m(iy)*A0p(iz)*fmesh
+             P1(ix)=P1(ix) + A0p(iy)*A0m(iz)*mesh
+             P2(ix)=P2(ix) + A0m(iy)*A0p(iz)*mesh
           endif
        enddo
     enddo
@@ -184,8 +184,8 @@ contains
        do iy=1,MM
           iz= iy_m_ix(iy,ix)
           if(iz>0)then
-             sum1=sum1+A0p(MM-iz+1)*P1(iy)*fmesh
-             sum2=sum2+A0m(MM-iz+1)*P2(iy)*fmesh
+             sum1=sum1+A0p(MM-iz+1)*P1(iy)*mesh
+             sum2=sum2+A0m(MM-iz+1)*P2(iy)*mesh
           end if
        enddo
        imS(ix)=-(U**2)*(sum1+sum2)*pi

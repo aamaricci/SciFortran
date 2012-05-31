@@ -2,7 +2,7 @@ include $(SFDIR)/etc/opt.mk
 
 #SciFor MODULES:
 SFMODS 	= -I$(SFINCLUDE)
-SFMODS_DEB= -I$(SFINCLUDE)/debug
+SFMODS_DEB= -I$(SFINCLUDE)/debug/
 
 
 ifdef MKLDIR
