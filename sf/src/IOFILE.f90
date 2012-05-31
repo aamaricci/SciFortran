@@ -163,7 +163,7 @@ contains
     logical           :: control
     character(len=9)  :: csize 
     integer           :: cstatus,fsize
-    call msg("store: "//file)
+    call msg("storing "//file)
     !Check file exists:
     inquire(file=reg_filename(file),exist=control)
     if(control)then

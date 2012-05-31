@@ -16,7 +16,7 @@ module IPT_SC_SOPT
   integer,allocatable,dimension(:,:)    :: iy_m_ix
   integer,save                          :: loop=1
   complex(8),allocatable,dimension(:,:) :: fg0,sigma
-  real(8)                               :: n,n0,delta,delta0
+  real(8)                               :: n,n0,delta,delta0,mesh
   integer                               :: Lm
   public                                :: solve_ipt_sc_sopt
   public                                :: solve_mpt_sc_sopt
@@ -41,7 +41,7 @@ contains
        if(.not.allocated(wr))allocate(wr(Lm))
        call get_frequency_index
     endif
-    fg0=fg0_ ; delta=delta_ ; wr=wr_ ; fmesh=abs(wr(2)-wr(1))
+    fg0=fg0_ ; delta=delta_ ; wr=wr_ ; mesh=abs(wr(2)-wr(1))
     call simpurity 
     sigma_(1,:) =          sigma(1,:)
     sigma_(2,:) = -delta + sigma(2,:)
@@ -77,7 +77,7 @@ contains
     endif
     fg0=fg0_  ; wr=wr_ 
     n=n_ ; n0=n0_ ; delta=delta_ ; delta0=delta0_
-    fmesh=abs(wr(2)-wr(1))
+    mesh=abs(wr(2)-wr(1))
     call simpurity
     A = U**2*n*(1.d0-n)-delta**2
     B = U**2*n0*(1.d0-n0)-delta0**2
@@ -214,36 +214,36 @@ contains
           ! posso eliminare il check di prima perche i punti fuori  dai 
           ! boundaries non verranno calcolati comunque
           if((iz>=1).and.(iz<=Lm)) then
-             P2(ix)=P2(ix) + A0p11(iy)*A0m22(iz)*fmesh
-             P1(ix)=P1(ix) + A0m11(iy)*A0p22(iz)*fmesh
-             Q2(ix)=Q2(ix) + C0p(iy)*A0m22(iz)*fmesh     
-             Q1(ix)=Q1(ix) + C0m(iy)*A0p22(iz)*fmesh     
-             R2(ix)=R2(ix) + B0p(iy)*B0m(iz)*fmesh
-             R1(ix)=R1(ix) + B0m(iy)*B0p(iz)*fmesh
-             T2(ix)=T2(ix) + A0p11(iy)*B0m(iz)*fmesh
-             T1(ix)=T1(ix) + A0m11(iy)*B0p(iz)*fmesh
+             P2(ix)=P2(ix) + A0p11(iy)*A0m22(iz)*mesh
+             P1(ix)=P1(ix) + A0m11(iy)*A0p22(iz)*mesh
+             Q2(ix)=Q2(ix) + C0p(iy)*A0m22(iz)*mesh     
+             Q1(ix)=Q1(ix) + C0m(iy)*A0p22(iz)*mesh     
+             R2(ix)=R2(ix) + B0p(iy)*B0m(iz)*mesh
+             R1(ix)=R1(ix) + B0m(iy)*B0p(iz)*mesh
+             T2(ix)=T2(ix) + A0p11(iy)*B0m(iz)*mesh
+             T1(ix)=T1(ix) + A0m11(iy)*B0p(iz)*mesh
           endif
 
           !OLDER
           !if(iz>0)then
-          ! P2(ix)=P2(ix) + A0p11(iy)*A0m22(iz)*fmesh
-          ! P1(ix)=P1(ix) + A0m11(iy)*A0p22(iz)*fmesh
-          ! Q2(ix)=Q2(ix) + C0p(iy)*A0m22(iz)*fmesh
-          ! Q1(ix)=Q1(ix) + C0m(iy)*A0p22(iz)*fmesh
-          ! R2(ix)=R2(ix) + B0p(iy)*B0m(iz)*fmesh
-          ! R1(ix)=R1(ix) + B0m(iy)*B0p(iz)*fmesh
-          ! T2(ix)=T2(ix) + A0p11(iy)*B0m(iz)*fmesh
-          ! T1(ix)=T1(ix) + A0m11(iy)*B0p(iz)*fmesh
+          ! P2(ix)=P2(ix) + A0p11(iy)*A0m22(iz)*mesh
+          ! P1(ix)=P1(ix) + A0m11(iy)*A0p22(iz)*mesh
+          ! Q2(ix)=Q2(ix) + C0p(iy)*A0m22(iz)*mesh
+          ! Q1(ix)=Q1(ix) + C0m(iy)*A0p22(iz)*mesh
+          ! R2(ix)=R2(ix) + B0p(iy)*B0m(iz)*mesh
+          ! R1(ix)=R1(ix) + B0m(iy)*B0p(iz)*mesh
+          ! T2(ix)=T2(ix) + A0p11(iy)*B0m(iz)*mesh
+          ! T1(ix)=T1(ix) + A0m11(iy)*B0p(iz)*mesh
 
           !VERY OLDER VERSION:
-          ! P1(ix)=P1(ix) + A0p11(iy)*A0m22(iz)*fmesh
-          ! P2(ix)=P2(ix) + A0m11(iy)*A0p22(iz)*fmesh
-          ! Q1(ix)=Q1(ix) + C0p(iy)*A0m22(iz)*fmesh !C0p(iy)*A0m22(iz)*fmesh
-          ! Q2(ix)=Q2(ix) + C0m(iy)*A0p22(iz)*fmesh !C0m(iy)*A0p22(iz)*fmesh
-          ! R1(ix)=R1(ix) + B0p(iy)*B0m(iz)*fmesh
-          ! R2(ix)=R2(ix) + B0m(iy)*B0p(iz)*fmesh
-          ! T1(ix)=T1(ix) + A0p11(iy)*B0m(iz)*fmesh
-          ! T2(ix)=T2(ix) + A0m11(iy)*B0p(iz)*fmesh
+          ! P1(ix)=P1(ix) + A0p11(iy)*A0m22(iz)*mesh
+          ! P2(ix)=P2(ix) + A0m11(iy)*A0p22(iz)*mesh
+          ! Q1(ix)=Q1(ix) + C0p(iy)*A0m22(iz)*mesh !C0p(iy)*A0m22(iz)*mesh
+          ! Q2(ix)=Q2(ix) + C0m(iy)*A0p22(iz)*mesh !C0m(iy)*A0p22(iz)*mesh
+          ! R1(ix)=R1(ix) + B0p(iy)*B0m(iz)*mesh
+          ! R2(ix)=R2(ix) + B0m(iy)*B0p(iz)*mesh
+          ! T1(ix)=T1(ix) + A0p11(iy)*B0m(iz)*mesh
+          ! T2(ix)=T2(ix) + A0m11(iy)*B0p(iz)*mesh
           !endif
        enddo
     enddo
@@ -283,36 +283,36 @@ contains
           iz= iy_m_ix(iy,ix)
 
           if((iz>=1).and.(iz<=Lm)) then         ! in questo modo il contributo fuori da dove le polarizzazioni sono definite e' eliminato 
-             sumP1=sumP1 + A0m22(Lm+1-iz)*P1(iy)*fmesh ! Adriano mi ha spiegato il senso di com'era prima ma  
-             sumP2=sumP2 + A0p22(Lm+1-iz)*P2(iy)*fmesh ! questo mi sembra MORALMENTE 
-             sumQ1=sumQ1 + B0m(Lm+1-iz)*Q1(iy)*fmesh   ! piu' chiaro per i posteri per cui... 
-             sumQ2=sumQ2 + B0p(Lm+1-iz)*Q2(iy)*fmesh
-             sumR1=sumR1 + C0m(Lm+1-iz)*R1(iy)*fmesh!C0m(iy)*R1(iz)*fmesh   !! DOUBLE CHECK
-             sumR2=sumR2 + C0p(Lm+1-iz)*R2(iy)*fmesh!C0p(iy)*R2(iz)*fmesh
-             sumT1=sumT1 + A0m22(Lm+1-iz)*T1(iy)*fmesh
-             sumT2=sumT2 + A0p22(Lm+1-iz)*T2(iy)*fmesh
+             sumP1=sumP1 + A0m22(Lm+1-iz)*P1(iy)*mesh ! Adriano mi ha spiegato il senso di com'era prima ma  
+             sumP2=sumP2 + A0p22(Lm+1-iz)*P2(iy)*mesh ! questo mi sembra MORALMENTE 
+             sumQ1=sumQ1 + B0m(Lm+1-iz)*Q1(iy)*mesh   ! piu' chiaro per i posteri per cui... 
+             sumQ2=sumQ2 + B0p(Lm+1-iz)*Q2(iy)*mesh
+             sumR1=sumR1 + C0m(Lm+1-iz)*R1(iy)*mesh!C0m(iy)*R1(iz)*mesh   !! DOUBLE CHECK
+             sumR2=sumR2 + C0p(Lm+1-iz)*R2(iy)*mesh!C0p(iy)*R2(iz)*mesh
+             sumT1=sumT1 + A0m22(Lm+1-iz)*T1(iy)*mesh
+             sumT2=sumT2 + A0p22(Lm+1-iz)*T2(iy)*mesh
           endif
 
           !OLDER
           ! if(iz>0)then
-          !    sumP1=sumP1 + A0m22(Lm-iz+1)*P1(iy)*fmesh 
-          !    sumP2=sumP2 + A0p22(Lm-iz+1)*P2(iy)*fmesh
-          !    sumQ1=sumQ1 + B0m(Lm-iz+1)*Q1(iy)*fmesh
-          !    sumQ2=sumQ2 + B0p(Lm-iz+1)*Q2(iy)*fmesh
-          !    sumR1=sumR1 + C0m(Lm-iz+1)*R1(iy)*fmesh
-          !    sumR2=sumR2 + C0p(Lm-iz+1)*R2(iy)*fmesh
-          !    sumT1=sumT1 + A0m22(Lm-iz+1)*T1(iy)*fmesh
-          !    sumT2=sumT2 + A0p22(Lm-iz+1)*T2(iy)*fmesh
+          !    sumP1=sumP1 + A0m22(Lm-iz+1)*P1(iy)*mesh 
+          !    sumP2=sumP2 + A0p22(Lm-iz+1)*P2(iy)*mesh
+          !    sumQ1=sumQ1 + B0m(Lm-iz+1)*Q1(iy)*mesh
+          !    sumQ2=sumQ2 + B0p(Lm-iz+1)*Q2(iy)*mesh
+          !    sumR1=sumR1 + C0m(Lm-iz+1)*R1(iy)*mesh
+          !    sumR2=sumR2 + C0p(Lm-iz+1)*R2(iy)*mesh
+          !    sumT1=sumT1 + A0m22(Lm-iz+1)*T1(iy)*mesh
+          !    sumT2=sumT2 + A0p22(Lm-iz+1)*T2(iy)*mesh
 
           !    !OLDER++ VERSION:
-          !    ! sumP1=sumP1 + A0m22(iy)*P1(iz)*fmesh 
-          !    ! sumP2=sumP2 + A0p22(iy)*P2(iz)*fmesh
-          !    ! sumQ1=sumQ1 + B0m(iy)*Q1(iz)*fmesh
-          !    ! sumQ2=sumQ2 + B0p(iy)*Q2(iz)*fmesh
-          !    ! sumR1=sumR1 + C0m(iy)*R1(iz)*fmesh
-          !    ! sumR2=sumR2 + C0p(iy)*R2(iz)*fmesh
-          !    ! sumT1=sumT1 + A0m22(iy)*T1(iz)*fmesh
-          !    ! sumT2=sumT2 + A0p22(iy)*T2(iz)*fmesh
+          !    ! sumP1=sumP1 + A0m22(iy)*P1(iz)*mesh 
+          !    ! sumP2=sumP2 + A0p22(iy)*P2(iz)*mesh
+          !    ! sumQ1=sumQ1 + B0m(iy)*Q1(iz)*mesh
+          !    ! sumQ2=sumQ2 + B0p(iy)*Q2(iz)*mesh
+          !    ! sumR1=sumR1 + C0m(iy)*R1(iz)*mesh
+          !    ! sumR2=sumR2 + C0p(iy)*R2(iz)*mesh
+          !    ! sumT1=sumT1 + A0m22(iy)*T1(iz)*mesh
+          !    ! sumT2=sumT2 + A0p22(iy)*T2(iz)*mesh
           ! end if
 
 
