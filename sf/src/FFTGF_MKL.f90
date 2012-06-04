@@ -7,6 +7,7 @@
     public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
     public :: fftgf_rw2rt  , fftgf_rt2rw
     public :: fftgf_iw2tau , fftgf_tau2iw
+    public :: fftff_iw2tau , fftff_tau2iw
 
     REAL(8),PARAMETER    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
 
@@ -200,6 +201,31 @@
 
 
 
+    subroutine fftff_iw2tau(gw,gt,beta)
+      integer                             :: i,n,L
+      complex(8),dimension(:)             :: gw
+      complex(8),dimension(0:)            :: gt
+      complex(8),dimension(:),allocatable :: tmpGw
+      complex(8),dimension(:),allocatable :: tmpGt
+      real(8)                             :: wmax,beta,mues,tau,dtau,At,w
+      n=size(gw)     ; L=size(gt)-1 ; dtau=beta/real(L,8) 
+      if(L>n)then
+         print*,"error in fftff_iw2tau: call w/ notail and L>n"
+         stop
+      endif
+      !
+      allocate(tmpGw(2*L),tmpGt(-L:L))
+      !
+      tmpGw= (0.d0,0.d0)
+      forall(i=1:L)tmpGw(2*i)  = gw(i)
+      call cfft_1d_forward(tmpGw)
+      tmpGt = cfft_1d_shift(tmpGw,L)*2.d0/beta
+      gt(0:L-1) = tmpGt(0:L-1)
+      gt(L)=-gt(0)
+    end subroutine fftff_iw2tau
+
+
+
     !*******************************************************************
     !*******************************************************************
     !*******************************************************************
@@ -209,29 +235,20 @@
     !+-------------------------------------------------------------------+
     !PURPOSE  :  
     !+-------------------------------------------------------------------+
-    subroutine fftgf_tau2iw(gt,gw,beta)!,normal)
+    subroutine fftgf_tau2iw(gt,gw,beta)
       real(8)                :: gt(0:)
       complex(8)             :: gw(:)
       real(8)                :: beta
-      ! logical,optional       :: normal
-      ! logical                :: normal_
       integer                :: i,L,n,M
       complex(8),allocatable :: Igw(:)
       real(8),allocatable    :: Igt(:)
 
       L=size(gt)-1    ; N=size(gw)
-      ! normal_=.true.  ; if(present(normal))normal_=normal
 
       M=32*L
       allocate(Igt(-M:M),Igw(2*M))
       call interp(gt(0:L),Igt(0:M),L,M)
-      !
-      ! if(normal_)then
       forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)
-      ! else
-      !    forall(i=1:M)Igt(-i)=Igt(M-i)
-      ! endif
-      !
       call fftgf_rt2rw((1.d0,0.d0)*Igt,Igw,M)
       Igw=Igw*beta/real(M,8)/2.d0
       forall(i=1:n)gw(i)=Igw(2*i)
@@ -239,6 +256,33 @@
     contains
       include "splinefft.f90" !This is taken from SPLINE to make this module independent    
     end subroutine fftgf_tau2iw
+
+
+    subroutine fftff_tau2iw(gt,gw,beta)
+      complex(8)             :: gt(0:)
+      complex(8)             :: gw(:)
+      real(8)                :: beta
+      integer                :: i,L,n,M
+      real(8),allocatable    :: reGt(:),imGt(:)
+      complex(8),allocatable :: Igw(:),Igt(:)
+
+      L=size(gt)-1    ; N=size(gw)
+
+      M=32*L
+      allocate(Igt(-M:M),Igw(2*M))
+      allocate(reGt(0:M),imGt(0:M))
+      call interp(real(gt(0:L),8),reGt(0:M),L,M)
+      call interp(aimag(gt(0:L)),imGt(0:M),L,M)
+      Igt(0:M)=cmplx(reGt(0:M),imGt(0:M),8)
+      !
+      forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)
+      call fftgf_rt2rw(Igt,Igw,M)
+      Igw=Igw*beta/real(M,8)/2.d0
+      forall(i=1:n)gw(i)=Igw(2*i)
+      deallocate(Igt,Igw)
+    contains
+      include "splinefft.f90" !This is taken from SPLINE to make this module independent    
+    end subroutine fftff_tau2iw
 
 
 
