@@ -5,6 +5,7 @@ module FFTGF
   public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
   public :: fftgf_rw2rt  , fftgf_rt2rw
   public :: fftgf_iw2tau , fftgf_tau2iw
+  public :: fftff_iw2tau , fftff_tau2iw
 
   REAL(8),PARAMETER    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
   integer*8            :: plan
@@ -189,7 +190,37 @@ contains
     end select
   end subroutine fftgf_iw2tau
 
-
+  subroutine fftff_iw2tau(gw,gt,beta)
+    integer                             :: i,n,L,itau,M
+    complex(8),dimension(:)             :: gw
+    real(8),dimension(size(gw))         :: wm
+    complex(8),dimension(0:)            :: gt
+    ! real(8),dimension(:),allocatable    :: tmpGr,tmpGi
+    ! complex(8),dimension(:),allocatable :: tmpGt,tmpGw,tmpGw1,tmpGw2
+    real(8)                             :: wmax,beta,mues,tau,dtau,At,w
+    n=size(gw) ; L=size(gt)-1
+    if(L/=N)then
+       print*,"error in fftgf_iw2tau: call w/ notail and L/=N"
+       stop
+    endif
+    dtau=beta/real(L,8) 
+    ! M=2*L
+    ! allocate(tmpGw1(2*L),tmpGw2(2*2*L),tmpGt(-L:L))
+    ! !Get full domain of the anomalous F(iw) by symmetry F(iw)=F(-iw) <= time-reversal
+    ! tmpGw2=(0.d0,0.d0)
+    ! tmpGw1(1:L)=gw(1:L)
+    ! forall(i=1:L)tmpGw1(2*L-i+1)=gw(i)
+    ! forall(i=1:M)tmpGw2(2*i)=tmpGw1(i)
+    ! call cfft_1d_forward(tmpGw2)
+    ! tmpGt = cfft_1d_shift(tmpGw2,2*L)/beta
+    ! do i=-L,L
+    !    write(200,*)real(i,8)*dtau,real(tmpGt(i)),aimag(tmpGt(i))
+    ! enddo
+    gt = (0.d0,0.d0)
+    forall(i=1:n)wm(i)=pi/beta*real(2*i-1,8)
+    forall(i=0:L)gt(i)=sum(cos(real(i,8)*dtau*wm(:))*gw(:))
+    gt=gt*2.d0/beta
+  end subroutine fftff_iw2tau
   !*******************************************************************
   !*******************************************************************
   !*******************************************************************
@@ -235,6 +266,29 @@ contains
     include "splinefft.f90" !This is taken from SPLINE to make this module independent    
   end subroutine fftgf_tau2iw
 
+  subroutine fftff_tau2iw(gt,gw,beta)
+    complex(8)             :: gt(0:)
+    complex(8)             :: gw(:)
+    real(8)                :: beta
+    integer                :: i,L,n,M
+    real(8),allocatable    :: reGt(:),imGt(:)
+    complex(8),allocatable :: Igw(:),Igt(:)
+    L=size(gt)-1    ; N=size(gw)
+    M=32*L
+    allocate(Igt(-M:M),Igw(2*M))
+    allocate(reGt(0:M),imGt(0:M))
+    call interp(real(gt(0:L),8),reGt(0:M),L,M)
+    call interp(aimag(gt(0:L)),imGt(0:M),L,M)
+    Igt(0:M)=cmplx(reGt(0:M),imGt(0:M),8)
+    !
+    forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)
+    call fftgf_rt2rw(Igt,Igw,M)
+    Igw=Igw*beta/real(M,8)/2.d0
+    forall(i=1:n)gw(i)=Igw(2*i)
+    deallocate(Igt,Igw)
+  contains
+    include "splinefft.f90" !This is taken from SPLINE to make this module independent    
+  end subroutine fftff_tau2iw
 
   ! subroutine fftgf_tau2iw(gt,gw,beta,notail)
   !   implicit none

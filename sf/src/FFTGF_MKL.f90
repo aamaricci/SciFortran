@@ -1,7 +1,9 @@
   include "mkl_dfti.f90"
+  include "mkl_trig_transforms.f90"
   module FFTGF
     use MKL_DFTI
     use MKL_DFT_TYPE
+    use MKL_TRIG_TRANSFORMS
     implicit none 
     private
     public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
@@ -185,8 +187,8 @@
          gt(L)=-(gt(0)+1.d0)
 
       case(.true.)
-         if(L>n)then
-            print*,"error in fftgf_iw2tau: call w/ notail and L>n"
+         if(L/=N)then
+            print*,"error in fftgf_iw2tau: call w/ notail and L/=N"
             stop
          endif
          forall(i=1:L)tmpGw(2*i)  = gw(i)
@@ -202,26 +204,35 @@
 
 
     subroutine fftff_iw2tau(gw,gt,beta)
-      integer                             :: i,n,L
+      integer                             :: i,n,L,itau,M
       complex(8),dimension(:)             :: gw
+      real(8),dimension(size(gw))         :: wm
       complex(8),dimension(0:)            :: gt
-      complex(8),dimension(:),allocatable :: tmpGw
-      complex(8),dimension(:),allocatable :: tmpGt
+      ! real(8),dimension(:),allocatable    :: tmpGr,tmpGi
+      ! complex(8),dimension(:),allocatable :: tmpGt,tmpGw,tmpGw1,tmpGw2
       real(8)                             :: wmax,beta,mues,tau,dtau,At,w
-      n=size(gw)     ; L=size(gt)-1 ; dtau=beta/real(L,8) 
-      if(L>n)then
-         print*,"error in fftff_iw2tau: call w/ notail and L>n"
+      n=size(gw) ; L=size(gt)-1
+      if(L/=N)then
+         print*,"error in fftgf_iw2tau: call w/ notail and L/=N"
          stop
       endif
-      !
-      allocate(tmpGw(2*L),tmpGt(-L:L))
-      !
-      tmpGw= (0.d0,0.d0)
-      forall(i=1:L)tmpGw(2*i)  = gw(i)
-      call cfft_1d_forward(tmpGw)
-      tmpGt = cfft_1d_shift(tmpGw,L)*2.d0/beta
-      gt(0:L-1) = tmpGt(0:L-1)
-      gt(L)=-gt(0)
+      dtau=beta/real(L,8) 
+      ! M=2*L
+      ! allocate(tmpGw1(2*L),tmpGw2(2*2*L),tmpGt(-L:L))
+      ! !Get full domain of the anomalous F(iw) by symmetry F(iw)=F(-iw) <= time-reversal
+      ! tmpGw2=(0.d0,0.d0)
+      ! tmpGw1(1:L)=gw(1:L)
+      ! forall(i=1:L)tmpGw1(2*L-i+1)=gw(i)
+      ! forall(i=1:M)tmpGw2(2*i)=tmpGw1(i)
+      ! call cfft_1d_forward(tmpGw2)
+      ! tmpGt = cfft_1d_shift(tmpGw2,2*L)/beta
+      ! do i=-L,L
+      !    write(200,*)real(i,8)*dtau,real(tmpGt(i)),aimag(tmpGt(i))
+      ! enddo
+      gt = (0.d0,0.d0)
+      forall(i=1:n)wm(i)=pi/beta*real(2*i-1,8)
+      forall(i=0:L)gt(i)=sum(cos(real(i,8)*dtau*wm(:))*gw(:))
+      gt=gt*2.d0/beta
     end subroutine fftff_iw2tau
 
 
@@ -242,9 +253,7 @@
       integer                :: i,L,n,M
       complex(8),allocatable :: Igw(:)
       real(8),allocatable    :: Igt(:)
-
       L=size(gt)-1    ; N=size(gw)
-
       M=32*L
       allocate(Igt(-M:M),Igw(2*M))
       call interp(gt(0:L),Igt(0:M),L,M)
@@ -265,9 +274,7 @@
       integer                :: i,L,n,M
       real(8),allocatable    :: reGt(:),imGt(:)
       complex(8),allocatable :: Igw(:),Igt(:)
-
       L=size(gt)-1    ; N=size(gw)
-
       M=32*L
       allocate(Igt(-M:M),Igw(2*M))
       allocate(reGt(0:M),imGt(0:M))
