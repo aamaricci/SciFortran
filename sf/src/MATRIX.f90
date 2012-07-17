@@ -37,19 +37,85 @@ module MATRIX
      module procedure d_invert_matrix,c_invert_matrix
   end interface invert_matrix
 
+  interface mat_diagonalization
+     module procedure d_mat_diagonalization,z_mat_diagonalization
+  end interface mat_diagonalization
+
   !From NR90
   interface swap
      module procedure swap_i,swap_r,swap_rv,swap_z,swap_zv,swap_zm
   end interface swap
+
 
   public :: mat_inversion
   public :: mat_inversion_SYM
   public :: mat_inversion_HER
   public :: mat_inversion_TRIANG
   public :: mat_inversion_GJ
+  public :: mat_diagonalization
   public :: invert_matrix,invert_matrix_gj
+
+
 contains
 
+  !+-----------------------------------------------------------------+
+  !PROGRAM  : MAT_DIAGONALIZATION
+  !PURPOSE  : function interface to matrix inversion subroutine
+  !+-----------------------------------------------------------------+
+  subroutine d_mat_diagonalization(M,E,jobz,uplo)
+    real(8),dimension(:,:),intent(inout)       :: M
+    real(8),dimension(size(M,1)),intent(inout) :: E
+    character(len=1),optional                  :: jobz,uplo
+    character(len=1)                           :: jobz_,uplo_
+    integer                                    :: i,j,Nsize,info
+    integer                                    :: lwork
+    real(8),dimension(1)                       :: lwork_guess
+    real(8),dimension(:),allocatable           :: work
+    Nsize=size(M,1)
+    if(Nsize/=size(M,2))then
+       print*,"error d_mat_diagonalization: size(M,1) /= size(M,2)"
+       stop
+    endif
+    jobz_='N';if(present(jobz))jobz_=jobz
+    uplo_='U';if(present(uplo))uplo_=uplo
+    call dsyev(jobz_,uplo_,Nsize,M,Nsize,E,lwork_guess,-1,info)
+    if(info /= 0)print*,"error d_mat_diagonalization: 1st call dsyev",info
+    lwork=lwork_guess(1) ; allocate(work(lwork))
+    call dsyev(jobz_,uplo_,Nsize,M,Nsize,E,work,lwork,info)
+    if(info /= 0)print*,"error d_mat_diagonalization: 2nd call dsyev",info
+  end subroutine d_mat_diagonalization
+  subroutine z_mat_diagonalization(M,E,jobz,uplo)
+    complex(8),dimension(:,:),intent(inout)    :: M
+    real(8),dimension(size(M,1)),intent(inout) :: E
+    character(len=1),optional                  :: jobz,uplo
+    character(len=1)                           :: jobz_,uplo_
+    integer                                    :: i,j,Nsize,info
+    integer                                    :: lwork
+    complex(8),dimension(1)                    :: lwork_guess
+    complex(8),dimension(:),allocatable        :: work
+    real(8),dimension(:),allocatable           :: rwork
+    Nsize=size(M,1)
+    if(Nsize/=size(M,2))then
+       print*,"error z_mat_diagonalization: size(M,1) /= size(M,2)"
+       stop
+    endif
+    jobz_='N';if(present(jobz))jobz_=jobz
+    uplo_='U';if(present(uplo))uplo_=uplo
+    allocate(rwork(3*Nsize))
+    call zheev(jobz_,uplo_,Nsize,M,Nsize,E,lwork_guess,-1,rwork,info)
+    if(info /= 0)print*,"error z_mat_diagonalization: 1st call dsyev",info
+    lwork=lwork_guess(1) ; allocate(work(lwork))
+    call zheev(jobz_,uplo_,Nsize,M,Nsize,E,work,lwork,rwork,info)
+    if(info /= 0)print*,"error z_mat_diagonalization: 2nd call dsyev",info
+  end subroutine z_mat_diagonalization
+
+
+
+
+  !+-----------------------------------------------------------------+
+  !PROGRAM  : invert_matrix_xx
+  !PURPOSE  : function interface to matrix inversion subroutine
+  !+-----------------------------------------------------------------+
   function d_invert_matrix_gj(M,L) result(M1)
     integer :: L
     real(8),dimension(L,L) :: M,M1
@@ -62,7 +128,7 @@ contains
     M1=M
     call mat_inversion_GJ(M1)
   end function c_invert_matrix_gj
-
+  !
   function d_invert_matrix(M,L) result(M1)
     integer :: L
     real(8),dimension(L,L) :: M,M1
@@ -75,6 +141,16 @@ contains
     M1=M
     call mat_inversion(M1)
   end function c_invert_matrix
+
+
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+
+
 
 
   !+-----------------------------------------------------------------+
@@ -120,6 +196,10 @@ contains
     call zgetri(ndim2,M,ndim1,ipvt,work,lwork,info)
     if(info/=0)stop "Error in zgetri"
   end subroutine Z_mat_invert
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
@@ -172,6 +252,10 @@ contains
     call ztrtri(uplo,diag,ndim2,M,ndim1,info)
     if(info/=0)stop "Error in ztrtri"
   end subroutine Z_mat_invertTRIANG
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
@@ -227,6 +311,11 @@ contains
     call zsytri(trim(uplo),ndim,M,ndim,ipvt,work,info)
     if(info/=0)stop "Error in zsytri"
   end subroutine Z_mat_invertSYM
+
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
@@ -261,6 +350,11 @@ contains
     call zhetri(trim(uplo),ndim,M,ndim,ipvt,work,info)
     if(info/=0)stop "Error in zsytri"
   end subroutine Z_mat_invertHER
+
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
@@ -348,6 +442,11 @@ contains
            spread(b,dim=1,ncopies=size(a))
     END FUNCTION outerprod
   END SUBROUTINE Z_mat_invertGJ
+
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
@@ -430,6 +529,10 @@ contains
            spread(b,dim=1,ncopies=size(a))
     END FUNCTION outerprod
   END SUBROUTINE D_mat_invertGJ
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
@@ -499,6 +602,10 @@ contains
     a=b
     b=dum
   END SUBROUTINE swap_zm
+
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************

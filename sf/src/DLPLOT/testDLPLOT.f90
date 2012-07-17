@@ -55,23 +55,23 @@ program testDLPLOT
   ENDDO
 
   ! !1-dim array: PLOT
-  call dplot("plotFUNCS",X,FUNC,"c(x)",Y1,"$c(x)*e(-x)$",Y2,"$c(x)*s(x)$",wlp="wlp") 
+  !call dplot("plotFUNCS",X,FUNC,"c(x)",Y1,"$c(x)*e(-x)$",Y2,"$c(x)*s(x)$",wlp="wlp") 
 
   ! !1-dim + animation:
-  call dplot_movie("plotANI",X,Y3)
+  !call dplot_movie("plotANI",X,Y3)
 
   ! !2-dim: plot3D
   ! call dplot_3d("plotZMAT","X","Y","Z",X,Y,ZMAT)
   ! !change the point of view of the "observer": s1,s2 
   ! call dplot_3d("plotZMAT_newVIEW","X","Y","Z",X,Y,ZMAT,theta=250.d0,phi=40.d0,rho=5.6d0)
   ! !produce a rotating figure in addition to the static plots for better visualization
-  call dplot_3D("plotZMAT","X","Y","Z",X,Y,ZMAT,imovie=.true.)
+  !call dplot_3D("plotZMAT","X","Y","Z",X,Y,ZMAT,imovie=.true.)
 
   ! !2-dim + time animatino:
-  call dplot_3D_intensity_animated("plot3Dintensity","X","Y","Z",X*FPI,Y*FPI,ZMATT)
+  !call dplot_3D_intensity_animated("plot3Dintensity","X","Y","Z",X*FPI,Y*FPI,ZMATT)
 
   ! !2-dim + time animatino:
-  call dplot_3D_surface_animated("plot3Dsurface","X","Y","Z",X*FPI,Y*FPI,ZMATT)
+  !call dplot_3D_surface_animated("plot3Dsurface","X","Y","Z",X*FPI,Y*FPI,ZMATT)
 
   ! !Vector Field:
   call dplot_vector_field("plotVF",X,Y,VX,VY,XLABEL="X",YLABEL="Y")

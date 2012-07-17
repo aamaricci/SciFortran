@@ -6,7 +6,8 @@ SFMODS_DEB= -I$(SFINCLUDE)/debug/
 
 
 ifdef MKLDIR
-MATHLIB  = -lmkl_em64t -lmkl_core -liomp5  -lpthread
+MATHLIB  = -lmkl_gf_ilp64 -lmkl_intel_thread -lmkl_core -liomp5  -lpthread
+#-lmkl_em64t -lmkl_core -liomp5  -lpthread
 else
 MATHLIB	 = -llapack -lblas
 endif
