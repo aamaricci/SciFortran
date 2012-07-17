@@ -16,6 +16,7 @@ subroutine plot_dislinVF_(pname,X,Y,Vx,Vy,Xlabel,Ylabel)
   real(8)                       :: ZXmin,ZXmax,ZYmin,ZYmax,Zmin,Zmax,dez
   integer                       :: Nx,Ny
   integer                       :: i,j
+  real(4),allocatable :: STRMX(:),STRMY(:)
   Nx=size(X);Ny=size(Y)
 
   Xmin=minval(X); Xmax=maxval(X)
@@ -73,8 +74,11 @@ subroutine plot_dislinVF_(pname,X,Y,Vx,Vy,Xlabel,Ylabel)
        real(Ymin,4),real(Ymax,4),real(Ymin,4),real(dey,4))
   CALL VECCLR(-2)
   CALL VECOPT(0.,"SCALE")
+  !Stream lines:
+  allocate(STRMX(Nx),STRMY(Ny))
+  CALL STREAM(real(Vx,4),real(Vy,4),Nx,Ny,real(X,4),real(Y,4),STRMX,STRMY,0)
+  !Vector field:
   CALL VECMAT(real(Vx,4),real(Vy,4),Nx,Ny,real(X,4),real(Y,4),-1)
-
 
   !Vector plot NEW type: vector intensity plot:
   !===========================================================
@@ -95,8 +99,8 @@ subroutine plot_dislinVF_(pname,X,Y,Vx,Vy,Xlabel,Ylabel)
   CALL TITLE
   CALL DISFIN
 
-  call system("if [ ! -d PNG ]; then mkdir PNG; fi")
-  call system("mv *.png PNG/")
+  ! call system("if [ ! -d PNG ]; then mkdir PNG; fi")
+  ! call system("mv *.png PNG/")
 end subroutine plot_dislinVF_
 !-----------------------------------
 !-----------------------------------

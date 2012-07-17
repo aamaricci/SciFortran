@@ -113,6 +113,10 @@ contains
     logical :: IOfile
     inquire(file=trim(adjustl(trim(file))),exist=IOfile)
     if(.not.IOfile)then
+       inquire(file=trim(adjustl(trim(file)))//".gz",exist=IOfile)
+       if(IOfile)call data_open(trim(adjustl(trim(file))))
+    endif
+    if(.not.IOfile)then
        call msg('Cannot read +'//trim(adjustl(trim(file)))//'. Skip file_size')
        length=0
        return

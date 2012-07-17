@@ -99,12 +99,11 @@ module COMMON_VARS
 
 
   !===============================================
-  public :: parse_cmd_variable,parse_cmd_help,get_cmd_variable
+  public :: parse_cmd_variable,parse_cmd_help,print_cmd_help,get_cmd_variable
   public :: version
   public :: timestamp
   public :: error
   public :: msg
-  !public :: start_mpi,close_mpi
   public :: bold
   public :: underline
   public :: highlight
@@ -309,6 +308,16 @@ contains
        endif
     enddo
   end subroutine parse_cmd_help
+
+  subroutine print_cmd_help(buffer)
+    character(len=*),dimension(:) :: buffer
+    integer                       :: lines,N
+    N=size(buffer)
+    do lines=1,N
+       write(*,"(256A)")trim(adjustl(trim(buffer(lines))))
+    enddo
+    stop
+  end subroutine print_cmd_help
 
 
   function get_cmd_variable(i)  result(var)
