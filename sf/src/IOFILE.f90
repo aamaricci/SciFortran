@@ -20,8 +20,36 @@ module IOFILE
   public :: reg_filename
   public :: create_data_dir
   public :: close_file
+  public :: get_filename
+  public :: get_filepath
+
+  interface reg
+     module procedure reg_filename
+  end interface reg
 
 contains
+
+  function get_filename(string) result(fname)
+    character(len=*) :: string
+    character(len=len_trim(string)) :: fname
+    integer :: i,slen
+    slen=len_trim(string)
+    do i=slen,1,-1
+       if(string(i:i)== '/')exit
+    enddo
+    fname=string(i+1:slen)
+  end function get_filename
+
+  function get_filepath(string) result(pname)
+    character(len=*) :: string
+    character(len=len_trim(string)) :: pname
+    integer :: i,slen
+    slen=len_trim(string)
+    do i=slen,1,-1
+       if(string(i:i)== '/')exit
+    enddo
+    pname=string(1:i)
+  end function get_filepath
 
   subroutine close_file(pname)
     character(len=*) :: pname
@@ -229,7 +257,7 @@ contains
     name="DATAsrc";if(present(dir_name))name=dir_name
     control = check_data_dir(name)
     if(control)then
-       call error("Can not create dir +"//trim(adjustl(trim(name)))//": ATTENTION",stop=.false.)
+       call warning("can not create dir +"//trim(adjustl(trim(name)))//": ATTENTION")
        return
     else
        call system("mkdir -v "//trim(adjustl(trim(name))))
@@ -249,6 +277,7 @@ contains
   function check_data_dir(dir_name) result(logic)
     character(len=*),optional :: dir_name
     logical                   :: logic
+    call system("rm -f dir_exist")
     call system("if [ -d "//trim(adjustl(trim(dir_name)))//" ]; then echo > dir_exist; fi")
     inquire(file="dir_exist",EXIST=logic)
     call system("rm -f dir_exist")

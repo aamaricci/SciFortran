@@ -10,7 +10,7 @@ subroutine print_bar(i,imax,leta)
      if(present(leta))then
         call delete_bar_eta()
         old_time=time
-        time=timer()
+        time=total_time()
         dtime        = time-old_time     
         elapsed_time = elapsed_time + dtime
         dtime        = elapsed_time/real(i,4)

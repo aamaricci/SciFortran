@@ -11,80 +11,79 @@ module COMMON_VARS
 
   !PARAMETERS
   !===============================================================
-  COMPLEX(8),PARAMETER,public :: ZERO=(0.D0,0.D0)
-  COMPLEX(8),PARAMETER,public :: XI=(0.D0,1.D0)
-  COMPLEX(8),PARAMETER,public :: ONE=(1.D0,0.D0)
-  REAL(8),PARAMETER,public    :: SQRT2 = 1.41421356237309504880169D0
-  REAL(8),PARAMETER,public    :: SQRT3 = 1.73205080756887729352745D0
-  REAL(8),PARAMETER,public    :: SQRT6 = 2.44948974278317809819728D0
-  REAL(8),PARAMETER,public    :: PI    = 3.14159265358979323846264338327950288419716939937510D0
-  REAL(8),PARAMETER,public    :: PI2   = 6.28318530717959D0
-  REAL(8),PARAMETER,public    :: GAMMA_EULER = 0.57721566490153286060D0  !EULER S CONSTANT
-  REAL(8),PARAMETER,public    :: EULER= 2.7182818284590452353602874713526624977572470936999595749669676277240766303535D0
-  INTEGER,PARAMETER,public    :: MAX_INT  = HUGE(1) 
-  REAL(8),PARAMETER,public    :: MAX_REAL = HUGE(1.D0)
-  REAL(8),PARAMETER,public    :: MAX_EXP  =  700.D0
-  REAL(8),PARAMETER,public    :: MIN_EXP  = -700.D0
-  REAL(8),PARAMETER,public    :: MAX_EXP_QUAD = 11000.D0
-  REAL(8),PARAMETER,public    :: MIN_EXP_QUAD =-11000.D0
-  REAL(8),PARAMETER,public    :: MAX_EXP_R =  81.D0
-  REAL(8),PARAMETER,public    :: MIN_EXP_R = -81.D0
-  !REAL(8),PARAMETER,public    :: ERROR=EPSILON(1.D0)*100.D0
-  REAL(8),PARAMETER,public    :: EPSILONR=EPSILON(1.D0),EPSILONQ=1.D-30
-  INTEGER,PARAMETER,public    :: DBL=8,DP=8        ! "DOUBLE" PRECISION
-  INTEGER,PARAMETER,public    :: DDP=16            ! "QUAD"   PRECISION
-  INTEGER,PARAMETER,public    :: SP = KIND(1.0)    ! "SINGLE" PRECISION
-  REAL(DBL),PARAMETER,public  :: TINY_   = 1.D-12
-  REAL(DBL),PARAMETER,public  :: HUGE_   = 1.D+12
-  REAL(DBL),PARAMETER,public  :: QUARTER = 0.25_DBL
-  REAL(DBL),PARAMETER,public  :: THIRD   = 0.3333333333333_DBL
-  REAL(DBL),PARAMETER,public  :: HALF    = 0.5_DBL
-  LOGICAL,PARAMETER,public    :: TT=.TRUE., FF=.FALSE.
+  complex(8),parameter,public :: zero=(0.d0,0.d0)
+  complex(8),parameter,public :: xi=(0.d0,1.d0)
+  complex(8),parameter,public :: one=(1.d0,0.d0)
+  real(8),parameter,public    :: sqrt2 = 1.41421356237309504880169d0
+  real(8),parameter,public    :: sqrt3 = 1.73205080756887729352745d0
+  real(8),parameter,public    :: sqrt6 = 2.44948974278317809819728d0
+  real(8),parameter,public    :: pi    = 3.14159265358979323846264338327950288419716939937510d0
+  real(8),parameter,public    :: pi2   = 6.28318530717959d0
+  real(8),parameter,public    :: gamma_euler = 0.57721566490153286060d0  !euler s constant
+  real(8),parameter,public    :: euler= 2.7182818284590452353602874713526624977572470936999595749669676277240766303535d0
+  integer,parameter,public    :: max_int  = huge(1) 
+  real(8),parameter,public    :: max_real = huge(1.d0)
+  real(8),parameter,public    :: max_exp  =  700.d0
+  real(8),parameter,public    :: min_exp  = -700.d0
+  real(8),parameter,public    :: max_exp_quad = 11000.d0
+  real(8),parameter,public    :: min_exp_quad =-11000.d0
+  real(8),parameter,public    :: max_exp_r =  81.d0
+  real(8),parameter,public    :: min_exp_r = -81.d0
+  !real(8),parameter,public    :: error=epsilon(1.d0)*100.d0
+  real(8),parameter,public    :: epsilonr=epsilon(1.d0),epsilonq=1.d-30
+  integer,parameter,public    :: dbl=8,dp=8        ! "double" precision
+  integer,parameter,public    :: ddp=16            ! "quad"   precision
+  integer,parameter,public    :: sp = kind(1.0)    ! "single" precision
+  real(dbl),parameter,public  :: tiny_   = 1.d-12
+  real(dbl),parameter,public  :: huge_   = 1.d+12
+  real(dbl),parameter,public  :: quarter = 0.25_dbl
+  real(dbl),parameter,public  :: third   = 0.3333333333333_dbl
+  real(dbl),parameter,public  :: half    = 0.5_dbl
+  logical,parameter,public    :: tt=.true., ff=.false.
 
 
-  !GLOABL  VARIABLES
+  !gloabl  variables
   !=========================================================
-  INTEGER,public  :: ILOOP,NLOOP    !DMFT LOOP VARIABLES
-  REAL(8),public  :: D              !BANDWIDTH
-  REAL(8),public  :: TS,TSP,TPP     !N.N./N.N.N. HOPPING AMPLITUDE
-  REAL(8),public  :: U,V            !LOCAL,NON-LOCAL INTERACTION
-  REAL(8),public  :: TPD,VPD        !HYBRIDIZATION,BAND-BAND COUPLING
-  REAL(8),public  :: ED0,EP0        !ORBITAL ENERGIES
-  REAL(8),public  :: XMU            !CHEMICAL POTENTIAL
-  REAL(8),public  :: DT,DTAU        !TIME STEP
-  REAL(8),public  :: FMESH          !FREQ. STEP
-  REAL(8),public  :: BETA           !INVERSE TEMPERATURE
-  REAL(8),public  :: TEMP           !TEMPERATURE
-  REAL(8),public  :: EPS            !BROADENING
+  integer,public  :: iloop,nloop    !dmft loop variables
+  real(8),public  :: d              !bandwidth
+  real(8),public  :: ts,tsp,tpp     !n.n./n.n.n. hopping amplitude
+  real(8),public  :: u,v            !local,non-local interaction
+  real(8),public  :: tpd,vpd        !hybridization,band-band coupling
+  real(8),public  :: ed0,ep0        !orbital energies
+  real(8),public  :: xmu            !chemical potential
+  real(8),public  :: dt,dtau        !time step
+  real(8),public  :: fmesh          !freq. step
+  real(8),public  :: beta           !inverse temperature
+  real(8),public  :: temp           !temperature
+  real(8),public  :: eps            !broadening
 
 
-  !CMD LINE VARIABLES:
+  !cmd line variables:
   !=========================================================
-  TYPE,public:: CMD_VARIABLE
-     CHARACTER(LEN=64)           :: NAME
-     CHARACTER(LEN=64)           :: VALUE
-  END TYPE CMD_VARIABLE
-  CHARACTER(LEN=512),ALLOCATABLE,public :: HELP_BUFFER(:)
-  TYPE(CMD_VARIABLE),public             :: CMD_VAR,NML_VAR
+  type,public:: cmd_variable
+     character(len=64)           :: name
+     character(len=64)           :: value
+  end type cmd_variable
+  character(len=512),allocatable,public :: help_buffer(:)
+  type(cmd_variable),public             :: cmd_var,nml_var
 
-  INTERFACE PARSE_CMD_VARIABLE
-     MODULE PROCEDURE D_PARSE_VARIABLE,&
-          I_PARSE_VARIABLE,CH_PARSE_VARIABLE,L_PARSE_VARIABLE
-  END INTERFACE PARSE_CMD_VARIABLE
+  interface parse_cmd_variable
+     module procedure d_parse_variable,&
+          i_parse_variable,ch_parse_variable,l_parse_variable
+  end interface parse_cmd_variable
 
 
-  !MPI VARS:
+  !mpi vars:
   !=========================================================
-  INTEGER,public          :: MPIERR,MPISIZE=1,MPIID=0
+  integer,public          :: MPIERR,MPISIZE=1,MPIID=0
   CHARACTER(LEN=3),public :: MPICHAR
 
 
   !OMP VARS:
   !=========================================================
-  INTEGER,public :: OMP_NUM_THREADS,OMP_ID,OMP_SIZE
+  integer,public :: omp_num_threads,omp_id,omp_size
 
   !Date variables:
-
   integer(4)                          :: year
   integer(4)                          :: mese
   integer(4)                          :: day
@@ -97,13 +96,18 @@ module COMMON_VARS
        'May      ', 'June     ', 'July     ', 'August   ', &
        'September', 'October  ', 'November ', 'December ' /)
 
+  interface txtify
+     module procedure i_to_ch,r_to_ch,c_to_ch
+  end interface txtify
+
 
   !===============================================
   public :: parse_cmd_variable,parse_cmd_help,print_cmd_help,get_cmd_variable
   public :: version
   public :: timestamp
-  public :: error
+  public :: error,warning
   public :: msg
+  public :: txtify
   public :: bold
   public :: underline
   public :: highlight
@@ -200,15 +204,12 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : send abort message to std.out and exit 
   !+-------------------------------------------------------------------+
-  subroutine error(text,id,stop)
+  subroutine error(text,id)
     character(len=*) :: text
     character(len=4) :: char_id
     integer,optional :: id
     integer          :: id_
-    logical,optional :: stop
-    logical          :: stop_
     id_=0;if(present(id))id_=id
-    stop_=.true.;if(present(stop))stop_=stop
     if(id_ > mpiSIZE)id_=0
     if(mpiID==id_)then
        if(mpiID==0)then
@@ -219,8 +220,26 @@ contains
        endif
        write(*,'(A)')bg_red(text)
     endif
-    if(stop_)stop
+    stop
   end subroutine error
+
+  subroutine warning(text,id)
+    character(len=*) :: text
+    character(len=4) :: char_id
+    integer,optional :: id
+    integer          :: id_
+    id_=0;if(present(id))id_=id
+    if(id_ > mpiSIZE)id_=0
+    if(mpiID==id_)then
+       if(mpiID==0)then
+          write(*,'(A)',advance="no")bold_yellow("warning:")
+       else
+          write(char_id,"(I4)")id_
+          write(*,'(A)',advance="no")bold_yellow("warning from cpu"//char_id//":")
+       endif
+       write(*,'(A)')bg_yellow(text)
+    endif
+  end subroutine warning
 
 
   !******************************************************************
@@ -404,6 +423,34 @@ contains
     enddo
   end subroutine l_parse_variable
 
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+  function i_to_ch(i4) result(string)
+    character(len=32) :: string
+    integer           :: i4
+    call i4_to_s_left(i4,string)
+  end function i_to_ch
+
+  function r_to_ch(r8) result(string)
+    character(len=32) :: string
+    character(len=16) :: string_
+    real(8)           :: r8
+    call r8_to_s_left(r8,string_)
+    string=adjustl(string_)
+  end function r_to_ch
+
+  function c_to_ch(c) result(string)
+    character(len=32+3) :: string
+    character(len=16) :: sre,sim
+    complex(8)        :: c
+    real(8)           :: re,im
+    re=real(c,8);im=aimag(c)
+    call r8_to_s_left(re,sre)
+    call r8_to_s_left(im,sim)
+    string="("//trim(sre)//","//trim(sim)//")"
+  end function c_to_ch
 
   !******************************************************************
   !******************************************************************
@@ -572,5 +619,126 @@ contains
        ch = achar ( itemp - 32 )
     end if
   end subroutine ch_cap
+
+  subroutine i4_to_s_left ( i4, s )
+    !! I4_TO_S_LEFT converts an I4 to a left-justified string.
+    !  Example:
+    !    Assume that S is 6 characters long:
+    !        I4  S
+    !         1  1
+    !        -1  -1
+    !         0  0
+    !      1952  1952
+    !    123456  123456
+    !   1234567  ******  <-- Not enough room!
+    !  Parameters:
+    !    Input, integer ( kind = 4 ) I4, an integer to be converted.
+    !    Output, character ( len = * ) S, the representation of the integer.
+    !    The integer will be left-justified.  If there is not enough space,
+    !    the string will be filled with stars.
+    character :: c
+    integer   :: i
+    integer   :: i4
+    integer   :: idig
+    integer   :: ihi
+    integer   :: ilo
+    integer   :: ipos
+    integer   :: ival
+    character(len=*) ::  s
+    s = ' '
+    ilo = 1
+    ihi = len ( s )
+    if ( ihi <= 0 ) then
+       return
+    end if
+    !  Make a copy of the integer.
+    ival = i4
+    !  Handle the negative sign.
+    if ( ival < 0 ) then
+       if ( ihi <= 1 ) then
+          s(1:1) = '*'
+          return
+       end if
+       ival = -ival
+       s(1:1) = '-'
+       ilo = 2
+    end if
+    !  The absolute value of the integer goes into S(ILO:IHI).
+    ipos = ihi
+    !  Find the last digit of IVAL, strip it off, and stick it into the string.
+    do
+       idig = mod ( ival, 10 )
+       ival = ival / 10
+       if ( ipos < ilo ) then
+          do i = 1, ihi
+             s(i:i) = '*'
+          end do
+          return
+       end if
+       call digit_to_ch ( idig, c )
+       s(ipos:ipos) = c
+       ipos = ipos - 1
+       if ( ival == 0 ) then
+          exit
+       end if
+    end do
+    !  Shift the string to the left.
+    s(ilo:ilo+ihi-ipos-1) = s(ipos+1:ihi)
+    s(ilo+ihi-ipos:ihi) = ' '
+  end subroutine i4_to_s_left
+
+  subroutine r8_to_s_left ( r8, s )
+    !! R8_TO_S_LEFT writes an R8 into a left justified string.
+    !    An R8 is a real ( kind = 8 ) value.
+    !    A 'G14.6' format is used with a WRITE statement.
+    !  Parameters:
+    !    Input, real ( kind = 8 ) R8, the number to be written into the string.
+    !    Output, character ( len = * ) S, the string into which
+    !    the real number is to be written.  If the string is less than 14
+    !    characters long, it will will be returned as a series of asterisks.
+    integer :: i
+    real(8) :: r8
+    integer :: s_length
+    character(len=*) ::  s
+    character(len=16) :: s2
+    s_length = len ( s )
+    if ( s_length < 16 ) then
+       do i = 1, s_length
+          s(i:i) = '*'
+       end do
+    else if ( r8 == 0.0D+00 ) then
+       s(1:16) = '     0.0      '
+    else
+       write ( s2, '(g16.9)' ) r8
+       s(1:16) = s2
+    end if
+    !  Shift the string left.
+    s = adjustl ( s )
+  end subroutine r8_to_s_left
+
+  subroutine digit_to_ch(digit,ch)
+    !! DIGIT_TO_CH returns the character representation of a decimal digit.
+    !    Instead of CHAR, we now use the ACHAR function, which
+    !    guarantees the ASCII collating sequence.
+    !  Example:
+    !    DIGIT   CH
+    !    -----  ---
+    !      0    '0'
+    !      1    '1'
+    !    ...    ...
+    !      9    '9'
+    !     17    '*'
+    !  Parameters:
+    !    Input, integer ( kind = 4 ) DIGIT, the digit value between 0 and 9.
+    !    Output, character CH, the corresponding character.
+    character :: ch
+    integer   :: digit
+    if ( 0 <= digit .and. digit <= 9 ) then
+       ch = achar ( digit + 48 )
+    else
+       ch = '*'
+    end if
+  end subroutine digit_to_ch
+
 
 END MODULE COMMON_VARS

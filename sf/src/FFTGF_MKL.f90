@@ -274,17 +274,18 @@
       complex(8)             :: gw(:)
       real(8)                :: beta
       integer                :: i,L,n,M
-      complex(8),allocatable :: Igw(:)
+      complex(8),allocatable :: Igw(:),cIgt(:)
       real(8),allocatable    :: Igt(:)
       L=size(gt)-1    ; N=size(gw)
-      M=32*L
-      allocate(Igt(-M:M),Igw(2*M))
+      M=32*N
+      allocate(Igt(-M:M),Igw(2*M),cIgt(-M:M))
       call interp(gt(0:L),Igt(0:M),L,M)
-      forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)
-      call fftgf_rt2rw((1.d0,0.d0)*Igt,Igw,M)
+      forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)      
+      cIgt = cmplx(1.d0,0.d0)*Igt
+      call fftgf_rt2rw(cIgt,Igw,M)
       Igw=Igw*beta/real(M,8)/2.d0
       forall(i=1:n)gw(i)=Igw(2*i)
-      deallocate(Igt,Igw)
+      deallocate(Igt,Igw,cIgt)
     contains
       include "splinefft.f90" !This is taken from SPLINE to make this module independent    
     end subroutine fftgf_tau2iw
