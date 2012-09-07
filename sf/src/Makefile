@@ -1,4 +1,4 @@
-include $(SFDIR)/etc/opt.mk
+include opt.mk
 REV = $(shell git rev-parse HEAD)
 
 all: allmod libscifor.a libscifor_deb.a version
@@ -301,4 +301,4 @@ mod_STRINGPACK: STRINGPACK
 	@echo ' '
 
 clean: 
-	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/*
+	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod
