@@ -4,7 +4,7 @@
 !PURPOSE  : set of routines for timing procedures
 !AUTHORS  : Adriano Amaricci
 !########################################################################
-module CHRONOBAR
+module TIMER
   USE COMMON_VARS
   implicit none
   private
@@ -35,13 +35,12 @@ module CHRONOBAR
   public :: print_bar
   public :: start_timer,stop_timer
   public :: eta
-  public :: timer
 
 contains
 
-  include "crono.f90"
+  include "chrono.f90"
 
   include "bar.f90"
 
-end module CHRONOBAR
+end module TIMER
 

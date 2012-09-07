@@ -9,7 +9,7 @@ module IPT_MATS
   implicit none
   private
 
-  integer            :: i
+  integer            :: i,LL
   integer,save       :: loop=1 
   type(matsubara_gf) :: fg0,sigma
   real(8)            :: n,n0,xmu0
@@ -23,14 +23,16 @@ contains
   !COMMENT  : 
   !+-------------------------------------------------------------------+
   function solve_ipt_matsubara(fg0_) result(sigma_)
-    complex(8),dimension(L) :: fg0_,sigma_
+    complex(8),dimension(:) :: fg0_
+    complex(8),dimension(size(fg0_)) :: sigma_
+    LL=size(fg0_)
     if(loop==1)then
-       if(.not.fg0%status)call allocate_gf(fg0,L)
-       if(.not.sigma%status)call allocate_gf(sigma,L)
+       if(.not.fg0%status)call allocate_gf(fg0,LL)
+       if(.not.sigma%status)call allocate_gf(sigma,LL)
     endif
     fg0%iw=fg0_
     call fftgf_iw2tau(fg0%iw,fg0%tau,beta)
-    forall(i=0:L)sigma%tau(i)=U**2*(fg0%tau(i))**2*fg0%tau(L-i)
+    forall(i=0:LL)sigma%tau(i)=U**2*(fg0%tau(i))**2*fg0%tau(LL-i)
     call fftgf_tau2iw(sigma%tau,sigma%iw,beta)
     sigma_=sigma%iw
     loop=loop+1
@@ -48,16 +50,18 @@ contains
   !PURPOSE  : 
   !+-------------------------------------------------------------------+
   function solve_mpt_matsubara(fg0_,n_,n0_,xmu0_) result(sigma_)
-    complex(8),dimension(L)    :: fg0_,sigma_
+    complex(8),dimension(:)    :: fg0_
+    complex(8),dimension(size(fg0_))    :: sigma_
     real(8)                    :: n_,n0_,xmu0_
     real(8)                    :: A,B
+    LL=size(fg0_)
     if(loop==1) then
-       if(.not.fg0%status)call allocate_gf(fg0,L)
-       if(.not.sigma%status)call allocate_gf(sigma,L)
+       if(.not.fg0%status)call allocate_gf(fg0,LL)
+       if(.not.sigma%status)call allocate_gf(sigma,LL)
     endif
     fg0%iw=fg0_ ; n=n_ ; n0=n0_ ; xmu0=xmu0_
     call fftgf_iw2tau(fg0%iw,fg0%tau,beta)
-    forall(i=0:L)sigma%tau(i)=U**2*(fg0%tau(i))**2*fg0%tau(L-i)
+    forall(i=0:LL)sigma%tau(i)=U**2*(fg0%tau(i))**2*fg0%tau(LL-i)
     call fftgf_tau2iw(sigma%tau,sigma%iw,beta)
     call get_A ; call get_B
     sigma_ = U*(n-0.5d0) + A*sigma%iw/(1.d0-B*sigma%iw)

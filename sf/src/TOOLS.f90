@@ -7,7 +7,7 @@
   include "unista.f90"
   module TOOLS
     USE COMMON_VARS
-    USE CHRONOBAR
+    USE TIMER
     implicit none
     private
 

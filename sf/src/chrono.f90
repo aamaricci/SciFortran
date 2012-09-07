@@ -33,7 +33,7 @@ subroutine stop_timer
   if(mpiID==0)then
      call date_and_time(values=timer_stop(timer_index,:))
      itimer=time_difference(timer_stop(timer_index,:),timer_start(timer_index,:))
-     call print_timer(itimer)
+     call print_total_time(itimer)
      timer_start(timer_index,:)=0
      timer_stop(timer_index,:)=0
      if(timer_index>1)then
@@ -50,15 +50,8 @@ end subroutine stop_timer
 !*********************************************************************
 
 
-
-!+-------------------------------------------------------------------+
-!PURPOSE  : a timer
-!+-------------------------------------------------------------------+
-function timer()
-  real(4)                 :: timer
+subroutine print_total_time(dummy)
   integer(4),dimension(8) :: dummy
-  call date_and_time(values=timer1(timer_index,:))
-  dummy= time_difference(timer1(timer_index,:),timer0(timer_index,:))
   year = dummy(1)
   mese = dummy(2)
   day  = dummy(3)
@@ -66,15 +59,15 @@ function timer()
   m    = dummy(6)
   s    = dummy(7)
   ms   = dummy(8)
-  timer= real(dble(ms)/1000.d0 &
-       + dble(s)               &
-       + dble(m)*60.d0         &
-       + dble(h)*60.d0**2      &
-       + dble(day)*24.d0*60.d0**2,4)
-end function timer
+  write(*,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms
+  write(*,*)""
+end subroutine print_total_time
+
+
 !*********************************************************************
 !*********************************************************************
 !*********************************************************************
+
 
 
 
@@ -118,26 +111,6 @@ function time_difference(data1,data0)
 end function time_difference
 
 
-
-!*********************************************************************
-!*********************************************************************
-!*********************************************************************
-
-
-
-
-subroutine print_timer(dummy)
-  integer(4),dimension(8) :: dummy
-  year = dummy(1)
-  mese = dummy(2)
-  day  = dummy(3)
-  h    = dummy(5)
-  m    = dummy(6)
-  s    = dummy(7)
-  ms   = dummy(8)
-  write(*,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms
-  write(*,*)""
-end subroutine print_timer
 
 
 
@@ -201,7 +174,7 @@ subroutine eta(i,L,unit,file,step)
      fullprint=.false.;if(percent<=1 .OR. percent==10 .OR. percent==50)fullprint=.true.
 
      old_time=time
-     time=timer()
+     time=total_time()
      dtime        = time-old_time     
      elapsed_time = elapsed_time + dtime
      dtime        = elapsed_time/real(i,4)
@@ -229,3 +202,27 @@ end subroutine eta
 
 
 
+!+-------------------------------------------------------------------+
+!PURPOSE  : a total_time
+!+-------------------------------------------------------------------+
+function total_time()
+  real(4)                 :: total_time
+  integer(4),dimension(8) :: dummy
+  call date_and_time(values=timer1(timer_index,:))
+  dummy= time_difference(timer1(timer_index,:),timer0(timer_index,:))
+  year = dummy(1)
+  mese = dummy(2)
+  day  = dummy(3)
+  h    = dummy(5)
+  m    = dummy(6)
+  s    = dummy(7)
+  ms   = dummy(8)
+  total_time= real(dble(ms)/1000.d0 &
+       + dble(s)               &
+       + dble(m)*60.d0         &
+       + dble(h)*60.d0**2      &
+       + dble(day)*24.d0*60.d0**2,4)
+end function total_time
+!*********************************************************************
+!*********************************************************************
+!*********************************************************************
