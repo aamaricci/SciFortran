@@ -1,4 +1,4 @@
-include $(SFDIR)/etc/opt.mk
+include opt.mk
 
 ROUTINES=DLPLOT.f90
 
