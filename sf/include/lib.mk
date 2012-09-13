@@ -6,6 +6,8 @@ SFMODS_DEB= -I$(SFINCLUDE)/debug/
 
 ifdef MKLROOT
  ifeq ($(OS),LINUX)
+#IFORT 10: -lmkl_em64t -lmkl_core -liomp5  -lpthread
+#IFORT 11,12:
     MATHLIB = -Wl,--start-group  $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm
  endif
  ifeq ($(OS),OSX)

@@ -250,11 +250,15 @@ contains
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
-  subroutine create_data_dir(dir_name)
+  subroutine create_data_dir(dir_name)!,id)
     character(len=*),optional :: dir_name
     character(len=256)        :: name
     logical                   :: control
+    ! integer,optional :: id
+    ! integer :: id_
+    ! id_=0         ;if(present(id))id_=id
     name="DATAsrc";if(present(dir_name))name=dir_name
+    ! if(mpiID==id_)then
     control = check_data_dir(name)
     if(control)then
        call warning("can not create dir +"//trim(adjustl(trim(name)))//": ATTENTION")
@@ -262,6 +266,7 @@ contains
     else
        call system("mkdir -v "//trim(adjustl(trim(name))))
     endif
+    ! endif
   end subroutine create_data_dir
 
 
