@@ -11,41 +11,41 @@ module MATRIX
 
   !----------------------------------------------------------------------------------
 
-  interface mat_inversion
+  interface matrix_inverse
      module procedure D_mat_invert, Z_mat_invert
-  end interface mat_inversion
+  end interface matrix_inverse
 
-  interface mat_inversion_sym
+  interface matrix_inverse_sym
      module procedure d_mat_invertsym, z_mat_invertsym
-  end interface mat_inversion_sym
+  end interface matrix_inverse_sym
 
-  interface mat_inversion_her
+  interface matrix_inverse_her
      module procedure z_mat_inverther
-  end interface mat_inversion_her
+  end interface matrix_inverse_her
 
-  interface mat_inversion_triang
+  interface matrix_inverse_triang
      module procedure d_mat_inverttriang, z_mat_inverttriang
-  end interface mat_inversion_triang
+  end interface matrix_inverse_triang
 
-  interface mat_inversion_gj
+  interface matrix_inverse_gj
      module procedure d_mat_invertgj, z_mat_invertgj
-  end interface mat_inversion_gj
+  end interface matrix_inverse_gj
 
   !----------------------------------------------------------------------------------
 
-  interface invert_matrix_gj
+  interface m_invert_gj
      module procedure d_invert_matrix_gj,c_invert_matrix_gj
-  end interface invert_matrix_gj
+  end interface m_invert_gj
 
-  interface invert_matrix
+  interface m_invert
      module procedure d_invert_matrix,c_invert_matrix
-  end interface invert_matrix
+  end interface m_invert
 
   !----------------------------------------------------------------------------------
 
-  interface mat_diagonalization
+  interface matrix_diagonalize
      module procedure d_mat_diagonalization,z_mat_diagonalization
-  end interface mat_diagonalization
+  end interface matrix_diagonalize
 
   !----------------------------------------------------------------------------------
 
@@ -60,18 +60,18 @@ module MATRIX
      module procedure swap_i,swap_r,swap_rv,swap_z,swap_zv,swap_zm
   end interface swap
 
-  public :: mat_diagonalization
+  public :: matrix_diagonalize
   !
   public :: solve_linear_system
   !
-  public :: mat_inversion
-  public :: mat_inversion_sym
-  public :: mat_inversion_her
-  public :: mat_inversion_triang
-  public :: mat_inversion_gj
+  public :: matrix_inverse
+  public :: matrix_inverse_sym
+  public :: matrix_inverse_her
+  public :: matrix_inverse_triang
+  public :: matrix_inverse_gj
   !
-  public :: invert_matrix
-  public :: invert_matrix_gj
+  public :: m_invert
+  public :: m_invert_gj
   ! 
 
 
@@ -84,22 +84,21 @@ contains
   !PURPOSE  : function interface to matrix inversion subroutine
   !+-----------------------------------------------------------------+
   subroutine d_mat_diagonalization(M,E,jobz,uplo)
-    real(8),dimension(:,:),intent(inout)       :: M
-    real(8),dimension(size(M,1)),intent(inout) :: E
-    character(len=1),optional                  :: jobz,uplo
-    character(len=1)                           :: jobz_,uplo_
-    integer                                    :: i,j,Nsize,info
-    integer                                    :: lwork
-    real(8),dimension(1)                       :: lwork_guess
-    real(8),dimension(:),allocatable           :: work
-    Nsize=size(M,1)
-    if(Nsize/=size(M,2))call error("Error MATRIX/d_mat_diagonalization: size(M,1) /= size(M,2)")
+    real(8),dimension(:,:),intent(inout) :: M
+    real(8),dimension(:),intent(inout)   :: E
+    character(len=1),optional            :: jobz,uplo
+    character(len=1)                     :: jobz_,uplo_
+    integer                              :: i,j,n,lda,info,lwork
+    real(8),dimension(1)                 :: lwork_guess
+    real(8),dimension(:),allocatable     :: work
     jobz_='N';if(present(jobz))jobz_=jobz
     uplo_='U';if(present(uplo))uplo_=uplo
-    call dsyev(jobz_,uplo_,Nsize,M,Nsize,E,lwork_guess,-1,info)
+    lda = max(1,size(M,1))
+    n   = size(M,2)
+    Call dsyev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,info)
     if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 1st call dsyev")
     lwork=lwork_guess(1) ; allocate(work(lwork))
-    call dsyev(jobz_,uplo_,Nsize,M,Nsize,E,work,lwork,info)
+    call dsyev(jobz_,uplo_,n,M,lda,E,work,lwork,info)
     if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 2ns call dsyev")
     deallocate(work)
   end subroutine d_mat_diagonalization
@@ -107,27 +106,29 @@ contains
 
   !-----------------------------
   subroutine z_mat_diagonalization(M,E,jobz,uplo)
-    complex(8),dimension(:,:),intent(inout)    :: M
-    real(8),dimension(size(M,1)),intent(inout) :: E
-    character(len=1),optional                  :: jobz,uplo
-    character(len=1)                           :: jobz_,uplo_
-    integer                                    :: i,j,Nsize,info
-    integer                                    :: lwork
-    complex(8),dimension(1)                    :: lwork_guess
-    complex(8),dimension(:),allocatable        :: work
-    real(8),dimension(:),allocatable           :: rwork
-    Nsize=size(M,1)
-    if(Nsize/=size(M,2))call error("Error MATRIX/z_mat_diagonalization: size(M,1) /= size(M,2)")
+    complex(8),dimension(:,:),intent(inout) :: M
+    real(8),dimension(:),intent(inout)      :: E
+    character(len=1),optional               :: jobz,uplo
+    character(len=1)                        :: jobz_,uplo_
+    integer                                 :: i,j,n,lda,info,lwork
+    complex(8),dimension(1)                 :: lwork_guess
+    complex(8),dimension(:),allocatable     :: work
+    real(8),dimension(:),allocatable        :: rwork
     jobz_='N';if(present(jobz))jobz_=jobz
     uplo_='U';if(present(uplo))uplo_=uplo
-    allocate(rwork(3*Nsize))
-    call zheev(jobz_,uplo_,Nsize,M,Nsize,E,lwork_guess,-1,rwork,info)
+    lda = max(1,size(M,1))
+    n   = size(M,2)
+    allocate(rwork(max(1,3*N-2)))
+    call zheev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,rwork,info)
     if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 1st call zsyev")
     lwork=lwork_guess(1) ; allocate(work(lwork))
-    call zheev(jobz_,uplo_,Nsize,M,Nsize,E,work,lwork,rwork,info)
+    call zheev(jobz_,uplo_,n,M,lda,E,work,lwork,rwork,info)
     if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 2Nd call zsyev")
     deallocate(work,rwork)
   end subroutine z_mat_diagonalization
+
+
+
 
 
   !******************************************************************
@@ -147,17 +148,18 @@ contains
     real(8),dimension(:,:),allocatable :: b_
     character(len=1),optional          :: trans
     character(len=1)                   :: trans_
-    integer                            :: n,nrhs,lda,ldb
+    integer                            :: m,n,nrhs,lda,ldb
     integer                            :: info
     integer,dimension(:),allocatable   :: ipvt
     trans_="N";if(present(trans))trans_=trans
-    n=size(A,1) 
-    if(n/=size(A,2))call error("Error in MATRIX/d_mat_solve_linear_system:not a square matrix")
-    if(n/=size(b))  call error("Error in MATRIX/d_mat_solve_linear_system:b has wrong dimension")    
-    allocate(ipvt(n))
-    call dgetrf(n,n,A,n,ipvt,info)
+    lda = max(1,size(A,1))
+    ldb = max(1,size(B))
+    m   = size(A,1)
+    n   = size(A,2)
+    nrhs= 1
+    allocate(ipvt(min(m,n)))
+    call dgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
-    lda=n ; ldb=n ; nrhs=1
     allocate(b_(ldb,nrhs))
     call dgetrs(trans_,n,nrhs,A,lda,ipvt,b_,ldb,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
@@ -173,17 +175,18 @@ contains
     complex(8),dimension(:,:),allocatable :: b_
     character(len=1),optional          :: trans
     character(len=1)                   :: trans_
-    integer                            :: n,nrhs,lda,ldb
+    integer                            :: m,n,nrhs,lda,ldb
     integer                            :: info
     integer,dimension(:),allocatable   :: ipvt
     trans_="N";if(present(trans))trans_=trans
-    n=size(A,1) 
-    if(n/=size(A,2))call error("Error in MATRIX/d_mat_solve_linear_system:not a square matrix")
-    if(n/=size(b))  call error("Error in MATRIX/d_mat_solve_linear_system:b has wrong dimension")    
-    allocate(ipvt(n))
-    call zgetrf(n,n,A,n,ipvt,info)
+    lda = max(1,size(A,1))
+    ldb = max(1,size(B))
+    m   = size(A,1)
+    n   = size(A,2)
+    nrhs= 1
+    allocate(ipvt(min(m,n)))
+    call zgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
-    lda=n ; ldb=n ; nrhs=1
     allocate(b_(ldb,nrhs))
     call zgetrs(trans_,n,nrhs,A,lda,ipvt,b_,ldb,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
@@ -198,17 +201,18 @@ contains
     real(8),dimension(:,:),intent(inout) :: b
     character(len=1),optional          :: trans
     character(len=1)                   :: trans_
-    integer                            :: n,nrhs,lda,ldb
+    integer                            :: m,n,nrhs,lda,ldb
     integer                            :: info
     integer,dimension(:),allocatable   :: ipvt
     trans_="N";if(present(trans))trans_=trans
-    n=size(A,1) 
-    if(n/=size(A,2))call error("Error in MATRIX/d_mat_solve_linear_system:not a square matrix")
-    if(n/=size(b,1))call error("Error in MATRIX/d_mat_solve_linear_system:b has wrong dimension")    
-    allocate(ipvt(n))
-    call dgetrf(n,n,A,n,ipvt,info)
+    lda = max(1,size(A,1))
+    ldb = max(1,size(B,1))
+    m   = size(A,1)
+    n   = size(A,2)
+    nrhs= size(B,2)
+    allocate(ipvt(min(m,n)))
+    call dgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
-    lda=n ; ldb=n ; nrhs=size(b,2)
     call dgetrs(trans_,n,nrhs,A,lda,ipvt,b,ldb,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
     deallocate(ipvt)
@@ -221,15 +225,17 @@ contains
     complex(8),dimension(:,:),intent(inout) :: b
     character(len=1),optional          :: trans
     character(len=1)                   :: trans_
-    integer                            :: n,nrhs,lda,ldb
+    integer                            :: m,n,nrhs,lda,ldb
     integer                            :: info
     integer,dimension(:),allocatable   :: ipvt
     trans_="N";if(present(trans))trans_=trans
-    n=size(A,1) 
-    if(n/=size(A,2))call error("Error in MATRIX/d_mat_solve_linear_system:not a square matrix")
-    if(n/=size(b,1))call error("Error in MATRIX/d_mat_solve_linear_system:b has wrong dimension")    
+    lda = max(1,size(A,1))
+    ldb = max(1,size(B,1))
+    m   = size(A,1)
+    n   = size(A,2)
+    nrhs= size(B,2)   
     allocate(ipvt(n))
-    call zgetrf(n,n,A,n,ipvt,info)
+    call zgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
     lda=n ; ldb=n ; nrhs=size(b,2)
     call zgetrs(trans_,n,nrhs,A,lda,ipvt,b,ldb,info)
@@ -239,9 +245,15 @@ contains
 
 
 
+
+
+
   !******************************************************************
   !******************************************************************
   !******************************************************************
+
+
+
 
 
 
@@ -253,26 +265,26 @@ contains
     integer                   :: L
     real(8),dimension(L,L)    :: M,M1
     M1=M
-    call mat_inversion_GJ(M1)
+    call matrix_inverse_GJ(M1)
   end function d_invert_matrix_gj
   function c_invert_matrix_gj(M,L) result(M1)
     integer                   :: L
     complex(8),dimension(L,L) :: M,M1
     M1=M
-    call mat_inversion_GJ(M1)
+    call matrix_inverse_GJ(M1)
   end function c_invert_matrix_gj
   !
   function d_invert_matrix(M,L) result(M1)
     integer                   :: L
     real(8),dimension(L,L)    :: M,M1
     M1=M
-    call mat_inversion(M1)
+    call matrix_inverse(M1)
   end function d_invert_matrix
   function c_invert_matrix(M,L) result(M1)
     integer                   :: L
     complex(8),dimension(L,L) :: M,M1
     M1=M
-    call mat_inversion(M1)
+    call matrix_inverse(M1)
   end function c_invert_matrix
 
 
@@ -292,49 +304,44 @@ contains
   !PURPOSE  : Invert a general m*n matrix using LAPACK library 
   !COMMENT  : M is destroyed and replaces by its inverse M^-1
   !+-----------------------------------------------------------------+
-  subroutine D_mat_invert(M)
-    integer                          :: ndim,ndim1,ndim2
-    integer                          :: info
-    integer                          :: lwork
+  subroutine D_mat_invert(A)
+    real(8),dimension(:,:)           :: A
+    integer                          :: m,n,lda,info,lwork
     integer,dimension(:),allocatable :: ipvt
-    real(8),dimension(:,:)           :: M
     real(8),dimension(:),allocatable :: work
     real(8),dimension(1)             :: lwork_guess
-    ndim1=size(M,1) ; ndim2=size(M,2) 
-    if(ndim1<max(1,ndim2))call error("Error in MATRIX/D_mat_inversion: ndim1<ndim2")
-    ndim=max(ndim1,ndim2)
-    allocate(ipvt(ndim))
-    call dgetrf(ndim1,ndim2,M,ndim1,ipvt,info)
+    lda = max(1,size(A,1))
+    m = size(A,1)
+    n = size(A,2)
+    allocate(ipvt(min(m,n)))
+    call dgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/D_mat_invert: dgetrf")
-    call dgetri(ndim2,M,ndim1,ipvt,lwork_guess,-1,info)
+    call dgetri(n,A,lda,ipvt,lwork_guess,-1,info)
     if(info/=0)call error("Error MATRIX/D_mat_invert: 1st call dgetri")
     lwork=lwork_guess(1) ; allocate(work(lwork))
-    call dgetri(ndim2,M,ndim1,ipvt,work,lwork,info)
+    call dgetri(n,A,lda,ipvt,work,lwork,info)
     if(info/=0)call error("Error MATRIX/D_mat_invert: 2nd call dgetri")
     deallocate(ipvt,work)
   end subroutine D_mat_invert
   !-----------------------------
 
   !-----------------------------
-  subroutine Z_mat_invert(M)
-    integer                              :: ndim,ndim1,ndim2
-    integer                              :: info
-    integer                              :: lwork
+  subroutine Z_mat_invert(A)
+    complex(8),dimension(:,:)            :: A
+    integer                              :: m,n,lda,info,lwork
     integer,dimension(:),allocatable     :: ipvt
-    complex(8),dimension(:,:)            :: M
     complex(8),dimension(:),allocatable  :: work
     complex(8),dimension(1)              :: lwork_guess
-    ndim1=size(M,1) ; ndim2=size(M,2) 
-    if(ndim1<max(1,ndim2))call error("Error in MATRIX/Z_mat_inversion: ndim1<ndim2")
-    ndim=max(ndim1,ndim2)
-    lwork=ndim*8
-    allocate(ipvt(ndim))
-    call zgetrf(ndim1,ndim2,M,ndim1,ipvt,info)
+    lda = max(1,size(A,1))
+    m   = size(A,1)
+    n   = size(A,2)
+    allocate(ipvt(min(m,n)))
+    call zgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/Z_mat_invert: zgetrf")
-    call zgetri(ndim2,M,ndim1,ipvt,lwork_guess,-1,info)
+    call zgetri(n,A,lda,ipvt,lwork_guess,-1,info)
     if(info/=0)call error("Error MATRIX/Z_mat_invert: 1st call dgetri")
     lwork=lwork_guess(1) ; allocate(work(lwork))
-    call zgetri(ndim2,M,ndim1,ipvt,work,lwork,info)
+    call zgetri(n,A,lda,ipvt,work,lwork,info)
     if(info/=0)call error("Error MATRIX/Z_mat_invert: zgetri")
     deallocate(ipvt,work)
   end subroutine Z_mat_invert
@@ -363,37 +370,37 @@ contains
   !COMMENT  : M is destroyed and replaces by its inverse M^-1
   !           M on output is the square matrix n*n
   !+-----------------------------------------------------------------+
-  subroutine D_mat_invertTRIANG(M,char)
-    character(len=*),optional        :: char
-    character(len=1)                 :: uplo
-    character(len=1)                 :: diag
-    integer                          :: ndim1,ndim2
-    integer                          :: info
-    real(8),dimension(:,:)           :: M
-    ndim1=size(M,1);ndim2=size(M,2)
-    if(ndim1<max(1,ndim2))stop "Error in mat_inversion: ndim1<ndim2"
-    uplo="U";if(present(char))uplo=trim(char)
-    diag="N" !not a unit triangular matrix
-    call dtrtri(uplo,diag,ndim2,M,ndim1,info)
-    if(info/=0)stop"Error in dtrtri"
+  subroutine D_mat_invertTRIANG(A,uplo,diag)
+    real(8),dimension(:,:)           :: A
+    character(len=1),optional        :: uplo,diag
+    character(len=1)                 :: uplo_
+    character(len=1)                 :: diag_
+    integer                          :: n,lda,info
+    uplo_="U";if(present(uplo))uplo_=uplo
+    diag_="N";if(present(diag))diag_=diag !not a unit triangular matrix
+    lda = max(1,size(A,1))
+    n   = size(A,2)
+    call dtrtri(uplo_,diag_,n,A,lda,info)
+    if(info/=0)call error("Error MATRIX/D_mat_invertTRIANG: dtrtri")
   end subroutine D_mat_invertTRIANG
   !-----------------------------
 
   !-----------------------------
-  subroutine Z_mat_invertTRIANG(M,char)
-    character(len=*),optional        :: char
-    character(len=1)                 :: uplo
-    character(len=1)                 :: diag
+  subroutine Z_mat_invertTRIANG(A,uplo,diag)
+    complex(8),dimension(:,:)           :: A
+    character(len=1),optional        :: uplo,diag
+    character(len=1)                 :: uplo_
+    character(len=1)                 :: diag_
     integer                          :: ndim1,ndim2
-    integer                          :: info
-    complex(8),dimension(:,:)        :: M
-    ndim1=size(M,1);ndim2=size(M,2)
-    if(ndim1<max(1,ndim2))stop "Error in mat_inversion: ndim1<ndim2"
-    uplo="U";if(present(char))uplo=trim(char)
-    diag="N" !not a unit triangular matrix
-    call ztrtri(uplo,diag,ndim2,M,ndim1,info)
-    if(info/=0)stop "Error in ztrtri"
+    integer                          :: n,lda,info
+    uplo_="U";if(present(uplo))uplo_=uplo
+    diag_="N";if(present(diag))diag_=diag !not a unit triangular matrix
+    lda = max(1,size(A,1))
+    n   = size(A,2)
+    call ztrtri(uplo_,diag_,n,A,lda,info)
+    if(info/=0)call error("Error MATRIX/D_mat_invertTRIANG: ztrtri")
   end subroutine Z_mat_invertTRIANG
+
 
 
 
@@ -418,48 +425,50 @@ contains
   !PURPOSE  : Invert a symmetric n*n matrix using LAPACK library 
   !COMMENT  : M is destroyed and replaces by its inverse M^-1
   !+-----------------------------------------------------------------+
-  subroutine D_mat_invertSYM(M,ndim,char)
-    character(len=*),optional        :: char
-    character(len=10)                :: uplo
-    integer                          :: ndim
-    integer                          :: info
-    integer                          :: lwork
-    integer,dimension(ndim)          :: ipvt
-    real(8),dimension(ndim,ndim)     :: M
+  subroutine D_mat_invertSYM(A,uplo)
+    real(8),dimension(:,:)           :: A
+    character(len=*),optional        :: uplo
+    character(len=1)                 :: uplo_
+    integer                          :: n,lda,info,lwork
+    integer,dimension(:),allocatable :: ipvt
     real(8),dimension(:),allocatable :: work
     real(8),dimension(1)             :: lwork_guess
-    uplo="U";if(present(char))uplo=trim(char)
-    call dsytrf(trim(uplo),ndim,M,ndim,ipvt,lwork_guess,-1,info)
+    uplo_="U";if(present(uplo))uplo_=uplo
+    lda  = max(1,size(A,1))
+    n    = size(A,2)
+    allocate(ipvt(n))
+    call dsytrf(uplo_,n,A,lda,ipvt,lwork_guess,-1,info)
     if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 1st call dsytrf")
     lwork=lwork_guess(1);allocate(work(lwork))
-    call dsytrf(trim(uplo),ndim,M,ndim,ipvt,work,lwork,info)
+    call dsytrf(uplo_,n,A,lda,ipvt,work,lwork,info)
     if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 2nd call dsytrf")
-    call dsytri(trim(uplo),ndim,M,ndim,ipvt,work,info)
+    call dsytri(uplo_,n,A,lda,ipvt,work,info)
     if(info/=0)call error("Error MATRIX/D_mat_invertSYM: dsytri")
-    deallocate(work)
+    deallocate(ipvt,work)
   end subroutine D_mat_invertSYM
   !-----------------------------
 
   !-----------------------------
-  subroutine Z_mat_invertSYM(M,ndim,char)
-    character(len=*),optional    :: char
-    character(len=10)            :: uplo
-    integer                      :: ndim
-    integer                      :: info
-    integer                      :: lwork
-    integer,dimension(ndim)      :: ipvt
-    complex(8),dimension(ndim,ndim) :: M
+  subroutine Z_mat_invertSYM(A,uplo)
+    complex(8),dimension(:,:)           :: A
+    character(len=*),optional        :: uplo
+    character(len=1)                 :: uplo_
+    integer                          :: n,lda,info,lwork
+    integer,dimension(:),allocatable :: ipvt
     complex(8),dimension(:),allocatable :: work
     complex(8),dimension(1)             :: lwork_guess
-    uplo="U";if(present(char))uplo=trim(char)
-    call zsytrf(trim(uplo),ndim,M,ndim,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertSYM: 1st call zsytrf")
+    uplo_="U";if(present(uplo))uplo_=uplo
+    lda  = max(1,size(A,1))
+    n    = size(A,2)
+    allocate(ipvt(n))
+    call zsytrf(uplo_,n,A,lda,ipvt,lwork_guess,-1,info)
+    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 1st call zsytrf")
     lwork=lwork_guess(1);allocate(work(lwork))
-    call zsytrf(trim(uplo),ndim,M,ndim,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertSYM: 2nd call zsytrf")
-    call zsytri(trim(uplo),ndim,M,ndim,ipvt,work,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertSYM: zsytri")
-    deallocate(work)
+    call zsytrf(uplo_,n,A,lda,ipvt,work,lwork,info)
+    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 2nd call zsytrf")
+    call zsytri(uplo_,n,A,lda,ipvt,work,info)
+    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: zsytri")
+    deallocate(ipvt,work)
   end subroutine Z_mat_invertSYM
 
 
@@ -484,25 +493,44 @@ contains
   !PURPOSE  : Invert a hermitian n*n matrix using MKL_LAPACK library 
   !COMMENT  : M is destroyed and replaces by its inverse M^-1
   !+-----------------------------------------------------------------+
-  subroutine Z_mat_invertHER(M,ndim,char)
-    character(len=*),optional    :: char
-    character(len=10)            :: uplo
-    integer                      :: ndim
-    integer                      :: info
-    integer                      :: lwork
-    integer,dimension(ndim)      :: ipvt
-    complex(8),dimension(ndim,ndim) :: M
-    complex(8),dimension(:),allocatable :: work
-    complex(8),dimension(1)             :: lwork_guess
-    uplo="U";if(present(char))uplo=trim(char)
-    call zhetrf(trim(uplo),ndim,M,ndim,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertSYM: 1st call zhetrf")
+  subroutine Z_mat_invertHER(A,uplo)
+    complex(8),dimension(:,:)                 :: A
+    complex(8)                                :: c
+    character(len=*),optional                 :: uplo
+    character(len=1)                          :: uplo_
+    integer                                   :: n,lda,info,lwork,i,j
+    integer,dimension(:),allocatable          :: ipvt
+    complex(8),dimension(:),allocatable       :: work
+    complex(8),dimension(1)                   :: lwork_guess
+    logical                                   :: bool
+    uplo_="U";if(present(uplo))uplo_=uplo
+    lda=max(1,size(A,1))
+    n  =size(A,2)
+    allocate(ipvt(n))
+    !Test hermiticity:
+    bool=.false.
+    testH: do i=1,size(A,1)
+       do j=1,size(A,2)
+          c=A(i,j)-conjg(A(j,i))
+          if(c/=cmplx(0.d0,0.d0,8))bool=.true.
+          exit testH
+       enddo
+    enddo testH
+    if(bool)call error("Error MATRIX/Z_mat_invertHER: A not Hermitian")
+    !
+    call zhetrf(uplo_,n,A,lda,ipvt,lwork_guess,-1,info)
+    if(info/=0)call error("Error MATRIX/Z_mat_invertHER: 1st call zhetrf")
     lwork=lwork_guess(1) ; allocate(work(lwork))
-    call zhetrf(trim(uplo),ndim,M,ndim,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertSYM: 2nd call zhetrf")
-    call zhetri(trim(uplo),ndim,M,ndim,ipvt,work,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertSYM: zhetri")
-    deallocate(work)
+    call zhetrf(uplo_,n,A,lda,ipvt,work,lwork,info)
+    if(info/=0)call error("Error MATRIX/Z_mat_invertHERE: 2nd call zhetrf")
+    call zhetri(uplo_,n,A,lda,ipvt,work,info)
+    if(info/=0)call error("Error MATRIX/Z_mat_invertHERE: zhetri")
+    deallocate(ipvt,work)
+    if(uplo_=="U")then
+       forall(i=1:size(A,1),j=1:size(A,2),i>j)A(i,j)=conjg(A(j,i))
+    elseif(uplo_=="L")then
+       forall(i=1:size(A,1),j=1:size(A,2),i<j)A(i,j)=conjg(A(j,i))
+    endif
   end subroutine Z_mat_invertHER
 
 
