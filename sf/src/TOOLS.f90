@@ -25,6 +25,9 @@
     public :: uniq,reshuffle
     public :: shiftFW,shiftBW
 
+    !DERIVATIVE:
+    public :: deriv
+
     !FUNCTIONS:
     public :: heaviside
     public :: step
@@ -33,7 +36,12 @@
     public :: dens_hyperc
 
     !BETHE:
-    public :: gfbethe,gfbether,bethe_lattice,dens_bethe
+    public :: gfbethe
+    public :: gfbether
+    public :: bethe_lattice
+    public :: dens_bethe
+
+    !ERROR FUNCS
     public :: wfun         !complex error function (Faddeeva function)
     public :: zerf   
 
@@ -66,29 +74,45 @@
 
     interface check_convergence_scalar
        module procedure &
-            i0_check_convergence_scalar,i1_check_convergence_scalar,i2_check_convergence_scalar, &
-            d0_check_convergence_scalar,d1_check_convergence_scalar,d2_check_convergence_scalar, &
-            z0_check_convergence_scalar,z1_check_convergence_scalar,z2_check_convergence_scalar
+            i0_check_convergence_scalar,&
+            i1_check_convergence_scalar,&
+            i2_check_convergence_scalar,&
+            d0_check_convergence_scalar,&
+            d1_check_convergence_scalar,&
+            d2_check_convergence_scalar,&
+            z0_check_convergence_scalar,&
+            z1_check_convergence_scalar,&
+            z2_check_convergence_scalar
     end interface check_convergence_scalar
 
     interface check_convergence
        module procedure &
-            i0_check_convergence_function,i1_check_convergence_function,i2_check_convergence_function, &
-            d0_check_convergence_function,d1_check_convergence_function,d2_check_convergence_function, &
-            z0_check_convergence_function,z1_check_convergence_function,z2_check_convergence_function
+            i0_check_convergence_function,&
+            i1_check_convergence_function,&
+            i2_check_convergence_function,&
+            d0_check_convergence_function,&
+            d1_check_convergence_function,&
+            d2_check_convergence_function,&
+            z0_check_convergence_function,&
+            z1_check_convergence_function,&
+            z2_check_convergence_function
     end interface check_convergence
 
     interface check_convergence_local
        module procedure &
-            i0_check_convergence_function_local,i1_check_convergence_function_local,i2_check_convergence_function_local, &
-            d0_check_convergence_function_local,d1_check_convergence_function_local,d2_check_convergence_function_local, &
-            z0_check_convergence_function_local,z1_check_convergence_function_local,z2_check_convergence_function_local
+            i0_check_convergence_function_local,&
+            i1_check_convergence_function_local,&
+            i2_check_convergence_function_local,&
+            d0_check_convergence_function_local,&
+            d1_check_convergence_function_local,&
+            d2_check_convergence_function_local,&
+            z0_check_convergence_function_local,&
+            z1_check_convergence_function_local,&
+            z2_check_convergence_function_local
     end interface check_convergence_local
 
 
   contains
-
-    include "mix.f90"
 
 
     subroutine start_loop(loop,max,name,unit,id)
@@ -130,6 +154,21 @@
       endif
     end subroutine end_loop
 
+
+
+    subroutine mix(fin,weight)
+      complex(8),dimension(:),intent(inout) :: fin
+      real(8),intent(in)                    :: weight
+      complex(8),dimension(:),allocatable   :: old_fin
+      if(.not.allocated(old_fin))then
+         allocate(old_fin(size(fin)))
+         old_fin=0.d0
+         return
+      endif
+      fin=weight*fin + (1.d0-weight)*old_fin
+    end subroutine mix
+
+
     !******************************************************************
     !******************************************************************
     !******************************************************************
@@ -145,7 +184,18 @@
     ! FUNCTIONS:
     !###################################################################
     include "functions.f90"
-
+    function deriv(f,dh) result(df)
+      real(8),dimension(:),intent(in) :: f
+      real(8),intent(in)              :: dh
+      real(8),dimension(size(f))      :: df
+      integer                         :: i,L
+      L=size(f)
+      df(1)= (f(2)-f(1))/dh
+      do i=2,L-1
+         df(i) = (f(i+1)-f(i-1))/(2.d0*dh)
+      enddo
+      df(L)= (f(L)-f(L-1))/dh
+    end function deriv
 
     !###################################################################
     ! BETHE:

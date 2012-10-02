@@ -96,18 +96,21 @@ module COMMON_VARS
        'May      ', 'June     ', 'July     ', 'August   ', &
        'September', 'October  ', 'November ', 'December ' /)
 
-  interface txtify
+  interface txtfy
      module procedure i_to_ch,r_to_ch,c_to_ch
-  end interface txtify
+  end interface txtfy
 
+  interface abort
+     module procedure error
+  end interface abort
 
   !===============================================
   public :: parse_cmd_variable,parse_cmd_help,print_cmd_help,get_cmd_variable
   public :: version
   public :: timestamp
-  public :: error,warning
+  public :: abort,error,warning
   public :: msg
-  public :: txtify
+  public :: txtfy
   public :: bold
   public :: underline
   public :: highlight
@@ -350,10 +353,9 @@ contains
     endif
     call get_command_argument(i,buffer)
     pos      = scan(buffer,"=")
-    var%name = buffer(1:pos-1);call s_cap(var%name)
+    var%name = buffer(1:pos-1);call upper_case(var%name)
     var%value= buffer(pos+1:)
   end function get_cmd_variable
-
 
   subroutine i_parse_variable(variable,name,name2,default)
     integer                   :: variable
@@ -598,7 +600,7 @@ contains
   !******************************************************************
 
 
-  subroutine s_cap ( s )
+  subroutine upper_case(s)
     character              ch
     integer   ( kind = 4 ) i
     character ( len = * )  s
@@ -609,9 +611,9 @@ contains
        call ch_cap ( ch )
        s(i:i) = ch
     end do
-  end subroutine s_cap
+  end subroutine upper_case
 
-  subroutine ch_cap ( ch )
+  subroutine ch_cap(ch)
     character              ch
     integer   ( kind = 4 ) itemp
     itemp = iachar ( ch )

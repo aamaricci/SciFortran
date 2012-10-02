@@ -1,4 +1,4 @@
-subroutine splot3D(pname,X1,X2,Y,wlines,nlines)
+subroutine d_splot3D(pname,X1,X2,Y,wlines,nlines)
   integer                              :: i,j,Nx1,Nx2,count,Nl
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: X1
@@ -65,36 +65,10 @@ subroutine splot3D(pname,X1,X2,Y,wlines,nlines)
   close(10)
   call system("chmod +x "//adjustl(trim(pname))//".gp")
 
-end subroutine splot3D
+end subroutine d_splot3D
 
 
-! subroutine splot3D_(pname,X1,X2,Y,wlines,nlines)
-!   integer                              :: i
-!   character(len=*)                     :: pname
-!   real(8),dimension(:)                 :: X1
-!   real(8),dimension(:)                 :: X2
-!   complex(8),dimension(size(X1),size(X2)) :: Y
-!   integer,optional                     :: nlines
-!   logical,optional                     :: wlines
-!   character(len=256)                   :: fname,dname
-!   fname=get_filename(pname)
-!   dname=get_filepath(pname)
-!   if(present(nlines).and.present(wlines))then
-!      call splot3d(reg_filename(dname)//"re_"//reg_filename(fname),X1,X2,real(Y,8),wlines,nlines)
-!      call splot3d(reg_filename(dname)//"im_"//reg_filename(fname),X1,X2,dimag(Y),wlines,nlines)
-!   elseif(present(wlines))then
-!      call splot3d(reg_filename(dname)//"re_"//reg_filename(fname),X1,X2,real(Y,8),wlines)
-!      call splot3d(reg_filename(dname)//"im_"//reg_filename(fname),X1,X2,dimag(Y),wlines)
-!   elseif(present(nlines))then
-!      call splot3d(reg_filename(dname)//"re_"//reg_filename(fname),X1,X2,real(Y,8),nlines=nlines)
-!      call splot3d(reg_filename(dname)//"im_"//reg_filename(fname),X1,X2,dimag(Y),nlines=nlines)
-!   else
-!      call splot3d(reg_filename(dname)//"re_"//reg_filename(fname),X1,X2,real(Y,8))
-!      call splot3d(reg_filename(dname)//"im_"//reg_filename(fname),X1,X2,dimag(Y))
-!   endif
-! end subroutine splot3D_
-
-subroutine splot3D_(pname,X1,X2,Y,wlines,nlines)
+subroutine c_splot3D(pname,X1,X2,Y,wlines,nlines)
   integer                              :: i,j,Nx1,Nx2,count,Nl
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: X1
@@ -203,11 +177,144 @@ subroutine splot3D_(pname,X1,X2,Y,wlines,nlines)
   write(10,"(A)")"EOF"
   close(10)
   call system("chmod +x "//adjustl(trim(pname))//".gp")
-end subroutine splot3D_
+end subroutine c_splot3D
 
 
 
+subroutine d_splot3d_animate(pname,X1,X2,Y)
+  integer                  :: i,j,m,Nx1,Nx2,Nt
+  character(len=*)         :: pname
+  real(8),dimension(:)     :: X1
+  real(8),dimension(:)     :: X2
+  real(8),dimension(:,:,:) :: Y
+  real(8)                  :: X1min,X1max
+  real(8)                  :: X2min,X2max
+  real(8)                  :: Ymin(3),Ymax(3),Zmin,Zmax
+  Character(len=256)       :: fname,dname
+  fname=get_filename(pname)
+  dname=get_filepath(pname)
+  Nx1=size(X1) ; Nx2=size(X2)
+  if(size(Y,1)/=Nx1) stop "Error Nx1"
+  if(size(Y,2)/=Nx2) stop "Error Nx2"
+  Nt=size(Y,3)
+  call msg("splot3d_animate "//reg_filename(fname)//" ("//trim(txtfy(Nx1))//","//trim(txtfy(Nx2))//","//trim(txtfy(Nt))//")")
+  open(719,file=adjustl(trim(pname)))
+  do m=1,Nt
+     do i=1,Nx1
+        do j=1,Nx2
+           write(719,*)X1(i),X2(j),Y(i,j,m)
+        enddo
+        write(719,*)""
+     enddo
+  enddo
+  close(719)
+  X1min=minval(X1);X1max=maxval(X1)
+  X2min=minval(X2);X2max=maxval(X2)
+  Ymin=minval(Y);Ymax=maxval(Y)
+  Zmin=minval(Ymin);Zmax=maxval(Ymax)
+  open(10,file=adjustl(trim(pname))//".gp")
+  write(10,*)"gnuplot -persist << EOF"
+  write(10,*)"reset"
+  write(10,*)"#set term gif animate"
+  write(10,*)"#set output '"//trim(fname)//".gif'"
+  write(10,*)"set term wxt"
+  write(10,*)"set pm3d map"
+  write(10,*)"set size square"
+  write(10,*)"set xrange ["//trim(adjustl(trim(txtfy(X1min))))//":"//trim(adjustl(trim(txtfy(X1max))))//"]"
+  write(10,*)"set yrange ["//trim(adjustl(trim(txtfy(X2min))))//":"//trim(adjustl(trim(txtfy(X2max))))//"]"
+  write(10,*)"set cbrange ["//trim(adjustl(trim(txtfy(Zmin))))//":"//trim(adjustl(trim(txtfy(Zmax))))//"]"
+  write(10,*)"n="//trim(txtfy(Nt))
+  write(10,*)"do for [i=0:n-1]{"
+  write(10,*)"set title sprintf('"//trim(fname)//"; i=%i',i+1)"
+  write(10,*)"splot '"//trim(fname)//"' every :::("//trim(adjustl(trim(txtfy(Nx2))))//&
+       "*i)::("//trim(adjustl(trim(txtfy(Nx2))))//"*i+"//trim(adjustl(trim(txtfy(Nx1-1))))//") title '' "
+  write(10,*)"}"
+  write(10,*)"#set output"
+  write(10,"(A)")"EOF"
+  close(10)
+  call system("chmod +x "//adjustl(trim(pname))//".gp")
+end subroutine d_splot3D_animate
 
+
+
+subroutine c_splot3d_animate(pname,X1,X2,Y)
+  integer                     :: i,j,m,Nx1,Nx2,Nt
+  character(len=*)            :: pname
+  real(8),dimension(:)        :: X1
+  real(8),dimension(:)        :: X2
+  complex(8),dimension(:,:,:) :: Y
+  real(8)                     :: X1min,X1max
+  real(8)                     :: X2min,X2max
+  real(8)                     :: Ymin(3),Ymax(3),Zmin,Zmax  
+  character(len=256)          :: fname,dname
+  fname=get_filename(pname)
+  dname=get_filepath(pname)
+  Nx1=size(X1) ; Nx2=size(X2)
+  if(size(Y,1)/=Nx1) stop "Error Nx1"
+  if(size(Y,2)/=Nx2) stop "Error Nx2"
+  Nt=size(Y,3)
+  call msg("splot3d_animate "//reg_filename(fname)//" ("//trim(txtfy(Nx1))//","//trim(txtfy(Nx2))//","//trim(txtfy(Nt))//")")
+  open(619,file=adjustl(trim(dname))//"re_"//adjustl(trim(fname)))
+  open(719,file=adjustl(trim(dname))//"im_"//adjustl(trim(fname)))
+  do m=1,Nt
+     do i=1,Nx1
+        do j=1,Nx2
+           write(619,*)X1(i),X2(j),real(Y(i,j,m),8)
+           write(719,*)X1(i),X2(j),aimag(Y(i,j,m))
+        enddo
+        write(619,*)""
+        write(719,*)""
+     enddo
+  enddo
+  close(619)
+  close(719)
+  X1min=minval(X1);X1max=maxval(X1)
+  X2min=minval(X2);X2max=maxval(X2)
+  Ymin=minval(real(Y,8));Ymax=maxval(real(Y,8))
+  Zmin=minval(Ymin);Zmax=maxval(Ymax)
+  open(10,file=adjustl(trim(pname))//".gp")
+  write(10,*)"gnuplot -persist << EOF"
+  write(10,*)"reset"
+  write(10,*)"#set term gif animate"
+  write(10,*)"#set output 're_"//trim(fname)//".gif'"
+  write(10,*)"set term wxt"
+  write(10,*)"set pm3d map"
+  write(10,*)"set size square"
+  write(10,*)"set xrange ["//trim(adjustl(trim(txtfy(X1min))))//":"//trim(adjustl(trim(txtfy(X1max))))//"]"
+  write(10,*)"set yrange ["//trim(adjustl(trim(txtfy(X2min))))//":"//trim(adjustl(trim(txtfy(X2max))))//"]"
+  write(10,*)"set cbrange ["//trim(adjustl(trim(txtfy(Zmin))))//":"//trim(adjustl(trim(txtfy(Zmax))))//"]"
+  write(10,*)"n="//trim(txtfy(Nt))
+  write(10,*)"do for [i=0:n-1]{"
+  write(10,*)"set title sprintf('Re("//trim(fname)//"); i=%i',i+1)"
+  write(10,*)"splot 're_"//trim(fname)//"' every :::("//trim(adjustl(trim(txtfy(Nx2))))//&
+       "*i)::("//trim(adjustl(trim(txtfy(Nx2))))//"*i+"//trim(adjustl(trim(txtfy(Nx1-1))))//") title '' "
+  write(10,*)"}"
+  write(10,*)"#set output"
+  write(10,"(A)")"EOF"
+
+  Ymin=minval(aimag(Y));Ymax=maxval(aimag(Y))
+  Zmin=minval(Ymin);Zmax=maxval(Ymax)
+  write(10,*)"gnuplot -persist << EOF"
+  write(10,*)"reset"
+  write(10,*)"#set term gif animate"
+  write(10,*)"#set output 'im_"//trim(fname)//".gif'"
+  write(10,*)"set term wxt"
+  write(10,*)"set pm3d map"
+  write(10,*)"set size square"
+  write(10,*)"set xrange ["//trim(adjustl(trim(txtfy(X1min))))//":"//trim(adjustl(trim(txtfy(X1max))))//"]"
+  write(10,*)"set yrange ["//trim(adjustl(trim(txtfy(X2min))))//":"//trim(adjustl(trim(txtfy(X2max))))//"]"
+  write(10,*)"set cbrange ["//trim(adjustl(trim(txtfy(Zmin))))//":"//trim(adjustl(trim(txtfy(Zmax))))//"]"
+  write(10,*)"n="//trim(txtfy(Nt))
+  write(10,*)"do for [i=0:n-1]{"
+  write(10,*)"set title sprintf('Im("//trim(fname)//"); i=%i',i+1)"
+  write(10,*)"splot 'im_"//trim(fname)//"' every :::("//trim(adjustl(trim(txtfy(Nx2))))//&
+       "*i)::("//trim(adjustl(trim(txtfy(Nx2))))//"*i+"//trim(adjustl(trim(txtfy(Nx1-1))))//") title '' "
+  write(10,*)"}"
+  write(10,*)"#set output"
+  write(10,"(A)")"EOF"
+  close(10)
+  call system("chmod +x "//adjustl(trim(pname))//".gp")
+end subroutine c_splot3d_animate
 
 
 subroutine splot3D__(pname,X1,X2,Y,wlines,nlines)

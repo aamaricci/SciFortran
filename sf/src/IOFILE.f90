@@ -234,7 +234,7 @@ contains
        if(.not.compressed)return
     endif
 
-    call msg("deflate: "//reg_filename(filename)//reg_filename(type))
+    call msg("deflate "//reg_filename(filename)//reg_filename(type))
     call system("gunzip "//reg_filename(filename)//reg_filename(type))
     return
   end subroutine data_open
