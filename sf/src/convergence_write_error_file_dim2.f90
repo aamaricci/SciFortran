@@ -1,3 +1,4 @@
+  if(isnan(err))call abort("check_convergence: error is NaN. EXIT...")
   if(total_==1)then
      open(10,file="max_error.err",access="append")
      open(11,file="min_error.err",access="append")
