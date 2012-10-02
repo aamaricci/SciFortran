@@ -12,20 +12,31 @@ module IOFILE
   !file size to be stored automagically (in Kb)
   integer,public :: store_size=2048
 
+  interface reg
+     module procedure reg_filename
+  end interface reg
+  interface txtfit
+     module procedure reg_filename
+  end interface txtfit
+  interface txtcut
+     module procedure reg_filename
+  end interface txtcut
+
+  interface create_dir
+     module procedure create_data_dir
+  end interface create_dir
+
   public :: file_size
   public :: file_length
   public :: file_info
   public :: data_open
   public :: data_store
-  public :: reg_filename
-  public :: create_data_dir
+  public :: set_store_size
+  public :: reg_filename,reg,txtfit,txtcut
+  public :: create_data_dir,create_dir
   public :: close_file
   public :: get_filename
   public :: get_filepath
-
-  interface reg
-     module procedure reg_filename
-  end interface reg
 
 contains
 
@@ -208,6 +219,11 @@ contains
     endif
   end subroutine data_store
 
+  subroutine set_store_size(size)
+    integer :: size
+    store_size=size
+    call warning("store size ="//trim(txtfy(size))//"Kb")
+  end subroutine set_store_size
 
   !******************************************************************
   !******************************************************************
@@ -250,23 +266,23 @@ contains
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
-  subroutine create_data_dir(dir_name)!,id)
+  subroutine create_data_dir(dir_name,id)
     character(len=*),optional :: dir_name
     character(len=256)        :: name
     logical                   :: control
-    ! integer,optional :: id
-    ! integer :: id_
-    ! id_=0         ;if(present(id))id_=id
+    integer,optional :: id
+    integer          :: id_
+    id_=0         ;if(present(id))id_=id
     name="DATAsrc";if(present(dir_name))name=dir_name
-    ! if(mpiID==id_)then
-    control = check_data_dir(name)
-    if(control)then
-       call warning("can not create dir +"//trim(adjustl(trim(name)))//": ATTENTION")
-       return
-    else
+    if(mpiID==id_)then
+       ! control = check_data_dir(name)
+       ! if(control)then
+       !    call warning("directory +"//trim(adjustl(trim(name)))//" exists")
+       !    return
+       ! else
        call system("mkdir -v "//trim(adjustl(trim(name))))
+       ! endif
     endif
-    ! endif
   end subroutine create_data_dir
 
 
