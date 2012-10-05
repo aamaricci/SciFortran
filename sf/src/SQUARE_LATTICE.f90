@@ -171,8 +171,8 @@
         do ix=0,Nx
            do iy=0,Ny
               ik=ik+1
-              Kx=dble(ix)/dble(Nx)
-              Ky=dble(iy)/dble(Ny)
+              Kx=dble(ix)/dble(Nx+1)
+              Ky=dble(iy)/dble(Ny+1)
 
               ik2ix(ik)=ix
               ik2iy(ik)=iy
