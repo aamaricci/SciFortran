@@ -1,6 +1,5 @@
 !########################################################################
 !PROGRAM  : COMVARS
-!TYPE     : Module
 !PURPOSE  : Declare all the common variables usually in use within codes
 !########################################################################
 module COMMON_VARS
@@ -29,7 +28,6 @@ module COMMON_VARS
   real(8),parameter,public    :: min_exp_quad =-11000.d0
   real(8),parameter,public    :: max_exp_r =  81.d0
   real(8),parameter,public    :: min_exp_r = -81.d0
-  !real(8),parameter,public    :: error=epsilon(1.d0)*100.d0
   real(8),parameter,public    :: epsilonr=epsilon(1.d0),epsilonq=1.d-30
   integer,parameter,public    :: dbl=8,dp=8        ! "double" precision
   integer,parameter,public    :: ddp=16            ! "quad"   precision
@@ -42,35 +40,20 @@ module COMMON_VARS
   logical,parameter,public    :: tt=.true., ff=.false.
 
 
-  !gloabl  variables
-  !=========================================================
-  integer,public  :: iloop,nloop    !dmft loop variables
-  real(8),public  :: d              !bandwidth
-  real(8),public  :: ts,tsp,tpp     !n.n./n.n.n. hopping amplitude
-  real(8),public  :: u,v            !local,non-local interaction
-  real(8),public  :: tpd,vpd        !hybridization,band-band coupling
-  real(8),public  :: ed0,ep0        !orbital energies
-  real(8),public  :: xmu            !chemical potential
-  real(8),public  :: dt,dtau        !time step
-  real(8),public  :: fmesh          !freq. step
-  real(8),public  :: beta           !inverse temperature
-  real(8),public  :: temp           !temperature
-  real(8),public  :: eps            !broadening
-
-
-  !cmd line variables:
-  !=========================================================
-  type,public:: cmd_variable
-     character(len=64)           :: name
-     character(len=64)           :: value
-  end type cmd_variable
-  character(len=512),allocatable,public :: help_buffer(:)
-  type(cmd_variable),public             :: cmd_var,nml_var
-
-  interface parse_cmd_variable
-     module procedure d_parse_variable,&
-          i_parse_variable,ch_parse_variable,l_parse_variable
-  end interface parse_cmd_variable
+  ! !gloabl  variables !THESE SHOULD BE REMOVED
+  ! !=========================================================
+  ! integer,public  :: iloop,nloop    !dmft loop variables
+  ! real(8),public  :: d              !bandwidth
+  ! real(8),public  :: ts,tsp,tpp,tdd !n.n./n.n.n. hopping amplitude
+  ! real(8),public  :: u,v            !local,non-local interaction
+  ! real(8),public  :: tpd,vpd        !hybridization,band-band coupling
+  ! real(8),public  :: ed0,ep0        !orbital energies
+  ! real(8),public  :: xmu            !chemical potential
+  ! real(8),public  :: dt,dtau        !time step
+  ! real(8),public  :: fmesh          !freq. step
+  ! real(8),public  :: beta           !inverse temperature
+  ! real(8),public  :: temp           !temperature
+  ! real(8),public  :: eps            !broadening
 
 
   !mpi vars:
@@ -84,13 +67,13 @@ module COMMON_VARS
   integer,public :: omp_num_threads,omp_id,omp_size
 
   !Date variables:
-  integer(4)                          :: year
-  integer(4)                          :: mese
-  integer(4)                          :: day
-  integer(4)                          :: h
-  integer(4)                          :: m
-  integer(4)                          :: s
-  integer(4)                          :: ms
+  integer(4) :: year
+  integer(4) :: mese
+  integer(4) :: day
+  integer(4) :: h
+  integer(4) :: m
+  integer(4) :: s
+  integer(4) :: ms
   character(len=9),parameter,dimension(12) :: month = (/ &
        'January  ', 'February ', 'March    ', 'April    ', &
        'May      ', 'June     ', 'July     ', 'August   ', &
@@ -105,7 +88,7 @@ module COMMON_VARS
   end interface abort
 
   !===============================================
-  public :: parse_cmd_variable,parse_cmd_help,print_cmd_help,get_cmd_variable
+
   public :: version
   public :: timestamp
   public :: abort,error,warning
@@ -132,7 +115,6 @@ contains
        write(*,"(A)")bg_green("SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version))))
        write(*,"(A)")bg_green("CODE VERSION (GIT): "//trim(adjustl(trim(revision))))
        call timestamp
-
        open(10,file="version.inc")
        write(10,"(A)")"SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version)))
        write(10,"(A)")"CODE VERSION (GIT): "//trim(adjustl(trim(revision)))
@@ -276,159 +258,6 @@ contains
   !******************************************************************
   !******************************************************************
 
-
-  ! subroutine start_mpi
-  !   call MPI_INIT(mpiERR)
-  !   call MPI_COMM_RANK(MPI_COMM_WORLD,mpiID,mpiERR)
-  !   call MPI_COMM_SIZE(MPI_COMM_WORLD,mpiSIZE,mpiERR)
-  !   write(*,"(A,I4,A,I4,A)")'Processor ',mpiID,' of ',mpiSIZE,' is alive'
-  !   call MPI_BARRIER(MPI_COMM_WORLD,mpiERR)
-  ! end subroutine start_mpi
-
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
-
-
-
-  ! subroutine close_mpi
-  !   call MPI_BARRIER(MPI_COMM_WORLD,mpiERR)
-  !   call MPI_FINALIZE(mpiERR)
-  ! end subroutine close_mpi
-
-
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
-
-
-  subroutine parse_cmd_help(buffer,status)
-    character(len=256)            :: cmd_line
-    character(len=*),dimension(:) :: buffer
-    integer                       :: i,lines,N
-    logical,optional              :: status
-    if(present(status))status=.false.
-    N=size(buffer)
-    do i=1,command_argument_count()
-       call get_command_argument(i,cmd_line)
-       if(cmd_line=="--help" .OR. &
-            cmd_line=="-h"   .OR. &
-            cmd_line=="info" .OR. &
-            cmd_line=="--h"  .OR. &
-            cmd_line=="help")then
-          do lines=1,N
-             write(*,"(256A)")trim(adjustl(trim(buffer(lines))))
-          enddo
-          if(present(status))then
-             status=.true.
-             return
-          else
-             stop
-          endif
-       endif
-    enddo
-  end subroutine parse_cmd_help
-
-  subroutine print_cmd_help(buffer)
-    character(len=*),dimension(:) :: buffer
-    integer                       :: lines,N
-    N=size(buffer)
-    do lines=1,N
-       write(*,"(256A)")trim(adjustl(trim(buffer(lines))))
-    enddo
-    stop
-  end subroutine print_cmd_help
-
-
-  function get_cmd_variable(i)  result(var)
-    integer            :: i,ncount,pos
-    type(cmd_variable) :: var
-    character(len=512) :: buffer
-    ncount=command_argument_count()
-    if(i>ncount)then
-       write(*,*)"get_cmd_variable: i > cmdline_argument_count!"
-       return
-    endif
-    call get_command_argument(i,buffer)
-    pos      = scan(buffer,"=")
-    var%name = buffer(1:pos-1);call upper_case(var%name)
-    var%value= buffer(pos+1:)
-  end function get_cmd_variable
-
-  subroutine i_parse_variable(variable,name,name2,default)
-    integer                   :: variable
-    integer,optional          :: default
-    character(len=*)          :: name
-    character(len=*),optional :: name2
-    type(cmd_variable)        :: var
-    integer                   :: i
-    if(present(default))variable=default
-    do i=1,command_argument_count()
-       var = get_cmd_variable(i)
-       if(var%name==name)read(var%value,*)variable
-       if(present(name2))then
-          if(var%name==name2)read(var%value,*)variable
-       endif
-    enddo
-  end subroutine i_parse_variable
-
-  subroutine d_parse_variable(variable,name,name2,default)
-    real(8)                   :: variable
-    real(8),optional          :: default
-    character(len=*)          :: name
-    character(len=*),optional :: name2
-    type(cmd_variable)        :: var
-    integer                   :: i
-    if(present(default))variable=default
-    do i=1,command_argument_count()
-       var = get_cmd_variable(i)
-       if(var%name==name)read(var%value,*)variable
-       if(present(name2))then
-          if(var%name==name2)read(var%value,*)variable
-       endif
-    enddo
-  end subroutine d_parse_variable
-
-  subroutine ch_parse_variable(variable,name,name2,default)
-    character(len=*)          :: variable
-    character(len=*),optional :: default
-    character(len=*)          :: name
-    character(len=*),optional :: name2
-    type(cmd_variable)        :: var
-    integer                   :: i
-    if(present(default))variable=default
-    do i=1,command_argument_count()
-       var = get_cmd_variable(i)
-       if(var%name==name)read(var%value,*)variable
-       if(present(name2))then
-          if(var%name==name2)read(var%value,*)variable
-       endif
-    enddo
-  end subroutine ch_parse_variable
-
-  subroutine l_parse_variable(variable,name,name2,default)
-    logical                   :: variable
-    logical,optional          :: default
-    character(len=*)          :: name
-    character(len=*),optional :: name2
-    type(cmd_variable)        :: var
-    integer                   :: i
-    if(present(default))variable=default
-    do i=1,command_argument_count()
-       var = get_cmd_variable(i)
-       if(var%name==name)read(var%value,*)variable
-       if(present(name2))then
-          if(var%name==name2)read(var%value,*)variable
-       endif
-    enddo
-  end subroutine l_parse_variable
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
-
   function i_to_ch(i4) result(string)
     character(len=32) :: string
     integer           :: i4
@@ -518,7 +347,6 @@ contains
     textout=achar(27)//"[96m"//text//achar(27)//"[0m"
   end function cyan
 
-
   function bold_red(text) result(textout)
     character(len=*) :: text
     character(len=11+len(text)) :: textout
@@ -554,8 +382,6 @@ contains
     character(len=11+len(text)) :: textout
     textout=achar(27)//"[1;96m"//text//achar(27)//"[0m"
   end function bold_cyan
-
-
 
   function bg_red(text) result(textout)
     character(len=*) :: text
@@ -598,29 +424,6 @@ contains
   !******************************************************************
   !******************************************************************
   !******************************************************************
-
-
-  subroutine upper_case(s)
-    character              ch
-    integer   ( kind = 4 ) i
-    character ( len = * )  s
-    integer   ( kind = 4 ) s_length
-    s_length = len_trim ( s )
-    do i = 1, s_length
-       ch = s(i:i)
-       call ch_cap ( ch )
-       s(i:i) = ch
-    end do
-  end subroutine upper_case
-
-  subroutine ch_cap(ch)
-    character              ch
-    integer   ( kind = 4 ) itemp
-    itemp = iachar ( ch )
-    if ( 97 <= itemp .and. itemp <= 122 ) then
-       ch = achar ( itemp - 32 )
-    end if
-  end subroutine ch_cap
 
   subroutine i4_to_s_left ( i4, s )
     !! I4_TO_S_LEFT converts an I4 to a left-justified string.

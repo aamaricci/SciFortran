@@ -19,79 +19,8 @@ subroutine interp(FctL1,FctL2,L1,L2)
      FctL2(i)=PPVALU(xa,ya,L1,4,x,0)
   enddo
   FctL2(0)=FctL1(0)
-  ! do i=1, L2
-  !    FctL2(-i)=-FctL2(L2-i)
-  ! enddo
 end subroutine interp
-!-----------------------    
-!-----------------------    
-!-----------------------    
-subroutine Spline(x,y,n,yp1,ypn,y2)
-  implicit none
-  !integer, parameter :: nmax = 4096*32
-  integer      :: n
-  real(8)      :: x(:), y(size(x)), y2(size(x)), yp1, ypn
-  integer      :: i, k
-  real(8)      :: p, qn, sig, un
-  real(8),allocatable :: u(:)
-  n=size(x);allocate(u(n))
-  if (yp1 .gt. 0.99e30) then
-     y2(1) = 0.0d0
-     u(1)  = 0.0d0
-  else
-     y2(1) = -0.5d0
-     u(1)  = (3.0d0/(x(2)-x(1))) * ((y(2)-y(1))/(x(2)-x(1)) - yp1)
-  endif
-  do i=2, n-1
-     sig   = (x(i)-x(i-1))/(x(i+1)-x(i-1))
-     p     = sig * y2(i-1) + 2.0d0
-     y2(i) = (sig-1.0d0)/p
-     u(i)  = (6.0d0 * ((y(i+1)-y(i))/(x(i+1)-x(i)) - (y(i)-y(i-1))/(x(i)-x(i-1)))/(x(i+1)-x(i-1)) - sig*u(i-1)) /p
-  enddo
-  if (ypn .gt. 0.99e30) then
-     qn = 0.0d0
-     un = 0.0d0
-  else
-     qn = 0.5d0
-     un = (3.0d0/(x(n)-x(n-1))) * (ypn - (y(n)-y(n-1))/(x(n)-x(n-1)))
-  endif
-  y2(n) = (un - qn*u(n-1))/(qn*y2(n-1) + 1.0d0)
-  do k=n-1,1,-1
-     y2(k) = y2(k)*y2(k+1) + u(k)
-  enddo
-end subroutine Spline
-!-----------------------    
-!-----------------------    
-!-----------------------    
-subroutine Splint(xa,ya,y2a,n,x,y)
-  implicit none
-  integer      :: n
-  real(kind=8) :: xa(n), ya(n), y2a(n), x, y
-  integer      :: k, khi, klo
-  real(kind=8) :: a, b, h
-  klo=1
-  khi=n
-  do while(khi-klo .gt. 1)
-     k = (khi+klo)/2
-     if(xa(k) .gt. x)then
-        khi = k
-     else
-        klo = k
-     endif
-  enddo
-  h = xa(khi)-xa(klo)
-  if (h .eq. 0.0d0) then
-     write(*,*) "ERROR: Subroutine 'Splint'"
-     write(*,*) "       Bad xa input"
-     stop
-  end if
-  a = (xa(khi)-x)/h
-  b = (x-xa(klo))/h
-  y = a*ya(klo) + b*ya(khi) + ((a**3-a)*y2a(klo) + (b**3-b)*y2a(khi))*(h**2)/6.0d0
-end subroutine Splint
-!-----------------------    
-!-----------------------    
-!-----------------------    
+
 subroutine cubspl ( tau, c, n, ibcbeg, ibcend )
   !**************************************************************************
   !
@@ -261,7 +190,7 @@ subroutine cubspl ( tau, c, n, ibcbeg, ibcend )
      go to 110
   end if
 
-!90 continue
+  !90 continue
   !
   !  Not-a-knot and 3 <= N, and either 3 < N or also not-a-knot
   !  at left end point.

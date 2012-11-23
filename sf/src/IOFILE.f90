@@ -145,29 +145,33 @@ contains
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
-  function file_length(file) result(length)
-    integer          :: length
-    character(len=*) :: file
-    integer :: ifile,ierr
-    logical :: IOfile
+  function file_length(file) result(lines)
+    integer           :: lines
+    character(len=*)  :: file
+    integer           :: ifile,ierr,pos
+    logical           :: IOfile,bool,bool1,bool2
+    character(len=256)::buffer
     inquire(file=trim(adjustl(trim(file))),exist=IOfile)
     if(.not.IOfile)then
        inquire(file=trim(adjustl(trim(file)))//".gz",exist=IOfile)
        if(IOfile)call data_open(trim(adjustl(trim(file))))
     endif
+    lines=0
     if(.not.IOfile)then
        call msg('Cannot read +'//trim(adjustl(trim(file)))//'. Skip file_size')
-       length=0
        return
     endif
     open(99,file=trim(adjustl(trim(file))))
-    ifile=0;ierr=0
+    ierr=0
     do while(ierr==0)
-       read(99,*,iostat=ierr)
-       ifile=ifile+1
+       lines=lines+1
+       read(99,*,iostat=ierr)buffer
+       bool1=scan(buffer,"#").ne.0
+       bool2=len_trim(buffer).eq.0       
+       if(bool1 .OR. bool2)lines=lines-1
     enddo
-    length=ifile-1
-    write(*,'(A,I9,A)') 'there are', length,' lines in +'//trim(adjustl(trim(file)))
+    lines=lines-1
+    write(*,'(A,I9,A)') 'there are', lines,' lines in +'//trim(adjustl(trim(file)))
     rewind(99)
     close(99)
   end function file_length

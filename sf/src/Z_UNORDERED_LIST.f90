@@ -2,17 +2,17 @@ module Z_UNORDERED_LIST
   implicit none
   private
 
-  type,public :: d_list_node
+  type,public :: z_list_node
      private
      complex(8)          :: obj  !object value of the node (content of the box)
-     type(d_list_node),pointer :: prev !link to prev box (chain)
-     type(d_list_node),pointer :: next !link to next box (chain)
-  end type d_list_node
+     type(z_list_node),pointer :: prev !link to prev box (chain)
+     type(z_list_node),pointer :: next !link to next box (chain)
+  end type z_list_node
 
-  type,public :: d_linked_list
+  type,public :: z_linked_list
      integer                   :: size !size of the list
-     type(d_list_node),pointer :: root !head/root of the list\== list itself
-  end type d_linked_list
+     type(z_list_node),pointer :: root !head/root of the list\== list itself
+  end type z_linked_list
 
   public :: init_list
   public :: destroy_list
@@ -25,7 +25,7 @@ module Z_UNORDERED_LIST
 contains        !some routine to perform simple operation on the lists
 
   function init_list() result(new_list)
-    type(d_linked_list) :: new_list
+    type(z_linked_list) :: new_list
     allocate(new_list%root)
     new_list%root%prev => null()
     new_list%root%next => null()
@@ -34,8 +34,8 @@ contains        !some routine to perform simple operation on the lists
 
 
   subroutine destroy_list(list)
-    type(d_linked_list),intent(inout) :: list
-    type(d_list_node),pointer     :: current
+    type(z_linked_list),intent(inout) :: list
+    type(z_list_node),pointer     :: current
     do
        current => list%root%next         !current is the first node (root's next)
        if(.not.associated(current))exit  !empty list
@@ -54,9 +54,9 @@ contains        !some routine to perform simple operation on the lists
 
 
   subroutine add_element(list,obj)
-    type(d_linked_list),intent(inout) :: list
+    type(z_linked_list),intent(inout) :: list
     complex(8) ,intent(in)      :: obj
-    type(d_list_node),pointer         :: previous,current
+    type(z_list_node),pointer         :: previous,current
     integer                           :: i
     previous => list%root
     current  => previous%next
@@ -80,10 +80,10 @@ contains        !some routine to perform simple operation on the lists
 
 
   subroutine remove_element(list,n)
-    type(d_linked_list),intent(inout) :: list
+    type(z_linked_list),intent(inout) :: list
     integer,optional                  :: n
     integer                           :: i,pos
-    type(d_list_node),pointer         :: previous,current
+    type(z_list_node),pointer         :: previous,current
     previous => list%root
     current  => previous%next
     pos=list%size ; if(present(n))pos=n
@@ -100,17 +100,17 @@ contains        !some routine to perform simple operation on the lists
 
 
   function get_value(node) result(value)
-    type(d_list_node),intent(in) :: node
+    type(z_list_node),intent(in) :: node
     complex(8)           :: value
     value = node%obj
   end function get_value
 
 
   function get_node(list,n) result(node)
-    type(d_linked_list),intent(in) :: list
+    type(z_linked_list),intent(in) :: list
     integer                        :: i,n
-    type(d_list_node),pointer      :: node
-    type(d_list_node),pointer      :: current
+    type(z_list_node),pointer      :: node
+    type(z_list_node),pointer      :: current
     current => list%root%next
     if(n>list%size)then
        print*,"error in get_node: n > list.size!"
@@ -129,8 +129,8 @@ contains        !some routine to perform simple operation on the lists
 
 
   subroutine print_list(list)
-    type(d_linked_list),intent(in) :: list
-    type(d_list_node),pointer      :: current
+    type(z_linked_list),intent(in) :: list
+    type(z_list_node),pointer      :: current
     integer                        :: counter
     current => list%root%next   !assume is associated,ie list exists
     counter = 0
@@ -146,8 +146,8 @@ contains        !some routine to perform simple operation on the lists
 
 
   subroutine dump_list(list,vector)
-    type(d_linked_list),intent(in) :: list
-    type(d_list_node),pointer      :: current
+    type(z_linked_list),intent(in) :: list
+    type(z_list_node),pointer      :: current
     integer                        :: i
     complex(8),dimension(:)        :: vector
     current => list%root%next   !assume is associated,ie list exists

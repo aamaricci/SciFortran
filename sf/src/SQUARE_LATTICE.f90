@@ -53,18 +53,18 @@
     !+-----------------------------------------------------------------+
     !PURPOSE  : 
     !+-----------------------------------------------------------------+
-    function square_lattice_dispersion(ka,ts,tsp)
-      type(vect2D),intent(in) :: ka
-      real(8),intent(in),optional        :: ts,tsp
-      real(8)                 :: square_lattice_dispersion
+    function square_lattice_dispersion(ka,ts,tsp) result(epsk)
+      type(vect2D),intent(in)      :: ka
+      real(8),intent(in),optional  :: ts,tsp
+      real(8)                      :: epsk
       if(present(ts))t_hopping=ts
       if(present(tsp))t_prime=tsp
       if(t_hopping==0.d0)then
          print*,"warning in +square_lattice_dispersion: t_hopping=0!"
          call sleep(1)
       endif
-      square_lattice_dispersion= -2.d0*t_hopping*(cos(ka%x) + cos(ka%y)) &
-           - 4.0*t_prime*cos(ka%x)*cos(ka%y)
+      epsk=-2.d0*t_hopping*(cos(ka%x) + cos(ka%y)) &
+           -4.0*t_prime*cos(ka%x)*cos(ka%y)
     end function square_lattice_dispersion
 
 
