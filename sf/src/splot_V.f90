@@ -6,7 +6,7 @@ subroutine splotV_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   logical,optional                    :: append
   logical                             :: check
   Np=size(X)!Nx
-  !here as a reminder:
+  !here as a reminder of the older version:
   ! Ny1=size(Y1)
   ! if(present(Y2))Ny2=size(Y2)
   ! Np=min(Nx,Ny1);if(present(Y2))Np=min(Nx,Ny1,Ny2)

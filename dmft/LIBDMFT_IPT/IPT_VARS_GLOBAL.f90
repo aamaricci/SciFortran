@@ -7,6 +7,7 @@
 module IPT_VARS_GLOBAL
   !LIBRARY: put here all the LIBS in common
   USE COMMON_VARS
+  USE PARSE_CMD
   USE GREENFUNX
   USE FFTGF
   USE INTEGRATE
@@ -15,20 +16,26 @@ module IPT_VARS_GLOBAL
 
   !Size of the problem: some parameters:
   !=========================================================
-  integer     :: L !once it was protected
-
-
-  !local variables, others are defined in COMMON_VARS 
-  !=========================================================
-  integer               :: Nx
-  logical               :: printf
-  real(8) 	        :: wmin,wmax
-  real(8)               :: eps_error
-  integer               :: Nsuccess
-  real(8)               :: weight
-  real(8)               :: deltasc
-
-  real(8)               :: nread,nerror,ndelta
+  integer :: L              !a large number fix the size of the problem
+  integer :: nloop    !dmft loop variables
+  real(8) :: d              !bandwidth
+  real(8) :: ts,tsp,tpp,tdd !n.n./n.n.n. hopping amplitude
+  real(8) :: u,v            !local,non-local interaction
+  real(8) :: tpd,vpd        !hybridization,band-band coupling
+  real(8) :: ed0,ep0        !orbital energies
+  real(8) :: xmu            !chemical potential
+  real(8) :: dt,dtau        !time step
+  real(8) :: fmesh          !freq. step
+  real(8) :: beta           !inverse temperature
+  real(8) :: eps            !broadening
+  integer :: Nx
+  logical :: printf
+  real(8) :: wmin,wmax
+  real(8) :: eps_error
+  integer :: Nsuccess
+  real(8) :: weight
+  real(8) :: deltasc
+  real(8) :: nread,nerror,ndelta
 
   !Namelists:
   !=========================================================
@@ -37,6 +44,7 @@ module IPT_VARS_GLOBAL
        beta,     &
        U,        &
        ts,tsp,   &
+       tdd,tpp,  &
        xmu,      &
        wmax,     &
        Nx,       &
@@ -61,12 +69,17 @@ contains
     character(len=*) :: inputFILE
     integer :: i
     logical :: back,control
-
+    character(len=256),allocatable,dimension(:) :: help_buffer
     !variables: default values
     U     = 2.d0
     beta  = 100.d0
     ts    = 0.5d0
     tsp   = 0.d0
+    tdd   = 0.d0
+    tpp   = 0.d0
+    vpd=0.4d0
+    ed0=0.d0
+    ep0=0.d0
     xmu   = 0.d0
     Nx    = 20
     nloop = 10
@@ -122,7 +135,7 @@ contains
          '  supercond:',&
          '  solve_ipt_sc_sopt(fg0_,wr_,delta_)  result(sigma_) dim(2,-L:L)',&
          '  solve_ipt_sc_matsubara(fg0_,delta_) result(sigma_) dim(2,L)',&
-         '  solve_mpt_sc_sopt(fg0_,wr_,n_,n0_,delta_,delta0_)  result(sigma_) dim(2,-L:L) *not working*',&
+         '  solve_mpt_sc_sopt(fg0_,wr_,n_,n0_,delta_,delta0_)  result(sigma_) dim(2,-L:L)',&
          '  solve_mpt_sc_matsubara(fg0_,n_,n0_,delta_,delta0_) result(sigma_) dim(2,L)',&
          ' ',&
          '  '])
@@ -148,6 +161,9 @@ contains
     call parse_cmd_variable(ts,"TS")
     call parse_cmd_variable(tsp,"TSP")
     call parse_cmd_variable(xmu,"XMU")
+    call parse_cmd_variable(vpd,"VPD")
+    call parse_cmd_variable(ed0,"ED0")
+    call parse_cmd_variable(ep0,"EP0")
     call parse_cmd_variable(nx,"NX")
     call parse_cmd_variable(nloop,"NLOOP")
     call parse_cmd_variable(L,"L")

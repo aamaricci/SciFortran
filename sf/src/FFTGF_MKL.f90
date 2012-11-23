@@ -4,11 +4,11 @@
     use MKL_DFTI
     use MKL_DFT_TYPE
     use MKL_TRIG_TRANSFORMS
-    use TOOLS 
+    use TOOLS, only:linspace
     use SPLINE
     implicit none 
     private
-    public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
+    public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw,cfft_1d_ex
     public :: fftgf_rw2rt  , fftgf_rt2rw
     public :: fftgf_iw2tau , fftgf_tau2iw
     public :: fftff_iw2tau , fftff_tau2iw
@@ -63,7 +63,16 @@
       enddo
     end subroutine swap_fftrt2rw
 
-
+    subroutine cfft_1d_ex(func)
+      complex(8),dimension(:) :: func
+      real(8) :: ex
+      integer :: i
+      ex=-1.d0
+      do i=1,size(func)
+         ex=-ex
+         func(i)=ex*func(i)
+      enddo
+    end subroutine cfft_1d_ex
     !*******************************************************************
     !*******************************************************************
     !*******************************************************************

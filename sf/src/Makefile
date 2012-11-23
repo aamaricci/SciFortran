@@ -3,9 +3,9 @@ REV = $(shell git rev-parse HEAD)
 
 all: allmod libscifor.a libscifor_deb.a version
 
-allmod: COMVARS TIMER TOOLS BROYDEN BRENT CGFIT  FFTGF GREENFUNX INTEGRATE IOTOOLS SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS STRINGPACK PADE
+allmod: COMVARS PARSECMD TIMER TOOLS BROYDEN BRENT FFTGF GREENFUNX INTEGRATE IOTOOLS SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE
 
-allmod_deb: COMVARS_DEB TIMER_DEB TOOLS_DEB BROYDEN_DEB BRENT_DEB CGFIT_DEB  GREENFUNX_DEB  FFTGF_DEB INTEGRATE_DEB IOTOOLS_DEB SQUARE_LATTICE_DEB LIST_DEB MATRIX_DEB SPLINE_DEB RANDOM_DEB STATISTICS_DEB  STRINGPACK_DEB PADE_DEB
+allmod_deb: COMVARS_DEB PARSECMD_DEB TIMER_DEB TOOLS_DEB BROYDEN_DEB BRENT_DEB  GREENFUNX_DEB  FFTGF_DEB INTEGRATE_DEB IOTOOLS_DEB SQUARE_LATTICE_DEB LIST_DEB MATRIX_DEB SPLINE_DEB RANDOM_DEB STATISTICS_DEB  PADE_DEB
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
@@ -44,10 +44,11 @@ mod_COMVARS: COMVARS
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
-CGFIT: 
+#STD
+PARSECMD: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT) mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT) ./debug_mods/
-mod_CGFIT: CGFIT
+mod_PARSECMD: PARSECMD
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
@@ -282,23 +283,23 @@ mod_LIST: LIST
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
-STRINGPACK: 
-	$(FC) -c $(FFLAG) STRING_FUNX_1.f90 -I./mods/ -o objs/STRING_FUNX_1.o $(MOPT) mods/	
-	$(FC) -c $(FFLAG) STRING_FUNX_2.f90 -I./mods/ -o objs/STRING_FUNX_2.o $(MOPT) mods/	
-	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT) mods/	
-	$(FC) -c $(DFLAG) STRING_FUNX_1.f90 -I./debug_mods/ -o debug_objs/STRING_FUNX_1.o $(MOPT) ./debug_mods/	
-	$(FC) -c $(DFLAG) STRING_FUNX_2.f90 -I./debug_mods/ -o debug_objs/STRING_FUNX_2.o $(MOPT) ./debug_mods/	
-	$(FC) -c $(DFLAG) STRINGPACK.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT) ./debug_mods/
-mod_STRINGPACK: STRINGPACK 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
-	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
-	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
-	ranlib libscifor.a
-	ranlib libscifor_deb.a
-	@mv -fv *.a $(SFLIB)/
-	@echo 'LIBRARY IS UPDATED.........'
-	@echo ' '
+# STRINGPACK: 
+# 	$(FC) -c $(FFLAG) STRING_FUNX_1.f90 -I./mods/ -o objs/STRING_FUNX_1.o $(MOPT) mods/	
+# 	$(FC) -c $(FFLAG) STRING_FUNX_2.f90 -I./mods/ -o objs/STRING_FUNX_2.o $(MOPT) mods/	
+# 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT) mods/	
+# 	$(FC) -c $(DFLAG) STRING_FUNX_1.f90 -I./debug_mods/ -o debug_objs/STRING_FUNX_1.o $(MOPT) ./debug_mods/	
+# 	$(FC) -c $(DFLAG) STRING_FUNX_2.f90 -I./debug_mods/ -o debug_objs/STRING_FUNX_2.o $(MOPT) ./debug_mods/	
+# 	$(FC) -c $(DFLAG) STRINGPACK.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT) ./debug_mods/
+# mod_STRINGPACK: STRINGPACK 
+# 	@rsync -avP mods/*.mod $(SFINCLUDE)/
+# 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+# 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+# 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+# 	ranlib libscifor.a
+# 	ranlib libscifor_deb.a
+# 	@mv -fv *.a $(SFLIB)/
+# 	@echo 'LIBRARY IS UPDATED.........'
+# 	@echo ' '
 
 clean: 
 	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod

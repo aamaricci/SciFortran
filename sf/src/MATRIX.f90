@@ -126,6 +126,7 @@ contains
     if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 2Nd call zsyev")
     deallocate(work,rwork)
   end subroutine z_mat_diagonalization
+  !-----------------------------
 
 
 

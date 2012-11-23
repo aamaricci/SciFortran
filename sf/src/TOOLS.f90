@@ -19,6 +19,9 @@
     public :: linspace
     public :: logspace
     public :: arange
+    public :: powspace
+    public :: upmspace
+    public :: upminterval
 
     !SORT,UNIQE,SHUFFLE:
     public :: sort,sort_array
@@ -224,8 +227,11 @@
     !PURPOSE  : Evaluate sum over k-points (very simple method)
     !+-------------------------------------------------------------------+
     function sum_overk_zeta(zeta,ek,wk) result(fg)
-      complex(8)           :: zeta,fg
-      real(8),dimension(:) :: ek,wk
+      complex(8)                    :: zeta,fg
+      real(8),dimension(:)          :: ek
+      real(8),dimension(:),optional :: wk
+      real(8),dimension(size(ek))   :: wk_
+      wk_ = 1.d0/size(ek);if(present(wk))wk_=wk
       fg=sum(wk(:)/(zeta-ek(:)))
     end function sum_overk_zeta
 
@@ -251,7 +257,7 @@
       store_=.true. ; if(present(store))store_=store
       wini = -10.d0 ; if(present(wmin))wini=wmin
       wfin =  10.d0 ; if(present(wmax))wfin=wmax
-      eta  = 0.05d0 ; if(present(eps))eta=eps
+      eta  = 0.01d0 ; if(present(eps))eta=eps
       Lk =size(ek)  ; dew=abs(wfin-wini)/real(L,8)
       open(70,file=trim(adjustl(trim(file_))))
       do i=1,L
@@ -266,34 +272,6 @@
          call system("mv "//trim(adjustl(trim(file_)))//" LATTICEinfo/ 2>/dev/null")
       endif
     end subroutine get_free_dos
-    ! subroutine get_DOS(epsk_,file_,wt_,wini,wfin,eps)
-    !   implicit none
-    !   character(len=*)              :: file_
-    !   integer,parameter             :: M=2048
-    !   integer                       :: i,ik,Lk_
-    !   real(8),optional              :: wini,wfin,eps
-    !   real(8)                       :: w,peso,wini_,wfin_,dew_,eps_
-    !   complex(8)                    :: gf,iw
-    !   real(8),dimension(:)          :: epsk_
-    !   real(8),dimension(:),optional :: wt_
-    !   wini_ =-20.d0;if(present(wini))wini_=wini
-    !   wfin_ =20.d0;if(present(wfin))wfin_=wfin
-    !   eps_  =0.1d0;if(present(eps))eps_=eps
-    !   Lk_   =size(epsk_)
-    !   dew_=abs(wfin_-wini_)/dble(2*M)
-    !   open(70,file=trim(file_))
-    !   do i=1,2*M
-    !      w=wini_ + dble(i-1)*dew_;iw=cmplx(w,eps_)
-    !      gf=(0.d0,0.d0)
-    !      do ik=1,Lk_
-    !         peso=1.d0/Lk_
-    !         if(present(wt_))peso=wt_(ik)
-    !         gf=gf+peso/(iw-epsk_(ik))
-    !      enddo
-    !      write(70,*)w,-aimag(gf)/acos(-1.d0)
-    !   enddo
-    !   close(70)
-    ! end subroutine get_DOS
 
 
 
