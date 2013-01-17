@@ -39,7 +39,7 @@ function i0_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   endif
 end function i0_check_convergence_scalar
 
-function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(convergence)
+function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total,strict) result(convergence)
   integer,intent(in)            :: Xnew(:)
   real(8),intent(in)            :: eps
   integer,intent(in)            :: N1,N2
@@ -51,7 +51,10 @@ function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   real(8),dimension(size(Xnew)) :: M,Verror
   integer,save,allocatable      :: Xold(:,:)
   integer,save                  :: success=0,check=1
-  character(len=2)         :: label
+  character(len=2)              :: label
+  logical,optional              :: strict
+  logical                       :: strict_
+  strict_=.false.;if(present(strict))strict_=strict
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
   index_=1;if(present(index))index_=index
@@ -66,6 +69,7 @@ function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
+     if(strict_)err=error(1)
      Xold(index_,:)=Xnew
      include "convergence_write_error_file_dim1.f90"
      if(err < eps)then
@@ -80,7 +84,7 @@ function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   endif
 end function i1_check_convergence_scalar
 
-function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(convergence)
+function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total,strict) result(convergence)
   integer,intent(in)                           :: Xnew(:,:)
   real(8),intent(in)                           :: eps
   integer,intent(in)                           :: N1,N2
@@ -93,6 +97,9 @@ function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   integer,save,allocatable                     :: Xold(:,:,:)
   integer,save                                 :: success=0,check=1
   character(len=2)         :: label
+  logical,optional              :: strict
+  logical                       :: strict_
+  strict_=.false.;if(present(strict))strict_=strict
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
   index_=1;if(present(index))index_=index
@@ -107,6 +114,7 @@ function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
+     if(strict_)err=error(1)
      Xold(index_,:,:)=Xnew
      include "convergence_write_error_file_dim2.f90"
      if(err < eps)then
@@ -161,7 +169,7 @@ function d0_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   endif
 end function d0_check_convergence_scalar
 
-function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(convergence)
+function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total,strict) result(convergence)
   real(8),intent(in)            :: Xnew(:)
   real(8),intent(in)            :: eps
   integer,intent(in)            :: N1,N2
@@ -174,6 +182,9 @@ function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   real(8),save,allocatable      :: Xold(:,:)
   integer,save                  :: success=0,check=1
   character(len=2)         :: label
+  logical,optional              :: strict
+  logical                       :: strict_
+  strict_=.false.;if(present(strict))strict_=strict
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
   index_=1;if(present(index))index_=index
@@ -188,6 +199,7 @@ function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
+     if(strict_)err=error(1)
      Xold(index_,:)=Xnew
      include "convergence_write_error_file_dim1.f90"
      if(err < eps)then
@@ -202,7 +214,7 @@ function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   endif
 end function d1_check_convergence_scalar
 
-function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(convergence)
+function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total,strict) result(convergence)
   real(8),intent(in)                           :: Xnew(:,:)
   real(8),intent(in)                           :: eps
   integer,intent(in)                           :: N1,N2
@@ -215,6 +227,9 @@ function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   real(8),save,allocatable                     :: Xold(:,:,:)
   integer,save                                 :: success=0,check=1
   character(len=2)         :: label
+  logical,optional              :: strict
+  logical                       :: strict_
+  strict_=.false.;if(present(strict))strict_=strict
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
   index_=1;if(present(index))index_=index
@@ -229,6 +244,7 @@ function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
+     if(strict_)err=error(1)
      Xold(index_,:,:)=Xnew
      include "convergence_write_error_file_dim2.f90"
      if(err < eps)then
@@ -283,7 +299,7 @@ function z0_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   endif
 end function z0_check_convergence_scalar
 
-function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(convergence)
+function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total,strict) result(convergence)
   complex(8),intent(in)         :: Xnew(:)
   real(8),intent(in)            :: eps
   integer,intent(in)            :: N1,N2
@@ -296,6 +312,9 @@ function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   complex(8),save,allocatable   :: Xold(:,:)
   integer,save                  :: success=0,check=1
   character(len=2)         :: label
+  logical,optional              :: strict
+  logical                       :: strict_
+  strict_=.false.;if(present(strict))strict_=strict
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
   index_=1;if(present(index))index_=index
@@ -310,6 +329,7 @@ function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
+     if(strict_)err=error(1)
      Xold(index_,:)=Xnew
      include "convergence_write_error_file_dim1.f90"
      if(err < eps)then
@@ -324,7 +344,7 @@ function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   endif
 end function z1_check_convergence_scalar
 
-function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(convergence)
+function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total,strict) result(convergence)
   complex(8),intent(in)                        :: Xnew(:,:)
   real(8),intent(in)                           :: eps
   integer,intent(in)                           :: N1,N2
@@ -337,6 +357,9 @@ function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
   complex(8),save,allocatable                  :: Xold(:,:,:)
   integer,save                                 :: success=0,check=1
   character(len=2)         :: label
+  logical,optional              :: strict
+  logical                       :: strict_
+  strict_=.false.;if(present(strict))strict_=strict
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
   index_=1;if(present(index))index_=index
@@ -351,6 +374,7 @@ function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,index,total) result(conve
      error(1)=maxval(Verror)
      error(2)=minval(Verror)
      err=sum(Verror)/dble(size(Verror))
+     if(strict_)err=error(1)
      Xold(index_,:,:)=Xnew
      include "convergence_write_error_file_dim2.f90"
      if(err < eps)then

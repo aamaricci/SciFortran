@@ -41,7 +41,7 @@ DSL_LIBS_DEB= ${DLPLOT_DEB} ${DSL} ${X11}
 DSL_MODS= -I${DISLIN}/ifc
 endif
 
-include libdmft.mk
+#include libdmft.mk
 
 ###################################################################
 #REPO:
