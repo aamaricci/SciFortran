@@ -1,4 +1,4 @@
-include opt.mk
+include options.inc
 
 #SciFor MODULES:
 SFMODS 	= -I$(SFINCLUDE)
@@ -30,7 +30,6 @@ SFMODS_DEB  += -I$(SFFFTW3)/include/
 endif
 
 
-
 ifdef DISLIN
 DSL         =  -L$(DISLIN)/lib  -ldislin
 X11 	    =  -L/usr/lib -lX11 -lXt -lXext -lxcb -lX11-xcb -lXau -lXdmcp #-lxcb-xlib 
@@ -41,7 +40,11 @@ DSL_LIBS_DEB= ${DLPLOT_DEB} ${DSL} ${X11}
 DSL_MODS= -I${DISLIN}/ifc
 endif
 
-#include libdmft.mk
+
+#REVISION SOFTWARE GIT:
+REV = $(shell git rev-parse HEAD)
+VER='character(len=41),parameter :: revision = "$(REV)"' > revision.inc
+
 
 ###################################################################
 #REPO:
