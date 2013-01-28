@@ -6,11 +6,7 @@ subroutine sreadV_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
   integer,dimension(:)                :: X
   integer,dimension(size(X))          :: Y1
   integer,dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
-  Np=size(X)!Nx
-  !; Ny1=size(Y1);   if(present(Y2))Ny2=size(Y2)
-  !Np=min(Nx,Ny1);if(present(Y2))Np=min(Nx,Ny1,Ny2)
-  !if(Nx/=Ny1.OR.(present(Y2).AND.Nx/=Ny2))&
-  !write(*,"(a,1x,I6,I6,I6)")"problem while printing "//trim(pname)//" Nx,Ny1,Ny2",Nx,Ny1,Ny2
+  Np=size(X)
   open(719,file=adjustl(trim(pname)))
   if(present(Y8))then
      do i=1,Np

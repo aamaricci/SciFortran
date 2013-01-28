@@ -9,7 +9,7 @@ subroutine splotP_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   integer,optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),access="append")
+     open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
   endif
@@ -42,7 +42,7 @@ subroutine splotP_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   real(8),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),access="append")
+     open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
   endif
@@ -75,20 +75,20 @@ subroutine splotP_IC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8),optional:: Y2,Y3,Y4
   logical,optional :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),access="append")
+     open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
   endif
   if(present(Y4))then
-     write(719,"(I15,8(F18.10))")X,real(Y1,8),dimag(Y1),&
-          real(Y2,8),dimag(Y2),real(Y3,8),dimag(Y3),real(Y4,8),dimag(Y4)
+     write(719,"(I15,8(F18.10))")X,dreal(Y1),dimag(Y1),&
+          dreal(Y2),dimag(Y2),dreal(Y3),dimag(Y3),dreal(Y4),dimag(Y4)
   elseif(present(Y3))then
-     write(719,"(I15,6(F18.10))")X,real(Y1,8),dimag(Y1),&
-          real(Y2,8),dimag(Y2),real(Y3,8),dimag(Y3)
+     write(719,"(I15,6(F18.10))")X,dreal(Y1),dimag(Y1),&
+          dreal(Y2),dimag(Y2),dreal(Y3),dimag(Y3)
   elseif(present(Y2))then
-     write(719,"(I15,4(F18.10))")X,real(Y1,8),dimag(Y1),real(Y2,8),dimag(Y2)
+     write(719,"(I15,4(F18.10))")X,dreal(Y1),dimag(Y1),dreal(Y2),dimag(Y2)
   else
-     write(719,*)X,real(Y1,8),aimag(Y1)
+     write(719,*)X,dreal(Y1),aimag(Y1)
   endif
   close(719)
 end subroutine splotP_IC
@@ -102,7 +102,7 @@ subroutine splotP_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   integer,optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),access="append")
+     open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
   endif
@@ -135,7 +135,7 @@ subroutine splotP_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   real(8),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),access="append")
+     open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
   endif
@@ -168,20 +168,20 @@ subroutine splotP_RC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8),optional :: Y2,Y3,Y4
   logical,optional    :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),access="append")
+     open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
   endif
   if(present(Y4))then
-     write(719,"(F18.10,8(F18.10))")X,real(Y1,8),dimag(Y1),&
-          real(Y2,8),dimag(Y2),real(Y3,8),dimag(Y3),real(Y4,8),dimag(Y4)
+     write(719,"(F18.10,8(F18.10))")X,dreal(Y1),dimag(Y1),&
+          dreal(Y2),dimag(Y2),dreal(Y3),dimag(Y3),dreal(Y4),dimag(Y4)
   elseif(present(Y3))then
-     write(719,"(F18.10,6(F18.10))")X,real(Y1,8),dimag(Y1),&
-          real(Y2,8),dimag(Y2),real(Y3,8),dimag(Y3)
+     write(719,"(F18.10,6(F18.10))")X,dreal(Y1),dimag(Y1),&
+          dreal(Y2),dimag(Y2),dreal(Y3),dimag(Y3)
   elseif(present(Y2))then
-     write(719,"(F18.10,4(F18.10))")X,real(Y1,8),dimag(Y1),real(Y2,8),dimag(Y2)
+     write(719,"(F18.10,4(F18.10))")X,dreal(Y1),dimag(Y1),dreal(Y2),dimag(Y2)
   else
-     write(719,*)X,real(Y1,8),aimag(Y1)
+     write(719,*)X,dreal(Y1),dimag(Y1)
   endif
   close(719)
 end subroutine splotP_RC

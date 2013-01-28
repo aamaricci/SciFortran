@@ -1,4 +1,4 @@
-include opt.mk
+include options.inc
 REV = $(shell git rev-parse HEAD)
 
 all: allmod libscifor.a libscifor_deb.a version
