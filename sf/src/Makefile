@@ -302,4 +302,4 @@ mod_LIST: LIST
 # 	@echo ' '
 
 clean: 
-	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod
+	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod $(SFLIB)/*scifor*.a
