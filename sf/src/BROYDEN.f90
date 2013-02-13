@@ -6,9 +6,9 @@
     USE BROYDN_ROUTINES
     USE BROYDN_FMINLN
     implicit none
-    ! private 
+    private 
 
-    ! public :: broydn
+    public :: broydn
 
   contains
 

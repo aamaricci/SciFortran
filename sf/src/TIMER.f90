@@ -38,9 +38,9 @@ module TIMER
 
 contains
 
-  include "chrono.f90"
+  include "timer_chrono.f90"
 
-  include "bar.f90"
+  include "timer_bar.f90"
 
 end module TIMER
 
