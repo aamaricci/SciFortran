@@ -4,7 +4,7 @@ subroutine data_readV_I(pname,Y1)
   integer,dimension(:)  :: Y1
   Np=size(Y1)  
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Np
      read(719,*)Y1(i)
@@ -19,7 +19,7 @@ subroutine data_readV_R(pname,Y1)
   real(8),dimension(:)  :: Y1
   Np=size(Y1)
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Np
      read(719,*)Y1(i)
@@ -35,7 +35,7 @@ subroutine data_readV_C(pname,Y1)
   real(8)                :: reY1,imY1
   Np=size(Y1)  
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Np
      read(719,*)imY1,reY1
@@ -56,7 +56,7 @@ subroutine data_readM_I(pname,Y1,X)
   real(8),optional,dimension(:) :: X(size(Y1,2))
   Ny1=size(Y1,1) ; Ny2=size(Y1,2)
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Ny1
      do j=1,Ny2
@@ -78,7 +78,7 @@ subroutine data_readM_R(pname,Y1,X)
   real(8),optional,dimension(:) :: X(size(Y1,2))
   Ny1=size(Y1,1) ; Ny2=size(Y1,2)
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Ny1
      do j=1,Ny2
@@ -101,7 +101,7 @@ subroutine data_readM_C(pname,Y1,X)
   real(8)                       :: reY,imY
   Ny1=size(Y1,1) ; Ny2=size(Y1,2)
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Ny1
      do j=1,Ny2
@@ -129,7 +129,7 @@ subroutine data_readA3_I(pname,Y1,X)
   real(8),optional,dimension(:) :: X(size(Y1,3))
   Ny1=size(Y1,1) ; Ny2=size(Y1,2) ; Ny3=size(Y1,3) 
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Ny1
      do j=1,Ny2
@@ -153,7 +153,7 @@ subroutine data_readA3_R(pname,Y1,X)
   real(8),optional,dimension(:) :: X(size(Y1,3))
   Ny1=size(Y1,1) ; Ny2=size(Y1,2) ; Ny3=size(Y1,3) 
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
   open(719,file=reg_filename(pname))
   do i=1,Ny1
      do j=1,Ny2
@@ -178,7 +178,7 @@ subroutine data_readA3_C(pname,Y1,X)
   real(8)                       :: reY,imY
   Ny1=size(Y1,1) ; Ny2=size(Y1,2) ; Ny3=size(Y1,3) 
   call data_open(trim(pname))
-  include "control.f90"
+  include "data_read_control.f90"
 
   open(719,file=reg_filename(pname))
   do i=1,Ny1

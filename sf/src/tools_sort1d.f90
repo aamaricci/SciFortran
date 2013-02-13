@@ -6,7 +6,7 @@
 !PURPOSE  :   
 !+-----------------------------------------------------------------+
 subroutine i_uniq(AIN,AOUT,MASK)
-  USE M_UNISTA
+  !USE M_UNISTA
   integer,dimension(:),intent(INOUT)           :: AIN
   integer,dimension(:),allocatable,intent(OUT) :: AOUT
   integer                                      :: NDIM
@@ -14,15 +14,15 @@ subroutine i_uniq(AIN,AOUT,MASK)
        ,optional                               :: MASK
   if(present(MASK))then
      allocate(MASK(size(AIN)))
-     call unista(AIN,ndim,MASK)
+     call i_unista(AIN,ndim,MASK)
   else
-     call unista(AIN,ndim)
+     call i_unista(AIN,ndim)
   endif
   allocate(AOUT(NDIM))
   AOUT(1:NDIM)=AIN(1:NDIM)
 end subroutine i_uniq
 subroutine d_uniq(AIN,AOUT,MASK)
-  USE M_UNISTA
+  !USE M_UNISTA
   real(8),dimension(:),intent(INOUT)           :: AIN
   real(8),dimension(:),allocatable,intent(OUT) :: AOUT
   integer                                      :: NDIM
@@ -30,9 +30,9 @@ subroutine d_uniq(AIN,AOUT,MASK)
        ,optional                               :: MASK
   if(present(MASK))then
      allocate(MASK(size(AIN)))
-     call unista(AIN,ndim,MASK)
+     call d_unista(AIN,ndim,MASK)
   else
-     call unista(AIN,ndim)
+     call d_unista(AIN,ndim)
   endif
   allocate(AOUT(NDIM))
   AOUT(1:NDIM)=AIN(1:NDIM)
