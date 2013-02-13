@@ -2,7 +2,7 @@ module FFTGF
   implicit none
   include "fftw3.f"
   private
-  public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
+  public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw,cfft_1d_ex
   public :: fftgf_rw2rt  , fftgf_rt2rw
   public :: fftgf_iw2tau , fftgf_tau2iw
   public :: fftff_iw2tau , fftff_tau2iw
@@ -54,7 +54,16 @@ contains
     enddo
   end subroutine swap_fftrt2rw
 
-
+  subroutine cfft_1d_ex(func)
+    complex(8),dimension(:) :: func
+    real(8) :: ex
+    integer :: i
+    ex=-1.d0
+    do i=1,size(func)
+       ex=-ex
+       func(i)=ex*func(i)
+    enddo
+  end subroutine cfft_1d_ex
   !*******************************************************************
   !*******************************************************************
   !*******************************************************************
@@ -72,12 +81,12 @@ contains
     complex(8),dimension(2*M),intent(in)   :: func_in
     complex(8),dimension(-M:M),intent(out) :: func_out
     complex(8),dimension(2*M)              :: dummy_in
-    complex(8),dimension(-M:M)             :: dummy_out
+    !complex(8),dimension(-M:M)             :: dummy_out
     dummy_in = func_in
-    call cfft_1d_backward(dummy_in)
-    dummy_out = cfft_1d_shift(dummy_in,M)
-    dummy_out(M)=dummy_out(M-1)
-    forall(i=-M:M)func_out(i)=dummy_out(-i)
+    call cfft_1d_forward(dummy_in)
+    func_out = cfft_1d_shift(dummy_in,M)
+    func_out(M)=func_out(M-1)
+    !forall(i=-M:M)func_out(i)=dummy_out(-i)
   end subroutine fftgf_rw2rt
 
 
@@ -102,7 +111,7 @@ contains
     complex(8),dimension(2*M),intent(out) :: func_out
     complex(8),dimension(2*M)             :: dummy_out
     forall(i=1:2*M)dummy_out(i) = func_in(i-M-1)
-    call cfft_1d_forward(dummy_out)
+    call cfft_1d_backward(dummy_out)
     ex=-1.d0
     do i=1,2*M
        ex=-ex
@@ -157,8 +166,10 @@ contains
           if(i<=n)tmpGw(2*i)= gw(i)-tail
           if(i>n)tmpGw(2*i)=tail
        enddo
-       call fftgf_rw2rt(tmpGw,tmpGt,L)
-       tmpGt=2.d0*tmpGt/beta
+       call cfft_1d_forward(tmpGw)
+       tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
+       ! call fftgf_rw2rt(tmpGw,tmpGt,L)
+       ! tmpGt=2.d0*tmpGt/beta
        do i=0,L-1
           tau=dble(i)*dtau
           if(mues > 0.d0)then
@@ -174,7 +185,7 @@ contains
                 At = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
              endif
           endif
-          gt(i)=real(tmpGt(i),8)+At
+          gt(i)=tmpGt(i)+At
        enddo
        gt(L)=-(gt(0)+1.d0)
     case(.true.)
@@ -183,8 +194,10 @@ contains
           stop
        endif
        forall(i=1:L)tmpGw(2*i)  = gw(i)
-       call fftgf_rw2rt(tmpGw,tmpGt,L)
-       tmpGt=2.d0*tmpGt/beta
+       call cfft_1d_forward(tmpGw)
+       tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
+       ! call fftgf_rw2rt(tmpGw,tmpGt,L)
+       ! tmpGt=2.d0*tmpGt/beta
        gt(0:L-1) = real(tmpGt(0:L-1),8)
        gt(L)=-gt(0)
     end select
@@ -228,40 +241,26 @@ contains
 
 
 
-
   !+-------------------------------------------------------------------+
   !PURPOSE  :  
   !+-------------------------------------------------------------------+
-  !+-------------------------------------------------------------------+
-  !PURPOSE  :  
-  !+-------------------------------------------------------------------+
-  subroutine fftgf_tau2iw(gt,gw,beta)!,normal)
+  subroutine fftgf_tau2iw(gt,gw,beta)
     real(8)                :: gt(0:)
     complex(8)             :: gw(:)
     real(8)                :: beta
-    ! logical,optional       :: normal
-    ! logical                :: normal_
     integer                :: i,L,n,M
-    complex(8),allocatable :: Igw(:)
+    complex(8),allocatable :: Igw(:),cIgt(:)
     real(8),allocatable    :: Igt(:)
-
     L=size(gt)-1    ; N=size(gw)
-    ! normal_=.true.  ; if(present(normal))normal_=normal
-
-    M=32*L
-    allocate(Igt(-M:M),Igw(2*M))
+    M=32*N!L
+    allocate(Igt(-M:M),Igw(2*M),cIgt(-M:M))
     call interp(gt(0:L),Igt(0:M),L,M)
-    !
-    ! if(normal_)then
     forall(i=1:M)Igt(-i)=-Igt(M-i)
-    ! else
-    !    forall(i=1:M)Igt(-i)=Igt(M-i)
-    ! endif
-    !
-    call fftgf_rt2rw((1.d0,0.d0)*Igt,Igw,M)
+    cIgt = cmplx(1.d0,0.d0)*Igt
+    call fftgf_rt2rw(cIgt,Igw,M)
     Igw=Igw*beta/real(M,8)/2.d0
-    forall(i=1:n)gw(i)=-Igw(2*i)
-    deallocate(Igt,Igw)
+    forall(i=1:n)gw(i)=Igw(2*i)
+    deallocate(Igt,Igw,cIgt)
   contains
     include "splinefft.f90" !This is taken from SPLINE to make this module independent    
   end subroutine fftgf_tau2iw
@@ -277,8 +276,8 @@ contains
     M=32*L
     allocate(Igt(-M:M),Igw(2*M))
     allocate(reGt(0:M),imGt(0:M))
-    call interp(real(gt(0:L),8),reGt(0:M),L,M)
-    call interp(aimag(gt(0:L)),imGt(0:M),L,M)
+    call interp(dreal(gt(0:L)),reGt(0:M),L,M)
+    call interp(dimag(gt(0:L)),imGt(0:M),L,M)
     Igt(0:M)=cmplx(reGt(0:M),imGt(0:M),8)
     !
     forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)

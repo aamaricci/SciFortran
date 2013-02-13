@@ -46,6 +46,7 @@ subroutine splotP_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   logical          :: rw
   rw=.false.;if(present(append))rw=append
   if(rw)then
+
      open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -81,6 +82,7 @@ subroutine splotP_IC(pname,X,Y1,Y2,Y3,Y4,append)
   logical          :: rw
   rw=.false.;if(present(append))rw=append
   if(rw)then
+
      open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -110,6 +112,7 @@ subroutine splotP_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   logical          :: rw
   rw=.false.;if(present(append))rw=append
   if(rw)then
+
      open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))
@@ -145,6 +148,7 @@ subroutine splotP_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   logical          :: rw
   rw=.false.;if(present(append))rw=append
   if(rw)then
+
      open(719,file=adjustl(trim(pname)),position="append")
   else
      open(719,file=adjustl(trim(pname)))

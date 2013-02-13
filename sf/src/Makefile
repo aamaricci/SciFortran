@@ -1,7 +1,7 @@
 include options.inc
 REV = $(shell git rev-parse HEAD)
 
-all: allmod libscifor.a libscifor_deb.a version
+all: version allmod libscifor.a libscifor_deb.a
 
 allmod: COMVARS PARSECMD TIMER TOOLS ZEROS FFTGF FUNCTIONS GREENFUNX INTEGRATE IOTOOLS SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE
 
@@ -23,6 +23,10 @@ libscifor_deb.a:
 
 version:
 	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > scifor_version.inc
+
+
+clean: 
+	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod $(SFLIB)/*scifor*.a
 
 
 #STD
@@ -308,6 +312,3 @@ mod_LIST: LIST
 	@mv -fv *.a $(SFLIB)/
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
-
-clean: 
-	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod

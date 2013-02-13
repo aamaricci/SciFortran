@@ -5,7 +5,7 @@ MODULE PADE
   private
 
   integer                 :: Npade
-  complex(16),allocatable :: p(:,:),z(:)
+  complex(8),allocatable :: p(:,:),z(:)
   public :: pade_analytic_continuation
 
 contains
