@@ -29,18 +29,6 @@ SFMODS      += -I$(SFFFTW3)/include/
 SFMODS_DEB  += -I$(SFFFTW3)/include/
 endif
 
-
-ifdef DISLIN
-DSL         =  -L$(DISLIN)/lib  -ldislin
-X11 	    =  -L/usr/lib -lX11 -lXt -lXext -lxcb -lX11-xcb -lXau -lXdmcp #-lxcb-xlib 
-DLPLOT      =  -ldlplot
-DLPLOT_DEB  =  -ldlplot_deb
-DSL_LIBS    = ${DLPLOT} ${DSL} ${X11}
-DSL_LIBS_DEB= ${DLPLOT_DEB} ${DSL} ${X11}
-DSL_MODS= -I${DISLIN}/ifc
-endif
-
-
 #REVISION SOFTWARE GIT:
 REV = $(shell git rev-parse HEAD)
 VER='character(len=41),parameter :: revision = "$(REV)"' > revision.inc
@@ -63,4 +51,12 @@ VER='character(len=41),parameter :: revision = "$(REV)"' > revision.inc
 # SFMODS += ${FGSL_MODS}
 # endif
 
-
+# ifdef DISLIN
+# DSL         =  -L$(DISLIN)/lib  -ldislin
+# X11 	    =  -L/usr/lib -lX11 -lXt -lXext -lxcb -lX11-xcb -lXau -lXdmcp #-lxcb-xlib 
+# DLPLOT      =  -ldlplot
+# DLPLOT_DEB  =  -ldlplot_deb
+# DSL_LIBS    = ${DLPLOT} ${DSL} ${X11}
+# DSL_LIBS_DEB= ${DLPLOT_DEB} ${DSL} ${X11}
+# DSL_MODS= -I${DISLIN}/ifc
+# endif

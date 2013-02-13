@@ -251,7 +251,6 @@ contains
     integer                :: i,L,n,M
     complex(8),allocatable :: Igw(:),cIgt(:)
     real(8),allocatable    :: Igt(:)
-    print*,"Hello: FFTW3"
     L=size(gt)-1    ; N=size(gw)
     M=32*N!L
     allocate(Igt(-M:M),Igw(2*M),cIgt(-M:M))

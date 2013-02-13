@@ -1,14 +1,14 @@
-  if(isnan(err))call abort("check_convergence: error is NaN. EXIT...")
+  !if(isnan(err))call abort("check_convergence: error is NaN. EXIT...")
   if(total_==1)then
-     open(10,file="max_error.err",access="append")
-     open(11,file="min_error.err",access="append")
-     open(12,file="error.err",access="append")
+     open(10,file="max_error.err",position="append")
+     open(11,file="min_error.err",position="append")
+     open(12,file="error.err",position="append")
      open(13,file="error_distribution.err")
   else
      write(label,"(I2)")index_
-     open(10,file="max_error_"//trim(adjustl(trim(label)))//".err",access="append")
-     open(11,file="min_error_"//trim(adjustl(trim(label)))//".err",access="append")
-     open(12,file="error_"//trim(adjustl(trim(label)))//".err",access="append")
+     open(10,file="max_error_"//trim(adjustl(trim(label)))//".err",position="append")
+     open(11,file="min_error_"//trim(adjustl(trim(label)))//".err",position="append")
+     open(12,file="error_"//trim(adjustl(trim(label)))//".err",position="append")
      open(13,file="error_distribution_"//trim(adjustl(trim(label)))//".err")
   endif
   write(10,*)check,error(1)
