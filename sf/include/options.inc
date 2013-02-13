@@ -4,7 +4,7 @@ STD =  -O2 -assume nobuffered_io
 DEB =  -p -O0 -g -debug -fpe0 -traceback -check all
 FFLAG += $(STD) -static-intel
 DFLAG += $(DEB) -static-intel
-MOPT=-module
+MOPT=-module 
 endif
 ifeq ($(FC),gfortran)
 OPT=-O3 -funroll-all-loops -fno-f2c
