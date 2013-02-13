@@ -38,9 +38,7 @@ module IOFILE
   public :: get_filename
   public :: get_filepath
 
-
 contains
-
 
   function get_filename(string) result(fname)
     character(len=*) :: string
@@ -53,7 +51,6 @@ contains
     fname=string(i+1:slen)
   end function get_filename
 
-
   function get_filepath(string) result(pname)
     character(len=*) :: string
     character(len=len_trim(string)) :: pname
@@ -65,10 +62,9 @@ contains
     pname=string(1:i)
   end function get_filepath
 
-
   subroutine close_file(pname)
     character(len=*) :: pname
-    open(10,file=trim(adjustl(trim(pname))),access="APPEND")
+    open(10,file=trim(adjustl(trim(pname))),position="APPEND")
     write(10,*)""
     close(10)
   end subroutine close_file
