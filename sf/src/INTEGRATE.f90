@@ -1,6 +1,5 @@
-  include "d_quadpack.f90"
-  include "INTEGRATE_FINTER_MOD.f90"
-
+  include "integrate_d_quadpack.f90"
+  include "integrate_finter_mod.f90"
   !###############################################################
   ! PROGRAM  : INTEGRATE
   ! TYPE     : Module
@@ -314,40 +313,6 @@
       fr(L) =(fr(L-2) - fr(L-1))*dx  + fr(L-1)
       fr(1)=(fr(1+1)- fr(1+2))*dx + fr(1+1)
     end function kramers_kronig
-    ! function kramers_kronig(fi,x,L) result(fr)
-    !   integer                 :: i,L
-    !   real(8),dimension(-L:L) :: fi,fr,x
-    !   real(8)                 :: dx
-    !   !QAWC/E parameters:
-    !   integer, parameter :: LIMIT = 500
-    !   integer            :: IERSUM,NEVAL,IER,LAST
-    !   real(8)            :: EPSABS,EPSREL,A,B,C,ABSERR
-    !   real(8)            :: ALIST(LIMIT),BLIST(LIMIT),ELIST(LIMIT),RLIST(LIMIT)
-    !   integer            :: IORD(limit)
-    !   if(allocated(finterX))deallocate(finterX)
-    !   if(allocated(finterF))deallocate(finterF)
-    !   allocate(finterX(-L:L),finterF(-L:L))
-    !   finterX    = x
-    !   finterF    = fi/pi
-    !   finterImax = L
-    !   finterImin =-L
-    !   finterN    = 5
-    !   EPSABS = 0.0d0
-    !   EPSREL = 5.0d-9
-    !   IERSUM = 0
-    !   A      = x(-L)-1.d-3
-    !   B      = x(L)+1.d-3
-    !   do i=-L,L
-    !      C = x(i)
-    !      CALL QAWCE(finter,A,B,C,EPSABS,EPSREL,LIMIT,fr(i),ABSERR,NEVAL,&
-    !           IER,alist,blist,rlist,elist,iord,last)
-    !      IERSUM=IERSUM+IER
-    !   enddo
-    !   !Some regularization at the borders: (thanks Jan Tomczak)
-    !   dx=x(1)-x(0)
-    !   fr(L) =(fr(L-2) - fr(L-1))*dx  + fr(L-1)
-    !   fr(-L)=(fr(-L+1)- fr(-L+2))*dx + fr(-L+1)
-    ! end function kramers_kronig
 
 
 
