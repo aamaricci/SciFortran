@@ -1,4 +1,4 @@
-  include "INTEGRATE_NR_MOD.f90"
+  include "integrate_nr_mod.f90"
   !###############################################################
   ! PROGRAM  : MOD_FINTER
   ! TYPE     : Module

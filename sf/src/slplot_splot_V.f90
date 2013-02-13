@@ -4,9 +4,16 @@ subroutine splotV_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   integer,dimension(:)                :: X,Y1
   integer,dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional                    :: append
+<<<<<<< HEAD
   logical                             :: check
   Np=size(X)
   if(present(append).AND. append.eqv..true.)then
+=======
+  logical                             :: check,rw
+  rw=.false.;if(present(append))rw=append
+  Np=size(X)
+  if(rw)then
+>>>>>>> devel
      inquire(file=trim(adjustl(trim(pname))),exist=check)
      open(719,file=adjustl(trim(pname)),position="append")
      if(check)write(719,*)
@@ -58,9 +65,10 @@ subroutine splotV_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   real(8),dimension(size(X))          :: Y1
   real(8),dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional                    :: append
-  logical                             :: check
+  logical                             :: check,rw
+  rw=.false.;if(present(append))rw=append
   Np=size(X)
-  if(present(append).AND. append.eqv..true.)then
+  if(rw)then
      inquire(file=trim(adjustl(trim(pname))),exist=check)
      open(719,file=adjustl(trim(pname)),position="append")
      if(check)write(719,*)
@@ -112,9 +120,10 @@ subroutine splotV_IC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8),dimension(:)                :: Y1
   complex(8),dimension(size(X)),optional :: Y2,Y3,Y4
   logical,optional                       :: append
-  logical                                :: check
+  logical                             :: check,rw
+  rw=.false.;if(present(append))rw=append
   Np=size(X)
-  if(present(append).AND. append.eqv..true.)then
+  if(rw)then
      inquire(file=trim(adjustl(trim(pname))),exist=check)
      open(719,file=adjustl(trim(pname)),position="append")
      if(check)write(719,*)
@@ -156,9 +165,10 @@ subroutine splotV_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   integer,dimension(size(X))          :: Y1
   integer,dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional                    :: append
-  logical                             :: check
+  logical                             :: check,rw
+  rw=.false.;if(present(append))rw=append
   Np=size(X)
-  if(present(append).AND. append.eqv..true.)then
+  if(rw)then
      inquire(file=trim(adjustl(trim(pname))),exist=check)
      open(719,file=adjustl(trim(pname)),position="append")
      if(check)write(719,*)
@@ -210,9 +220,10 @@ subroutine splotV_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   real(8),dimension(:)          :: Y1
   real(8),dimension(:),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional              :: append
-  logical                       :: check
+  logical                             :: check,rw
+  rw=.false.;if(present(append))rw=append
   Np=size(X)
-  if(present(append).AND. append.eqv..true.)then
+  if(rw)then
      inquire(file=trim(adjustl(trim(pname))),exist=check)
      open(719,file=adjustl(trim(pname)),position="append")
      if(check)write(719,*)
@@ -264,9 +275,10 @@ subroutine splotV_RC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8),dimension(:)          :: Y1
   complex(8),dimension(:),optional :: Y2,Y3,Y4
   logical,optional                 :: append
-  logical                          :: check
+  logical                             :: check,rw
+  rw=.false.;if(present(append))rw=append
   Np=size(X)
-  if(present(append).AND. append.eqv..true.)then
+  if(rw)then
      inquire(file=trim(adjustl(trim(pname))),exist=check)
      open(719,file=adjustl(trim(pname)),position="append")
      if(check)write(719,*)

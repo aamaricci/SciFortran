@@ -1,7 +1,7 @@
   include "spline_nr_mod.f90"
   include "spline_finter_mod.f90"
-  include "interp.f90"
-  include "cubspl_routines.f90"
+  include "spline_interp.f90"
+  include "spline_cubspl_routines.f90"
   !###############################################################
   !     PROGRAM  : SPLINE
   !     TYPE     : Module

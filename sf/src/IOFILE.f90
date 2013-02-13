@@ -38,7 +38,9 @@ module IOFILE
   public :: get_filename
   public :: get_filepath
 
+
 contains
+
 
   function get_filename(string) result(fname)
     character(len=*) :: string
@@ -51,6 +53,7 @@ contains
     fname=string(i+1:slen)
   end function get_filename
 
+
   function get_filepath(string) result(pname)
     character(len=*) :: string
     character(len=len_trim(string)) :: pname
@@ -61,6 +64,7 @@ contains
     enddo
     pname=string(1:i)
   end function get_filepath
+
 
   subroutine close_file(pname)
     character(len=*) :: pname
@@ -279,35 +283,9 @@ contains
     id_=0         ;if(present(id))id_=id
     name="DATAsrc";if(present(dir_name))name=dir_name
     if(mpiID==id_)then
-       ! control = check_data_dir(name)
-       ! if(control)then
-       !    call warning("directory +"//trim(adjustl(trim(name)))//" exists")
-       !    return
-       ! else
        call system("mkdir -v "//trim(adjustl(trim(name))))
-       ! endif
     endif
   end subroutine create_data_dir
-
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
-
-
-
-  !+-----------------------------------------------------------------+
-  !PURPOSE  : 
-  !+-----------------------------------------------------------------+
-  function check_data_dir(dir_name) result(logic)
-    character(len=*),optional :: dir_name
-    logical                   :: logic
-    call system("rm -f dir_exist")
-    call system("if [ -d "//trim(adjustl(trim(dir_name)))//" ]; then echo > dir_exist; fi")
-    inquire(file="dir_exist",EXIST=logic)
-    call system("rm -f dir_exist")
-  end function check_data_dir
-
 
 
   !******************************************************************
