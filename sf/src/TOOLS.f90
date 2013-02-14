@@ -6,6 +6,7 @@
 module TOOLS
   USE COMMON_VARS
   USE TIMER
+  USE IOTOOLS
   implicit none
   private
 
@@ -210,9 +211,9 @@ contains
   !###################################################################
   ! CONVERGENCE:
   !###################################################################
-  include "tools_convergence/convergence_check_scalar.f90"
-  include "tools_convergence/convergence_check_function1d.f90"
-  include "tools_convergence/convergence_check_function1d_local.f90"
+  include "tools_convergence/check_scalar.f90"
+  include "tools_convergence/check_function1d.f90"
+  include "tools_convergence/check_function1d_local.f90"
 
   !###################################################################
   ! SORTING 1D:

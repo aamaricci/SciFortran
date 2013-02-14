@@ -15,9 +15,11 @@ module IOFILE
   interface reg
      module procedure reg_filename
   end interface reg
+
   interface txtfit
      module procedure reg_filename
   end interface txtfit
+
   interface txtcut
      module procedure reg_filename
   end interface txtcut
@@ -39,6 +41,16 @@ module IOFILE
   public :: get_filepath
 
 contains
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : 
+  !+-----------------------------------------------------------------+
+  function reg_filename(file) result(reg)
+    character(len=*)                                   :: file    
+    character(len=len_trim(trim(adjustl(trim(file))))) :: reg
+    reg=trim(adjustl(trim(file)))
+  end function reg_filename
 
   function get_filename(string) result(fname)
     character(len=*) :: string
@@ -64,11 +76,22 @@ contains
 
   subroutine close_file(pname)
     character(len=*) :: pname
-    open(10,file=trim(adjustl(trim(pname))),position="APPEND")
+    open(10,file=reg(pname),position="APPEND")
     write(10,*)""
     close(10)
   end subroutine close_file
 
+  function free_unit() result(unit_)
+    integer :: unit_,ios
+    logical :: is_it_opened
+    unit_=100
+    do 
+       unit_=unit_+1
+       INQUIRE(unit=unit_,OPENED=is_it_opened,iostat=ios)
+       if(.not.is_it_opened.AND.ios==0)return 
+       if(unit_>900) call error("ERROR free_unit: no unit free smaller than 900. Possible BUG")
+    enddo
+  end function free_unit
 
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
@@ -79,16 +102,16 @@ contains
     integer,dimension(13) :: buff
     logical,optional      :: printf
     logical               :: control
-    inquire(file=trim(adjustl(trim(file))),exist=control)
+    inquire(file=reg(file),exist=control)
     if(.not.control)then
-       call msg('Cannot read '//trim(adjustl(trim(file)))//'. Skip file_size')
+       call msg('Cannot read '//reg(file)//'. Skip file_size')
        return
     endif
-    open(10,file=trim(adjustl(trim(file))))
+    open(10,file=reg(file))
     call fstat(10,buff,status)
     size=nint(dble(buff(8))/dble(1024))
     if(present(printf).AND.printf.eqv..true.)&
-         write(*,"(A,A,A,f9.6,A)")"file: **",trim(adjustl(trim(file))),"** is ",size," Kb"
+         write(*,"(A,A,A,f9.6,A)")"file: **",reg(file),"** is ",size," Kb"
   end function file_size
 
 
@@ -108,13 +131,13 @@ contains
     integer,dimension(13) :: buff
     integer               :: status,ifile
     logical               :: IOfile
-    inquire(file=trim(adjustl(trim(file))),exist=IOfile)
+    inquire(file=reg(file),exist=IOfile)
     if(.not.IOfile)then
-       print*,'Cannot read ',trim(adjustl(trim(file))),': skip file_size'
+       print*,'Cannot read ',reg(file),': skip file_size'
        file_info=0
        return
     endif
-    open(10,file=trim(adjustl(trim(file))))
+    open(10,file=reg(file))
     call fstat(10,buff,status)
     if(status == 0)then
        WRITE (*, FMT="('Device ID:',               T30, I19)") buff(1)
@@ -151,17 +174,17 @@ contains
     integer           :: ifile,ierr,pos
     logical           :: IOfile,bool,bool1,bool2
     character(len=256)::buffer
-    inquire(file=trim(adjustl(trim(file))),exist=IOfile)
+    inquire(file=reg(file),exist=IOfile)
     if(.not.IOfile)then
-       inquire(file=trim(adjustl(trim(file)))//".gz",exist=IOfile)
-       if(IOfile)call data_open(trim(adjustl(trim(file))))
+       inquire(file=reg(file)//".gz",exist=IOfile)
+       if(IOfile)call data_open(reg(file))
     endif
     lines=0
     if(.not.IOfile)then
-       call msg('Cannot read +'//trim(adjustl(trim(file)))//'. Skip file_size')
+       call msg('Cannot read +'//reg(file)//'. Skip file_size')
        return
     endif
-    open(99,file=trim(adjustl(trim(file))))
+    open(99,file=reg(file))
     ierr=0
     do while(ierr==0)
        lines=lines+1
@@ -171,7 +194,7 @@ contains
        if(bool1 .OR. bool2)lines=lines-1
     enddo
     lines=lines-1
-    write(*,'(A,I9,A)') 'there are', lines,' lines in +'//trim(adjustl(trim(file)))
+    write(*,'(A,I9,A)') 'there are', lines,' lines in +'//reg(file)
     rewind(99)
     close(99)
   end function file_length
@@ -183,20 +206,6 @@ contains
   !******************************************************************
 
 
-
-  !+-----------------------------------------------------------------+
-  !PURPOSE  : 
-  !+-----------------------------------------------------------------+
-  function reg_filename(file) result(reg)
-    character(len=*)                                   :: file    
-    character(len=len_trim(trim(adjustl(trim(file))))) :: reg
-    reg=trim(adjustl(trim(file)))
-  end function reg_filename
-
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
 
 
 
@@ -212,14 +221,14 @@ contains
     integer           :: cstatus,fsize
     call msg("storing "//file)
     !Check file exists:
-    inquire(file=reg_filename(file),exist=control)
+    inquire(file=reg(file),exist=control)
     if(control)then
        !Check if store_size is environment variable:
-       call get_environment_variable("STORE_SIZE",csize,STATUS=cstatus)
-       if(cstatus/=1)read(csize,"(I9)")store_size
+       !call get_environment_variable("STORE_SIZE",csize,STATUS=cstatus)
+       !if(cstatus/=1)read(csize,"(I9)")store_size
        fsize=store_size;if(present(size))fsize=size
-       if(file_size(reg_filename(file))>fsize)&
-            call system("gzip -fv "//trim(adjustl(trim(file))))
+       if(file_size(reg(file))>fsize)&
+            call system("gzip -fv "//reg(file))
     endif
   end subroutine data_store
 
@@ -244,18 +253,18 @@ contains
     logical                        :: compressed,control
     logical,optional,intent(out)   :: tar
     type=".gz"
-    inquire(file=reg_filename(filename),exist=control)
+    inquire(file=reg(filename),exist=control)
     if(control)then             !If exist return (no untar)
        if(present(tar))tar  = .false.
        return
     else                        !else search the correct compress format
-       inquire(file=reg_filename(filename)//reg_filename(type),exist=compressed)
+       inquire(file=reg(filename)//reg(type),exist=compressed)
        if(present(tar))tar =compressed
        if(.not.compressed)return
     endif
 
-    call msg("deflate "//reg_filename(filename)//reg_filename(type))
-    call system("gunzip "//reg_filename(filename)//reg_filename(type))
+    call msg("deflate "//reg(filename)//reg(type))
+    call system("gunzip "//reg(filename)//(type))
     return
   end subroutine data_open
 
@@ -279,7 +288,7 @@ contains
     id_=0         ;if(present(id))id_=id
     name="DATAsrc";if(present(dir_name))name=dir_name
     if(mpiID==id_)then
-       call system("mkdir -v "//trim(adjustl(trim(name))))
+       call system("mkdir -v "//reg(name))
     endif
   end subroutine create_data_dir
 
