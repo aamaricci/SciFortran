@@ -3,12 +3,12 @@ subroutine data_saveV_I(pname,Y1)
   character(len=*)                 :: pname
   integer,dimension(:)             :: Y1
   Np=size(Y1)  
-  open(719,file=trim(adjustl(trim(pname))))
+  open(719,file=reg(pname))
   do i=1,Np
      write(719,*)Y1(i)
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveV_I
 !----------------------------
 subroutine data_saveV_R(pname,Y1)
@@ -16,12 +16,12 @@ subroutine data_saveV_R(pname,Y1)
   character(len=*)                 :: pname
   real(8),dimension(:)             :: Y1
   Np=size(Y1)  
-  open(719,file=trim(adjustl(trim(pname))))
+  open(719,file=reg(pname))
   do i=1,Np
      write(719,*)Y1(i)
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveV_R
 !----------------------------
 subroutine data_saveV_C(pname,Y1)
@@ -29,12 +29,12 @@ subroutine data_saveV_C(pname,Y1)
   character(len=*)                 :: pname
   complex(8),dimension(:)          :: Y1
   Np=size(Y1)  
-  open(719,file=trim(adjustl(trim(pname))))
+  open(719,file=reg(pname))
   do i=1,Np
      write(719,*)dimag(Y1(i)),real(Y1(i),8)
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveV_C
 
 !----------------------------
@@ -59,7 +59,7 @@ subroutine data_saveM_I(pname,Y1,X)
      write(719,*)""
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveM_I
 !----------------------------
 subroutine data_saveM_R(pname,Y1,X)
@@ -80,7 +80,7 @@ subroutine data_saveM_R(pname,Y1,X)
      write(719,*)""
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveM_R
 !----------------------------
 subroutine data_saveM_C(pname,Y1,X)
@@ -101,7 +101,7 @@ subroutine data_saveM_C(pname,Y1,X)
      write(719,*)""
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveM_C
 
 !----------------------------
@@ -128,7 +128,7 @@ subroutine data_saveA3_I(pname,Y1,X)
      enddo
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveA3_I
 !----------------------------
 subroutine data_saveA3_R(pname,Y1,X)
@@ -151,7 +151,7 @@ subroutine data_saveA3_R(pname,Y1,X)
      enddo
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveA3_R
 !----------------------------
 subroutine data_saveA3_C(pname,Y1,X)
@@ -174,7 +174,7 @@ subroutine data_saveA3_C(pname,Y1,X)
      enddo
   enddo
   close(719)
-  call data_store(trim(adjustl(trim(pname))))
+  call data_store(reg(pname))
 end subroutine data_saveA3_C
 !----------------------------
 !----------------------------

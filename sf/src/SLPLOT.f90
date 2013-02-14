@@ -15,23 +15,21 @@ module SLPLOT
           splotP_RI,splotP_RR,splotP_RC, &
           splotV_II, splotV_IR,splotV_IC,&
           splotV_RI, splotV_RR,splotV_RC,&
-          d_splot3d,c_splot3d,d_splot3d_animate,c_splot3d_animate,splot3D__,&
+          splotM_II,splotM_IR,splotM_IC,&
+          splotM_RI,splotM_RR,splotM_RC,&
+          splotA3_II,splotA3_IR,splotA3_IC,&
+          splotA3_RI,splotA3_RR,splotA3_RC,&
           data_saveV_I,data_saveV_R,data_saveV_C,&
           data_saveM_I,data_saveM_R,data_saveM_C,&
           data_saveA3_I,data_saveA3_R,data_saveA3_C
   end interface splot
 
-  interface plot
+
+  interface splot3d
      module procedure &
-          splotP_II,splotP_IR,splotP_IC, &
-          splotP_RI,splotP_RR,splotP_RC, &
-          splotV_II, splotV_IR,splotV_IC,&
-          splotV_RI, splotV_RR,splotV_RC,&
-          d_splot3d,c_splot3d,d_splot3d_animate,c_splot3d_animate,splot3D__,&
-          data_saveV_I,data_saveV_R,data_saveV_C,&
-          data_saveM_I,data_saveM_R,data_saveM_C,&
-          data_saveA3_I,data_saveA3_R,data_saveA3_C
-  end interface plot
+          d_splot3d,c_splot3d,d_splot3d_animate,c_splot3d_animate
+  end interface splot3d
+
 
   interface store_data
      module procedure &
@@ -40,7 +38,8 @@ module SLPLOT
           data_saveA3_I,data_saveA3_R,data_saveA3_C
   end interface store_data
 
-  public :: plot,splot
+  public :: splot
+  public :: splot3d
   public :: store_data
 
 
@@ -52,10 +51,13 @@ contains
   ! 1-dim array
   include "slplot_splot_V.f90"
 
+  ! N=2,3-dim array
+  include "slplot_splot_M.f90"
+
   ! 3Dplot:
   include "slplot_splot_3d.f90"
 
-  ! STORE 1,2-dim arrays
+  ! STORE arrays
   include "slplot_data_save.f90"
 
 end module SLPLOT

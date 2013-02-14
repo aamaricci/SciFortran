@@ -1,7 +1,8 @@
 subroutine splotV_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
-  integer                             :: i,Np!,Ny1,Ny2,Nx
+  integer                             :: i,Np
   character(len=*)                    :: pname
-  integer,dimension(:)                :: X,Y1
+  integer,dimension(:)                :: X
+  integer,dimension(size(X))          :: Y1
   integer,dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
   logical,optional                    :: append
   logical                             :: check,rw
@@ -111,7 +112,7 @@ subroutine splotV_IC(pname,X,Y1,Y2,Y3,Y4,append)
   integer                                :: i,Np
   character(len=*)                       :: pname
   integer,dimension(:)                   :: X
-  complex(8),dimension(:)                :: Y1
+  complex(8),dimension(size(X))          :: Y1
   complex(8),dimension(size(X)),optional :: Y2,Y3,Y4
   logical,optional                       :: append
   logical                             :: check,rw
@@ -208,12 +209,12 @@ end subroutine splotV_RI
 !----------------------------
 
 subroutine splotV_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
-  integer                       :: i,Np
-  character(len=*)              :: pname
-  real(8),dimension(:)          :: X
-  real(8),dimension(:)          :: Y1
-  real(8),dimension(:),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
-  logical,optional              :: append
+  integer                             :: i,Np
+  character(len=*)                    :: pname
+  real(8),dimension(:)                :: X
+  real(8),dimension(size(X))          :: Y1
+  real(8),dimension(size(X)),optional :: Y2,Y3,Y4,Y5,Y6,Y7,Y8
+  logical,optional                    :: append
   logical                             :: check,rw
   rw=.false.;if(present(append))rw=append
   Np=size(X)
@@ -263,13 +264,13 @@ end subroutine splotV_RR
 !----------------------------
 
 subroutine splotV_RC(pname,X,Y1,Y2,Y3,Y4,append)
-  integer                          :: i,Np
-  character(len=*)                 :: pname
-  real(8),dimension(:)             :: X
-  complex(8),dimension(:)          :: Y1
-  complex(8),dimension(:),optional :: Y2,Y3,Y4
-  logical,optional                 :: append
-  logical                             :: check,rw
+  integer                                :: i,Np
+  character(len=*)                       :: pname
+  real(8),dimension(:)                   :: X
+  complex(8),dimension(size(X))          :: Y1
+  complex(8),dimension(size(X)),optional :: Y2,Y3,Y4
+  logical,optional                       :: append
+  logical                                :: check,rw
   rw=.false.;if(present(append))rw=append
   Np=size(X)
   if(rw)then
