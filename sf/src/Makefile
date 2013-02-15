@@ -3,7 +3,7 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: COMVARS PARSECMD TIMER TOOLS ZEROS FFTGF FUNCTIONS GREENFUNX INTEGRATE IOTOOLS SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE
+allmod: COMVARS PARSECMD TIMER IOTOOLS TOOLS ZEROS FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
@@ -246,10 +246,10 @@ mod_STATISTICS: STATISTICS
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
-TOOLS:
+TOOLS:  
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_TOOLS: TOOLS 
+mod_TOOLS: COMVARS PARSECMD TIMER IOTOOLS TOOLS 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
