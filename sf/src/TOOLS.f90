@@ -211,9 +211,9 @@ contains
   !###################################################################
   ! CONVERGENCE:
   !###################################################################
-  include "tools_convergence/check_scalar.f90"
-  include "tools_convergence/check_function1d.f90"
-  include "tools_convergence/check_function1d_local.f90"
+  include "tools_check_scalar.f90"
+  include "tools_check_function1d.f90"
+  include "tools_check_function1d_local.f90"
 
   !###################################################################
   ! SORTING 1D:

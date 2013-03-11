@@ -1,27 +1,39 @@
-function linspace(start,stop,num,endpoint,mesh) result(array)
+function linspace(start,stop,num,istart,iend,mesh) result(array)
   real(8)          :: start,stop,step,array(num)
   integer          :: num,i
-  logical,optional :: endpoint
-  logical          :: endpoint_
+  logical,optional :: istart,iend
+  logical          :: startpoint_,endpoint_
   real(8),optional :: mesh
   if(num<0)call error("linspace: N<0, abort.")
-  endpoint_=.true.;if(present(endpoint))endpoint_=endpoint
-  if(endpoint_)then
-     if(num==1)array(num)=start
+  startpoint_=.true.;if(present(istart))startpoint_=istart
+  endpoint_=.true.;if(present(iend))endpoint_=iend
+
+  if(startpoint_.AND.endpoint_)then
+     if(num<2)call error("linspace: N<2 with both start and end points")
      step = (stop-start)/real(num-1,8)
-  else
+     forall(i=1:num)array(i)=start + real(i-1,8)*step
+
+  elseif(startpoint_.AND.(.not.endpoint_))then
      step = (stop-start)/real(num,8)
-  end if
-  forall(i=1:num)array(i)=start + real(i-1,8)*step
+     forall(i=1:num)array(i)=start + real(i-1,8)*step
+
+  elseif(.not.startpoint_.AND.endpoint_)then
+     step = (stop-start)/real(num,8)
+     forall(i=1:num)array(i)=start + real(i,8)*step
+
+  else
+     step = (stop-start)/real(num+1,8)
+     forall(i=1:num)array(i)=start + real(i,8)*step
+  endif
   if(present(mesh))mesh=step
 end function linspace
 
 
-function logspace(start,stop,num,endpoint,base) result(array)
+function logspace(start,stop,num,base) result(array)
   real(8)          :: start,stop,array(num)
   integer          :: num,i
-  logical,optional :: endpoint
-  logical          :: endpoint_
+  ! logical,optional :: iend
+  ! logical          :: endpoint_
   real(8),optional :: base
   real(8)          :: base_
   real(8)          :: A,B
@@ -30,19 +42,19 @@ function logspace(start,stop,num,endpoint,base) result(array)
   A=start;if(start==0.d0)A=1.d-5
   B=stop;if(stop==0.d0)B=1.d-5
   A=log(A)/log(base) ; B=log(B)/log(base)
-  array = linspace(A,B,num=num,endpoint=endpoint)
+  array = linspace(A,B,num=num,iend=.true.)
   array = base**array
 end function logspace
 
 
 
-function arange(start,num,endpoint) result(array)
+function arange(start,num,iend) result(array)
   integer          :: start,array(num)
   integer          :: num,i
-  logical,optional :: endpoint
+  logical,optional :: iend
   logical          :: endpoint_
   if(num<0)call error("numspace: N<0, abort.")
-  endpoint_=.true.;if(present(endpoint))endpoint_=endpoint
+  endpoint_=.true.;if(present(iend))endpoint_=iend
   if(endpoint_)then
      forall(i=1:num)array(i)=start+i-1
   else
@@ -66,10 +78,10 @@ function upminterval(start,stop,midpoint,p,q,type,base,mesh) result(array)
   Nhalf=p*q
   if(type==0)then
      array(1:Nhalf+1)   = upmspace(start,midpoint,p,q,Nhalf+1,base=base_)
-     array(N:Nhalf+2:-1)= upmspace(stop,midpoint,p,q,Nhalf,base=base_,endpoint=.false.)
+     array(N:Nhalf+2:-1)= upmspace(stop,midpoint,p,q,Nhalf,base=base_,iend=.false.)
   else
      array(Nhalf+1:1:-1) = upmspace(midpoint,start,p,q,Nhalf+1,base=base_)
-     array(Nhalf+2:N)    = upmspace(midpoint,stop,p,q,Nhalf,base=base_,startpoint=.false.)
+     array(Nhalf+2:N)    = upmspace(midpoint,stop,p,q,Nhalf,base=base_,istart=.false.)
   endif
   if(present(mesh))then
      do i=1,N-1
@@ -81,13 +93,13 @@ end function upminterval
 
 
 
-function upmspace(start,stop,p,u,ndim,base,startpoint,endpoint,mesh) result(aout)
+function upmspace(start,stop,p,u,ndim,base,istart,iend,mesh) result(aout)
   integer          :: p,u,ndim,pindex,uindex,pa,pb
   real(8)          :: start,stop,step,array(p*u+1),aout(ndim)
   real(8),optional :: mesh(ndim)
   real(8)          :: ustart,ustop
   integer          :: i,j
-  logical,optional :: endpoint,startpoint
+  logical,optional :: iend,istart
   logical          :: endpoint_,startpoint_,check
   real(8),optional :: base
   real(8)          :: base_
@@ -96,8 +108,8 @@ function upmspace(start,stop,p,u,ndim,base,startpoint,endpoint,mesh) result(aout
   check=(ndim==(p*u)).OR.(ndim==(p*u+1))
   if(.not.check)call abort("upmspace: wrong Ndim, abort.")
   base_= 2.d0       ;if(present(base))base_=base
-  startpoint_=.true.;if(present(startpoint))startpoint_=startpoint
-  endpoint_=.true.  ;if(present(endpoint))endpoint_=endpoint
+  startpoint_=.true.;if(present(istart))startpoint_=istart
+  endpoint_=.true.  ;if(present(iend))endpoint_=iend
   check=startpoint_.AND.endpoint_
   pindex=1
   array(pindex) = start

@@ -153,20 +153,23 @@ subroutine eta(i,L,unit,file,step)
            write(unit_,*)""
            write(*,"(2x,A,I3)")"+ETA --> fort."//trim(adjustl(trim(string)))
         endif
-
         lentry=.false.
      endif
 
      if(i==L)lentry=.true.
 
      !avoid repetition of percentage (within the error)
-     percent=100*i/L ; if(percent==older)return
+     percent=100*i/L
+     if(percent==0)return
+     if(percent==older)return
+     if(percent<mod_print)return
      older=percent
 
      !set step for printing:
      esc=.true.
      iprint=percent/mod_print
-     if(percent<=mod_print .OR. iprint/=oldiprint)esc=.false.
+     !if(percent<=mod_print .OR. iprint/=oldiprint)esc=.false.
+     if(iprint/=oldiprint)esc=.false.
      if(esc)return
      oldiprint=iprint
 
