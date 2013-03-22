@@ -21,7 +21,6 @@ endif
 SFLIBS 	   = -lscifor ${MATHLIB}
 SFLIBS_DEB = -lscifor_deb ${MATHLIB}
 
-
 ifdef SFFFTW3
 SFLIBS      += -lfftw3
 SFLIBDS_DEB += -lfftw3

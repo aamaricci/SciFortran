@@ -31,9 +31,9 @@ else
     export LIBRARY_PATH=${SFDIR}/lib:$LIBRARY_PATH
 fi
 
+
 source $SFETC/library.conf
 source $SFBIN/bash_tools.sh
-
 
 #IF MKL is not available then set standard LAPACK/BLAS as default MATH library:
 #Lapack/Blas are compiled with the chosen compiler at the installation.
@@ -62,6 +62,11 @@ fi
 #     export PATH=$DISLIN/bin:$PATH
 #     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DISLIN
 #     export LIBRARY_PATH=$LIBRARY_PATH:$DISLIN
+# fi
+
+# if [ ! -z "${SFMINPACK}" ];then
+#     export LD_LIBRARY_PATH=${SFMINPACK}:$LD_LIBRARY_PATH
+#     export LIBRARY_PATH=${SFMINPACK}:$LIBRARY_PATH
 # fi
 
 # #ADD CUDA (C.Weber) if defined
