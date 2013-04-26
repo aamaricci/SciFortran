@@ -163,9 +163,10 @@ mod_GREENFUNX: GREENFUNX
 	@echo ' '
 
 INTEGRATE: 
-	$(FC) -c $(FFLAG) integrate_d_quadpack.f90 -I./mods/ -o objs/ntegrate_d_quadpack.o $(MOPT)./mods/
-	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
-	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+	$(FC) -c $(FFLAG) integrate_d_quadpack.f90 -I./mods/ -o objs/integrate_d_quadpack.o $(MOPT)./mods/
+	$(FC) -c $(FFLAG)  $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) integrate_d_quadpack.f90 -I./debug_mods/ -o debug_objs/integrate_d_quadpack.o $(MOPT)./debug_mods/
+	$(FC) -c $(DFLAG)  $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_INTEGRATE: INTEGRATE 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
