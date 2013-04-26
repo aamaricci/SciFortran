@@ -195,7 +195,7 @@
     !+------------------------------------------------------------------+
     !PURPOSE  : calculate the Heaviside  function
     !+------------------------------------------------------------------+
-    pure function heaviside(x)
+    elemental function heaviside(x)
       real(8),intent(in) :: x
       real(8)            :: heaviside
       if(x < 0.d0) then
