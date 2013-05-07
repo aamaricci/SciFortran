@@ -22,9 +22,6 @@ subroutine bethe_lattice(dos,ome,Lk,D)
      e=-D_ + dble(ie-1)*de
      dos(ie)=dens_bethe(e,D_)*de
      ome(ie)=e
-     ! zeta=cmplx(e,eps_)
-     ! gf=gfbether(e,zeta,D)
-     ! dos(ie)=-aimag(gf)/pi*de
      write(10,*)e,dos(ie)/de
   enddo
   close(10)
