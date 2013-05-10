@@ -39,11 +39,11 @@ function logspace(start,stop,num,base) result(array)
   real(8)          :: A,B
   base_= 10.d0;if(present(base))base_=base
   if(num<0)call error("logspace: N<0, abort.")
-  A=start;if(start==0.d0)A=1.d-5
-  B=stop;if(stop==0.d0)B=1.d-5
-  A=log(A)/log(base) ; B=log(B)/log(base)
+  A=start;if(start==0.d0)A=1.d-12
+  B=stop;if(stop==0.d0)B=1.d-12
+  A=log(A)/log(base_) ; B=log(B)/log(base_)
   array = linspace(A,B,num=num,iend=.true.)
-  array = base**array
+  array = base_**array
 end function logspace
 
 
