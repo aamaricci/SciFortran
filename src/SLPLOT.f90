@@ -18,10 +18,10 @@ module SLPLOT
           splotM_II,splotM_IR,splotM_IC,&
           splotM_RI,splotM_RR,splotM_RC,&
           splotA3_II,splotA3_IR,splotA3_IC,&
-          splotA3_RI,splotA3_RR,splotA3_RC,&
-          data_saveV_I,data_saveV_R,data_saveV_C,&
-          data_saveM_I,data_saveM_R,data_saveM_C,&
-          data_saveA3_I,data_saveA3_R,data_saveA3_C
+          splotA3_RI,splotA3_RR,splotA3_RC!,&
+          ! data_saveV_I,data_saveV_R,data_saveV_C,&
+          ! data_saveM_I,data_saveM_R,data_saveM_C,&
+          ! data_saveA3_I,data_saveA3_R,data_saveA3_C
   end interface splot
 
 
