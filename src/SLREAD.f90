@@ -19,13 +19,13 @@ module SLREAD
           sreadM_II,sreadM_IR,sreadM_IC,&
           sreadM_RI,sreadM_RR,sreadM_RC,&
           sreadA3_II,sreadA3_IR,sreadA3_IC,&
-          sreadA3_RI,sreadA3_RR,sreadA3_RC,&
-          data_readV_I,&
-          data_readV_R,&
-          data_readV_C,&
-          data_readM_I,&
-          data_readM_R,&
-          data_readM_C
+          sreadA3_RI,sreadA3_RR,sreadA3_RC!,&
+          ! data_readV_I,&
+          ! data_readV_R,&
+          ! data_readV_C,&
+          ! data_readM_I,&
+          ! data_readM_R,&
+          ! data_readM_C
   end interface sread
 
   interface read_data

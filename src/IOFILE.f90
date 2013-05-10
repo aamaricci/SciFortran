@@ -93,6 +93,9 @@ contains
     enddo
   end function free_unit
 
+
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -220,12 +223,8 @@ contains
     character(len=9)  :: csize 
     integer           :: cstatus,fsize
     call msg("storing "//file)
-    !Check file exists:
     inquire(file=reg(file),exist=control)
     if(control)then
-       !Check if store_size is environment variable:
-       !call get_environment_variable("STORE_SIZE",csize,STATUS=cstatus)
-       !if(cstatus/=1)read(csize,"(I9)")store_size
        fsize=store_size;if(present(size))fsize=size
        if(file_size(reg(file))>fsize)&
             call system("gzip -fv "//reg(file))
