@@ -108,7 +108,7 @@ subroutine data_readM_C(pname,Y1,X)
         if(present(X))then
            read(719,*)X(j),imY,reY!Y1(i,j)
         else
-           read(719,*),imY,reY!Y1(i,j)
+           read(719,*)imY,reY!Y1(i,j)
         endif
         Y1(i,j)=cmplx(reY,imY,8)
      enddo
