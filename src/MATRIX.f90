@@ -93,6 +93,7 @@ contains
     real(8),dimension(:),allocatable     :: work
     jobz_='N';if(present(jobz))jobz_=jobz
     uplo_='U';if(present(uplo))uplo_=uplo
+    !write(*,*)"matrix_diagonalization called with: jobz="//jobz_//" uplo="//uplo_
     lda = max(1,size(M,1))
     n   = size(M,2)
     Call dsyev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,info)
@@ -114,6 +115,7 @@ contains
     complex(8),dimension(1)                 :: lwork_guess
     complex(8),dimension(:),allocatable     :: work
     real(8),dimension(:),allocatable        :: rwork
+    !write(*,*)"matrix_diagonalization called with: jobz="//jobz_//" uplo="//uplo_
     jobz_='N';if(present(jobz))jobz_=jobz
     uplo_='U';if(present(uplo))uplo_=uplo
     lda = max(1,size(M,1))

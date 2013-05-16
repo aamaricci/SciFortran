@@ -3,7 +3,7 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: COMVARS PARSECMD TIMER IOTOOLS TOOLS ZEROS FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE
+allmod: COMVARS PARSECMD TIMER IOTOOLS TOOLS OPTIMIZE FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE SCIFOR
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
@@ -63,37 +63,21 @@ mod_PARSECMD: PARSECMD
 BROYDEN: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_BROYDEN: BROYDEN 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
-	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
-	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
-	ranlib libscifor.a
-	ranlib libscifor_deb.a
-	@mv -fv *.a $(SFLIB)/
-	@echo 'LIBRARY IS UPDATED.........'
-	@echo ' '
 
 
 BRENT: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_BRENT: BRENT 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
-	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
-	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
-	ranlib libscifor.a
-	ranlib libscifor_deb.a
-	@mv -fv *.a $(SFLIB)/
-	@echo 'LIBRARY IS UPDATED.........'
-	@echo ' '
 
-
-ZEROS: BROYDEN BRENT
+WRAP_MINPACK: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_ZEROS: ZEROS 
+
+
+OPTIMIZE: BROYDEN BRENT WRAP_MINPACK
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_OPTIMIZE: OPTIMIZE 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
@@ -305,6 +289,21 @@ LIST:
 	$(FC) -c $(DFLAG) LIST_D_UNORDERED.f90 -I./debug_mods/ -o debug_objs/LIST_D_UNORDERED.o $(MOPT)./debug_mods/	
 	$(FC) -c $(DFLAG) LIST_Z_UNORDERED.f90 -I./debug_mods/ -o debug_objs/LIST_Z_UNORDERED.o $(MOPT)./debug_mods/	
 mod_LIST: LIST 
+	@rsync -avP mods/*.mod $(SFINCLUDE)/
+	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+	ranlib libscifor.a
+	ranlib libscifor_deb.a
+	@mv -fv *.a $(SFLIB)/
+	@echo 'LIBRARY IS UPDATED.........'
+	@echo ' '
+
+
+SCIFOR: 
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_SCIFOR:  
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
