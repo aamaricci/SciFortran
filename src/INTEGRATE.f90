@@ -475,7 +475,6 @@ contains
     finter=cmplx(rey,imy,8)
   end function c_finter_func
 
-
   subroutine polint(xa,ya,x,y,dy)
     real(8), dimension(:), intent(in) :: xa,ya
     real(8), intent(in)          :: x

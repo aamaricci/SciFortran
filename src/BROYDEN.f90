@@ -1,5 +1,5 @@
   include "broydn_routines.f90"
-  MODULE BROYDEN    
+  MODULE BROYDEN 
     USE BROYDN_ROUTINES
     implicit none
     private 
@@ -11,12 +11,6 @@
     function fmin(x)
       real(8), dimension(:), intent(in) :: x
       real(8)                           :: fmin
-      interface
-         function funcv(x)
-           real(8), dimension(:), intent(in) :: x
-           real(8), dimension(size(x))       :: funcv
-         end function funcv
-      end interface
       if (.not. associated(fmin_fvecp)) then
          print*,'fmin: problem with pointer for returned values'
          stop
@@ -26,14 +20,16 @@
     end function fmin
 
 
-    subroutine broydn(x,check,maxits,tolf,tolmin,stpmx,noexit)
+    subroutine broydn(ff,x,check,maxits,tolf,tolmin,stpmx,noexit)
+      procedure(broydn_func)               :: ff
       real(8), dimension(:), intent(inout) :: x
       logical, optional                    :: noexit
-      logical, intent(out)                 :: check
+      logical, optional                    :: check
       integer, optional                    :: maxits
-      integer                              :: maxits_=200
       real(8), optional                    :: tolf,tolmin,stpmx
-      real(8)                              :: tolf_=1.0e-5,tolmin_=1.0e-7,stpmx_=100.0
+      logical                              :: check_
+      integer                              :: maxits_=200
+      real(8)                              :: tolf_=1.0e-10,tolmin_=1.0e-7,stpmx_=100.0
       real(8),parameter                    :: eps=epsilon(x),tolx=eps
       integer                              :: i,its,k,n
       real(8)                              :: f,fold,stpmax
@@ -51,12 +47,15 @@
       !
       if(present(STPMX))    STPMX_   = STPMX  
       !
+      if(associated(funcv))nullify(funcv)
+      funcv=>ff
       fmin_fvecp=>fvec
       !
       n=size(x)
       f=fmin(x)
       if (maxval(abs(fvec(:))) < 0.01d0*TOLF_) then
-         check=.false.
+         check_=.false.
+         if(present(check))check=check_
          RETURN
       end if
       stpmax=STPMX_*max(vabs(x(:)),real(n,8))
@@ -115,17 +114,18 @@
          fvcold(:)=fvec(:)
          fold=f
          call rsolv(r,d,p)
-         call lnsrch(xold,fold,g,p,x,f,stpmax,check,fmin)
+         call lnsrch(xold,fold,g,p,x,f,stpmax,check_,fmin)
          if (maxval(abs(fvec(:))) < TOLF_) then
-            check=.false.
+            check_=.false.
+            if(present(check))check=check_
             RETURN
          end if
-         if (check) then
+         if (check_) then
             if (restrt .or. maxval(abs(g(:))*max(abs(x(:)), &
                  1.0d0)/max(f,0.5d0*n)) < TOLMIN_) RETURN
             restrt=.true.
          else
-            restrt=.false.
+            restrt=.false.            
             if (maxval((abs(x(:)-xold(:)))/max(abs(x(:)), &
                  1.0d0)) < TOLX) RETURN
          end if
@@ -133,8 +133,10 @@
       print*,'MAXITS exceeded in broydn'
       if(noexit_)then
          noexit=.false.
+         if(present(check))check=check_
          return
       else
+         if(present(check))check=check_
          stop
       endif
     END SUBROUTINE broydn

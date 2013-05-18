@@ -18,12 +18,9 @@ contains
     real(8),intent(in) :: a,b
     real(8)            :: fzero
     real(8)            :: tol
-    !real(8),external   :: zbrent
     tol=epsilon(a)
     fzero = zbrent(func,a,b,tol)
   end function fzero
-
-
 
 
   function zbrent(func,x1,x2,tol)

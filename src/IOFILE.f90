@@ -31,6 +31,7 @@ module IOFILE
   public :: file_size
   public :: file_length
   public :: file_info
+  public :: free_unit
   public :: data_open
   public :: data_store
   public :: set_store_size
