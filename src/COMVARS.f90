@@ -3,10 +3,11 @@
 !PURPOSE  : Declare all the common variables usually in use within codes
 !########################################################################
 module COMMON_VARS
+  USE SCIFOR_VERSION
   implicit none
   private
 
-  include "scifor_version.inc"
+  !include "scifor_version.inc"
 
   !PARAMETERS
   !===============================================================
@@ -22,38 +23,10 @@ module COMMON_VARS
   real(8),parameter,public    :: euler= 2.7182818284590452353602874713526624977572470936999595749669676277240766303535d0
   integer,parameter,public    :: max_int  = huge(1) 
   real(8),parameter,public    :: max_real = huge(1.d0)
-  real(8),parameter,public    :: max_exp  =  700.d0
-  real(8),parameter,public    :: min_exp  = -700.d0
-  real(8),parameter,public    :: max_exp_quad = 11000.d0
-  real(8),parameter,public    :: min_exp_quad =-11000.d0
-  real(8),parameter,public    :: max_exp_r =  81.d0
-  real(8),parameter,public    :: min_exp_r = -81.d0
   real(8),parameter,public    :: epsilonr=epsilon(1.d0),epsilonq=1.d-30
   integer,parameter,public    :: dbl=8,dp=8        ! "double" precision
   integer,parameter,public    :: ddp=16            ! "quad"   precision
   integer,parameter,public    :: sp = kind(1.0)    ! "single" precision
-  real(dbl),parameter,public  :: tiny_   = 1.d-12
-  real(dbl),parameter,public  :: huge_   = 1.d+12
-  real(dbl),parameter,public  :: quarter = 0.25_dbl
-  real(dbl),parameter,public  :: third   = 0.3333333333333_dbl
-  real(dbl),parameter,public  :: half    = 0.5_dbl
-  logical,parameter,public    :: tt=.true., ff=.false.
-
-
-  ! !gloabl  variables !THESE SHOULD BE REMOVED
-  ! !=========================================================
-  ! integer,public  :: iloop,nloop    !dmft loop variables
-  ! real(8),public  :: d              !bandwidth
-  ! real(8),public  :: ts,tsp,tpp,tdd !n.n./n.n.n. hopping amplitude
-  ! real(8),public  :: u,v            !local,non-local interaction
-  ! real(8),public  :: tpd,vpd        !hybridization,band-band coupling
-  ! real(8),public  :: ed0,ep0        !orbital energies
-  ! real(8),public  :: xmu            !chemical potential
-  ! real(8),public  :: dt,dtau        !time step
-  ! real(8),public  :: fmesh          !freq. step
-  ! real(8),public  :: beta           !inverse temperature
-  ! real(8),public  :: temp           !temperature
-  ! real(8),public  :: eps            !broadening
 
 
   !mpi vars:
@@ -79,19 +52,15 @@ module COMMON_VARS
        'May      ', 'June     ', 'July     ', 'August   ', &
        'September', 'October  ', 'November ', 'December ' /)
 
+
   interface txtfy
      module procedure i_to_ch,r_to_ch,c_to_ch
   end interface txtfy
 
-  interface abort
-     module procedure error
-  end interface abort
-
   !===============================================
 
-  public :: version
   public :: timestamp
-  public :: abort,error,warning
+  public :: error,warning
   public :: msg
   public :: txtfy
   public :: bold
@@ -105,28 +74,6 @@ module COMMON_VARS
 
 contains
 
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : print actual version of the software (if any)
-  !+-------------------------------------------------------------------+
-  subroutine version(revision)
-    character(len=*) :: revision
-    if(mpiID==0)then
-       write(*,"(A)")bg_green("SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version))))
-       write(*,"(A)")bg_green("CODE VERSION (GIT): "//trim(adjustl(trim(revision))))
-       call timestamp
-       open(10,file="version.inc")
-       write(10,"(A)")"SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version)))
-       write(10,"(A)")"CODE VERSION (GIT): "//trim(adjustl(trim(revision)))
-       call timestamp(unit=10)
-       close(10)
-    endif
-  end subroutine version
-
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
 
 
   !+-------------------------------------------------------------------+
@@ -187,7 +134,7 @@ contains
 
 
   !+-------------------------------------------------------------------+
-  !PURPOSE  : send abort message to std.out and exit 
+  !PURPOSE  : send error message to std.out and exit 
   !+-------------------------------------------------------------------+
   subroutine error(text,id)
     character(len=*) :: text

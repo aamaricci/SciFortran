@@ -211,6 +211,16 @@ contains
     end do
   end subroutine upper_case
 
+  subroutine lower_case(s)
+    integer   ( kind = 4 ) i
+    character ( len = * )  s
+    integer   ( kind = 4 ) s_length
+    s_length = len_trim ( s )
+    do i = 1, s_length
+       call ch_low ( s(i:i) )
+    end do
+  end subroutine lower_case
+
   subroutine ch_cap(ch)
     character              ch
     integer   ( kind = 4 ) itemp
@@ -219,6 +229,15 @@ contains
        ch = achar ( itemp - 32 )
     end if
   end subroutine ch_cap
+
+  subroutine ch_low ( ch )
+    character ch
+    integer ( kind = 4 ) i
+    i = iachar ( ch )
+    if ( 65 <= i .and. i <= 90 ) then
+       ch = achar ( i + 32 )
+    end if
+  end subroutine ch_low
 
 
 end module PARSE_CMD

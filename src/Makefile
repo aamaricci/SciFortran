@@ -3,7 +3,7 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: COMVARS PARSECMD TIMER IOTOOLS TOOLS OPTIMIZE FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE SCIFOR
+allmod: SCIFOR_VERSION COMVARS CONSTANTS PARSECMD TIMER IOTOOLS TOOLS OPTIMIZE FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE SCIFOR
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
@@ -22,6 +22,7 @@ libscifor_deb.a:
 	@echo ' '
 
 version:
+	@echo "Actual version is: $(REV)"
 	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > scifor_version.inc
 
 
@@ -43,6 +44,38 @@ mod_COMVARS: COMVARS
 	@mv -fv *.a $(SFLIB)/
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
+
+
+CONSTANTS: 
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_CONSTANTS: CONSTANTS
+	@rsync -avP mods/*.mod $(SFINCLUDE)/
+	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+	ranlib libscifor.a
+	ranlib libscifor_deb.a
+	@mv -fv *.a $(SFLIB)/
+	@echo 'LIBRARY IS UPDATED.........'
+	@echo ' '
+
+
+SCIFOR_VERSION: version
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_SCIFOR_VERSION: SCIFOR_VERSION
+	@rsync -avP mods/*.mod $(SFINCLUDE)/
+	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+	ranlib libscifor.a
+	ranlib libscifor_deb.a
+	@mv -fv *.a $(SFLIB)/
+	@echo 'LIBRARY IS UPDATED.........'
+	@echo ' '
+
+
 
 #STD
 PARSECMD: 
