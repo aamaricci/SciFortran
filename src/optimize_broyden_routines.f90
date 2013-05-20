@@ -8,7 +8,7 @@ MODULE BROYDEN_FUNC_INTERFACE
 END MODULE BROYDEN_FUNC_INTERFACE
 
 
-MODULE BROYDN_ROUTINES
+MODULE BROYDEN_ROUTINES
   USE BROYDEN_FUNC_INTERFACE
   implicit none
   integer, parameter             :: npar_arth=16,npar2_arth=8
@@ -367,7 +367,7 @@ contains
     ifirstloc=loc(1)
     if (.not. mask(ifirstloc)) ifirstloc=size(mask)+1
   end function ifirstloc
-END MODULE BROYDN_ROUTINES
+END MODULE BROYDEN_ROUTINES
 
 
 
