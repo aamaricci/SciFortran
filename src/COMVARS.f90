@@ -155,21 +155,21 @@ contains
     stop
   end subroutine error
 
-  subroutine warning(text,id)
+  subroutine warning(text,unit,id)
     character(len=*) :: text
     character(len=4) :: char_id
-    integer,optional :: id
-    integer          :: id_
-    id_=0;if(present(id))id_=id
-    if(id_ > mpiSIZE)id_=0
+    integer,optional :: id,unit
+    integer          :: id_,unit_
+    id_=0;if(present(id))id_=id;if(id_ > mpiSIZE)id_=0
+    unit_=6;if(present(unit))unit_=unit
     if(mpiID==id_)then
        if(mpiID==0)then
-          write(*,'(A)',advance="no")bold_yellow("warning:")
+          write(unit_,'(A)',advance="no")bold_yellow("warning:")
        else
           write(char_id,"(I4)")id_
-          write(*,'(A)',advance="no")bold_yellow("warning from cpu"//char_id//":")
+          write(unit_,'(A)',advance="no")bold_yellow("warning from cpu"//char_id//":")
        endif
-       write(*,'(A)')bg_yellow(text)
+       write(unit_,'(A)')bg_yellow(text)
     endif
   end subroutine warning
 
@@ -179,24 +179,19 @@ contains
   !******************************************************************
 
 
-  subroutine msg(message,lines,id)
+  subroutine msg(message,unit,id)
     character(len=*) :: message
-    integer,optional :: lines,id
-    integer          :: i,id_
-    id_=0;if(present(id))id_=id
-    if(id_ > mpiSIZE)id_=0
+    integer,optional :: unit,id
+    integer          :: unit_,i,id_
+    id_=0;if(present(id))id_=id;if(id_ > mpiSIZE)id_=0
+    unit_=6;if(present(unit))unit_=unit
     if(mpiID==id_)then
        if(mpiID==0)then
-          write(*,'(A)',advance="no")"msg:"
+          write(unit_,'(A)',advance="no")"msg:"
        else
-          write(*,'(A,I3,A)',advance="no")"msg from cpu",id_,": "
+          write(unit_,'(A,I3,A)',advance="no")"msg from cpu",id_,": "
        endif
        write(*,'(A)') message
-       if(present(lines))then
-          do i=1,lines
-             write(*,'(A)')""
-          enddo
-       endif
     endif
   end subroutine msg
 
