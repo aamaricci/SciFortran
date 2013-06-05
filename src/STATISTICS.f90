@@ -3,18 +3,19 @@ MODULE STATISTICS
   private
 
   type,public :: histogram
-     integer                      :: n
-     real(8),dimension(:),pointer :: range
+     integer                       :: n=0
+     real(8),dimension(:),pointer  :: range
      real(8),dimension(:),pointer  :: bin
   end type histogram
 
   public :: histogram_allocate
+  public :: histogram_deallocate
   public :: histogram_set_range_uniform
   public :: histogram_accumulate
   public :: histogram_get_range
   public :: histogram_get_value
   public :: histogram_print
-
+  public :: histogram_reset
 
   public :: get_moments
   public :: get_mean,get_sd,get_var,get_skew,get_curt
@@ -117,7 +118,6 @@ contains
   end function get_covariance
 
 
-
   function histogram_allocate(n) result(h)
     integer,intent(in) :: n
     type(histogram)    :: h
@@ -129,6 +129,21 @@ contains
     allocate(h%bin(n))    ;h%bin=0.d0
     h%n=n
   end function histogram_allocate
+
+
+  subroutine histogram_deallocate(h)
+    type(histogram)    :: h
+    deallocate(h%range)
+    deallocate(h%bin)
+    h%n=0
+  end subroutine  histogram_deallocate
+
+
+  subroutine histogram_reset(h)
+    type(histogram)    :: h
+    h%range=0.d0
+    h%bin=0.d0
+  end subroutine histogram_reset
 
 
   subroutine histogram_set_range_uniform(h,xmin,xmax)

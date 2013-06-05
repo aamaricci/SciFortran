@@ -30,12 +30,7 @@ module TOOLS
   !DERIVATIVE:
   public :: deriv
 
-  !BETHE:
-  public :: gfbethe
-  public :: gfbether
-  public :: bethe_lattice
-  public :: dens_bethe
-  public :: dens_hyperc
+ 
 
   !SORT 2D:
   public :: find2Dmesh
@@ -185,27 +180,6 @@ contains
     df(L)= (f(L)-f(L-1))/dh
   end function deriv
 
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : calculate the non-interacting dos for HYPERCUBIC lattice 
-  !+-------------------------------------------------------------------+
-  pure function dens_hyperc(x,t1)
-    real(8),optional,intent(in) :: t1
-    real(8),intent(in)          :: x
-    REAL(8):: dens_hyperc,t1_,pi2,sqrt2
-    pi2=2.d0*acos(-1.d0)
-    sqrt2=sqrt(2.d0)
-    t1_=sqrt2 ; if(present(t1))t1_=t1
-    dens_hyperc = (1/(t1_*sqrt(pi2)))*exp(-(x**2)/(2.d0*t1_**2))
-    return
-  end function dens_hyperc
-
-
-  !###################################################################
-  ! BETHE:
-  !###################################################################
-  include "tools_bethe.f90"
 
 
   !###################################################################

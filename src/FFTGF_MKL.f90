@@ -5,7 +5,7 @@
     use MKL_DFT_TYPE
     use MKL_TRIG_TRANSFORMS
     use TOOLS, only:linspace
-    use SPLINE
+    use INTERPOLATE
     implicit none 
     private
     public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw,cfft_1d_ex
