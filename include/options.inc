@@ -1,7 +1,7 @@
 ifeq ($(FC),ifort)
 OPT =  -O3 -ftz -assume nobuffered_io -openmp 
 STD =  -O2 -assume nobuffered_io
-DEB =  -p -O0 -g -debug -fpe0 -traceback -check all
+DEB =  -p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created
 FFLAG += $(STD) -static-intel
 DFLAG += $(DEB) -static-intel
 MOPT=-module 

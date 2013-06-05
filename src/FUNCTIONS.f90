@@ -188,6 +188,14 @@
     public :: wfun         !complex error function (Faddeeva function)
     public :: zerf   
 
+    !BETHE:
+    public :: gfbethe
+    public :: gfbether
+    public :: bethe_lattice
+    public :: dens_bethe
+
+    !HYPERCUBIC/GAUSSIAN DENS:
+    public :: dens_hyperc
 
   contains
 
@@ -300,5 +308,28 @@
 
     !Double precision complex argument Error function
     include "functions_zerf.f90"
+
+
+    !###################################################################
+    ! BETHE:
+    !###################################################################
+    include "functions_bethe.f90"
+
+
+
+    !+-------------------------------------------------------------------+
+    !PURPOSE  : calculate the non-interacting dos for HYPERCUBIC lattice 
+    !+-------------------------------------------------------------------+
+    pure function dens_hyperc(x,t1)
+      real(8),optional,intent(in) :: t1
+      real(8),intent(in)          :: x
+      REAL(8):: dens_hyperc,t1_,pi2,sqrt2
+      pi2=2.d0*acos(-1.d0)
+      sqrt2=sqrt(2.d0)
+      t1_=sqrt2 ; if(present(t1))t1_=t1
+      dens_hyperc = (1/(t1_*sqrt(pi2)))*exp(-(x**2)/(2.d0*t1_**2))
+      return
+    end function dens_hyperc
+
 
   END module FUNCTIONS
