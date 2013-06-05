@@ -1,17 +1,13 @@
-  include "spline_nr_mod.f90"
-  include "spline_finter_mod.f90"
-  include "spline_interp.f90"
-  include "spline_cubspl_routines.f90"
   !###############################################################
-  !     PROGRAM  : SPLINE
-  !     TYPE     : Module
-  !     PURPOSE  : provide an interface to interpolation routines
+  ! PURPOSE  : provide an interface to interpolation routines
   ! Now I don't have time to add more stuff, that can be  found 
   ! in splinF directory as copied from internet.
   !###############################################################
-  module SPLINE
-    USE SPLINE_NR_MOD
-    USE SPLINE_FINTER_MOD
+  include "interpolate_finter_mod.f90"
+  include "interpolate_pack.f90"
+  include "interpolate_cubspl_routines.f90"
+  module INTERPOLATE
+    USE INTERPOLATE_FINTER_MOD
     implicit none
     private
 
@@ -353,4 +349,4 @@
     ! end subroutine Splint
 
 
-  end module SPLINE
+  end module INTERPOLATE
