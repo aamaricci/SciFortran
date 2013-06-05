@@ -1,12 +1,33 @@
-module SPLINE_NR_MOD
+module INTERPOLATE_FINTER_MOD
   implicit none
+  private
+  real(8), allocatable,public :: finterX(:)  !vector with frequencies
+  real(8), allocatable,public :: finterF(:) !corresponding vector of functional values
+  integer,public              :: finterImin,finterImax,finterN
 
-  INTERFACE assert_eq
-     MODULE PROCEDURE assert_eq2,assert_eq3,assert_eq4,assert_eqn
-  END INTERFACE assert_eq
-
+  public :: finter
 
 contains
+
+  function finter(x)
+    real(8) :: finter
+    real(8) :: x,y,dy
+    integer :: itmp,k
+    integer :: n
+    n=finterN    !order of polynomial interpolation
+    finter=0.d0
+    itmp=locate(finterX(FinterImin:finterImax),x)
+    k=max(itmp-(N-1)/2,1)
+    if (k < finterImin)k=finterImin
+    if(k+n+1 <= finterImax)then
+       call polint(finterX(k:k+n+1),finterF(k:k+n+1),x,y,dy)
+    else
+       call polint(finterX(k:finterImax),finterF(k:finterImax),x,y,dy)
+    endif
+    finter=y
+    return
+  end function finter
+
 
   function locate(xx,x)
     REAL(8), DIMENSION(:), INTENT(IN) :: xx
@@ -158,64 +179,25 @@ contains
   ! END SUBROUTINE polint
   ! !-------------------------------------------------------!
 
-  FUNCTION iminloc(arr)
-    REAL(8), DIMENSION(:), INTENT(IN) :: arr
-    INTEGER, DIMENSION(1) :: imin
-    INTEGER :: iminloc
+  function iminloc(arr)
+    real(8), dimension(:), intent(in) :: arr
+    integer, dimension(1) :: imin
+    integer :: iminloc
     imin=minloc(arr(:))
     iminloc=imin(1)
-  END FUNCTION iminloc
+  end function iminloc
 
-  FUNCTION assert_eq2(n1,n2,string)
-    CHARACTER(LEN=*), INTENT(IN) :: string
-    INTEGER, INTENT(IN) :: n1,n2
-    INTEGER :: assert_eq2
+  function assert_eq(n1,n2,string)
+    character(len=*), intent(in) :: string
+    integer, intent(in) :: n1,n2
+    integer :: assert_eq
     if (n1 == n2) then
-       assert_eq2=n1
+       assert_eq=n1
     else
        write (*,*) 'nrerror: an assert_eq failed with this tag:', &
             string
-       STOP 'program terminated by assert_eq2'
+       stop 'program terminated by assert_eq'
     end if
-  END FUNCTION assert_eq2
+  end function assert_eq
 
-  FUNCTION assert_eq3(n1,n2,n3,string)
-    CHARACTER(LEN=*), INTENT(IN) :: string
-    INTEGER, INTENT(IN) :: n1,n2,n3
-    INTEGER :: assert_eq3
-    if (n1 == n2 .and. n2 == n3) then
-       assert_eq3=n1
-    else
-       write (*,*) 'nrerror: an assert_eq failed with this tag:', &
-            string
-       STOP 'program terminated by assert_eq3'
-    end if
-  END FUNCTION assert_eq3
-
-  FUNCTION assert_eq4(n1,n2,n3,n4,string)
-    CHARACTER(LEN=*), INTENT(IN) :: string
-    INTEGER, INTENT(IN) :: n1,n2,n3,n4
-    INTEGER :: assert_eq4
-    if (n1 == n2 .and. n2 == n3 .and. n3 == n4) then
-       assert_eq4=n1
-    else
-       write (*,*) 'nrerror: an assert_eq failed with this tag:', &
-            string
-       STOP 'program terminated by assert_eq4'
-    end if
-  END FUNCTION assert_eq4
-
-  FUNCTION assert_eqn(nn,string)
-    CHARACTER(LEN=*), INTENT(IN) :: string
-    INTEGER, DIMENSION(:), INTENT(IN) :: nn
-    INTEGER :: assert_eqn
-    if (all(nn(2:) == nn(1))) then
-       assert_eqn=nn(1)
-    else
-       write (*,*) 'nrerror: an assert_eq failed with this tag:', &
-            string
-       STOP 'program terminated by assert_eqn'
-    end if
-  END FUNCTION assert_eqn
-
-end module SPLINE_NR_MOD
+END MODULE INTERPOLATE_FINTER_MOD

@@ -3,7 +3,7 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: SCIFOR_VERSION COMVARS CONSTANTS PARSECMD TIMER IOTOOLS TOOLS OPTIMIZE FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX SPLINE RANDOM STATISTICS PADE SCIFOR
+allmod: SCIFOR_VERSION COMVARS CONSTANTS PARSECMD TIMER IOTOOLS TOOLS OPTIMIZE FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS PADE SCIFOR
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
@@ -135,7 +135,7 @@ mod_TIMER: TIMER
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
-FFTGF:  COMVARS SPLINE
+FFTGF:  COMVARS INTERPOLATE
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_FFTGF: FFTGF 
@@ -222,10 +222,10 @@ mod_MATRIX: MATRIX
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
-SPLINE: 
+INTERPOLATE: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_SPLINE: SPLINE 
+mod_INTERPOLATE: INTERPOLATE 
 	@rsync -avP mods/*.mod $(SFINCLUDE)/
 	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
