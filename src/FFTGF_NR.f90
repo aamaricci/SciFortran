@@ -152,9 +152,9 @@ contains
     !
     allocate(tmpGw(2*L),tmpGt(-L:L))
     !
-    wmax = pi/beta*real(2*L-1,8)
-    mues =-real(gw(L),8)*wmax**2
-    tmpGw= (0.d0,0.d0)
+    wmax = pi/beta*real(2*N-1,8)
+    mues =-dreal(gw(N))*wmax**2
+    tmpGw=(0.d0,0.d0)
     !
     select case(notail_)
     case default

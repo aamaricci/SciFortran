@@ -7,6 +7,7 @@ module TOOLS
   USE COMMON_VARS
   USE TIMER
   USE IOTOOLS
+  USE FFTGF
   implicit none
   private
 
