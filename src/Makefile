@@ -3,10 +3,10 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: SCIFOR_VERSION COMVARS CONSTANTS PARSECMD TIMER IOTOOLS TOOLS OPTIMIZE FFTGF FUNCTIONS GREENFUNX INTEGRATE  SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS PADE SCIFOR
+allmod: SCIFOR_VERSION COMVARS CONSTANTS PARSECMD TIMER IOTOOLS TOOLS FFTGF OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS PADE SCIFOR
 
 libscifor.a: 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
+	@rsync -avP mods/*.mod $(SFMODS)/
 	ar cvq $@ `ls objs/*.o | sort | uniq`  
 	ranlib $@
 	@mv -fv *.a $(SFLIB)/
@@ -14,7 +14,7 @@ libscifor.a:
 	@echo ' '
 
 libscifor_deb.a: 
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq $@ `ls debug_objs/*.o | sort | uniq`  
 	ranlib $@
 	@mv -fv *.a $(SFLIB)/
@@ -27,7 +27,7 @@ version:
 
 
 clean: 
-	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFINCLUDE)/*.mod $(SFINCLUDE)/debug/*.mod $(SFLIB)/*scifor*.a
+	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFMODS)/*.mod $(SFMODS)/debug/*.mod $(SFLIB)/*scifor*.a
 
 
 #STD
@@ -35,8 +35,8 @@ COMVARS:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_COMVARS: COMVARS
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -50,8 +50,8 @@ CONSTANTS:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_CONSTANTS: CONSTANTS
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -65,8 +65,8 @@ SCIFOR_VERSION: version
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_SCIFOR_VERSION: SCIFOR_VERSION
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -82,8 +82,8 @@ PARSECMD:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_PARSECMD: PARSECMD
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -94,9 +94,6 @@ mod_PARSECMD: PARSECMD
 
 
 
-MINPACK:
-	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
-	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 OPTIMIZE_ROOT_FINDING: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
@@ -105,13 +102,13 @@ OPTIMIZE_MINIMIZE:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 
-OPTIMIZE: MINPACK OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE 
+OPTIMIZE: OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 
 mod_OPTIMIZE: OPTIMIZE
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -125,8 +122,8 @@ TIMER:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_TIMER: TIMER 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -139,8 +136,8 @@ FFTGF:  COMVARS INTERPOLATE
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_FFTGF: FFTGF 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -153,8 +150,8 @@ FUNCTIONS:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_FUNCTIONS: FUNCTIONS 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -168,8 +165,8 @@ GREENFUNX:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_GREENFUNX: GREENFUNX 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -184,8 +181,8 @@ INTEGRATE:
 	$(FC) -c $(DFLAG) integrate_d_quadpack.f90 -I./debug_mods/ -o debug_objs/integrate_d_quadpack.o $(MOPT)./debug_mods/
 	$(FC) -c $(DFLAG)  $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_INTEGRATE: INTEGRATE 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -198,8 +195,8 @@ SQUARE_LATTICE:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_SQUARE_LATTICE: SQUARE_LATTICE 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -212,8 +209,8 @@ MATRIX:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_MATRIX: MATRIX 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -226,8 +223,8 @@ INTERPOLATE:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_INTERPOLATE: INTERPOLATE 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -240,8 +237,8 @@ RANDOM:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_RANDOM: RANDOM 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -254,8 +251,8 @@ STATISTICS:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_STATISTICS: STATISTICS 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -268,8 +265,8 @@ TOOLS:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_TOOLS: COMVARS PARSECMD TIMER IOTOOLS TOOLS 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -282,8 +279,8 @@ PADE:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_PADE: PADE 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -302,8 +299,8 @@ IOTOOLS:
 	$(FC) -c $(DFLAG) SLREAD.f90 -I./debug_mods/ -o debug_objs/SLREAD.o $(MOPT)./debug_mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_IOTOOLS: COMVARS IOTOOLS 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -321,8 +318,8 @@ LIST:
 	$(FC) -c $(DFLAG) LIST_D_UNORDERED.f90 -I./debug_mods/ -o debug_objs/LIST_D_UNORDERED.o $(MOPT)./debug_mods/	
 	$(FC) -c $(DFLAG) LIST_Z_UNORDERED.f90 -I./debug_mods/ -o debug_objs/LIST_Z_UNORDERED.o $(MOPT)./debug_mods/	
 mod_LIST: LIST 
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
@@ -336,8 +333,8 @@ SCIFOR:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_SCIFOR:  
-	@rsync -avP mods/*.mod $(SFINCLUDE)/
-	@rsync -avP debug_mods/*.mod $(SFINCLUDE)/debug/
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
 	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
 	ranlib libscifor.a
