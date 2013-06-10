@@ -1,5 +1,4 @@
   include "optimize_cgfit_routines.f90"
-
   MODULE MINIMIZE
     USE CGFIT_FUNC_INTERFACE
     USE CGFIT_ROUTINES
