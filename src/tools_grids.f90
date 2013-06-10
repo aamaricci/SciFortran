@@ -104,9 +104,9 @@ function upmspace(start,stop,p,u,ndim,base,istart,iend,mesh) result(aout)
   real(8),optional :: base
   real(8)          :: base_
   ! real(8),optional :: mesh(p*u+1)
-  if(ndim<0)call abort("upmspace: N<0, abort.")
+  if(ndim<0)call error("upmspace: N<0, abort.")
   check=(ndim==(p*u)).OR.(ndim==(p*u+1))
-  if(.not.check)call abort("upmspace: wrong Ndim, abort.")
+  if(.not.check)call error("upmspace: wrong Ndim, abort.")
   base_= 2.d0       ;if(present(base))base_=base
   startpoint_=.true.;if(present(istart))startpoint_=istart
   endpoint_=.true.  ;if(present(iend))endpoint_=iend
@@ -149,7 +149,7 @@ function powspace(start,stop,num,base) result(array)
   integer          :: num,i
   real(8),optional :: base
   real(8)          :: base_
-  if(num<0)call abort("linspace: N<0, abort.")
+  if(num<0)call error("linspace: N<0, abort.")
   base_= 2.d0;if(present(base))base_=base
   array(1) = start
   forall(i=2:num)array(i)=start + (stop-start)*base_**(-num+i)

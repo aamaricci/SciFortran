@@ -1,7 +1,7 @@
 MODULE FFTGF_FFTPACK
   implicit none
   private
-  public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw
+  public :: cfft_1d_forward,cfft_1d_backward,cfft_1d_shift,swap_fftrt2rw,cfft_1d_ex
   public :: fftgf_rw2rt  , fftgf_rt2rw
   public :: fftgf_iw2tau , fftgf_tau2iw
 
@@ -52,7 +52,16 @@ contains
     enddo
   end subroutine swap_fftrt2rw
 
-
+  subroutine cfft_1d_ex(func)
+    complex(8),dimension(:) :: func
+    real(8) :: ex
+    integer :: i
+    ex=-1.d0
+    do i=1,size(func)
+       ex=-ex
+       func(i)=ex*func(i)
+    enddo
+  end subroutine cfft_1d_ex
   !*******************************************************************
   !*******************************************************************
   !*******************************************************************

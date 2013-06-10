@@ -173,9 +173,9 @@
          do i=1,L
             w=pi/beta*dble(2*i-1)
             tail=-(mues+w*(0.d0,1.d0))/(mues**2+w**2)
-            tmpGw(2*i)= gw(i)-tail
-            if(i<n)tmpGw(2*i)= gw(i)-tail
-            if(i>=n)tmpGw(2*i)= tail
+            ! tmpGw(2*i)= gw(i)-tail
+            if(i<=n)tmpGw(2*i)= gw(i)-tail
+            if(i>n)tmpGw(2*i)= tail
          enddo
          call cfft_1d_forward(tmpGw)
          tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
