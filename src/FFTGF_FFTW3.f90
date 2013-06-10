@@ -81,12 +81,10 @@ contains
     complex(8),dimension(2*M),intent(in)   :: func_in
     complex(8),dimension(-M:M),intent(out) :: func_out
     complex(8),dimension(2*M)              :: dummy_in
-    !complex(8),dimension(-M:M)             :: dummy_out
     dummy_in = func_in
     call cfft_1d_forward(dummy_in)
     func_out = cfft_1d_shift(dummy_in,M)
     func_out(M)=func_out(M-1)
-    !forall(i=-M:M)func_out(i)=dummy_out(-i)
   end subroutine fftgf_rw2rt
 
 
@@ -188,6 +186,7 @@ contains
           gt(i)=tmpGt(i)+At
        enddo
        gt(L)=-(gt(0)+1.d0)
+
     case(.true.)
        if(L>n)then
           print*,"error in fftgf_iw2tau: call w/ notail and L>n"
@@ -196,8 +195,6 @@ contains
        forall(i=1:L)tmpGw(2*i)  = gw(i)
        call cfft_1d_forward(tmpGw)
        tmpGt = real(cfft_1d_shift(tmpGw,L),8)*2.d0/beta
-       ! call fftgf_rw2rt(tmpGw,tmpGt,L)
-       ! tmpGt=2.d0*tmpGt/beta
        gt(0:L-1) = real(tmpGt(0:L-1),8)
        gt(L)=-gt(0)
     end select
@@ -208,8 +205,6 @@ contains
     complex(8),dimension(:)             :: gw
     real(8),dimension(size(gw))         :: wm
     complex(8),dimension(0:)            :: gt
-    ! real(8),dimension(:),allocatable    :: tmpGr,tmpGi
-    ! complex(8),dimension(:),allocatable :: tmpGt,tmpGw,tmpGw1,tmpGw2
     real(8)                             :: wmax,beta,mues,tau,dtau,At,w
     n=size(gw) ; L=size(gt)-1
     if(L/=N)then
@@ -217,18 +212,6 @@ contains
        stop
     endif
     dtau=beta/real(L,8) 
-    ! M=2*L
-    ! allocate(tmpGw1(2*L),tmpGw2(2*2*L),tmpGt(-L:L))
-    ! !Get full domain of the anomalous F(iw) by symmetry F(iw)=F(-iw) <= time-reversal
-    ! tmpGw2=(0.d0,0.d0)
-    ! tmpGw1(1:L)=gw(1:L)
-    ! forall(i=1:L)tmpGw1(2*L-i+1)=gw(i)
-    ! forall(i=1:M)tmpGw2(2*i)=tmpGw1(i)
-    ! call cfft_1d_forward(tmpGw2)
-    ! tmpGt = cfft_1d_shift(tmpGw2,2*L)/beta
-    ! do i=-L,L
-    !    write(200,*)real(i,8)*dtau,real(tmpGt(i)),aimag(tmpGt(i))
-    ! enddo
     gt = (0.d0,0.d0)
     forall(i=1:n)wm(i)=pi/beta*real(2*i-1,8)
     forall(i=0:L)gt(i)=sum(cos(real(i,8)*dtau*wm(:))*gw(:))
@@ -288,38 +271,6 @@ contains
   contains
     include "splinefft.f90" !This is taken from SPLINE to make this module independent    
   end subroutine fftff_tau2iw
-
-  ! subroutine fftgf_tau2iw(gt,gw,beta,notail)
-  !   implicit none
-  !   integer                :: i,L,n,M
-  !   logical,optional       :: notail
-  !   logical                :: notail_
-  !   real(8)                :: gt(0:)
-  !   complex(8)             :: gw(:),one=(1.d0,0.d0)
-  !   real(8)                :: beta
-  !   complex(8),allocatable :: xgw(:),Igw(:)
-  !   real(8),allocatable    :: xgt(:),Igt(:)
-  !   notail_=.false. ; if(present(notail))notail_=notail
-  !   L=size(gt)-1    ; n=size(gw)
-  !   select case(notail_)
-  !   case default
-  !      allocate(xgt(-L:L)) ; xgt(0:L)=gt(0:L) ; forall(i=1:L)xgt(-i)=-xgt(L-i)
-  !      !Fit to get rid of the 2*i problem
-  !      M=4*L                        !long enough to get back gw(1:n)
-  !      allocate(Igt(-M:M),Igw(2*M)) !allocate the long arrays 
-  !      call interp(xgt,Igt,L,M)     !w/ interpolation to treat long tails
-  !      call fftgf_rt2rw(one*Igt,Igw,M)
-  !      Igw=Igw*beta/dble(M)/2.d0
-  !      forall(i=1:n)gw(i)=Igw(2*i)
-  !      deallocate(xgt,Igt,Igw)
-  !   case(.true.)
-  !      call fft_tau2iw(gt(0:L),gw(1:L),beta,L)
-  !   end select
-  ! contains
-  !   !This is taken from SPLINE to make this module independent    
-  !   include "splinefft.f90"
-  ! end subroutine fftgf_tau2iw
-
 
 
   !*******************************************************************

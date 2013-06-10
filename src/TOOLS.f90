@@ -30,12 +30,14 @@ module TOOLS
   !DERIVATIVE:
   public :: deriv
 
- 
+
+
 
   !SORT 2D:
   public :: find2Dmesh
 
   !OTHER:
+  public :: get_density_from_matsubara_gf
   public :: get_matsubara_gf_from_dos
   public :: check_convergence,check_convergence_scalar,check_convergence_local
   public :: get_free_dos
@@ -199,6 +201,28 @@ contains
   !###################################################################
   ! USEFUL ROUTINES:
   !###################################################################
+  function get_density_from_matsubara_gf(giw,beta) result(n)
+    complex(8),dimension(:) :: giw
+    complex(8)              :: tail
+    real(8)                 :: sum
+    real(8)                 :: n,wmax,beta,mues,At,w
+    integer                 :: i,Liw
+    Liw=size(giw)
+    wmax = pi/beta*real(2*Liw-1,8)
+    mues =-dreal(giw(Liw))*wmax**2
+    sum=0.d0
+    do i=1,Liw
+       w=pi/beta*real(2*i-1,8)
+       tail=-cmplx(mues,w,8)/(mues**2+w**2)
+       sum=sum + dreal(giw(i)-tail)
+    enddo
+    At = -1.d0/(1.d0 + exp(-beta*mues))
+    if((mues*beta) >  30.d0)At = -1.d0
+    if((mues*beta) < -30.d0)At = -exp(mues*beta)
+    n=sum*2.d0/beta+At+1.d0
+  end function get_density_from_matsubara_gf
+
+
   !+-------------------------------------------------------------------+
   !PURPOSE  : Evaluate sum over k-points (very simple method)
   !+-------------------------------------------------------------------+
