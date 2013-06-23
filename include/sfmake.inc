@@ -15,37 +15,44 @@ SFINCLUDE_DEB= -I${SFMODS}/debug
 MATHINCLUDE=-I$(SFINCLUDE)
 ifdef MKLROOT
  ifeq ($(SFOS),Linux)
-    MATHLIB = -Wl,--start-group  $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm
+    MATHLIB     = -Wl,--start-group  $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm
+    MATHLIB_DEB = -Wl,--start-group  $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm
  endif
  ifeq ($(SFOS),Darwin)
-    MATHLIB = $(MKLROOT)/lib/libmkl_intel_lp64.a $(MKLROOT)/lib/libmkl_sequential.a $(MKLROOT)/lib/libmkl_core.a -lpthread -lm
+    MATHLIB	= $(MKLROOT)/lib/libmkl_intel_lp64.a $(MKLROOT)/lib/libmkl_sequential.a $(MKLROOT)/lib/libmkl_core.a -lpthread -lm
+    MATHLIB_DEB = $(MKLROOT)/lib/libmkl_intel_lp64.a $(MKLROOT)/lib/libmkl_sequential.a $(MKLROOT)/lib/libmkl_core.a -lpthread -lm
  endif
 else
-MATHLIB	 = -llapack -lblas
+MATHLIB	    = -llapack -lblas
+MATHLIB_DEB = -llapack -lblas
 endif
 
 ifdef FFTW_LIB
-MATHLIB      += -lfftw3
-SFINCLUDE    += -I$(FFTW_LIB)/include/
-SFINCLUDE_DEB+= -I$(FFTW_LIB)/include/
+MATHLIB      +=-lfftw3
+MATHLIB_DEB  +=-lfftw3
+SFINCLUDE    +=-I$(FFTW_LIB)/include/
+SFINCLUDE_DEB+=-I$(FFTW_LIB)/include/
 endif
 
 ifdef FFTPACK_LIB
-MATHLIB      += -lfftpack
-endif
-
-ifdef ARPACK_LIB
-MATHLIB      += -larpack
+MATHLIB      +=-lfftpack
+MATHLIB_DEB  +=-lfftpack
 endif
 
 ifdef MINPACK_LIB
-MATHLIB      += -lminpack
+MATHLIB      +=-lminpack
+MATHLIB_DEB  +=-lminpack
+endif
+
+ifdef ARPACK_LIB
+MATHLIB     +=-lparpack -larpack 
+MATHLIB_DEB +=-lparpack_debug -larpack_debug
 endif
 
 #----------------------------------------------------
 #SciFor LIBRARY:
 SFLIBS 	   =  ${SFINCLUDE} -lscifor ${MATHLIB}
-SFLIBS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb ${MATHLIB}
+SFLIBS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb ${MATHLIB_DEB}
 #----------------------------------------------------
 
 
