@@ -164,6 +164,7 @@ contains
     call dgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
     allocate(b_(ldb,nrhs))
+    b_(:,1)=b
     call dgetrs(trans_,n,nrhs,A,lda,ipvt,b_,ldb,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
     b=b_(:,1)
@@ -191,6 +192,7 @@ contains
     call zgetrf(m,n,A,lda,ipvt,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
     allocate(b_(ldb,nrhs))
+    b_(:,1)=b
     call zgetrs(trans_,n,nrhs,A,lda,ipvt,b_,ldb,info)
     if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
     b=b_(:,1)

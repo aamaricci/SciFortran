@@ -265,7 +265,7 @@
       call FREE_TRIG_TRANSFORM(handle,ipar,ir)
       tau_long = linspace(0.d0,beta,2*L)
       tau_short= linspace(0.d0,beta,L+1)
-      call linear_spline(cmplx(reF,imF,8),tau_long,gt,tau_short)
+      call linear_spline(tau_long,cmplx(reF,imF,8),tau_short,gt)
       gt(L)=-gt(0)
       gt=gt/beta*2.d0
     end subroutine fftff_iw2tau

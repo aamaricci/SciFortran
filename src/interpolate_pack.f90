@@ -1,66 +1,91 @@
-subroutine cc_abscissas ( n, x )
+! CC_ABSCISSAS computes the Clenshaw Curtis abscissas.
+! CC_ABSCISSAS_AB computes the Clenshaw Curtis abscissas for the interval [A,B].
+! F1_ABSCISSAS computes Fejer type 1 abscissas.
+! F1_ABSCISSAS_AB computes Fejer type 1 abscissas for the interval [A,B].
+! F2_ABSCISSAS computes Fejer Type 2 abscissas.
+! F2_ABSCISSAS_AB computes Fejer Type 2 abscissas for the interval [A,B].
+! INTERP_LAGRANGE: Lagrange polynomial interpolation to a curve in M dimensions.
+! INTERP_LINEAR: piecewise linear interpolation to a curve in M dimensions.
+! INTERP_NEAREST: Nearest neighbor interpolation to a curve in M dimensions.
+! LAGRANGE_VALUE evaluates the Lagrange polynomials.
+! NCC_ABSCISSAS computes the Newton Cotes Closed abscissas.
+! NCC_ABSCISSAS_AB computes the Newton Cotes Closed abscissas for [A,B].
+! NCO_ABSCISSAS computes the Newton Cotes Open abscissas.
+! NCO_ABSCISSAS_AB computes the Newton Cotes Open abscissas for [A,B].
+! PARAMETERIZE_ARC_LENGTH parameterizes data by pseudo-arclength.
+! PARAMETERIZE_INDEX parameterizes data by its index.
+! R8MAT_EXPAND_LINEAR2 expands an R8MAT by linear interpolation.
+! R8VEC_ASCENDS_STRICTLY determines if an R8VEC is strictly ascending.
+! R8VEC_BRACKET searches a sorted R8VEC for successive brackets of a value.
+! R8VEC_EXPAND_LINEAR linearly interpolates new data into an R8VEC.
+! R8VEC_EXPAND_LINEAR2 linearly interpolates new data into an R8VEC.
+! R8VEC_SORTED_NEAREST returns the nearest element in a sorted R8VEC.
+!---------------------------------------------------------------------------
+! TEST CODE COMMENTED AT THE BOTTOM:
+!---------------------------------------------------------------------------
 
-!*****************************************************************************80
-!
-!! CC_ABSCISSAS computes the Clenshaw Curtis abscissas.
-!
-!  Discussion:
-!
-!    The interval is [ -1, 1 ].
-!
-!    The abscissas are the cosines of equally spaced angles between 
-!    180 and 0 degrees, including the endpoints.
-!
-!      X(I) = cos ( ( ORDER - I ) * PI / ( ORDER - 1 ) )
-!
-!    except for the basic case ORDER = 1, when
-!
-!      X(1) = 0.
-!
-!    If the value of ORDER is increased in a sensible way, then
-!    the new set of abscissas will include the old ones.  One such
-!    sequence would be ORDER(K) = 2*K+1 for K = 0, 1, 2, ...
-!
-!    When doing interpolation with Lagrange polynomials, the Clenshaw Curtis
-!    abscissas can be a better choice than regularly spaced abscissas.
-!
-!  Licensing:
-!
-!    This code is distributed under the GNU LGPL license. 
-!
-!  Modified:
-!
-!    04 December 2007
-!
-!  Author:
-!
-!    John Burkardt
-!
-!  Reference:
-!
-!    Charles Clenshaw, Alan Curtis,
-!    A Method for Numerical Integration on an Automatic Computer,
-!    Numerische Mathematik,
-!    Volume 2, Number 1, December 1960, pages 197-205.
-!
-!    Philip Davis, Philip Rabinowitz,
-!    Methods of Numerical Integration,
-!    Second Edition,
-!    Dover, 2007,
-!    ISBN: 0486453391,
-!    LC: QA299.3.D28.
-!
-!    Joerg Waldvogel,
-!    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
-!    BIT Numerical Mathematics,
-!    Volume 43, Number 1, 2003, pages 1-18.
-!
-!  Parameters:
-!
-!    Input, integer ( kind = 4 ) N, the order of the rule.
-!
-!    Output, real ( kind = 8 ) X(N), the abscissas.
-!
+subroutine cc_abscissas ( n, x )
+  !*****************************************************************************80
+  !
+  !! CC_ABSCISSAS computes the Clenshaw Curtis abscissas.
+  !
+  !  Discussion:
+  !
+  !    The interval is [ -1, 1 ].
+  !
+  !    The abscissas are the cosines of equally spaced angles between 
+  !    180 and 0 degrees, including the endpoints.
+  !
+  !      X(I) = cos ( ( ORDER - I ) * PI / ( ORDER - 1 ) )
+  !
+  !    except for the basic case ORDER = 1, when
+  !
+  !      X(1) = 0.
+  !
+  !    If the value of ORDER is increased in a sensible way, then
+  !    the new set of abscissas will include the old ones.  One such
+  !    sequence would be ORDER(K) = 2*K+1 for K = 0, 1, 2, ...
+  !
+  !    When doing interpolation with Lagrange polynomials, the Clenshaw Curtis
+  !    abscissas can be a better choice than regularly spaced abscissas.
+  !
+  !  Licensing:
+  !
+  !    This code is distributed under the GNU LGPL license. 
+  !
+  !  Modified:
+  !
+  !    04 December 2007
+  !
+  !  Author:
+  !
+  !    John Burkardt
+  !
+  !  Reference:
+  !
+  !    Charles Clenshaw, Alan Curtis,
+  !    A Method for Numerical Integration on an Automatic Computer,
+  !    Numerische Mathematik,
+  !    Volume 2, Number 1, December 1960, pages 197-205.
+  !
+  !    Philip Davis, Philip Rabinowitz,
+  !    Methods of Numerical Integration,
+  !    Second Edition,
+  !    Dover, 2007,
+  !    ISBN: 0486453391,
+  !    LC: QA299.3.D28.
+  !
+  !    Joerg Waldvogel,
+  !    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
+  !    BIT Numerical Mathematics,
+  !    Volume 43, Number 1, 2003, pages 1-18.
+  !
+  !  Parameters:
+  !
+  !    Input, integer ( kind = 4 ) N, the order of the rule.
+  !
+  !    Output, real ( kind = 8 ) X(N), the abscissas.
+  !
   implicit none
 
   integer ( kind = 4 ) n
@@ -71,52 +96,54 @@ subroutine cc_abscissas ( n, x )
   real    ( kind = 8 ) x(n)
 
   if ( n < 1 ) then
-    write ( *, '(a)' ) ' '
-    write ( *, '(a)' ) 'CC_ABSCISSA - Fatal error!'
-    write ( *, '(a)' ) '  N < 1.'
-    stop
+     write ( *, '(a)' ) ' '
+     write ( *, '(a)' ) 'CC_ABSCISSA - Fatal error!'
+     write ( *, '(a)' ) '  N < 1.'
+     stop
   end if
 
   if ( n == 1 ) then
-    x(1) = 0.0D+00
-    return
+     x(1) = 0.0D+00
+     return
   end if
 
   do i = 1, n
-    theta(i) = real ( n - i, kind = 8 ) * pi &
-             / real ( n - 1, kind = 8 )
+     theta(i) = real ( n - i, kind = 8 ) * pi &
+          / real ( n - 1, kind = 8 )
   end do
 
   x(1:n) = cos ( theta(1:n) )
 
   return
-end
+end subroutine cc_abscissas
+
+
 subroutine cc_abscissas_ab ( a, b, n, x )
 
-!*****************************************************************************80
-!
-!! CC_ABSCISSAS_AB computes the Clenshaw Curtis abscissas for the interval [A,B].
-!
-!  Licensing:
-!
-!    This code is distributed under the GNU LGPL license. 
-!
-!  Modified:
-!
-!    29 December 2007
-!
-!  Author:
-!
-!    John Burkardt
-!
-!  Parameters:
-!
-!    Input, real ( kind = 8 ) A, B, the endpoints of the interval.
-!
-!    Input, integer ( kind = 4 ) N, the order of the rule.
-!
-!    Output, real ( kind = 8 ) X(N), the abscissas.
-!
+  !*****************************************************************************80
+  !
+  !! CC_ABSCISSAS_AB computes the Clenshaw Curtis abscissas for the interval [A,B].
+  !
+  !  Licensing:
+  !
+  !    This code is distributed under the GNU LGPL license. 
+  !
+  !  Modified:
+  !
+  !    29 December 2007
+  !
+  !  Author:
+  !
+  !    John Burkardt
+  !
+  !  Parameters:
+  !
+  !    Input, real ( kind = 8 ) A, B, the endpoints of the interval.
+  !
+  !    Input, integer ( kind = 4 ) N, the order of the rule.
+  !
+  !    Output, real ( kind = 8 ) X(N), the abscissas.
+  !
   implicit none
 
   integer ( kind = 4 ) n
@@ -129,76 +156,78 @@ subroutine cc_abscissas_ab ( a, b, n, x )
   real    ( kind = 8 ) x(n)
 
   if ( n < 1 ) then
-    write ( *, '(a)' ) ' '
-    write ( *, '(a)' ) 'CC_ABSCISSAS_AB - Fatal error!'
-    write ( *, '(a)' ) '  N < 1.'
-    stop
+     write ( *, '(a)' ) ' '
+     write ( *, '(a)' ) 'CC_ABSCISSAS_AB - Fatal error!'
+     write ( *, '(a)' ) '  N < 1.'
+     stop
   end if
 
   if ( n == 1 ) then
-    x(1) = 0.5D+00 * ( b + a )
-    return
+     x(1) = 0.5D+00 * ( b + a )
+     return
   end if
 
   do i = 1, n
-    theta(i) = real ( n - i, kind = 8 ) * pi &
-             / real ( n - 1, kind = 8 )
+     theta(i) = real ( n - i, kind = 8 ) * pi &
+          / real ( n - 1, kind = 8 )
   end do
 
   x(1:n) = 0.5D+00 * ( ( b + a ) + ( b - a ) * cos ( theta(1:n) ) )
 
   return
-end
+end subroutine cc_abscissas_ab
+
+
 subroutine f1_abscissas ( n, x )
 
-!*****************************************************************************80
-!
-!! F1_ABSCISSAS computes Fejer type 1 abscissas.
-!
-!  Discussion:
-!
-!    The interval is [ -1, +1 ].
-!
-!    The abscissas are the cosines of equally spaced angles, which
-!    are the midpoints of N equal intervals between 0 and PI.
-!
-!  Licensing:
-!
-!    This code is distributed under the GNU LGPL license. 
-!
-!  Modified:
-!
-!    29 December 2007
-!
-!  Author:
-!
-!    John Burkardt
-!
-!  Reference:
-!
-!    Philip Davis, Philip Rabinowitz,
-!    Methods of Numerical Integration,
-!    Second Edition,
-!    Dover, 2007,
-!    ISBN: 0486453391,
-!    LC: QA299.3.D28.
-!
-!    Walter Gautschi,
-!    Numerical Quadrature in the Presence of a Singularity,
-!    SIAM Journal on Numerical Analysis,
-!    Volume 4, Number 3, 1967, pages 357-362.
-!
-!    Joerg Waldvogel,
-!    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
-!    BIT Numerical Mathematics,
-!    Volume 43, Number 1, 2003, pages 1-18.
-!
-!  Parameters:
-!
-!    Input, integer ( kind = 4 ) N, the order of the rule.
-!
-!    Output, real ( kind = 8 ) X(N), the abscissas.
-!
+  !*****************************************************************************80
+  !
+  !! F1_ABSCISSAS computes Fejer type 1 abscissas.
+  !
+  !  Discussion:
+  !
+  !    The interval is [ -1, +1 ].
+  !
+  !    The abscissas are the cosines of equally spaced angles, which
+  !    are the midpoints of N equal intervals between 0 and PI.
+  !
+  !  Licensing:
+  !
+  !    This code is distributed under the GNU LGPL license. 
+  !
+  !  Modified:
+  !
+  !    29 December 2007
+  !
+  !  Author:
+  !
+  !    John Burkardt
+  !
+  !  Reference:
+  !
+  !    Philip Davis, Philip Rabinowitz,
+  !    Methods of Numerical Integration,
+  !    Second Edition,
+  !    Dover, 2007,
+  !    ISBN: 0486453391,
+  !    LC: QA299.3.D28.
+  !
+  !    Walter Gautschi,
+  !    Numerical Quadrature in the Presence of a Singularity,
+  !    SIAM Journal on Numerical Analysis,
+  !    Volume 4, Number 3, 1967, pages 357-362.
+  !
+  !    Joerg Waldvogel,
+  !    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
+  !    BIT Numerical Mathematics,
+  !    Volume 43, Number 1, 2003, pages 1-18.
+  !
+  !  Parameters:
+  !
+  !    Input, integer ( kind = 4 ) N, the order of the rule.
+  !
+  !    Output, real ( kind = 8 ) X(N), the abscissas.
+  !
   implicit none
 
   integer ( kind = 4 ) n
@@ -209,71 +238,73 @@ subroutine f1_abscissas ( n, x )
   real    ( kind = 8 ) x(n)
 
   if ( n < 1 ) then
-    write ( *, '(a)' ) ' '
-    write ( *, '(a)' ) 'F1_ABSCISSAS - Fatal error!'
-    write ( *, '(a)' ) '  N < 1.'
-    stop
+     write ( *, '(a)' ) ' '
+     write ( *, '(a)' ) 'F1_ABSCISSAS - Fatal error!'
+     write ( *, '(a)' ) '  N < 1.'
+     stop
   end if
 
   if ( n == 1 ) then
-    x(1) = 0.0D+00
-    return
+     x(1) = 0.0D+00
+     return
   end if
 
   do i = 1, n
-    theta(i) = real ( 2 * n - 2 * i + 1, kind = 8 ) * pi &
-             / real ( 2 * n,             kind = 8 )
+     theta(i) = real ( 2 * n - 2 * i + 1, kind = 8 ) * pi &
+          / real ( 2 * n,             kind = 8 )
   end do
 
   x(1:n) = cos ( theta(1:n) )
 
   return
-end
+end subroutine f1_abscissas
+
+
 subroutine f1_abscissas_ab ( a, b, n, x )
 
-!*****************************************************************************80
-!
-!! F1_ABSCISSAS_AB computes Fejer type 1 abscissas for the interval [A,B].
-!
-!  Licensing:
-!
-!    This code is distributed under the GNU LGPL license. 
-!
-!  Modified:
-!
-!    29 December 2007
-!
-!  Author:
-!
-!    John Burkardt
-!
-!  Reference:
-!
-!    Philip Davis, Philip Rabinowitz,
-!    Methods of Numerical Integration,
-!    Second Edition,
-!    Dover, 2007,
-!    ISBN: 0486453391,
-!    LC: QA299.3.D28.
-!
-!    Walter Gautschi,
-!    Numerical Quadrature in the Presence of a Singularity,
-!    SIAM Journal on Numerical Analysis,
-!    Volume 4, Number 3, 1967, pages 357-362.
-!
-!    Joerg Waldvogel,
-!    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
-!    BIT Numerical Mathematics,
-!    Volume 43, Number 1, 2003, pages 1-18.
-!
-!  Parameters:
-!
-!    Input, real ( kind = 8 ) A, B, the endpoints of the interval.
-!
-!    Input, integer ( kind = 4 ) N, the order of the rule.
-!
-!    Output, real ( kind = 8 ) X(N), the abscissas.
-!
+  !*****************************************************************************80
+  !
+  !! F1_ABSCISSAS_AB computes Fejer type 1 abscissas for the interval [A,B].
+  !
+  !  Licensing:
+  !
+  !    This code is distributed under the GNU LGPL license. 
+  !
+  !  Modified:
+  !
+  !    29 December 2007
+  !
+  !  Author:
+  !
+  !    John Burkardt
+  !
+  !  Reference:
+  !
+  !    Philip Davis, Philip Rabinowitz,
+  !    Methods of Numerical Integration,
+  !    Second Edition,
+  !    Dover, 2007,
+  !    ISBN: 0486453391,
+  !    LC: QA299.3.D28.
+  !
+  !    Walter Gautschi,
+  !    Numerical Quadrature in the Presence of a Singularity,
+  !    SIAM Journal on Numerical Analysis,
+  !    Volume 4, Number 3, 1967, pages 357-362.
+  !
+  !    Joerg Waldvogel,
+  !    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
+  !    BIT Numerical Mathematics,
+  !    Volume 43, Number 1, 2003, pages 1-18.
+  !
+  !  Parameters:
+  !
+  !    Input, real ( kind = 8 ) A, B, the endpoints of the interval.
+  !
+  !    Input, integer ( kind = 4 ) N, the order of the rule.
+  !
+  !    Output, real ( kind = 8 ) X(N), the abscissas.
+  !
   implicit none
 
   integer ( kind = 4 ) n
@@ -286,77 +317,79 @@ subroutine f1_abscissas_ab ( a, b, n, x )
   real    ( kind = 8 ) x(n)
 
   if ( n < 1 ) then
-    write ( *, '(a)' ) ' '
-    write ( *, '(a)' ) 'F1_ABSCISSAS_AB - Fatal error!'
-    write ( *, '(a)' ) '  N < 1.'
-    stop
+     write ( *, '(a)' ) ' '
+     write ( *, '(a)' ) 'F1_ABSCISSAS_AB - Fatal error!'
+     write ( *, '(a)' ) '  N < 1.'
+     stop
   end if
 
   if ( n == 1 ) then
-    x(1) = 0.5D+00 * ( b + a )
-    return
+     x(1) = 0.5D+00 * ( b + a )
+     return
   end if
 
   do i = 1, n
-    theta(i) = real ( 2 * n - 2 * i + 1, kind = 8 ) * pi &
-             / real ( 2 * n,             kind = 8 )
+     theta(i) = real ( 2 * n - 2 * i + 1, kind = 8 ) * pi &
+          / real ( 2 * n,             kind = 8 )
   end do
 
   x(1:n) = 0.5D+00 * ( ( b + a ) + ( b - a ) * cos ( theta(1:n) ) )
 
   return
-end
+end subroutine f1_abscissas_ab
+
+
 subroutine f2_abscissas ( n, x )
 
-!*****************************************************************************80
-!
-!! F2_ABSCISSAS computes Fejer Type 2 abscissas.
-!
-!  Discussion:
-!
-!    The interval is [-1,+1].
-!
-!    The abscissas are the cosines of equally spaced angles.
-!    The angles are computed as N+2 equally spaced values between 0 and PI,
-!    but with the first and last angle omitted.
-!
-!  Licensing:
-!
-!    This code is distributed under the GNU LGPL license. 
-!
-!  Modified:
-!
-!    29 December 2007
-!
-!  Author:
-!
-!    John Burkardt
-!
-!  Reference:
-!
-!    Philip Davis, Philip Rabinowitz,
-!    Methods of Numerical Integration,
-!    Second Edition,
-!    Dover, 2007,
-!    ISBN: 0486453391,
-!    LC: QA299.3.D28.
-!
-!    Walter Gautschi,
-!    Numerical Quadrature in the Presence of a Singularity,
-!    SIAM Journal on Numerical Analysis,
-!    Volume 4, Number 3, 1967, pages 357-362.
-!
-!    Joerg Waldvogel,
-!    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
-!    BIT Numerical Mathematics,
-!    Volume 43, Number 1, 2003, pages 1-18.
-!
-!  Parameters:
-!
-!    Input, integer ( kind = 4 ) N, the order of the rule.
-!
-!    Output, real ( kind = 8 ) X(N), the abscissas.
-!
+  !*****************************************************************************80
+  !
+  !! F2_ABSCISSAS computes Fejer Type 2 abscissas.
+  !
+  !  Discussion:
+  !
+  !    The interval is [-1,+1].
+  !
+  !    The abscissas are the cosines of equally spaced angles.
+  !    The angles are computed as N+2 equally spaced values between 0 and PI,
+  !    but with the first and last angle omitted.
+  !
+  !  Licensing:
+  !
+  !    This code is distributed under the GNU LGPL license. 
+  !
+  !  Modified:
+  !
+  !    29 December 2007
+  !
+  !  Author:
+  !
+  !    John Burkardt
+  !
+  !  Reference:
+  !
+  !    Philip Davis, Philip Rabinowitz,
+  !    Methods of Numerical Integration,
+  !    Second Edition,
+  !    Dover, 2007,
+  !    ISBN: 0486453391,
+  !    LC: QA299.3.D28.
+  !
+  !    Walter Gautschi,
+  !    Numerical Quadrature in the Presence of a Singularity,
+  !    SIAM Journal on Numerical Analysis,
+  !    Volume 4, Number 3, 1967, pages 357-362.
+  !
+  !    Joerg Waldvogel,
+  !    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,
+  !    BIT Numerical Mathematics,
+  !    Volume 43, Number 1, 2003, pages 1-18.
+  !
+  !  Parameters:
+  !
+  !    Input, integer ( kind = 4 ) N, the order of the rule.
+  !
+  !    Output, real ( kind = 8 ) X(N), the abscissas.
+  !
   implicit none
 
   integer ( kind = 4 ) n
@@ -367,56 +400,58 @@ subroutine f2_abscissas ( n, x )
   real    ( kind = 8 ) x(n)
 
   if ( n < 1 ) then
-    write ( *, '(a)' ) ' '
-    write ( *, '(a)' ) 'F2_ABSCISSAS - Fatal error!'
-    write ( *, '(a)' ) '  N < 1.'
-    stop
+     write ( *, '(a)' ) ' '
+     write ( *, '(a)' ) 'F2_ABSCISSAS - Fatal error!'
+     write ( *, '(a)' ) '  N < 1.'
+     stop
   end if
 
   if ( n == 1 ) then
-    x(1) = 0.0D+00
-    return
+     x(1) = 0.0D+00
+     return
   else if ( n == 2 ) then
-    x(1) = -0.5D+00
-    x(2) =  0.5D+00
-    return
+     x(1) = -0.5D+00
+     x(2) =  0.5D+00
+     return
   end if
 
   do i = 1, n
-    theta(i) = real ( n + 1 - i, kind = 8 ) * pi &
-             / real ( n + 1,     kind = 8 )
+     theta(i) = real ( n + 1 - i, kind = 8 ) * pi &
+          / real ( n + 1,     kind = 8 )
   end do
 
   x(1:n) = cos ( theta(1:n) )
 
   return
-end
+end subroutine f2_abscissas
+
+
 subroutine f2_abscissas_ab ( a, b, n, x )
 
-!*****************************************************************************80
-!
-!! F2_ABSCISSAS_AB computes Fejer Type 2 abscissas for the interval [A,B].
-!
-!  Licensing:
-!
-!    This code is distributed under the GNU LGPL license. 
-!
-!  Modified:
-!
-!    29 December 2007
-!
-!  Author:
-!
-!    John Burkardt
-!
-!  Parameters:
-!
-!    Input, real ( kind = 8 ) A, B, the endpoints of the interval.
-!
-!    Input, integer ( kind = 4 ) N, the order of the rule.
-!
-!    Output, real ( kind = 8 ) X(N), the abscissas.
-!
+  !*****************************************************************************80
+  !
+  !! F2_ABSCISSAS_AB computes Fejer Type 2 abscissas for the interval [A,B].
+  !
+  !  Licensing:
+  !
+  !    This code is distributed under the GNU LGPL license. 
+  !
+  !  Modified:
+  !
+  !    29 December 2007
+  !
+  !  Author:
+  !
+  !    John Burkardt
+  !
+  !  Parameters:
+  !
+  !    Input, real ( kind = 8 ) A, B, the endpoints of the interval.
+  !
+  !    Input, integer ( kind = 4 ) N, the order of the rule.
+  !
+  !    Output, real ( kind = 8 ) X(N), the abscissas.
+  !
   implicit none
 
   integer ( kind = 4 ) n
@@ -429,24 +464,25 @@ subroutine f2_abscissas_ab ( a, b, n, x )
   real    ( kind = 8 ) x(n)
 
   if ( n < 1 ) then
-    write ( *, '(a)' ) ' '
-    write ( *, '(a)' ) 'F2_ABSCISSAS_AB - Fatal error!'
-    write ( *, '(a)' ) '  N < 1.'
-    stop
+     write ( *, '(a)' ) ' '
+     write ( *, '(a)' ) 'F2_ABSCISSAS_AB - Fatal error!'
+     write ( *, '(a)' ) '  N < 1.'
+     stop
   end if
 
   do i = 1, n
-    theta(i) = real ( n + 1 - i, kind = 8 ) * pi &
-             / real ( n + 1,     kind = 8 )
+     theta(i) = real ( n + 1 - i, kind = 8 ) * pi &
+          / real ( n + 1,     kind = 8 )
   end do
 
   x(1:n) = 0.5D+00 * ( ( b + a ) + ( b - a ) * cos ( theta(1:n) ) )
 
   return
-end
+end subroutine f2_abscissas_ab
+
+
 subroutine interp_lagrange ( dim_num, data_num, t_data, p_data, interp_num, &
      t_interp, p_interp )
-
   !*****************************************************************************80
   !
   !! INTERP_LAGRANGE applies Lagrange polynomial interpolation to data.
@@ -637,6 +673,7 @@ subroutine interp_linear ( dim_num, data_num, t_data, p_data, interp_num, &
 
   return
 end subroutine interp_linear
+
 subroutine lagrange_value ( data_num, t_data, interp_num, t_interp, l_interp )
 
   !*****************************************************************************80
@@ -1489,23 +1526,248 @@ subroutine r8vec_expand_linear2 ( n, x, before, fat, after, xfat )
 
   return
 end subroutine r8vec_expand_linear2
-! subroutine timestamp ( )
 
+
+!###################################################################################################
+!###################################################################################################
+!###################################################################################################
+!###################################################################################################
+!###################################################################################################
+
+
+! program main
 !   !*****************************************************************************80
 !   !
-!   !! TIMESTAMP prints the current YMDHMS date as a time stamp.
+!   !! MAIN is the main program for INTERP_PRB.
 !   !
-!   !  Example:
+!   !  Discussion:
 !   !
-!   !    31 May 2001   9:45:54.872 AM
+!   !    INTERP_PRB calls the INTERP tests.
 !   !
 !   !  Licensing:
 !   !
-!   !    This code is distributed under the GNU LGPL license. 
+!   !    This code is distributed under the GNU LGPL license.
 !   !
 !   !  Modified:
 !   !
-!   !    06 August 2005
+!   !    03 December 2007
+!   !
+!   !  Author:
+!   !
+!   !    John Burkardt
+!   !
+!   implicit none
+!   integer ( kind = 4 ) data_num
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) 'INTERP_PRB'
+!   write ( *, '(a)' ) '  FORTRAN90 version:'
+!   write ( *, '(a)' ) '  Test the INTERP library.'
+!   call test01 ( )
+!   call test02 ( )
+!   data_num = 6
+!   call test03 ( data_num )
+!   data_num = 11
+!   call test03 ( data_num )
+!   data_num = 6
+!   call test04 ( data_num )
+!   data_num = 11
+!   call test04 ( data_num )
+!   !
+!   !  Terminate.
+!   !
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) 'INTERP_PRB'
+!   write ( *, '(a)' ) '  Normal end of execution.'
+!   write ( *, '(a)' ) ' '
+!   stop
+! end program main
+
+! subroutine test01 ( )
+!   !*****************************************************************************80
+!   !
+!   !! TEST01 tests INTERP_NEAREST on 1-dimensional data.
+!   !
+!   !  Licensing:
+!   !
+!   !    This code is distributed under the GNU LGPL license.
+!   !
+!   !  Modified:
+!   !
+!   !    01 July 2012
+!   !
+!   !  Author:
+!   !
+!   !    John Burkardt
+!   !
+!   implicit none
+!   integer ( kind = 4 ), parameter :: data_num = 11
+!   integer ( kind = 4 ), parameter :: m = 1
+!   integer ( kind = 4 ) after
+!   integer ( kind = 4 ) before
+!   integer ( kind = 4 ) fat
+!   integer ( kind = 4 ) i
+!   integer ( kind = 4 ) interp
+!   integer ( kind = 4 ) interp_num
+!   real ( kind = 8 ) p
+!   real ( kind = 8 ) p_data(m,data_num)
+!   real ( kind = 8 ), allocatable, dimension ( :, : ) :: p_interp
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: p_value
+!   real ( kind = 8 ) t
+!   real ( kind = 8 ) t_data(data_num)
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: t_interp
+!   real ( kind = 8 ) t_max
+!   real ( kind = 8 ) t_min
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) 'TEST01'
+!   write ( *, '(a)' ) '  INTERP_NEAREST evaluates a nearest-neighbor interpolant.'
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) '  In this example, the function we are interpolating is'
+!   write ( *, '(a)' ) '  Runge''s function, with Chebyshev knots.'
+!   t_min = -1.0D+00
+!   t_max = +1.0D+00
+!   call cc_abscissas_ab ( t_min, t_max, data_num, t_data )
+!   call f_runge ( m, data_num, t_data, p_data )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  The data to be interpolated:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a,i8)' ) '  Spatial dimension =     ', m
+!   write ( *, '(a,i8)' ) '  Number of data values = ', data_num
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '       T_data        P_data'
+!   write ( *, '(a)'    ) ' '
+!   do i = 1, data_num
+!      write ( *, '(2x,2g14.6)' ) t_data(i), p_data(1,i)
+!   end do
+!   !
+!   !  Our interpolation values will include the original T values, plus
+!   !  3 new values in between each pair of original values.
+!   !
+!   before = 4
+!   fat = 3
+!   after = 2
+!   interp_num = before + 1 + ( data_num - 1 ) * ( fat + 1 ) + after
+!   allocate ( t_interp(interp_num) )
+!   allocate ( p_interp(m,interp_num) )
+!   call r8vec_expand_linear2 ( data_num, t_data, before, fat, after, t_interp )
+!   call interp_nearest ( m, data_num, t_data, p_data, interp_num, &
+!        t_interp, p_interp )
+!   ( p_value(1:interp_num) )
+!   call f_runge ( m, interp_num, t_interp, p_value )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  Interpolation:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '    T_interp      P_interp        P_exact        Error'
+!   write ( *, '(a)'    ) ' '
+!   do interp = 1, interp_num
+!      write ( *, '(2x,f10.4,2x,g14.6,2x,g14.6,2x,g10.2)' ) &
+!           t_interp(interp), p_interp(1,interp), p_value(interp), &
+!           p_interp(1,interp) - p_value(interp)
+!   end do
+!   deallocate ( p_interp )
+!   deallocate ( p_value )
+!   deallocate ( t_interp )
+!   return
+! end subroutine test01
+
+! subroutine test02 ( )
+!   !*****************************************************************************80
+!   !
+!   !! TEST02 tests INTERP_LINEAR on 1-dimensional data.
+!   !
+!   !  Licensing:
+!   !
+!   !    This code is distributed under the GNU LGPL license.
+!   !
+!   !  Modified:
+!   !
+!   !    03 December 2007
+!   !
+!   !  Author:
+!   !
+!   !    John Burkardt
+!   !
+!   implicit none
+!   integer ( kind = 4 ), parameter :: data_num = 11
+!   integer ( kind = 4 ), parameter :: m = 1
+!   integer ( kind = 4 ) after
+!   integer ( kind = 4 ) before
+!   integer ( kind = 4 ) fat
+!   integer ( kind = 4 ) i
+!   integer ( kind = 4 ) interp
+!   integer ( kind = 4 ) interp_num
+!   real ( kind = 8 ) p
+!   real ( kind = 8 ) p_data(m,data_num)
+!   real ( kind = 8 ), allocatable, dimension ( :, : ) :: p_interp
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: p_value
+!   real ( kind = 8 ) t
+!   real ( kind = 8 ) t_data(data_num)
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: t_interp
+!   real ( kind = 8 ) t_max
+!   real ( kind = 8 ) t_min
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) 'TEST02'
+!   write ( *, '(a)' ) '  INTERP_LINEAR evaluates a piecewise linear spline.'
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) '  In this example, the function we are interpolating is'
+!   write ( *, '(a)' ) '  Runge''s function, with evenly spaced knots.'
+!   t_min = -1.0D+00
+!   t_max = +1.0D+00
+!   call ncc_abscissas_ab ( t_min, t_max, data_num, t_data )
+!   call f_runge ( m, data_num, t_data, p_data )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  The data to be interpolated:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a,i8)' ) '  Spatial dimension =     ', m
+!   write ( *, '(a,i8)' ) '  Number of data values = ', data_num
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '       T_data        P_data'
+!   write ( *, '(a)'    ) ' '
+!   do i = 1, data_num
+!      write ( *, '(2x,2g14.6)' ) t_data(i), p_data(1,i)
+!   end do
+!   !
+!   !  Our interpolation values will include the original T values, plus
+!   !  3 new values in between each pair of original values.
+!   !
+!   before = 4
+!   fat = 3
+!   after = 2
+!   interp_num = before + 1 + ( data_num - 1 ) * ( fat + 1 ) + after
+!   allocate ( t_interp(interp_num) )
+!   allocate ( p_interp(m,interp_num) )
+!   call r8vec_expand_linear2 ( data_num, t_data, before, fat, after, t_interp )
+!   call interp_linear ( m, data_num, t_data, p_data, interp_num, &
+!        t_interp, p_interp )
+!   allocate ( p_value(1:interp_num) )
+!   call f_runge ( m, interp_num, t_interp, p_value )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  Interpolation:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '    T_interp      P_interp        P_exact        Error'
+!   write ( *, '(a)'    ) ' '
+!   do interp = 1, interp_num
+!      write ( *, '(2x,f10.4,2x,g14.6,2x,g14.6,2x,g10.2)' ) &
+!           t_interp(interp), p_interp(1,interp), p_value(interp), &
+!           p_interp(1,interp) - p_value(interp)
+!   end do
+!   deallocate ( p_interp )
+!   deallocate ( p_value )
+!   deallocate ( t_interp )
+!   return
+! end subroutine test02
+
+! subroutine test03 ( data_num )
+!   !*****************************************************************************80
+!   !
+!   !! TEST03 tests INTERP_LAGRANGE on 1-dimensional data, equally spaced data.
+!   !
+!   !  Licensing:
+!   !
+!   !    This code is distributed under the GNU LGPL license.
+!   !
+!   !  Modified:
+!   !
+!   !    03 December 2007
 !   !
 !   !  Author:
 !   !
@@ -1513,57 +1775,205 @@ end subroutine r8vec_expand_linear2
 !   !
 !   !  Parameters:
 !   !
-!   !    None
+!   !    Input, integer ( kind = 4 ) DATA_NUM, the number of data values.
 !   !
 !   implicit none
-
-!   character ( len = 8 ) ampm
-!   integer ( kind = 4 ) d
-!   integer ( kind = 4 ) h
-!   integer ( kind = 4 ) m
-!   integer ( kind = 4 ) mm
-!   character ( len = 9 ), parameter, dimension(12) :: month = (/ &
-!        'January  ', 'February ', 'March    ', 'April    ', &
-!        'May      ', 'June     ', 'July     ', 'August   ', &
-!        'September', 'October  ', 'November ', 'December ' /)
-!   integer ( kind = 4 ) n
-!   integer ( kind = 4 ) s
-!   integer ( kind = 4 ) values(8)
-!   integer ( kind = 4 ) y
-
-!   call date_and_time ( values = values )
-
-!   y = values(1)
-!   m = values(2)
-!   d = values(3)
-!   h = values(5)
-!   n = values(6)
-!   s = values(7)
-!   mm = values(8)
-
-!   if ( h < 12 ) then
-!      ampm = 'AM'
-!   else if ( h == 12 ) then
-!      if ( n == 0 .and. s == 0 ) then
-!         ampm = 'Noon'
-!      else
-!         ampm = 'PM'
-!      end if
-!   else
-!      h = h - 12
-!      if ( h < 12 ) then
-!         ampm = 'PM'
-!      else if ( h == 12 ) then
-!         if ( n == 0 .and. s == 0 ) then
-!            ampm = 'Midnight'
-!         else
-!            ampm = 'AM'
-!         end if
-!      end if
-!   end if
-
-!   write ( *, '(i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3,1x,a)' ) &
-!        d, trim ( month(m) ), y, h, ':', n, ':', s, '.', mm, trim ( ampm )
-
+!   integer ( kind = 4 ) data_num
+!   integer ( kind = 4 ), parameter :: m = 1
+!   integer ( kind = 4 ) after
+!   integer ( kind = 4 ) before
+!   integer ( kind = 4 ) fat
+!   integer ( kind = 4 ) i
+!   integer ( kind = 4 ) interp
+!   integer ( kind = 4 ) interp_num
+!   real ( kind = 8 ) p
+!   real ( kind = 8 ) p_data(m,data_num)
+!   real ( kind = 8 ), allocatable, dimension ( :, : ) :: p_interp
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: p_value
+!   real ( kind = 8 ) t
+!   real ( kind = 8 ) t_data(data_num)
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: t_interp
+!   real ( kind = 8 ) t_max
+!   real ( kind = 8 ) t_min
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) 'TEST03'
+!   write ( *, '(a)' ) '  INTERP_LAGRANGE evaluates a polynomial interpolant.'
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) '  In this example, the function we are interpolating is'
+!   write ( *, '(a)' ) '  Runge''s function, with evenly spaced knots.'
+!   t_min = -1.0D+00
+!   t_max = +1.0D+00
+!   call ncc_abscissas_ab ( t_min, t_max, data_num, t_data )
+!   call f_runge ( m, data_num, t_data, p_data )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  The data to be interpolated:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a,i8)' ) '  Spatial dimension =     ', m
+!   write ( *, '(a,i8)' ) '  Number of data values = ', data_num
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '       T_data        P_data'
+!   write ( *, '(a)'    ) ' '
+!   do i = 1, data_num
+!      write ( *, '(2x,2g14.6)' ) t_data(i), p_data(1,i)
+!   end do
+!   !
+!   !  Our interpolation values will include the original T values, plus
+!   !  3 new values in between each pair of original values.
+!   !
+!   before = 4
+!   fat = 3
+!   after = 2
+!   interp_num = before + 1 + ( data_num - 1 ) * ( fat + 1 ) + after
+!   allocate ( t_interp(interp_num) )
+!   allocate ( p_interp(m,interp_num) )
+!   call r8vec_expand_linear2 ( data_num, t_data, before, fat, after, t_interp )
+!   call interp_lagrange ( m, data_num, t_data, p_data, interp_num, &
+!        t_interp, p_interp )
+!   allocate ( p_value(1:interp_num) )
+!   call f_runge ( m, interp_num, t_interp, p_value )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  Interpolation:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '    T_interp      P_interp        P_exact        Error'
+!   write ( *, '(a)'    ) ' '
+!   do interp = 1, interp_num
+!      write ( *, '(2x,f10.4,2x,g14.6,2x,g14.6,2x,g10.2)' ) &
+!           t_interp(interp), p_interp(1,interp), p_value(interp), &
+!           p_interp(1,interp) - p_value(interp)
+!   end do
+!   deallocate ( p_interp )
+!   deallocate ( p_value )
+!   deallocate ( t_interp )
 !   return
-! end subroutine timestamp
+! end subroutine test03
+! subroutine test04 ( data_num )
+!   !*****************************************************************************80
+!   !
+!   !! TEST04 tests INTERP_LAGRANGE on 1-dimensional data, Clenshaw-Curtis data.
+!   !
+!   !  Licensing:
+!   !
+!   !    This code is distributed under the GNU LGPL license.
+!   !
+!   !  Modified:
+!   !
+!   !    04 December 2007
+!   !
+!   !  Author:
+!   !
+!   !    John Burkardt
+!   !
+!   !  Parameters:
+!   !
+!   !    Input, integer ( kind = 4 ) DATA_NUM, the number of data values.
+!   !
+!   implicit none
+!   integer ( kind = 4 ) data_num
+!   integer ( kind = 4 ), parameter :: m = 1
+!   integer ( kind = 4 ) after
+!   integer ( kind = 4 ) before
+!   integer ( kind = 4 ) fat
+!   integer ( kind = 4 ) i
+!   integer ( kind = 4 ) interp
+!   integer ( kind = 4 ) interp_num
+!   real ( kind = 8 ) p
+!   real ( kind = 8 ) p_data(m,data_num)
+!   real ( kind = 8 ), allocatable, dimension ( :, : ) :: p_interp
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: p_value
+!   real ( kind = 8 ) t
+!   real ( kind = 8 ) t_data(data_num)
+!   real ( kind = 8 ), allocatable, dimension ( : ) :: t_interp
+!   real ( kind = 8 ) t_max
+!   real ( kind = 8 ) t_min
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) 'TEST04'
+!   write ( *, '(a)' ) '  INTERP_LAGRANGE evaluates a polynomial interpolant.'
+!   write ( *, '(a)' ) ' '
+!   write ( *, '(a)' ) '  In this example, the function we are interpolating is'
+!   write ( *, '(a)' ) '  Runge''s function, with Clenshaw Curtis knots.'
+!   t_min = -1.0D+00
+!   t_max = +1.0D+00
+!   call cc_abscissas_ab ( t_min, t_max, data_num, t_data )
+!   call f_runge ( m, data_num, t_data, p_data )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  The data to be interpolated:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a,i8)' ) '  Spatial dimension =     ', m
+!   write ( *, '(a,i8)' ) '  Number of data values = ', data_num
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '       T_data        P_data'
+!   write ( *, '(a)'    ) ' '
+!   do i = 1, data_num
+!      write ( *, '(2x,2g14.6)' ) t_data(i), p_data(1,i)
+!   end do
+!   !
+!   !  Our interpolation values will include the original T values, plus
+!   !  3 new values in between each pair of original values.
+!   !
+!   before = 4
+!   fat = 3
+!   after = 2
+!   interp_num = before + 1 + ( data_num - 1 ) * ( fat + 1 ) + after
+!   allocate ( t_interp(interp_num) )
+!   allocate ( p_interp(m,interp_num) )
+!   call r8vec_expand_linear2 ( data_num, t_data, before, fat, after, t_interp )
+!   call interp_lagrange ( m, data_num, t_data, p_data, interp_num, &
+!        t_interp, p_interp )
+!   allocate ( p_value(1:interp_num) )
+!   call f_runge ( m, interp_num, t_interp, p_value )
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '  Interpolation:'
+!   write ( *, '(a)'    ) ' '
+!   write ( *, '(a)'    ) '    T_interp      P_interp        P_exact        Error'
+!   write ( *, '(a)'    ) ' '
+!   do interp = 1, interp_num
+!      write ( *, '(2x,f10.4,2x,g14.6,2x,g14.6,2x,g10.2)' ) &
+!           t_interp(interp), p_interp(1,interp), p_value(interp), &
+!           p_interp(1,interp) - p_value(interp)
+!   end do
+!   deallocate ( p_interp )
+!   deallocate ( p_value )
+!   deallocate ( t_interp )
+!   return
+! end subroutine test04
+
+! subroutine f_runge ( m, n, x, f )
+!   !*****************************************************************************80
+!   !
+!   !! F_RUNGE evaluates the Runge function.
+!   !
+!   !  Discussion:
+!   !
+!   !    Interpolation of the Runge function at evenly spaced points in [-1,1]
+!   !    is a common test.
+!   !
+!   !  Licensing:
+!   !
+!   !    This code is distributed under the GNU LGPL license.
+!   !
+!   !  Modified:
+!   !
+!   !    01 July 2012
+!   !
+!   !  Author:
+!   !
+!   !    John Burkardt
+!   !
+!   !  Parameters:
+!   !
+!   !    Input, integer ( kind = 4 ) M, the spatial dimension.
+!   !
+!   !    Input, integer ( kind = 4 ) N, the number of evaluation points.
+!   !
+!   !    Input, real ( kind = 8 ) X(M,N), the evaluation points.
+!   !
+!   !    Output, real ( kind = 8 ) F(N), the function values.
+!   !
+!   implicit none
+!   integer ( kind = 4 ) m
+!   integer ( kind = 4 ) n
+!   real ( kind = 8 ) f(n)
+!   real ( kind = 8 ) x(m,n)
+!   f(1:n) = 1.0D+00 / ( 1.0D+00 + 25.0D+00 * sum ( x(1:m,1:n)**2, 1 ) )
+!   return
+! end subroutine f_runge
