@@ -30,7 +30,8 @@ module TOOLS
   !DERIVATIVE:
   public :: deriv
 
-
+  !OUTER-PRODUCT:
+  public :: outerprod
 
 
   !SORT 2D:
@@ -108,11 +109,26 @@ module TOOLS
           z2_check_convergence_function_local
   end interface check_convergence_local
 
-
-
-
+  interface outerprod
+     module procedure outerprod_d,outerprod_c
+  end interface outerprod
 
 contains
+
+
+  function outerprod_d(a,b) result(outerprod)
+    real(8), dimension(:), intent(in)   :: a,b
+    real(8), dimension(size(a),size(b)) :: outerprod
+    outerprod = spread(a,dim=2,ncopies=size(b)) * &
+         spread(b,dim=1,ncopies=size(a))
+  end function outerprod_d
+  function outerprod_c(a,b) result(outerprod)
+    complex(8), dimension(:), intent(in)   :: a,b
+    complex(8), dimension(size(a),size(b)) :: outerprod
+    outerprod = spread(a,dim=2,ncopies=size(b)) * &
+         spread(b,dim=1,ncopies=size(a))
+  end function outerprod_c
+
 
 
   subroutine start_loop(loop,max,name,unit,id)

@@ -11,9 +11,9 @@ subroutine splotP_II(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   logical          :: rw
   rw=.false.;if(present(append))rw=append
   if(rw)then
-     open(719,file=adjustl(trim(pname)),position="append")
+     open(719,file=reg((pname)),position="append")
   else
-     open(719,file=adjustl(trim(pname)))
+     open(719,file=reg((pname)))
   endif
   if(present(Y8))then
      write(719,"(9(I15))")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
@@ -47,9 +47,9 @@ subroutine splotP_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   rw=.false.;if(present(append))rw=append
   if(rw)then
 
-     open(719,file=adjustl(trim(pname)),position="append")
+     open(719,file=reg((pname)),position="append")
   else
-     open(719,file=adjustl(trim(pname)))
+     open(719,file=reg((pname)))
   endif
   if(present(Y8))then
      write(719,"(I15,8(F18.10))")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
@@ -83,9 +83,9 @@ subroutine splotP_IC(pname,X,Y1,Y2,Y3,Y4,append)
   rw=.false.;if(present(append))rw=append
   if(rw)then
 
-     open(719,file=adjustl(trim(pname)),position="append")
+     open(719,file=reg((pname)),position="append")
   else
-     open(719,file=adjustl(trim(pname)))
+     open(719,file=reg((pname)))
   endif
   if(present(Y4))then
      write(719,"(I15,8(F18.10))")X,dreal(Y1),dimag(Y1),&
@@ -113,9 +113,9 @@ subroutine splotP_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   rw=.false.;if(present(append))rw=append
   if(rw)then
 
-     open(719,file=adjustl(trim(pname)),position="append")
+     open(719,file=reg((pname)),position="append")
   else
-     open(719,file=adjustl(trim(pname)))
+     open(719,file=reg((pname)))
   endif
   if(present(Y8))then
      write(719,"(F18.10,8I15)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
@@ -149,9 +149,9 @@ subroutine splotP_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   rw=.false.;if(present(append))rw=append
   if(rw)then
 
-     open(719,file=adjustl(trim(pname)),position="append")
+     open(719,file=reg((pname)),position="append")
   else
-     open(719,file=adjustl(trim(pname)))
+     open(719,file=reg((pname)))
   endif
   if(present(Y8))then
      write(719,"(9F18.10)")X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8
@@ -182,9 +182,9 @@ subroutine splotP_RC(pname,X,Y1,Y2,Y3,Y4,append)
   complex(8),optional :: Y2,Y3,Y4
   logical,optional    :: append
   if(present(append).AND. append.eqv..true.)then
-     open(719,file=adjustl(trim(pname)),position="append")
+     open(719,file=reg((pname)),position="append")
   else
-     open(719,file=adjustl(trim(pname)))
+     open(719,file=reg((pname)))
   endif
   if(present(Y4))then
      write(719,"(F18.10,8(F18.10))")X,dreal(Y1),dimag(Y1),&
