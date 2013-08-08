@@ -197,6 +197,9 @@
     !HYPERCUBIC/GAUSSIAN DENS:
     public :: dens_hyperc
 
+    !2D-SQUARE LATTICE ANALYTIC DOS:
+    public :: dens_2dsquare
+
   contains
 
 
@@ -330,6 +333,21 @@
       dens_hyperc = (1/(t1_*sqrt(pi2)))*exp(-(x**2)/(2.d0*t1_**2))
       return
     end function dens_hyperc
+
+
+    function dens_2dsquare(x,ts) result(dos)
+      real(8),intent(in)          :: x
+      real(8),intent(in),optional :: ts
+      real(8)                     :: wband,y,kint,eint,dos
+      wband=4.d0;if(present(ts))wband=4.d0*ts
+
+      dos=0.d0
+      if(abs(x)<=wband)then
+         y=0.5d0*(x/wband)**2-1.d0
+         call comelp(y,kint,eint)
+         dos=2.d0/wband/pi**2*kint!*heaviside(wband-abs(y))
+      endif
+    end function dens_2dsquare
 
 
   END module FUNCTIONS

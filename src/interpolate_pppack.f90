@@ -4567,52 +4567,49 @@ subroutine putit ( t, kpm, left, scrtch, dbiatx, q, nrow, b )
 
   return
 end subroutine putit
-subroutine r8vec_print ( n, a, title )
 
-  !*****************************************************************************80
-  !
-  !! R8VEC_PRINT prints an R8VEC.
-  !
-  !  Discussion:
-  !
-  !    An R8VEC is an array of double precision real values.
-  !
-  !  Modified:
-  !
-  !    22 August 2000
-  !
-  !  Author:
-  !
-  !    John Burkardt
-  !
-  !  Parameters:
-  !
-  !    Input, integer ( kind = 4 ) N, the number of components of the vector.
-  !
-  !    Input, real ( kind = 8 ) A(N), the vector to be printed.
-  !
-  !    Input, character ( len = * ) TITLE, an optional title.
-  !
-  implicit none
 
-  integer ( kind = 4 ) n
+! subroutine r8vec_print ( n, a, title )
+!   !*****************************************************************************80
+!   !
+!   !! R8VEC_PRINT prints an R8VEC.
+!   !
+!   !  Discussion:
+!   !
+!   !    An R8VEC is an array of double precision real values.
+!   !
+!   !  Modified:
+!   !
+!   !    22 August 2000
+!   !
+!   !  Author:
+!   !
+!   !    John Burkardt
+!   !
+!   !  Parameters:
+!   !
+!   !    Input, integer ( kind = 4 ) N, the number of components of the vector.
+!   !
+!   !    Input, real ( kind = 8 ) A(N), the vector to be printed.
+!   !
+!   !    Input, character ( len = * ) TITLE, an optional title.
+!   !
+!   implicit none
+!   integer ( kind = 4 ) n
+!   real ( kind = 8 ) a(n)
+!   integer ( kind = 4 ) i
+!   character ( len = * ) title
+!   if ( 0 < len_trim ( title ) ) then
+!      write ( *, '(a)' ) ' '
+!      write ( *, '(a)' ) trim ( title )
+!   end if
+!   write ( *, '(a)' ) ' '
+!   do i = 1, n
+!      write ( *, '(2x,i8,2x,g16.8)' ) i, a(i)
+!   end do
+!   return
+! end subroutine r8vec_print
 
-  real ( kind = 8 ) a(n)
-  integer ( kind = 4 ) i
-  character ( len = * ) title
-
-  if ( 0 < len_trim ( title ) ) then
-     write ( *, '(a)' ) ' '
-     write ( *, '(a)' ) trim ( title )
-  end if
-
-  write ( *, '(a)' ) ' '
-  do i = 1, n
-     write ( *, '(2x,i8,2x,g16.8)' ) i, a(i)
-  end do
-
-  return
-end subroutine r8vec_print
 function round ( x, size )
 
   !*****************************************************************************80
@@ -7382,7 +7379,7 @@ end subroutine titand
 !   write ( *, '(a,i8)' ) '  B-spline order K = ', k
 !   write ( *, '(a,i8)' ) '  N = ', n
 
-!   call r8vec_print ( n+k, t, '  Knot sequence T:' )
+!   !call r8vec_print ( n+k, t, '  Knot sequence T:' )
 
 !   write ( *, '(a)' ) ' '
 !   write ( *, '(a)' ) &

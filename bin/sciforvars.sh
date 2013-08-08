@@ -24,15 +24,24 @@ if [ -z "${LD_LIBRARY_PATH}" ];then
 else
     export LD_LIBRARY_PATH=${SFDIR}/lib:$LD_LIBRARY_PATH
 fi
-if [ -z "${MANPATH}" ];then
-    export MANPATH=${SFDIR}/man
-else
-    export MANPATH=${SFDIR}/man:$MANPATH
-fi
+
 if [ -z "${LIBRARY_PATH}" ];then
     export LIBRARY_PATH=${SFDIR}/lib
 else
     export LIBRARY_PATH=${SFDIR}/lib:$LIBRARY_PATH
+fi
+
+if [ -z "${FPATH}" ];then
+    export FPATH=${SFDIR}/include
+else
+    export FPATH=${SFDIR}/include:$FPATH
+fi
+
+
+if [ -z "${MANPATH}" ];then
+    export MANPATH=${SFDIR}/man
+else
+    export MANPATH=${SFDIR}/man:$MANPATH
 fi
 
 source $SFETC/library.conf
@@ -62,6 +71,7 @@ fi
 #ADD FFTW_3 to ENV
 if [ ! -z "$sf_fftw_dir" ];then
     export INCLUDE=$sf_fftw_dir/include:${INCLUDE}
+    export FPATH=$sf_fftw_dir/include:${FPATH}
     export LD_LIBRARY_PATH=$sf_fftw_dir/lib:$LD_LIBRARY_PATH
     export LIBRARY_PATH=$sf_fftw_dir/lib:$LIBRARY_PATH
     export FFTW_LIB=$sf_fftw_dir
