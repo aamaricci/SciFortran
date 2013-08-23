@@ -14,10 +14,10 @@ SFINCLUDE_DEB= -I${SFMODS}/debug
 #SETUP MATHLIB: the main mathematical library. If MKL is available use it, if not use just std lapack and blas
 ifdef MKLROOT
  ifeq ($(SFOS),Linux)
-    MATHLIB     = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core.a -lpthread -lm
+    MATHLIB     = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
  endif
  ifeq ($(SFOS),Darwin)
-    MATHLIB	= -lmkl_intel_lp64 -lmkl_sequential -lmkl_core.a -lpthread -lm
+    MATHLIB	= -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
  endif
 else
 MATHLIB	    = -llapack -lblas

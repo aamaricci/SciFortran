@@ -76,6 +76,10 @@ module INTEGRATE
 
 contains
 
+
+
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE: Trapezoidal rule for data function integration
   !+-----------------------------------------------------------------+
@@ -161,9 +165,80 @@ contains
   end function c_trapz_nonlin
 
 
+
   !+-----------------------------------------------------------------+
   !PURPOSE: Simpson rule for data function integration
   !+-----------------------------------------------------------------+
+  function int_simps(dh,f) result(int_value)
+    real(8) :: dh
+    real(8) :: f(:),wt(size(f))
+    real(8) :: int_value
+    int_value=0.d0
+    call get_quadrature_weights(wt)
+    int_value = sum(f(:)*wt(:))*dh
+  contains
+    subroutine get_quadrature_weights(wt,nrk)
+      real(8),dimension(:) :: wt
+      integer,optional     :: nrk
+      integer              :: nrk_
+      integer              :: N
+      nrk_=4;if(present(nrk))nrk_=nrk
+      N=size(wt)
+      if(nrk_==4)then
+         select case(n)           !n>=3
+         case (1)
+            wt = 1.d0
+         case (2)
+            wt = 0.5d0
+         case (3)                 !simpson's rule
+            wt(1)=1.d0/3.d0
+            wt(2)=4.d0/3.d0
+            wt(3)=1.d0/3.d0
+         case(4)                  !simpson's 3/8 rule
+            wt(1)=3.d0/8.d0
+            wt(2)=9.d0/8.d0
+            wt(3)=9.d0/8.d0
+            wt(4)=3.d0/8.d0
+         case(5)                  !Simpson's rule (E,O n)
+            wt(1)=1.d0/3.d0
+            wt(2)=4.d0/3.d0
+            wt(3)=2.d0/3.d0
+            wt(4)=4.d0/3.d0
+            wt(5)=1.d0/3.d0
+         case default             !Simpson's rule n>=6
+            if(mod(n-1,2)==0)then
+               wt(1)=1.d0/3.d0
+               wt(n)=1.d0/3.d0
+               wt(2:n-1:2)=4.d0/3.d0
+               wt(3:n-2:2)=2.d0/3.d0
+            else
+               wt(1)=1.d0/3.d0
+               wt(2:n-4:2)=4.d0/3.d0
+               wt(3:n-5:2)=2.d0/3.d0
+               wt(n-3)=17.d0/24.d0
+               wt(n-2)=9.d0/8.d0
+               wt(n-1)=9.d0/8.d0
+               wt(n)=3.d0/8.d0
+            endif
+            ! wt(1)=3.d0/8.d0
+            ! wt(2)=7.d0/6.d0
+            ! wt(3)=23.d0/24.d0
+            ! wt(4:n-3)=1.d0
+            ! wt(n-2)=23.d0/24.d0
+            ! wt(n-1)=7.d0/6.d0
+            ! wt(n)=3.d0/8.d0
+         end select
+      elseif(nrk_==2)then
+         wt(1) = 0.5d0
+         wt(2:n-1)=1.d0
+         wt(n) = 0.5d0
+      else
+         stop "error in +get_quadrature_weights: nrk != 2,4" 
+      end if
+    end subroutine get_quadrature_weights
+  end function  int_simps
+
+
   function d_simpson_ab(a,b,f) result(sum)
     integer :: n
     real(8) :: a,b
@@ -174,36 +249,33 @@ contains
        sum=0.d0
        return
     endif
-    n=size(f)
-    m=n-1
-    dh=(b-a)/real(m,8)
-    p=(m/2)*2
+    N=size(f)
     sum1=0.d0
     sum2=0.d0
     sum=0.d0
-    if(p==m)then
-       do i=2,m,2
+    int1=0.d0
+    int2=0.d0
+    if(mod(n-1,2)==0)then                !if n-1 is even:
+       do i=2,N-1,2
           sum1 = sum1 + f(i)
        enddo
-       do i=3,m-1,2
+       do i=3,N-2,2
           sum2 = sum2 + f(i)
        enddo
        sum = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n))/3.d0
        sum = sum*dh
-    else
-       if (m>=5) then
-          mm=m-3
-          do i=2,m-3,2
+    else                        !if n-1 is odd, use Simpson's for N-3 slices + 3/8rule for the last
+
+       if (N>=6) then
+          do i=2,N-4,2
              sum1 = sum1 + f(i)
           enddo
-          mmm=mm-1
-          do i=3,m-4,2
+          do i=3,N-5,2
              sum2 = sum2 + f(i)
           enddo
-          int1 = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n-3))/(3.d0*(m-3))
-          int1 = ((b-3.d0*dh)-a)*int1
+          int1 = dh*(f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n-3))/3.d0
        endif
-       int2 = 3.d0*dh*(f(n-3)+3.d0*(f(n-2)+f(n-1))+f(n))/8.d0
+       int2 = 3.d0*dh*(f(n-3)+3.d0*f(n-2)+3.d0*f(n-1)+f(n))/8.d0
        sum  = int1 + int2
     end if
   end function d_simpson_ab
