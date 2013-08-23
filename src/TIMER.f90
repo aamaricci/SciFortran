@@ -31,12 +31,12 @@ module TIMER
   integer,parameter :: secs_in_one_hour=3600
   integer,parameter :: secs_in_one_min=60
 
-
+  integer,save :: Funit
 
   public :: start_timer,stop_timer
+  public :: start_progress,stop_progress
   public :: eta
-
-  public :: start_bar,stop_bar
+  public :: progress
   public :: progress_bar
   public :: progress_bar_eta
 
@@ -59,15 +59,19 @@ contains
        time         =0.0
     endif
   end subroutine start_timer
-
-
-
+  !
+  subroutine start_progress(unit)
+    integer,optional :: unit
+    funit=6;if(present(unit))funit=unit
+    open(funit,carriagecontrol='fortran')
+    call start_timer
+  end subroutine start_progress
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : stop the timer and get the partial time
   !+-------------------------------------------------------------------+
   subroutine stop_timer
-    integer(4),dimension(8) :: itimer
+    integer,dimension(8) :: itimer
     if(mpiID==0)then
        call date_and_time(values=timer_stop(timer_index,:))
        itimer=time_difference(timer_stop(timer_index,:),timer_start(timer_index,:))
@@ -81,6 +85,11 @@ contains
        endif
     endif
   end subroutine stop_timer
+  !
+  subroutine stop_progress
+    close(funit)
+    call stop_timer
+  end subroutine stop_progress
 
 
   subroutine print_total_time(dummy)
@@ -249,21 +258,16 @@ contains
   !+-------------------------------------------------------------------+
   !TYPE     : Subroutine
   !+-------------------------------------------------------------------+
-  subroutine start_bar(funit)
-    integer,optional :: funit
-    integer :: funit_
-    funit_=6;if(present(funit))funit_=funit
-    open(unit=funit_, carriagecontrol='fortran')
-    call start_timer
-  end subroutine start_bar
+  subroutine progress(i,imax)
+    integer            :: i,imax,k,jmax
+    character(len=7)  :: bar="> ???% "
+    if(mpiID==0)then
+       write(unit=bar(3:5),fmt="(I3)")100*i/imax
+       write(unit=funit,fmt="(A1,A1,A7)")'+',char(13), bar
+    endif
+  end subroutine progress
 
 
-  !+-------------------------------------------------------------------+
-  !TYPE     : Subroutine
-  !+-------------------------------------------------------------------+
-  subroutine stop_bar
-    call stop_timer
-  end subroutine stop_bar
 
   !+-------------------------------------------------------------------+
   !TYPE     : Subroutine
@@ -277,7 +281,7 @@ contains
        do k=1,jmax
           bar(6+k:6+k)="*"
        enddo
-       write(unit=6,fmt="(A1,A1,A57)")'+',char(13), bar
+       write(unit=funit,fmt="(A1,A1,A57)")'+',char(13), bar
     endif
   end subroutine progress_bar
 
@@ -307,7 +311,7 @@ contains
        do k=1,jmax
           bar(6+k:6+k)="*"
        enddo
-       write(unit=6,fmt="(A1,A1,A62,I2,A1,I2.2,A1,I2.2,A1,I3.3)")'+',char(13), bar,h,":",m,":",s,".",ms
+       write(unit=funit,fmt="(A1,A1,A62,I2,A1,I2.2,A1,I2.2,A1,I3.3)")'+',char(13), bar,h,":",m,":",s,".",ms
     endif
   end subroutine progress_bar_eta
 
