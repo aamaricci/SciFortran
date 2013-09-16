@@ -143,9 +143,9 @@ contains
     if(mpiID==id_)then
        write(unit_,*)
        if(.not.present(max))then
-          write(unit_,"(A,I5)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,bold("-----")
+          write(unit_,"(A,I5)")reg(bold("-----"//trim(adjustl(trim(loop_name))))),loop,bold("-----")
        else
-          write(unit_,"(A,I5,A,I5,A)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,&
+          write(unit_,"(A,I5,A,I5,A)")reg(bold("-----"//trim(adjustl(trim(loop_name))))),loop,&
                bold(" (max:"),max,bold(")-----")
        endif
        call start_timer

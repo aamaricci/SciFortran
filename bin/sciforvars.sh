@@ -37,7 +37,6 @@ else
     export FPATH=${SFDIR}/include:$FPATH
 fi
 
-
 if [ -z "${MANPATH}" ];then
     export MANPATH=${SFDIR}/man
 else
@@ -45,6 +44,7 @@ else
 fi
 
 source $SFETC/library.conf
+
 
 #IF MKL is not available then set standard LAPACK/BLAS as default MATH library:
 #Lapack/Blas are compiled with the chosen compiler at the installation.
@@ -67,7 +67,6 @@ if [ -z "$MKLROOT" ];then		# standard mkl variable, if defined you are using MKL
     fi
 fi
 
-
 #ADD FFTW_3 to ENV
 if [ ! -z "$sf_fftw_dir" ];then
     export INCLUDE=$sf_fftw_dir/include:${INCLUDE}
@@ -80,65 +79,39 @@ fi
 #ADD FFTPACK to ENV
 if [ ! -z "$sf_fftpack_dir" ];then
     export INCLUDE=$sf_fftpack_dir/include:${INCLUDE}
+    export FPATH=$sf_fftpack_dir/include:${FPATH}
+    export CPATH=$sf_fftpack_dir/include:${CPATH}
     export LD_LIBRARY_PATH=$sf_fftpack_dir/lib:$LD_LIBRARY_PATH
     export LIBRARY_PATH=$sf_fftpack_dir/lib:$LIBRARY_PATH
     export FFTPACK_LIB=$sf_fftpack_dir
+fi
+
+#ADD NFFTW to ENV
+if [ ! -z "$sf_nfft_dir" ];then
+    export INCLUDE=$sf_nfft_dir/include:${INCLUDE}
+    export FPATH=$sf_nfft_dir/include:${FPATH}
+    export CPATH=$sf_nfft_dir/include:${CPATH}
+    export LD_LIBRARY_PATH=$sf_nfft_dir/lib:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=$sf_nfft_dir/lib:$LIBRARY_PATH
+    export NFFT_LIB=$sf_nfft_dir
 fi
 
 
 #ADD ARPACK to ENV
 if [ ! -z "$sf_arpack_dir" ];then
     export INCLUDE=$sf_arpack_dir/include:${INCLUDE}
+    export FPATH=$sf_arpack_dir/include:${INCLUDE}
     export LD_LIBRARY_PATH=$sf_arpack_dir/lib:$LD_LIBRARY_PATH
     export LIBRARY_PATH=$sf_arpack_dir/lib:$LIBRARY_PATH
     export ARPACK_LIB=$sf_arpack_dir
 fi
 
-
 #ADD MINPACK to ENV
 if [ ! -z "$sf_minpack_dir" ];then
     export INCLUDE=$sf_minpack_dir/include:${INCLUDE}
+    export FPATH=$sf_minpack_dir/include:${FPATH}
     export LD_LIBRARY_PATH=$sf_minpack_dir/lib:$LD_LIBRARY_PATH
     export LIBRARY_PATH=$sf_minpack_dir/lib:$LIBRARY_PATH
     export MINPACK_LIB=$sf_minpack_dir
 fi
 
-
-
-##################################################################
-#REPO: THIS SOFTWARE SHOULD BE MADE AVAILABLE **EXTERNALLY* W/ SCIFOR LIB.
-#SCIFOR DOES NOT RELY ON THESE LIBS, THOUGH SOME ROUTINES MAY USE PART OF THEM. 
-#E.G. DLPLOT DEPENDS ON DISLIN
-# #ADD DISLIN if defined
-# if [ ! -z "${DISLIN}" ];then
-#     export PATH=$DISLIN/bin:$PATH
-#     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DISLIN
-#     export LIBRARY_PATH=$LIBRARY_PATH:$DISLIN
-# fi
-
-# if [ ! -z "${SFMINPACK}" ];then
-#     export LD_LIBRARY_PATH=${SFMINPACK}:$LD_LIBRARY_PATH
-#     export LIBRARY_PATH=${SFMINPACK}:$LIBRARY_PATH
-# fi
-
-# #ADD CUDA (C.Weber) if defined
-# if [ ! -z "${CUDADIR}" ]; then
-#     export PATH=$CUDADIR/bin:$PATH
-#     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDADIR/lib64
-#     export LIBRARY_PATH=$LIBRARY_PATH:$CUDADIR/lib64
-# fi
-
-# #ADD GSL if defined
-# if [ ! -z "$GSLDIR}" ];then
-#     export INCLUDE=${GSLDIR}/include:${INCLUDE}
-#     export LD_LIBRARY_PATH=${GSLDIR}/lib:$LD_LIBRARY_PATH
-#     export LIBRARY_PATH=${GSLDIR}/lib:$LIBRARY_PATH
-#     export MANPATH=$GSLDIR/share/man:$MANPATH
-# fi
-
-# #ADD FortranGSL if definted
-# if [ ! -z "${FGSLDIR}" ];then
-#     export INCLUDE=${FGSLDIR}/include:${INCLUDE}
-#     export LD_LIBRARY_PATH=${FGSLDIR}/lib:$LD_LIBRARY_PATH
-#     export LIBRARY_PATH=${FGSLDIR}/lib:$LIBRARY_PATH
-# fi

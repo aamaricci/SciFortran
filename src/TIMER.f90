@@ -31,7 +31,7 @@ module TIMER
   integer,parameter :: secs_in_one_hour=3600
   integer,parameter :: secs_in_one_min=60
 
-  integer,save :: Funit
+  integer  :: Funit
 
   public :: start_timer,stop_timer
   public :: start_progress,stop_progress
