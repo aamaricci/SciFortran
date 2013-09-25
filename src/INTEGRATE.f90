@@ -17,37 +17,6 @@ module INTEGRATE
   integer              :: finterImin,finterImax,finterN
 
 
-  !NOW THESE ARE IN INTERPOLATE
-  !MUST USE INTERPOLATE IF WE WANNA USE INTERPOLATE/FUNCTIONALIZED ARRAY
-  !FOR INTEGRATION
-  ! type,public :: d_finter
-  !    integer                      :: Imin,Imax,Iorder
-  !    real(8),dimension(:),pointer :: X,F
-  !    logical                      :: status=.false.
-  ! end type d_finter
-  ! type,public :: c_finter
-  !    integer                         :: Imin,Imax,Iorder
-  !    real(8),dimension(:),pointer    :: X
-  !    complex(8),dimension(:),pointer :: F
-  !    logical                         :: status=.false.
-  ! end type c_finter
-
-  ! interface init_finter
-  !    module procedure d_init_finter,c_init_finter
-  ! end interface init_finter
-
-  ! interface kill_finter
-  !    module procedure d_kill_finter,c_kill_finter
-  ! end interface kill_finter
-
-  ! interface set_finter
-  !    module procedure d_set_finter,c_set_finter
-  ! end interface set_finter
-
-  ! interface finter_func
-  !    module procedure d_finter_func,c_finter_func
-  ! end interface finter_func
-
   interface trapz
      module procedure &
           d_trapz_ab,c_trapz_ab,&
@@ -62,24 +31,81 @@ module INTEGRATE
           d_simpson_nonlin,c_simpson_nonlin
   end interface simps
 
+  interface int_simps
+     module procedure d_int_simps,c_int_simps
+  end interface int_simps
 
   public :: kramers_kronig
   public :: kronig
   public :: trapz
   public :: simps
-
-  ! public :: init_finter
-  ! public :: kill_finter
-  ! public :: set_finter
-  ! public :: finter_func
+  public :: int_simps
 
 
 contains
 
+  !+-----------------------------------------------------------------+
+  !PURPOSE: obtain quadrature weights for higher order integration (2,4)
+  !+-----------------------------------------------------------------+
+  subroutine get_quadrature_weights(wt,nrk)
+    real(8),dimension(:) :: wt
+    integer,optional     :: nrk
+    integer              :: nrk_
+    integer              :: N
+    nrk_=4;if(present(nrk))nrk_=nrk
+    N=size(wt)
+    if(nrk_==4)then
+       select case(n)           !n>=3
+       case (1)
+          wt = 1.d0
+       case (2)
+          wt = 0.5d0
+       case (3)                 !simpson's rule
+          wt(1)=1.d0/3.d0
+          wt(2)=4.d0/3.d0
+          wt(3)=1.d0/3.d0
+       case(4)                  !simpson's 3/8 rule
+          wt(1)=3.d0/8.d0
+          wt(2)=9.d0/8.d0
+          wt(3)=9.d0/8.d0
+          wt(4)=3.d0/8.d0
+       case(5)                  !Simpson's rule (E,O n)
+          wt(1)=1.d0/3.d0
+          wt(2)=4.d0/3.d0
+          wt(3)=2.d0/3.d0
+          wt(4)=4.d0/3.d0
+          wt(5)=1.d0/3.d0
+       case default             !Simpson's rule n>=6
+          if(mod(n-1,2)==0)then
+             wt(1)=1.d0/3.d0
+             wt(n)=1.d0/3.d0
+             wt(2:n-1:2)=4.d0/3.d0
+             wt(3:n-2:2)=2.d0/3.d0
+          else
+             wt(1)=1.d0/3.d0
+             wt(2:n-4:2)=4.d0/3.d0
+             wt(3:n-5:2)=2.d0/3.d0
+             wt(n-3)=17.d0/24.d0
+             wt(n-2)=9.d0/8.d0
+             wt(n-1)=9.d0/8.d0
+             wt(n)=3.d0/8.d0
+          endif
+       end select
+    elseif(nrk_==2)then
+       wt(1) = 0.5d0
+       wt(2:n-1)=1.d0
+       wt(n) = 0.5d0
+    else
+       stop "error in +get_quadrature_weights: nrk != 2,4" 
+    end if
+  end subroutine get_quadrature_weights
 
 
 
 
+  !###################################################################
+  ! TRAPEZIOD or 2nd-ORDER METHODS:
+  !###################################################################
   !+-----------------------------------------------------------------+
   !PURPOSE: Trapezoidal rule for data function integration
   !+-----------------------------------------------------------------+
@@ -95,7 +121,7 @@ contains
        sum = sum+(f(i+1)+f(i))*dh
     enddo
   end function d_trapz_ab
-
+  !
   function d_trapz_dh(dh,f) result(sum)
     real(8) :: dh
     real(8) :: f(:)
@@ -107,7 +133,7 @@ contains
        sum = sum+(f(i+1)+f(i))*dh/2.d0
     enddo
   end function d_trapz_dh
-
+  !
   function c_trapz_ab(a,b,f) result(sum)
     real(8)    :: a,b,dh
     complex(8) :: f(:)
@@ -120,7 +146,7 @@ contains
        sum = sum+(f(i+1)+f(i))*dh
     enddo
   end function c_trapz_ab
-
+  !
   function c_trapz_dh(dh,f) result(sum)
     real(8)    :: dh
     complex(8) :: f(:)
@@ -133,6 +159,12 @@ contains
     enddo
   end function c_trapz_dh
 
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE: Simpson rule for data function integration on a non-linear
+  ! grid (input) using explicit formulae
+  !+-----------------------------------------------------------------+
   function d_trapz_nonlin(x,f) result(sum)
     real(8) :: a,b,dh
     real(8) :: f(:),x(size(f))
@@ -166,93 +198,55 @@ contains
 
 
 
+
+
+
+
+  !###################################################################
+  ! SIMPSON or 4th-ORDER METHODS:
+  !###################################################################
   !+-----------------------------------------------------------------+
-  !PURPOSE: Simpson rule for data function integration
+  !PURPOSE: Simpson rule for data function integration using weights
   !+-----------------------------------------------------------------+
-  function int_simps(dh,f) result(int_value)
+  function d_int_simps(dh,f) result(int_value)
     real(8) :: dh
     real(8) :: f(:),wt(size(f))
     real(8) :: int_value
     int_value=0.d0
     call get_quadrature_weights(wt)
     int_value = sum(f(:)*wt(:))*dh
-  contains
-    subroutine get_quadrature_weights(wt,nrk)
-      real(8),dimension(:) :: wt
-      integer,optional     :: nrk
-      integer              :: nrk_
-      integer              :: N
-      nrk_=4;if(present(nrk))nrk_=nrk
-      N=size(wt)
-      if(nrk_==4)then
-         select case(n)           !n>=3
-         case (1)
-            wt = 1.d0
-         case (2)
-            wt = 0.5d0
-         case (3)                 !simpson's rule
-            wt(1)=1.d0/3.d0
-            wt(2)=4.d0/3.d0
-            wt(3)=1.d0/3.d0
-         case(4)                  !simpson's 3/8 rule
-            wt(1)=3.d0/8.d0
-            wt(2)=9.d0/8.d0
-            wt(3)=9.d0/8.d0
-            wt(4)=3.d0/8.d0
-         case(5)                  !Simpson's rule (E,O n)
-            wt(1)=1.d0/3.d0
-            wt(2)=4.d0/3.d0
-            wt(3)=2.d0/3.d0
-            wt(4)=4.d0/3.d0
-            wt(5)=1.d0/3.d0
-         case default             !Simpson's rule n>=6
-            if(mod(n-1,2)==0)then
-               wt(1)=1.d0/3.d0
-               wt(n)=1.d0/3.d0
-               wt(2:n-1:2)=4.d0/3.d0
-               wt(3:n-2:2)=2.d0/3.d0
-            else
-               wt(1)=1.d0/3.d0
-               wt(2:n-4:2)=4.d0/3.d0
-               wt(3:n-5:2)=2.d0/3.d0
-               wt(n-3)=17.d0/24.d0
-               wt(n-2)=9.d0/8.d0
-               wt(n-1)=9.d0/8.d0
-               wt(n)=3.d0/8.d0
-            endif
-            ! wt(1)=3.d0/8.d0
-            ! wt(2)=7.d0/6.d0
-            ! wt(3)=23.d0/24.d0
-            ! wt(4:n-3)=1.d0
-            ! wt(n-2)=23.d0/24.d0
-            ! wt(n-1)=7.d0/6.d0
-            ! wt(n)=3.d0/8.d0
-         end select
-      elseif(nrk_==2)then
-         wt(1) = 0.5d0
-         wt(2:n-1)=1.d0
-         wt(n) = 0.5d0
-      else
-         stop "error in +get_quadrature_weights: nrk != 2,4" 
-      end if
-    end subroutine get_quadrature_weights
-  end function  int_simps
+  end function  d_int_simps
+  !
+  function c_int_simps(dh,f) result(int_value)
+    real(8) :: dh
+    complex(8) :: f(:)
+    real(8) :: wt(size(f))
+    complex(8) :: int_value
+    int_value=cmplx(0.d0,0.d0,8)
+    call get_quadrature_weights(wt)
+    int_value = sum(f(:)*wt(:))*dh
+  end function  c_int_simps
 
 
-  function d_simpson_ab(a,b,f) result(sum)
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE: Simpson rule for data function integration using explicit 
+  ! formulae
+  !+-----------------------------------------------------------------+
+  function d_simpson_dh(dh,f) result(sum)
     integer :: n
-    real(8) :: a,b
     real(8) :: f(:)
     real(8) :: dh,sum,sum1,sum2,int1,int2
     integer :: i,p,m,mm,mmm
-    if(b==a)then
+    N=size(f)
+    if(N==1)then
        sum=0.d0
        return
     endif
-    N=size(f)
     sum1=0.d0
     sum2=0.d0
-    sum=0.d0
+    sum =0.d0
     int1=0.d0
     int2=0.d0
     if(mod(n-1,2)==0)then                !if n-1 is even:
@@ -262,10 +256,8 @@ contains
        do i=3,N-2,2
           sum2 = sum2 + f(i)
        enddo
-       sum = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n))/3.d0
-       sum = sum*dh
+       sum = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n))*dh/3.d0
     else                        !if n-1 is odd, use Simpson's for N-3 slices + 3/8rule for the last
-
        if (N>=6) then
           do i=2,N-4,2
              sum1 = sum1 + f(i)
@@ -273,39 +265,81 @@ contains
           do i=3,N-5,2
              sum2 = sum2 + f(i)
           enddo
-          int1 = dh*(f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n-3))/3.d0
+          int1 = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n-3))*dh/3.d0
        endif
-       int2 = 3.d0*dh*(f(n-3)+3.d0*f(n-2)+3.d0*f(n-1)+f(n))/8.d0
+       int2 = (f(n-3)+3.d0*f(n-2)+3.d0*f(n-1)+f(n))*dh*3.d0/8.d0
        sum  = int1 + int2
     end if
-  end function d_simpson_ab
-
-  function c_simpson_ab(a,b,f) result(sum)
-    real(8)    :: a,b
-    complex(8) :: f(:)
-    complex(8) :: sum
-    real(8)    :: rsum,isum
-    rsum = d_simpson_ab(a,b,dreal(f))
-    isum = d_simpson_ab(a,b,dimag(f))
-    sum  = cmplx(rsum,isum,8)
-  end function c_simpson_ab
-
-  function d_simpson_dh(dh,f) result(sum)
+  end function d_simpson_dh
+  !
+  function c_simpson_dh(dh,f) result(sum)
+    integer              :: n
+    complex(8)           :: f(:)
+    real(8)              :: dh
+    complex(8)           :: sum,sum1,sum2,int1,int2
+    integer              :: i,p,m
+    complex(8),parameter :: zero=cmplx(0.d0,0.d0,8)
+    N=size(f)
+    if(N==1)then
+       sum=zero
+       return
+    endif
+    sum1=zero
+    sum2=zero
+    sum =zero
+    int1=zero
+    int2=zero
+    if(mod(n-1,2)==0)then                !if n-1 is even:
+       do i=2,N-1,2
+          sum1 = sum1 + f(i)
+       enddo
+       do i=3,N-2,2
+          sum2 = sum2 + f(i)
+       enddo
+       sum = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n))*dh/3.d0
+    else                        !if n-1 is odd, use Simpson's for N-3 slices + 3/8rule for the last
+       if (N>=6) then
+          do i=2,N-4,2
+             sum1 = sum1 + f(i)
+          enddo
+          do i=3,N-5,2
+             sum2 = sum2 + f(i)
+          enddo
+          int1 = (f(1) + 4.d0*sum1 + 2.d0*sum2 + f(n-3))*dh/3.d0
+       endif
+       int2 = (f(n-3)+3.d0*f(n-2)+3.d0*f(n-1)+f(n))*dh*3.d0/8.d0
+       sum  = int1 + int2
+    end if
+  end function c_simpson_dh
+  !
+  function d_simpson_ab(a,b,f) result(sum)
     real(8) :: dh,a,b
     real(8) :: f(:)
     real(8) :: sum
-    a=0.d0 ; b=size(f)*dh-dh
-    sum = d_simpson_ab(a,b,f)
-  end function d_simpson_dh
-
-  function c_simpson_dh(dh,f) result(sum)
+    integer :: L
+    L=size(f)
+    dh=(b-a)/real(L-1,8)
+    sum = d_simpson_dh(dh,f)
+  end function d_simpson_ab
+  !
+  function c_simpson_ab(a,b,f) result(sum)
     real(8)    :: dh,a,b
     complex(8) :: f(:)
     complex(8) :: sum
-    a=0.d0 ; b=size(f)*dh-dh
-    sum = c_simpson_ab(a,b,f)
-  end function c_simpson_dh
+    integer    :: L
+    L=size(f)
+    dh=(b-a)/real(L-1,8)
+    sum = c_simpson_dh(dh,f)
+  end function c_simpson_ab
 
+
+
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE: Simpson rule for data function integration on a non-linear
+  ! grid (input) using explicit formulae
+  !+-----------------------------------------------------------------+
   function d_simpson_nonlin(x,f) result(sum)
     real(8) :: f(:),x(size(f)),dx(size(f)+1)
     real(8) :: sum,sum1,sum2,sum3
@@ -338,7 +372,7 @@ contains
     enddo
     sum = sum1+sum2+sum3
   end function d_simpson_nonlin
-
+  !
   function c_simpson_nonlin(x,f) result(sum)
     complex(8) :: f(:),sum
     real(8)    :: x(size(f)),rsum,isum
@@ -389,6 +423,8 @@ contains
 
 
 
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : A slower (but possibly more accurate) Kramers-Kr\"onig 
   ! integral, using local interpolation w/ polynomial of order-5
@@ -402,7 +438,6 @@ contains
     real(8)            :: EPSABS,EPSREL,A,B,C,ABSERR
     real(8)            :: ALIST(LIMIT),BLIST(LIMIT),ELIST(LIMIT),RLIST(LIMIT)
     integer            :: IORD(limit)
-
     if(allocated(finterX))deallocate(finterX)
     if(allocated(finterF))deallocate(finterF)
     allocate(finterX(1:L),finterF(1:L))
