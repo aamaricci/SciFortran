@@ -55,21 +55,21 @@ subroutine splotM_IR(pname,X,Y1,Y2,Y3,Y4,append)
   if(present(Y4))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,4(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
+           write(719,"(I15,4(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
         enddo
         write(719,*)""
      enddo
   elseif(present(Y3))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,3(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
+           write(719,"(I15,3(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
         enddo
         write(719,*)""
      enddo
   elseif(present(Y2))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,2(F18.10))")X(j),Y1(i,j),Y2(i,j)
+           write(719,"(I15,2(F21.12))")X(j),Y1(i,j),Y2(i,j)
         enddo
         write(719,*)""
      enddo
@@ -98,7 +98,7 @@ subroutine splotM_IC(pname,X,Y1,Y2,append)
   if(present(Y2))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,4(F18.10))")X(j),dimag(Y1(i,j)),dreal(Y1(i,j)),&
+           write(719,"(I15,4(F21.12))")X(j),dimag(Y1(i,j)),dreal(Y1(i,j)),&
                 dimag(Y2(i,j)),dreal(Y2(i,j))
         enddo
         write(719,*)""
@@ -131,14 +131,14 @@ subroutine splotM_RI(pname,X,Y1,Y2,Y3,Y4,append)
   if(present(Y4))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(F18.10,4(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
+           write(719,"(F21.12,4(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
         enddo
         write(719,*)""
      enddo
   elseif(present(Y3))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(F18.10,3(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
+           write(719,"(F21.12,3(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
         enddo
         write(719,*)""
      enddo
@@ -174,14 +174,14 @@ subroutine splotM_RR(pname,X,Y1,Y2,Y3,Y4,append)
   if(present(Y4))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(5(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
+           write(719,"(5(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
         enddo
         write(719,*)""
      enddo
   elseif(present(Y3))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(4(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
+           write(719,"(4(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
         enddo
         write(719,*)""
      enddo
@@ -217,7 +217,7 @@ subroutine splotM_RC(pname,X,Y1,Y2,append)
   if(present(Y2))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(F18.10,4(F18.10))")X(j),dimag(Y1(i,j)),dreal(Y1(i,j)),&
+           write(719,"(F21.12,4(F21.12))")X(j),dimag(Y1(i,j)),dreal(Y1(i,j)),&
                 dimag(Y2(i,j)),dreal(Y2(i,j))
         enddo
         write(719,*)""
@@ -321,7 +321,7 @@ subroutine splotA3_IC(pname,X,Y1,Y2,append)
      do i=1,Ny1
         do j=1,Ny2
            do k=1,Ny3
-              write(719,"(I15,4(F18.10))")X(k),dimag(Y1(i,j,k)),dreal(Y1(i,j,k)),dimag(Y2(i,j,k)),dreal(Y2(i,j,k))
+              write(719,"(I15,4(F21.12))")X(k),dimag(Y1(i,j,k)),dreal(Y1(i,j,k)),dimag(Y2(i,j,k)),dreal(Y2(i,j,k))
            enddo
            write(719,*)""
         enddo
@@ -423,7 +423,7 @@ subroutine splotA3_RC(pname,X,Y1,Y2,append)
      do i=1,Ny1
         do j=1,Ny2
            do k=1,Ny3
-              write(719,"(F18.10,4(F18.10))")X(k),dimag(Y1(i,j,k)),dreal(Y1(i,j,k)),dimag(Y2(i,j,k)),dreal(Y2(i,j,k))
+              write(719,"(F21.12,4(F21.12))")X(k),dimag(Y1(i,j,k)),dreal(Y1(i,j,k)),dimag(Y2(i,j,k)),dreal(Y2(i,j,k))
            enddo
            write(719,*)""
         enddo

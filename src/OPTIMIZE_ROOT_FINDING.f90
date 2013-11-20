@@ -21,11 +21,12 @@
     public :: fzero_brentq
     public :: zbrent
 
+    public :: fsolve
     public :: fzero_hybrd
     public :: fzero_broyden
     public :: broydn            !backward compatibility
 
-    public :: fsolve
+
 
     procedure(hybrd_func),pointer :: hybrd_funcv
     real(8), dimension(:),pointer :: fmin_fvecp

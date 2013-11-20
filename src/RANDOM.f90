@@ -17,135 +17,38 @@ module RANDOM
   integer,parameter :: dp = SELECTED_REAL_KIND(12, 60)
   real    :: zero = 0.0, half = 0.5, one = 1.0, two = 2.0, vsmall = TINY(1.0), vlarge = HUGE(1.0)
 
-  interface rand
-     module procedure is_random,iv_random,im_random,&
-          ds_random,dv_random,dm_random,&
-          cs_random,cv_random,cm_random
-  end interface rand
-
   public :: nrand
-  public :: irand,drand,crand
   public :: init_random_number
   public :: random_order
-  public :: rand
+  !
+  public :: random_normal
+  public :: random_gamma
+  public :: random_gamma1
+  public :: random_gamma2
+  public :: random_chisq
+  public :: random_exponential
+  public :: random_Weibull
+  public :: random_beta
+  public :: random_inv_gauss
+  public :: random_Poisson
+  public :: random_binomial1
+  public :: bin_prob
+  public :: lngamma
+  public :: random_binomial2
+  public :: random_neg_binomial
+  public :: random_von_Mises
+  public :: random_Cauchy
+
 
 contains
-
-  function irand()
-    integer :: irand
-    real(8) :: r
-    call random_number(r)
-    irand=nint(r*10.d0)
-  end function irand
-  function drand()
-    real(8) :: drand
-    call random_number(drand)
-  end function drand
-  function crand()
-    complex(8) :: crand
-    real(8) :: re,im
-    call random_number(re)
-    call random_number(im)
-    crand=cmplx(re,im,8)
-  end function crand
-
-
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-  !+-----------------------------------------------------------------+
-  !PURPOSE  :  interface to multi-dimensional RNG
-  !+-----------------------------------------------------------------+
-  subroutine is_random(M,dim)
-    integer,intent(inout) :: M
-    integer,optional      :: dim
-    D=1;if(present(dim))D=dim
-    M=nint(drand()*D)
-  end subroutine is_random
-  subroutine iv_random(M,dim)
-    integer,dimension(:),intent(inout) :: M
-    integer,optional                   :: dim
-    D=1;if(present(dim))D=dim
-    do i=1,size(M)
-       M(i)=nint(drand()*D)
-    end do
-  end subroutine iv_random
-  subroutine im_random(M,dim)
-    integer,dimension(:,:),intent(inout) :: M
-    integer,optional                     :: dim
-    D=1;if(present(dim))D=dim
-    do i=1,size(M,1)
-       do j=1,size(M,2)
-          M(i,j)=nint(drand()*D)
-       end do
-    end do
-  end subroutine im_random
-  subroutine ds_random(M,dim)
-    real(8),intent(inout) :: M
-    integer,optional      :: dim
-    D=1;if(present(dim))D=dim
-    M=drand()*D
-  end subroutine ds_random
-  subroutine dv_random(M,dim)
-    real(8),dimension(:),intent(inout) :: M
-    integer,optional                   :: dim
-    D=1;if(present(dim))D=dim
-    do i=1,size(M)
-       M(i)=drand()*D
-    end do
-  end subroutine dv_random
-  subroutine dm_random(M,dim)
-    real(8),dimension(:,:),intent(inout) :: M
-    integer,optional                     :: dim
-    D=1;if(present(dim))D=dim
-    do i=1,size(M,1)
-       do j=1,size(M,2)
-          M(i,j)=drand()*D
-       end do
-    end do
-  end subroutine dm_random
-  subroutine cs_random(M,dim)
-    complex(8),intent(inout) :: M
-    integer,optional      :: dim
-    D=1;if(present(dim))D=dim
-    M=cmplx(drand(),drand())*D
-  end subroutine cs_random
-  subroutine cv_random(M,dim)
-    complex(8),dimension(:),intent(inout) :: M
-    integer,optional                   :: dim
-    D=1;if(present(dim))D=dim
-    do i=1,size(M)
-       M(i)=cmplx(drand(),drand())*D
-    end do
-  end subroutine cv_random
-  subroutine cm_random(M,dim)
-    complex(8),dimension(:,:),intent(inout) :: M
-    integer,optional                     :: dim
-    D=1;if(present(dim))D=dim
-    do i=1,size(M,1)
-       do j=1,size(M,2)
-          M(i,j)=cmplx(drand(),drand())*D
-       end do
-    end do
-  end subroutine cm_random
-
-
-  !***************************************************************
-  !***************************************************************
-  !***************************************************************
 
 
   !+-----------------------------------------------------------------+
   !PURPOSE  :   
   !+-----------------------------------------------------------------+
   real(8) function nrand(dseed)
-    implicit none
-    integer :: dseed
-    integer,      parameter :: IM1=2147483563, IM2=2147483399, IMM1=IM1-1, IA1=40014, &
+    integer                 :: dseed
+    integer,parameter       :: IM1=2147483563, IM2=2147483399, IMM1=IM1-1, IA1=40014, &
          & IA2=40692, IQ1=53668, IQ2=52774, IR1=12211, IR2=3791,  &
          & NTAB=32, NDIV=1+IMM1/NTAB
     real(kind=8), parameter :: AM=1.0d0/IM1, EPS=1.2e-7, RNMX=1.-EPS
@@ -179,24 +82,14 @@ contains
 
 
 
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-
-
-
-
 
 
   !+-----------------------------------------------------------------+
   !PURPOSE  : initialize the seed for the INTRINSIC RNG 
   !+-----------------------------------------------------------------+
   subroutine init_random_number(shift)
-    integer,optional :: shift
-    integer :: i, n, clock
+    integer,optional                 :: shift
+    integer                          :: i, n, clock
     integer,dimension(:),allocatable :: seed
     call RANDOM_SEED(size = n)
     allocate(seed(n))
@@ -210,91 +103,114 @@ contains
 
 
 
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-
-  ! !+-----------------------------------------------------------------+
-  ! !PURPOSE  :   
-  ! !+-----------------------------------------------------------------+
-  ! function mkl_random_number_uniform()
-  !   real(4)                 :: mkl_random_number_uniform
-  !   integer                 :: brng_
-  !   real(4)                 :: a_,b_
-  !   real(4),dimension(1)    :: r
-  !   integer                 :: method,seed,errcode
-  !   TYPE (VSL_STREAM_STATE) :: stream
-  !   brng_=VSL_BRNG_MT19937 !;if(present(brng))brng_=brng
-  !   a_=0.0 !; if(present(a))a_=real(a,4)
-  !   b_=1.0 !; if(present(b))b_=real(b,4)
-  !   method=0
-  !   seed=1654
-  !   errcode=vslnewstream( stream, brng_,  seed )       !Initialize
-  !   errcode=vsrnguniform( method, stream, 1, r, a_, b_ )!Call RNG Uniform
-  !   mkl_random_number_uniform=r(1)
-  !   errcode=vsldeletestream( stream )                 !Close
-  ! end function mkl_random_number_uniform
-
-
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
 
   !+-----------------------------------------------------------------+
   !PURPOSE  :   
   !+-----------------------------------------------------------------+
   SUBROUTINE random_order(order, n)
-    !     Generate a random ordering of the integers 1 ... n.
-    INTEGER, INTENT(IN)  :: n
-    INTEGER, INTENT(OUT) :: order(n)
-    !     Local variables
-    INTEGER :: i, j, k
-    REAL(8) :: wk
-    DO i = 1, n
+    !     generate a random ordering of the integers 1 ... n.
+    integer, intent(in)  :: n
+    integer, intent(out) :: order(n)
+    !     local variables
+    integer :: i, j, k
+    real(8) :: wk
+    do i = 1, n
        order(i) = i
-    END DO
-    !     Starting at the end, swap the current last indicator with one
+    end do
+    !     starting at the end, swap the current last indicator with one
     !     randomly chosen from those preceeding it.
-    DO i = n, 2, -1
-       CALL RANDOM_NUMBER(wk)
+    do i = n, 2, -1
+       call random_number(wk)
        j = 1 + i * wk
-       IF (j < i) THEN
+       if (j < i) then
           k = order(i)
           order(i) = order(j)
           order(j) = k
-       END IF
-    END DO
-    RETURN
-  END SUBROUTINE random_order
-
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
+       end if
+    end do
+    return
+  end subroutine random_order
 
 
 
   !+-----------------------------------------------------------------+
-  !PURPOSE  : RNG library, not exported!! 
+  !purpose  : rng library, not exported!! 
   !+-----------------------------------------------------------------+
-  !include "random_routines.f90"
+  ! A module for random number generation from the following distributions:
+  !
+  !     Distribution                    Function/subroutine name
+  !
+  !     Normal (Gaussian)               random_normal
+  !     Gamma                           random_gamma
+  !     Chi-squared                     random_chisq
+  !     Exponential                     random_exponential
+  !     Weibull                         random_Weibull
+  !     Beta                            random_beta
+  !     t                               random_t
+  !     Multivariate normal             random_mvnorm
+  !     Generalized inverse Gaussian    random_inv_gauss
+  !     Poisson                         random_Poisson
+  !     Binomial                        random_binomial1   *
+  !                                     random_binomial2   *
+  !     Negative binomial               random_neg_binomial
+  !     von Mises                       random_von_Mises
+  !     Cauchy                          random_Cauchy
+  !
+  !  Generate a random ordering of the integers 1 .. N
+  !                                     random_order
+  !     Initialize (seed) the uniform random number generator for ANY compiler
+  !                                     seed_random_number
+  !     Lognormal - see note below.
+  !  ** Two functions are provided for the binomial distribution.
+  !  If the parameter values remain constant, it is recommended that the
+  !  first function is used (random_binomial1).   If one or both of the
+  !  parameters change, use the second function (random_binomial2).
+  ! The compilers own random number generator, SUBROUTINE RANDOM_NUMBER(r),
+  ! is used to provide a source of uniformly distributed random numbers.
+  ! N.B. At this stage, only one random number is generated at each call to
+  !      one of the functions above.
+  ! The module uses the following functions which are included here:
+  ! bin_prob to calculate a single binomial probability
+  ! lngamma  to calculate the logarithm to base e of the gamma function
+  ! Some of the code is adapted from Dagpunar's book:
+  !     Dagpunar, J. 'Principles of random variate generation'
+  !     Clarendon Press, Oxford, 1988.   ISBN 0-19-852202-9
+  !
+  ! In most of Dagpunar's routines, there is a test to see whether the value
+  ! of one or two floating-point parameters has changed since the last call.
+  ! These tests have been replaced by using a logical variable FIRST.
+  ! This should be set to .TRUE. on the first call using new values of the
+  ! parameters, and .FALSE. if the parameter values are the same as for the
+  ! previous call.
+  ! Lognormal distribution
+  ! If X has a lognormal distribution, then log(X) is normally distributed.
+  ! Here the logarithm is the natural logarithm, that is to base e, sometimes
+  ! denoted as ln.  To generate random variates from this distribution, generate
+  ! a random deviate from the normal distribution with mean and variance equal
+  ! to the mean and variance of the logarithms of X, then take its exponential.
+  ! Relationship between the mean & variance of log(X) and the mean & variance
+  ! of X, when X has a lognormal distribution.
+  ! Let m = mean of log(X), and s^2 = variance of log(X)
+  ! Then
+  ! mean of X     = exp(m + 0.5s^2)
+  ! variance of X = (mean(X))^2.[exp(s^2) - 1]
+  ! In the reverse direction (rarely used)
+  ! variance of log(X) = log[1 + var(X)/(mean(X))^2]
+  ! mean of log(X)     = log(mean(X) - 0.5var(log(X))
+  ! N.B. The above formulae relate to population parameters; they will only be
+  !      approximate if applied to sample values.
+  ! Version 1.13, 2 October 2000
+  ! Changes from version 1.01
+  ! 1. The random_order, random_Poisson & random_binomial routines have been
+  !    replaced with more efficient routines.
+  ! 2. A routine, seed_random_number, has been added to seed the uniform random
+  !    number generator.   This requires input of the required number of seeds
+  !    for the particular compiler from a specified I/O unit such as a keyboard.
+  ! 3. Made compatible with Lahey's ELF90.
+  ! 4. Marsaglia & Tsang algorithm used for random_gamma when shape parameter > 1.
+  ! 5. INTENT for array f corrected in random_mvnorm.
+
+  include "random_routines.f90"
 
 
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-end module RANDOM
+end module random

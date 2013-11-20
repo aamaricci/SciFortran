@@ -1,12 +1,9 @@
 !###############################################################
-! PROGRAM  : TOOLS
-! TYPE     : Module
 ! PURPOSE  : A "zibaldone" of useful routines
 !###############################################################  
 module TOOLS
   USE COMMON_VARS
   USE TIMER
-  USE IOTOOLS
   implicit none
   private
 
@@ -14,25 +11,24 @@ module TOOLS
   public :: start_loop
   public :: end_loop
 
-  !GRIDS:
-  public :: linspace
-  public :: logspace
-  public :: arange
-  public :: powspace
-  public :: upmspace
-  public :: upminterval
+  ! !GRIDS:
+  ! public :: linspace
+  ! public :: logspace
+  ! public :: arange
+  ! public :: powspace
+  ! public :: upmspace
+  ! public :: upminterval
 
-  !SORT,UNIQE,SHUFFLE:
+  !SORT,UNIQ,SHUFFLE:
   public :: sort,sort_array
   public :: uniq,reshuffle
   public :: shiftFW,shiftBW
 
-  !DERIVATIVE:
-  public :: deriv
+  ! !DERIVATIVE:
+  ! public :: deriv
 
   !OUTER-PRODUCT:
   public :: outerprod
-
 
   !SORT 2D:
   public :: find2Dmesh
@@ -40,9 +36,11 @@ module TOOLS
   !OTHER:
   public :: get_density_from_matsubara_gf
   public :: get_matsubara_gf_from_dos
-  public :: check_convergence,check_convergence_scalar,check_convergence_local
   public :: get_free_dos
   public :: sum_overk_zeta
+
+  ! !CONVERGENCE
+  ! public :: check_convergence,check_convergence_global,check_convergence_local
 
   interface shiftFW
      module procedure shiftM_fw_C,shiftA_fw_C,shiftM_fw_R,shiftA_fw_R
@@ -51,6 +49,17 @@ module TOOLS
   interface shiftBW
      module procedure shiftM_bw_C,shiftA_bw_C,shiftM_bw_R,shiftA_bw_R
   end interface shiftBW
+
+
+  !----------------------------------------------------------------------
+  !   UNIINV = Merge-sort inverse ranking of an array, with removal of
+  !   duplicate entries.
+  !   The routine is similar to pure merge-sort ranking, but on
+  !   the last pass, it sets indices in IGOEST to the rank
+  !   of the value in the ordered set with duplicates removed.
+  !   For performance reasons, the first 2 passes are taken
+  !   out of the standard loop, and use dedicated coding.
+  !----------------------------------------------------------------------
 
   interface uniinv
      module procedure d_uniinv, r_uniinv, i_uniinv
@@ -61,53 +70,60 @@ module TOOLS
      module procedure D_nearless, R_nearless, I_nearless
   end interface nearless
 
+
+  !   unista = (stable unique) removes duplicates from an array,
+  !            leaving unique entries in the order of their first
+  !            appearance in the initial set.
   interface unista
      module procedure d_unista, r_unista, i_unista
   end interface unista
   public  :: unista
 
+
   interface uniq
      module procedure i_uniq,d_uniq
   end interface uniq
 
-  interface check_convergence_scalar
-     module procedure &
-          i0_check_convergence_scalar,&
-          i1_check_convergence_scalar,&
-          i2_check_convergence_scalar,&
-          d0_check_convergence_scalar,&
-          d1_check_convergence_scalar,&
-          d2_check_convergence_scalar,&
-          z0_check_convergence_scalar,&
-          z1_check_convergence_scalar,&
-          z2_check_convergence_scalar
-  end interface check_convergence_scalar
 
-  interface check_convergence
-     module procedure &
-          i0_check_convergence_function,&
-          i1_check_convergence_function,&
-          i2_check_convergence_function,&
-          d0_check_convergence_function,&
-          d1_check_convergence_function,&
-          d2_check_convergence_function,&
-          z0_check_convergence_function,&
-          z1_check_convergence_function,&
-          z2_check_convergence_function
-  end interface check_convergence
+  ! interface check_convergence
+  !    module procedure &
+  !         i0_check_convergence_relative,&
+  !         i1_check_convergence_relative,&
+  !         i2_check_convergence_relative,&
+  !         d0_check_convergence_relative,&
+  !         d1_check_convergence_relative,&
+  !         d2_check_convergence_relative,&
+  !         z0_check_convergence_relative,&
+  !         z1_check_convergence_relative,&
+  !         z2_check_convergence_relative
+  ! end interface check_convergence
 
-  interface check_convergence_local
-     module procedure &
-          i0_check_convergence_function_local,&
-          i1_check_convergence_function_local,&
-          i2_check_convergence_function_local,&
-          d0_check_convergence_function_local,&
-          d1_check_convergence_function_local,&
-          d2_check_convergence_function_local,&
-          z0_check_convergence_function_local,&
-          z1_check_convergence_function_local,&
-          z2_check_convergence_function_local
-  end interface check_convergence_local
+
+  ! interface check_convergence_global
+  !    module procedure &
+  !         i0_check_convergence_global,&
+  !         i1_check_convergence_global,&
+  !         i2_check_convergence_global,&
+  !         d0_check_convergence_global,&
+  !         d1_check_convergence_global,&
+  !         d2_check_convergence_global,&
+  !         z0_check_convergence_global,&
+  !         z1_check_convergence_global,&
+  !         z2_check_convergence_global
+  ! end interface check_convergence_global
+
+  ! interface check_convergence_local
+  !    module procedure &
+  !         i0_check_convergence_local,&
+  !         i1_check_convergence_local,&
+  !         i2_check_convergence_local,&
+  !         d0_check_convergence_local,&
+  !         d1_check_convergence_local,&
+  !         d2_check_convergence_local,&
+  !         z0_check_convergence_local,&
+  !         z1_check_convergence_local,&
+  !         z2_check_convergence_local
+  ! end interface check_convergence_local
 
   interface outerprod
      module procedure outerprod_d,outerprod_c
@@ -130,7 +146,6 @@ contains
   end function outerprod_c
 
 
-
   subroutine start_loop(loop,max,name,unit,id)
     integer                   :: loop
     integer,optional          :: max,unit,id
@@ -143,9 +158,9 @@ contains
     if(mpiID==id_)then
        write(unit_,*)
        if(.not.present(max))then
-          write(unit_,"(A,I5)")reg(bold("-----"//trim(adjustl(trim(loop_name))))),loop,bold("-----")
+          write(unit_,"(A,I5)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,bold("-----")
        else
-          write(unit_,"(A,I5,A,I5,A)")reg(bold("-----"//trim(adjustl(trim(loop_name))))),loop,&
+          write(unit_,"(A,I5,A,I5,A)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,&
                bold(" (max:"),max,bold(")-----")
        endif
        call start_timer
@@ -176,36 +191,36 @@ contains
   !******************************************************************
 
 
-  !###################################################################
-  ! GRIDS:
-  !###################################################################
-  include "tools_grids.f90"
+  ! !###################################################################
+  ! ! GRIDS:
+  ! !###################################################################
+  ! include "tools_grids.f90"
 
 
-  !###################################################################
-  ! FUNCTIONS:
-  !###################################################################
-  function deriv(f,dh) result(df)
-    real(8),dimension(:),intent(in) :: f
-    real(8),intent(in)              :: dh
-    real(8),dimension(size(f))      :: df
-    integer                         :: i,L
-    L=size(f)
-    df(1)= (f(2)-f(1))/dh
-    do i=2,L-1
-       df(i) = (f(i+1)-f(i-1))/(2.d0*dh)
-    enddo
-    df(L)= (f(L)-f(L-1))/dh
-  end function deriv
+  ! !###################################################################
+  ! ! FUNCTIONS:
+  ! !###################################################################
+  ! function deriv(f,dh) result(df)
+  !   real(8),dimension(:),intent(in) :: f
+  !   real(8),intent(in)              :: dh
+  !   real(8),dimension(size(f))      :: df
+  !   integer                         :: i,L
+  !   L=size(f)
+  !   df(1)= (f(2)-f(1))/dh
+  !   do i=2,L-1
+  !      df(i) = (f(i+1)-f(i-1))/(2.d0*dh)
+  !   enddo
+  !   df(L)= (f(L)-f(L-1))/dh
+  ! end function deriv
 
 
 
-  !###################################################################
-  ! CONVERGENCE:
-  !###################################################################
-  include "tools_check_scalar.f90"
-  include "tools_check_function1d.f90"
-  include "tools_check_function1d_local.f90"
+  ! !###################################################################
+  ! ! CONVERGENCE:
+  ! !###################################################################
+  ! include "tools_check_convergence_global.f90"
+  ! include "tools_check_convergence_relative.f90"
+  ! include "tools_check_convergence_local.f90"
 
   !###################################################################
   ! SORTING 1D:
@@ -283,10 +298,6 @@ contains
        write(70,*)w,-aimag(gf)/pi
     enddo
     close(70)
-    if(store_)then
-       call system("if [ ! -d LATTICEinfo ]; then mkdir LATTICEinfo; fi")
-       call system("mv "//trim(adjustl(trim(file_)))//" LATTICEinfo/ 2>/dev/null")
-    endif
   end subroutine get_free_dos
 
 

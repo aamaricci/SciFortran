@@ -64,13 +64,13 @@ contains
   !PROGRAM  : 2D VECTOR ALGEBRA:
   !PURPOSE  : generate the necessary 2D vectors algebra 
   !+-----------------------------------------------------------------+
-  include 'vectorial_algebra_2d.f90'
+  include 'vector_algebra_2d.f90'
 
   !+-----------------------------------------------------------------+
   !PROGRAM  : 3D VECTOR ALGEBRA:
   !PURPOSE  : generate the necessary 2D vectors algebra 
   !+-----------------------------------------------------------------+
-  include 'vectorial_algebra_3d.f90'
+  include 'vector_algebra_3d.f90'
 
 
 end module VECTORS

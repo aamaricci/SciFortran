@@ -3,7 +3,7 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: SCIFOR_VERSION COMVARS PARSECMD TIMER IOTOOLS TOOLS FFTGF OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS PADE SCIFOR
+allmod: SCIFOR_VERSION COMVARS PARSECMD TIMER IOTOOLS TOOLS ERROR ARRAYS FFTGF DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS SCIFOR
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFMODS)/
@@ -30,7 +30,6 @@ clean:
 	@rm -fv *.o *.mod *.a mods/* objs/* debug_*/* $(SFMODS)/*.mod $(SFMODS)/debug/*.mod $(SFLIB)/*scifor*.a
 
 
-#STD
 COMVARS: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
@@ -74,7 +73,6 @@ mod_SCIFOR_VERSION: SCIFOR_VERSION
 	@mv -fv *.a $(SFLIB)/
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
-
 
 
 #STD
@@ -175,6 +173,21 @@ mod_GREENFUNX: GREENFUNX
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
+DERIVATE: 
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG)  $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_DERIVATE: DERIVATE 
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
+	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+	ranlib libscifor.a
+	ranlib libscifor_deb.a
+	@mv -fv *.a $(SFLIB)/
+	@echo 'LIBRARY IS UPDATED.........'
+	@echo ' '
+
+
 INTEGRATE: 
 	$(FC) -c $(FFLAG) integrate_d_quadpack.f90 -I./mods/ -o objs/integrate_d_quadpack.o $(MOPT)./mods/
 	$(FC) -c $(FFLAG)  $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
@@ -191,10 +204,25 @@ mod_INTEGRATE: INTEGRATE
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
+VECTORS: 
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_VECTORS: VECTORS 
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
+	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+	ranlib libscifor.a
+	ranlib libscifor_deb.a
+	@mv -fv *.a $(SFLIB)/
+	@echo 'LIBRARY IS UPDATED.........'
+	@echo ' '
+
+
 SQUARE_LATTICE: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_SQUARE_LATTICE: SQUARE_LATTICE 
+mod_SQUARE_LATTICE: VECTORS SQUARE_LATTICE 
 	@rsync -avP mods/*.mod $(SFMODS)/
 	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
@@ -264,7 +292,7 @@ mod_STATISTICS: STATISTICS
 TOOLS:  
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_TOOLS: COMVARS PARSECMD TIMER IOTOOLS TOOLS 
+mod_TOOLS: COMVARS TIMER TOOLS 
 	@rsync -avP mods/*.mod $(SFMODS)/
 	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
@@ -275,10 +303,11 @@ mod_TOOLS: COMVARS PARSECMD TIMER IOTOOLS TOOLS
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
-PADE:
+
+ERROR:  
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_PADE: PADE 
+mod_ERROR: ERROR 
 	@rsync -avP mods/*.mod $(SFMODS)/
 	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
@@ -288,15 +317,32 @@ mod_PADE: PADE
 	@mv -fv *.a $(SFLIB)/
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
+
+
+ARRAYS:  
+	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+mod_ARRAYS: ARRAYS 
+	@rsync -avP mods/*.mod $(SFMODS)/
+	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
+	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
+	ar cvq libscifor_deb.a `ls debug_objs/*.o | sort | uniq`  
+	ranlib libscifor.a
+	ranlib libscifor_deb.a
+	@mv -fv *.a $(SFLIB)/
+	@echo 'LIBRARY IS UPDATED.........'
+	@echo ' '
+
+
 
 IOTOOLS: 
 	$(FC) -c $(FFLAG) IOFILE.f90 -I./mods/ -o objs/IOFILE.o $(MOPT)./mods/	
-	$(FC) -c $(FFLAG) SLPLOT.f90 -I./mods/ -o objs/SLPLOT.o $(MOPT)./mods/
-	$(FC) -c $(FFLAG) SLREAD.f90 -I./mods/ -o objs/SLREAD.o $(MOPT)./mods/
+	$(FC) -c $(FFLAG) IOPLOT.f90 -I./mods/ -o objs/IOPLOT.o $(MOPT)./mods/
+	$(FC) -c $(FFLAG) IOREAD.f90 -I./mods/ -o objs/IOREAD.o $(MOPT)./mods/
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) IOFILE.f90 -I./debug_mods/ -o debug_objs/IOFILE.o $(MOPT)./debug_mods/	
-	$(FC) -c $(DFLAG) SLPLOT.f90 -I./debug_mods/ -o debug_objs/SLPLOT.o $(MOPT)./debug_mods/
-	$(FC) -c $(DFLAG) SLREAD.f90 -I./debug_mods/ -o debug_objs/SLREAD.o $(MOPT)./debug_mods/
+	$(FC) -c $(DFLAG) IOPLOT.f90 -I./debug_mods/ -o debug_objs/IOPLOT.o $(MOPT)./debug_mods/
+	$(FC) -c $(DFLAG) IOREAD.f90 -I./debug_mods/ -o debug_objs/IOREAD.o $(MOPT)./debug_mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 mod_IOTOOLS: COMVARS IOTOOLS 
 	@rsync -avP mods/*.mod $(SFMODS)/

@@ -31,7 +31,7 @@ subroutine data_saveV_C(pname,Y1)
   Np=size(Y1)  
   open(719,file=reg(pname))
   do i=1,Np
-     write(719,*)dimag(Y1(i)),real(Y1(i),8)
+     write(719,*)dimag(Y1(i)),dreal(Y1(i))
   enddo
   close(719)
   call data_store(reg(pname))
@@ -93,9 +93,9 @@ subroutine data_saveM_C(pname,Y1,X)
   do i=1,Ny1
      do j=1,Ny2
         if(present(X))then
-           write(719,*)X(j),dimag(Y1(i,j)),real(Y1(i,j),8)
+           write(719,*)X(j),dimag(Y1(i,j)),dreal(Y1(i,j))
         else
-           write(719,*)dimag(Y1(i,j)),real(Y1(i,j),8)
+           write(719,*)dimag(Y1(i,j)),dreal(Y1(i,j))
         endif
      enddo
      write(719,*)""
@@ -165,9 +165,9 @@ subroutine data_saveA3_C(pname,Y1,X)
      do j=1,Ny2
         do k=1,Ny3
            if(present(X))then
-              write(719,*)X(k),dimag(Y1(i,j,k)),real(Y1(i,j,k),8)
+              write(719,*)X(k),dimag(Y1(i,j,k)),dreal(Y1(i,j,k))
            else
-              write(719,*)dimag(Y1(i,j,k)),real(Y1(i,j,k),8)
+              write(719,*)dimag(Y1(i,j,k)),dreal(Y1(i,j,k))
            endif
         enddo
         write(719,*)""
