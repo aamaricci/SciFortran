@@ -6,7 +6,7 @@
      write(*,"(A)")bg_red("Convergence not achieved after N2 iterations!! exiting..")
      convergence=.true.
   endif
-  if(convergence)then
+  if(convergence.and.reset_)then
      check=0
      deallocate(Xold)
   endif
