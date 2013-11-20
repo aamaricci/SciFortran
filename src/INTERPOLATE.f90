@@ -99,7 +99,7 @@
     public :: poly_spline2d
 
     !LEGACY CODE:
-    !used in some determinant qmc algorithm. to be removed
+    !used in some determinant qmc algorithm.
     public :: extract,extract_gtau 
     public :: interp_gtau
 
@@ -840,7 +840,6 @@
       real(8)             :: x, y
       integer             :: i, j
       real(8),external    :: ppvalu
-
       FctL1(0:L1)=FG1 ; forall(i=1:L1)FctL1(-i)=-FctL1(L1-i)
       L11 = L1 + 1
       L12 = L1 + 2

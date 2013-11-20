@@ -17,6 +17,37 @@ module INTEGRATE
   integer              :: finterImin,finterImax,finterN
 
 
+  !NOW THESE ARE IN INTERPOLATE
+  !MUST USE INTERPOLATE IF WE WANNA USE INTERPOLATE/FUNCTIONALIZED ARRAY
+  !FOR INTEGRATION
+  ! type,public :: d_finter
+  !    integer                      :: Imin,Imax,Iorder
+  !    real(8),dimension(:),pointer :: X,F
+  !    logical                      :: status=.false.
+  ! end type d_finter
+  ! type,public :: c_finter
+  !    integer                         :: Imin,Imax,Iorder
+  !    real(8),dimension(:),pointer    :: X
+  !    complex(8),dimension(:),pointer :: F
+  !    logical                         :: status=.false.
+  ! end type c_finter
+
+  ! interface init_finter
+  !    module procedure d_init_finter,c_init_finter
+  ! end interface init_finter
+
+  ! interface kill_finter
+  !    module procedure d_kill_finter,c_kill_finter
+  ! end interface kill_finter
+
+  ! interface set_finter
+  !    module procedure d_set_finter,c_set_finter
+  ! end interface set_finter
+
+  ! interface finter_func
+  !    module procedure d_finter_func,c_finter_func
+  ! end interface finter_func
+
   interface trapz
      module procedure &
           d_trapz_ab,c_trapz_ab,&
@@ -40,6 +71,10 @@ module INTEGRATE
   public :: trapz
   public :: simps
   public :: int_simps
+  ! public :: init_finter
+  ! public :: kill_finter
+  ! public :: set_finter
+  ! public :: finter_func
 
 
 contains
@@ -75,7 +110,7 @@ contains
           wt(3)=2.d0/3.d0
           wt(4)=4.d0/3.d0
           wt(5)=1.d0/3.d0
-       case default             !Simpson's rule n>=6
+       case default            !Simpson's rule n>=6
           if(mod(n-1,2)==0)then
              wt(1)=1.d0/3.d0
              wt(n)=1.d0/3.d0
@@ -90,6 +125,14 @@ contains
              wt(n-1)=9.d0/8.d0
              wt(n)=3.d0/8.d0
           endif
+       ! case default             !Simpson's rule n>=6
+       !    wt(1)=3.d0/8.d0
+       !    wt(2)=7.d0/6.d0
+       !    wt(3)=23.d0/24.d0
+       !    wt(4:n-3)=1.d0
+       !    wt(n-2)=23.d0/24.d0
+       !    wt(n-1)=7.d0/6.d0
+       !    wt(n)=3.d0/8.d0
        end select
     elseif(nrk_==2)then
        wt(1) = 0.5d0

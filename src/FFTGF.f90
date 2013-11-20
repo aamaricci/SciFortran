@@ -4,7 +4,7 @@
     use MKL_DFTI
     use MKL_DFT_TYPE
     use MKL_TRIG_TRANSFORMS
-    use TOOLS, only:linspace
+    !use TOOLS, only:linspace
     use INTERPOLATE
     implicit none 
     private
@@ -239,7 +239,7 @@
       complex(8),dimension(:)             :: gw
       real(8),dimension(2*size(gw))       :: reF,imF,tau_long
       complex(8),dimension(0:size(gw))    :: gt
-      real(8)                             :: beta
+      real(8)                             :: beta,step
       real(8),dimension(0:size(gw))       :: tau_short
       !
       integer                             :: tt_type,ipar(128),ir
@@ -263,8 +263,12 @@
       call D_COMMIT_TRIG_TRANSFORM(imF,handle,ipar,dpar,ir)
       call D_BACKWARD_TRIG_TRANSFORM(imF,handle,ipar,dpar,ir)
       call FREE_TRIG_TRANSFORM(handle,ipar,ir)
-      tau_long = linspace(0.d0,beta,2*L)
-      tau_short= linspace(0.d0,beta,L+1)
+      step = beta/dble(2*L-1)
+      forall(i=1:2*L)tau_long(i)=dble(i-1)*step
+      step = beta/dble(L)
+      forall(i=1:L+1)tau_short(i-1)=dble(i-1)*step
+      !tau_long = linspace(0.d0,beta,2*L)
+      !tau_short= linspace(0.d0,beta,L+1)
       call linear_spline(tau_long,cmplx(reF,imF,8),tau_short,gt)
       gt(L)=-gt(0)
       gt=gt/beta*2.d0
