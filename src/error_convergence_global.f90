@@ -1,7 +1,7 @@
 !+-------------------------------------------------------------------+
 !PURPOSE  : 
 !+-------------------------------------------------------------------+
-function i0_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,oerr) result(convergence)
+function i0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr) result(convergence)
   integer,intent(in)       :: Xnew
   real(8),intent(in)       :: eps
   real(8),optional         :: oerr
@@ -28,21 +28,21 @@ function i0_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,oerr) re
      err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
      Xold(index_)=Xnew
-     include "tools_write_error_file_dim0.f90"
+     include "error_write_file_dim0.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim0.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim0.f90"
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function i0_check_convergence_scalar
+end function i0_check_convergence_global
 
-function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
+function i1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
   integer,intent(in)            :: Xnew(:)
   real(8),intent(in)            :: eps
   real(8),optional         :: oerr
@@ -78,21 +78,21 @@ function i1_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,o
      err=sum(Verror)/dble(size(Verror))
      if(strict_)err=error(1)
      Xold(index_,:)=Xnew
-     include "tools_write_error_file_dim1.f90"
+     include "error_write_file_dim1.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim1.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim1.f90"
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function i1_check_convergence_scalar
+end function i1_check_convergence_global
 
-function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
+function i2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
   integer,intent(in)                           :: Xnew(:,:)
   real(8),intent(in)                           :: eps
   real(8),optional         :: oerr
@@ -128,25 +128,25 @@ function i2_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,o
      err=sum(Verror)/dble(size(Verror))
      if(strict_)err=error(1)
      Xold(index_,:,:)=Xnew
-     include "tools_write_error_file_dim2.f90"
+     include "error_write_file_dim2.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim2.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim2.f90"
           if(present(oerr))oerr=err
      check=check+1
   endif
-end function i2_check_convergence_scalar
+end function i2_check_convergence_global
 
 
 !----------------------------------------------------------------------
 
 
-function d0_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,oerr) result(convergence)
+function d0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr) result(convergence)
   real(8),intent(in)       :: Xnew
   real(8),intent(in)       :: eps
   real(8),optional         :: oerr
@@ -173,21 +173,21 @@ function d0_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,oerr) re
      err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
      Xold(index_)=Xnew
-     include "tools_write_error_file_dim0.f90"
+     include "error_write_file_dim0.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim0.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim0.f90"
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function d0_check_convergence_scalar
+end function d0_check_convergence_global
 
-function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
+function d1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
   real(8),intent(in)            :: Xnew(:)
   real(8),intent(in)            :: eps
   real(8),optional         :: oerr
@@ -223,21 +223,21 @@ function d1_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,o
      err=sum(Verror)/dble(size(Verror))
      if(strict_)err=error(1)
      Xold(index_,:)=Xnew
-     include "tools_write_error_file_dim1.f90"
+     include "error_write_file_dim1.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim1.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim1.f90"
           if(present(oerr))oerr=err
      check=check+1
   endif
-end function d1_check_convergence_scalar
+end function d1_check_convergence_global
 
-function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
+function d2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
   real(8),intent(in)                           :: Xnew(:,:)
   real(8),intent(in)                           :: eps
   real(8),optional         :: oerr
@@ -273,25 +273,25 @@ function d2_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,o
      err=sum(Verror)/dble(size(Verror))
      if(strict_)err=error(1)
      Xold(index_,:,:)=Xnew
-     include "tools_write_error_file_dim2.f90"
+     include "error_write_file_dim2.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim2.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim2.f90"
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function d2_check_convergence_scalar
+end function d2_check_convergence_global
 
 
 !----------------------------------------------------------------------
 
 
-function z0_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,oerr) result(convergence)
+function z0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr) result(convergence)
   complex(8),intent(in)       :: Xnew
   real(8),intent(in)          :: eps
   real(8),optional         :: oerr
@@ -318,21 +318,21 @@ function z0_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,oerr) re
      err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
      Xold(index_)=Xnew
-     include "tools_write_error_file_dim0.f90"
+     include "error_write_file_dim0.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim0.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim0.f90"
           if(present(oerr))oerr=err
      check=check+1
   endif
-end function z0_check_convergence_scalar
+end function z0_check_convergence_global
 
-function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
+function z1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
   complex(8),intent(in)         :: Xnew(:)
   real(8),intent(in)            :: eps
   real(8),optional         :: oerr
@@ -368,21 +368,21 @@ function z1_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,o
      err=sum(Verror)/dble(size(Verror))
      if(strict_)err=error(1)
      Xold(index_,:)=Xnew
-     include "tools_write_error_file_dim1.f90"
+     include "error_write_file_dim1.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim1.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim1.f90"
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function z1_check_convergence_scalar
+end function z1_check_convergence_global
 
-function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
+function z2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr) result(convergence)
   complex(8),intent(in)                        :: Xnew(:,:)
   real(8),intent(in)                           :: eps
   real(8),optional         :: oerr
@@ -418,16 +418,16 @@ function z2_check_convergence_scalar(Xnew,eps,N1,N2,id,file,index,total,strict,o
      err=sum(Verror)/dble(size(Verror))
      if(strict_)err=error(1)
      Xold(index_,:,:)=Xnew
-     include "tools_write_error_file_dim2.f90"
+     include "error_write_file_dim2.f90"
      if(err < eps)then
         success=success+1
      else
         success=0
      endif
      convergence=.false.
-     include "tools_test_convergence.f90"
-     include "tools_print_error_msg_dim2.f90"
+     include "error_test_convergence.f90"
+     include "error_msg_dim2.f90"
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function z2_check_convergence_scalar
+end function z2_check_convergence_global

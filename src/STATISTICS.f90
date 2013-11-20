@@ -126,7 +126,7 @@ contains
        stop
     endif
     allocate(h%range(0:n));h%range=0.d0
-    allocate(h%bin(n))    ;h%bin=0.d0
+    allocate(h%bin(0:n))    ;h%bin=0.d0
     h%n=n
   end function histogram_allocate
 
@@ -238,7 +238,7 @@ contains
     integer                    :: i,n
     real(8)                    :: lower,upper,bin_value
     n=h%n
-    call histogram_get_range(h,i,lower,upper)
+    call histogram_get_range(h,0,lower,upper)
     write(unit,"(2F12.7)")lower,0.d0
     do i=0,n-1
        call histogram_get_range(h,i,lower,upper)

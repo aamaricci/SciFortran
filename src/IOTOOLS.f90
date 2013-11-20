@@ -5,6 +5,6 @@
 !###############################################################
 MODULE IOTOOLS
   USE IOFILE
-  USE SLPLOT
-  USE SLREAD
+  USE IOPLOT
+  USE IOREAD
 END MODULE IOTOOLS

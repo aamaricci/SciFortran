@@ -1,10 +1,9 @@
 !###############################################################
-! PURPOSE  : VERY SIMPLE PLOTTING LIBRARY
-! AUTHORS  : A.Amaricci (SISSA)
+! PURPOSE  : VERY SIMPLE WRITE LIBRARY
 !###############################################################
-module SLPLOT
-  USE IOFILE
+module IOPLOT
   USE COMMON_VARS
+  USE IOFILE
   implicit none
   private
 
@@ -43,18 +42,18 @@ module SLPLOT
 contains
 
   ! 0-dim array
-  include "slplot_splot_P.f90"
+  include "ioplot_P.f90"
 
   ! 1-dim array
-  include "slplot_splot_V.f90"
+  include "ioplot_V.f90"
 
   ! N=2,3-dim array
-  include "slplot_splot_M.f90"
+  include "ioplot_M.f90"
 
   ! 3Dplot:
-  include "slplot_splot_3d.f90"
+  include "ioplot_3d.f90"
 
   ! STORE arrays
-  include "slplot_data_save.f90"
+  include "ioplot_data.f90"
 
-end module SLPLOT
+end module IOPLOT

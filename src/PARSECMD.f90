@@ -1,5 +1,5 @@
 !########################################################################
-!PROGRAM  : PARSECMD
+!Program  : PARSECMD
 !PURPOSE  : Declare all the common variables usually in use within codes
 !########################################################################
 module PARSE_CMD
@@ -18,10 +18,10 @@ module PARSE_CMD
 
   interface parse_cmd_variable
      module procedure &
-          i_parse_variable, iv_parse_variable, &
-          d_parse_variable, dv_parse_variable, &
-          l_parse_variable, lv_parse_variable, &
-          ch_parse_variable, chv_parse_variable
+          i_parse_variable, iv_parse_variable, im_parse_variable, &
+          d_parse_variable, dv_parse_variable, dm_parse_variable,&
+          l_parse_variable, lv_parse_variable, lm_parse_variable,&
+          ch_parse_variable,chv_parse_variable,chm_parse_variable
   end interface parse_cmd_variable
 
   public :: parse_cmd_variable
@@ -108,6 +108,61 @@ contains
   !******************************************************************
   !******************************************************************
 
+  function check_cmd_vector_size(ndim,var) result(nargs)
+    integer            :: ndim,ncount,j,nargs
+    type(cmd_variable) :: var
+    logical            :: iscalar
+    iscalar=(scan(var%value,",")==0)
+    if(iscalar)then
+       print*,"error in parse_cmd array:",trim(var%name)
+       print*,"expecting a comma separated list of: ",ndim
+       stop
+    endif
+    ncount=0
+    do j=1,len(var%value)
+       if(var%value(j:j)==",")ncount=ncount+1
+    enddo
+    nargs=ncount+1
+    if(nargs/=ndim)then
+       print*,"parse_variable wrong dimensions: ",trim(var%name)
+       print*,"expecting a comma separated list of: ",ndim
+       stop
+    endif
+  end function check_cmd_vector_size
+
+
+  function check_cmd_matrix_size(ndim,var) result(nargs)
+    integer            :: ndim,ncount,j,nargs
+    type(cmd_variable) :: var
+    logical            :: iscalar
+    iscalar=(scan(var%value,",")==0)
+    if(iscalar)then
+       print*,"error in parse_cmd array:",trim(var%name)
+       print*,"expecting a comma separated list of: ",ndim
+       stop
+    endif
+    ncount=0
+    do j=1,len(var%value)
+       if(var%value(j:j)==",")ncount=ncount+1
+    enddo
+    nargs=ncount+1
+    if(nargs/=ndim)then
+       print*,"parse_variable wrong dimensions: ",trim(var%name)
+       print*,"expecting a comma separated list of: ",ndim
+       stop
+    endif
+  end function check_cmd_matrix_size
+
+
+
+
+
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
 
 
   subroutine i_parse_variable(variable,name,default)
@@ -123,7 +178,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          call msg(("Variable "//trim(var%name)//" update to "//trim(var%value)))
+          write(*,*)"Variable "//trim(var%name)//" update to "//trim(var%value)
        endif
     enddo
   end subroutine i_parse_variable
@@ -143,13 +198,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           iscalar=(scan(var%value,",")==0)
-          if(iscalar)stop "error in parse_cmd array"
-          ncount=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")ncount=ncount+1
-          enddo
-          nargs=ncount+1
-          if(nargs/=ndim)stop "parse_variable wrong dimensions"
+          nargs=check_cmd_vector_size(ndim,var)
           allocate(var%args(nargs))
           iarg=0
           pos0=0
@@ -164,10 +213,51 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          print*,"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100I6)")"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine iv_parse_variable
+
+  subroutine im_parse_variable(variable,name,default)
+    integer,dimension(:,:)                     :: variable
+    integer,dimension(size(variable))          :: dummy_var
+    integer,dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=len(name))                   :: name_
+    type(cmd_variable)                         :: var
+    integer                                    :: i,j,ndim,nargs,pos0,iarg
+    If(present(default))variable=transpose(reshape(default,shape(variable)))
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = get_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)dummy_var(iarg)
+          enddo
+          variable=transpose(reshape(dummy_var,shape(variable)))
+          write(*,"(A,100I6)")"Variable "//trim(var%name)//" update to ",(dummy_var(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine im_parse_variable
+
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
 
 
 
@@ -184,7 +274,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          call msg(("Variable "//trim(var%name)//" update to "//trim(var%value)))
+          write(*,*)"Variable "//trim(var%name)//" update to "//trim(var%value)
        endif
     enddo
   end subroutine d_parse_variable
@@ -203,14 +293,7 @@ contains
     do i=1,command_argument_count()
        var = get_cmd_variable(i)
        if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          if(iscalar)stop "error in parse_cmd array"
-          ncount=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")ncount=ncount+1
-          enddo
-          nargs=ncount+1
-          if(nargs/=ndim)stop "parse_variable wrong dimensions"
+          nargs=check_cmd_vector_size(ndim,var)
           allocate(var%args(nargs))
           iarg=0
           pos0=0
@@ -225,10 +308,50 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          print*,"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100F18.9)")"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine dv_parse_variable
+
+  subroutine dm_parse_variable(variable,name,default)
+    real(8),dimension(:,:)                     :: variable
+    real(8),dimension(size(variable))          :: dummy_var
+    real(8),dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=len(name))                   :: name_
+    type(cmd_variable)                         :: var
+    integer                                    :: i,j,ndim,nargs,pos0,iarg
+    If(present(default))variable=transpose(reshape(default,shape(variable)))
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = get_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)dummy_var(iarg)
+          enddo
+          variable=transpose(reshape(dummy_var,shape(variable)))
+          write(*,"(A,100I6)")"Variable "//trim(var%name)//" update to ",(dummy_var(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine dm_parse_variable
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
 
 
   subroutine ch_parse_variable(variable,name,default)
@@ -244,7 +367,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          call msg(("Variable "//trim(var%name)//" update to "//trim(var%value)))
+          write(*,*)"Variable "//trim(var%name)//" update to "//trim(var%value)
        endif
     enddo
   end subroutine ch_parse_variable
@@ -263,14 +386,7 @@ contains
     do i=1,command_argument_count()
        var = get_cmd_variable(i)
        if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          if(iscalar)stop "error in parse_cmd array"
-          ncount=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")ncount=ncount+1
-          enddo
-          nargs=ncount+1
-          if(nargs/=ndim)stop "parse_variable wrong dimensions"
+          nargs=check_cmd_vector_size(ndim,var)
           allocate(var%args(nargs))
           iarg=0
           pos0=0
@@ -285,10 +401,51 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          print*,"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100A20)")"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine chv_parse_variable
+
+  subroutine chm_parse_variable(variable,name,default)
+    character(len=*),dimension(:,:)                     :: variable
+    character(len=20),dimension(size(variable))         :: dummy_var
+    character(len=*),dimension(size(variable)),optional :: default
+    character(len=*)                                    :: name
+    character(len=len(name))                            :: name_
+    type(cmd_variable)                                  :: var
+    integer                                             :: i,j,ndim,nargs,pos0,iarg
+    If(present(default))variable=transpose(reshape(default,shape(variable)))
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = get_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)dummy_var(iarg)
+          enddo
+          variable=transpose(reshape(dummy_var,shape(variable)))
+          write(*,"(A,100I6)")"Variable "//trim(var%name)//" update to ",(dummy_var(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine chm_parse_variable
+
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
 
 
   subroutine l_parse_variable(variable,name,default)
@@ -304,7 +461,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          call msg(("Variable "//trim(var%name)//" update to "//trim(var%value)))
+          write(*,*)"Variable "//trim(var%name)//" update to "//trim(var%value)
        endif
     enddo
   end subroutine l_parse_variable
@@ -323,14 +480,7 @@ contains
     do i=1,command_argument_count()
        var = get_cmd_variable(i)
        if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          if(iscalar)stop "error in parse_cmd array"
-          ncount=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")ncount=ncount+1
-          enddo
-          nargs=ncount+1
-          if(nargs/=ndim)stop "parse_variable wrong dimensions"
+          nargs=check_cmd_vector_size(ndim,var)
           allocate(var%args(nargs))
           iarg=0
           pos0=0
@@ -345,10 +495,45 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          print*,"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100L3)")"Variable "//trim(var%name)//" update to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine lv_parse_variable
+
+  subroutine lm_parse_variable(variable,name,default)
+    logical,dimension(:,:)                     :: variable
+    logical,dimension(size(variable))          :: dummy_var
+    logical,dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=len(name))                   :: name_
+    type(cmd_variable)                         :: var
+    integer                                    :: i,j,ndim,nargs,pos0,iarg
+    If(present(default))variable=transpose(reshape(default,shape(variable)))
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = get_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)dummy_var(iarg)
+          enddo
+          variable=transpose(reshape(dummy_var,shape(variable)))
+          write(*,"(A,100I6)")"Variable "//trim(var%name)//" update to ",(dummy_var(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine lm_parse_variable
 
 
 

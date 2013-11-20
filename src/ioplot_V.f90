@@ -72,27 +72,27 @@ subroutine splotV_IR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   endif
   if(present(Y8))then
      do i=1,Np
-        write(719,"(I15,8(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i),Y8(i)
+        write(719,"(I15,8(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i),Y8(i)
      enddo
   elseif(present(Y7))then
      do i=1,Np
-        write(719,"(I15,7(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i)
+        write(719,"(I15,7(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i)
      enddo
   elseif(present(Y6))then
      do i=1,Np
-        write(719,"(I15,6(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i)
+        write(719,"(I15,6(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i)
      enddo
   elseif(present(Y5))then
      do i=1,Np
-        write(719,"(I15,5(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i)
+        write(719,"(I15,5(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i)
      enddo
   elseif(present(Y4))then
      do i=1,Np
-        write(719,"(I15,4(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i)
+        write(719,"(I15,4(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i)
      enddo
   elseif(present(Y3))then
      do i=1,Np
-        write(719,"(I15,3(F18.10))")X(i),Y1(i),Y2(i),Y3(i)
+        write(719,"(I15,3(F21.12))")X(i),Y1(i),Y2(i),Y3(i)
      enddo
   elseif(present(Y2))then
      do i=1,Np
@@ -127,18 +127,18 @@ subroutine splotV_IC(pname,X,Y1,Y2,Y3,Y4,append)
   endif
   if(present(Y4))then
      do i=1,Np
-        write(719,"(I15,8(F18.10))")X(i),dreal(Y1(i)),dimag(Y1(i)),&
+        write(719,"(I15,8(F21.12))")X(i),dreal(Y1(i)),dimag(Y1(i)),&
              dreal(Y2(i)),dimag(Y2(i)),dreal(Y3(i)),dimag(Y3(i)),&
              dreal(Y4(i)),dimag(Y4(i))
      enddo
   elseif(present(Y3))then
      do i=1,Np
-        write(719,"(I15,6(F18.10))")X(i),dreal(Y1(i)),dimag(Y1(i)),&
+        write(719,"(I15,6(F21.12))")X(i),dreal(Y1(i)),dimag(Y1(i)),&
              dreal(Y2(i)),dimag(Y2(i)),dreal(Y3(i)),dimag(Y3(i))
      enddo
   elseif(present(Y2))then
      do i=1,Np
-        write(719,"(I15,4(F18.10))")X(i),dreal(Y1(i)),dimag(Y1(i)),&
+        write(719,"(I15,4(F21.12))")X(i),dreal(Y1(i)),dimag(Y1(i)),&
              dreal(Y2(i)),dimag(Y2(i))
      enddo
   else
@@ -172,27 +172,27 @@ subroutine splotV_RI(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   endif
   if(present(Y8))then
      do i=1,Np
-        write(719,"(F18.10,8(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i),Y8(i)
+        write(719,"(F21.12,8(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i),Y8(i)
      enddo
   elseif(present(Y7))then
      do i=1,Np
-        write(719,"(F18.10,7(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i)
+        write(719,"(F21.12,7(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i)
      enddo
   elseif(present(Y6))then
      do i=1,Np
-        write(719,"(F18.10,6(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i)
+        write(719,"(F21.12,6(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i)
      enddo
   elseif(present(Y5))then
      do i=1,Np
-        write(719,"(F18.10,5(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i)
+        write(719,"(F21.12,5(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i)
      enddo
   elseif(present(Y4))then
      do i=1,Np
-        write(719,"(F18.10,4(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i)
+        write(719,"(F21.12,4(I15))")X(i),Y1(i),Y2(i),Y3(i),Y4(i)
      enddo
   elseif(present(Y3))then
      do i=1,Np
-        write(719,"(F18.10,3(I15))")X(i),Y1(i),Y2(i),Y3(i)
+        write(719,"(F21.12,3(I15))")X(i),Y1(i),Y2(i),Y3(i)
      enddo
   elseif(present(Y2))then
      do i=1,Np
@@ -227,27 +227,27 @@ subroutine splotV_RR(pname,X,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,append)
   endif
   if(present(Y8))then
      do i=1,Np
-        write(719,"(9(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i),Y8(i)
+        write(719,"(9(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i),Y8(i)
      enddo
   elseif(present(Y7))then
      do i=1,Np
-        write(719,"(8(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i)
+        write(719,"(8(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i),Y7(i)
      enddo
   elseif(present(Y6))then
      do i=1,Np
-        write(719,"(7(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i)
+        write(719,"(7(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i),Y6(i)
      enddo
   elseif(present(Y5))then
      do i=1,Np
-        write(719,"(6(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i)
+        write(719,"(6(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i),Y5(i)
      enddo
   elseif(present(Y4))then
      do i=1,Np
-        write(719,"(5(F18.10))")X(i),Y1(i),Y2(i),Y3(i),Y4(i)
+        write(719,"(5(F21.12))")X(i),Y1(i),Y2(i),Y3(i),Y4(i)
      enddo
   elseif(present(Y3))then
      do i=1,Np
-        write(719,"(4(F18.10))")X(i),Y1(i),Y2(i),Y3(i)
+        write(719,"(4(F21.12))")X(i),Y1(i),Y2(i),Y3(i)
      enddo
   elseif(present(Y2))then
      do i=1,Np
@@ -282,18 +282,18 @@ subroutine splotV_RC(pname,X,Y1,Y2,Y3,Y4,append)
   endif
   if(present(Y4))then
      do i=1,Np
-        write(719,"(F18.10,8(F18.10))")X(i),dimag(Y1(i)),dreal(Y1(i)),&
+        write(719,"(F21.12,8(F21.12))")X(i),dimag(Y1(i)),dreal(Y1(i)),&
              dimag(Y2(i)),dreal(Y2(i)),dimag(Y3(i)),dreal(Y3(i)),&
              dimag(Y4(i)),dreal(Y4(i))
      enddo
   elseif(present(Y3))then
      do i=1,Np
-        write(719,"(F18.10,6(F18.10))")X(i),dimag(Y1(i)),dreal(Y1(i)),&
+        write(719,"(F21.12,6(F21.12))")X(i),dimag(Y1(i)),dreal(Y1(i)),&
              dimag(Y2(i)),dreal(Y2(i)),dimag(Y3(i)),dreal(Y3(i))
      enddo
   elseif(present(Y2))then
      do i=1,Np
-        write(719,"(F18.10,4(F18.10))")X(i),dimag(Y1(i)),dreal(Y1(i)),&
+        write(719,"(F21.12,4(F21.12))")X(i),dimag(Y1(i)),dreal(Y1(i)),&
              dimag(Y2(i)),dreal(Y2(i))
      enddo
   else
