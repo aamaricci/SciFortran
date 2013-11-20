@@ -11,14 +11,6 @@ module TOOLS
   public :: start_loop
   public :: end_loop
 
-  ! !GRIDS:
-  ! public :: linspace
-  ! public :: logspace
-  ! public :: arange
-  ! public :: powspace
-  ! public :: upmspace
-  ! public :: upminterval
-
   !SORT,UNIQ,SHUFFLE:
   public :: sort,sort_array
   public :: uniq,reshuffle
@@ -34,13 +26,11 @@ module TOOLS
   public :: find2Dmesh
 
   !OTHER:
+  public :: order_of_magnitude
   public :: get_density_from_matsubara_gf
   public :: get_matsubara_gf_from_dos
   public :: get_free_dos
   public :: sum_overk_zeta
-
-  ! !CONVERGENCE
-  ! public :: check_convergence,check_convergence_global,check_convergence_local
 
   interface shiftFW
      module procedure shiftM_fw_C,shiftA_fw_C,shiftM_fw_R,shiftA_fw_R
@@ -50,17 +40,9 @@ module TOOLS
      module procedure shiftM_bw_C,shiftA_bw_C,shiftM_bw_R,shiftA_bw_R
   end interface shiftBW
 
-
-  !----------------------------------------------------------------------
   !   UNIINV = Merge-sort inverse ranking of an array, with removal of
-  !   duplicate entries.
-  !   The routine is similar to pure merge-sort ranking, but on
-  !   the last pass, it sets indices in IGOEST to the rank
-  !   of the value in the ordered set with duplicates removed.
-  !   For performance reasons, the first 2 passes are taken
-  !   out of the standard loop, and use dedicated coding.
+  !    duplicate entries. 
   !----------------------------------------------------------------------
-
   interface uniinv
      module procedure d_uniinv, r_uniinv, i_uniinv
   end interface uniinv
@@ -71,9 +53,10 @@ module TOOLS
   end interface nearless
 
 
-  !   unista = (stable unique) removes duplicates from an array,
-  !            leaving unique entries in the order of their first
-  !            appearance in the initial set.
+  !   UNISTA = (stable unique) removes duplicates from an array,
+  !    leaving unique entries in the order of their first
+  !    appearance in the initial set.
+  !----------------------------------------------------------------------
   interface unista
      module procedure d_unista, r_unista, i_unista
   end interface unista
@@ -83,47 +66,6 @@ module TOOLS
   interface uniq
      module procedure i_uniq,d_uniq
   end interface uniq
-
-
-  ! interface check_convergence
-  !    module procedure &
-  !         i0_check_convergence_relative,&
-  !         i1_check_convergence_relative,&
-  !         i2_check_convergence_relative,&
-  !         d0_check_convergence_relative,&
-  !         d1_check_convergence_relative,&
-  !         d2_check_convergence_relative,&
-  !         z0_check_convergence_relative,&
-  !         z1_check_convergence_relative,&
-  !         z2_check_convergence_relative
-  ! end interface check_convergence
-
-
-  ! interface check_convergence_global
-  !    module procedure &
-  !         i0_check_convergence_global,&
-  !         i1_check_convergence_global,&
-  !         i2_check_convergence_global,&
-  !         d0_check_convergence_global,&
-  !         d1_check_convergence_global,&
-  !         d2_check_convergence_global,&
-  !         z0_check_convergence_global,&
-  !         z1_check_convergence_global,&
-  !         z2_check_convergence_global
-  ! end interface check_convergence_global
-
-  ! interface check_convergence_local
-  !    module procedure &
-  !         i0_check_convergence_local,&
-  !         i1_check_convergence_local,&
-  !         i2_check_convergence_local,&
-  !         d0_check_convergence_local,&
-  !         d1_check_convergence_local,&
-  !         d2_check_convergence_local,&
-  !         z0_check_convergence_local,&
-  !         z1_check_convergence_local,&
-  !         z2_check_convergence_local
-  ! end interface check_convergence_local
 
   interface outerprod
      module procedure outerprod_d,outerprod_c
@@ -186,50 +128,18 @@ contains
   end subroutine end_loop
 
 
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
+  function order_of_magnitude(x) result(norder)
+    integer :: norder
+    real(8) :: x
+    norder = floor(log10(abs(x)))
+  end function order_of_magnitude
 
-
-  ! !###################################################################
-  ! ! GRIDS:
-  ! !###################################################################
-  ! include "tools_grids.f90"
-
-
-  ! !###################################################################
-  ! ! FUNCTIONS:
-  ! !###################################################################
-  ! function deriv(f,dh) result(df)
-  !   real(8),dimension(:),intent(in) :: f
-  !   real(8),intent(in)              :: dh
-  !   real(8),dimension(size(f))      :: df
-  !   integer                         :: i,L
-  !   L=size(f)
-  !   df(1)= (f(2)-f(1))/dh
-  !   do i=2,L-1
-  !      df(i) = (f(i+1)-f(i-1))/(2.d0*dh)
-  !   enddo
-  !   df(L)= (f(L)-f(L-1))/dh
-  ! end function deriv
-
-
-
-  ! !###################################################################
-  ! ! CONVERGENCE:
-  ! !###################################################################
-  ! include "tools_check_convergence_global.f90"
-  ! include "tools_check_convergence_relative.f90"
-  ! include "tools_check_convergence_local.f90"
-
-  !###################################################################
   ! SORTING 1D:
   !###################################################################
   include "tools_sort1d.f90"
   include "tools_shifts.f90"
 
 
-  !###################################################################
   ! USEFUL ROUTINES:
   !###################################################################
   function get_density_from_matsubara_gf(giw,beta) result(n)
