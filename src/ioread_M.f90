@@ -45,19 +45,19 @@ subroutine sreadM_IR(pname,X,Y1,Y2,Y3,Y4)
   if(present(Y4))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,4(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
+           write(719,"(I15,4(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
         enddo
      enddo
   elseif(present(Y3))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,3(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
+           write(719,"(I15,3(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
         enddo
      enddo
   elseif(present(Y2))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(I15,2(F18.10))")X(j),Y1(i,j),Y2(i,j)
+           write(719,"(I15,2(F21.12))")X(j),Y1(i,j),Y2(i,j)
         enddo
      enddo
   else
@@ -84,7 +84,7 @@ subroutine sreadM_IC(pname,X,Y1,Y2)
           imY(2,size(Y1,1),size(Y1,2)))
      do i=1,Ny1
         do j=1,Ny2
-           read(719,"(I15,4(F18.10))")X(j),imY(1,i,j),reY(1,i,j),imY(2,i,j),imY(2,i,j)
+           read(719,"(I15,4(F21.12))")X(j),imY(1,i,j),reY(1,i,j),imY(2,i,j),imY(2,i,j)
         enddo
      enddo
      Y1=cmplx(reY(1,:,:),imY(1,:,:),8)
@@ -117,13 +117,13 @@ subroutine sreadM_RI(pname,X,Y1,Y2,Y3,Y4)
   if(present(Y4))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(F18.10,4(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
+           write(719,"(F21.12,4(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
         enddo
      enddo
   elseif(present(Y3))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(F18.10,3(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
+           write(719,"(F21.12,3(I15))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
         enddo
      enddo
   elseif(present(Y2))then
@@ -153,13 +153,13 @@ subroutine sreadM_RR(pname,X,Y1,Y2,Y3,Y4)
   if(present(Y4))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(5(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
+           write(719,"(5(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j),Y4(i,j)
         enddo
      enddo
   elseif(present(Y3))then
      do i=1,Ny1
         do j=1,Ny2
-           write(719,"(4(F18.10))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
+           write(719,"(4(F21.12))")X(j),Y1(i,j),Y2(i,j),Y3(i,j)
         enddo
      enddo
   elseif(present(Y2))then
@@ -192,7 +192,7 @@ subroutine sreadM_RC(pname,X,Y1,Y2)
           imY(2,size(Y1,1),size(Y1,2)))
      do i=1,Ny1
         do j=1,Ny2
-           read(719,"(F18.10,4(F18.10))")X(j),imY(1,i,j),reY(1,i,j),imY(2,i,j),imY(2,i,j)
+           read(719,"(F21.12,4(F21.12))")X(j),imY(1,i,j),reY(1,i,j),imY(2,i,j),imY(2,i,j)
         enddo
      enddo
      Y1=cmplx(reY(1,:,:),imY(1,:,:),8)
@@ -293,7 +293,7 @@ subroutine sreadA3_IC(pname,X,Y1,Y2)
      do i=1,Ny1
         do j=1,Ny2
            do k=1,Ny3
-              read(719,"(I15,4(F18.10))")X(j),imY(1,i,j,k),reY(1,i,j,k),imY(2,i,j,k),imY(2,i,j,k)
+              read(719,"(I15,4(F21.12))")X(j),imY(1,i,j,k),reY(1,i,j,k),imY(2,i,j,k),imY(2,i,j,k)
            enddo
         enddo
      enddo
@@ -386,7 +386,7 @@ subroutine sreadA3_RC(pname,X,Y1,Y2)
      do i=1,Ny1
         do j=1,Ny2
            do k=1,Ny3
-              read(719,"(F18.10,4(F18.10))")X(j),imY(1,i,j,k),reY(1,i,j,k),imY(2,i,j,k),imY(2,i,j,k)
+              read(719,"(F21.12,4(F21.12))")X(j),imY(1,i,j,k),reY(1,i,j,k),imY(2,i,j,k),imY(2,i,j,k)
            enddo
         enddo
      enddo
