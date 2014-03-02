@@ -4,6 +4,7 @@
 module TOOLS
   USE COMMON_VARS
   USE TIMER
+  USE FFTGF
   implicit none
   private
 
@@ -26,6 +27,7 @@ module TOOLS
   public :: find2Dmesh
 
   !OTHER:
+  public :: get_local_density
   public :: order_of_magnitude
   public :: get_density_from_matsubara_gf
   public :: get_matsubara_gf_from_dos
@@ -142,6 +144,15 @@ contains
 
   ! USEFUL ROUTINES:
   !###################################################################
+  function get_local_density(giw,beta) result(n)
+    complex(8),dimension(:) :: giw
+    real(8)                 :: gtau(0:size(giw))
+    real(8)                 :: beta,n
+    call fftgf_iw2tau(giw,gtau,beta)
+    n = -2.d0*gtau(size(giw))
+  end function get_local_density
+
+
   function get_density_from_matsubara_gf(giw,beta) result(n)
     complex(8),dimension(:) :: giw
     complex(8)              :: tail

@@ -177,7 +177,11 @@
 
     !FUNCTIONS:
     public :: heaviside
+    interface step
+       module procedure step_x,step_ij
+    end interface step
     public :: step
+
     public :: fermi
     interface sgn
        module procedure i_sgn,d_sgn
@@ -193,6 +197,7 @@
     public :: gfbether
     public :: bethe_lattice
     public :: dens_bethe
+    public :: bethe_guess_g0
 
     !HYPERCUBIC/GAUSSIAN DENS:
     public :: dens_hyperc
@@ -222,7 +227,7 @@
     !+------------------------------------------------------------------+
     !PURPOSE  : calculate step function
     !+------------------------------------------------------------------+
-    pure function step(x,origin)
+    pure function step_x(x,origin) result(step)
       real(8),intent(in)          :: x
       logical,optional,intent(in) :: origin
       real(8)                     :: step
@@ -235,9 +240,26 @@
       case (.false.)
          if(x>0.d0)step=1.d0
       end select
-    end function step
+    end function step_x
 
 
+    !+------------------------------------------------------------------+
+    !PURPOSE  : calculate step function
+    !+------------------------------------------------------------------+
+    pure function step_ij(i,j,origin)
+      integer,intent(in)          :: i,j
+      logical,optional,intent(in) :: origin
+      real(8)                     :: step_ij
+      logical                     :: w0
+      step_ij=0.d0
+      w0=.true.;if(present(origin))w0=origin
+      select case(w0)
+      case (.true.)
+         if(i.ge.j)step_ij=1.d0
+      case (.false.)
+         if(i.gt.j)step_ij=1.d0
+      end select
+    end function step_ij
 
     !*******************************************************************
     !*******************************************************************
@@ -335,12 +357,14 @@
     end function dens_hyperc
 
 
+    !+-------------------------------------------------------------------+
+    !PURPOSE  : calculate the non-interacting dos for HYPERCUBIC lattice 
+    !+-------------------------------------------------------------------+
     function dens_2dsquare(x,ts) result(dos)
       real(8),intent(in)          :: x
       real(8),intent(in),optional :: ts
       real(8)                     :: wband,y,kint,eint,dos
       wband=4.d0;if(present(ts))wband=4.d0*ts
-
       dos=0.d0
       if(abs(x)<=wband)then
          y=0.5d0*(x/wband)**2-1.d0

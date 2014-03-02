@@ -4,7 +4,6 @@
     use MKL_DFTI
     use MKL_DFT_TYPE
     use MKL_TRIG_TRANSFORMS
-    !use TOOLS, only:linspace
     use INTERPOLATE
     implicit none 
     private
@@ -147,11 +146,11 @@
     !if g(-tau) is required this has to be implemented in the calling code
     !using the transformation: g(-tau)=-g(beta-tau) for tau>0
     !+-------------------------------------------------------------------+
-    subroutine fftgf_iw2tau(gw,gt,beta,notail)
+    subroutine fftgf_iw2tau(gw,gt,beta,notail,nofix)
       implicit none
       integer                             :: i,n,L
-      logical,optional                    :: notail
-      logical                             :: notail_
+      logical,optional                    :: notail,nofix
+      logical                             :: notail_,nofix_
       complex(8),dimension(:)             :: gw
       real(8),dimension(0:)               :: gt
       complex(8),dimension(:),allocatable :: tmpGw
@@ -159,6 +158,7 @@
       complex(8)                          :: tail
       real(8)                             :: wmax,beta,mues,tau,dtau,At,w
       notail_=.false.;if(present(notail))notail_=notail
+      nofix_ =.false.;if(present(nofix))nofix_=nofix
       !
       n=size(gw)     ; L=size(gt)-1 ; dtau=beta/real(L,8) 
       !
@@ -196,7 +196,7 @@
             endif
             gt(i) = tmpGt(i) + At
          enddo
-         gt(L)=-(gt(0)+1.d0)
+         if(.not.nofix_)gt(L)=-(gt(0)+1.d0)
 
       case(.true.)
          if(L/=N)then
@@ -267,9 +267,7 @@
       forall(i=1:2*L)tau_long(i)=dble(i-1)*step
       step = beta/dble(L)
       forall(i=1:L+1)tau_short(i-1)=dble(i-1)*step
-      !tau_long = linspace(0.d0,beta,2*L)
-      !tau_short= linspace(0.d0,beta,L+1)
-      call linear_spline(tau_long,cmplx(reF,imF,8),tau_short,gt)
+      call linear_spline(tau_long,dcmplx(reF,imF),tau_short,gt)
       gt(L)=-gt(0)
       gt=gt/beta*2.d0
     end subroutine fftff_iw2tau
@@ -301,7 +299,7 @@
       forall(i=1:n)gw(i)=Igw(2*i)
       deallocate(Igt,Igw,cIgt)
     contains
-      include "splinefft.f90" !This is taken from SPLINE to make this module independent    
+      include "fftgf_spline.f90" !This is taken from SPLINE to make this module independent    
     end subroutine fftgf_tau2iw
 
 
@@ -316,17 +314,17 @@
       M=32*L
       allocate(Igt(-M:M),Igw(2*M))
       allocate(reGt(0:M),imGt(0:M))
-      call interp(real(gt(0:L),8),reGt(0:M),L,M)
+      call interp(dreal(gt(0:L)),reGt(0:M),L,M)
       call interp(dimag(gt(0:L)),imGt(0:M),L,M)
-      Igt(0:M)=cmplx(reGt(0:M),imGt(0:M),8)
+      Igt(0:M)=dcmplx(reGt(0:M),imGt(0:M))
       !
       forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)
       call fftgf_rt2rw(Igt,Igw,M)
-      Igw=Igw*beta/real(M,8)/2.d0
+      Igw=Igw*beta/dble(M)/2.d0
       forall(i=1:n)gw(i)=Igw(2*i)
       deallocate(Igt,Igw)
     contains
-      include "splinefft.f90" !This is taken from SPLINE to make this module independent    
+      include "fftgf_spline.f90" !This is taken from SPLINE to make this module independent    
     end subroutine fftff_tau2iw
 
 

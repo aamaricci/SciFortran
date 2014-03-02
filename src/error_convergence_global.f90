@@ -27,6 +27,7 @@ function i0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,res
      if(.not.allocated(Xold))then
         allocate(Xold(total_))
         Xold=0.d0
+        include "error_init_file_dim0.f90"
      endif
      err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
@@ -48,9 +49,9 @@ end function i0_check_convergence_global
 function i1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr,reset) result(convergence)
   integer,intent(in)            :: Xnew(:)
   real(8),intent(in)            :: eps
-  real(8),optional         :: oerr
-  logical,optional          :: reset
-  logical                   :: reset_
+  real(8),optional              :: oerr
+  logical,optional              :: reset
+  logical                       :: reset_
   integer,intent(in)            :: N1,N2
   integer,optional              :: id,index,total
   integer                       :: id_,index_,total_
@@ -63,8 +64,8 @@ function i1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
   character(len=2)              :: label
   logical,optional              :: strict
   logical                       :: strict_
-  character(len=*),optional:: file
-  character(len=100)       :: file_
+  character(len=*),optional     :: file
+  character(len=100)            :: file_
   file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   strict_=.false.;if(present(strict))strict_=strict
@@ -76,6 +77,7 @@ function i1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
      if(.not.allocated(Xold))then
         allocate(Xold(total_,Msize1))
         Xold=0.d0
+        include "error_init_file_dim1.f90"
      endif
      Verror=abs(Xnew-Xold(index_,:))
      if(check==1)Verror=1.d0
@@ -101,9 +103,9 @@ end function i1_check_convergence_global
 function i2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr,reset) result(convergence)
   integer,intent(in)                           :: Xnew(:,:)
   real(8),intent(in)                           :: eps
-  real(8),optional         :: oerr
-  logical,optional          :: reset
-  logical                   :: reset_
+  real(8),optional                             :: oerr
+  logical,optional                             :: reset
+  logical                                      :: reset_
   integer,intent(in)                           :: N1,N2
   integer,optional                             :: id,index,total
   integer                                      :: id_,index_,total_
@@ -113,11 +115,11 @@ function i2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
   real(8),dimension(size(Xnew,1),size(Xnew,2)) :: Verror
   integer,save,allocatable                     :: Xold(:,:,:)
   integer,save                                 :: success=0,check=1
-  character(len=2)         :: label
-  logical,optional              :: strict
-  logical                       :: strict_
-  character(len=*),optional:: file
-  character(len=100)       :: file_
+  character(len=2)                             :: label
+  logical,optional                             :: strict
+  logical                                      :: strict_
+  character(len=*),optional                    :: file
+  character(len=100)                           :: file_
   file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   strict_=.false.;if(present(strict))strict_=strict
@@ -129,6 +131,7 @@ function i2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
      if(.not.allocated(Xold))then
         allocate(Xold(total_,Msize1,Msize2))
         Xold=0.d0
+        include "error_init_file_dim2.f90"
      endif
      Verror=abs(Xnew-Xold(index_,:,:))
      if(check==1)Verror=1.d0
@@ -156,22 +159,22 @@ end function i2_check_convergence_global
 
 
 function d0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
-  real(8),intent(in)       :: Xnew
-  real(8),intent(in)       :: eps
-  real(8),optional         :: oerr
+  real(8),intent(in)        :: Xnew
+  real(8),intent(in)        :: eps
+  real(8),optional          :: oerr
   logical,optional          :: reset
   logical                   :: reset_
-  integer,intent(in)       :: N1,N2
-  integer,optional         :: id,index,total
-  integer                  :: id_,index_,total_
-  integer                  :: i,j,Msize
-  logical                  :: convergence  
-  real(8)                  :: error,err
-  real(8),save,allocatable :: Xold(:)
-  integer,save             :: success=0,check=1
-  character(len=2)         :: label
-  character(len=*),optional:: file
-  character(len=100)       :: file_
+  integer,intent(in)        :: N1,N2
+  integer,optional          :: id,index,total
+  integer                   :: id_,index_,total_
+  integer                   :: i,j,Msize
+  logical                   :: convergence  
+  real(8)                   :: error,err
+  real(8),save,allocatable  :: Xold(:)
+  integer,save              :: success=0,check=1
+  character(len=2)          :: label
+  character(len=*),optional :: file
+  character(len=100)        :: file_
   file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
@@ -181,6 +184,7 @@ function d0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,res
      if(.not.allocated(Xold))then
         allocate(Xold(total_))
         Xold=0.d0
+        include "error_init_file_dim0.f90"
      endif
      err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
@@ -202,9 +206,9 @@ end function d0_check_convergence_global
 function d1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,oerr,reset) result(convergence)
   real(8),intent(in)            :: Xnew(:)
   real(8),intent(in)            :: eps
-  real(8),optional         :: oerr
-  logical,optional          :: reset
-  logical                   :: reset_
+  real(8),optional              :: oerr
+  logical,optional              :: reset
+  logical                       :: reset_
   integer,intent(in)            :: N1,N2
   integer,optional              :: id,index,total
   integer                       :: id_,index_,total_
@@ -214,11 +218,11 @@ function d1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
   real(8),dimension(size(Xnew)) :: Verror
   real(8),save,allocatable      :: Xold(:,:)
   integer,save                  :: success=0,check=1
-  character(len=2)         :: label
+  character(len=2)              :: label
   logical,optional              :: strict
   logical                       :: strict_
-  character(len=*),optional:: file
-  character(len=100)       :: file_
+  character(len=*),optional     :: file
+  character(len=100)            :: file_
   file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   strict_=.false.;if(present(strict))strict_=strict
@@ -230,6 +234,7 @@ function d1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
      if(.not.allocated(Xold))then
         allocate(Xold(total_,Msize1))
         Xold=0.d0
+        include "error_init_file_dim1.f90"
      endif
      Verror=abs(Xnew-Xold(index_,:))
      if(check==1)Verror=1.d0
@@ -283,6 +288,7 @@ function d2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
      if(.not.allocated(Xold))then
         allocate(Xold(total_,Msize1,Msize2))
         Xold=0.d0
+        include "error_init_file_dim2.f90"
      endif
      Verror=abs(Xnew-Xold(index_,:,:))
      if(check==1)Verror=1.d0
@@ -335,6 +341,7 @@ function z0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,res
      if(.not.allocated(Xold))then
         allocate(Xold(total_))
         Xold=0.d0
+        include "error_init_file_dim0.f90"
      endif
      err=abs(Xnew-Xold(index_))
      if(check==1)err=1.d0
@@ -384,6 +391,7 @@ function z1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
      if(.not.allocated(Xold))then
         allocate(Xold(total_,Msize1))
         Xold=0.d0
+        include "error_init_file_dim1.f90"
      endif
      Verror=abs(Xnew-Xold(index_,:))
      if(check==1)Verror=1.d0
@@ -437,6 +445,7 @@ function z2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,strict,o
      if(.not.allocated(Xold))then
         allocate(Xold(total_,Msize1,Msize2))
         Xold=0.d0
+        include "error_init_file_dim2.f90"
      endif
      Verror=abs(Xnew-Xold(index_,:,:))
      if(check==1)Verror=1.d0
