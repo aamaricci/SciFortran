@@ -1,9 +1,11 @@
+ifeq ($(FC),xlf90)
 OPT =  -O3 -qarch=qp -qtune=qp
 STD =  -O2
 DEB =  -O0 -C
 FFLAG = $(STD)
 DFLAG = $(DEB)
 MOPT =-qmoddir=
+endif
 
 ifeq ($(FC),ifort)
 OPT =  -O3 -ftz -assume nobuffered_io -openmp 

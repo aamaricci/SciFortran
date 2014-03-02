@@ -3,7 +3,7 @@ REV = $(shell git rev-parse HEAD)
 
 all: version allmod libscifor.a libscifor_deb.a
 
-allmod: SCIFOR_VERSION COMVARS PARSECMD TIMER IOTOOLS TOOLS ERROR ARRAYS FFTGF DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS SCIFOR
+allmod: SCIFOR_VERSION COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS  DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS SCIFOR
 
 libscifor.a: 
 	@rsync -avP mods/*.mod $(SFMODS)/
@@ -76,10 +76,10 @@ mod_SCIFOR_VERSION: SCIFOR_VERSION
 
 
 #STD
-PARSECMD: 
+PARSE_INPUT: 
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_PARSECMD: PARSECMD
+mod_PARSE_INPUT: PARSE_INPUT
 	@rsync -avP mods/*.mod $(SFMODS)/
 	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  
@@ -292,7 +292,7 @@ mod_STATISTICS: STATISTICS
 TOOLS:  
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
-mod_TOOLS: COMVARS TIMER TOOLS 
+mod_TOOLS: COMVARS TIMER FFTGF TOOLS 
 	@rsync -avP mods/*.mod $(SFMODS)/
 	@rsync -avP debug_mods/*.mod $(SFMODS)/debug/
 	ar cvq libscifor.a `ls objs/*.o | sort | uniq`  

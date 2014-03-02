@@ -54,7 +54,6 @@ module MATRIX
           d_mat_solve_linear_system_Mrhs,z_mat_solve_linear_system_Mrhs
   end interface solve_linear_system
 
-
   !from nr90
   interface swap
      module procedure swap_i,swap_r,swap_rv,swap_z,swap_zv,swap_zm
@@ -97,10 +96,10 @@ contains
     lda = max(1,size(M,1))
     n   = size(M,2)
     Call dsyev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,info)
-    if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 1st call dsyev")
+    if(info /= 0)stop "Error MATRIX/d_mat_diagonalization: 1st call dsyev"
     lwork=lwork_guess(1) ; allocate(work(lwork))
     call dsyev(jobz_,uplo_,n,M,lda,E,work,lwork,info)
-    if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 2ns call dsyev")
+    if(info /= 0)stop "Error MATRIX/d_mat_diagonalization: 2ns call dsyev"
     deallocate(work)
   end subroutine d_mat_diagonalization
   !-----------------------------
@@ -122,10 +121,10 @@ contains
     n   = size(M,2)
     allocate(rwork(max(1,3*N-2)))
     call zheev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,rwork,info)
-    if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 1st call zsyev")
+    if(info /= 0)stop "Error MATRIX/d_mat_diagonalization: 1st call zsyev"
     lwork=lwork_guess(1) ; allocate(work(lwork))
     call zheev(jobz_,uplo_,n,M,lda,E,work,lwork,rwork,info)
-    if(info /= 0)call error("Error MATRIX/d_mat_diagonalization: 2Nd call zsyev")
+    if(info /= 0)stop "Error MATRIX/d_mat_diagonalization: 2Nd call zsyev"
     deallocate(work,rwork)
   end subroutine z_mat_diagonalization
   !-----------------------------
@@ -162,11 +161,11 @@ contains
     nrhs= 1
     allocate(ipvt(min(m,n)))
     call dgetrf(m,n,A,lda,ipvt,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrf"    
     allocate(b_(ldb,nrhs))
     b_(:,1)=b
     call dgetrs(trans_,n,nrhs,A,lda,ipvt,b_,ldb,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrs"
     b=b_(:,1)
     deallocate(ipvt,b_)
   end subroutine d_mat_solve_linear_system_1rhs
@@ -190,11 +189,11 @@ contains
     nrhs= 1
     allocate(ipvt(min(m,n)))
     call zgetrf(m,n,A,lda,ipvt,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrf"    
     allocate(b_(ldb,nrhs))
     b_(:,1)=b
     call zgetrs(trans_,n,nrhs,A,lda,ipvt,b_,ldb,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrs"
     b=b_(:,1)
     deallocate(ipvt,b_)
   end subroutine z_mat_solve_linear_system_1rhs
@@ -217,9 +216,9 @@ contains
     nrhs= size(B,2)
     allocate(ipvt(min(m,n)))
     call dgetrf(m,n,A,lda,ipvt,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrf"    
     call dgetrs(trans_,n,nrhs,A,lda,ipvt,b,ldb,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrs"
     deallocate(ipvt)
   end subroutine d_mat_solve_linear_system_Mrhs
   !-----------------------------
@@ -241,10 +240,10 @@ contains
     nrhs= size(B,2)   
     allocate(ipvt(n))
     call zgetrf(m,n,A,lda,ipvt,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrf")    
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrf"    
     lda=n ; ldb=n ; nrhs=size(b,2)
     call zgetrs(trans_,n,nrhs,A,lda,ipvt,b,ldb,info)
-    if(info/=0)call error("Error MATRIX/d_mat_solve_linear_system: dgetrs")
+    if(info/=0)stop "Error MATRIX/d_mat_solve_linear_system: dgetrs"
     deallocate(ipvt)
   end subroutine z_mat_solve_linear_system_Mrhs
 
@@ -320,12 +319,12 @@ contains
     n = size(A,2)
     allocate(ipvt(min(m,n)))
     call dgetrf(m,n,A,lda,ipvt,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invert: dgetrf")
+    if(info/=0)stop "Error MATRIX/D_mat_invert: dgetrf"
     call dgetri(n,A,lda,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invert: 1st call dgetri")
+    if(info/=0)stop "Error MATRIX/D_mat_invert: 1st call dgetri"
     lwork=lwork_guess(1) ; allocate(work(lwork))
     call dgetri(n,A,lda,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invert: 2nd call dgetri")
+    if(info/=0)stop "Error MATRIX/D_mat_invert: 2nd call dgetri"
     deallocate(ipvt,work)
   end subroutine D_mat_invert
   !-----------------------------
@@ -342,12 +341,12 @@ contains
     n   = size(A,2)
     allocate(ipvt(min(m,n)))
     call zgetrf(m,n,A,lda,ipvt,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invert: zgetrf")
+    if(info/=0)stop "Error MATRIX/Z_mat_invert: zgetrf"
     call zgetri(n,A,lda,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invert: 1st call dgetri")
+    if(info/=0)stop "Error MATRIX/Z_mat_invert: 1st call dgetri"
     lwork=lwork_guess(1) ; allocate(work(lwork))
     call zgetri(n,A,lda,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invert: zgetri")
+    if(info/=0)stop "Error MATRIX/Z_mat_invert: zgetri"
     deallocate(ipvt,work)
   end subroutine Z_mat_invert
 
@@ -386,7 +385,7 @@ contains
     lda = max(1,size(A,1))
     n   = size(A,2)
     call dtrtri(uplo_,diag_,n,A,lda,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertTRIANG: dtrtri")
+    if(info/=0)stop "Error MATRIX/D_mat_invertTRIANG: dtrtri"
   end subroutine D_mat_invertTRIANG
   !-----------------------------
 
@@ -403,7 +402,7 @@ contains
     lda = max(1,size(A,1))
     n   = size(A,2)
     call ztrtri(uplo_,diag_,n,A,lda,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertTRIANG: ztrtri")
+    if(info/=0)stop "Error MATRIX/D_mat_invertTRIANG: ztrtri"
   end subroutine Z_mat_invertTRIANG
 
 
@@ -443,12 +442,12 @@ contains
     n    = size(A,2)
     allocate(ipvt(n))
     call dsytrf(uplo_,n,A,lda,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 1st call dsytrf")
+    if(info/=0)stop "Error MATRIX/D_mat_invertSYM: 1st call dsytrf"
     lwork=lwork_guess(1);allocate(work(lwork))
     call dsytrf(uplo_,n,A,lda,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 2nd call dsytrf")
+    if(info/=0)stop "Error MATRIX/D_mat_invertSYM: 2nd call dsytrf"
     call dsytri(uplo_,n,A,lda,ipvt,work,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: dsytri")
+    if(info/=0)stop "Error MATRIX/D_mat_invertSYM: dsytri"
     deallocate(ipvt,work)
   end subroutine D_mat_invertSYM
   !-----------------------------
@@ -467,12 +466,12 @@ contains
     n    = size(A,2)
     allocate(ipvt(n))
     call zsytrf(uplo_,n,A,lda,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 1st call zsytrf")
+    if(info/=0)stop "Error MATRIX/D_mat_invertSYM: 1st call zsytrf"
     lwork=lwork_guess(1);allocate(work(lwork))
     call zsytrf(uplo_,n,A,lda,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: 2nd call zsytrf")
+    if(info/=0)stop "Error MATRIX/D_mat_invertSYM: 2nd call zsytrf"
     call zsytri(uplo_,n,A,lda,ipvt,work,info)
-    if(info/=0)call error("Error MATRIX/D_mat_invertSYM: zsytri")
+    if(info/=0)stop "Error MATRIX/D_mat_invertSYM: zsytri"
     deallocate(ipvt,work)
   end subroutine Z_mat_invertSYM
 
@@ -521,15 +520,15 @@ contains
           exit testH
        enddo
     enddo testH
-    if(bool)call error("Error MATRIX/Z_mat_invertHER: A not Hermitian")
+    if(bool)stop "Error MATRIX/Z_mat_invertHER: A not Hermitian"
     !
     call zhetrf(uplo_,n,A,lda,ipvt,lwork_guess,-1,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertHER: 1st call zhetrf")
+    if(info/=0)stop "Error MATRIX/Z_mat_invertHER: 1st call zhetrf"
     lwork=lwork_guess(1) ; allocate(work(lwork))
     call zhetrf(uplo_,n,A,lda,ipvt,work,lwork,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertHERE: 2nd call zhetrf")
+    if(info/=0)stop "Error MATRIX/Z_mat_invertHERE: 2nd call zhetrf"
     call zhetri(uplo_,n,A,lda,ipvt,work,info)
-    if(info/=0)call error("Error MATRIX/Z_mat_invertHERE: zhetri")
+    if(info/=0)stop "Error MATRIX/Z_mat_invertHERE: zhetri"
     deallocate(ipvt,work)
     if(uplo_=="U")then
        forall(i=1:size(A,1),j=1:size(A,2),i>j)A(i,j)=conjg(A(j,i))

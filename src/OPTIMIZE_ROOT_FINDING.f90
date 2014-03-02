@@ -1,4 +1,5 @@
   include "optimize_broyden_routines.f90"
+  include "minpack.f90"
   module HYBRD_INTERFACE
     implicit none
     abstract interface 

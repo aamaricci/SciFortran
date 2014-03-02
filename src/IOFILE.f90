@@ -31,7 +31,7 @@ module IOFILE
   public :: file_size
   public :: file_length
   public :: file_info
-  public :: free_unit
+  public :: free_unit,free_units
   public :: data_open
   public :: data_store
   public :: set_store_size
@@ -90,9 +90,26 @@ contains
        unit_=unit_+1
        INQUIRE(unit=unit_,OPENED=is_it_opened,iostat=ios)
        if(.not.is_it_opened.AND.ios==0)return 
-       if(unit_>900) call error("ERROR free_unit: no unit free smaller than 900. Possible BUG")
+       if(unit_>900) stop "ERROR free_unit: no unit free smaller than 900. Possible BUG"
     enddo
   end function free_unit
+
+  function free_units(n) result(unit)
+    integer :: n
+    integer :: unit(n)
+    integer :: i,unit_,ios
+    logical :: is_it_opened
+    unit_=100
+    do i=1,n
+       search: do 
+          unit_=unit_+1
+          inquire(unit=unit_,OPENED=is_it_opened,iostat=ios)
+          if(.not.is_it_opened.AND.ios==0)exit search
+          if(unit_>900) stop "ERROR free_unit: no unit free smaller than 900. Possible BUG"
+       enddo search
+       unit(i)=unit_
+    enddo
+  end function free_units
 
 
 
@@ -108,7 +125,7 @@ contains
     logical               :: control
     inquire(file=reg(file),exist=control)
     if(.not.control)then
-       call msg('Cannot read '//reg(file)//'. Skip file_size')
+       write(*,*) 'Cannot read '//reg(file)//'. Skip file_size'
        return
     endif
     open(10,file=reg(file))
@@ -185,7 +202,7 @@ contains
     endif
     lines=0
     if(.not.IOfile)then
-       call msg('Cannot read +'//reg(file)//'. Skip file_size')
+       write(*,*) 'Cannot read +'//reg(file)//'. Skip file_size'
        return
     endif
     open(99,file=reg(file))
@@ -223,7 +240,7 @@ contains
     logical           :: control
     character(len=9)  :: csize 
     integer           :: cstatus,fsize
-    call msg("storing "//file)
+    write(*,*) "storing "//file
     inquire(file=reg(file),exist=control)
     if(control)then
        fsize=store_size;if(present(size))fsize=size
@@ -263,7 +280,7 @@ contains
        if(.not.compressed)return
     endif
 
-    call msg("deflate "//reg(filename)//reg(type))
+    write(*,*) "deflate "//reg(filename)//reg(type)
     call system("gunzip "//reg(filename)//(type))
     return
   end subroutine data_open
