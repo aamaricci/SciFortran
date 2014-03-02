@@ -197,7 +197,7 @@ subroutine d_splot3d_animate(pname,X1,X2,Y)
   if(size(Y,1)/=Nx1) stop "Error Nx1"
   if(size(Y,2)/=Nx2) stop "Error Nx2"
   Nt=size(Y,3)
-  call msg("splot3d_animate "//reg_filename(fname)//" ("//trim(txtfy(Nx1))//","//trim(txtfy(Nx2))//","//trim(txtfy(Nt))//")")
+  write(*,*) "splot3d_animate "//reg_filename(fname)//" ("//trim(txtfy(Nx1))//","//trim(txtfy(Nx2))//","//trim(txtfy(Nt))//")"
   open(719,file=adjustl(trim(pname)))
   do m=1,Nt
      do i=1,Nx1
@@ -253,7 +253,7 @@ subroutine c_splot3d_animate(pname,X1,X2,Y)
   if(size(Y,1)/=Nx1) stop "Error Nx1"
   if(size(Y,2)/=Nx2) stop "Error Nx2"
   Nt=size(Y,3)
-  call msg("splot3d_animate "//reg_filename(fname)//" ("//trim(txtfy(Nx1))//","//trim(txtfy(Nx2))//","//trim(txtfy(Nt))//")")
+  write(*,*) "splot3d_animate "//reg_filename(fname)//" ("//trim(txtfy(Nx1))//","//trim(txtfy(Nx2))//","//trim(txtfy(Nt))//")"
   open(619,file=adjustl(trim(dname))//"re_"//adjustl(trim(fname)))
   open(719,file=adjustl(trim(dname))//"im_"//adjustl(trim(fname)))
   do m=1,Nt

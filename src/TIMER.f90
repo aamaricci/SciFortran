@@ -49,7 +49,7 @@ contains
     if(mpiID==0)then
        timer_index=timer_index+1
        if(timer_index>size(timer_start,1))then
-          call error("Error in cronograph: too many timers started")
+          stop "Error in cronograph: too many timers started"
        endif
        call date_and_time(values=timer_start(timer_index,:))
        timer0(timer_index,:)=timer_start(timer_index,:)
