@@ -99,7 +99,7 @@ contains
     type(vect2D)         :: ai,aj,bi,bj
 
     Nk=Nx/2+1 ; Lk_=Nk*(Nk+1)/2 ; if(present(Ny))Lk_=(Nx+1)*(Ny+1)
-    if(Lk_ /= Lk)call error("LATTICE: the +input1.dimension in +build_2dsquare_lattice is wrong!")
+    if(Lk_ /= Lk)stop "LATTICE: the +input1.dimension in +build_2dsquare_lattice is wrong!"
 
     if(present(Ny))then
        write(*,"(A,I8,A)")"Full BZ:",Lk," k-points"

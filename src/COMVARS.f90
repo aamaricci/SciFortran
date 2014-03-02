@@ -3,11 +3,8 @@
 !PURPOSE  : Declare all the common variables usually in use within codes
 !########################################################################
 module COMMON_VARS
-  USE SCIFOR_VERSION
   implicit none
   private
-
-  !include "scifor_version.inc"
 
   !PARAMETERS
   !===============================================================
@@ -39,37 +36,23 @@ module COMMON_VARS
   !=========================================================
   integer,public :: omp_num_threads,omp_id,omp_size
 
-  !Date variables:
-  integer(4) :: year
-  integer(4) :: mese
-  integer(4) :: day
-  integer(4) :: h
-  integer(4) :: m
-  integer(4) :: s
-  integer(4) :: ms
-  character(len=9),parameter,dimension(12) :: month = (/ &
-       'January  ', 'February ', 'March    ', 'April    ', &
-       'May      ', 'June     ', 'July     ', 'August   ', &
-       'September', 'October  ', 'November ', 'December ' /)
-
 
   interface txtfy
-     module procedure i_to_ch,r_to_ch,c_to_ch
+     module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
   end interface txtfy
 
   !===============================================
 
   public :: timestamp
-  public :: error,warning
-  public :: msg
+  public :: warning
   public :: txtfy
   public :: bold
   public :: underline
   public :: highlight
   public :: erased
-  public :: red,green,yellow,blue,purple,cyan
-  public :: bold_red,bold_green,bold_yellow,bold_blue,bold_purple,bold_cyan
-  public :: bg_red,bg_green,bg_yellow,bg_blue,bg_purple,bg_cyan
+  public :: red,green,yellow,blue
+  public :: bold_red,bold_green,bold_yellow,bold_blue
+  public :: bg_red,bg_green,bg_yellow,bg_blue
 
 
 contains
@@ -90,10 +73,6 @@ contains
        call print_date(data,unit_)
     endif
   end subroutine timestamp
-
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
 
 
   !+-------------------------------------------------------------------+
@@ -133,27 +112,28 @@ contains
 
 
 
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : send error message to std.out and exit 
-  !+-------------------------------------------------------------------+
-  subroutine error(text,id)
-    character(len=*) :: text
-    character(len=4) :: char_id
-    integer,optional :: id
-    integer          :: id_
-    id_=0;if(present(id))id_=id
-    if(id_ > mpiSIZE)id_=0
-    if(mpiID==id_)then
-       if(mpiID==0)then
-          write(*,'(A)',advance="no")bold_red("error:")
-       else
-          write(char_id,"(I4)")id_
-          write(*,'(A)',advance="no")bold_red("error from cpu"//char_id//":")
-       endif
-       write(*,'(A)')bg_red(text)
-    endif
-    stop
-  end subroutine error
+  ! !+-------------------------------------------------------------------+
+  ! !PURPOSE  : send error message to std.out and exit 
+  ! !+-------------------------------------------------------------------+
+  ! subroutine error(text,id)
+  !   character(len=*) :: text
+  !   character(len=4) :: char_id
+  !   integer,optional :: id
+  !   integer          :: id_
+  !   id_=0;if(present(id))id_=id
+  !   if(id_ > mpiSIZE)id_=0
+  !   if(mpiID==id_)then
+  !      if(mpiID==0)then
+  !         write(*,'(A)',advance="no")bold_red("error:")
+  !      else
+  !         write(char_id,"(I4)")id_
+  !         write(*,'(A)',advance="no")bold_red("error from cpu"//char_id//":")
+  !      endif
+  !      write(*,'(A)')bg_red(text)
+  !   endif
+  !   stop
+  ! end subroutine error
+
 
   subroutine warning(text,unit,id)
     character(len=*) :: text
@@ -174,26 +154,21 @@ contains
   end subroutine warning
 
 
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
-
-
-  subroutine msg(message,unit,id)
-    character(len=*) :: message
-    integer,optional :: unit,id
-    integer          :: unit_,i,id_
-    id_=0;if(present(id))id_=id;if(id_ > mpiSIZE)id_=0
-    unit_=6;if(present(unit))unit_=unit
-    if(mpiID==id_)then
-       if(mpiID==0)then
-          write(unit_,'(A)',advance="no")"msg:"
-       else
-          write(unit_,'(A,I3,A)',advance="no")"msg from cpu",id_,": "
-       endif
-       write(*,'(A)') message
-    endif
-  end subroutine msg
+  ! subroutine msg(message,unit,id)
+  !   character(len=*) :: message
+  !   integer,optional :: unit,id
+  !   integer          :: unit_,i,id_
+  !   id_=0;if(present(id))id_=id;if(id_ > mpiSIZE)id_=0
+  !   unit_=6;if(present(unit))unit_=unit
+  !   if(mpiID==id_)then
+  !      if(mpiID==0)then
+  !         write(unit_,'(A)',advance="no")"msg:"
+  !      else
+  !         write(unit_,'(A,I3,A)',advance="no")"msg from cpu",id_,": "
+  !      endif
+  !      write(*,'(A)') message
+  !   endif
+  ! end subroutine msg
 
 
   !******************************************************************
@@ -224,6 +199,14 @@ contains
     call r8_to_s_left(im,sim)
     string="("//trim(sre)//","//trim(sim)//")"
   end function c_to_ch
+
+  function l_to_ch(bool) result(string)
+    logical :: bool
+    character(len=1) :: string
+    string='F'
+    if(bool)string='T'
+  end function l_to_ch
+
 
   !******************************************************************
   !******************************************************************
@@ -277,18 +260,6 @@ contains
     textout=achar(27)//"[94m"//text//achar(27)//"[0m"
   end function blue
 
-  function purple(text) result(textout)
-    character(len=*) :: text
-    character(len=9+len(text)) :: textout
-    textout=achar(27)//"[95m"//text//achar(27)//"[0m"
-  end function purple
-
-  function cyan(text) result(textout)
-    character(len=*) :: text
-    character(len=9+len(text)) :: textout
-    textout=achar(27)//"[96m"//text//achar(27)//"[0m"
-  end function cyan
-
   function bold_red(text) result(textout)
     character(len=*) :: text
     character(len=11+len(text)) :: textout
@@ -313,18 +284,6 @@ contains
     textout=achar(27)//"[1;94m"//text//achar(27)//"[0m"
   end function bold_blue
 
-  function bold_purple(text) result(textout)
-    character(len=*) :: text
-    character(len=11+len(text)) :: textout
-    textout=achar(27)//"[1;95m"//text//achar(27)//"[0m"
-  end function bold_purple
-
-  function bold_cyan(text) result(textout)
-    character(len=*) :: text
-    character(len=11+len(text)) :: textout
-    textout=achar(27)//"[1;96m"//text//achar(27)//"[0m"
-  end function bold_cyan
-
   function bg_red(text) result(textout)
     character(len=*) :: text
     character(len=9+len(text)) :: textout
@@ -348,18 +307,6 @@ contains
     character(len=9+len(text)) :: textout
     textout=achar(27)//"[44m"//text//achar(27)//"[0m"
   end function bg_blue
-
-  function bg_purple(text) result(textout)
-    character(len=*) :: text
-    character(len=9+len(text)) :: textout
-    textout=achar(27)//"[45m"//text//achar(27)//"[0m"
-  end function bg_purple
-
-  function bg_cyan(text) result(textout)
-    character(len=*) :: text
-    character(len=9+len(text)) :: textout
-    textout=achar(27)//"[46m"//text//achar(27)//"[0m"
-  end function bg_cyan
 
 
 
