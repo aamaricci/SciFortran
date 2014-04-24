@@ -33,14 +33,8 @@ module TOOLS
   public :: get_matsubara_gf_from_dos
   public :: get_free_dos
   public :: sum_overk_zeta
+  public :: finalize_run
 
-  interface shiftFW
-     module procedure shiftM_fw_C,shiftA_fw_C,shiftM_fw_R,shiftA_fw_R
-  end interface shiftFW
-
-  interface shiftBW
-     module procedure shiftM_bw_C,shiftA_bw_C,shiftM_bw_R,shiftA_bw_R
-  end interface shiftBW
 
   !   UNIINV = Merge-sort inverse ranking of an array, with removal of
   !    duplicate entries. 
@@ -49,11 +43,6 @@ module TOOLS
      module procedure d_uniinv, r_uniinv, i_uniinv
   end interface uniinv
   public :: uniinv
-
-  interface nearless
-     module procedure D_nearless, R_nearless, I_nearless
-  end interface nearless
-
 
   !   UNISTA = (stable unique) removes duplicates from an array,
   !    leaving unique entries in the order of their first
@@ -64,10 +53,14 @@ module TOOLS
   end interface unista
   public  :: unista
 
-
   interface uniq
      module procedure i_uniq,d_uniq
   end interface uniq
+
+
+  interface nearless
+     module procedure D_nearless, R_nearless, I_nearless
+  end interface nearless
 
   interface outerprod
      module procedure outerprod_d,outerprod_c
@@ -88,6 +81,11 @@ contains
     outerprod = spread(a,dim=2,ncopies=size(b)) * &
          spread(b,dim=1,ncopies=size(a))
   end function outerprod_c
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
 
 
   subroutine start_loop(loop,max,name,unit,id)
@@ -112,10 +110,6 @@ contains
   end subroutine start_loop
 
 
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
-
   subroutine end_loop(unit,id)
     integer,optional :: unit,id
     integer          :: unit_,id_
@@ -130,16 +124,32 @@ contains
   end subroutine end_loop
 
 
+  subroutine finalize_run(iter,error,filename)
+    integer,intent(in)                   :: iter
+    real(8),intent(in)                   :: error
+    character(len=*),intent(in),optional :: filename
+    character(len=100)                   :: filename_
+    integer                              :: unit
+    filename_="job_done.out";if(present(filename))filename_=filename
+    unit=free_unit()
+    open(unit,file=reg(filename),status="new")
+    write(unit,*)iter,error
+    close(unit)
+  end subroutine finalize_run
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+
   function order_of_magnitude(x) result(norder)
     integer :: norder
     real(8) :: x
     norder = floor(log10(abs(x)))
   end function order_of_magnitude
 
-  ! SORTING 1D:
-  !###################################################################
-  include "tools_sort1d.f90"
-  include "tools_shifts.f90"
+  !include "tools_shifts.f90"
 
 
   ! USEFUL ROUTINES:
@@ -264,8 +274,11 @@ contains
 
 
 
-
+  ! SORTING 1D:
   !###################################################################
+  include "tools_sort1d.f90"
+
+
   ! SORTING 2D:
   !###################################################################
   !+------------------------------------------------------------------+
@@ -586,16 +599,7 @@ contains
     return
     !
   end subroutine d_uniinv
-
-
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-
+  !
   subroutine r_uniinv (xdont, igoest)
     real, dimension (:), intent (in) :: xdont
     integer, dimension (:), intent (out) :: igoest
