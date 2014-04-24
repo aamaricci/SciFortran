@@ -300,11 +300,8 @@ contains
   end subroutine find2Dmesh
   !---------------------------------------------!
   function fastsearchreal(xx,tab)
-    implicit none
-    !bissection non recursive
-    !LES BIN COMMENCE A GAUCHE : gauche_bin_i=tab(xi)
     integer :: i1,i2,is,siz
-    real(8)  :: xx,tab(:)
+    real(8) :: xx,tab(:)
     integer :: fastsearchreal
     siz=size(tab)
     is=siz/2
@@ -313,7 +310,6 @@ contains
     fastsearchreal=0
     if(tab(1)>xx)then
        fastsearchreal=siz
-       !write(*,*) 'element pas dans le tableau'
        return
     endif
     if(tab(siz)<=xx)then
@@ -321,19 +317,16 @@ contains
        return
     endif
     do
-       !*********************************
        if(tab(is)<=xx) then
           i1=is
           is=i1+max(1,(i2-i1)/2)
           goto 28
        endif
-       !*********************************
        if(tab(is)>xx)then
           i2=is
           is=i1+(i2-i1)/2
           goto 28
        endif
-       !**********************************
 28     continue
        if(is==siz.and.tab(is)<=xx)then
           fastsearchreal=is
@@ -1132,7 +1125,6 @@ contains
     logical, dimension (size(xdont)),optional :: mask
     integer :: icrs
     call uniinv (xdont, iwrkt)
-
     ifmptyt = .true.
     nuni = 0
     do icrs = 1, size(xdont)
