@@ -46,14 +46,16 @@ module PARSE_INPUT
      module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
   end interface txtfy
 
-
+  
   public :: get_cmd_variable
+  public :: check_input_file
   !
   public :: parse_cmd_help
 
   integer            :: unit
   character(len=7)   :: file_status='replace'
   character(len=255) :: p_buffer
+  logical            :: IOinput=.true.
 
 contains
 
@@ -102,7 +104,13 @@ contains
 
 
 
-
+  subroutine check_input_file(file)
+    character(len=*) :: file
+    if(.not.IOinput)then
+       write(*,*)"input file can not be found. dumped a default version in used."//trim(file)
+       stop
+    endif
+  end subroutine check_input_file
 
 
 
@@ -130,7 +138,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+          write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
        endif
     enddo
   end subroutine i_parse_variable
@@ -165,7 +173,7 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          write(0,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine iv_parse_variable
@@ -200,7 +208,7 @@ contains
              read(var%args(iarg),*)dummy_var(iarg)
           enddo
           variable=transpose(reshape(dummy_var,shape(variable)))
-          write(0,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
+          write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine im_parse_variable
@@ -219,18 +227,20 @@ contains
     if(present(default))variable=default
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          read(var%value,*)variable
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -253,33 +263,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)variable(iarg)
-          enddo
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             iscalar=(scan(var%value,",")==0)
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -302,33 +314,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)dummy_var(iarg)
-          enddo
-          variable=transpose(reshape(dummy_var,shape(variable)))
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)dummy_var(iarg)
+             enddo
+             variable=transpose(reshape(dummy_var,shape(variable)))
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -364,7 +378,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+          write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
        endif
     enddo
   end subroutine d_parse_variable
@@ -398,7 +412,7 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          write(0,"(A,100F18.9)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100F18.9)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine dv_parse_variable
@@ -433,7 +447,7 @@ contains
              read(var%args(iarg),*)dummy_var(iarg)
           enddo
           variable=transpose(reshape(dummy_var,shape(variable)))
-          write(0,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
+          write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine dm_parse_variable
@@ -453,18 +467,20 @@ contains
     if(present(default))variable=default
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          read(var%value,*)variable
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -487,33 +503,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)variable(iarg)
-          enddo
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             iscalar=(scan(var%value,",")==0)
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -536,33 +554,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)dummy_var(iarg)
-          enddo
-          variable=transpose(reshape(dummy_var,shape(variable)))
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)dummy_var(iarg)
+             enddo
+             variable=transpose(reshape(dummy_var,shape(variable)))
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -598,7 +618,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+          write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
        endif
     enddo
   end subroutine ch_parse_variable
@@ -632,7 +652,7 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          write(0,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine chv_parse_variable
@@ -667,7 +687,7 @@ contains
              read(var%args(iarg),*)dummy_var(iarg)
           enddo
           variable=transpose(reshape(dummy_var,shape(variable)))
-          write(0,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
+          write(*,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine chm_parse_variable
@@ -687,18 +707,20 @@ contains
     if(present(default))variable=default
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          read(var%value,*)variable
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -721,33 +743,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)variable(iarg)
-          enddo
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             iscalar=(scan(var%value,",")==0)
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -770,33 +794,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)dummy_var(iarg)
-          enddo
-          variable=transpose(reshape(dummy_var,shape(variable)))
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)dummy_var(iarg)
+             enddo
+             variable=transpose(reshape(dummy_var,shape(variable)))
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -830,7 +856,7 @@ contains
        var = get_cmd_variable(i)
        if(var%name==name_)then
           read(var%value,*)variable
-          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+          write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
        endif
     enddo
   end subroutine l_parse_variable
@@ -864,7 +890,7 @@ contains
           do iarg=1,nargs
              read(var%args(iarg),*)variable(iarg)
           enddo
-          write(0,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+          write(*,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine lv_parse_variable
@@ -899,7 +925,7 @@ contains
              read(var%args(iarg),*)dummy_var(iarg)
           enddo
           variable=transpose(reshape(dummy_var,shape(variable)))
-          write(0,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
+          write(*,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
        endif
     enddo
   end subroutine lm_parse_variable
@@ -920,18 +946,20 @@ contains
     if(present(default))variable=default
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          read(var%value,*)variable
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -954,33 +982,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          iscalar=(scan(var%value,",")==0)
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)variable(iarg)
-          enddo
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             iscalar=(scan(var%value,",")==0)
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -1003,33 +1033,35 @@ contains
     ndim=size(variable)
     name_=name;call upper_case(name_)
     inquire(file=file,exist=bool)
-    if(.not.bool)stop "PARSE_INPUT: input file does not exist."
-    unit=free_unit()
-    open(unit,file=file)
-    status=0
-    var_search: do while(status>=0)
-       read(unit,"(A)",iostat=status)buffer
-       var = get_input_variable(trim(buffer))
-       if(var%name==name_)then
-          nargs=check_cmd_vector_size(ndim,var)
-          allocate(var%args(nargs))
-          iarg=0
-          pos0=0
-          do j=1,len(var%value)
-             if(var%value(j:j)==",")then
-                iarg=iarg+1
-                var%args(iarg)=var%value(pos0+1:j-1)
-                pos0=j
-             endif
-          enddo
-          var%args(nargs)=var%value(pos0+1:)
-          do iarg=1,nargs
-             read(var%args(iarg),*)dummy_var(iarg)
-          enddo
-          variable=transpose(reshape(dummy_var,shape(variable)))
-          exit var_search
-       endif
-    enddo var_search
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A)",iostat=status)buffer
+          var = get_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)dummy_var(iarg)
+             enddo
+             variable=transpose(reshape(dummy_var,shape(variable)))
+             exit var_search
+          endif
+       enddo var_search
+    endif
     call parse_cmd_variable(variable,name_)
     close(unit)
     call append_to_used_input(variable,name_,file)
@@ -1055,7 +1087,7 @@ contains
     character(len=*) :: file
     integer          :: unit
     call s_blank_delete(name)
-    p_buffer=trim(name)//"="//txtfy(variable)//","
+    p_buffer=trim(name)//"="//txtfy(variable)!//","
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1071,9 +1103,10 @@ contains
     integer              :: unit,i
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable)
+    do i=1,size(variable)-1
        p_buffer=trim(p_buffer)//txtfy(variable(i))//","
     end do
+    p_buffer=trim(p_buffer)//txtfy(variable(size(variable)))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1089,11 +1122,17 @@ contains
     integer              :: unit,i,j
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable,1)
+    do i=1,size(variable,1)-1
        do j=1,size(variable,2)
           p_buffer=trim(p_buffer)//txtfy(variable(i,j))//","
        end do
     end do
+    i=size(variable,1)
+    do j=1,size(variable,2)-1
+       p_buffer=trim(p_buffer)//txtfy(variable(i,j))//","
+    end do
+    j=size(variable,2)
+    p_buffer=trim(p_buffer)//txtfy(variable(i,j))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1125,9 +1164,10 @@ contains
     integer              :: unit,i
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable)
+    do i=1,size(variable)-1
        p_buffer=trim(p_buffer)//txtfy(variable(i))//","
     end do
+    p_buffer=trim(p_buffer)//txtfy(variable(size(variable)))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1143,11 +1183,17 @@ contains
     integer              :: unit,i,j
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable,1)
+    do i=1,size(variable,1)-1
        do j=1,size(variable,2)
           p_buffer=trim(p_buffer)//txtfy(variable(i,j))//","
        end do
     end do
+    i=size(variable,1)
+    do j=1,size(variable,2)-1
+       p_buffer=trim(p_buffer)//txtfy(variable(i,j))//","
+    end do
+    j=size(variable,2)
+    p_buffer=trim(p_buffer)//txtfy(variable(i,j))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1180,9 +1226,10 @@ contains
     integer              :: unit,i
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable)
+    do i=1,size(variable)-1
        p_buffer=trim(p_buffer)//trim(variable(i))//","
     end do
+    p_buffer=trim(p_buffer)//trim(variable(size(variable)))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1198,11 +1245,18 @@ contains
     integer              :: unit,i,j
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable,1)
+    do i=1,size(variable,1)-1
        do j=1,size(variable,2)
           p_buffer=trim(p_buffer)//trim(variable(i,j))//","
        end do
     end do
+    i=size(variable,1)
+    do j=1,size(variable,2)-1
+       p_buffer=trim(p_buffer)//trim(variable(i,j))//","
+    end do
+    j=size(variable,2)
+    p_buffer=trim(p_buffer)//trim(variable(i,j))
+
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1235,9 +1289,10 @@ contains
     integer              :: unit,i
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable)
+    do i=1,size(variable)-1
        p_buffer=trim(p_buffer)//txtfy(variable(i))//","
     end do
+    p_buffer=trim(p_buffer)//txtfy(variable(size(variable)))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1253,11 +1308,17 @@ contains
     integer              :: unit,i,j
     call s_blank_delete(name)
     p_buffer=trim(name)//"="
-    do i=1,size(variable,1)
+    do i=1,size(variable,1)-1
        do j=1,size(variable,2)
           p_buffer=trim(p_buffer)//txtfy(variable(i,j))//","
        end do
     end do
+    i=size(variable,1)
+    do j=1,size(variable,2)-1
+       p_buffer=trim(p_buffer)//txtfy(variable(i,j))//","
+    end do
+    j=size(variable,2)
+    p_buffer=trim(p_buffer)//txtfy(variable(i,j))
     call s_blank_delete(p_buffer)
     unit=free_unit()
     open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
@@ -1523,9 +1584,13 @@ contains
           s(i:i) = '*'
        end do
     else if ( r8 == 0.0D+00 ) then
-       s(1:16) = '     0.0      '
+       s(1:16) = '     0.d0     '
     else
-       write ( s2, '(g16.9)' ) r8
+       if(abs(r8) < 1.d0)then
+          write ( s2, '(ES16.9)' ) r8
+       else
+          write ( s2, '(F16.9)' ) r8
+       endif
        s(1:16) = s2
     end if
     !  Shift the string left.

@@ -44,7 +44,7 @@ module SQUARE_LATTICE
   public :: square_lattice_reduxGrid_dimension
   public :: square_lattice_reduxGrid_index
   public :: square_lattice_reduxGrid_dispersion_array
-
+  public :: square_lattice_deallocate
 
 
 contains
@@ -370,4 +370,11 @@ contains
   end subroutine square_lattice_reduxGrid_dispersion_array
 
 
+
+  subroutine square_lattice_deallocate()
+    if(allocated(kindex))deallocate(kindex)
+    if(allocated(kgrid))deallocate(kgrid)
+    if(allocated(ik2ix))deallocate(ik2ix)
+    if(allocated(ik2iy))deallocate(ik2iy)
+  end subroutine square_lattice_deallocate
 end module SQUARE_LATTICE

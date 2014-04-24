@@ -29,8 +29,8 @@ MODULE CGFIT_ROUTINES
   implicit none
   integer                        :: ncom
   real(8), dimension(:), pointer :: pcom,xicom
-  procedure(cgfit_func),pointer :: func
-  procedure(cgfit_fjac),pointer :: dfunc
+  procedure(cgfit_func),pointer  :: func
+  procedure(cgfit_fjac),pointer  :: dfunc
 
 contains
 
@@ -45,24 +45,45 @@ contains
   ! This is actually all accomplished by calling the routines 
   ! MNBRAK and BRENT.
   !+-------------------------------------------------------------------+
-  SUBROUTINE linmin(p,xi,fret)
+  SUBROUTINE linmin(p,xi,fret,ftol)
     real(8), intent(out) :: fret
     real(8), dimension(:), target, intent(inout) :: p,xi
-    real(8), parameter :: tol=1.0e-4
+    real(8),optional :: ftol
+    real(8)          :: tol
+    !real(8), parameter :: tol=1.d-6
     real(8) :: ax,bx,fa,fb,fx,xmin,xx
+    tol=1.d-6;if(present(ftol))tol=ftol
     ncom=size(p) ; if(ncom /= size(xi))stop "Error in LinMin"
     pcom=>p
     xicom=>xi
-    ax=0.0
-    xx=1.0
+    ax=0.d0
+    xx=1.d0
     call mnbrak(ax,xx,bx,fa,fx,fb,f1dim)
-    fret=brent_(ax,xx,bx,f1dim,TOL,xmin)
-    !...construct the vector results to return
+    fret=brent_(ax,xx,bx,f1dim,tol,xmin)
     xi=xmin*xi
     p=p+xi
     return
   end subroutine linmin
 
+  SUBROUTINE dlinmin(p,xi,fret,ftol)
+    real(8), intent(out) :: fret
+    real(8), dimension(:), target, intent(inout) :: p,xi
+    real(8),optional :: ftol
+    real(8)          :: tol
+    !real(8), parameter :: tol=1.d-6
+    real(8) :: ax,bx,fa,fb,fx,xmin,xx
+    tol=1.d-6;if(present(ftol))tol=ftol
+    ncom=size(p) ; if(ncom /= size(xi))stop "Error in LinMin"
+    pcom=>p
+    xicom=>xi
+    ax=0.d0
+    xx=1.d0
+    call mnbrak(ax,xx,bx,fa,fx,fb,f1dim)
+    fret=dbrent_(ax,xx,bx,f1dim,df1dim,tol,xmin)
+    xi=xmin*xi
+    p=p+xi
+    return
+  end subroutine dlinmin
 
 
   !+-------------------------------------------------------------------+
@@ -78,6 +99,16 @@ contains
     deallocate(xt)
   end function f1dim
 
+  function df1dim(x)
+    real(8), intent(in)                :: x
+    real(8)                            :: df1dim
+    real(8), dimension(:), allocatable :: xt,df
+    allocate(xt(ncom),df(ncom))
+    xt(:)=pcom(:)+x*xicom(:)
+    df(:)=dfunc(xt)
+    df1dim=dot_product(df,xicom)
+    deallocate(xt,df)
+  end function df1dim
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : 
@@ -94,7 +125,7 @@ contains
     !...the first parameter is the default ratio by which successive intervals
     !   are magnified; the second is the maximum magnification allowed for a
     !   parabolic-fit step
-    real(8), parameter :: gold=1.618034,glimit=100.0,tiny=1.0e-20
+    real(8), parameter :: gold=1.618034d0,glimit=100.d0,tiny=1.d-20
     real(8) :: fu,q,r,u,ulim
     interface
        function func(x)
@@ -116,7 +147,7 @@ contains
        q=(bx-cx)*(fb-fa)
        u=bx-((bx-cx)*q-(bx-ax)*r)/(2.0*sign(max(abs(q-r),TINY),q-r))
        ulim=bx+GLIMIT*(cx-bx)
-       if ((bx-u)*(u-cx) > 0.0) then
+       if ((bx-u)*(u-cx) > 0.d0) then
           fu=func(u)
           if (fu < fc) then
              ax=bx
@@ -131,7 +162,7 @@ contains
           end if
           u=cx+GOLD*(cx-bx)
           fu=func(u)
-       else if ((cx-u)*(u-ulim) > 0.0) then
+       else if ((cx-u)*(u-ulim) > 0.d0) then
           fu=func(u)
           if (fu < fc) then
              bx=cx
@@ -139,7 +170,7 @@ contains
              u=cx+GOLD*(cx-bx)
              call shft(fb,fc,fu,func(u))
           end if
-       else if ((u-ulim)*(ulim-cx) >= 0.0) then
+       else if ((u-ulim)*(ulim-cx) >= 0.d0) then
           u=ulim
           fu=func(u)
        else
@@ -198,15 +229,15 @@ contains
     v=bx
     w=v
     x=v
-    e=0.0
+    e=0.d0
     fx=func(x)
     fv=fx
     fw=fx
     do iter=1,itmax
-       xm=0.5*(a+b)
+       xm=0.5d0*(a+b)
        tol1=tol*abs(x)+zeps
        tol2=2.0*tol1
-       if (abs(x-xm) <= (tol2-0.5*(b-a))) then
+       if (abs(x-xm) <= (tol2-0.5d0*(b-a))) then
           xmin=x
           brent_=fx
           return
@@ -215,12 +246,12 @@ contains
           r=(x-w)*(fx-fv)
           q=(x-v)*(fx-fw)
           p=(x-v)*q-(x-w)*r
-          q=2.0*(q-r)
-          if (q > 0.0) p=-p
+          q=2.d0*(q-r)
+          if (q > 0.d0) p=-p
           q=abs(q)
           etemp=e
           e=d
-          if (abs(p) >= abs(0.5*q*etemp) .or. &
+          if (abs(p) >= abs(0.5d0*q*etemp) .or. &
                p <= q*(a-x) .or. p >= q*(b-x)) then
              e=merge(a-x,b-x, x >= xm )
              d=cgold*e
@@ -271,6 +302,126 @@ contains
       c=d
     end subroutine shft
   end function brent_
+
+
+
+
+  function dbrent_(ax,bx,cx,func,dfunc,tol,xmin) result(dbrent)
+    real(8),intent(in)  :: ax,bx,cx,tol
+    real(8),intent(out) :: xmin
+    real(8)             :: dbrent
+    integer, parameter  :: itmax=100
+    real(8), parameter  :: zeps=1.d-3*epsilon(ax)
+    integer             :: iter
+    real(8)             :: a,b,d,d1,d2,du,dv,dw,dx,e,fu,fv,fw,fx,olde,tol1,tol2
+    real(8)             :: u,u1,u2,v,w,x,xm
+    logical             :: ok1,ok2
+    interface
+       function func(x)
+         real(8), intent(in) :: x
+         real(8)             :: func
+       end function func
+       function dfunc(x)
+         real(8), intent(in) :: x
+         real(8)             :: dfunc
+       end function dfunc
+    end interface
+
+    a=min(ax,cx)
+    b=max(ax,cx)
+    v=bx
+    w=v
+    x=v
+    e=0.d0
+    fx=func(x)
+    fv=fx
+    fw=fx
+    dx=dfunc(x)
+    dv=dx
+    dw=dx
+    do iter=1,ITMAX
+       xm=0.5d0*(a+b)
+       tol1=tol*abs(x)+ZEPS
+       tol2=2.0d0*tol1
+       if (abs(x-xm) <= (tol2-0.5d0*(b-a))) exit
+       if (abs(e) > tol1) then
+          d1=2.0d0*(b-a)
+          d2=d1
+          if (dw /= dx) d1=(w-x)*dx/(dx-dw)
+          if (dv /= dx) d2=(v-x)*dx/(dx-dv)
+          u1=x+d1
+          u2=x+d2
+          ok1=((a-u1)*(u1-b) > 0.d0) .and. (dx*d1 <= 0.d0)
+          ok2=((a-u2)*(u2-b) > 0.d0) .and. (dx*d2 <= 0.d0)
+          olde=e
+          e=d
+          if (ok1 .or. ok2) then
+             if (ok1 .and. ok2) then
+                d=merge(d1,d2, abs(d1) < abs(d2))
+             else
+                d=merge(d1,d2,ok1)
+             end if
+             if (abs(d) <= abs(0.5d0*olde)) then
+                u=x+d
+                if (u-a < tol2 .or. b-u < tol2) &
+                     d=sign(tol1,xm-x)
+             else
+                e=merge(a,b, dx >= 0.d0)-x
+                d=0.5d0*e
+             end if
+          else
+             e=merge(a,b, dx >= 0.d0)-x
+             d=0.5d0*e
+          end if
+       else
+          e=merge(a,b, dx >= 0.d0)-x
+          d=0.5d0*e
+       end if
+       if (abs(d) >= tol1) then
+          u=x+d
+          fu=func(u)
+       else
+          u=x+sign(tol1,d)
+          fu=func(u)
+          if (fu > fx) exit
+       end if
+       du=dfunc(u)
+       if (fu <= fx) then
+          if (u >= x) then
+             a=x
+          else
+             b=x
+          end if
+          call mov3(v,fv,dv,w,fw,dw)
+          call mov3(w,fw,dw,x,fx,dx)
+          call mov3(x,fx,dx,u,fu,du)
+       else
+          if (u < x) then
+             a=u
+          else
+             b=u
+          end if
+          if (fu <= fw .or. w == x) then
+             call mov3(v,fv,dv,w,fw,dw)
+             call mov3(w,fw,dw,u,fu,du)
+          else if (fu <= fv .or. v == x .or. v == w) then
+             call mov3(v,fv,dv,u,fu,du)
+          end if
+       end if
+    end do
+    if (iter > ITMAX) stop 'dbrent: exceeded maximum iterations'
+    xmin=x
+    dbrent=fx
+  contains
+    !bl
+    subroutine mov3(a,b,c,d,e,f)
+      real(8), intent(in) :: d,e,f
+      real(8), intent(out) :: a,b,c
+      a=d
+      b=e
+      c=f
+    end subroutine mov3
+  end function dbrent_
 
 end module CGFIT_ROUTINES
 

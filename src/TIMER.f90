@@ -70,12 +70,15 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : stop the timer and get the partial time
   !+-------------------------------------------------------------------+
-  subroutine stop_timer
+  subroutine stop_timer(unit)
+    integer,optional :: unit
+    integer :: unit_
     integer,dimension(8) :: itimer
     if(mpiID==0)then
+       unit_=6;if(present(unit))unit_=unit
        call date_and_time(values=timer_stop(timer_index,:))
        itimer=time_difference(timer_stop(timer_index,:),timer_start(timer_index,:))
-       call print_total_time(itimer)
+       call print_total_time(itimer,unit)
        timer_start(timer_index,:)=0
        timer_stop(timer_index,:)=0
        if(timer_index>1)then
@@ -92,8 +95,11 @@ contains
   end subroutine stop_progress
 
 
-  subroutine print_total_time(dummy)
+  subroutine print_total_time(dummy,unit)
+    integer,optional :: unit
+    integer :: unit_
     integer(4),dimension(8) :: dummy
+    unit_=6;if(present(unit))unit_=unit
     year = dummy(1)
     mese = dummy(2)
     day  = dummy(3)
@@ -101,8 +107,8 @@ contains
     m    = dummy(6)
     s    = dummy(7)
     ms   = dummy(8)
-    write(*,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms
-    write(*,*)""
+    write(unit_,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms
+    !write(unit_,*)""
   end subroutine print_total_time
 
 
