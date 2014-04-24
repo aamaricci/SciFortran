@@ -26,19 +26,6 @@ module ERROR
   end interface check_convergence
 
 
-  interface check_convergence_global
-     module procedure &
-          i0_check_convergence_global,&
-          i1_check_convergence_global,&
-          i2_check_convergence_global,&
-          d0_check_convergence_global,&
-          d1_check_convergence_global,&
-          d2_check_convergence_global,&
-          z0_check_convergence_global,&
-          z1_check_convergence_global,&
-          z2_check_convergence_global
-  end interface check_convergence_global
-
   interface check_convergence_local
      module procedure &
           i0_check_convergence_local,&
@@ -52,15 +39,27 @@ module ERROR
           z2_check_convergence_local
   end interface check_convergence_local
 
+  interface check_convergence_global
+     module procedure &
+          i0_check_convergence_global,&
+          i1_check_convergence_global,&
+          i2_check_convergence_global,&
+          d0_check_convergence_global,&
+          d1_check_convergence_global,&
+          d2_check_convergence_global,&
+          z0_check_convergence_global,&
+          z1_check_convergence_global,&
+          z2_check_convergence_global
+  end interface check_convergence_global
+
 
 
 contains
-
-  include "error_convergence_global.f90"
 
   include "error_convergence_relative.f90"
 
   include "error_convergence_local.f90"
 
+  include "error_convergence_global.f90"
 
 end module ERROR

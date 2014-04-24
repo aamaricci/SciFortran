@@ -1,7 +1,7 @@
 !+-------------------------------------------------------------------+
 !PURPOSE  : 
 !+-------------------------------------------------------------------+
-function i0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function i0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   integer,intent(in)       :: Xnew(:)
   real(8),intent(in)       :: eps
   real(8),optional         :: oerr
@@ -19,7 +19,7 @@ function i0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -48,9 +48,9 @@ function i0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function i0_check_convergence_local
+end function i0_check_convergence_global
 
-function i1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function i1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   integer,intent(in)              :: Xnew(:,:)
   real(8),intent(in)              :: eps
   real(8),optional         :: oerr
@@ -68,7 +68,7 @@ function i1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -100,9 +100,9 @@ function i1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function i1_check_convergence_local
+end function i1_check_convergence_global
 
-function i2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function i2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   integer,intent(in)                                        :: Xnew(:,:,:)
   real(8),intent(in)                                        :: eps
   real(8),optional         :: oerr
@@ -120,7 +120,7 @@ function i2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -152,13 +152,13 @@ function i2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function i2_check_convergence_local
+end function i2_check_convergence_global
 
 
 !----------------------------------------------------------------------
 
 
-function d0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function d0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   real(8),intent(in)       :: Xnew(:)
   real(8),intent(in)       :: eps
   real(8),optional         :: oerr
@@ -176,7 +176,7 @@ function d0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -205,9 +205,9 @@ function d0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function d0_check_convergence_local
+end function d0_check_convergence_global
 
-function d1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function d1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   real(8),intent(in)              :: Xnew(:,:)
   real(8),intent(in)              :: eps
   real(8),optional         :: oerr
@@ -225,7 +225,7 @@ function d1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -257,9 +257,9 @@ function d1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function d1_check_convergence_local
+end function d1_check_convergence_global
 
-function d2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function d2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   real(8),intent(in)                                        :: Xnew(:,:,:)
   real(8),intent(in)                                        :: eps
   real(8),optional         :: oerr
@@ -277,7 +277,7 @@ function d2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -309,13 +309,13 @@ function d2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function d2_check_convergence_local
+end function d2_check_convergence_global
 
 
 !----------------------------------------------------------------------
 
 
-function z0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function z0_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   complex(8),intent(in)       :: Xnew(:)
   real(8),intent(in)          :: eps
   real(8),optional         :: oerr
@@ -333,7 +333,7 @@ function z0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -362,9 +362,9 @@ function z0_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function z0_check_convergence_local
+end function z0_check_convergence_global
 
-function z1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function z1_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   complex(8),intent(in)           :: Xnew(:,:)
   real(8),intent(in)              :: eps
   real(8),optional         :: oerr
@@ -382,7 +382,7 @@ function z1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
   character(len=2)         :: label
   character(len=*),optional:: file
   character(len=100)       :: file_
-   file_='error.err';if(present(file))file_=reg(file)
+  file_='error.err';if(present(file))file_=reg(file)
   reset_=.true.;if(present(reset))reset_=reset
   id_=0;if(present(id))id_=id
   total_=1;if(present(total))total_=total
@@ -414,9 +414,9 @@ function z1_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function z1_check_convergence_local
+end function z1_check_convergence_global
 
-function z2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+function z2_check_convergence_global(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   complex(8),intent(in)                                     :: Xnew(:,:,:)
   real(8),intent(in)                                        :: eps
   real(8),optional         :: oerr
@@ -466,4 +466,4 @@ function z2_check_convergence_local(Xnew,eps,N1,N2,id,file,index,total,oerr,rese
      if(present(oerr))oerr=err
      check=check+1
   endif
-end function z2_check_convergence_local
+end function z2_check_convergence_global
