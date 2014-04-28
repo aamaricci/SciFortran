@@ -17,6 +17,7 @@ module ERROR
           i0_check_convergence_relative,&
           i1_check_convergence_relative,&
           i2_check_convergence_relative,&
+          d0_check_convergence_relative_,&
           d0_check_convergence_relative,&
           d1_check_convergence_relative,&
           d2_check_convergence_relative,&

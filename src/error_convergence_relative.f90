@@ -168,6 +168,52 @@ end function i2_check_convergence_relative
 
 !----------------------------------------------------------------------
 
+function d0_check_convergence_relative_(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
+  real(8),intent(in)        :: Xnew
+  real(8),intent(in)        :: eps
+  real(8),optional          :: oerr
+  logical,optional          :: reset
+  logical                   :: reset_
+  integer,intent(in)        :: N1,N2
+  integer,optional          :: id,index,total
+  integer                   :: id_,index_,total_
+  integer                   :: i,j,Msum
+  logical                   :: convergence  
+  real(8)                   :: error,err
+  real(8)                   :: M,S
+  real(8),save,allocatable  :: Xold(:)
+  integer,save              :: success=0,check=1
+  character(len=2)          :: label
+  character(len=*),optional :: file
+  character(len=100)        :: file_
+  file_='error.err';if(present(file))file_=reg(file)
+  reset_=.true.;if(present(reset))reset_=reset
+  id_=0;if(present(id))id_=id
+  total_=1;if(present(total))total_=total
+  index_=1;if(present(index))index_=index
+  if(mpiID==id_)then
+     if(.not.allocated(Xold))then
+        allocate(Xold(total_))
+        Xold=0.d0
+     endif
+     S=0.d0 ; M=0.d0
+     M=abs(Xnew-Xold(index_))
+     S=abs(Xnew)
+     err= M/S
+     Xold(index_)=Xnew
+     include "error_write_file_dim0.f90"
+     if(err < eps)then
+        success=success+1
+     else
+        success=0
+     endif
+     convergence=.false.
+     include "error_test_convergence.f90"
+     include "error_msg_dim0.f90"
+     if(present(oerr))oerr=err
+     check=check+1
+  endif
+end function d0_check_convergence_relative_
 
 function d0_check_convergence_relative(Xnew,eps,N1,N2,id,file,index,total,oerr,reset) result(convergence)
   real(8),intent(in)        :: Xnew(:)
