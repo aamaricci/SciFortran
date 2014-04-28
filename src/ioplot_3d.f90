@@ -1,11 +1,12 @@
-subroutine d_splot3D(pname,X1,X2,Y,wlines,nlines)
+subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   integer                              :: i,j,Nx1,Nx2,count,Nl
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: X1
   real(8),dimension(:)                 :: X2
   real(8),dimension(size(X1),size(X2)) :: Y
+  real(8),optional                     :: xmin,xmax,ymin,ymax
   integer,optional                     :: nlines
-  logical,optional                     :: wlines
+  logical,optional                     :: wlines,nosurface
   real(8)                              :: X1min,X1max
   real(8)                              :: X2min,X2max
   character(len=12)                    :: minx,miny,maxx,maxy
@@ -27,8 +28,10 @@ subroutine d_splot3D(pname,X1,X2,Y,wlines,nlines)
      if(present(wlines))write(720,*)""
   enddo
   close(719)
-  X1min=minval(X1);X1max=maxval(X1)
-  X2min=minval(X2);X2max=maxval(X2)
+  X1min=minval(X1);if(present(xmin))X1min=xmin
+  X1max=maxval(X1);if(present(xmax))X1max=xmax
+  X2min=minval(X2);if(present(ymin))X2min=ymin
+  X2max=maxval(X2);if(present(ymax))X2max=ymax
   write(minx,"(f12.4)")X1min
   write(maxx,"(f12.4)")X1max
   write(miny,"(f12.4)")X2min
@@ -50,6 +53,10 @@ subroutine d_splot3D(pname,X1,X2,Y,wlines,nlines)
   write(10,*)"#"
   write(10,"(A)")"EOF"
   !
+  if(present(nosurface).AND.nosurface)then
+     call system("chmod +x "//adjustl(trim(pname))//".gp")
+     return
+  endif
   write(10,*)"gnuplot -persist << EOF"
   write(10,*)"set term wxt"
   write(10,*)"set title '"//trim(fname)//"'"
@@ -68,18 +75,19 @@ subroutine d_splot3D(pname,X1,X2,Y,wlines,nlines)
 end subroutine d_splot3D
 
 
-subroutine c_splot3D(pname,X1,X2,Y,wlines,nlines)
-  integer                              :: i,j,Nx1,Nx2,count,Nl
-  character(len=*)                     :: pname
-  real(8),dimension(:)                 :: X1
-  real(8),dimension(:)                 :: X2
+subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
+  integer                                 :: i,j,Nx1,Nx2,count,Nl
+  character(len=*)                        :: pname
+  real(8),dimension(:)                    :: X1
+  real(8),dimension(:)                    :: X2
   complex(8),dimension(size(X1),size(X2)) :: Y
-  integer,optional                     :: nlines
-  logical,optional                     :: wlines
-  real(8)                              :: X1min,X1max
-  real(8)                              :: X2min,X2max
-  character(len=12)                    :: minx,miny,maxx,maxy
-  character(len=256)                   :: fname,dname
+  real(8),optional                        :: xmin,xmax,ymin,ymax
+  integer,optional                        :: nlines
+  logical,optional                        :: wlines,nosurface
+  real(8)                                 :: X1min,X1max
+  real(8)                                 :: X2min,X2max
+  character(len=12)                       :: minx,miny,maxx,maxy
+  character(len=256)                      :: fname,dname
   fname=get_filename(pname)
   dname=get_filepath(pname)
   Nx1=size(X1) ; Nx2=size(X2)
@@ -110,9 +118,10 @@ subroutine c_splot3D(pname,X1,X2,Y,wlines,nlines)
   enddo
   close(619)
   close(719)
-
-  X1min=minval(X1);X1max=maxval(X1)
-  X2min=minval(X2);X2max=maxval(X2)
+  X1min=minval(X1);if(present(xmin))X1min=xmin
+  X1max=maxval(X1);if(present(xmax))X1max=xmax
+  X2min=minval(X2);if(present(ymin))X2min=ymin
+  X2max=maxval(X2);if(present(ymax))X2max=ymax
   write(minx,"(f12.4)")X1min
   write(maxx,"(f12.4)")X1max
   write(miny,"(f12.4)")X2min
@@ -150,6 +159,10 @@ subroutine c_splot3D(pname,X1,X2,Y,wlines,nlines)
   write(10,*)"#rep"
   write(10,"(A)")"EOF"
   !
+  if(present(nosurface).AND.nosurface)then
+     call system("chmod +x "//adjustl(trim(pname))//".gp")
+     return
+  endif
   write(10,*)"gnuplot -persist << EOF"
   write(10,*)"set term wxt"
   write(10,*)"set title 'Re_"//trim(fname)//"'"
@@ -181,7 +194,7 @@ end subroutine c_splot3D
 
 
 
-subroutine d_splot3d_animate(pname,X1,X2,Y)
+subroutine d_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   integer                  :: i,j,m,Nx1,Nx2,Nt
   character(len=*)         :: pname
   real(8),dimension(:)     :: X1
@@ -189,7 +202,8 @@ subroutine d_splot3d_animate(pname,X1,X2,Y)
   real(8),dimension(:,:,:) :: Y
   real(8)                  :: X1min,X1max
   real(8)                  :: X2min,X2max
-  real(8)                  :: Ymin(3),Ymax(3),Zmin,Zmax
+  real(8),optional         :: xmin,xmax,ymin,ymax
+  real(8)                  :: Rmin(3),Rmax(3),Zmin,Zmax
   Character(len=256)       :: fname,dname
   fname=get_filename(pname)
   dname=get_filepath(pname)
@@ -208,10 +222,12 @@ subroutine d_splot3d_animate(pname,X1,X2,Y)
      enddo
   enddo
   close(719)
-  X1min=minval(X1);X1max=maxval(X1)
-  X2min=minval(X2);X2max=maxval(X2)
-  Ymin=minval(Y);Ymax=maxval(Y)
-  Zmin=minval(Ymin);Zmax=maxval(Ymax)
+  X1min=minval(X1);if(present(xmin))X1min=xmin
+  X1max=maxval(X1);if(present(xmax))X1max=xmax
+  X2min=minval(X2);if(present(ymin))X2min=ymin
+  X2max=maxval(X2);if(present(ymax))X2max=ymax
+  Rmin=minval(Y);Rmax=maxval(Y)
+  Zmin=minval(Rmin);Zmax=maxval(Rmax)
   open(10,file=adjustl(trim(pname))//".gp")
   write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
@@ -237,7 +253,7 @@ end subroutine d_splot3D_animate
 
 
 
-subroutine c_splot3d_animate(pname,X1,X2,Y)
+subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   integer                     :: i,j,m,Nx1,Nx2,Nt
   character(len=*)            :: pname
   real(8),dimension(:)        :: X1
@@ -245,7 +261,8 @@ subroutine c_splot3d_animate(pname,X1,X2,Y)
   complex(8),dimension(:,:,:) :: Y
   real(8)                     :: X1min,X1max
   real(8)                     :: X2min,X2max
-  real(8)                     :: Ymin(3),Ymax(3),Zmin,Zmax  
+  real(8),optional            :: xmin,xmax,ymin,ymax
+  real(8)                     :: Rmin(3),Rmax(3),Zmin,Zmax  
   character(len=256)          :: fname,dname
   fname=get_filename(pname)
   dname=get_filepath(pname)
@@ -268,10 +285,12 @@ subroutine c_splot3d_animate(pname,X1,X2,Y)
   enddo
   close(619)
   close(719)
-  X1min=minval(X1);X1max=maxval(X1)
-  X2min=minval(X2);X2max=maxval(X2)
-  Ymin=minval(real(Y,8));Ymax=maxval(real(Y,8))
-  Zmin=minval(Ymin);Zmax=maxval(Ymax)
+  X1min=minval(X1);if(present(xmin))X1min=xmin
+  X1max=maxval(X1);if(present(xmax))X1max=xmax
+  X2min=minval(X2);if(present(ymin))X2min=ymin
+  X2max=maxval(X2);if(present(ymax))X2max=ymax
+  Rmin=minval(dreal(Y));Rmax=maxval(dreal(Y))
+  Zmin=minval(Rmin);Zmax=maxval(Rmax)
   open(10,file=adjustl(trim(pname))//".gp")
   write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
@@ -292,8 +311,8 @@ subroutine c_splot3d_animate(pname,X1,X2,Y)
   write(10,*)"#set output"
   write(10,"(A)")"EOF"
 
-  Ymin=minval(aimag(Y));Ymax=maxval(aimag(Y))
-  Zmin=minval(Ymin);Zmax=maxval(Ymax)
+  Rmin=minval(dimag(Y));Rmax=maxval(dimag(Y))
+  Zmin=minval(Rmin);Zmax=maxval(Rmax)
   write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
