@@ -6,10 +6,11 @@
 !automatically set the correct dimensions.
 !###############################################################
 module GREENFUNX
-  USE COMMON_VARS
   implicit none
   private 
 
+  complex(8),parameter :: xi=(0.d0,1.d0)
+  real(8),parameter    :: pi= 3.14159265358979323846264338327950288419716939937510d0
   type,public :: matsubara_gf
      complex(8),dimension(:),pointer :: iw
      real(8),dimension(:),pointer    :: tau
@@ -108,7 +109,7 @@ contains
     do i=1,L
        w       = wr(i)
        A       = -dimag(fret(i))/pi
-       fless(i)= pi2*xi*fermi(w,beta)*A
+       fless(i)= 2.d0*pi*xi*fermi(w,beta)*A
     enddo
   contains
     function fermi(x,beta)
@@ -134,7 +135,7 @@ contains
     do i=1,L
        w      = wr(i)
        A      = -dimag(fret(i))/pi
-       fgtr(i)= pi2*xi*(fermi(w,beta)-1.d0)*A
+       fgtr(i)= 2.d0*pi*xi*(fermi(w,beta)-1.d0)*A
     enddo
   contains
     function fermi(x,beta)

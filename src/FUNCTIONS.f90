@@ -171,7 +171,6 @@
   include "functions_special_funcs.f90"
   !
   module FUNCTIONS
-    USE COMMON_VARS
     implicit none
     private
 
@@ -363,7 +362,8 @@
     function dens_2dsquare(x,ts) result(dos)
       real(8),intent(in)          :: x
       real(8),intent(in),optional :: ts
-      real(8)                     :: wband,y,kint,eint,dos
+      real(8)                     :: wband,y,kint,eint,dos,pi
+      pi=acos(-1.d0)
       wband=4.d0;if(present(ts))wband=4.d0*ts
       dos=0.d0
       if(abs(x)<=wband)then

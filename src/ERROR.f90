@@ -2,7 +2,8 @@
 ! PURPOSE :
 !###############################################################  
 module ERROR
-  USE COMMON_VARS
+  USE MPI_VARS
+  USE FONTS
   USE IOTOOLS, only: reg
   implicit none
   private

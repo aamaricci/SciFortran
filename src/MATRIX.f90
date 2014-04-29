@@ -4,10 +4,10 @@
 ! PURPOSE  : A collection of MATRIX related routines
 !###############################################################
 module MATRIX
-  USE COMMON_VARS
+  !USE COMMON_VARS
   implicit none
   private
-  include "mkl_lapack.fi"
+  !include "mkl_lapack.fi"
 
   !----------------------------------------------------------------------------------
 

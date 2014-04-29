@@ -2,11 +2,16 @@
 ! PURPOSE  : A "zibaldone" of useful routines
 !###############################################################  
 module TOOLS
-  USE COMMON_VARS
+  !USE COMMON_VARS
+  USE MPI_VARS
+  USE IOFILE, only:reg,free_unit
   USE TIMER
-  USE FFTGF
+  USE FFTGF, only:fftgf_iw2tau
   implicit none
   private
+
+  complex(8),parameter :: zero=(0.d0,0.d0)
+  real(8),parameter    :: pi    = 3.14159265358979323846264338327950288419716939937510d0
 
   !LOOP:
   public :: start_loop
@@ -15,7 +20,6 @@ module TOOLS
   !SORT,UNIQ,SHUFFLE:
   public :: sort,sort_array
   public :: uniq,reshuffle
-  public :: shiftFW,shiftBW
 
   ! !DERIVATIVE:
   ! public :: deriv
@@ -100,10 +104,10 @@ contains
     if(mpiID==id_)then
        write(unit_,*)
        if(.not.present(max))then
-          write(unit_,"(A,I5)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,bold("-----")
+          write(unit_,"(A,I5)")"-----"//trim(adjustl(trim(loop_name))),loop,"-----"
        else
-          write(unit_,"(A,I5,A,I5,A)")bold("-----"//trim(adjustl(trim(loop_name)))),loop,&
-               bold(" (max:"),max,bold(")-----")
+          write(unit_,"(A,I5,A,I5,A)")"-----"//trim(adjustl(trim(loop_name))),loop,&
+               " (max:",max,")-----"
        endif
        call start_timer
     endif
@@ -116,7 +120,7 @@ contains
     unit_=6 ; if(present(unit))unit_=unit
     id_  =0 ; if(present(id))id_=id
     if(mpiID==id_)then
-       write(unit_,"(A)")bold("=====================================")
+       write(unit_,"(A)")"====================================="
        call stop_timer
        write(unit_,*)
        write(unit_,*)
