@@ -7,10 +7,12 @@
 !include "VECTORS.f90"
 module SQUARE_LATTICE
   USE VECTORS
-  USE COMMON_VARS
+  !USE COMMON_VARS
   implicit none
   private
 
+  real(8),parameter    :: pi    = 3.14159265358979323846264338327950288419716939937510d0
+  real(8),parameter    :: pi2   = 6.28318530717959d0
   !parameters:
   !=========================================================
   real(8),parameter,public                       :: alat=1.d0 !lattice constant

@@ -5,7 +5,7 @@
 !AUTHORS  : Adriano Amaricci
 !########################################################################
 module TIMER
-  USE COMMON_VARS
+  USE MPI_VARS
   implicit none
   private
 

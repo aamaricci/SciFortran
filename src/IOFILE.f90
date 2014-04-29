@@ -5,12 +5,16 @@
 !     AUTHORS  : Adriano Amaricci (SISSA)
 !###############################################################
 module IOFILE
-  USE COMMON_VARS
+  USE MPI_VARS
   implicit none
   private
 
   !file size to be stored automagically (in Kb)
   integer,public :: store_size=2048
+
+  interface txtfy
+     module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
+  end interface txtfy
 
   interface reg
      module procedure reg_filename
@@ -28,6 +32,7 @@ module IOFILE
      module procedure create_data_dir
   end interface create_dir
 
+  public :: txtfy
   public :: file_size
   public :: file_length
   public :: file_info
@@ -252,7 +257,7 @@ contains
   subroutine set_store_size(size)
     integer :: size
     store_size=size
-    call warning("store size ="//trim(txtfy(size))//"Kb")
+    write(*,*)"store size ="//trim(txtfy(size))//"Kb"
   end subroutine set_store_size
 
   !******************************************************************
@@ -314,6 +319,166 @@ contains
   !******************************************************************
   !******************************************************************
 
+
+  function i_to_ch(i4) result(string)
+    character(len=32) :: string
+    integer           :: i4
+    call i4_to_s_left(i4,string)
+  end function i_to_ch
+
+  function r_to_ch(r8) result(string)
+    character(len=32) :: string
+    character(len=16) :: string_
+    real(8)           :: r8
+    call r8_to_s_left(r8,string_)
+    string=adjustl(string_)
+  end function r_to_ch
+
+  function c_to_ch(c) result(string)
+    character(len=32+3) :: string
+    character(len=16) :: sre,sim
+    complex(8)        :: c
+    real(8)           :: re,im
+    re=real(c,8);im=aimag(c)
+    call r8_to_s_left(re,sre)
+    call r8_to_s_left(im,sim)
+    string="("//trim(sre)//","//trim(sim)//")"
+  end function c_to_ch
+
+  function l_to_ch(bool) result(string)
+    logical :: bool
+    character(len=1) :: string
+    string='F'
+    if(bool)string='T'
+  end function l_to_ch
+
+
+
+
+
+  !******************************************************************
+  !******************************************************************
+  !******************************************************************
+
+  subroutine i4_to_s_left ( i4, s )
+    !! I4_TO_S_LEFT converts an I4 to a left-justified string.
+    !  Example:
+    !    Assume that S is 6 characters long:
+    !        I4  S
+    !         1  1
+    !        -1  -1
+    !         0  0
+    !      1952  1952
+    !    123456  123456
+    !   1234567  ******  <-- Not enough room!
+    !  Parameters:
+    !    Input, integer ( kind = 4 ) I4, an integer to be converted.
+    !    Output, character ( len = * ) S, the representation of the integer.
+    !    The integer will be left-justified.  If there is not enough space,
+    !    the string will be filled with stars.
+    character :: c
+    integer   :: i
+    integer   :: i4
+    integer   :: idig
+    integer   :: ihi
+    integer   :: ilo
+    integer   :: ipos
+    integer   :: ival
+    character(len=*) ::  s
+    s = ' '
+    ilo = 1
+    ihi = len ( s )
+    if ( ihi <= 0 ) then
+       return
+    end if
+    !  Make a copy of the integer.
+    ival = i4
+    !  Handle the negative sign.
+    if ( ival < 0 ) then
+       if ( ihi <= 1 ) then
+          s(1:1) = '*'
+          return
+       end if
+       ival = -ival
+       s(1:1) = '-'
+       ilo = 2
+    end if
+    !  The absolute value of the integer goes into S(ILO:IHI).
+    ipos = ihi
+    !  Find the last digit of IVAL, strip it off, and stick it into the string.
+    do
+       idig = mod ( ival, 10 )
+       ival = ival / 10
+       if ( ipos < ilo ) then
+          do i = 1, ihi
+             s(i:i) = '*'
+          end do
+          return
+       end if
+       call digit_to_ch ( idig, c )
+       s(ipos:ipos) = c
+       ipos = ipos - 1
+       if ( ival == 0 ) then
+          exit
+       end if
+    end do
+    !  Shift the string to the left.
+    s(ilo:ilo+ihi-ipos-1) = s(ipos+1:ihi)
+    s(ilo+ihi-ipos:ihi) = ' '
+  end subroutine i4_to_s_left
+
+  subroutine r8_to_s_left ( r8, s )
+    !! R8_TO_S_LEFT writes an R8 into a left justified string.
+    !    An R8 is a real ( kind = 8 ) value.
+    !    A 'G14.6' format is used with a WRITE statement.
+    !  Parameters:
+    !    Input, real ( kind = 8 ) R8, the number to be written into the string.
+    !    Output, character ( len = * ) S, the string into which
+    !    the real number is to be written.  If the string is less than 14
+    !    characters long, it will will be returned as a series of asterisks.
+    integer :: i
+    real(8) :: r8
+    integer :: s_length
+    character(len=*) ::  s
+    character(len=16) :: s2
+    s_length = len ( s )
+    if ( s_length < 16 ) then
+       do i = 1, s_length
+          s(i:i) = '*'
+       end do
+    else if ( r8 == 0.0D+00 ) then
+       s(1:16) = '     0.0      '
+    else
+       write ( s2, '(g16.9)' ) r8
+       s(1:16) = s2
+    end if
+    !  Shift the string left.
+    s = adjustl ( s )
+  end subroutine r8_to_s_left
+
+  subroutine digit_to_ch(digit,ch)
+    !! DIGIT_TO_CH returns the character representation of a decimal digit.
+    !    Instead of CHAR, we now use the ACHAR function, which
+    !    guarantees the ASCII collating sequence.
+    !  Example:
+    !    DIGIT   CH
+    !    -----  ---
+    !      0    '0'
+    !      1    '1'
+    !    ...    ...
+    !      9    '9'
+    !     17    '*'
+    !  Parameters:
+    !    Input, integer ( kind = 4 ) DIGIT, the digit value between 0 and 9.
+    !    Output, character CH, the corresponding character.
+    character :: ch
+    integer   :: digit
+    if ( 0 <= digit .and. digit <= 9 ) then
+       ch = achar ( digit + 48 )
+    else
+       ch = '*'
+    end if
+  end subroutine digit_to_ch
 
 end module IOFILE
 
