@@ -49,8 +49,8 @@
       if(associated(func))nullify(func) ; func=>f
       if(associated(dfunc))nullify(dfunc) ; dfunc=>df
       !
-      ftol_=1.d-6
-      itmax_=1000
+      ftol_=1.d-5
+      itmax_=500
       type_=0
       iverbose_=.false.;if(present(iverbose))iverbose_=iverbose
       if(present(ftol))then
@@ -75,10 +75,10 @@
          iter=its
          call dlinmin(p,xi,fret,ftol_)
          !if (2.0*abs(fret-fp) <= ftol_*(abs(fret)+abs(fp)+eps)) return
-         !if(2.d0*abs(fret-fp) <= ftol_ )return
-         if(2.d0*abs(fret-fp) <= ftol_*(abs(fp)+eps))return
+         if(2.d0*abs(fret-fp) <= ftol_ )return
+         !if(2.d0*abs(fret-fp) <= ftol_*(abs(fp)+eps))return
          fp = fret
-         xi = dfunc(p)        
+         xi = dfunc(p)
          gg=dot_product(g,g)
          select case(type_)
          case default             
@@ -119,8 +119,8 @@
       !and properly definted will continue to work.
       if(associated(dfunc))nullify(dfunc) ; dfunc=>dfunc_
       !
-      ftol_=1.d-6
-      itmax_=1000
+      ftol_=1.d-5
+      itmax_=500
       type_=0
       iverbose_=.false.;if(present(iverbose))iverbose_=iverbose
       if(present(ftol))then
@@ -145,8 +145,8 @@
          iter=its
          call dlinmin(p,xi,fret,ftol_)
          !if (2.0*abs(fret-fp) <= ftol_*(abs(fret)+abs(fp)+eps)) return
-         !if(2.d0*abs(fret-fp) <= ftol_ )return
-         if(2.d0*abs(fret-fp) <= ftol_*(abs(fp)+eps))return
+         if(2.d0*abs(fret-fp) <= ftol_ )return
+         !if(2.d0*abs(fret-fp) <= ftol_*(abs(fp)+eps))return
          fp=fret
          xi = f_dgradient(func,size(p),p)        
          gg=dot_product(g,g)

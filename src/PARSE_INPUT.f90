@@ -34,7 +34,7 @@
     public  :: parse_input_variable
     public  :: get_cmd_variable
     public  :: save_input_file
-    public  :: parse_cmd_help
+    !public  :: parse_cmd_help
     logical :: IOinput=.true.
 
 
@@ -59,7 +59,23 @@
     !PURPOSE:
     !---------------------------------------------------------------------
     subroutine save_input_file(file)
-      character(len=*) :: file
+      character(len=*)   :: file
+      character(len=256) :: cmd_line
+      integer            :: i
+      do i=1,command_argument_count()
+         call get_command_argument(i,cmd_line)
+         if(cmd_line=="--help" .OR. &
+              cmd_line=="-h"   .OR. &
+              cmd_line=="info" .OR. &
+              cmd_line=="--h"  .OR. &
+              cmd_line=="help")then
+            write(0,*)"Usage:"
+            write(0,*)"exe var1=value1 var2=value2 ... "
+            write(0,*)"here is a list of variables, saved into used."//trim(file)
+            call print_input_list(trim(file))
+            stop 
+         endif
+      enddo
       if(.not.IOinput)then
          write(*,*)"input file can not be found. dumped a default version in used."//trim(file)
          call print_input_list(trim(file))
@@ -131,32 +147,22 @@
       endif
     end function check_cmd_vector_size
 
-    subroutine parse_cmd_help(buffer,status)
-      character(len=256)            :: cmd_line
-      character(len=*),dimension(:) :: buffer
-      integer                       :: i,lines,N
-      logical,optional              :: status
-      if(present(status))status=.false.
-      N=size(buffer)
-      do i=1,command_argument_count()
-         call get_command_argument(i,cmd_line)
-         if(cmd_line=="--help" .OR. &
-              cmd_line=="-h"   .OR. &
-              cmd_line=="info" .OR. &
-              cmd_line=="--h"  .OR. &
-              cmd_line=="help")then
-            do lines=1,N
-               write(*,"(256A)")trim(adjustl(trim(buffer(lines))))
-            enddo
-            if(present(status))then
-               status=.true.
-               return
-            else
-               stop
-            endif
-         endif
-      enddo
-    end subroutine parse_cmd_help
+    ! subroutine parse_cmd_help()
+    !   character(len=256)            :: cmd_line
+    !   character(len=*),dimension(:) :: buffer
+    !   integer                       :: i,lines,N
+    !   if(present(status))status=.false.
+    !   do i=1,command_argument_count()
+    !      call get_command_argument(i,cmd_line)
+    !      if(cmd_line=="--help" .OR. &
+    !           cmd_line=="-h"   .OR. &
+    !           cmd_line=="info" .OR. &
+    !           cmd_line=="--h"  .OR. &
+    !           cmd_line=="help")then
+    !         call help_input_list()
+    !      endif
+    !   enddo
+    ! end subroutine parse_cmd_help
 
 
 
