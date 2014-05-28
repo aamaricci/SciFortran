@@ -2,8 +2,6 @@
 ! PURPOSE  : A "zibaldone" of useful routines
 !###############################################################  
 module TOOLS
-  !USE COMMON_VARS
-  USE MPI_VARS
   USE IOFILE, only:reg,free_unit
   USE TIMER
   USE FFTGF, only:fftgf_iw2tau
@@ -101,16 +99,14 @@ contains
     loop_name="main-loop";if(present(name))loop_name=name
     unit_    =6          ;if(present(unit))unit_=unit
     id_      =0          ;if(present(id))id_=id
-    if(mpiID==id_)then
-       write(unit_,*)
-       if(.not.present(max))then
-          write(unit_,"(A,I5)")"-----"//trim(adjustl(trim(loop_name))),loop,"-----"
-       else
-          write(unit_,"(A,I5,A,I5,A)")"-----"//trim(adjustl(trim(loop_name))),loop,&
-               " (max:",max,")-----"
-       endif
-       call start_timer
+    write(unit_,*)
+    if(.not.present(max))then
+       write(unit_,"(A,I5)")"-----"//trim(adjustl(trim(loop_name))),loop,"-----"
+    else
+       write(unit_,"(A,I5,A,I5,A)")"-----"//trim(adjustl(trim(loop_name))),loop,&
+            " (max:",max,")-----"
     endif
+    call start_timer
   end subroutine start_loop
 
 
@@ -119,12 +115,10 @@ contains
     integer          :: unit_,id_
     unit_=6 ; if(present(unit))unit_=unit
     id_  =0 ; if(present(id))id_=id
-    if(mpiID==id_)then
-       write(unit_,"(A)")"====================================="
-       call stop_timer
-       write(unit_,*)
-       write(unit_,*)
-    endif
+    write(unit_,"(A)")"====================================="
+    call stop_timer
+    write(unit_,*)
+    write(unit_,*)
   end subroutine end_loop
 
 
