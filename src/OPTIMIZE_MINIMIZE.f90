@@ -75,8 +75,8 @@
          iter=its
          call dlinmin(p,xi,fret,ftol_)
          !if (2.0*abs(fret-fp) <= ftol_*(abs(fret)+abs(fp)+eps)) return
-         !write(*,*)fp,fret,2.d0*abs(fret-fp)/abs(fp)
-         if(2.d0*abs(fret-fp)/abs(fp) <= ftol_)return
+         !if(2.d0*abs(fret-fp) <= ftol_ )return
+         if(2.d0*abs(fret-fp) <= ftol_*(abs(fp)+eps))return
          fp = fret
          xi = dfunc(p)        
          gg=dot_product(g,g)
@@ -145,7 +145,8 @@
          iter=its
          call dlinmin(p,xi,fret,ftol_)
          !if (2.0*abs(fret-fp) <= ftol_*(abs(fret)+abs(fp)+eps)) return
-         if(2.d0*abs(fret-fp)/abs(fp) <= ftol_)return
+         !if(2.d0*abs(fret-fp) <= ftol_ )return
+         if(2.d0*abs(fret-fp) <= ftol_*(abs(fp)+eps))return
          fp=fret
          xi = f_dgradient(func,size(p),p)        
          gg=dot_product(g,g)
