@@ -147,8 +147,6 @@ contains
     norder = floor(log10(abs(x)))
   end function order_of_magnitude
 
-  !include "tools_shifts.f90"
-
 
   ! USEFUL ROUTINES:
   !###################################################################
