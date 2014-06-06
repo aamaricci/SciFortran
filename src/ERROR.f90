@@ -58,10 +58,13 @@ module ERROR
 
 contains
 
+  !err = sum(NEW-OLD)/sum(NEW)
   include "error_convergence_relative.f90"
 
+  !err = abs(NEW-OLD)
   include "error_convergence_local.f90"
 
+  !err = sum((NEW-OLD)/NEW)
   include "error_convergence_global.f90"
 
 end module ERROR

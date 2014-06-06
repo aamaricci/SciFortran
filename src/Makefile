@@ -96,8 +96,16 @@ OPTIMIZE_ROOT_FINDING:
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 
-OPTIMIZE_MINIMIZE: 
+OPTIMIZE_MINIMIZE:
+	$(FC) -c $(FFLAG)  minimize.f -o objs/minimize.o $(MOPT)./mods/
+	$(FC) -c $(FFLAG)  CGFAM.f -o objs/CGFAM.o $(MOPT)./mods/
+	$(FC) -c $(FFLAG)  CGSEARCH.f -o objs/CGSEARCH.o $(MOPT)./mods/
+	$(FC) -c $(FFLAG)  CGBLAS.f -o objs/CGBLAS.o $(MOPT)./mods/
 	$(FC) -c $(FFLAG) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG)  minimize.f -o debug_objs/minimize.o $(MOPT)./debug_mods/
+	$(FC) -c $(DFLAG)  CGFAM.f -o debug_objs/CGFAM.o $(MOPT)./debug_mods/
+	$(FC) -c $(DFLAG)  CGSEARCH.f -o debug_objs/CGSEARCH.o $(MOPT)./debug_mods/
+	$(FC) -c $(DFLAG)  CGBLAS.f -o debug_objs/CGBLAS.o $(MOPT)./debug_mods/
 	$(FC) -c $(DFLAG) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 
 OPTIMIZE: OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE 
