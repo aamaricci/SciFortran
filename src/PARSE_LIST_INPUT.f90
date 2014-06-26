@@ -38,6 +38,7 @@ module PARSE_LIST_INPUT
   public :: size_input_list
   public :: append_to_input_list
   public :: print_input_list
+  public :: print_help_list
 
   type(input_list)   :: default_list
   character(len=255) :: p_buffer
@@ -138,6 +139,35 @@ contains
     c => null()
   end subroutine print_input_list
 
+
+
+  !+------------------------------------------------------------------+
+  !PURPOSE: print the list to file
+  !+------------------------------------------------------------------+
+  subroutine print_help_list(list)
+    type(input_list),optional :: list
+    integer                   :: i,counter,unit
+    type(input_node),pointer  :: c
+    logical                   :: bool
+    if(present(list))then
+       c => list%root%next
+    else
+       c => default_list%root%next
+    endif
+    counter = 0 
+    if(default_list%size>0)then
+       do
+          if(.not.associated(c))exit
+          counter=counter+1
+          call help_input_node(c)
+          c => c%next
+       enddo
+    else
+       write(*,*)"input list empty: no help."
+       return
+    endif
+    c => null()
+  end subroutine print_help_list
 
 
 

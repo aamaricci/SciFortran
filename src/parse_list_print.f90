@@ -1,3 +1,16 @@
+subroutine help_input_node(c)
+  type(input_node)   :: c
+  character(len=255) :: name
+  integer            :: clen
+  integer            :: unit,i
+  name=c%name
+  call s_blank_delete(name)
+  p_buffer=trim(name)//" : "//trim(c%comment)
+  write(*,"(1x,A)")trim(p_buffer)
+end subroutine help_input_node
+
+
+
 !---------------------------------------------------------------------
 !PURPOSE:
 !---------------------------------------------------------------------
