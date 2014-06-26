@@ -105,7 +105,7 @@ contains
     base_= 2.d0       ;if(present(base))base_=base
     N=2*p*q+1
     Nhalf=p*q
-    if(type==0)then
+    if(type_==0)then
        array(1:Nhalf+1)   = upmspace(start,midpoint,p,q,Nhalf+1,base=base_)
        array(N:Nhalf+2:-1)= upmspace(stop,midpoint,p,q,Nhalf,base=base_,iend=.false.)
     else
@@ -114,9 +114,9 @@ contains
     endif
     if(present(mesh))then
        do i=1,N-1
-          mesh(i)=abs(array(i+1)-array(i))
+          mesh(i)=(array(i+1)-array(i))
        enddo
-       Mesh(N)=abs(array(N)-array(N-1))
+       Mesh(N)=(array(N)-array(N-1))
     endif
   end function upminterval
 
@@ -162,7 +162,7 @@ contains
     elseif(.not.endpoint_)then
        aout(1:ndim)=array(1:p*u)
     elseif(.not.startpoint_)then
-       aout(1:ndim)=array(2:)
+       aout(1:ndim)=array(2:)   
     endif
     if(present(mesh))then
        do i=1,ndim-1

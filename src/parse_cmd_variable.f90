@@ -12,7 +12,7 @@ subroutine i_parse_variable(variable,name,default)
      var = get_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
-        write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+        write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
      endif
   enddo
 end subroutine i_parse_variable
@@ -30,7 +30,7 @@ subroutine d_parse_variable(variable,name,default)
      var = get_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
-        write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+        write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
      endif
   enddo
 end subroutine d_parse_variable
@@ -48,7 +48,7 @@ subroutine ch_parse_variable(variable,name,default)
      var = get_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
-        write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+        write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
      endif
   enddo
 end subroutine ch_parse_variable
@@ -66,7 +66,7 @@ subroutine l_parse_variable(variable,name,default)
      var = get_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
-        write(*,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+        write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
      endif
   enddo
 end subroutine l_parse_variable
@@ -137,7 +137,7 @@ subroutine dv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(*,"(A,100F18.9)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100F18.9)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine dv_parse_variable
@@ -171,7 +171,7 @@ subroutine chv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(*,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine chv_parse_variable
@@ -205,7 +205,7 @@ subroutine lv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(*,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine lv_parse_variable
