@@ -70,7 +70,11 @@ compile: \$(OBJS)
 
 
 #compile the library modules
+<<<<<<< HEAD
 libmod: COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS  DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS 
+=======
+lib: COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS  DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS 
+>>>>>>> devel
 
 
 
@@ -161,7 +165,11 @@ STATISTICS:
 
 
 clean: 
-	@echo "Cleaning:"
-	@rm -vf *.mod *.o *~ $DIR_LIB/*.o $DIR_LIB/*.mod
+	@echo "Cleaning here:"
+	@rm -vf *.mod *.o *~ 
+
+clean_lib: 
+	@echo "Cleaning lib:"
+	@rm -vf $DIR_LIB/*.o $DIR_LIB/*.mod
 
 EOF
