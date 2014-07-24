@@ -137,6 +137,7 @@ contains
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   !MULTI-DIMENSIONAL:
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef _MINPACK
   subroutine fsolve(ff,x,tol,info)
     procedure(hybrd_func)      :: ff
     real(8),dimension(:)       :: x      
@@ -177,7 +178,7 @@ contains
     call hybrd1(func,n,x,fvec,tol_,info_)
     if(present(info))info=info_
   end subroutine fzero_hybrd
-
+#endif
 
 
   subroutine fzero_broyden(ff,x,check,maxits,tolf,tolmin,stpmx,noexit)
