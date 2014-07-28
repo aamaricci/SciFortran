@@ -3,7 +3,7 @@
 ! PURPOSE  : A set of routines to perform specific integrals
 !###############################################################
 module INTEGRATE
-  USE INTEGRATE_QUADPACK
+  !USE INTEGRATE_QUADPACK
   implicit none
   private
 
@@ -34,35 +34,39 @@ module INTEGRATE
   public :: trapz
   public :: simps
   public :: int_simps
-  public :: qc25c
-  public :: qc25o
-  public :: qc25s
-  public :: qcheb
-  public :: qextr
-  public :: qfour
-  public :: qk15
-  public :: qk15i
-  public :: qk15w
-  public :: qk21
-  public :: qk31
-  public :: qk41
-  public :: qk51
-  public :: qk61
-  public :: qmomo
-  public :: qsort
-  public :: qag
-  public :: qage
-  public :: qagi
-  public :: qagp
-  public :: qags
-  public :: qawc
-  public :: qawce
-  public :: qawf
-  public :: qawfe
-  public :: qawo
-  public :: qaws
-  public :: qawse
-  public :: qng
+  ! now in a separate library with separate MODULE interface.
+  ! Here we provide only standard functions and 
+  ! will add more object oriented interface to QUADPACK
+  ! which will require to have this lib installed at compilation time.
+  ! public :: qc25c
+  ! public :: qc25o
+  ! public :: qc25s
+  ! public :: qcheb
+  ! public :: qextr
+  ! public :: qfour
+  ! public :: qk15
+  ! public :: qk15i
+  ! public :: qk15w
+  ! public :: qk21
+  ! public :: qk31
+  ! public :: qk41
+  ! public :: qk51
+  ! public :: qk61
+  ! public :: qmomo
+  ! public :: qsort
+  ! public :: qag
+  ! public :: qage
+  ! public :: qagi
+  ! public :: qagp
+  ! public :: qags
+  ! public :: qawc
+  ! public :: qawce
+  ! public :: qawf
+  ! public :: qawfe
+  ! public :: qawo
+  ! public :: qaws
+  ! public :: qawse
+  ! public :: qng
 
 contains
 

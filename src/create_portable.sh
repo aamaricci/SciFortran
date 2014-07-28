@@ -33,7 +33,7 @@ DIREXE=.
 EXE=
 
 ifeq (\$(FC),ifort)
-STD =  -O2 -assume nobuffered_io
+STD =  -O2 
 DEB =  -p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created
 MOPT=-module #leave a space here!
 endif
@@ -56,12 +56,12 @@ OBJS=
 
 
 #SET HERE THE COMPILATION FLAG: DEB is for debugging
-FLAG=\$(STD)
+FLAG=\$(STD) -I$DIR_LIB/
 #FLAG=\$(DEB)
 
 compile: \$(OBJS)
 	@echo " ..................... compile \$(EXE)........................... "
-	\$(FC) \$(FLAG) $DIR_LIB/*.o \$(OBJS) \$(DIR)/\$(EXE).f90 -o \$(DIREXE)/\$(EXE) \$(ARGS) -I$DIR_LIB/
+	\$(FC) \$(FLAG) $DIR_LIB/*.o \$(OBJS) \$(DIR)/\$(EXE).f90 -o \$(DIREXE)/\$(EXE) \$(ARGS) 
 	@echo " ......................... done ................................ "
 	@echo ""
 	@echo ""
@@ -70,98 +70,92 @@ compile: \$(OBJS)
 
 
 #compile the library modules
-<<<<<<< HEAD
-libmod: COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS  DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS 
-=======
 lib: COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS  DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS 
->>>>>>> devel
-
-
 
 .f90.o:	
 	\$(FC) \$(FLAG) -c \$<
 
 
 COMVARS: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o  $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o  $DIR_LIB/\$@.f90
 
 PARSE_INPUT: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/PARSE_LIST_INPUT.o $DIR_LIB/PARSE_LIST_INPUT.f90
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90 
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/PARSE_LIST_INPUT.o $DIR_LIB/PARSE_LIST_INPUT.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90 
 
 TIMER: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 IOTOOLS: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOFILE.o $DIR_LIB/IOFILE.f90
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOPLOT.o $DIR_LIB/IOPLOT.f90  
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOREAD.o $DIR_LIB/IOREAD.f90 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOFILE.o $DIR_LIB/IOFILE.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOPLOT.o $DIR_LIB/IOPLOT.f90  
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOREAD.o $DIR_LIB/IOREAD.f90 
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
   
 FFTGF:  COMVARS INTERPOLATE
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 TOOLS:  
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 ERROR:  
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 
 ARRAYS:  
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 DERIVATE: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 
 OPTIMIZE_ROOT_FINDING: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/optimize_broyden_routines.o $DIR_LIB/optimize_broyden_routines.f90    
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/minpack.o $DIR_LIB/minpack.f90       
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/optimize_broyden_routines.o $DIR_LIB/optimize_broyden_routines.f90    
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/minpack.o $DIR_LIB/minpack.f90       
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 OPTIMIZE_MINIMIZE: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/minimize.o $DIR_LIB/minimize.f 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/CGFAM.o  $DIR_LIB/CGFAM.f
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/CGSEARCH.o  $DIR_LIB/CGSEARCH.f 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/CGBLAS.o   $DIR_LIB/CGBLAS.f
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/optimize_cgfit_routines.o $DIR_LIB/optimize_cgfit_routines.f90
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/minimize.o $DIR_LIB/minimize.f 
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/CGFAM.o  $DIR_LIB/CGFAM.f
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/CGSEARCH.o  $DIR_LIB/CGSEARCH.f 
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/CGBLAS.o   $DIR_LIB/CGBLAS.f
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/optimize_cgfit_routines.o $DIR_LIB/optimize_cgfit_routines.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 OPTIMIZE: OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
  
 FUNCTIONS:  
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 GREENFUNX: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 INTEGRATE: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/integrate_quadpack.o  $DIR_LIB/integrate_quadpack.f90  
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/integrate_quadpack.o  $DIR_LIB/integrate_quadpack.f90  
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 
 VECTORS: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 SQUARE_LATTICE: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 LIST: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_D_ORDERED.o   $DIR_LIB/LIST_D_ORDERED.f90      
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_D_UNORDERED.o $DIR_LIB/LIST_D_UNORDERED.f90 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_Z_UNORDERED.o $DIR_LIB/LIST_Z_UNORDERED.f90    
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_D_ORDERED.o   $DIR_LIB/LIST_D_ORDERED.f90      
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_D_UNORDERED.o $DIR_LIB/LIST_D_UNORDERED.f90 
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_Z_UNORDERED.o $DIR_LIB/LIST_Z_UNORDERED.f90    
 
 MATRIX: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 INTERPOLATE: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 RANDOM: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 STATISTICS: 
-	\$(FC) -c \$(FLAG) -I$DIR_LIB/ \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 
 clean: 

@@ -71,7 +71,7 @@ subroutine data_saveM_I(pname,Y1,X)
            write(719,*)Y1(i,j)
         endif
      enddo
-     write(719,*)""
+     write(719,*)
   enddo
   close(719)
   call data_store(reg(pname))
@@ -92,7 +92,7 @@ subroutine data_saveM_R(pname,Y1,X)
            write(719,*)Y1(i,j)
         endif
      enddo
-     write(719,*)""
+     write(719,*)
   enddo
   close(719)
   call data_store(reg(pname))
@@ -113,7 +113,7 @@ subroutine data_saveM_C(pname,Y1,X)
            write(719,*)dimag(Y1(i,j)),dreal(Y1(i,j))
         endif
      enddo
-     write(719,*)""
+     write(719,*)
   enddo
   close(719)
   call data_store(reg(pname))
@@ -139,7 +139,7 @@ subroutine data_saveA3_I(pname,Y1,X)
               write(719,*)Y1(i,j,k)
            endif
         enddo
-        write(719,*)""
+        write(719,*)
      enddo
   enddo
   close(719)
@@ -162,7 +162,7 @@ subroutine data_saveA3_R(pname,Y1,X)
               write(719,*)Y1(i,j,k)
            endif
         enddo
-        write(719,*)""
+        write(719,*)
      enddo
   enddo
   close(719)
@@ -185,7 +185,7 @@ subroutine data_saveA3_C(pname,Y1,X)
               write(719,*)dimag(Y1(i,j,k)),dreal(Y1(i,j,k))
            endif
         enddo
-        write(719,*)""
+        write(719,*)
      enddo
   enddo
   close(719)
