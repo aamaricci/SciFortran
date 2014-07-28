@@ -49,7 +49,7 @@ elemental function gfbethe(w,zeta,d)
   complex(8),intent(in) :: zeta
   complex(8)            :: gfbethe,sqroot
   real(8)               :: sq,sig
-  sqroot=cdsqrt(zeta**2-d**2)
+  sqroot=sqrt(zeta**2-d**2)
   sq=dimag(sqroot)
   sig=w*sq/abs(w*sq)
   gfbethe=2.d0/(zeta+sig*sqroot)
@@ -60,13 +60,14 @@ end function gfbethe
 !+------------------------------------------------------------------+
 !purpose  : get the hilber transfom of a given "zeta" with bethe dos
 !+------------------------------------------------------------------+
-elemental function gfbether(w,zeta,d)
-  real(8),intent(in)    :: w,d
-  complex(8),intent(in) :: zeta
+function gfbether(w,zeta,d)
+  real(8)               :: w,d
+  complex(8)            :: zeta
   complex(8)            :: gfbether,sqroot
   real(8)               :: sig
-  sqroot=cdsqrt(zeta**2-d**2)
-  sig=real(zeta,8)/abs(real(zeta,8))
+  if(dreal(zeta)==0.d0)zeta=dcmplx(1.d-8,dimag(zeta))
+  sqroot=sqrt(zeta**2-d**2)
+  sig=dreal(zeta)/abs(dreal(zeta))
   gfbether=2.d0/(zeta+sig*sqroot)
 end function gfbether
 

@@ -10,6 +10,7 @@ VER = 'character(len=41),parameter :: revision = "$(REV)"' > revision.inc
 SFINCLUDE= -I${SFMODS}
 SFINCLUDE_DEB= -I${SFMODS}/debug
 
+SFCOMPLETION=${SFROOT}/bin/scifor_completion.sh
 
 #SETUP MATHLIB: the main mathematical library. If MKL is available use it, if not use just std lapack and blas
 ifdef MKLROOT
