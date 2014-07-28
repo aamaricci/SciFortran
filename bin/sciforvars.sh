@@ -3,9 +3,9 @@
 #SETUP SCIFOR LIBRARY:
 if [ -z "${SFDIR}" ] ; then	# se $SFDIR NON e' definita:
     if [ -z "$1" ]; then 	# check if $1 is given: if not print error
-	echo "Could not load SciFor library !"
-	echo "Usage:"
-	echo "$0 <path_to_SciFor_home>"
+	echo "Could not load SciFor library !" >&2
+	echo "Usage:" >&2
+	echo "$0 <path_to_SciFor_home>" >&2
 	return 1
     else
 	export SFROOT=$1
@@ -61,13 +61,13 @@ if [ -z "$MKLROOT" ];then		# standard mkl variable, if defined you are using MKL
 	add_library_to_system $SF_LAPACK_DIR
 	export LAPACK_LIB=$SF_LAPACK_DIR
     else
-	echo "Not using MKL and can not find LAPACK"
+	echo "Not using MKL and can not find LAPACK" >&2
     fi
     if [ ! -z "$SF_BLAS_DIR" ];then
 	add_library_to_system $SF_BLAS_DIR
 	export BLAS_LIB=$SF_BLAS_DIR
     else
-	echo "Not using MKL and can not find BLAS"
+	echo "Not using MKL and can not find BLAS" >&2
     fi
 fi
 
@@ -75,10 +75,10 @@ fi
 for LIB in $SF_LIST_LIB;
 do
     if [  -d "$LIB" ];then
-	add_library_to_system $$LIB
+	add_library_to_system $LIB
 	lib_name=$(basename $LIB)
     else
-	echo "$LIB does not exist or I can not find it: skip installation..."
+	echo "$LIB does not exist or I can not find it: skip installation..."  >&2
     fi
 done
 
