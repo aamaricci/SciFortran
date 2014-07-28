@@ -10,6 +10,7 @@ VER = 'character(len=41),parameter :: revision = "$(REV)"' > revision.inc
 SFINCLUDE= -I${SFMODS}
 SFINCLUDE_DEB= -I${SFMODS}/debug
 
+SFCOMPLETION=${SFROOT}/bin/scifor_completion.sh
 
 #SETUP MATHLIB: the main mathematical library. If MKL is available use it, if not use just std lapack and blas
 ifdef MKLROOT
@@ -23,23 +24,27 @@ else
 MATHLIB	    = -llapack -lblas
 endif
 
-ifdef FFTPACK_LIB
+ifdef PRECOMP_FFTPACK
 MATHLIB      +=-lfftpack
 endif
 
-ifdef MINPACK_LIB
+ifdef PRECOMP_MINPACK
 MATHLIB      +=-lminpack
 endif
 
-ifdef ARPACK_LIB
-MATHLIB     +=-lparpack -larpack #-lparpack_debug -larpack_debug
+ifdef PRECOMP_QUADPACK
+MATHLIB      +=-lquadpack
 endif
 
-ifdef FFTW_LIB
-MATHLIB      +=-lfftw3
-SFINCLUDE    +=-I$(FFTW_LIB)/include/
-SFINCLUDE_DEB+=-I$(FFTW_LIB)/include/
-endif
+# ifdef ARPACK_LIB
+# MATHLIB     +=-lparpack -larpack #-lparpack_debug -larpack_debug
+# endif
+
+# ifdef FFTW_LIB
+# MATHLIB      +=-lfftw3
+# SFINCLUDE    +=-I$(FFTW_LIB)/include/
+# SFINCLUDE_DEB+=-I$(FFTW_LIB)/include/
+# endif
 
 
 #----------------------------------------------------

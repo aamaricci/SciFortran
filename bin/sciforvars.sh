@@ -8,110 +8,109 @@ if [ -z "${SFDIR}" ] ; then	# se $SFDIR NON e' definita:
 	echo "$0 <path_to_SciFor_home>"
 	return 1
     else
-	export SFDIR=$1
+	export SFROOT=$1
     fi
 fi
-SFROOT=$SFDIR
 
-export SFLIB=$SFDIR/lib
-export SFMODS=$SFDIR/include
-export SFETC=$SFDIR/etc
-export SFBIN=$SFDIR/bin
+export SFROOT=$SFDIR
+export SFLIB=$SFROOT/lib
+export SFMODS=$SFROOT/include
+
+add_library_to_system(){    
+    LIB=$1
+    if [ -z "${LD_LIBRARY_PATH}" ];then
+	export LD_LIBRARY_PATH=${LIB}/lib
+    else
+	export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
+    fi
+
+    if [ -z "${LIBRARY_PATH}" ];then
+	export LIBRARY_PATH=${LIB}/lib
+    else
+	export LIBRARY_PATH=${LIB}/lib:$LIBRARY_PATH
+    fi
+
+    if [ -z "${FPATH}" ];then
+	export FPATH=${LIB}/include
+    else
+	export FPATH=${LIB}/include:$FPATH
+    fi
+
+    if [ -z "${CPATH}" ];then
+	export CPATH=${LIB}/include
+    else
+	export CPATH=${LIB}/include:$CPATH
+    fi
+
+    if [ -z "${MANPATH}" ];then
+	export MANPATH=${LIB}/man
+    else
+	export MANPATH=${LIB}/man:$MANPATH
+    fi
+}
 
 #ADD SCIFOR TO THE SYSTEM ENVIRONMENT
-if [ -z "${LD_LIBRARY_PATH}" ];then
-    export LD_LIBRARY_PATH=${SFDIR}/lib
-else
-    export LD_LIBRARY_PATH=${SFDIR}/lib:$LD_LIBRARY_PATH
-fi
-
-if [ -z "${LIBRARY_PATH}" ];then
-    export LIBRARY_PATH=${SFDIR}/lib
-else
-    export LIBRARY_PATH=${SFDIR}/lib:$LIBRARY_PATH
-fi
-
-if [ -z "${FPATH}" ];then
-    export FPATH=${SFDIR}/include
-else
-    export FPATH=${SFDIR}/include:$FPATH
-fi
-
-if [ -z "${MANPATH}" ];then
-    export MANPATH=${SFDIR}/man
-else
-    export MANPATH=${SFDIR}/man:$MANPATH
-fi
-
-source $SFETC/library.conf
+add_library_to_system $SFROOT
+source $SFROOT/etc/library.conf
 
 
 #IF MKL is not available then set standard LAPACK/BLAS as default MATH library:
 #Lapack/Blas are compiled with the chosen compiler at the installation.
 if [ -z "$MKLROOT" ];then		# standard mkl variable, if defined you are using MKL
-    if [ ! -z "$sf_lapack_dir" ];then
-	export LD_LIBRARY_PATH=${sf_lapack_dir}:$LD_LIBRARY_PATH
-	export LIBRARY_PATH=${sf_lapack_dir}:$LIBRARY_PATH
-	export MANPATH=${sf_lapack_dir}/man:$MANPATH
-	export LAPACK_LIB=$sf_blas_dir
+    if [ ! -z "$SF_LAPACK_DIR" ];then
+	add_library_to_system $SF_LAPACK_DIR
+	export LAPACK_LIB=$SF_LAPACK_DIR
     else
 	echo "Not using MKL and can not find LAPACK"
     fi
-    if [ ! -z "$sf_blas_dir" ];then
-	export LD_LIBRARY_PATH=${sf_blas_dir}:$LD_LIBRARY_PATH
-	export LIBRARY_PATH=${sf_blas_dir}:$LIBRARY_PATH
-	export MANPATH=${sf_blas_dir}/man:$MANPATH
-	export BLAS_LIB=$sf_blas_dir
+    if [ ! -z "$SF_BLAS_DIR" ];then
+	add_library_to_system $SF_BLAS_DIR
+	export BLAS_LIB=$SF_BLAS_DIR
     else
 	echo "Not using MKL and can not find BLAS"
     fi
 fi
 
-#ADD FFTW_3 to ENV
-if [ ! -z "$sf_fftw_dir" ];then
-    export INCLUDE=$sf_fftw_dir/include:${INCLUDE}
-    export FPATH=$sf_fftw_dir/include:${FPATH}
-    export LD_LIBRARY_PATH=$sf_fftw_dir/lib:$LD_LIBRARY_PATH
-    export LIBRARY_PATH=$sf_fftw_dir/lib:$LIBRARY_PATH
-    export FFTW_LIB=$sf_fftw_dir
+
+for LIB in $SF_LIST_LIB;
+do
+    if [  -d "$LIB" ];then
+	add_library_to_system $LIB
+	lib_name=$(basename $LIB)
+    else
+	echo "$LIB does not exist or I can not find it: skip installation..."
+    fi
+done
+
+#IF LIBRARIES ARE AVAILABLE SET PRE-COMPILATION FLAGS ACCORDINGLY
+#availability of these libraries is independent of the fact that
+#SciFor is actually adding them to the system, you may want to 
+#do it your own for some reason.
+#This is just a way to communicate SciFor that you have or don't have 
+#access to these libraries so to include or not routines that are 
+#based on these libraries.
+if [ ! -z $SF_FFTPACK ];then 
+    export PRECOMP_FFTPACK=FFTPACK
+fi
+if [ ! -z $SF_MINPACK ];then 
+    export PRECOMP_MINPACK=MINPACK
+fi
+if [ ! -z $SF_QUADPACK ];then 
+    export PRECOMP_QUADPACK=QUADPACK
 fi
 
-#ADD FFTPACK to ENV
-if [ ! -z "$sf_fftpack_dir" ];then
-    export INCLUDE=$sf_fftpack_dir/include:${INCLUDE}
-    export FPATH=$sf_fftpack_dir/include:${FPATH}
-    export CPATH=$sf_fftpack_dir/include:${CPATH}
-    export LD_LIBRARY_PATH=$sf_fftpack_dir/lib:$LD_LIBRARY_PATH
-    export LIBRARY_PATH=$sf_fftpack_dir/lib:$LIBRARY_PATH
-    export FFTPACK_LIB=$sf_fftpack_dir
-fi
 
-#ADD NFFTW to ENV
-if [ ! -z "$sf_nfft_dir" ];then
-    export INCLUDE=$sf_nfft_dir/include:${INCLUDE}
-    export FPATH=$sf_nfft_dir/include:${FPATH}
-    export CPATH=$sf_nfft_dir/include:${CPATH}
-    export LD_LIBRARY_PATH=$sf_nfft_dir/lib:$LD_LIBRARY_PATH
-    export LIBRARY_PATH=$sf_nfft_dir/lib:$LIBRARY_PATH
-    export NFFT_LIB=$sf_nfft_dir
-fi
+# #ADD FFTPACK to ENV
+# if [ ! -z "$sf_fftpack_dir" ];then
+#     add_library_to_system $sf_fftpack_dir
+#     export FFTPACK_LIB=$sf_fftpack_dir
+#     export PRECOMP_FFTPACK=SC_FFTPACK
+# fi
 
-
-#ADD ARPACK to ENV
-if [ ! -z "$sf_arpack_dir" ];then
-    export INCLUDE=$sf_arpack_dir/include:${INCLUDE}
-    export FPATH=$sf_arpack_dir/include:${INCLUDE}
-    export LD_LIBRARY_PATH=$sf_arpack_dir/lib:$LD_LIBRARY_PATH
-    export LIBRARY_PATH=$sf_arpack_dir/lib:$LIBRARY_PATH
-    export ARPACK_LIB=$sf_arpack_dir
-fi
-
-#ADD MINPACK to ENV
-if [ ! -z "$sf_minpack_dir" ];then
-    export INCLUDE=$sf_minpack_dir/include:${INCLUDE}
-    export FPATH=$sf_minpack_dir/include:${FPATH}
-    export LD_LIBRARY_PATH=$sf_minpack_dir/lib:$LD_LIBRARY_PATH
-    export LIBRARY_PATH=$sf_minpack_dir/lib:$LIBRARY_PATH
-    export MINPACK_LIB=$sf_minpack_dir
-fi
+# #ADD MINPACK to ENV
+# if [ ! -z "$sf_minpack_dir" ];then
+#     add_library_to_system $sf_minpack_dir
+#     export MINPACK_LIB=$sf_minpack_dir
+#     export PRECOMP_MINPACK=SC_MINPACK
+# fi
 

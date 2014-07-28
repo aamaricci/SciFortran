@@ -28,7 +28,6 @@ MODULE OPTIMIZE_ROOT_FINDING
   public :: broydn            !backward compatibility
 
 
-
   procedure(hybrd_func),pointer :: hybrd_funcv
   real(8), dimension(:),pointer :: fmin_fvecp
 
@@ -133,10 +132,10 @@ contains
 
 
 
-
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   !MULTI-DIMENSIONAL:
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef _MINPACK
   subroutine fsolve(ff,x,tol,info)
     procedure(hybrd_func)      :: ff
     real(8),dimension(:)       :: x      
@@ -162,7 +161,6 @@ contains
     fvec(:) = hybrd_funcv(x)
   end subroutine func
 
-
   subroutine fzero_hybrd(func,x,tol,info)
     real(8),dimension(:)       :: x
     real(8),dimension(size(x)) :: fvec
@@ -177,7 +175,7 @@ contains
     call hybrd1(func,n,x,fvec,tol_,info_)
     if(present(info))info=info_
   end subroutine fzero_hybrd
-
+#endif
 
 
   subroutine fzero_broyden(ff,x,check,maxits,tolf,tolmin,stpmx,noexit)
