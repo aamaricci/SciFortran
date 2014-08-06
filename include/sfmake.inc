@@ -24,18 +24,32 @@ else
 MATHLIB	    = -llapack -lblas
 endif
 
-ifdef PRECOMP_FFTPACK
+
+#This is kind of awkard: library should be added to the system before 
+#make use of them.
+ifeq ($(PRECOMP_FFTPACK),T)
 MATHLIB      +=-lfftpack
 endif
 
-ifdef PRECOMP_MINPACK
+ifeq ($(PRECOMP_MINPACK),T)
 MATHLIB      +=-lminpack
 endif
 
-ifdef PRECOMP_QUADPACK
+ifeq ($(PRECOMP_QUADPACK),T)
 MATHLIB      +=-lquadpack
 endif
 
+
+
+#----------------------------------------------------
+#SciFor LIBRARY:
+SFLIBS 	   =  ${SFINCLUDE} -lscifor ${MATHLIB}
+SFLIBS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb ${MATHLIB}
+#----------------------------------------------------
+
+
+
+###################################################################
 # ifdef ARPACK_LIB
 # MATHLIB     +=-lparpack -larpack #-lparpack_debug -larpack_debug
 # endif
@@ -47,15 +61,6 @@ endif
 # endif
 
 
-#----------------------------------------------------
-#SciFor LIBRARY:
-SFLIBS 	   =  ${SFINCLUDE} -lscifor ${MATHLIB}
-SFLIBS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb ${MATHLIB}
-#----------------------------------------------------
-
-
-###################################################################
-#REPO:
 # ifdef CUDADIR
 # GPU     = -L$(SFLIB)/ 	-lgpu
 # CUDA    = -L/opt/cuda_2.3/lib64 -lcufft -lcuda -lcudart -lcublas

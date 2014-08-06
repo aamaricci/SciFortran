@@ -71,17 +71,6 @@ if [ -z "$MKLROOT" ];then		# standard mkl variable, if defined you are using MKL
     fi
 fi
 
-
-for LIB in $SF_LIST_LIB;
-do
-    if [  -d "$LIB" ];then
-	add_library_to_system $LIB
-	lib_name=$(basename $LIB)
-    else
-	echo "$LIB does not exist or I can not find it: skip installation..."
-    fi
-done
-
 #IF LIBRARIES ARE AVAILABLE SET PRE-COMPILATION FLAGS ACCORDINGLY
 #availability of these libraries is independent of the fact that
 #SciFor is actually adding them to the system, you may want to 
@@ -100,17 +89,16 @@ if [ ! -z $SF_QUADPACK ];then
 fi
 
 
-# #ADD FFTPACK to ENV
-# if [ ! -z "$sf_fftpack_dir" ];then
-#     add_library_to_system $sf_fftpack_dir
-#     export FFTPACK_LIB=$sf_fftpack_dir
-#     export PRECOMP_FFTPACK=SC_FFTPACK
-# fi
+# for LIB in $SF_LIST_LIB;
+# do
+#     if [  -d "$LIB" ];then
+# 	add_library_to_system $LIB
+# 	lib_name=$(basename $LIB)
+#     else
+# 	echo "$LIB does not exist or I can not find it: skip installation..."
+#     fi
+# done
 
-# #ADD MINPACK to ENV
-# if [ ! -z "$sf_minpack_dir" ];then
-#     add_library_to_system $sf_minpack_dir
-#     export MINPACK_LIB=$sf_minpack_dir
-#     export PRECOMP_MINPACK=SC_MINPACK
-# fi
+
+
 
