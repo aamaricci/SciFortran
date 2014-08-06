@@ -22,8 +22,11 @@ MODULE OPTIMIZE_ROOT_FINDING
   public :: fzero_brentq
   public :: zbrent
 
+#ifdef _MINPACK
   public :: fsolve
   public :: fzero_hybrd
+#endif
+
   public :: fzero_broyden
   public :: broydn            !backward compatibility
 
