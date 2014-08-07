@@ -3,9 +3,9 @@
 #SETUP SCIFOR LIBRARY:
 if [ -z "${SFDIR}" ] ; then	# se $SFDIR NON e' definita:
     if [ -z "$1" ]; then 	# check if $1 is given: if not print error
-	echo "Could not load SciFor library !"
-	echo "Usage:"
-	echo "$0 <path_to_SciFor_home>"
+	echo "Could not load SciFor library !" >&2
+	echo "Usage:" >&2
+	echo "$0 <path_to_SciFor_home>" >&2
 	return 1
     else
 	export SFROOT=$1
@@ -16,89 +16,80 @@ export SFROOT=$SFDIR
 export SFLIB=$SFROOT/lib
 export SFMODS=$SFROOT/include
 
-add_library_to_system(){    
-    LIB=$1
-    if [ -z "${LD_LIBRARY_PATH}" ];then
-	export LD_LIBRARY_PATH=${LIB}/lib
-    else
-	export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
-    fi
-
-    if [ -z "${LIBRARY_PATH}" ];then
-	export LIBRARY_PATH=${LIB}/lib
-    else
-	export LIBRARY_PATH=${LIB}/lib:$LIBRARY_PATH
-    fi
-
-    if [ -z "${FPATH}" ];then
-	export FPATH=${LIB}/include
-    else
-	export FPATH=${LIB}/include:$FPATH
-    fi
-
-    if [ -z "${CPATH}" ];then
-	export CPATH=${LIB}/include
-    else
-	export CPATH=${LIB}/include:$CPATH
-    fi
-
-    if [ -z "${MANPATH}" ];then
-	export MANPATH=${LIB}/man
-    else
-	export MANPATH=${LIB}/man:$MANPATH
-    fi
-}
 
 #ADD SCIFOR TO THE SYSTEM ENVIRONMENT
-add_library_to_system $SFROOT
+if [ -z "${LD_LIBRARY_PATH}" ];then
+    export LD_LIBRARY_PATH=${SFROOT}/lib
+else
+    export LD_LIBRARY_PATH=${SFROOT}/lib:$LD_LIBRARY_PATH
+fi
+
+if [ -z "${LIBRARY_PATH}" ];then
+    export LIBRARY_PATH=${SFROOT}/lib
+else
+    export LIBRARY_PATH=${SFROOT}/lib:$LIBRARY_PATH
+fi
+
+if [ -z "${FPATH}" ];then
+    export FPATH=${SFROOT}/include
+else
+    export FPATH=${SFROOT}/include:$FPATH
+fi
+
+if [ -z "${CPATH}" ];then
+    export CPATH=${SFROOT}/include
+else
+    export CPATH=${SFROOT}/include:$CPATH
+fi
+
 source $SFROOT/etc/library.conf
 
 
-#IF MKL is not available then set standard LAPACK/BLAS as default MATH library:
-#Lapack/Blas are compiled with the chosen compiler at the installation.
-if [ -z "$MKLROOT" ];then		# standard mkl variable, if defined you are using MKL
-    if [ ! -z "$SF_LAPACK_DIR" ];then
-	add_library_to_system $SF_LAPACK_DIR
-	export LAPACK_LIB=$SF_LAPACK_DIR
-    else
-	echo "Not using MKL and can not find LAPACK"
-    fi
-    if [ ! -z "$SF_BLAS_DIR" ];then
-	add_library_to_system $SF_BLAS_DIR
-	export BLAS_LIB=$SF_BLAS_DIR
-    else
-	echo "Not using MKL and can not find BLAS"
-    fi
-fi
-
-#IF LIBRARIES ARE AVAILABLE SET PRE-COMPILATION FLAGS ACCORDINGLY
-#availability of these libraries is independent of the fact that
-#SciFor is actually adding them to the system, you may want to 
-#do it your own for some reason.
-#This is just a way to communicate SciFor that you have or don't have 
-#access to these libraries so to include or not routines that are 
-#based on these libraries.
-if [ ! -z $SF_FFTPACK ];then 
-    export PRECOMP_FFTPACK=FFTPACK
-fi
-if [ ! -z $SF_MINPACK ];then 
-    export PRECOMP_MINPACK=MINPACK
-fi
-if [ ! -z $SF_QUADPACK ];then 
-    export PRECOMP_QUADPACK=QUADPACK
-fi
-
-
-# for LIB in $SF_LIST_LIB;
-# do
-#     if [  -d "$LIB" ];then
-# 	add_library_to_system $LIB
-# 	lib_name=$(basename $LIB)
-#     else
-# 	echo "$LIB does not exist or I can not find it: skip installation..."
-#     fi
-# done
 
 
 
 
+#TO BE REMOVED
+
+# #If MKL is set (by definition of MKLROOT environment variable) set related precompilation flag 
+# if [ ! -z "$MKLROOT" ];then
+#     export SF_PRECOMP_MKL=MKL
+# fi
+
+# #Start adding required libraries to the system. 
+# #If not defined a warning message to std.err is given.
+# #BLAS
+# if [ ! -z "$BLASROOT" ];then
+#     add_library_to_system $BLASROOT
+#     export PRECOMP_BLAS=BLAS
+# else
+#     echo "SciFor: can not add BLAS to system." >&2
+# fi
+# #LAPACK
+# if [ ! -z "$LAPACKROOT" ];then
+#     add_library_to_system $LAPACKROOT
+#     export PRECOMP_LAPACK=LAPACK
+# else
+#     echo "SciFor: can not add LAPACK to system." >&2
+# fi
+# #FFTPACK
+# if [ ! -z "$FFTPACKROOT" ];then 
+#     add_library_to_system $FFTPACKROOT
+#     export PRECOMP_FFTPACK=FFTPACK
+# else
+#     echo "SciFor: can not add FFTPACK to system." >&2
+# fi
+# #MINPACK
+# if [ ! -z "$MINPACKROOT" ];then 
+#     add_library_to_system $MINPACKROOT
+#     export PRECOMP_MINPACK=MINPACK
+# else
+#     echo "SciFor: can not add MINPACK to system." >&2
+# fi
+# #QUADPACK
+# if [ ! -z "$QUADPACKROOT" ];then 
+#     add_library_to_system $QUADPACKROOT
+#     export PRECOMP_QUADPACK=QUADPACK
+# else
+#     echo "SciFor: can not add QUADPACK to system." >&2
+# fi

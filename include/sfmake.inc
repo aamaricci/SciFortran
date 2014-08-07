@@ -12,40 +12,60 @@ SFINCLUDE_DEB= -I${SFMODS}/debug
 
 SFCOMPLETION=${SFROOT}/bin/scifor_completion.sh
 
-#SETUP MATHLIB: the main mathematical library. If MKL is available use it, if not use just std lapack and blas
-ifdef MKLROOT
- ifeq ($(SFOS),Linux)
-    MATHLIB     = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
- endif
- ifeq ($(SFOS),Darwin)
-    MATHLIB	= -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
- endif
-else
-MATHLIB	    = -llapack -lblas
-endif
-
-
-#This is kind of awkard: library should be added to the system before 
-#make use of them.
-ifeq ($(PRECOMP_FFTPACK),T)
-MATHLIB      +=-lfftpack
-endif
-
-ifeq ($(PRECOMP_MINPACK),T)
-MATHLIB      +=-lminpack
-endif
-
-ifeq ($(PRECOMP_QUADPACK),T)
-MATHLIB      +=-lquadpack
-endif
-
-
-
+#SciFor LIBRARY compilation arguments:
+SFARGS 	   =  ${SFINCLUDE} -lscifor
+SFARGS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb
 #----------------------------------------------------
-#SciFor LIBRARY:
-SFLIBS 	   =  ${SFINCLUDE} -lscifor ${MATHLIB}
-SFLIBS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb ${MATHLIB}
-#----------------------------------------------------
+
+
+
+#TO BE REMOVED:
+
+# ifdef MKLROOT
+#  ifeq ($(SFOS),Linux)
+#     MKLARGS     = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
+#  endif
+#  ifeq ($(SFOS),Darwin)
+#     MKLARGS	= -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
+#  endif
+# endif
+
+# #SETUP MATHLIB: the main mathematical library. If MKL is available use it, if not use just std lapack and blas
+# ifdef MKLROOT
+# #
+#  ifeq ($(SFOS),Linux)
+#     MATHLIB     = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
+#  endif
+#  ifeq ($(SFOS),Darwin)
+#     MATHLIB	= -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
+#  endif
+# #
+# else
+# #
+#  ifdef BLASROOT
+#     MATHLIB     += -lblas
+#  endif
+#  ifdef LAPACKROOT
+#     MATHLIB	+= -llapack
+#  endif	
+# #
+# endif
+# ifdef FFTPACKROOT
+#    MATHLIB      +=-lfftpack
+# endif
+# ifdef MINPACKROOT
+#    MATHLIB      +=-lminpack
+# endif
+# ifdef QUADPACKROOT
+#    MATHLIB      +=-lquadpack
+# endif
+
+
+# #----------------------------------------------------
+# #SciFor LIBRARY:
+# SFLIBS 	   =  ${SFINCLUDE} -lscifor #${MATHLIB}
+# SFLIBS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb #${MATHLIB}
+# #----------------------------------------------------
 
 
 
