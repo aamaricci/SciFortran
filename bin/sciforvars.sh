@@ -13,9 +13,6 @@ if [ -z "${SFDIR}" ] ; then	# se $SFDIR NON e' definita:
 fi
 
 export SFROOT=$SFDIR
-export SFLIB=$SFROOT/lib
-export SFMODS=$SFROOT/include
-
 
 #ADD SCIFOR TO THE SYSTEM ENVIRONMENT
 if [ -z "${LD_LIBRARY_PATH}" ];then

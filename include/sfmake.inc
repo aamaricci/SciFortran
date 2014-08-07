@@ -6,15 +6,18 @@ include options.inc
 REV = $(shell git rev-parse HEAD)
 VER = 'character(len=41),parameter :: revision = "$(REV)"' > revision.inc
 
-#SciFor INCLUDE modules:
-SFINCLUDE= -I${SFMODS}
-SFINCLUDE_DEB= -I${SFMODS}/debug
-
+#BASH COMPLETION SCRIPT FOR SciFor
 SFCOMPLETION=${SFROOT}/bin/scifor_completion.sh
 
+#SciFor INCLUDE modules:
+SFINCLUDE= -I${SFROOT}/include
+SFINCLUDE_DEB= -I${SFROOT}/include/debug
+
+
+
 #SciFor LIBRARY compilation arguments:
-SFARGS 	   =  ${SFINCLUDE} -lscifor
-SFARGS_DEB =  ${SFINCLUDE_DEB} -lscifor_deb
+SFARGS 	   =  -lscifor
+SFARGS_DEB =  -lscifor_deb
 #----------------------------------------------------
 
 
