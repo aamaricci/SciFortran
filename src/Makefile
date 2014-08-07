@@ -115,10 +115,8 @@ mod_DERIVATE: DERIVATE libupdate
 OPTIMIZE_ROOT_FINDING: 
 	$(FC) -c $(FFLAG)  optimize_broyden_routines.f90 -o objs/optimize_broyden_routines.o $(MOPT)./mods/
 	$(FC) -c $(DFLAG)  optimize_broyden_routines.f90 -o debug_objs/optimize_broyden_routines.o $(MOPT)./debug_mods/
-# $(FC) -c $(FFLAG)  minpack.f90 -o objs/minpack.o $(MOPT)./mods/
-# $(FC) -c $(DFLAG)  minpack.f90 -o debug_objs/minpack.o $(MOPT)./debug_mods/
-	$(FC) -c $(FFLAG) -fpp -D_$(PRECOMP_MINPACK) $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
-	$(FC) -c $(DFLAG) -fpp -D_$(PRECOMP_MINPACK) $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
+	$(FC) -c $(FFLAG)  $@.f90 -I./mods/ -o objs/$@.o $(MOPT)./mods/
+	$(FC) -c $(DFLAG)  $@.f90 -I./debug_mods/ -o debug_objs/$@.o $(MOPT)./debug_mods/
 OPTIMIZE_MINIMIZE: 
 	$(FC) -c $(FFLAG)  minimize.f -o objs/minimize.o $(MOPT)./mods/
 	$(FC) -c $(FFLAG)  CGFAM.f -o objs/CGFAM.o $(MOPT)./mods/
