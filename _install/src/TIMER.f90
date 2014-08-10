@@ -60,7 +60,8 @@ contains
   subroutine start_progress(unit)
     integer,optional :: unit
     funit=6;if(present(unit))funit=unit
-    open(funit,carriagecontrol='fortran')
+    !open(funit,carriagecontrol='fortran')
+    open(funit)
     call start_timer
   end subroutine start_progress
 
@@ -272,12 +273,13 @@ contains
   subroutine progress_bar(i,imax)
     integer            :: i,imax,k,jmax
     character(len=57)  :: bar="???% |                                                  |"
-    write(unit=bar(1:3),fmt="(I3)")100*i/imax
+    write(unit=bar(1:3),fmt="(I3,$)")100*i/imax
     jmax=50*i/imax
     do k=1,jmax
        bar(6+k:6+k)="*"
     enddo
-    write(unit=funit,fmt="(A1,A1,A57)")'+',char(13), bar
+    write(unit=funit,fmt="(A1,A1,A57,$)")'+',char(13), bar
+    if(i==imax)write(funit,*)
   end subroutine progress_bar
 
 
