@@ -36,9 +36,9 @@ print_ARmake(){
     case $PLAT in
 	intel)
 	    FC=ifort
-	    OPT="-O3 -ftz  -openmp"
-	    STD=-O2 
-	    DEB="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created"
+	    # OPT="-O3 -ftz  -openmp"
+	    # STD=-O2 
+	    # DEB="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created"
 	    FFLAGS="-O2 -static-intel"
 	    MOPT="-module "
 	    MOD_DIR=intel_mods
@@ -46,9 +46,9 @@ print_ARmake(){
 	    ;;
 	gnu)
 	    FC=gfortran
-	    OPT="-O3 -funroll-all-loops -fno-f2c"
-	    STD=-O2
-	    DEB="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace"
+	    # OPT="-O3 -funroll-all-loops -fno-f2c"
+	    # STD=-O2
+	    # DEB="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace"
 	    FFLAGS="-O2 -static"
 	    MOPT=-J
 	    MOD_DIR=gnu_mods
@@ -56,9 +56,9 @@ print_ARmake(){
 	    ;;
 	intel_debug)
 	    FC=ifort
-	    OPT="-O3 -ftz  -openmp"
-	    STD=-O2 
-	    DEB="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created"
+	    # OPT="-O3 -ftz  -openmp"
+	    # STD=-O2 
+	    # DEB="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created"
 	    FFLAGS="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created -static-intel"
 	    MOPT="-module "
 	    MOD_DIR=intel_debug_mods
@@ -66,9 +66,9 @@ print_ARmake(){
 	    ;;
 	gnu_debug)
 	    FC=gfortran
-	    OPT="-O3 -funroll-all-loops -fno-f2c"
-	    STD=-O2
-	    DEB="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace"
+	    # OPT="-O3 -funroll-all-loops -fno-f2c"
+	    # STD=-O2
+	    # DEB="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace"
 	    FFLAGS="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static"
 	    MOPT=-J
 	    MOD_DIR=gnu_debug_mods
@@ -109,11 +109,12 @@ EOF
 
 
 print_ARmake $PLAT
+exit
 make all
 echo "moving compiled library:"
 mv -vf $DIR_TARGET $WRKDIR/
 if [ $? == 0 ];then
     make clean
-    rm -vf make.inc
+    mv -vf make.inc $WRKDIR/$PLAT/
 fi
 cd $WRKDIR
