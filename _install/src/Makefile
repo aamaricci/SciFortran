@@ -16,7 +16,7 @@ allmod: SCIFOR_VERSION COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAY
 
 libscifor.a: 
 	@rsync -avP $(MOD_DIR)/*.mod $(MOD_SCIFOR)/
-	ar cvq $(LIB_SCIFOR) `ls $(OBJ_DIR)/*.o | sort | uniq`  
+	ar crv $(LIB_SCIFOR) `ls $(OBJ_DIR)/*.o | sort | uniq`  
 	ranlib $(LIB_SCIFOR)
 	@echo 'LIBRARY IS DONE.........'
 	@echo ' '
@@ -27,14 +27,15 @@ version:
 	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > scifor_version.inc
 
 clean: 
-	@rm -fv *.o *.mod *.a $(MOD_DIR)/*.mod $(OBJ_DIR)/*.o $(MOD_SCIFOR)/*.mod $(LIB_SCIFOR)
+	@rm -fv *.o *.mod *.a
 
 portable:
 	./create_portable.sh $(DIR)
 
 libupdate:
+	@echo "	rsync -avP $(MOD_DIR)/*.mod $(MOD_SCIFOR)/"
 	@rsync -avP $(MOD_DIR)/*.mod $(MOD_SCIFOR)/
-	ar cvq $(LIB_SCIFOR) `ls $(OBJ_DIR)/*.o | sort | uniq`  
+	ar crv $(LIB_SCIFOR) `ls $(OBJ_DIR)/*.o | sort | uniq`  
 	ranlib $(LIB_SCIFOR)
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
@@ -93,15 +94,15 @@ DERIVATE:
 mod_DERIVATE: DERIVATE libupdate
 
 OPTIMIZE_ROOT_FINDING: 
-	$(FC) -c $(FFLAGS)  optimize_broyden_routines.f90 -o $(OBJ_DIR)/optimize_broyden_routines.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS)  $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) optimize_broyden_routines.f90 -o $(OBJ_DIR)/optimize_broyden_routines.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 OPTIMIZE_MINIMIZE: 
-	$(FC) -c $(FFLAGS)  minimize.f -o $(OBJ_DIR)/minimize.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS)  CGFAM.f -o $(OBJ_DIR)/CGFAM.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS)  CGSEARCH.f -o $(OBJ_DIR)/CGSEARCH.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS)  CGBLAS.f -o $(OBJ_DIR)/CGBLAS.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS)  optimize_cgfit_routines.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/optimize_cgfit_routines.o $(MOPT)$(MOD_DIR)/ 
-	$(FC) -c $(FFLAGS)  $@.f90 -I$(MOD_DIR)/  -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) minimize.f -o $(OBJ_DIR)/minimize.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) CGFAM.f -o $(OBJ_DIR)/CGFAM.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) CGSEARCH.f -o $(OBJ_DIR)/CGSEARCH.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) CGBLAS.f -o $(OBJ_DIR)/CGBLAS.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) optimize_cgfit_routines.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/optimize_cgfit_routines.o $(MOPT)$(MOD_DIR)/ 
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/  -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 OPTIMIZE: OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_OPTIMIZE: OPTIMIZE libupdate
@@ -118,7 +119,7 @@ mod_GREENFUNX: GREENFUNX libupdate
 
 
 INTEGRATE: 
-	$(FC) -c $(FFLAGS)  $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_INTEGRATE: INTEGRATE libupdate
 
 

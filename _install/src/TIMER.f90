@@ -261,8 +261,9 @@ contains
   subroutine progress(i,imax)
     integer            :: i,imax,k,jmax
     character(len=7)  :: bar="> ???% "
-    write(unit=bar(3:5),fmt="(I3)")100*i/imax
-    write(unit=funit,fmt="(A1,A1,A7)")'+',char(13), bar
+    write(unit=bar(3:5),fmt="(I3,$)")100*i/imax
+    write(unit=funit,fmt="(A1,A1,A7,$)")'+',char(13), bar
+    if(i==imax)write(funit,*)
   end subroutine progress
 
 
@@ -302,12 +303,13 @@ contains
     h =int(eta_time/secs_in_one_hour)
     m =int((eta_time - h*secs_in_one_hour)/secs_in_one_min)
     s =int(eta_time - h*secs_in_one_hour - m*secs_in_one_min)
-    write(unit=bar(1:3),fmt="(I3)")100*i/imax
+    write(unit=bar(1:3),fmt="(I3,$)")100*i/imax
     jmax=50*i/imax
     do k=1,jmax
        bar(6+k:6+k)="*"
     enddo
-    write(unit=funit,fmt="(A1,A1,A62,I2,A1,I2.2,A1,I2.2,A1,I3.3)")'+',char(13), bar,h,":",m,":",s,".",ms
+    write(unit=funit,fmt="(A1,A1,A62,I2,A1,I2.2,A1,I2.2,A1,I3.3,$)")'+',char(13), bar,h,":",m,":",s,".",ms
+    if(i==imax)write(funit,*)
   end subroutine progress_bar_eta
 
 

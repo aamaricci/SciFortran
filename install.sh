@@ -22,23 +22,20 @@ print_ARmake(){
     cd $WRK_INSTALL
     local ROOT=$WRK_INSTALL
     local PLAT=$1
-    DIR_TARGET=$ROOT/$PLAT
-    local BIN_TARGET=$ROOT/$PLAT/bin
-    local LIB_TARGET=$ROOT/$PLAT/lib
-    local INC_TARGET=$ROOT/$PLAT/include
+    DIR_TARGET=$WRKDIR/$PLAT
+    local BIN_TARGET=$DIR_TARGET/bin
+    local LIB_TARGET=$DIR_TARGET/lib
+    local INC_TARGET=$DIR_TARGET/include
+    local LIB_SCIFOR=$LIB_TARGET/libscifor.a
+    local MOD_SCIFOR=$INC_TARGET
     mkdir -pv $DIR_TARGET
     mkdir -pv $BIN_TARGET
     mkdir -pv $LIB_TARGET
     mkdir -pv $INC_TARGET
-    local LIB_SCIFOR=$LIB_TARGET/libscifor.a
-    local MOD_SCIFOR=$INC_TARGET
-
+    
     case $PLAT in
 	intel)
 	    FC=ifort
-	    # OPT="-O3 -ftz  -openmp"
-	    # STD=-O2 
-	    # DEB="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created"
 	    FFLAGS="-O2 -static-intel"
 	    MOPT="-module "
 	    MOD_DIR=intel_mods
@@ -46,9 +43,6 @@ print_ARmake(){
 	    ;;
 	gnu)
 	    FC=gfortran
-	    # OPT="-O3 -funroll-all-loops -fno-f2c"
-	    # STD=-O2
-	    # DEB="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace"
 	    FFLAGS="-O2 -static"
 	    MOPT=-J
 	    MOD_DIR=gnu_mods
@@ -56,9 +50,6 @@ print_ARmake(){
 	    ;;
 	intel_debug)
 	    FC=ifort
-	    # OPT="-O3 -ftz  -openmp"
-	    # STD=-O2 
-	    # DEB="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created"
 	    FFLAGS="-p -O0 -g -debug -fpe0 -traceback -check all,noarg_temp_created -static-intel"
 	    MOPT="-module "
 	    MOD_DIR=intel_debug_mods
@@ -66,9 +57,6 @@ print_ARmake(){
 	    ;;
 	gnu_debug)
 	    FC=gfortran
-	    # OPT="-O3 -funroll-all-loops -fno-f2c"
-	    # STD=-O2
-	    # DEB="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace"
 	    FFLAGS="-O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static"
 	    MOPT=-J
 	    MOD_DIR=gnu_debug_mods
@@ -76,9 +64,6 @@ print_ARmake(){
 	    ;;
 	ibm)
 	    FC=xlf90
-	    OPT="-O3 -qarch=qp -qtune=qp"
-	    STD=-O2
-	    DEB="-O0 -C"
 	    FFLAGS="-O2 -qarch=qp -qtune=qp"
 	    MOPT="-qmoddir="
 	    MOD_DIR=ibm_mods
@@ -104,15 +89,11 @@ EOF
 
     cp -fv $WRK_INSTALL/bin/scifor_completion.sh $BIN_TARGET/lib_completion.sh
     cp -fv $WRK_INSTALL/bin/bash_add_lib.sh      $BIN_TARGET/bash_add_lib.sh
-
 }
 
 
 print_ARmake $PLAT
-exit
 make all
-echo "moving compiled library:"
-mv -vf $DIR_TARGET $WRKDIR/
 if [ $? == 0 ];then
     make clean
     mv -vf make.inc $WRKDIR/$PLAT/
