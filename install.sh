@@ -1,5 +1,5 @@
 #!/bin/bash
-
+NAME=DMFT_TOOLS
 usage(){
     echo "usage:  $0 (-h,--help) [plat:intel,intel_debug,gnu,gnu_debug,ibm]"
     exit
@@ -14,6 +14,8 @@ if [ $1 == "gnu" ] || [ $1 == "gnu_debug" ] || [ $1 == "ibm" ];then
 fi
 
 PLAT=$1
+UNAME=`echo $NAME |tr [:lower:] [:upper:]`
+LNAME=`echo $NAME |tr [:upper:] [:lower:]`
 WRKDIR=$(pwd)
 VERSION=$(git describe --tags)
 WRK_INSTALL=$WRKDIR/_install
@@ -89,23 +91,26 @@ MOD_DMFTT=$INC_TARGET
 EOF
 
 
-
-    cat <<EOF > module.inc
+    echo "Copying init script for $UNAME" >&2
+    cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
+    cat <<EOF >> $BIN_TARGET/configvars.sh
+ROOT=$WRKDIR
+PLAT=$PLAT
+add_library_to_system $ROOT/$PLAT
+EOF
+    echo "" >&2
+    echo "Generating environment module file for $UNAME" >&2
+    cat <<EOF > $ETC_TARGET/modules/${LNAME}_$PLAT
 #%Modules
 set	root	$WRKDIR
 set	plat	$PLAT
 set	version	"$VERSION ($PLAT)"
 EOF
-    
-    echo "Copying load-init script for DMFT_Tools" >&2
-    cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
+    cat $WRK_INSTALL/etc/environment_modules/module >> $ETC_TARGET/modules/${LNAME}_$PLAT
     echo "" >&2
-    echo "Generating the environment module file for DMFT_Tools" >&2
-    mv -fv module.inc                                             $ETC_TARGET/modules/dmft_tools_$PLAT
-    cat $WRK_INSTALL/etc/environment_modules/dmft_tools_module >> $ETC_TARGET/modules/dmft_tools_$PLAT
+    echo "Compiling $UNAME library on platform $PLAT:">&2
     echo "" >&2
-    echo "Compiling library on platform $PLAT:"
-    echo "" >&2
+
 }
 
 

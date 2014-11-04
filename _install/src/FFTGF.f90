@@ -1,8 +1,8 @@
-include "mkl_dfti.f90"
-include "mkl_trig_transforms.f90"
+!include "mkl_dfti.f90"
+!include "mkl_trig_transforms.f90"
 module FFTGF
-  use MKL_DFTI
-  use MKL_DFT_TYPE
+  !use MKL_DFTI
+  !use MKL_DFT_TYPE
   use MKL_TRIG_TRANSFORMS
   !
   use FFT
