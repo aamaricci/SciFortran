@@ -24,7 +24,7 @@ libdmftt.a:
 
 version:
 	@echo "Actual version is: $(REV)"
-	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > dmftt_version.inc
+	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > dmft_tools_version.inc
 
 clean: 
 	@rm -fv *.o *.mod *.a

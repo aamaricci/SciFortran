@@ -98,10 +98,10 @@ set	version	"$VERSION ($PLAT)"
 EOF
     
     echo "Copying load-init script for DMFT_Tools" >&2
-    cp -fv $WRK_INSTALL/bin/configvars.sh             $BIN_TARGET/configvars.sh
+    cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
     echo "" >&2
     echo "Generating the environment module file for DMFT_Tools" >&2
-    mv -fv module.inc                                 $ETC_TARGET/modules/scifor_$PLAT
+    mv -fv module.inc                                             $ETC_TARGET/modules/dmft_tools_$PLAT
     cat $WRK_INSTALL/etc/environment_modules/dmft_tools_module >> $ETC_TARGET/modules/dmft_tools_$PLAT
     echo "" >&2
     echo "Compiling library on platform $PLAT:"
