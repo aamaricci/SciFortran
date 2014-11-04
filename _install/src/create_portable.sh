@@ -70,18 +70,17 @@ compile: \$(OBJS)
 
 
 #compile the library modules
-lib: COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS  DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS 
+lib: CONSTANTS FONTS TIMER IOTOOLS FFT TOOLS ARRAYS DERIVATE OPTIMIZE FUNCTIONS INTEGRATE LIST MATRIX INTERPOLATE RANDOM STATISTICS
 
 .f90.o:	
 	\$(FC) \$(FLAG) -c \$<
 
 
-COMVARS: 
+CONSTANTS: 
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o  $DIR_LIB/\$@.f90
 
-PARSE_INPUT: 
-	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/PARSE_LIST_INPUT.o $DIR_LIB/PARSE_LIST_INPUT.f90
-	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90 
+FONTS: 
+	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o  $DIR_LIB/\$@.f90
 
 TIMER: 
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
@@ -92,15 +91,11 @@ IOTOOLS:
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/IOREAD.o $DIR_LIB/IOREAD.f90 
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
   
-FFTGF:  COMVARS INTERPOLATE
+FFT:
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 TOOLS:  
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
-
-ERROR:  
-	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
-
 
 ARRAYS:  
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
@@ -126,19 +121,10 @@ OPTIMIZE: OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE
 FUNCTIONS:  
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
-GREENFUNX: 
-	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
-
 INTEGRATE: 
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/integrate_quadpack.o  $DIR_LIB/integrate_quadpack.f90  
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
-
-VECTORS: 
-	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
-
-SQUARE_LATTICE: 
-	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/\$@.o $DIR_LIB/\$@.f90
 
 LIST: 
 	\$(FC) -c \$(FLAG)  \$(MOPT)$DIR_LIB/ -o $DIR_LIB/LIST_D_ORDERED.o   $DIR_LIB/LIST_D_ORDERED.f90      
