@@ -1,7 +1,7 @@
 #!/bin/bash
-
+NAME=SCIFOR
 usage(){
-    echo "usage:  $0 [intel,intel_debug] [gnu,gnu_debug,ibm: not yet supported ]"
+    echo "usage:  $0 (-h,--help) [plat:intel,intel_debug//gnu,gnu_debug,ibm: not yet supported ]"
     exit
 }
 
@@ -14,7 +14,10 @@ if [ $1 == "gnu" ] || [ $1 == "gnu_debug" ] || [ $1 == "ibm" ];then
 fi
 
 PLAT=$1
+UNAME=`echo $NAME |tr [:lower:] [:upper:]`
+LNAME=`echo $NAME |tr [:upper:] [:lower:]`
 WRKDIR=$(pwd)
+VERSION=$(git describe --tags)
 WRK_INSTALL=$WRKDIR/_install
 if [ ! -d $WRK_INSTALL ];then echo "$0: can not find _install directory";exit;fi
 
@@ -24,15 +27,19 @@ print_ARmake(){
     local PLAT=$1
     DIR_TARGET=$WRKDIR/$PLAT
     local BIN_TARGET=$DIR_TARGET/bin
+    local ETC_TARGET=$DIR_TARGET/etc
     local LIB_TARGET=$DIR_TARGET/lib
     local INC_TARGET=$DIR_TARGET/include
     local LIB_SCIFOR=$LIB_TARGET/libscifor.a
     local MOD_SCIFOR=$INC_TARGET
+    echo "Creating directories:" >&2
     mkdir -pv $DIR_TARGET
     mkdir -pv $BIN_TARGET
+    mkdir -pv $ETC_TARGET
+    mkdir -pv $ETC_TARGET/modules
     mkdir -pv $LIB_TARGET
     mkdir -pv $INC_TARGET
-    
+    echo "" >&2
     case $PLAT in
 	intel)
 	    FC=ifort
@@ -74,7 +81,6 @@ print_ARmake(){
 	    ;;
     esac
     
-    echo "Compiling library on platform $PLAT:"
     
     cat << EOF > make.inc
 FC=$FC
@@ -87,8 +93,28 @@ LIB_SCIFOR=$LIB_SCIFOR
 MOD_SCIFOR=$MOD_SCIFOR
 EOF
 
-    cp -fv $WRK_INSTALL/bin/scifor_completion.sh $BIN_TARGET/lib_completion.sh
-    cp -fv $WRK_INSTALL/bin/bash_add_lib.sh      $BIN_TARGET/bash_add_lib.sh
+
+    echo "Copying init script for $UNAME" >&2
+    cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
+    cat <<EOF >> $BIN_TARGET/configvars.sh
+ROOT=$WRKDIR
+PLAT=$PLAT
+add_library_to_system $ROOT/$PLAT
+EOF
+    echo "" >&2
+    echo "Generating environment module file for $UNAME" >&2
+    cat <<EOF > $ETC_TARGET/modules/${LNAME}_$PLAT
+#%Modules
+set	root	$WRKDIR
+set	plat	$PLAT
+set	version	"$VERSION ($PLAT)"
+EOF
+    cat $WRK_INSTALL/etc/environment_modules/module >> $ETC_TARGET/modules/${LNAME}_$PLAT
+    echo "" >&2
+    echo "Compiling $UNAME library on platform $PLAT:">&2
+    echo "" >&2
+
+
 }
 
 

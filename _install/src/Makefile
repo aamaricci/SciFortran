@@ -11,7 +11,7 @@ mkdir:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(MOD_DIR)
 
-allmod: SCIFOR_VERSION COMVARS PARSE_INPUT TIMER IOTOOLS FFTGF TOOLS ERROR ARRAYS DERIVATE OPTIMIZE FUNCTIONS GREENFUNX INTEGRATE VECTORS SQUARE_LATTICE LIST MATRIX INTERPOLATE RANDOM STATISTICS SCIFOR
+allmod: SCIFOR_VERSION CONSTANTS FONTS TIMER IOTOOLS FFT TOOLS ARRAYS DERIVATE OPTIMIZE FUNCTIONS INTEGRATE LIST MATRIX INTERPOLATE RANDOM STATISTICS SCIFOR
 
 
 libscifor.a: 
@@ -24,7 +24,7 @@ libscifor.a:
 
 version:
 	@echo "Actual version is: $(REV)"
-	@echo 'character(len=41),parameter,public :: sf_version = "$(REV)"' > scifor_version.inc
+	@echo 'character(len=41),parameter,public :: version_scifor = "$(REV)"' > scifor_version.inc
 
 clean: 
 	@rm -fv *.o *.mod *.a
@@ -47,19 +47,24 @@ SCIFOR_VERSION: version
 mod_SCIFOR_VERSION: SCIFOR_VERSION libupdate
 
 
-COMVARS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_COMVARS: COMVARS libupdate
 
-PARSE_INPUT: 
-	$(FC) -c $(FFLAGS)  PARSE_LIST_INPUT.f90 -o $(OBJ_DIR)/PARSE_LIST_INPUT.o $(MOPT)$(MOD_DIR)/
+CONSTANTS: 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_PARSE_INPUT: PARSE_INPUT libupdate
+mod_CONSTANTS: CONSTANTS libupdate
+
+
+
+FONTS: 
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+mod_FONTS: FONTS libupdate
+
 
 
 TIMER: 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_TIMER: TIMER libupdate 
+
+
 
 IOTOOLS: 
 	$(FC) -c $(FFLAGS) IOFILE.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/IOFILE.o $(MOPT)$(MOD_DIR)/	
@@ -69,19 +74,17 @@ IOTOOLS:
 mod_IOTOOLS: COMVARS IOTOOLS libupdate
 
 
-FFTGF:  COMVARS INTERPOLATE
+
+FFT:  CONSTANTS INTERPOLATE
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_FFTGF: FFTGF libupdate 
+mod_FFT: FFT libupdate 
+
 
 
 TOOLS:  
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_TOOLS: COMVARS TIMER FFTGF TOOLS libupdate
+mod_TOOLS: TOOLS libupdate
 
-
-ERROR:  
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_ERROR: ERROR libupdate
 
 
 ARRAYS:  
@@ -92,6 +95,8 @@ mod_ARRAYS: ARRAYS libupdate
 DERIVATE: 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_DERIVATE: DERIVATE libupdate
+
+
 
 OPTIMIZE_ROOT_FINDING: 
 	$(FC) -c $(FFLAGS) optimize_broyden_routines.f90 -o $(OBJ_DIR)/optimize_broyden_routines.o $(MOPT)$(MOD_DIR)/
@@ -113,24 +118,11 @@ FUNCTIONS:
 mod_FUNCTIONS: FUNCTIONS libupdate
 
 
-GREENFUNX: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_GREENFUNX: GREENFUNX libupdate
-
 
 INTEGRATE: 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_INTEGRATE: INTEGRATE libupdate
 
-
-VECTORS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_VECTORS: VECTORS libupdate
-
-
-SQUARE_LATTICE: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_SQUARE_LATTICE: VECTORS SQUARE_LATTICE libupdate
 
 
 LIST: 
@@ -140,9 +132,11 @@ LIST:
 mod_LIST: LIST libupdate
 
 
+
 MATRIX: 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_MATRIX: MATRIX libupdate
+
 
 
 INTERPOLATE: 

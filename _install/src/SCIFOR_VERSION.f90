@@ -6,7 +6,7 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : print actual version of the software (if any)
   !+-------------------------------------------------------------------+
-  subroutine version(revision)
+  subroutine sf_version(revision)
     character(len=*)                         :: revision
     integer(4),dimension(8)                  :: dummy
     integer(4)                               :: year
@@ -20,7 +20,7 @@ contains
          'January  ', 'February ', 'March    ', 'April    ', &
          'May      ', 'June     ', 'July     ', 'August   ', &
          'September', 'October  ', 'November ', 'December ' /)
-    write(*,"(A)")("SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version))))
+    write(*,"(A)")("SCIFOR VERSION (GIT): "//trim(adjustl(trim(version_scifor))))
     write(*,"(A)")("CODE VERSION (GIT): "//trim(adjustl(trim(revision))))
     call date_and_time(values=dummy)
     year = dummy(1)
@@ -34,12 +34,12 @@ contains
          "Timestamp: +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
     write(*,*)""
     open(10,file="version.inc")
-    write(10,"(A)")"SCIFOR VERSION (GIT): "//trim(adjustl(trim(sf_version)))
+    write(10,"(A)")"SCIFOR VERSION (GIT): "//trim(adjustl(trim(version_scifor)))
     write(10,"(A)")"CODE VERSION (GIT): "//trim(adjustl(trim(revision)))
     write(10,"(A,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3)")&
          "Timestamp: +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
     write(10,*)""
     close(10)
-  end subroutine version
+  end subroutine sf_version
 
 END MODULE SCIFOR_VERSION
