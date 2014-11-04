@@ -1,0 +1,23 @@
+
+proc ModulesHelp { } {
+        puts stderr "\tThis module provides access to DMFT Tools (DMFTT) library\n";
+	puts stderr "\t Version $version\n"
+}
+
+module-whatis "Dynamical Mean-Field Theory Tools (DMFTT) $version"
+
+if { ! [is-loaded scifor/$plat ] }  {
+        module load minpack/$plat
+ }
+
+prereq scifor/$plat
+
+prepend-path LD_LIBRARY_PATH    "$root/$plat/lib"
+prepend-path LIBRARY_PATH       "$root/$plat/lib"
+prepend-path CPATH		"$root/$plat/include"
+prepend-path FPATH		"$root/$plat/include"
+prepend-path PATH		"$root/$plat/bin"
+
+
+puts stderr " > (un)load DMFT Tools $version"
+#EOF
