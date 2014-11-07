@@ -306,8 +306,10 @@ contains
     do i=3,L-2
        df(i) = dot_product(d2_ccoeff_n2(-1:1),f(i-1:i+1))/dh**2
     enddo
-    df(L-1) = dot_product(d2_fcoeff_n2,f(L-1:L-3:-1))/dh**2
-    df(L) = dot_product(d2_fcoeff_n2,f(L:L-2:-1))/dh**2
+    !foo = f(L-1:L-4:-1)
+    df(L-1) = dot_product(d2_fcoeff_n2,f(L-1:L-4:-1))/dh**2
+    !foo = f(L:L-3:-1)
+    df(L) = dot_product(d2_fcoeff_n2,f(L:L-3:-1))/dh**2
   end function derivF2_n222
 
   function derivF2_n444(f,dh) result(df)
