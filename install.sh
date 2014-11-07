@@ -1,7 +1,7 @@
 #!/bin/bash
 NAME=SCIFOR
 usage(){
-    echo "usage:  $0 (-h,--help) [plat:intel,intel_debug//gnu,gnu_debug,ibm: not yet supported ]"
+    echo "usage:  $0 (-h,--help) [plat:intel,intel_debug,gnu,gnu_debug,ibm]"
     exit
 }
 
@@ -9,9 +9,6 @@ if [ -z $1 ] || [ $1 == "-h" ] && [ $1=="--help"  ];then
     usage
 fi
 
-if [ $1 == "gnu" ] || [ $1 == "gnu_debug" ] || [ $1 == "ibm" ];then
-    usage
-fi
 
 PLAT=$1
 UNAME=`echo $NAME |tr [:lower:] [:upper:]`
@@ -21,7 +18,7 @@ VERSION=$(git describe --tags)
 WRK_INSTALL=$WRKDIR/_install
 if [ ! -d $WRK_INSTALL ];then echo "$0: can not find _install directory";exit;fi
 
-print_ARmake(){    
+print_ARmake(){
     cd $WRK_INSTALL
     local ROOT=$WRK_INSTALL
     local PLAT=$1
@@ -115,6 +112,19 @@ EOF
     echo "" >&2
 
 
+}
+
+
+test_mkl(){
+    local FILE="f.f90"
+    echo "program test"     >  $FILE
+    echo "end program test" >> $FILE
+    local ARGS="-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm"
+    echo "$FC $FILE $ARGS -o/dev/null"
+    $FC $FILE $ARGS -o/dev/null
+    local TEST=$?
+    rm $FILE
+    return $TEST
 }
 
 

@@ -30,7 +30,7 @@ MODULE CGFIT_ROUTINES
   integer                        :: ncom
   real(8), dimension(:), pointer :: pcom,xicom
   procedure(cgfit_func),pointer  :: func
-  procedure(cgfit_fjac),pointer  :: dfunc
+  procedure(cgfit_fjac),pointer  :: fjac
 
 contains
 
@@ -105,7 +105,7 @@ contains
     real(8), dimension(:), allocatable :: xt,df
     allocate(xt(ncom),df(ncom))
     xt(:)=pcom(:)+x*xicom(:)
-    df(:)=dfunc(xt)
+    df(:)=fjac(xt)
     df1dim=dot_product(df,xicom)
     deallocate(xt,df)
   end function df1dim
@@ -306,7 +306,7 @@ contains
 
 
 
-  function dbrent_(ax,bx,cx,func,dfunc,tol,xmin) result(dbrent)
+  function dbrent_(ax,bx,cx,func,fjac,tol,xmin) result(dbrent)
     real(8),intent(in)  :: ax,bx,cx,tol
     real(8),intent(out) :: xmin
     real(8)             :: dbrent
@@ -321,12 +321,11 @@ contains
          real(8), intent(in) :: x
          real(8)             :: func
        end function func
-       function dfunc(x)
+       function fjac(x)
          real(8), intent(in) :: x
-         real(8)             :: dfunc
-       end function dfunc
+         real(8)             :: fjac
+       end function fjac
     end interface
-
     a=min(ax,cx)
     b=max(ax,cx)
     v=bx
@@ -336,7 +335,7 @@ contains
     fx=func(x)
     fv=fx
     fw=fx
-    dx=dfunc(x)
+    dx=fjac(x)
     dv=dx
     dw=dx
     do iter=1,ITMAX
@@ -385,7 +384,7 @@ contains
           fu=func(u)
           if (fu > fx) exit
        end if
-       du=dfunc(u)
+       du=fjac(u)
        if (fu <= fx) then
           if (u >= x) then
              a=x
