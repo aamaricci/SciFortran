@@ -1,25 +1,24 @@
 #!/bin/bash
 NAME=DMFT_TOOLS
 usage(){
-    echo "usage:  $0 (-h,--help) [plat:intel,intel_debug,gnu,gnu_debug,ibm]"
+    echo "usage:  $0 (-h,--help) [plat:intel,intel_debug,gnu,gnu_debug,ibm] [Scifor root dir]"
     exit
 }
 
-if [ -z $1 ] || [ $1 == "-h" ] && [ $1=="--help"  ];then
-    usage
-fi
-
-if [ $1 == "gnu" ] || [ $1 == "gnu_debug" ] || [ $1 == "ibm" ];then
+if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help"  ] || [ -z $2 ] ;then
     usage
 fi
 
 PLAT=$1
+SFROOT=$2
 UNAME=`echo $NAME |tr [:lower:] [:upper:]`
 LNAME=`echo $NAME |tr [:upper:] [:lower:]`
 WRKDIR=$(pwd)
 VERSION=$(git describe --tags)
 WRK_INSTALL=$WRKDIR/_install
 if [ ! -d $WRK_INSTALL ];then echo "$0: can not find _install directory";exit;fi
+if [ ! -d $SFROOT ];then echo "$0: can not find SciFor root directory";exit;fi
+if [ ! -d $SFROOT/$PLAT ];then echo "$0: can not find $SFROOT/$PLAT directory";exit;fi
 
 print_ARmake(){    
     cd $WRK_INSTALL
@@ -86,6 +85,7 @@ MOPT=$MOPT
 PLAT=$PLAT
 OBJ_DIR=$ROOT/src/$OBJ_DIR
 MOD_DIR=$ROOT/src/$MOD_DIR
+MOD_SCIFOR=$SFROOT/$PLAT/include
 LIB_DMFTT=$LIB_TARGET/libdmftt.a
 MOD_DMFTT=$INC_TARGET
 EOF
@@ -94,9 +94,7 @@ EOF
     echo "Copying init script for $UNAME" >&2
     cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
     cat <<EOF >> $BIN_TARGET/configvars.sh
-ROOT=$WRKDIR
-PLAT=$PLAT
-add_library_to_system $ROOT/$PLAT
+add_library_to_system ${WRKDIR}/${PLAT}
 EOF
     echo "" >&2
     echo "Generating environment module file for $UNAME" >&2
@@ -110,7 +108,6 @@ EOF
     echo "" >&2
     echo "Compiling $UNAME library on platform $PLAT:">&2
     echo "" >&2
-
 }
 
 
@@ -121,3 +118,14 @@ if [ $? == 0 ];then
     mv -vf make.inc $WRKDIR/$PLAT/
 fi
 cd $WRKDIR
+CONFIGFILE=$WRKDIR/$PLAT/bin/configvars.sh
+MODULEFILE=$WRKDIR/$PLAT/etc/modules/${LNAME}_$PLAT
+echo "" >&2
+echo "To use library $UNAME:" >&2
+echo "i.   source $CONFIGFILE (temporary, static)">&2
+echo "ii.  add source $CONFIGFILE to your bash profile (permament, static)"      >&2
+echo "     echo \"source $CONFIGFILE\" >> $HOME/[.bashrc,.bash_profile,.profile]"      >&2
+echo "iii. use $MODULEFILE in your *environment module*: module use $MODULEFILE (temporary, dynamic)">&2
+echo "iv.  copy $MODULEFILE in your *environment module* directory and load it  (semi-permanent, dynamic)">&2
+echo "v.   copy $MODULEFILE in your *environment module* directory and load it in your bash profile (permanent, dynamic)">&2
+echo "">&2

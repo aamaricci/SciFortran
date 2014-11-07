@@ -43,41 +43,41 @@ libupdate:
 
 
 DMFT_TOOLS_VERSION: version
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_DMFT_TOOLS_VERSION: DMFT_TOOLS_VERSION libupdate
 
 
 PARSE_INPUT: 
 	$(FC) -c $(FFLAGS)  PARSE_LIST_INPUT.f90 -o $(OBJ_DIR)/PARSE_LIST_INPUT.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_PARSE_INPUT: PARSE_INPUT libupdate
 
 
 FFTGF:  
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_FFTGF: FFTGF libupdate 
 
 
 TOOLS:  
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_TOOLS:  TOOLS libupdate
 
 
 ERROR:  
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_ERROR: ERROR libupdate
 
 
 VECTORS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_VECTORS: VECTORS libupdate
 
 
 SQUARE_LATTICE: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_SQUARE_LATTICE: SQUARE_LATTICE libupdate
 
 
 DMFT_TOOLS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
 mod_DMFT_TOOLS:  DMFT_TOOLS libupdate

@@ -3,12 +3,13 @@
 !###############################################################  
 module TOOLS
   USE TIMER
-  USE FFTGF, only:fftgf_iw2tau
+  USE CONSTANTS, only: pi,zero
+  !USE FFTGF, only:fftgf_iw2tau
   implicit none
   private
 
-  complex(8),parameter :: zero=(0.d0,0.d0)
-  real(8),parameter    :: pi    = 3.14159265358979323846264338327950288419716939937510d0
+  ! complex(8),parameter :: zero=(0.d0,0.d0)
+  ! real(8),parameter    :: pi    = 3.14159265358979323846264338327950288419716939937510 d0
 
   !LOOP:
   public :: start_loop
@@ -18,7 +19,7 @@ module TOOLS
   public :: find2Dmesh
 
   !OTHER:
-  public :: get_local_density
+  ! public :: get_local_density
   public :: order_of_magnitude
   public :: get_density_from_matsubara_gf
   public :: get_matsubara_gf_from_dos
@@ -89,13 +90,13 @@ contains
 
 
 
-  function get_local_density(giw,beta) result(n)
-    complex(8),dimension(:) :: giw
-    real(8)                 :: gtau(0:size(giw))
-    real(8)                 :: beta,n
-    call fftgf_iw2tau(giw,gtau,beta)
-    n = -2.d0*gtau(size(giw))
-  end function get_local_density
+  ! function get_local_density(giw,beta) result(n)
+  !   complex(8),dimension(:) :: giw
+  !   real(8)                 :: gtau(0:size(giw))
+  !   real(8)                 :: beta,n
+  !   call fftgf_iw2tau(giw,gtau,beta)
+  !   n = -2.d0*gtau(size(giw))
+  ! end function get_local_density
 
 
 

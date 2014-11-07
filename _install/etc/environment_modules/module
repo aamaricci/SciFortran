@@ -6,10 +6,6 @@ proc ModulesHelp { } {
 
 module-whatis "Dynamical Mean-Field Theory Tools (DMFTT) $version"
 
-if { ! [is-loaded scifor/$plat ] }  {
-        module load scifor/$plat
- }
-
 prereq scifor/$plat
 
 prepend-path LD_LIBRARY_PATH    "$root/$plat/lib"
