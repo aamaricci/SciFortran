@@ -2,7 +2,6 @@ MODULE FFT_FFTPACK
   implicit none
   private
 
-
   !- - - - - - - - - - - - - - - - - - - - - - - - - - - - -!
   !Fast Fourier Transforms of time/frequency signal
   !- - - - - - - - - - - - - - - - - - - - - - - - - - - - -!
