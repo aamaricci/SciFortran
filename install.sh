@@ -94,9 +94,7 @@ EOF
     echo "Copying init script for $UNAME" >&2
     cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
     cat <<EOF >> $BIN_TARGET/configvars.sh
-ROOT=$WRKDIR
-PLAT=$PLAT
-add_library_to_system $ROOT/$PLAT
+add_library_to_system ${WRKDIR}/${PLAT}
 EOF
     echo "" >&2
     echo "Generating environment module file for $UNAME" >&2
@@ -110,8 +108,6 @@ EOF
     echo "" >&2
     echo "Compiling $UNAME library on platform $PLAT:">&2
     echo "" >&2
-
-
 }
 
 
@@ -135,3 +131,14 @@ if [ $? == 0 ];then
     mv -vf make.inc $WRKDIR/$PLAT/
 fi
 cd $WRKDIR
+CONFIGFILE=$WRKDIR/$PLAT/bin/configvars.sh
+MODULEFILE=$WRKDIR/$PLAT/etc/modules/${LNAME}_$PLAT
+echo "" >&2
+echo "To use library $UNAME:" >&2
+echo "i.   source $CONFIGFILE (temporary, static)">&2
+echo "ii.  add source $CONFIGFILE to your bash profile (permament, static)"      >&2
+echo "     echo \"source $CONFIGFILE\" >> $HOME/[.bashrc,.bash_profile,.profile]"      >&2
+echo "iii. use $MODULEFILE in your *environment module*: module use $MODULEFILE (temporary, dynamic)">&2
+echo "iv.  copy $MODULEFILE in your *environment module* directory and load it  (semi-permanent, dynamic)">&2
+echo "v.   copy $MODULEFILE in your *environment module* directory and load it in your bash profile (permanent, dynamic)">&2
+echo "">&2

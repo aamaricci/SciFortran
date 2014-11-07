@@ -6,18 +6,6 @@ proc ModulesHelp { } {
 
 module-whatis "Scientific Fortran (SciFor) $version"
 
-if { ! [is-loaded minpack/$plat ] }  {
-        module load minpack/$plat
- }
-
-if { ! [is-loaded fftpack/$plat ] }  {
-        module load fftpack/$plat
- }
-
-if { ! [is-loaded quadpack/$plat ] }  {
-        module load quadpack/$plat
- }
-
 prereq minpack/$plat fftpack/$plat quadpack/$plat
 
 setenv       SFROOT  		 $root
