@@ -66,12 +66,12 @@ subroutine i_print_to_file(variable,name,file,comment)
 end subroutine i_print_to_file
 
 subroutine d_print_to_file(variable,name,file,comment)
-  real(8)          :: variable
-  character(len=*) :: name,comment
-  character(len=*) :: file
-  integer          :: unit
+  real(8)            :: variable
+  character(len=*)   :: name,comment
+  character(len=*)   :: file
+  integer            :: unit
   character(len=255) :: blank=""
-  integer          :: clen
+  integer            :: clen
   call s_blank_delete(name)
   p_buffer=trim(name)//"="//txtfy(variable)
   call s_blank_delete(p_buffer)
