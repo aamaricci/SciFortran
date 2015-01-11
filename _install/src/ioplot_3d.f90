@@ -38,8 +38,7 @@ subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(maxy,"(f12.4)")X2max
   if(present(wlines))close(720)
 
-  open(10,file=adjustl(trim(pname))//".gp")
-  write(10,*)"gnuplot -persist << EOF"
+  open(10,file=adjustl(trim(pname))//"_map.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title '"//trim(fname)//"'"
   write(10,*)"set pm3d map"
@@ -50,14 +49,10 @@ subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(10,*)"#set term png size 1920,1280"
   write(10,*)"#set out '"//adjustl(trim(fname))//".png'"
   write(10,*)"#rep"
-  write(10,*)"#"
-  write(10,"(A)")"EOF"
   !
-  if(present(nosurface).AND.nosurface)then
-     call system("chmod +x "//adjustl(trim(pname))//".gp")
-     return
-  endif
-  write(10,*)"gnuplot -persist << EOF"
+  close(10)
+  if(present(nosurface).AND.nosurface)return
+  open(10,file=adjustl(trim(pname))//"_surface.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title '"//trim(fname)//"'"
   write(10,*)"set nokey"
@@ -68,10 +63,7 @@ subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(10,*)"#set term png size 1920,1280"
   write(10,*)"#set out '"//adjustl(trim(fname))//".png'"
   write(10,*)"#rep"
-  write(10,"(A)")"EOF"
   close(10)
-  call system("chmod +x "//adjustl(trim(pname))//".gp")
-
 end subroutine d_splot3D
 
 
@@ -102,8 +94,8 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   do i=1,Nx1
      count=mod(i,Nl)
      do j=1,Nx2
-        write(619,*)X1(i),X2(j),real(Y(i,j),8)
-        write(719,*)X1(i),X2(j),aimag(Y(i,j))
+        write(619,*)X1(i),X2(j),dreal(Y(i,j))
+        write(719,*)X1(i),X2(j),dimag(Y(i,j))
         if(present(wlines).AND.count==0)write(620,*)X1(i),X2(j),real(Y(i,j),8)
         if(present(wlines).AND.count==0)write(720,*)X1(i),X2(j),aimag(Y(i,j))
      enddo
@@ -131,9 +123,9 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
      close(720)
   endif
 
-  open(10,file=adjustl(trim(pname))//".gp")
+
   !Re:
-  write(10,*)"gnuplot -persist << EOF"
+  open(10,file=adjustl(trim(pname))//"_re_map.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title 'Re_"//trim(fname)//"'"
   write(10,*)"set pm3d map"
@@ -144,9 +136,9 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(10,*)"#set term png size 1920,1280"
   write(10,*)"#set out 're_"//adjustl(trim(fname))//".png'"
   write(10,*)"#rep"
-  write(10,"(A)")"EOF"
+  close(10)
   !Im
-  write(10,*)"gnuplot -persist << EOF"
+  open(10,file=adjustl(trim(pname))//"_im_map.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title 'Im_"//trim(fname)//"'"
   write(10,*)"set pm3d map"
@@ -157,13 +149,10 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(10,*)"#set term png size 1920,1280"
   write(10,*)"#set out 'im_"//adjustl(trim(fname))//".png'"
   write(10,*)"#rep"
-  write(10,"(A)")"EOF"
-  !
-  if(present(nosurface).AND.nosurface)then
-     call system("chmod +x "//adjustl(trim(pname))//".gp")
-     return
-  endif
-  write(10,*)"gnuplot -persist << EOF"
+  close(10)
+  if(present(nosurface).AND.nosurface)return
+  !Re
+  open(10,file=adjustl(trim(pname))//"_re_surface.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title 'Re_"//trim(fname)//"'"
   write(10,*)"set nokey"
@@ -174,9 +163,9 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(10,*)"#set term png size 1920,1280"
   write(10,*)"#set out 're_"//adjustl(trim(fname))//".png'"
   write(10,*)"#rep"
-  write(10,"(A)")"EOF"
-  !  
-  write(10,*)"gnuplot -persist << EOF"
+  close(10)
+  !Im
+  open(10,file=adjustl(trim(pname))//"_im_surface.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title 'Im_"//trim(fname)//"'"
   write(10,*)"set nokey"
@@ -187,9 +176,7 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   write(10,*)"#set term png size 1920,1280"
   write(10,*)"#set out 'im_"//adjustl(trim(fname))//".png'"
   write(10,*)"#rep"
-  write(10,"(A)")"EOF"
   close(10)
-  call system("chmod +x "//adjustl(trim(pname))//".gp")
 end subroutine c_splot3D
 
 
@@ -228,8 +215,8 @@ subroutine d_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   X2max=maxval(X2);if(present(ymax))X2max=ymax
   Rmin=minval(Y);Rmax=maxval(Y)
   Zmin=minval(Rmin);Zmax=maxval(Rmax)
-  open(10,file=adjustl(trim(pname))//".gp")
-  write(10,*)"gnuplot -persist << EOF"
+  open(10,file=adjustl(trim(pname))//"_map.gp")
+  ! write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
   write(10,*)"#set output '"//trim(fname)//".gif'"
@@ -246,9 +233,9 @@ subroutine d_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
        "*i)::("//trim(adjustl(trim(txtfy(Nx2))))//"*i+"//trim(adjustl(trim(txtfy(Nx1-1))))//") title '' "
   write(10,*)"}"
   write(10,*)"#set output"
-  write(10,"(A)")"EOF"
+  ! write(10,"(A)")"EOF"
   close(10)
-  call system("chmod +x "//adjustl(trim(pname))//".gp")
+  ! call system("chmod +x "//adjustl(trim(pname))//"_map.gp")
 end subroutine d_splot3D_animate
 
 
@@ -291,8 +278,8 @@ subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   X2max=maxval(X2);if(present(ymax))X2max=ymax
   Rmin=minval(dreal(Y));Rmax=maxval(dreal(Y))
   Zmin=minval(Rmin);Zmax=maxval(Rmax)
-  open(10,file=adjustl(trim(pname))//".gp")
-  write(10,*)"gnuplot -persist << EOF"
+  open(10,file=adjustl(trim(pname))//"_re_map.gp")
+  ! write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
   write(10,*)"#set output 're_"//trim(fname)//".gif'"
@@ -309,10 +296,12 @@ subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
        "*i)::("//trim(adjustl(trim(txtfy(Nx2))))//"*i+"//trim(adjustl(trim(txtfy(Nx1-1))))//") title '' "
   write(10,*)"}"
   write(10,*)"#set output"
-  write(10,"(A)")"EOF"
+  ! write(10,"(A)")"EOF"
+  close(10)
 
   Rmin=minval(dimag(Y));Rmax=maxval(dimag(Y))
   Zmin=minval(Rmin);Zmax=maxval(Rmax)
+  open(10,file=adjustl(trim(pname))//"_im_map.gp")
   write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
@@ -330,9 +319,9 @@ subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
        "*i)::("//trim(adjustl(trim(txtfy(Nx2))))//"*i+"//trim(adjustl(trim(txtfy(Nx1-1))))//") title '' "
   write(10,*)"}"
   write(10,*)"#set output"
-  write(10,"(A)")"EOF"
+  ! write(10,"(A)")"EOF"
   close(10)
-  call system("chmod +x "//adjustl(trim(pname))//".gp")
+  ! call system("chmod +x "//adjustl(trim(pname))//".gp")
 end subroutine c_splot3d_animate
 
 

@@ -4,5 +4,8 @@ all:
 portable:
 	@make portable -C ./src/
 
-clean:
+clean: cleanlib
 	@make clean -C ./src/
+
+cleanlib:
+	@rm -fv lib/*.a
