@@ -4,12 +4,16 @@ REV = $(shell git rev-parse HEAD)
 
 DIR = ./scifor_portable
 
-all: version mkdir allmod libscifor.a
+all: version mkdir allmod libscifor.a rmdir
 
 
 mkdir:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(MOD_DIR)
+
+rmdir:
+	@rm -rfv $(OBJ_DIR)
+	@rm -rfv $(MOD_DIR)
 
 allmod: SCIFOR_VERSION CONSTANTS FONTS TIMER IOTOOLS FFT TOOLS ARRAYS DERIVATE OPTIMIZE FUNCTIONS INTEGRATE LIST MATRIX INTERPOLATE RANDOM STATISTICS SCIFOR
 
@@ -71,7 +75,7 @@ IOTOOLS:
 	$(FC) -c $(FFLAGS) IOPLOT.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/IOPLOT.o $(MOPT)$(MOD_DIR)/
 	$(FC) -c $(FFLAGS) IOREAD.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/IOREAD.o $(MOPT)$(MOD_DIR)/
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-mod_IOTOOLS: COMVARS IOTOOLS libupdate
+mod_IOTOOLS: IOTOOLS libupdate
 
 
 

@@ -77,7 +77,8 @@ module MATRIX
   public :: m_invert
   public :: m_invert_gj
   ! 
-
+  public :: kronecker_product
+  public :: kroenecker_product
 
 contains
 
