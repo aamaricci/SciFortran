@@ -1,10 +1,5 @@
-!###############################################################
-! PROGRAM  : MATRIX
-! TYPE     : Module
-! PURPOSE  : A collection of MATRIX related routines
-!###############################################################
 module MATRIX
-  !USE COMMON_VARS
+  USE CONSTANTS, only: one,xi,zero
   implicit none
   private
   !include "mkl_lapack.fi"
@@ -59,6 +54,16 @@ module MATRIX
      module procedure swap_i,swap_r,swap_rv,swap_z,swap_zv,swap_zm
   end interface swap
 
+
+  interface kronecker_product
+     module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
+  end interface kronecker_product
+
+  interface kroenecker_product
+     module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
+  end interface kroenecker_product
+
+
   public :: matrix_diagonalize
   !
   public :: solve_linear_system
@@ -75,6 +80,46 @@ module MATRIX
 
 
 contains
+
+
+
+  !---------------------------------------------------------------------
+  !PURPOSE: Function to compute the tensor product (M1_kp_M2) of 
+  ! two complex matrices M1 and M2. nr1(nr2) and nc1(nc2) are 
+  ! the number of rows and columns of the Matrix M1 and M2
+  !---------------------------------------------------------------------
+  function i_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+    integer               :: i, j
+    integer,intent(in)    :: nr1,nc1,nr2,nc2
+    integer,intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
+    integer               :: M1_kp_M2(nr1*nr2,nc1*nc2)
+    M1_kp_M2 = zero
+    forall(i =1:nr1,j=1:nc1)
+       M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+    end forall
+  end function i_kronecker_product
+  !
+  function d_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+    integer               :: i, j
+    integer,intent(in)    :: nr1,nc1,nr2,nc2
+    real(8),intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
+    real(8)               :: M1_kp_M2(nr1*nr2,nc1*nc2)
+    M1_kp_M2 = zero
+    forall(i =1:nr1,j=1:nc1)
+       M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+    end forall
+  end function d_kronecker_product
+  !
+  function c_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+    integer               :: i, j
+    integer,intent(in)    :: nr1,nc1,nr2,nc2
+    complex(8),intent(in) :: M1(nr1,nc1), M2(nr2,nc2)
+    complex(8)            :: M1_kp_M2(nr1*nr2,nc1*nc2)
+    M1_kp_M2 = zero
+    forall(i =1:nr1,j=1:nc1)
+       M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+    end forall
+  end function c_kronecker_product
 
 
 
