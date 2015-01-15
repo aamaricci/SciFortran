@@ -183,8 +183,8 @@ contains
   subroutine fft_gf_iw2tau(giw,gtau,beta,C)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
-    real(8)                             :: beta
-    real(8),dimension(0:3)              :: C
+    real(8)                             :: beta,wmax,fmom,mues
+    real(8),dimension(0:3),optional     :: C
     integer                             :: Liw,Ltau,L
     complex(8),dimension(:),allocatable :: Tiw,Fiw
     real(8),dimension(:),allocatable    :: Ttau,Ftau
@@ -199,10 +199,33 @@ contains
     tau= linspace(0d0,beta,L)
     !
     allocate(Tiw(L),Ttau(L))
-    Tiw  = C(0) + C(1)/(xi*wm) + C(2)/(xi*wm)**2 + C(3)/(xi*wm)**3
-    Ttau = -C(1)/2 + C(2)*(-beta+2*tau)/4       + C(3)*tau*(beta-tau)/4
-    !
     allocate(Fiw(2*(L-1)),Ftau(2*(L-1)))
+    !
+    if(present(C))then
+       Tiw  = C(0) + C(1)/(xi*wm) + C(2)/(xi*wm)**2 + C(3)/(xi*wm)**3
+       Ttau = -C(1)/2 + C(2)*(-beta+2*tau)/4       + C(3)*tau*(beta-tau)/4
+    else
+       wmax=pi/beta*dble(2*L-1)
+       mues=-dreal(Giw(L-1))*wmax**2
+       fmom=1d0
+       !fmom=-dimag(gw(L-1))*wmax
+       Tiw =-dcmplx(mues,wm)/(mues**2+wm**2)
+       if(mues > 0.d0)then
+          if((mues*beta) > 30.d0)then
+             Ttau = -exp(-mues*tau)
+          else
+             Ttau = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
+          endif
+       else
+          if((mues*beta) < -30.d0)then
+             Ttau = -exp(mues*(beta-tau))
+          else
+             Ttau = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
+          endif
+       endif
+       Ttau=fmom*Ttau
+    endif
+    !
     Fiw=zero
     Fiw(2::2)=Giw(:L-1)-Tiw(:)
     !
@@ -213,11 +236,15 @@ contains
   end subroutine fft_gf_iw2tau
   !
   function f_fft_gf_iw2tau(giw,beta,C) result(gtau)
-    complex(8),dimension(:)      :: giw
-    real(8),dimension(size(giw)) :: gtau
-    real(8)                      :: beta
-    real(8),dimension(0:3)       :: C
-    call fft_gf_iw2tau(giw,gtau,beta,C)
+    complex(8),dimension(:)         :: giw
+    real(8),dimension(size(giw))    :: gtau
+    real(8)                         :: beta
+    real(8),dimension(0:3),optional :: C
+    if(present(C))then
+       call fft_gf_iw2tau(giw,gtau,beta,C)
+    else
+       call fft_gf_iw2tau(giw,gtau,beta)
+    endif
   end function f_fft_gf_iw2tau
 
 
@@ -231,8 +258,8 @@ contains
   subroutine fft_sigma_iw2tau(giw,gtau,beta,C)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
-    real(8)                             :: beta
-    real(8),dimension(0:1)              :: C
+    real(8)                             :: beta,wmax,fmom,mues
+    real(8),dimension(0:1),optional     :: C
     integer                             :: Liw,Ltau,L
     complex(8),dimension(:),allocatable :: Tiw,Fiw
     real(8),dimension(:),allocatable    :: Ttau,Ftau
@@ -247,10 +274,33 @@ contains
     tau= linspace(0d0,beta,L)
     !
     allocate(Tiw(L),Ttau(L))
-    Tiw = C(0) + C(1)/(xi*wm)
-    Ttau = -C(1)/2
-    !
     allocate(Fiw(2*(L-1)),Ftau(2*(L-1)))
+    !
+    if(present(C))then
+       Tiw = C(0) + C(1)/(xi*wm)
+       Ttau = -C(1)/2
+    else
+       wmax=pi/beta*dble(2*L-1)
+       mues=-dreal(Giw(L-1))*wmax**2
+       fmom=1d0
+       !fmom=-dimag(gw(L-1))*wmax
+       Tiw =-dcmplx(mues,wm)/(mues**2+wm**2)
+       if(mues > 0.d0)then
+          if((mues*beta) > 30.d0)then
+             Ttau = -exp(-mues*tau)
+          else
+             Ttau = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
+          endif
+       else
+          if((mues*beta) < -30.d0)then
+             Ttau = -exp(mues*(beta-tau))
+          else
+             Ttau = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
+          endif
+       endif
+       Ttau=fmom*Ttau
+    endif
+    !
     Fiw=zero
     Fiw(2::2)=Giw(:L-1)-Tiw(:)
     !
@@ -261,11 +311,15 @@ contains
   end subroutine fft_sigma_iw2tau
   !
   function f_fft_sigma_iw2tau(giw,beta,C) result(gtau)
-    complex(8),dimension(:)      :: giw
-    real(8),dimension(size(giw)) :: gtau
-    real(8)                      :: beta
-    real(8),dimension(0:1)       :: C
-    call fft_sigma_iw2tau(giw,gtau,beta,C)
+    complex(8),dimension(:)         :: giw
+    real(8),dimension(size(giw))    :: gtau
+    real(8)                         :: beta
+    real(8),dimension(0:1),optional :: C
+    if(present(C))then
+       call fft_sigma_iw2tau(giw,gtau,beta,C)
+    else
+       call fft_sigma_iw2tau(giw,gtau,beta)
+    endif
   end function f_fft_sigma_iw2tau
 
 
