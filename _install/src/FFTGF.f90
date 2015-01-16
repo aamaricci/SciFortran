@@ -178,7 +178,10 @@ contains
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : Evaluate the FFT of a Green's function from Matsubara frequencies
-  ! to imaginary time. 
+  ! to imaginary time.
+  !Output is only for tau\in[0,beta]
+  !if g(-tau) is required this has to be implemented in the calling code
+  !using the transformation: g(-tau)=-g(beta-tau) for tau>0
   !+-------------------------------------------------------------------+
   subroutine fft_gf_iw2tau(giw,gtau,beta,C)
     complex(8),dimension(:)             :: giw
@@ -191,7 +194,7 @@ contains
     real(8),dimension(:),allocatable    :: tau,wm
     Liw  = size(giw)
     Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_gf_iw2tau: Liw must be > Ltau"
+    if(Ltau-1 > Liw)stop "fft_gf_iw2tau: Liw must be > Ltau"
     L = Ltau
     !
     allocate(wm(L),tau(L))
@@ -249,12 +252,6 @@ contains
 
 
 
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : Evaluate the FFT of a Sigma function from Matsubara frequencies
-  ! to imaginary time. 
-  !+-------------------------------------------------------------------+
   subroutine fft_sigma_iw2tau(giw,gtau,beta,C)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
@@ -266,7 +263,7 @@ contains
     real(8),dimension(:),allocatable    :: tau,wm
     Liw  = size(giw)
     Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_sigma_iw2tau: Liw must be > Ltau"
+    if(Ltau-1 > Liw)stop "fft_sigma_iw2tau: Liw must be > Ltau"
     L = Ltau
     !
     allocate(wm(L),tau(L))
@@ -418,6 +415,78 @@ contains
   !      if(.not.nofix_)gt(L)=-gt(1)
   !   end select
   ! end subroutine fftgf_iw2tau_
+  !
+  !   subroutine fftgf_iw2tau(gw,gt,beta,notail,nofix)
+  !   implicit none
+  !   integer                             :: i,n,L
+  !   logical,optional                    :: notail,nofix
+  !   logical                             :: notail_,nofix_
+  !   complex(8),dimension(:)             :: gw
+  !   real(8),dimension(0:)               :: gt
+  !   complex(8),dimension(:),allocatable :: tmpGw
+  !   real(8),dimension(:),allocatable    :: tmpGt
+  !   complex(8)                          :: tail
+  !   real(8)                             :: wmax,beta,mues,tau,dtau,At,w
+  !   notail_=.false.;if(present(notail))notail_=notail
+  !   nofix_ =.false.;if(present(nofix))nofix_=nofix
+  !   !
+  !   n=size(gw)     ; L=size(gt)-1 ; dtau=beta/real(L,8) 
+  !   !
+  !   allocate(tmpGw(2*L),tmpGt(-L:L))
+  !   !
+  !   wmax = pi/beta*real(2*N-1,8)
+  !   mues =-dreal(gw(N))*wmax**2
+  !   tmpGw= (0.d0,0.d0)
+  !   !
+  !   select case(notail_)
+  !   case default
+  !      do i=1,L
+  !         w=pi/beta*dble(2*i-1)
+  !         tail=-(mues+w*(0.d0,1.d0))/(mues**2+w**2)
+  !         tmpGw(2*i)= gw(i)-tail
+  !      enddo
+  !      call fft(tmpGw)
+  !      tmpGt(0:L) = dreal((tmpGw))*2.d0/beta*size(tmpGw)
+  !      !call cfft_1d_forward(tmpGw)
+  !      !tmpGt = dreal(cfft_1d_shift(tmpGw))*2.d0/beta
+  !      do i=0,L-1
+  !         tau=real(i,8)*dtau
+  !         if(mues > 0.d0)then
+  !            if((mues*beta) > 30.d0)then
+  !               At = -exp(-mues*tau)
+  !            else
+  !               At = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
+  !            endif
+  !         else
+  !            if((mues*beta) < -30.d0)then
+  !               At = -exp(mues*(beta-tau))
+  !            else
+  !               At = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
+  !            endif
+  !         endif
+  !         gt(i) = tmpGt(i) + At
+  !      enddo
+  !      if(.not.nofix_)gt(L)=-(gt(0)+1.d0)
+  !   case(.true.)
+  !      if(L/=N)then
+  !         print*,"error in fftgf_iw2tau: call w/ notail and L/=N"
+  !         stop
+  !      endif
+  !      forall(i=1:L)tmpGw(2*i)  = gw(i)
+  !      call fft(tmpGw)
+  !      tmpGt(0:L) = dreal((tmpGw))*2.d0/beta*size(tmpGw)
+  !      ! call cfft_1d_forward(tmpGw)
+  !      ! tmpGt = dreal(cfft_1d_shift(tmpGw))*2.d0/beta
+  !      gt(0:L-1) = tmpGt(0:L-1)
+  !      gt(L)=-gt(0)
+  !   end select
+  !   deallocate(tmpGw,tmpGt)
+  ! end subroutine fftgf_iw2tau
+
+
+
+
+
 
 
 
@@ -457,7 +526,7 @@ contains
     bcflag_=.true.;if(present(bcflag)) bcflag_ =bcflag
     Liw  = size(giw)
     Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau"
+    if(Ltau-1 > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau"
     L = Ltau
     allocate(wm(Liw),tau(L))
     wm = pi/beta*(2*arange(1,Liw)-1)
@@ -532,11 +601,6 @@ contains
 
 
 
-
-  !+-------------------------------------------------------------------+
-  !PROGRAM  : Evaluate the FFT of a Sigma function from imaginary time
-  ! to Matsubara frequencies.
-  !+-------------------------------------------------------------------+
   subroutine fft_sigma_tau2iw(giw,gtau,beta,C,factor,intflag,bcflag)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
@@ -558,7 +622,7 @@ contains
     bcflag_=.true.;if(present(bcflag)) bcflag_ =bcflag
     Liw  = size(giw)
     Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau"
+    if(Ltau-1 > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau"
     L = Ltau
     allocate(wm(Liw),tau(L))
     wm = pi/beta*(2*arange(1,Liw)-1)
@@ -694,6 +758,31 @@ contains
   !     call cubic_spline(Xin,Fin,Xout,Fout)
   !   end subroutine interp_gtau
   ! end subroutine fftgf_tau2iw_
+  ! subroutine fftgf_tau2iw(gw,gt,beta)
+  !   real(8)                :: gt(0:)
+  !   complex(8)             :: gw(:)
+  !   real(8)                :: beta,ex
+  !   integer                :: i,L,n,M
+  !   complex(8),allocatable :: Igw(:),cIgt(:)
+  !   real(8),allocatable    :: Igt(:)
+  !   L=size(gt)-1    ; N=size(gw)
+  !   M=32*N
+  !   allocate(Igt(-M:M),Igw(2*M),cIgt(-M:M))
+  !   call cubic_interp_gtau(gt(0:L),Igt(0:M),beta)
+  !   forall(i=1:M)Igt(-i)=-Igt(M-i) !Valid for every fermionic GF (bosonic case not here)      
+  !   !Igw = dcmplx(1d0,0d0)*Igt
+  !   forall(i=1:2*M)Igw(i) = dcmplx(1d0,0d0)*Igt(i-M-1)
+  !   call cfft_1d_backward(Igw)
+  !   ex=-1d0
+  !   do i=1,2*M
+  !      ex=-ex
+  !      Igw(i)=ex*Igw(i)
+  !   enddo
+  !   ! call fftgf_rt2rw(cIgt,Igw,M)
+  !   Igw=Igw*beta/dble(M)/2.d0
+  !   forall(i=1:n)gw(i)=Igw(2*i)
+  !   deallocate(Igt,Igw,cIgt)
+  ! end subroutine fftgf_tau2iw
 
 
 
