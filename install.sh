@@ -116,6 +116,9 @@ make all
 if [ $? == 0 ];then
     make clean
     mv -vf make.inc $WRKDIR/$PLAT/
+else
+    echo "Error from Makefile. STOP here."
+    exit 1
 fi
 cd $WRKDIR
 CONFIGFILE=$WRKDIR/$PLAT/bin/configvars.sh

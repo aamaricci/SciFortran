@@ -1,8 +1,4 @@
-!########################################################################
-!Program  : PARSECMD
-!PURPOSE  : Declare all the common variables usually in use within codes
-!########################################################################
-module PARSE_INPUT
+module DMFT_PARSE_INPUT
   USE PARSE_LIST_INPUT
   implicit none
   private
@@ -34,6 +30,7 @@ module PARSE_INPUT
   public  :: get_cmd_variable
   public  :: save_input_file
   public  :: get_help_input
+
   logical :: IOinput=.true.
 
 
@@ -257,7 +254,7 @@ contains
     enddo
   end function free_unit
 
-end module PARSE_INPUT
+end module DMFT_PARSE_INPUT
 
 
 

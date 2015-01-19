@@ -1,8 +1,8 @@
-MODULE TIGHT_BINDING
-  USE CONSTANTS, only: pi,pi2,xi,one,zero
-  USE IOTOOLS, only:free_unit,reg,txtfy
-  USE MATRIX, only: matrix_diagonalize
-  USE COLORS
+MODULE DMFT_TIGHT_BINDING
+  USE SF_CONSTANTS, only: pi,pi2,xi,one,zero
+  USE SF_IOTOOLS, only:free_unit,reg,txtfy
+  USE SF_LINALG, only: matrix_diagonalize
+  USE SF_COLORS
   !USE FT_TIGHT_BINDING
   implicit none
   private
@@ -499,5 +499,5 @@ contains
 
 
 
-END MODULE TIGHT_BINDING
+END MODULE DMFT_TIGHT_BINDING
 

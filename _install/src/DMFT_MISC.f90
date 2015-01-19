@@ -1,15 +1,8 @@
-!###############################################################
-! PURPOSE  : A "zibaldone" of useful routines
-!###############################################################  
-module TOOLS
-  USE TIMER
-  USE CONSTANTS, only: pi,zero
-  !USE FFTGF, only:fftgf_iw2tau
+module DMFT_MISC
+  USE SF_TIMER
+  USE SF_CONSTANTS, only: pi,zero
   implicit none
   private
-
-  ! complex(8),parameter :: zero=(0.d0,0.d0)
-  ! real(8),parameter    :: pi    = 3.14159265358979323846264338327950288419716939937510 d0
 
   !LOOP:
   public :: start_loop
@@ -29,10 +22,6 @@ module TOOLS
 
 
 contains
-
-
-  ! USEFUL ROUTINES:
-  !###################################################################
 
 
   subroutine start_loop(loop,max,name,unit,id)
@@ -289,4 +278,4 @@ contains
 
 
 
-end module TOOLS
+end module DMFT_MISC
