@@ -1,10 +1,6 @@
-!###############################################################
-! PURPOSE :
-!###############################################################  
-module ERROR
-  USE MPI_VARS
-  USE FONTS
-  USE IOTOOLS, only: reg
+module DMFT_ERROR
+  USE SF_FONTS
+  USE SF_IOTOOLS, only: reg
   implicit none
   private
 
@@ -67,4 +63,4 @@ contains
   !err = sum((NEW-OLD)/NEW)
   include "error_convergence_global.f90"
 
-end module ERROR
+end module DMFT_ERROR

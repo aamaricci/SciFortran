@@ -1,12 +1,10 @@
-MODULE FFTGF
-  USE FFT_FFTPACK
-  !USE FFT_MKL
-  !USE FFT_NR
-  USE CONSTANTS, only: pi,one,xi,zero
-  USE ARRAYS, only: linspace,arange
-  USE MATRIX, only: solve_linear_system
-  USE INTERPOLATE, only: linear_spline,cubic_spline
-  USE FUNCTIONS,only:fermi
+module DMFT_FFTGF
+  USE SF_FFT_FFTPACK
+  USE SF_CONSTANTS, only   : pi, one, xi, zero
+  USE SF_ARRAYS, only      : linspace, arange
+  USE SF_LINALG, only      : solve_linear_system
+  USE SF_INTERPOLATE, only : linear_spline, cubic_spline
+  USE SF_SPECIAL,only      : fermi
 
   implicit none
   private
@@ -70,6 +68,7 @@ MODULE FFTGF
   public :: fft_gf_rw2rt
   public :: fft_sigma_rw2rt
   public :: fft_delta_rw2rt
+  !
   public :: f_fft_gf_rw2rt
   public :: f_fft_sigma_rw2rt
   public :: f_fft_delta_rw2rt
@@ -77,6 +76,7 @@ MODULE FFTGF
   public :: fft_gf_rt2rw
   public :: fft_sigma_rt2rw
   public :: fft_delta_rt2rw
+  !
   public :: f_fft_gf_rt2rw
   public :: f_fft_sigma_rt2rw
   public :: f_fft_delta_rt2rw
@@ -86,6 +86,7 @@ MODULE FFTGF
   public :: fft_sigma_iw2tau
   public :: fft_delta_iw2tau
   public :: fft_ff_iw2tau
+  !
   public :: f_fft_gf_iw2tau
   public :: f_fft_sigma_iw2tau
   public :: f_fft_delta_iw2tau
@@ -94,6 +95,7 @@ MODULE FFTGF
   public :: fft_sigma_tau2iw
   public :: fft_delta_tau2iw
   public :: fft_ff_tau2iw
+  !
   public :: f_fft_gf_tau2iw
   public :: f_fft_sigma_tau2iw
   public :: f_fft_delta_tau2iw
@@ -178,21 +180,23 @@ contains
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : Evaluate the FFT of a Green's function from Matsubara frequencies
-  ! to imaginary time. 
+  ! to imaginary time.
+  !Output is only for tau\in[0,beta]
+  !if g(-tau) is required this has to be implemented in the calling code
+  !using the transformation: g(-tau)=-g(beta-tau) for tau>0
   !+-------------------------------------------------------------------+
   subroutine fft_gf_iw2tau(giw,gtau,beta,C)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
     real(8)                             :: beta,wmax,fmom,mues
     real(8),dimension(0:3),optional     :: C
-    integer                             :: Liw,Ltau,L
+    integer                             :: Liw,L
     complex(8),dimension(:),allocatable :: Tiw,Fiw
     real(8),dimension(:),allocatable    :: Ttau,Ftau
     real(8),dimension(:),allocatable    :: tau,wm
-    Liw  = size(giw)
-    Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_gf_iw2tau: Liw must be > Ltau"
-    L = Ltau
+    Liw = size(giw)
+    L   = size(gtau)
+    if(L-1 > Liw)stop "fft_gf_iw2tau: Liw must be > Ltau-1"
     !
     allocate(wm(L),tau(L))
     wm = pi/beta*(2*arange(1,L)-1)
@@ -249,25 +253,18 @@ contains
 
 
 
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : Evaluate the FFT of a Sigma function from Matsubara frequencies
-  ! to imaginary time. 
-  !+-------------------------------------------------------------------+
   subroutine fft_sigma_iw2tau(giw,gtau,beta,C)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
     real(8)                             :: beta,wmax,fmom,mues
     real(8),dimension(0:1),optional     :: C
-    integer                             :: Liw,Ltau,L
+    integer                             :: Liw,L
     complex(8),dimension(:),allocatable :: Tiw,Fiw
     real(8),dimension(:),allocatable    :: Ttau,Ftau
     real(8),dimension(:),allocatable    :: tau,wm
-    Liw  = size(giw)
-    Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_sigma_iw2tau: Liw must be > Ltau"
-    L = Ltau
+    Liw = size(giw)
+    L   = size(gtau)
+    if(L-1 > Liw)stop "fft_sigma_iw2tau: Liw must be > Ltau-1"
     !
     allocate(wm(L),tau(L))
     wm = pi/beta*(2*arange(1,L)-1)
@@ -283,7 +280,7 @@ contains
        wmax=pi/beta*dble(2*L-1)
        mues=-dreal(Giw(L-1))*wmax**2
        fmom=1d0
-       !fmom=-dimag(gw(L-1))*wmax
+       !fmom=-dimag(Giw(L-1))*wmax
        Tiw =-dcmplx(mues,wm)/(mues**2+wm**2)
        if(mues > 0.d0)then
           if((mues*beta) > 30.d0)then
@@ -348,76 +345,8 @@ contains
   end subroutine fft_ff_iw2tau
 
 
-  !OLD ROUTINES
-  ! subroutine fftgf_iw2tau(gw,gt,beta,notail,nofix)
-  !   complex(8),dimension(:)     :: gw
-  !   real(8),dimension(size(gw)) :: gt
-  !   real(8)                     :: beta
-  !   logical,optional            :: notail,nofix
-  !   logical                     :: notail_,nofix_
-  !   integer                     :: Liw,Ltau
-  !   notail_=.false. ; if(present(notail))notail_=notail
-  !   nofix_ =.false. ; if(present(nofix))nofix_=nofix
-  !   Liw=size(gw)
-  !   Ltau=size(gt)
-  !   call fftgf_iw2tau_(gw,Liw,gt,Ltau,beta,notail_,nofix_)
-  ! end subroutine fftgf_iw2tau
-  ! !
-  ! subroutine fftgf_iw2tau_(gw,N,gt,L,beta,notail_,nofix_)    
-  !   complex(8),dimension(N)       :: gw
-  !   integer                       :: N
-  !   real(8),dimension(L)          :: gt
-  !   integer                       :: L
-  !   real(8)                       :: beta
-  !   logical                       :: notail_,nofix_
-  !   complex(8),dimension(2*(L-1)) :: tmpGw
-  !   real(8),dimension(2*(L-1))    :: tmpGt
-  !   integer                       :: i
-  !   real(8)                       :: wmax,mues,fmom
-  !   complex(8)                    :: tail
-  !   real(8)                       :: tau,dtau,At,w
-  !   if(N<L)stop "fftgf_iw2tau: Liw must be > Ltau"
-  !   dtau=beta/dble(L+1)
-  !   wmax=pi/beta*dble(2*L-1)
-  !   mues=-dreal(gw(L-1))*wmax**2
-  !   fmom=-dimag(gw(L-1))*wmax
-  !   tmpGw=dcmplx(0.d0,0.d0)
-  !   select case(notail_)
-  !   case default
-  !      do i=1,L-1
-  !         w=pi/beta*dble(2*i-1)
-  !         tail=-fmom*dcmplx(mues,w)/(mues**2+w**2)
-  !         tmpGw(2*i) =(gw(i)-tail)
-  !      enddo
-  !      call fft(tmpGw)
-  !      tmpGt = dreal(tmpGw)*size(tmpGw)*2.d0/beta
-  !      do i=1,L-1
-  !         tau=dble(i)*dtau
-  !         if(mues > 0.d0)then
-  !            if((mues*beta) > 30.d0)then
-  !               At = -exp(-mues*tau)
-  !            else
-  !               At = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
-  !            endif
-  !         else
-  !            if((mues*beta) < -30.d0)then
-  !               At = -exp(mues*(beta-tau))
-  !            else
-  !               At = -exp(-mues*tau)/(1.d0 + exp(-beta*mues))
-  !            endif
-  !         endif
-  !         gt(i)=tmpGt(i)+fmom*At
-  !      enddo
-  !      if(.not.nofix_)gt(L)=-(gt(1)+1.d0)
-  !   case (.true.)
-  !      if(N/=L)stop "fftgf_iw2tau: notail requires Liw==Ltau"
-  !      forall(i=1:L-1)tmpGw(2*i)=gw(i)
-  !      call fft(tmpGw)
-  !      tmpGt = dreal(tmpGw)*size(tmpGw)*2.d0/beta
-  !      gt(1:L) = tmpGt(1:L)
-  !      if(.not.nofix_)gt(L)=-gt(1)
-  !   end select
-  ! end subroutine fftgf_iw2tau_
+
+
 
 
 
@@ -439,58 +368,60 @@ contains
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
     real(8)                             :: beta
-    real(8),dimension(0:3)              :: C
+    real(8),dimension(0:3),optional     :: C
     integer,optional                    :: factor
     integer                             :: factor_
     integer,optional                    :: intflag
     integer                             :: intflag_
     logical,optional                    :: bcflag
     logical                             :: bcflag_
-    integer                             :: Liw,Ltau,L,N,i
+    integer                             :: Liw,L,N,i
     real(8)                             :: dtau
     complex(8),dimension(:),allocatable :: Tiw,Fiw,Iiw
     real(8),dimension(:),allocatable    :: Ttau,Ftau,Itau,TtauP,TtauM
     real(8),dimension(:),allocatable    :: tau,wm,taup
     real(8)                             :: A,B,Zp,Zm
-    intflag_=1    ;if(present(intflag))intflag_=intflag
-    factor_=50    ;if(present(factor))factor_=factor
-    bcflag_=.true.;if(present(bcflag)) bcflag_ =bcflag
-    Liw  = size(giw)
-    Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau"
-    L = Ltau
-    allocate(wm(L),tau(L))
-    wm = pi/beta*(2*arange(1,L)-1)
+    intflag_= 1     ;if(present(intflag))intflag_=intflag
+    factor_ = 50    ;if(present(factor))factor_=factor
+    bcflag_ = .true.;if(present(bcflag)) bcflag_ =bcflag
+    Liw     = size(giw)
+    L       = size(gtau)
+    if(L-1 > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau-1"
+    allocate(wm(Liw),tau(L))
+    wm = pi/beta*(2*arange(1,Liw)-1)
     tau= linspace(0d0,beta,L)
-    !
-    allocate(Tiw(L),Ttau(L),TtauP(L),TtauM(L))
-    if(C(2)==0d0.AND.C(3)==0d0)then
-       Tiw = C(0) + C(1)/(xi*wm)
-       Ttau = -C(1)/2 
-    else
-       A = C(2)
-       B = C(3)-C(2)**2
-       Tiw = one/(xi*wm - A - B/(xi*wm))
-       !
-       Zp = 0.5d0*(A + sqrt(A**2 + 4.d0*B))
-       Zm = 0.5d0*(A - sqrt(A**2 + 4.d0*B))
-       if(Zp>=0.d0)then
-          TtauP = Zp*exp(-Zp*tau)*fermi(-Zp,beta)
+    allocate(Tiw(Liw),Ttau(L),TtauP(L),TtauM(L))
+    Tiw  = zero
+    Ttau = 0d0
+    if(present(C))then
+       if(C(2)==0d0.AND.C(3)==0d0)then
+          Tiw = C(0) + C(1)/(xi*wm)
+          Ttau = -C(1)/2 
        else
-          TtauP = Zp*exp(-Zp*(tau-beta))*fermi(Zp,beta)
-       end if
-       if(Zm>=0.d0)then
-          TtauM = Zm*exp(-Zm*tau)*fermi(-Zm,beta)
-       else
-          TtauM = Zm*exp(-Zm*(tau-beta))*fermi(Zm,beta)
+          A = C(2)
+          B = C(3)-C(2)**2
+          Tiw = one/(xi*wm - A - B/(xi*wm))
+          !
+          Zp = 0.5d0*(A + sqrt(A**2 + 4.d0*B))
+          Zm = 0.5d0*(A - sqrt(A**2 + 4.d0*B))
+          if(Zp>=0.d0)then
+             TtauP = Zp*exp(-Zp*tau)*fermi(-Zp,beta)
+          else
+             TtauP = Zp*exp(-Zp*(tau-beta))*fermi(Zp,beta)
+          end if
+          if(Zm>=0.d0)then
+             TtauM = Zm*exp(-Zm*tau)*fermi(-Zm,beta)
+          else
+             TtauM = Zm*exp(-Zm*(tau-beta))*fermi(Zm,beta)
+          endif
+          Ttau = ( TtauM - TtauP )/(Zp-Zm)
        endif
-       Ttau = ( TtauM - TtauP )/(Zp-Zm)
     endif
     !
-    allocate(Ftau(L),Fiw(L))
+    allocate(Fiw(Liw),Ftau(L))
     Ftau = Gtau - Ttau
     !
-    N=min(factor_*L,2**24)
+    N=max(min(factor_*L,2**24),4*Liw)
     allocate(Itau(2*N),Iiw(2*N))
     select case(intflag_)
     case (1)
@@ -510,7 +441,7 @@ contains
     real(8),dimension(:)                :: gtau
     complex(8),dimension(size(gtau))    :: giw
     real(8)                             :: beta
-    real(8),dimension(0:3)              :: C
+    real(8),dimension(0:3),optional     :: C
     integer,optional                    :: factor
     integer,optional                    :: intflag
     logical,optional                    :: bcflag
@@ -520,16 +451,15 @@ contains
     intflag_=1    ;if(present(intflag))intflag_=intflag
     factor_=50    ;if(present(factor))factor_=factor
     bcflag_=.true.;if(present(bcflag)) bcflag_ =bcflag
-    call fft_gf_tau2iw(giw,gtau,beta,C,factor_,intflag_,bcflag_)
+    if(present(C))then
+       call fft_gf_tau2iw(giw,gtau,beta,C,factor=factor_,intflag=intflag_,bcflag=bcflag_)
+    else
+       call fft_gf_tau2iw(giw,gtau,beta,factor=factor_,intflag=intflag_,bcflag=bcflag_)
+    endif
   end function f_fft_gf_tau2iw
 
 
 
-
-  !+-------------------------------------------------------------------+
-  !PROGRAM  : Evaluate the FFT of a Sigma function from imaginary time
-  ! to Matsubara frequencies.
-  !+-------------------------------------------------------------------+
   subroutine fft_sigma_tau2iw(giw,gtau,beta,C,factor,intflag,bcflag)
     complex(8),dimension(:)             :: giw
     real(8),dimension(:)                :: gtau
@@ -540,31 +470,33 @@ contains
     integer                             :: intflag_
     logical,optional                    :: bcflag
     logical                             :: bcflag_
-    real(8),dimension(0:1)              :: C
-    integer                             :: Liw,Ltau,L,N,i
+    real(8),dimension(0:1),optional     :: C
+    integer                             :: Liw,L,N,i
     complex(8),dimension(:),allocatable :: Tiw,Fiw,Iiw
     real(8),dimension(:),allocatable    :: Ttau,Ftau,Itau,TtauP,TtauM
     real(8),dimension(:),allocatable    :: tau,wm,taup
     real(8)                             :: A,B,Zp,Zm
-    intflag_=1    ;if(present(intflag))intflag_=intflag
-    factor_=20    ;if(present(factor))factor_=factor
-    bcflag_=.true.;if(present(bcflag)) bcflag_ =bcflag
-    Liw  = size(giw)
-    Ltau = size(gtau)
-    if(Ltau > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau"
-    L = Ltau
-    allocate(wm(L),tau(L))
-    wm = pi/beta*(2*arange(1,L)-1)
+    intflag_= 1     ;if(present(intflag))intflag_=intflag
+    factor_ = 20    ;if(present(factor))factor_=factor
+    bcflag_ =.true. ;if(present(bcflag)) bcflag_ =bcflag
+    Liw     = size(giw)
+    L       = size(gtau)
+    if(L-1 > Liw)stop "fft_gf_tau2iw: Liw must be > Ltau-1"
+    allocate(wm(Liw),tau(L))
+    wm = pi/beta*(2*arange(1,Liw)-1)
     tau= linspace(0d0,beta,L)
     !
-    allocate(Tiw(L),Ttau(L))
-    Tiw = C(0) + C(1)/(xi*wm) 
-    Ttau = -C(1)/2
-    !
-    allocate(Ftau(L),Fiw(L))
+    allocate(Tiw(Liw),Ttau(L))
+    Tiw = zero
+    Ttau= 0d0
+    if(present(C))then
+       Tiw = C(0) + C(1)/(xi*wm) 
+       Ttau = -C(1)/2
+    endif
+    allocate(Fiw(Liw),Ftau(L))
     Ftau = Gtau - Ttau
     !
-    N=min(factor_*L,2**24)
+    N=max(min(factor_*L,2**24),4*Liw)
     allocate(Itau(2*N),Iiw(2*N))
     select case(intflag_)
     case (1)
@@ -584,7 +516,7 @@ contains
     real(8),dimension(:)                :: gtau
     complex(8),dimension(size(gtau))    :: giw
     real(8)                             :: beta
-    real(8),dimension(0:1)              :: C
+    real(8),dimension(0:1),optional     :: C
     integer,optional                    :: factor
     integer,optional                    :: intflag
     logical,optional                    :: bcflag
@@ -594,7 +526,11 @@ contains
     intflag_=1    ;if(present(intflag))intflag_=intflag
     factor_=50    ;if(present(factor))factor_=factor
     bcflag_=.true.;if(present(bcflag)) bcflag_ =bcflag
-    call fft_sigma_tau2iw(giw,gtau,beta,C,factor_,intflag_,bcflag_)
+    if(present(C))then
+       call fft_sigma_tau2iw(giw,gtau,beta,C,factor=factor_,intflag=intflag_,bcflag=bcflag_)
+    else
+       call fft_sigma_tau2iw(giw,gtau,beta,factor=factor_,intflag=intflag_,bcflag=bcflag_)
+    endif
   end function f_fft_sigma_tau2iw
 
 
@@ -637,80 +573,52 @@ contains
   end subroutine fft_ff_tau2iw
 
 
-  !OLD ROUTINES
-  ! subroutine fftgf_tau2iw(gt,gw,beta)
-  !   real(8)    :: gt(:)
-  !   complex(8) :: gw(:)
-  !   integer    :: Liw,Ltau
-  !   real(8)    :: beta
-  !   Liw = size(gw)
-  !   Ltau= size(gt)
-  !   call fftgf_tau2iw_(gt,Ltau,gw,Liw,beta)
-  ! end subroutine fftgf_tau2iw
-  ! subroutine fftgf_tau2iw_(gt,L,gw,N,beta)
-  !   real(8)                :: gt(L)
-  !   integer                :: L
-  !   complex(8)             :: gw(N),one=(1.d0,0.d0)
-  !   integer                :: N
-  !   real(8)                :: beta
-  !   integer                :: i,M
-  !   real(8),allocatable    :: xgt(:)
-  !   complex(8),allocatable :: Igw(:)
-  !   real(8),allocatable    :: Igt(:)
-  !   M=32*L
-  !   allocate(xgt(2*L),Igt(2*M),Igw(2*M))
-  !   forall(i=1:L)
-  !      xgt(L+i)= gt(i)
-  !      xgt(i)  =-gt(L-i+1)                          !Valid for every fermionic GF (bosonic case not here)  
-  !   end forall
-  !   call interp_gtau(xgt(L+1:2*L),Igt(M+1:2*M),L,M) !interpolate to treat long tails
-  !   forall(i=1:M)Igt(i)=-Igt(2*M-i+1)               !Valid for every fermionic GF (bosonic case not here)  
-  !   Igw=one*Igt
-  !   call ifft(Igw)
-  !   Igw = -Igw/size(Igw)*beta
-  !   forall(i=1:L)gw(i)=Igw(2*i)
-  !   deallocate(Xgt,Igt,Igw)
-  ! contains
-  !   subroutine interp_gtau(Fin,Fout,Lin,Lout)
-  !     integer :: Lin,Lout
-  !     real(8) :: Fin(Lin),Xin(Lin)
-  !     real(8) :: Fout(Lout),Xout(Lout)
-  !     Xin = linspace(0.d0,beta,Lin)
-  !     Xout= linspace(0.d0,beta,Lout)
-  !     call cubic_spline(Xin,Fin,Xout,Fout)
-  !   end subroutine interp_gtau
-  ! end subroutine fftgf_tau2iw_
 
 
 
 
 
-
-
-  !--------------------------------------------------------------
-  ! INTERPOLATION ROUTINES:
-  !--------------------------------------------------------------
   ! !+-------------------------------------------------------------------+
   ! !PURPOSE  : Sample a given function G(tau) over Nfak < N points.
   ! this has been superseded by the new FFT with different number of points
   ! !+-------------------------------------------------------------------+
-  subroutine fft_gf_extract(g0,g00,beta)
-    real(8),dimension(:)    :: g0
-    real(8),dimension(:) :: g00
-    real(8) :: tau0(size(g0)),tau00(size(g00))   
-    integer                 :: N,Nfak
-    integer                 :: i,ip,k,k0
-    real(8)                 :: p,mismatch,beta
-    N = size(g0)
-    Nfak = size(g00)
-    tau0 = linspace(0d0,beta,N)
-    tau00 = linspace(0d0,beta,Nfak)
-    g00(1)   = g0(1)
-    do i=1,Nfak
-       ip = locate(tau0,tau00(i))
-       g00(i) = g0(ip)
+  subroutine fft_gf_extract(g0,g00)
+    real(8),dimension(0:)  :: g0 !0:L-1
+    real(8),dimension(0:) :: g00 !0:Lfak-1
+    integer :: N,Nfak
+    integer :: i,ip
+    real(8) :: p,mismatch
+    N=size(g0)-1
+    Nfak=size(g00)-1
+    g00(0)=g0(0)
+    ! if(g0(0) > 0.d0) g00(Nfak)=1.d0-g0(0)
+    ! if(g0(0) < 0.d0) g00(Nfak)=-(g0(0)+1.d0)
+    mismatch=dble(N)/dble(Nfak)
+    do i=1,Nfak-1
+       p=dble(i)*mismatch
+       ip=int(p)
+       g00(i)=g0(ip)
     enddo
+    g00(Nfak)=g0(N)
   end subroutine fft_gf_extract
+  ! subroutine fft_gf_extract(g0,g00,beta)
+  !   real(8),dimension(:)    :: g0
+  !   real(8),dimension(:) :: g00
+  !   real(8) :: tau0(size(g0)),tau00(size(g00))   
+  !   integer                 :: N,Nfak
+  !   integer                 :: i,ip,k,k0
+  !   real(8)                 :: p,mismatch,beta
+  !   N = size(g0)
+  !   Nfak = size(g00)
+  !   tau0 = linspace(0d0,beta,N)
+  !   tau00 = linspace(0d0,beta,Nfak)
+  !   g00(1)   = g0(1)
+  !   do i=1,Nfak
+  !      ip = locate(tau0,tau00(i))
+  !      g00(i) = g0(ip)
+  !   enddo
+  !   g00(Nfak)   = g0(N)
+  ! end subroutine fft_gf_extract
   ! subroutine fft_gf_extract(g0,N,g00,Nfak)
   !   real(8),dimension(N)    :: g0
   !   real(8),dimension(Nfak) :: g00
@@ -728,26 +636,16 @@ contains
   !      g00(i)=g0(ip)
   !   enddo
   ! end subroutine fft_gf_extract
-  !   subroutine fft_gf_extract(g0,g00)
-  !   real(8),dimension(0:)  :: g0 !0:L
-  !   real(8),dimension(0:) :: g00 !0:Lfak
-  !   integer :: N,Nfak
-  !   integer :: i,ip
-  !   real(8) :: p,mismatch
-  !   N=size(g0)-1
-  !   Nfak=size(g00)-1
-  !   g00(0)=g0(0)
-  !   if(g0(0) > 0.d0) g00(Nfak)=1.d0-g0(0)
-  !   if(g0(0) < 0.d0) g00(Nfak)=-(g0(0)+1.d0)
-  !   mismatch=dble(N)/dble(Nfak)
-  !   do i=1,Nfak-1
-  !      p=dble(i)*mismatch
-  !      ip=int(p)
-  !      g00(i)=g0(ip)
-  !   enddo
-  ! end subroutine fft_gf_extract
 
 
+
+
+
+
+
+  !--------------------------------------------------------------
+  ! INTERPOLATION ROUTINES:
+  !--------------------------------------------------------------
   subroutine cubic_spline_gtau(Gin,Gout,beta,bcflag)
     real(8),dimension(:)          :: Gin
     real(8),dimension(:)          :: Gout
@@ -1451,4 +1349,4 @@ contains
 
 
 
-END MODULE FFTGF
+END MODULE DMFT_FFTGF

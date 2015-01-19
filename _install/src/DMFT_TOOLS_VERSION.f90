@@ -1,6 +1,7 @@
 MODULE DMFT_TOOLS_VERSION
   implicit none
   include "dmft_tools_version.inc"
+
 contains
 
   !+-------------------------------------------------------------------+

@@ -14,7 +14,7 @@ SFROOT=$2
 UNAME=`echo $NAME |tr [:lower:] [:upper:]`
 LNAME=`echo $NAME |tr [:upper:] [:lower:]`
 WRKDIR=$(pwd)
-VERSION=$(git describe --tags)
+VERSION=$(git describe --tags --always --long)
 WRK_INSTALL=$WRKDIR/_install
 if [ ! -d $WRK_INSTALL ];then echo "$0: can not find _install directory";exit;fi
 if [ ! -d $SFROOT ];then echo "$0: can not find SciFor root directory";exit;fi
@@ -116,6 +116,9 @@ make all
 if [ $? == 0 ];then
     make clean
     mv -vf make.inc $WRKDIR/$PLAT/
+else
+    echo "Error from Makefile. STOP here."
+    exit 1
 fi
 cd $WRKDIR
 CONFIGFILE=$WRKDIR/$PLAT/bin/configvars.sh

@@ -1,15 +1,19 @@
-MODULE TIGHT_BINDING
-  USE CONSTANTS, only: pi,pi2,xi,one,zero
-  USE IOTOOLS, only:free_unit,reg,txtfy
-  USE MATRIX, only: matrix_diagonalize
-  USE COLORS
+MODULE DMFT_TIGHT_BINDING
+  USE SF_CONSTANTS, only: pi,pi2,xi,one,zero
+  USE SF_IOTOOLS, only:free_unit,reg,txtfy
+  USE SF_LINALG, only: matrix_diagonalize
+  USE SF_COLORS
   !USE FT_TIGHT_BINDING
   implicit none
   private
 
   interface write_hk_w90
-     module procedure write_hk_w90_,write_hk_w90__
+     module procedure write_hk_w90_,write_hk_w90__,write_hk_w90___
   end interface write_hk_w90
+
+  interface build_hk_model
+     module procedure build_hk_model_Norb,build_hk_model_1
+  end interface build_hk_model
 
   public :: indx2ix,indx2iy,indx2iz
   public :: coord2indx
@@ -135,7 +139,7 @@ contains
 
 
 
-  function build_hk_model(Nk,Norb,hk_model,kxgrid,kygrid,kzgrid) result(Hk)
+  function build_hk_model_Norb(Nk,Norb,hk_model,kxgrid,kygrid,kzgrid) result(Hk)
     integer                         :: Norb
     integer                         :: Nk,Nkx,Nky,Nkz
     integer                         :: ik,ix,iy,iz
@@ -159,7 +163,32 @@ contains
        kz=kzgrid(iz)
        Hk(ik,:,:) = hk_model([kx,ky,kz],Norb)
     enddo
-  end function build_hk_model
+  end function build_hk_model_Norb
+
+  function build_hk_model_1(Nk,hk_model,kxgrid,kygrid,kzgrid) result(Hk)
+    integer                        :: Nk,Nkx,Nky,Nkz
+    integer                        :: ik,ix,iy,iz
+    real(8),dimension(:)           :: kxgrid,kygrid,kzgrid
+    real(8)                        :: kx,ky,kz
+    complex(8),dimension(Nk)       :: hk
+    interface 
+       function hk_model(kpoint)
+         real(8),dimension(:)      :: kpoint
+         complex(8)                :: hk_model
+       end function hk_model
+    end interface
+    Nkx = size(kxgrid)
+    Nky = size(kygrid)
+    Nkz = size(kzgrid)
+    if(Nk /= Nkx*Nky*Nkz) stop "build_hk_model: error in dimension Nk"
+    do ik=1,Nk
+       call indx2coord(ik,ix,iy,iz,[Nkx,Nky,Nkz])
+       kx=kxgrid(ix)
+       ky=kygrid(iy)
+       kz=kzgrid(iz)
+       Hk(ik) = hk_model([kx,ky,kz])
+    enddo
+  end function build_hk_model_1
 
 
 
@@ -231,6 +260,33 @@ contains
        enddo
     enddo
   end subroutine write_hk_w90__
+
+  subroutine write_hk_w90___(file,Norb,Np,Nineq,hk,kxgrid,kygrid,kzgrid)
+    character(len=*)        :: file
+    integer                 :: Norb,Nd,Np,Nineq
+    integer                 :: Nktot,Nkx,Nky,Nkz,unit
+    integer                 :: ik,ix,iy,iz,iorb,jorb
+    real(8),dimension(:)    :: kxgrid,kygrid,kzgrid
+    real(8)                 :: kx,ky,kz
+    complex(8),dimension(:) :: Hk    
+    unit=free_unit()
+    Nkx = size(kxgrid)
+    Nky = size(kygrid)
+    Nkz = size(kzgrid)
+    Nktot = Nkx*Nky*Nkz
+    if(size(Hk,1)/=Nktot)stop "write_hk_f90: error in dimension Hk,1"
+    Nd = Norb-Np    
+    open(unit,file=reg(file))
+    write(unit,'(1A1,1A12,1x,3(A2,1x))')"#",reg(txtfy(Nktot)),reg(txtfy(Nd)),reg(txtfy(Np)),reg(txtfy(Nineq))
+    do ik=1,Nktot
+       call indx2coord(ik,ix,iy,iz,[Nkx,Nky,Nkz])
+       kx=kxgrid(ix)
+       ky=kygrid(iy)
+       kz=kzgrid(iz)
+       write(unit,"(3(F15.9,1x))")kx,ky,kz
+       write(unit,"((2F15.9,1x))")Hk(ik)
+    enddo
+  end subroutine write_hk_w90___
 
   subroutine read_hk_w90(file,Norb,Np,Nineq,hk,kxgrid,kygrid,kzgrid)
     character(len=*)            :: file
@@ -443,5 +499,5 @@ contains
 
 
 
-END MODULE TIGHT_BINDING
+END MODULE DMFT_TIGHT_BINDING
 

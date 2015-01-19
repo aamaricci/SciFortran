@@ -1,12 +1,4 @@
-!###############################################################
-!     PROGRAM  : VECTORS
-!     TYPE     : Module
-!     PURPOSE  : Setup a class for vector algebra. 
-!     TODO     : exploit fortran2003 extensions to include higher 
-! and lower dimensionalities with real class properties
-!     AUTHORS  : Adriano Amaricci
-!###############################################################
-module VECTORS
+module DMFT_VECTORS
   implicit none
   private
 
@@ -73,4 +65,4 @@ contains
   include 'vector_algebra_3d.f90'
 
 
-end module VECTORS
+end module DMFT_VECTORS
