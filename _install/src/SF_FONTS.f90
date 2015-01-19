@@ -1,4 +1,4 @@
-MODULE FONTS
+MODULE SF_FONTS
   implicit none
   private
 
@@ -105,4 +105,4 @@ contains
     textout=achar(27)//"[44m"//text//achar(27)//"[0m"
   end function bg_blue
 
-END MODULE FONTS
+END MODULE SF_FONTS

@@ -1,9 +1,4 @@
-!###############################################################
-! PROGRAM  : INTEGRATE
-! PURPOSE  : A set of routines to perform specific integrals
-!###############################################################
-module INTEGRATE
-  !USE INTEGRATE_QUADPACK
+module SF_INTEGRATE
   implicit none
   private
 
@@ -34,6 +29,7 @@ module INTEGRATE
   public :: trapz
   public :: simps
   public :: int_simps
+
   ! now in a separate library with separate MODULE interface.
   ! Here we provide only standard functions and 
   ! will add more object oriented interface to QUADPACK
@@ -598,4 +594,4 @@ contains
 
 
 
-end module INTEGRATE
+end module SF_INTEGRATE

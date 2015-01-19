@@ -1,10 +1,8 @@
-module MATRIX
-  USE CONSTANTS, only: one,xi,zero
+module SF_LINALG
+  USE SF_CONSTANTS, only: one,xi,zero
   implicit none
   private
-  !include "mkl_lapack.fi"
 
-  !----------------------------------------------------------------------------------
 
   interface matrix_inverse
      module procedure D_mat_invert, Z_mat_invert
@@ -26,23 +24,20 @@ module MATRIX
      module procedure d_mat_invertgj, z_mat_invertgj
   end interface matrix_inverse_gj
 
-  !----------------------------------------------------------------------------------
 
-  interface m_invert_gj
+  interface f_mat_invert_gj
      module procedure d_invert_matrix_gj,c_invert_matrix_gj
-  end interface m_invert_gj
+  end interface f_mat_invert_gj
 
-  interface m_invert
+  interface f_mat_invert
      module procedure d_invert_matrix,c_invert_matrix
-  end interface m_invert
+  end interface f_mat_invert
 
-  !----------------------------------------------------------------------------------
+
 
   interface matrix_diagonalize
      module procedure d_mat_diagonalization,z_mat_diagonalization
   end interface matrix_diagonalize
-
-  !----------------------------------------------------------------------------------
 
   interface solve_linear_system
      module procedure d_mat_solve_linear_system_1rhs,z_mat_solve_linear_system_1rhs,&
@@ -68,16 +63,17 @@ module MATRIX
   !
   public :: solve_linear_system
   !
-  public :: matrix_inverse
-  public :: matrix_inverse_sym
-  public :: matrix_inverse_her
-  public :: matrix_inverse_triang
-  public :: matrix_inverse_gj
+  public :: matrix_inverse       !, matrix_invert
+  public :: matrix_inverse_sym   !, matrix_invert_sym
+  public :: matrix_inverse_her   !, matrix_invert_her
+  public :: matrix_inverse_triang!, matrix_invert_triang
+  public :: matrix_inverse_gj    !, matrix_invert_gj
   !
-  public :: m_invert
-  public :: m_invert_gj
+  public :: f_mat_invert
+  public :: f_mat_invert_gj
   ! 
-
+  public :: kronecker_product
+  public :: kroenecker_product
 
 contains
 
@@ -834,4 +830,4 @@ contains
 
 
 
-end module MATRIX
+end module SF_LINALG
