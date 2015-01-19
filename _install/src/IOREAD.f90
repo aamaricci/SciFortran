@@ -1,10 +1,4 @@
-!###############################################################
-!     PROGRAM  : IOREAD
-!     PURPOSE  : VERY SIMPLE READING LIBRARY FOR FORTRAN 90/95
-!     AUTHORS  : A.Amaricci (SISSA)
-!###############################################################
 module IOREAD
-  !USE COMMON_VARS
   USE IOFILE
   implicit none
   private

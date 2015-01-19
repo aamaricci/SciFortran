@@ -1,4 +1,4 @@
-MODULE STATISTICS
+MODULE SF_STAT
   implicit none
   private
 
@@ -250,5 +250,5 @@ contains
   end subroutine histogram_print
 
 
-END MODULE STATISTICS
+END MODULE SF_STAT
 

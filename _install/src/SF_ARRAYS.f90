@@ -1,7 +1,4 @@
-!###############################################################
-! PURPOSE  : 
-!###############################################################  
-module ARRAYS
+module SF_ARRAYS
   implicit none
 
   !ADD BUILDING MATRICES ROUTINES
@@ -191,4 +188,4 @@ contains
 
 
 
-end module ARRAYS
+end module SF_ARRAYS

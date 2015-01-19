@@ -1,8 +1,4 @@
-!###############################################################
-! PURPOSE  : VERY SIMPLE WRITE LIBRARY
-!###############################################################
 module IOPLOT
-  !USE COMMON_VARS
   USE IOFILE
   implicit none
   private

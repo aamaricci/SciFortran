@@ -1,9 +1,4 @@
-!###############################################################
-!PROGRAM  : RANDOM
-!TYPE     : Module
-!PURPOSE  : Module for Random Number generators
-!###############################################################
-module RANDOM
+module SF_RANDOM
   implicit none
   private
   integer           :: i,j,k,D
@@ -213,4 +208,4 @@ contains
   include "random_routines.f90"
 
 
-end module random
+end module SF_RANDOM

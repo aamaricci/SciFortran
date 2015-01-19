@@ -1,4 +1,4 @@
-MODULE FFT_FFTPACK
+MODULE SF_FFT_FFTPACK
   implicit none
   private
 
@@ -1044,4 +1044,4 @@ contains
   end subroutine cfft_1d_ex
 
 
-END MODULE FFT_FFTPACK
+END MODULE SF_FFT_FFTPACK

@@ -1,10 +1,4 @@
-!########################################################################
-!PROGRAM  : CHRONOBAR
-!TYPE     : module
-!PURPOSE  : set of routines for timing procedures
-!AUTHORS  : Adriano Amaricci
-!########################################################################
-module TIMER
+module SF_TIMER
   implicit none
   private
 
@@ -313,5 +307,5 @@ contains
   end subroutine progress_bar_eta
 
 
-end module TIMER
+end module SF_TIMER
 

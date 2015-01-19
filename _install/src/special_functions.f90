@@ -3882,8 +3882,8 @@ subroutine cikna ( n, z, nm, cbi, cdi, cbk, cdk )
   complex ( kind = 8 ) cs
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+  ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   complex ( kind = 8 ) z
 
@@ -4030,8 +4030,8 @@ subroutine ciknb ( n, z, nm, cbi, cdi, cbk, cdk )
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) l
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) pi
   real ( kind = 8 ) vt
@@ -4242,8 +4242,8 @@ subroutine cikva ( v, z, vm, cbi, cdi, cbk, cdk )
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) piv
@@ -4530,8 +4530,8 @@ subroutine cikvb ( v, z, vm, cbi, cdi, cbk, cdk )
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) piv
@@ -5479,8 +5479,8 @@ subroutine cjyna ( n, z, nm, cbj, cdj, cby, cdy )
   integer ( kind = 4 ) lb
   integer ( kind = 4 ) lb0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) pi
   real ( kind = 8 ) wa
@@ -5743,8 +5743,8 @@ subroutine cjynb ( n, z, nm, cbj, cdj, cby, cdy )
   real ( kind = 8 ) el
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) pi
   real ( kind = 8 ) r2p
@@ -5983,8 +5983,8 @@ subroutine cjyva ( v, z, vm, cbj, cdj, cby, cdy )
   integer ( kind = 4 ) lb
   integer ( kind = 4 ) lb0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) pv0
@@ -6411,8 +6411,8 @@ subroutine cjyvb ( v, z, vm, cbj, cdj, cby, cdy )
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) pv0
@@ -7755,8 +7755,8 @@ subroutine csphik ( n, z, nm, csi, cdi, csk, cdk )
   complex ( kind = 8 ) csk(0:n)
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) pi
   complex ( kind = 8 ) z
@@ -7900,8 +7900,8 @@ subroutine csphjy ( n, z, nm, csj, cdj, csy, cdy )
   complex ( kind = 8 ) csb
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   complex ( kind = 8 ) z
 
@@ -13235,8 +13235,8 @@ subroutine ikna ( n, x, nm, bi, di, bk, dk )
   real ( kind = 8 ) h1
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) s0
   real ( kind = 8 ) x
@@ -13388,8 +13388,8 @@ subroutine iknb ( n, x, nm, bi, di, bk, dk )
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) l
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) pi
   real ( kind = 8 ) r
@@ -13557,8 +13557,8 @@ subroutine ikv ( v, x, vm, bi, di, bk, dk )
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) piv
@@ -16428,8 +16428,8 @@ subroutine jyna ( n, x, nm, bj, dj, by, dy )
   real ( kind = 8 ) f2
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) x
 
@@ -16597,8 +16597,8 @@ subroutine jynb ( n, x, nm, bj, dj, by, dy )
   real ( kind = 8 ) f2
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) p0
   real ( kind = 8 ) p1
@@ -16918,8 +16918,8 @@ subroutine jyv ( v, x, vm, bj, dj, by, dy )
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) l
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) pv0
@@ -18402,8 +18402,8 @@ subroutine lamn ( n, x, nm, bl, dl )
   integer ( kind = 4 ) i
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) r
   real ( kind = 8 ) r0
@@ -18566,8 +18566,8 @@ subroutine lamv ( v, x, vm, vl, dl )
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k0
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) n
   real ( kind = 8 ) pi
   real ( kind = 8 ) px
@@ -20233,7 +20233,7 @@ function msta1 ( x, mp )
   implicit none
 
   real ( kind = 8 ) a0
-  real ( kind = 8 ) envj
+  ! real ( kind = 8 ) envj
   real ( kind = 8 ) f
   real ( kind = 8 ) f0
   real ( kind = 8 ) f1
@@ -20314,7 +20314,7 @@ function msta2 ( x, n, mp )
 
   real ( kind = 8 ) a0
   real ( kind = 8 ) ejn
-  real ( kind = 8 ) envj
+  ! real ( kind = 8 ) envj
   real ( kind = 8 ) f
   real ( kind = 8 ) f0
   real ( kind = 8 ) f1
@@ -21696,8 +21696,8 @@ subroutine rctj ( n, x, nm, rj, dj )
   real ( kind = 8 ) f1
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) rj(0:n)
   real ( kind = 8 ) rj0
@@ -23741,8 +23741,8 @@ subroutine sphi ( n, x, nm, si, di )
   real ( kind = 8 ) f1
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+    ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) si(0:n)
   real ( kind = 8 ) si0
@@ -23847,8 +23847,8 @@ subroutine sphj ( n, x, nm, sj, dj )
   real ( kind = 8 ) f1
   integer ( kind = 4 ) k
   integer ( kind = 4 ) m
-  integer ( kind = 4 ) msta1
-  integer ( kind = 4 ) msta2
+  ! integer ( kind = 4 ) msta1
+  ! integer ( kind = 4 ) msta2
   integer ( kind = 4 ) nm
   real ( kind = 8 ) sa
   real ( kind = 8 ) sb
