@@ -1,16 +1,10 @@
-!###############################################################
-!     PROGRAM  : IOTOOLS
-!     TYPE     : Module
-!     PURPOSE  : SIMPLE PLOTTING/READING LIBRARY FOR FORTRAN 90/95
-!     AUTHORS  : Adriano Amaricci (SISSA)
-!###############################################################
 module IOFILE
-  USE MPI_VARS
+  !USE MPI_VARS
   implicit none
   private
 
   !file size to be stored automagically (in Kb)
-  integer,public :: store_size=2048
+  integer,public,save :: store_size=2048
 
   interface txtfy
      module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
@@ -39,7 +33,6 @@ module IOFILE
   public :: free_unit,free_units
   public :: data_open
   public :: data_store
-  public :: set_store_size
   public :: reg_filename,reg,txtfit,txtcut
   public :: create_data_dir,create_dir
   public :: close_file
@@ -47,6 +40,7 @@ module IOFILE
   public :: get_filepath
 
 contains
+
 
 
   !+-----------------------------------------------------------------+
@@ -254,15 +248,17 @@ contains
     endif
   end subroutine data_store
 
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : 
+  !+-----------------------------------------------------------------+
   subroutine set_store_size(size)
     integer :: size
     store_size=size
-    write(*,*)"store size ="//trim(txtfy(size))//"Kb"
+    write(*,"(A)")"store size ="//trim(txtfy(size))//"Kb"
   end subroutine set_store_size
 
-  !******************************************************************
-  !******************************************************************
-  !******************************************************************
 
 
 

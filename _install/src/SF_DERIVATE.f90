@@ -1,8 +1,4 @@
-!###############################################################
-! PROGRAM  : DERIVATE
-! PURPOSE  : A set of routines to perform specific integrals
-!###############################################################
-MODULE DERIVATE
+MODULE SF_DERIVATE
   implicit none
   private
 
@@ -523,4 +519,4 @@ contains
   end function derivativeN
 
 
-END MODULE DERIVATE
+END MODULE SF_DERIVATE

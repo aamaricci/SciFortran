@@ -1,4 +1,4 @@
-MODULE MPI_VARS
+MODULE SF_MPI_VARS
   implicit none
   integer          :: MPIID=0
   integer          :: MPISIZE=1
@@ -17,18 +17,18 @@ MODULE MPI_VARS
   !   subroutine finalize_mpi
   !     call MPI_FINALIZE(mpiERR)
   !   end subroutine finalize_mpi
-END MODULE MPI_VARS
+END MODULE SF_MPI_VARS
 
-MODULE OMP_VARS
+MODULE SF_OMP_VARS
   implicit none
   integer :: omp_num_threads
   integer :: omp_id
   integer :: omp_size
-END MODULE OMP_VARS
+END MODULE SF_OMP_VARS
 
 
 
-MODULE COLORS
+MODULE SF_COLORS
   implicit none
 
   type rgb_color
@@ -796,13 +796,13 @@ contains
        stop "pick_color: color name does not exist"
     end select
   end function pick_color
-END MODULE COLORS
+END MODULE SF_COLORS
 
 
 
 
 
-MODULE PAULI
+MODULE SF_PAULI
   implicit none
   private
 
@@ -934,7 +934,7 @@ contains
     end forall
   end function c_kronecker_product
 
-END MODULE PAULI
+END MODULE SF_PAULI
 
 
 
@@ -942,11 +942,11 @@ END MODULE PAULI
 
 
 
-module CONSTANTS
-  USE MPI_VARS
-  USE OMP_VARS
-  USE COLORS
-  USE PAULI
+module SF_CONSTANTS
+  USE SF_MPI_VARS
+  USE SF_OMP_VARS
+  USE SF_COLORS
+  USE SF_PAULI
   implicit none
   private
 
@@ -1105,6 +1105,6 @@ contains
     write(unit,*)""
   end subroutine print_date
 
-END MODULE CONSTANTS
+END MODULE SF_CONSTANTS
 
 
