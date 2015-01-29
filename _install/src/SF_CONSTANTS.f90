@@ -948,7 +948,6 @@ module SF_CONSTANTS
   USE SF_COLORS
   USE SF_PAULI
   implicit none
-  private
 
   !PARAMETERS
   !===============================================================
