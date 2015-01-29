@@ -1,4 +1,4 @@
-module DMFT_ERROR
+module DMFT_CONVERGENCE
   USE SF_FONTS
   USE SF_IOTOOLS, only: reg
   implicit none
@@ -63,4 +63,4 @@ contains
   !err = sum((NEW-OLD)/NEW)
   include "error_convergence_global.f90"
 
-end module DMFT_ERROR
+end module DMFT_CONVERGENCE
