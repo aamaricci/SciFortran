@@ -16,15 +16,21 @@ contains
   ! PURPOSE  :
   !+-------------------------------------------------------------------+
   function fft_get_density(giw,beta,C) result(dens)
-    complex(8),dimension(:)         :: giw
-    real(8),dimension(size(giw))    :: gtau
-    real(8),dimension(0:3),optional :: C
-    real(8),dimension(0:3)          :: C_
-    real(8)                         :: beta
-    real(8)                         :: dens
-    C_=[0d0,1d0,0d0,0d0];if(present(C))C_=C
-    gtau = f_fft_gf_iw2tau(giw,beta,C_)
-    dens=-gtau(size(giw))
+    complex(8),dimension(:)          :: giw
+    real(8),dimension(:),allocatable :: gtau
+    real(8),dimension(0:3),optional  :: C
+    real(8)                          :: beta
+    real(8)                          :: dens
+    integer                          :: Liw
+    Liw=size(giw)
+    if(present(C))then
+       allocate(gtau(Liw))
+       call fft_gf_iw2tau(giw,gtau,beta,C)
+    else
+       allocate(gtau(0:Liw))
+       call fft_gf_iw2tau(giw,gtau(0:),beta)
+    endif
+    dens = -gtau(Liw)
   end function fft_get_density
 
   !+-------------------------------------------------------------------+
