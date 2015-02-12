@@ -44,6 +44,8 @@ libupdate:
 	@echo 'LIBRARY IS UPDATED.........'
 	@echo ' '
 
+cmdexit:
+	exit 1
 
 
 SCIFOR_VERSION: version
