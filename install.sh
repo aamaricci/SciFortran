@@ -39,14 +39,14 @@ print_ARmake(){
     case $PLAT in
 	intel)
 	    FC=ifort
-	    FFLAGS="-O2 -static-intel"
+	    FFLAGS="-O1 -static-intel"
 	    MOPT="-module "
 	    MOD_DIR=intel_mods
 	    OBJ_DIR=intel_objs
 	    ;;
 	gnu)
 	    FC=gfortran
-	    FFLAGS="-O2 -static"
+	    FFLAGS="-O1 -static"
 	    MOPT=-J
 	    MOD_DIR=gnu_mods
 	    OBJ_DIR=gnu_objs
@@ -67,7 +67,7 @@ print_ARmake(){
 	    ;;
 	ibm)
 	    FC=xlf90
-	    FFLAGS="-O2 -qarch=qp -qtune=qp"
+	    FFLAGS="-O1 -qarch=qp -qtune=qp"
 	    MOPT="-qmoddir="
 	    MOD_DIR=ibm_mods
 	    OBJ_DIR=ibm_objs
