@@ -1164,7 +1164,7 @@ contains
           print *, "singular, and division by zero will occur if it is used"
           print *, "to solve a system of equations."
        end if
-       call stop_error('inv: zgetrf error')
+       stop 'zdet error: zgetrf '
     end if
     ! for details on the computation, compare the comment in ddet().
     x = one
