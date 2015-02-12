@@ -33,6 +33,7 @@ contains
     dens = -gtau(Liw)
   end function fft_get_density
 
+
   !+-------------------------------------------------------------------+
   ! PURPOSE  : return the tail coefficients given the necessary
   ! informations. This is now limited to the one-band case
