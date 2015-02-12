@@ -75,4 +75,5 @@ DMFT_TIGHT_BINDING:
 
 DMFT_TOOLS: 
 	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -I$(MOD_SCIFOR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+
 mod_DMFT_TOOLS:  DMFT_TOOLS libupdate
