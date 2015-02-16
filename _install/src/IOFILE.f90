@@ -4,7 +4,7 @@ module IOFILE
   private
 
   !file size to be stored automagically (in Kb)
-  integer,public,save :: store_size=2048
+  integer,save :: store_size=2048
 
   interface txtfy
      module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
@@ -30,7 +30,9 @@ module IOFILE
   public :: file_size
   public :: file_length
   public :: file_info
-  public :: free_unit,free_units
+  public :: free_unit
+  public :: free_units
+  public :: set_store_size
   public :: data_open
   public :: data_store
   public :: reg_filename,reg,txtfit,txtcut
@@ -81,16 +83,18 @@ contains
     close(10)
   end subroutine close_file
 
-  function free_unit() result(unit_)
+  function free_unit(n) result(unit_)
+    integer,optional :: n
     integer :: unit_,ios
-    logical :: is_it_opened
+    logical :: opened
     unit_=100
     do 
        unit_=unit_+1
-       INQUIRE(unit=unit_,OPENED=is_it_opened,iostat=ios)
-       if(.not.is_it_opened.AND.ios==0)return 
+       INQUIRE(unit=unit_,OPENED=opened,iostat=ios)
+       if(.not.opened.AND.ios==0)exit 
        if(unit_>900) stop "ERROR free_unit: no unit free smaller than 900. Possible BUG"
     enddo
+    if(present(n))n=unit_
   end function free_unit
 
   function free_units(n) result(unit)

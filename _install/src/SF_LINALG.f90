@@ -159,12 +159,16 @@ module SF_LINALG
   public :: svd
 
   !Kroenecker product of matrices
+  interface kron
+     module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
+  end interface kron
   interface kronecker_product
      module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
   end interface kronecker_product
   interface kroenecker_product
      module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
   end interface kroenecker_product
+  public :: kron
   public :: kronecker_product
   public :: kroenecker_product
 
@@ -1508,34 +1512,78 @@ contains
   ! two complex matrices M1 and M2. nr1(nr2) and nc1(nc2) are 
   ! the number of rows and columns of the Matrix M1 and M2
   !---------------------------------------------------------------------
-  function i_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+  ! function i_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+  !   integer               :: i, j
+  !   integer,intent(in)    :: nr1,nc1,nr2,nc2
+  !   integer,intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
+  !   integer               :: M1_kp_M2(nr1*nr2,nc1*nc2)
+  !   M1_kp_M2 = zero
+  !   forall(i =1:nr1,j=1:nc1)
+  !      M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+  !   end forall
+  ! end function i_kronecker_product
+  ! !
+  ! function d_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+  !   integer               :: i, j
+  !   integer,intent(in)    :: nr1,nc1,nr2,nc2
+  !   real(8),intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
+  !   real(8)               :: M1_kp_M2(nr1*nr2,nc1*nc2)
+  !   M1_kp_M2 = zero
+  !   forall(i =1:nr1,j=1:nc1)
+  !      M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+  !   end forall
+  ! end function d_kronecker_product
+  ! !
+  ! function c_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+  !   integer               :: i, j
+  !   integer,intent(in)    :: nr1,nc1,nr2,nc2
+  !   complex(8),intent(in) :: M1(nr1,nc1), M2(nr2,nc2)
+  !   complex(8)            :: M1_kp_M2(nr1*nr2,nc1*nc2)
+  !   M1_kp_M2 = zero
+  !   forall(i =1:nr1,j=1:nc1)
+  !      M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+  !   end forall
+  ! end function c_kronecker_product
+  function i_kronecker_product(M1,M2) result(M1_kp_M2)
     integer               :: i, j
-    integer,intent(in)    :: nr1,nc1,nr2,nc2
-    integer,intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
-    integer               :: M1_kp_M2(nr1*nr2,nc1*nc2)
+    integer               :: nr1,nc1,nr2,nc2
+    integer,intent(in)    :: M1(:,:), M2(:,:)
+    integer               :: M1_kp_M2(size(M1,1)*size(M2,1),size(M1,2)*size(M2,2))
     M1_kp_M2 = zero
+    nr1=size(M1,1)
+    nc1=size(M1,2)
+    nr2=size(M2,1)
+    nc2=size(m2,2)
     forall(i =1:nr1,j=1:nc1)
        M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
     end forall
   end function i_kronecker_product
   !
-  function d_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+  function d_kronecker_product(M1,M2) result(M1_kp_M2)
     integer               :: i, j
-    integer,intent(in)    :: nr1,nc1,nr2,nc2
-    real(8),intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
-    real(8)               :: M1_kp_M2(nr1*nr2,nc1*nc2)
+    integer               :: nr1,nc1,nr2,nc2
+    real(8),intent(in)    :: M1(:,:), M2(:,:)
+    real(8)               :: M1_kp_M2(size(M1,1)*size(M2,1),size(M1,2)*size(M2,2))
     M1_kp_M2 = zero
+    nr1=size(M1,1)
+    nc1=size(M1,2)
+    nr2=size(M2,1)
+    nc2=size(m2,2)
     forall(i =1:nr1,j=1:nc1)
        M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
     end forall
   end function d_kronecker_product
   !
-  function c_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
+  function c_kronecker_product(M1,M2) result(M1_kp_M2)
     integer               :: i, j
-    integer,intent(in)    :: nr1,nc1,nr2,nc2
-    complex(8),intent(in) :: M1(nr1,nc1), M2(nr2,nc2)
-    complex(8)            :: M1_kp_M2(nr1*nr2,nc1*nc2)
+    integer               :: nr1,nc1,nr2,nc2
+    complex(8),intent(in) :: M1(:,:), M2(:,:)
+    complex(8)            :: M1_kp_M2(size(M1,1)*size(M2,1),size(M1,2)*size(M2,2))
     M1_kp_M2 = zero
+    nr1=size(M1,1)
+    nc1=size(M1,2)
+    nr2=size(M2,1)
+    nc2=size(m2,2)
     forall(i =1:nr1,j=1:nc1)
        M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
     end forall

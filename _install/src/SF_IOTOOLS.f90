@@ -11,7 +11,6 @@ MODULE SF_IOTOOLS
   public :: sread
   public :: read_data
 
-  public :: store_size
   public :: set_store_size
   public :: txtfy
   public :: file_size

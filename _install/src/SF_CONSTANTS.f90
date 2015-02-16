@@ -810,10 +810,19 @@ MODULE SF_PAULI
   complex(8),parameter :: xi=(0.d0,1.d0)
   complex(8),parameter :: one=(1.d0,0.d0)
 
-  complex(8),dimension(2,2),parameter :: pauli_tau_0=reshape([one,zero,zero,one],[2,2])
-  complex(8),dimension(2,2),parameter :: pauli_tau_x=reshape([zero,one,one,zero],[2,2])
-  complex(8),dimension(2,2),parameter :: pauli_tau_y=reshape([zero,xi,-xi,zero],[2,2])
-  complex(8),dimension(2,2),parameter :: pauli_tau_z=reshape([one,zero,zero,-one],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_0=reshape([one,zero,zero,one],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_x=reshape([zero,one,one,zero],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_y=reshape([zero,xi,-xi,zero],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_z=reshape([one,zero,zero,-one],[2,2])
+  !
+  complex(8),dimension(2,2),parameter :: pauli_1=pauli_x
+  complex(8),dimension(2,2),parameter :: pauli_2=pauli_y
+  complex(8),dimension(2,2),parameter :: pauli_3=pauli_z
+  !
+  complex(8),dimension(2,2),parameter :: pauli_tau_0=pauli_0
+  complex(8),dimension(2,2),parameter :: pauli_tau_x=pauli_x
+  complex(8),dimension(2,2),parameter :: pauli_tau_y=pauli_y
+  complex(8),dimension(2,2),parameter :: pauli_tau_z=pauli_z
   !
   complex(8),dimension(2,2),parameter :: pauli_tau_1=pauli_tau_x
   complex(8),dimension(2,2),parameter :: pauli_tau_2=pauli_tau_y
@@ -829,6 +838,15 @@ MODULE SF_PAULI
   complex(8),dimension(2,2),parameter :: pauli_sigma_3=pauli_tau_z
 
 
+  public :: pauli_0
+  public :: pauli_x
+  public :: pauli_y
+  public :: pauli_z
+  !
+  public :: pauli_1
+  public :: pauli_2
+  public :: pauli_3
+  !
   public :: pauli_tau_0
   public :: pauli_tau_x
   public :: pauli_tau_y
