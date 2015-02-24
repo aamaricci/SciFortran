@@ -173,6 +173,14 @@ module SF_LINALG
   public :: kroenecker_product
 
 
+  !outer product of two 1d arrays to form a matrix
+  interface outerprod
+     module procedure outerprod_d,outerprod_c
+  end interface outerprod
+  public :: outerprod
+
+
+
   !NOT PUBLIC:
   !Assert shape of matrices:
   interface assert_shape
@@ -1592,7 +1600,22 @@ contains
 
 
 
-
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: Form a matrix A(:,:) from the outerproduct of two 1d arrays:
+  ! A(i,j) = a_i*b_j
+  !+-----------------------------------------------------------------------------+!
+  function outerprod_d(a,b) result(outerprod)
+    real(8), dimension(:), intent(in)   :: a,b
+    real(8), dimension(size(a),size(b)) :: outerprod
+    outerprod = spread(a,dim=2,ncopies=size(b)) * &
+         spread(b,dim=1,ncopies=size(a))
+  end function outerprod_d
+  function outerprod_c(a,b) result(outerprod)
+    complex(8), dimension(:), intent(in)   :: a,b
+    complex(8), dimension(size(a),size(b)) :: outerprod
+    outerprod = spread(a,dim=2,ncopies=size(b)) * &
+         spread(b,dim=1,ncopies=size(a))
+  end function outerprod_c
 
 
 
