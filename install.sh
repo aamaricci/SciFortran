@@ -125,6 +125,7 @@ test_mkl(){
 }
 
 
+
 print_ARmake $PLAT
 make all
 if [ $? == 0 ];then
@@ -134,12 +135,27 @@ fi
 cd $WRKDIR
 CONFIGFILE=$WRKDIR/$PLAT/bin/configvars.sh
 MODULEFILE=$WRKDIR/$PLAT/etc/modules/${LNAME}_$PLAT
+mkdir -pv $HOME/.modules.d
+mkdir -pv $HOME/.modules.d/applications
+mkdir -pv $HOME/.modules.d/applications/$LNAME
+cp -vf $MODULEFILE $HOME/.modules.d/applications/$LNAME/$PLAT
+
+
 echo "" >&2
-echo "To use library $UNAME:" >&2
-echo "i.   source $CONFIGFILE (temporary, static)">&2
-echo "ii.  add source $CONFIGFILE to your bash profile (permament, static)"      >&2
-echo "     echo \"source $CONFIGFILE\" >> $HOME/[.bashrc,.bash_profile,.profile]"      >&2
-echo "iii. use $MODULEFILE in your *environment module*: module use $MODULEFILE (temporary, dynamic)">&2
-echo "iv.  copy $MODULEFILE in your *environment module* directory and load it  (semi-permanent, dynamic)">&2
-echo "v.   copy $MODULEFILE in your *environment module* directory and load it in your bash profile (permanent, dynamic)">&2
+echo "TO USE LIBRARY $UNAME:" >&2
+echo "A. add source $CONFIGFILE to your bash profile  (static)"   >&2
+echo "     add the following line to your profile file (e.g. .bashrc)"      >&2
+echo "     > echo \"source $CONFIGFILE\" "      >&2
 echo "">&2
+#which modulecmd
+module avail 2> /dev/null
+if [ $? == 0 ];then
+    echo "MODULES IS AVAILABLE IN YOUR SYSTEM SO YOU CAN USE THIS ALTERNATIVE METHOD:" >&2
+    echo "B. ">&2
+    echo "   load $MODULEFILE in your *environment module (dynamic).">&2
+    echo "     add the following lines to your profile file (e.g. .bashrc)"     >&2
+    echo "     > module use $HOME/.modules.d/applications">&2
+    echo "     and then this to load the library: " >&2
+    echo "     > module load $LNAME/$PLAT">&2
+    echo "">&2
+fi
