@@ -3,8 +3,11 @@ if [ -z "$1" ];then
     echo "target executable not defined. stop."
     exit 1
 fi
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-SUFFIX=_$BRANCH
+BRANCH=_$(git rev-parse --abbrev-ref HEAD)
+if [ $BRANCH == "_master" ];then
+    BRANCH=
+fi
+SUFFIX=$BRANCH
 if [ -z "$BRANCH" ];then
     SUFFIX=
 fi

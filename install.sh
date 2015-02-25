@@ -92,6 +92,7 @@ EOF
 
 
     echo "Copying init script for $UNAME" >&2
+    cp -fv $WRK_INSTALL/bin/scifor_completion.sh                  $BIN_TARGET/scifor_completion.sh
     cp -fv $WRK_INSTALL/bin/configvars.sh                         $BIN_TARGET/configvars.sh
     cat <<EOF >> $BIN_TARGET/configvars.sh
 add_library_to_system ${WRKDIR}/${PLAT}
