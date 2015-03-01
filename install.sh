@@ -134,7 +134,7 @@ echo "A. add source $CONFIGFILE to your bash profile  (static)"   >&2
 echo "     add the following line to your profile file (e.g. .bashrc)"      >&2
 echo "     > echo \"source $CONFIGFILE\" "      >&2
 echo "">&2
-which modulecmd >&2
+module avail 2> /dev/null
 if [ $? == 0 ];then
     echo "MODULES IS AVAILABLE IN YOUR SYSTEM SO YOU CAN USE THIS ALTERNATIVE METHOD:" >&2
     echo "B. ">&2
