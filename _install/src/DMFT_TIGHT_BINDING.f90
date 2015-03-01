@@ -8,32 +8,45 @@ module DMFT_TIGHT_BINDING
 
 
   interface build_hk_model
-     module procedure &
-          build_hk_model_Norb_d,build_hk_model_1_d,&
-          build_hk_model_Norb_c,build_hk_model_1_c
+     module procedure build_hk_model_Norb_d
+     module procedure build_hk_model_1_d 
+     module procedure build_hk_model_Norb_c
+     module procedure build_hk_model_1_c
   end interface build_hk_model
 
 
   interface build_hkr_model
-     module procedure &
-          build_hkr_model_Norb_d,build_hkr_model_1_d,&
-          build_hkr_model_Norb_c,build_hkr_model_1_c
+     module procedure build_hkr_model_Norb_d
+     module procedure build_hkr_model_1_d
+     module procedure build_hkr_model_Norb_c
+     module procedure build_hkr_model_1_c
   end interface build_hkr_model
 
 
   interface write_hk_w90
-     module procedure &
-          write_hk_w90_1,&
-          write_hk_w90_2,&
-          write_hk_w90_3,&
-          write_hk_w90_4
+     module procedure write_hk_w90_1
+     module procedure write_hk_w90_2
+     module procedure write_hk_w90_3
+     module procedure write_hk_w90_4
   end interface write_hk_w90
 
   interface read_hk_w90
-     module procedure &
-          read_hk_w90_1,&
-          read_hk_w90_2
+     module procedure read_hk_w90_1
+     module procedure read_hk_w90_2
   end interface read_hk_w90
+
+
+  interface write_Hloc
+     module procedure write_Hloc_1
+     module procedure write_Hloc_2
+  end interface write_Hloc
+
+
+  interface read_Hloc
+     module procedure read_Hloc_1
+     module procedure read_Hloc_2
+  end interface read_Hloc
+
 
   public :: indx2ix,indx2iy,indx2iz
   public :: coord2indx
@@ -176,8 +189,6 @@ contains
        Hk(:,:,ik) = hk_model([kx,ky,kz],Norb)
     enddo
   end function build_hk_model_Norb_c
-
-
 
 
 
@@ -333,11 +344,11 @@ contains
          complex(8),dimension(N,N) :: hk_model
        end function hk_model
     end interface
-    unit=free_unit()
     Nkx = size(kxgrid)
     Nky = size(kygrid)
     Nkz = size(kzgrid)
     Nktot = Nkx*Nky*Nkz
+    unit=free_unit()
     open(unit,file=reg(file))
     write(unit,'(1A1,1A12,1x,3(A2,1x))')"#",reg(txtfy(Nktot)),reg(txtfy(Nd)),reg(txtfy(Np)),reg(txtfy(Nineq))
     do ik=1,Nktot
@@ -351,6 +362,7 @@ contains
           write(unit,"(20(2F15.9,1x))")(Hk(iorb,jorb),jorb=1,No)
        enddo
     enddo
+    close(unit)
   end subroutine write_hk_w90_1
   !
   subroutine write_hk_w90_2(file,No,Nd,Np,Nineq,hk_model,kxgrid,kygrid,kzgrid)
@@ -367,11 +379,11 @@ contains
          complex(8)                :: hk_model
        end function hk_model
     end interface
-    unit=free_unit()
     Nkx = size(kxgrid)
     Nky = size(kygrid)
     Nkz = size(kzgrid)
     Nktot = Nkx*Nky*Nkz
+    unit=free_unit()
     open(unit,file=reg(file))
     write(unit,'(1A1,1A12,1x,3(A2,1x))')"#",reg(txtfy(Nktot)),reg(txtfy(Nd)),reg(txtfy(Np)),reg(txtfy(Nineq))
     do ik=1,Nktot
@@ -439,6 +451,7 @@ contains
        write(unit,"(3(F15.9,1x))")kx,ky,kz
        write(unit,"((2F15.9,1x))")Hk(ik)
     enddo
+    close(unit)
   end subroutine write_hk_w90_4
 
 
@@ -458,17 +471,17 @@ contains
     logical                     :: ioexist
     complex(8),dimension(:,:,:) :: Hk
     character(len=1)            :: achar
-    unit=free_unit()
     inquire(file=reg(file),exist=ioexist)
     if(.not.ioexist)then
        write(*,*)"can not find file:"//reg(file)
        stop
     endif
-    open(unit,file=reg(file))
     Nkx = size(kxgrid)
     Nky = size(kygrid)
     Nkz = size(kzgrid)
     Nktot = Nkx*Nky*Nkz
+    unit=free_unit()
+    open(unit,file=reg(file))
     read(unit,'(1A1,I12,1x,3(I2,1x))')achar,Nk_,Nd,Np,Nineq
     if(Nk_/=Nktot)stop "read_hk_f90: error in number of k-points: check kgrids and the header"
     if(size(Hk,3)/=Nktot)stop "read_hk_f90: error in size[Hk,3]"
@@ -484,6 +497,7 @@ contains
           read(unit,"(20(2F15.9,1x))")(Hk(iorb,jorb,ik),jorb=1,No)
        enddo
     enddo
+    close(unit)
   end subroutine read_hk_w90_1
   !
   subroutine read_hk_w90_2(file,No,Nd,Np,Nineq,hk,kxgrid,kygrid,kzgrid)
@@ -496,17 +510,18 @@ contains
     logical                     :: ioexist
     complex(8),dimension(:)     :: Hk
     character(len=1)            :: achar
-    unit=free_unit()
+
     inquire(file=reg(file),exist=ioexist)
     if(.not.ioexist)then
        write(*,*)"can not find file:"//reg(file)
        stop
     endif
-    open(unit,file=reg(file))
     Nkx = size(kxgrid)
     Nky = size(kygrid)
     Nkz = size(kzgrid)
     Nktot = Nkx*Nky*Nkz
+    unit=free_unit()
+    open(unit,file=reg(file))
     read(unit,'(1A1,I12,1x,3(I2,1x))')achar,Nk_,Nd,Np,Nineq
     if(Nk_/=Nktot)stop "read_hk_f90: error in number of k-points: check kgrids and the header"
     if(size(Hk,1)/=Nktot)stop "read_hk_f90: error in dimension Hk,1"
@@ -518,6 +533,7 @@ contains
        kzgrid(iz)=kz
        read(unit,"(20(2F15.9,1x))")Hk(ik)
     enddo
+    close(unit)
   end subroutine read_hk_w90_2
 
 
@@ -642,7 +658,7 @@ contains
           do ilat=1,Nlat
              do iorb=1,Norb
                 io=iorb + (ilat-1)*Norb
-                Eval(ic,ilat,iorb)=Efoo(io)
+                Eval(ilat,iorb,ic)=Efoo(io)
              enddo
           enddo
        enddo
@@ -658,14 +674,6 @@ contains
     enddo
     close(unit)
   end subroutine solve_HkR_along_BZpath
-
-
-
-
-
-
-
-
 
 
 
@@ -801,7 +809,7 @@ contains
   !-------------------------------------------------------------------------------------------
   !PURPOSE:  write/read the local part of the Hamiltonian to a file
   !-------------------------------------------------------------------------------------------
-  subroutine write_hloc(hloc,file)
+  subroutine write_hloc_1(hloc,file) ![Nlso][Nlso]
     complex(8),dimension(:,:) :: Hloc
     character(len=*),optional :: file
     integer                   :: iorb,jorb,Ni,Nj,unit
@@ -812,17 +820,70 @@ contains
     endif
     Ni=size(Hloc,1)
     Nj=size(Hloc,2)
-    do iorb=1,Ni
-       write(unit,"(90F21.12)")(dreal(Hloc(iorb,jorb)),jorb=1,Nj)
-    enddo
-    write(unit,*)""
-    do iorb=1,Ni
-       write(unit,"(90F21.12)")(dimag(Hloc(iorb,jorb)),jorb=1,Nj)
-    enddo
-    if(present(file))close(unit)
-  end subroutine write_hloc
+    if(present(file))then
+       do iorb=1,Ni
+          write(unit,"(90F12.6)")(dreal(Hloc(iorb,jorb)),jorb=1,Nj)
+       enddo
+       write(unit,*)""
+       do iorb=1,Ni
+          write(unit,"(90F12.6)")(dimag(Hloc(iorb,jorb)),jorb=1,Nj)
+       enddo
+       write(unit,*)""
+       close(unit)
+    else
+       do iorb=1,Ni
+          write(unit,"(20(A1,F7.3,A1,F7.3,A1,2x))")&
+               ('(',dreal(Hloc(iorb,jorb)),',',dimag(Hloc(iorb,jorb)),')',jorb =1,Nj)
+       enddo
+       write(unit,*)""
+    endif
+  end subroutine write_hloc_1
 
-  subroutine read_hloc(hloc,file)
+  subroutine write_hloc_2(hloc,file) ![Nspin][Nspin][Norb][Norb]
+    complex(8),dimension(:,:,:,:) :: Hloc
+    character(len=*),optional     :: file
+    integer                       :: iorb,jorb,ispin,jspin
+    integer                       :: Norb,Nspin,unit
+    unit=6;
+    if(present(file))then
+       unit=free_unit()
+       open(unit,file=reg(file))
+    endif
+    Nspin=size(Hloc,1)
+    if(size(Hloc,2)/=Nspin)stop "write_hloc error: size[Hloc,2] != size[Hloc,1] == Nspin"
+    Norb=size(Hloc,3)
+    if(size(Hloc,4)/=Nspin)stop "write_hloc error: size[Hloc,4] != size[Hloc,3] == Norb"
+    if(present(file))then
+       do ispin=1,Nspin
+          do iorb=1,Norb
+             write(unit,"(90F12.6)")((dreal(Hloc(ispin,jspin,iorb,jorb)),jorb=1,Norb),jspin=1,Nspin)
+          enddo
+       enddo
+       write(unit,*)""
+       do ispin=1,Nspin
+          do iorb=1,Norb
+             write(unit,"(90F12.6)")((dimag(Hloc(ispin,jspin,iorb,jorb)),jorb=1,Norb),jspin=1,Nspin)
+          enddo
+       enddo
+       write(unit,*)""
+       close(unit)
+    else
+       do ispin=1,Nspin
+          do iorb=1,Norb
+             write(unit,"(20(A1,F7.3,A1,F7.3,A1,2x))")&
+                  (&
+                  (&
+                  '(',dreal(Hloc(ispin,jspin,iorb,jorb)),',',dimag(Hloc(ispin,jspin,iorb,jorb)),')',&
+                  jorb =1,Norb),&
+                  jspin=1,Nspin)
+          enddo         
+       enddo
+       write(unit,*)""
+    endif
+  end subroutine write_hloc_2
+
+
+  subroutine read_hloc_1(hloc,file)
     complex(8),dimension(:,:)                    :: Hloc
     character(len=*)                             :: file
     integer                                      :: iorb,jorb,Ni,Nj,unit
@@ -832,18 +893,42 @@ contains
     Ni=size(Hloc,1)
     Nj=size(Hloc,2)
     do iorb=1,Ni
-       read(unit,"(90F21.12)")(reHloc(iorb,jorb),jorb=1,Nj)
+       read(unit,"(90F12.6)")(reHloc(iorb,jorb),jorb=1,Nj)
     enddo
     write(unit,*)""
     do iorb=1,Ni
-       read(unit,"(90F21.12)")(imHloc(iorb,jorb),jorb=1,Nj)
+       read(unit,"(90F12.6)")(imHloc(iorb,jorb),jorb=1,Nj)
     enddo
     close(unit)
     Hloc = dcmplx(reHloc,imHloc)
-  end subroutine read_hloc
+  end subroutine read_hloc_1
 
-
-
+  subroutine read_hloc_2(hloc,file)
+    complex(8),dimension(:,:,:,:)                                          :: Hloc
+    character(len=*)                                                       :: file
+    integer                                                                :: iorb,jorb,ispin,jspin,unit
+    integer                                                                :: Nspin,Norb
+    real(8),dimension(size(Hloc,1),size(Hloc,2),size(Hloc,3),size(Hloc,4)) :: reHloc,imHloc
+    unit=free_unit()   
+    open(unit,file=reg(file))
+    Nspin=size(Hloc,1)
+    if(size(Hloc,2)/=Nspin)stop "read_hloc error: size[Hloc,2] != size[Hloc,1] == Nspin"
+    Norb=size(Hloc,3)
+    if(size(Hloc,4)/=Nspin)stop "read_hloc error: size[Hloc,4] != size[Hloc,3] == Norb"
+    do ispin=1,Nspin
+       do iorb=1,Norb
+          read(unit,"(1000F12.6)")((reHloc(ispin,jspin,iorb,jorb),jorb=1,Norb),jspin=1,Nspin)
+       enddo
+    enddo
+    read(unit,*)
+    do ispin=1,Nspin
+       do iorb=1,Norb
+          read(unit,"(1000F12.6)")((imHloc(ispin,jspin,iorb,jorb),jorb=1,Norb),jspin=1,Nspin)
+       enddo
+    enddo
+    close(unit)
+    Hloc = dcmplx(reHloc,imHloc)
+  end subroutine read_hloc_2
 
 
 
