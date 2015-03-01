@@ -1,30 +1,30 @@
-MODULE SF_MPI_VARS
-  implicit none
-  integer          :: MPIID=0
-  integer          :: MPISIZE=1
-  integer          :: MPIERR
-  character(len=3) :: MPICHAR
-  ! public :: init_mpi
-  ! public :: finalize_mpi
-  ! contains
-  !   subroutine init_mpi
-  !     call MPI_INIT(mpiERR)
-  !     call MPI_COMM_RANK(MPI_COMM_WORLD,mpiID,mpiERR)
-  !     call MPI_COMM_SIZE(MPI_COMM_WORLD,mpiSIZE,mpiERR)
-  !     write(*,"(A,I4,A,I4,A)")'Processor ',mpiID,' of ',mpiSIZE,' is alive'
-  !     call MPI_BARRIER(MPI_COMM_WORLD,mpiERR)
-  !   end subroutine init_mpi
-  !   subroutine finalize_mpi
-  !     call MPI_FINALIZE(mpiERR)
-  !   end subroutine finalize_mpi
-END MODULE SF_MPI_VARS
+! MODULE SF_MPI_VARS
+!   implicit none
+!   integer          :: MPIID=0
+!   integer          :: MPISIZE=1
+!   integer          :: MPIERR
+!   character(len=3) :: MPICHAR
+!   ! public :: init_mpi
+!   ! public :: finalize_mpi
+!   ! contains
+!   !   subroutine init_mpi
+!   !     call MPI_INIT(mpiERR)
+!   !     call MPI_COMM_RANK(MPI_COMM_WORLD,mpiID,mpiERR)
+!   !     call MPI_COMM_SIZE(MPI_COMM_WORLD,mpiSIZE,mpiERR)
+!   !     write(*,"(A,I4,A,I4,A)")'Processor ',mpiID,' of ',mpiSIZE,' is alive'
+!   !     call MPI_BARRIER(MPI_COMM_WORLD,mpiERR)
+!   !   end subroutine init_mpi
+!   !   subroutine finalize_mpi
+!   !     call MPI_FINALIZE(mpiERR)
+!   !   end subroutine finalize_mpi
+! END MODULE SF_MPI_VARS
 
-MODULE SF_OMP_VARS
-  implicit none
-  integer :: omp_num_threads
-  integer :: omp_id
-  integer :: omp_size
-END MODULE SF_OMP_VARS
+! MODULE SF_OMP_VARS
+!   implicit none
+!   integer :: omp_num_threads
+!   integer :: omp_id
+!   integer :: omp_size
+! END MODULE SF_OMP_VARS
 
 
 
@@ -810,10 +810,19 @@ MODULE SF_PAULI
   complex(8),parameter :: xi=(0.d0,1.d0)
   complex(8),parameter :: one=(1.d0,0.d0)
 
-  complex(8),dimension(2,2),parameter :: pauli_tau_0=reshape([one,zero,zero,one],[2,2])
-  complex(8),dimension(2,2),parameter :: pauli_tau_x=reshape([zero,one,one,zero],[2,2])
-  complex(8),dimension(2,2),parameter :: pauli_tau_y=reshape([zero,xi,-xi,zero],[2,2])
-  complex(8),dimension(2,2),parameter :: pauli_tau_z=reshape([one,zero,zero,-one],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_0=reshape([one,zero,zero,one],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_x=reshape([zero,one,one,zero],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_y=reshape([zero,xi,-xi,zero],[2,2])
+  complex(8),dimension(2,2),parameter :: pauli_z=reshape([one,zero,zero,-one],[2,2])
+  !
+  complex(8),dimension(2,2),parameter :: pauli_1=pauli_x
+  complex(8),dimension(2,2),parameter :: pauli_2=pauli_y
+  complex(8),dimension(2,2),parameter :: pauli_3=pauli_z
+  !
+  complex(8),dimension(2,2),parameter :: pauli_tau_0=pauli_0
+  complex(8),dimension(2,2),parameter :: pauli_tau_x=pauli_x
+  complex(8),dimension(2,2),parameter :: pauli_tau_y=pauli_y
+  complex(8),dimension(2,2),parameter :: pauli_tau_z=pauli_z
   !
   complex(8),dimension(2,2),parameter :: pauli_tau_1=pauli_tau_x
   complex(8),dimension(2,2),parameter :: pauli_tau_2=pauli_tau_y
@@ -829,6 +838,15 @@ MODULE SF_PAULI
   complex(8),dimension(2,2),parameter :: pauli_sigma_3=pauli_tau_z
 
 
+  public :: pauli_0
+  public :: pauli_x
+  public :: pauli_y
+  public :: pauli_z
+  !
+  public :: pauli_1
+  public :: pauli_2
+  public :: pauli_3
+  !
   public :: pauli_tau_0
   public :: pauli_tau_x
   public :: pauli_tau_y
@@ -943,14 +961,13 @@ END MODULE SF_PAULI
 
 
 module SF_CONSTANTS
-  USE SF_MPI_VARS
-  USE SF_OMP_VARS
+  ! USE SF_MPI_VARS
+  ! USE SF_OMP_VARS
   USE SF_COLORS
   USE SF_PAULI
   implicit none
 
-  !PARAMETERS
-  !===============================================================
+  !COMMONLY USED PARAMETERS
   complex(8),parameter,public :: zero=(0.d0,0.d0)
   complex(8),parameter,public :: xi=(0.d0,1.d0)
   complex(8),parameter,public :: one=(1.d0,0.d0)
@@ -969,17 +986,25 @@ module SF_CONSTANTS
   integer,parameter,public    :: sp = kind(1.0)    ! "single" precision
 
 
+  !MPI VARIABLES:
+  integer                     :: MPIID=0
+  integer                     :: MPISIZE=1
+  integer                     :: MPIERR
+  character(len=3)            :: MPICHAR
+
+
+  !PHYSICAL CONSTANTS (expressed in the SI unit)
   real(8),parameter,public ::                                 Avogadro_constant=  0.602214129000D+24
   real(8),parameter,public ::                                     Bohr_magneton=  0.927400968000D-23
   real(8),parameter,public ::                             Bohr_magneton_in_eVoT=  0.578838180660D-04
   real(8),parameter,public ::                             Bohr_magneton_in_HzoT=  0.139962455500D+11
-  real(8),parameter,public ::         Bohr_magneton_in_inverse_meters_per_tesla=     46.686449800000
-  real(8),parameter,public ::                              Bohr_magneton_in_KoT=      0.671713880000
+  real(8),parameter,public ::         Bohr_magneton_in_inverse_meters_per_tesla=     46.6864498D0000
+  real(8),parameter,public ::                              Bohr_magneton_in_KoT=      0.67171388D000
   real(8),parameter,public ::                                       Bohr_radius=  0.529177210920D-10
   real(8),parameter,public ::                                Boltzmann_constant=  0.138064880000D-22
   real(8),parameter,public ::                        Boltzmann_constant_in_eVoK=  0.861733240000D-04
   real(8),parameter,public ::                        Boltzmann_constant_in_HzoK=  0.208366180000D+11
-  real(8),parameter,public ::   Boltzmann_constant_in_inverse_meters_per_kelvin=     69.503476000000
+  real(8),parameter,public ::   Boltzmann_constant_in_inverse_meters_per_kelvin=     69.503476D00000
   real(8),parameter,public ::                                Compton_wavelength=  0.242631023890D-11
   real(8),parameter,public ::                      Compton_wavelength_over_2_pi=  0.386159268000D-12
   real(8),parameter,public ::                                 electric_constant=  0.885418781700D-11
@@ -991,10 +1016,10 @@ module SF_CONSTANTS
   real(8),parameter,public ::         electron_mag__mom__to_Bohr_magneton_ratio= -0.100115965218D+01
   real(8),parameter,public ::                                     electron_mass=  0.910938291000D-30
   real(8),parameter,public ::                   electron_mass_energy_equivalent=  0.818710506000D-13
-  real(8),parameter,public ::            electron_mass_energy_equivalent_in_MeV=      0.510998928000
+  real(8),parameter,public ::            electron_mass_energy_equivalent_in_MeV=      0.510998928D00
   real(8),parameter,public ::                                     electron_volt=  0.160217656500D-18
   real(8),parameter,public ::       electron_volt_atomic_mass_unit_relationship=  0.107354415000D-08
-  real(8),parameter,public ::                electron_volt_hartree_relationship=      0.036749323790
+  real(8),parameter,public ::                electron_volt_hartree_relationship=     0.03674932379D0
   real(8),parameter,public ::                  electron_volt_hertz_relationship=  0.241798934800D+15
   real(8),parameter,public ::          electron_volt_inverse_meter_relationship=  0.806554429000D+06
   real(8),parameter,public ::                  electron_volt_joule_relationship=  0.160217656500D-18
@@ -1015,7 +1040,7 @@ module SF_CONSTANTS
   real(8),parameter,public ::                 kelvin_electron_volt_relationship=  0.861733240000D-04
   real(8),parameter,public ::                       kelvin_hartree_relationship=  0.316681140000D-05
   real(8),parameter,public ::                         kelvin_hertz_relationship=  0.208366180000D+11
-  real(8),parameter,public ::                 kelvin_inverse_meter_relationship=     69.503476000000
+  real(8),parameter,public ::                 kelvin_inverse_meter_relationship=     69.503476D00000
   real(8),parameter,public ::                         kelvin_joule_relationship=  0.138064880000D-22
   real(8),parameter,public ::                      kelvin_kilogram_relationship=  0.153617900000D-39
   real(8),parameter,public ::            kilogram_atomic_mass_unit_relationship=  0.602214129000D+27
@@ -1029,11 +1054,11 @@ module SF_CONSTANTS
   real(8),parameter,public ::                            natural_unit_of_action=  0.105457172600D-33
   real(8),parameter,public ::                    natural_unit_of_action_in_eV_s=  0.658211928000D-15
   real(8),parameter,public ::                            natural_unit_of_energy=  0.818710506000D-13
-  real(8),parameter,public ::                     natural_unit_of_energy_in_MeV=      0.510998928000
+  real(8),parameter,public ::                     natural_unit_of_energy_in_MeV=      0.510998928D00
   real(8),parameter,public ::                            natural_unit_of_length=  0.386159268000D-12
   real(8),parameter,public ::                              natural_unit_of_mass=  0.910938291000D-30
   real(8),parameter,public ::                            natural_unit_of_mom_um=  0.273092429000D-21
-  real(8),parameter,public ::                   natural_unit_of_mom_um_in_MeVoc=      0.510998928000
+  real(8),parameter,public ::                   natural_unit_of_mom_um_in_MeVoc=      0.510998928D0
   real(8),parameter,public ::                              natural_unit_of_time=  0.128808866833D-20
   real(8),parameter,public ::                          natural_unit_of_velocity=  0.299792458000D+09
   real(8),parameter,public ::                 Newtonian_constant_of_gravitation=  0.667384000000D-10
@@ -1042,22 +1067,74 @@ module SF_CONSTANTS
   real(8),parameter,public ::                         Planck_constant_over_2_pi=  0.105457172600D-33
   real(8),parameter,public ::                                  Rydberg_constant=  0.109737315685D+08
   real(8),parameter,public ::                    Rydberg_constant_times_c_in_Hz=  0.328984196036D+16
-  real(8),parameter,public ::                   Rydberg_constant_times_hc_in_eV=     13.605692530000
+  real(8),parameter,public ::                   Rydberg_constant_times_hc_in_eV=     13.60569253d000
   real(8),parameter,public ::                    Rydberg_constant_times_hc_in_J=  0.217987217100D-17
   real(8),parameter,public ::                          speed_of_light_in_vacuum=  0.299792458000D+09
-  real(8),parameter,public ::                  standard_acceleration_of_gravity=      9.806650000000
+  real(8),parameter,public ::                  standard_acceleration_of_gravity=      9.80665D000000
   real(8),parameter,public ::                         Stefan_Boltzmann_constant=  0.567037300000D-07
-
-
 
 
 
   public :: timestamp
 
 
+  interface isnan
+     module procedure i_isnan
+     module procedure d_isnan
+     module procedure z_isnan
+  end interface isnan
+  public :: isnan
+
+  interface isinfty
+     module procedure i_isinfty
+     module procedure d_isinfty
+     module procedure z_isinfty
+  end interface isinfty
+  public :: isinfty
+
+
 
 contains
 
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: test if a given number if infinity
+  !+-----------------------------------------------------------------------------+!
+  function i_isinfty(a) result(bool)
+    integer :: a
+    logical :: bool
+    bool = (a-1 == a)
+  end function i_isinfty
+  function d_isinfty(a) result(bool)
+    real(8) :: a
+    logical :: bool
+    bool = (a-1 == a)
+  end function d_isinfty
+  function z_isinfty(a) result(bool)
+    complex(8) :: a
+    logical    :: bool
+    bool = (a-1 == a)
+  end function z_isinfty
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: test if a given number is actually NaN
+  !+-----------------------------------------------------------------------------+!
+  function i_isnan(a) result(bool)
+    integer :: a
+    logical :: bool
+    bool = (a /= a)
+  end function i_isnan
+  function d_isnan(a) result(bool)
+    real(8) :: a
+    logical :: bool
+    bool = (a /= a)
+  end function d_isnan
+  function z_isnan(a) result(bool)
+    complex(8) :: a
+    logical    :: bool
+    bool = (a /= a)
+  end function z_isnan
 
 
   !+-------------------------------------------------------------------+

@@ -4,7 +4,7 @@ module IOFILE
   private
 
   !file size to be stored automagically (in Kb)
-  integer,public,save :: store_size=2048
+  integer,save :: store_size=2048
 
   interface txtfy
      module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
@@ -30,7 +30,9 @@ module IOFILE
   public :: file_size
   public :: file_length
   public :: file_info
-  public :: free_unit,free_units
+  public :: free_unit
+  public :: free_units
+  public :: set_store_size
   public :: data_open
   public :: data_store
   public :: reg_filename,reg,txtfit,txtcut

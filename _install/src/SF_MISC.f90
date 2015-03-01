@@ -24,10 +24,6 @@ module SF_MISC
      module procedure D_nearless, R_nearless, I_nearless
   end interface nearless
 
-  interface outerprod
-     module procedure outerprod_d,outerprod_c
-  end interface outerprod
-
 
   !SORT,UNIQ,SHUFFLE:
   public :: sort
@@ -35,26 +31,9 @@ module SF_MISC
   public :: reshuffle
   public :: uniq
   public :: uniinv
-  public  :: unista
-  !OUTER-PRODUCT:
-  public :: outerprod
-
+  public :: unista
 
 contains
-
-
-  function outerprod_d(a,b) result(outerprod)
-    real(8), dimension(:), intent(in)   :: a,b
-    real(8), dimension(size(a),size(b)) :: outerprod
-    outerprod = spread(a,dim=2,ncopies=size(b)) * &
-         spread(b,dim=1,ncopies=size(a))
-  end function outerprod_d
-  function outerprod_c(a,b) result(outerprod)
-    complex(8), dimension(:), intent(in)   :: a,b
-    complex(8), dimension(size(a),size(b)) :: outerprod
-    outerprod = spread(a,dim=2,ncopies=size(b)) * &
-         spread(b,dim=1,ncopies=size(a))
-  end function outerprod_c
 
 
 
