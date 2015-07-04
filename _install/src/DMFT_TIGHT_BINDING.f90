@@ -196,8 +196,6 @@ contains
 
 
 
-
-
   !-------------------------------------------------------------------------------------------
   !PURPOSE:  build the \hat{H}({\mathbf k};i,j) Hamiltonian matrix from the function hkr_model
   ! different cases here: 
@@ -453,9 +451,6 @@ contains
     enddo
     close(unit)
   end subroutine write_hk_w90_4
-
-
-
 
 
   !-------------------------------------------------------------------------------------------
@@ -773,21 +768,6 @@ contains
        enddo
     enddo
   end function kgrid_from_path
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

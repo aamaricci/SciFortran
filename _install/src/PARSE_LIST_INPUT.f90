@@ -43,6 +43,7 @@ module PARSE_LIST_INPUT
   type(input_list)   :: default_list
   character(len=255) :: p_buffer
   character(len=7)   :: file_status
+  integer,parameter  :: pos_comment=46 !72
 
 contains  
 
