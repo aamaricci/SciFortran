@@ -20,8 +20,13 @@ MODULE OPTIMIZE_ROOT_FINDING
   public :: fzero_brentq
   public :: zbrent
 
+  interface fsolve
+     module procedure fsolve_ff
+     module procedure fsolve_sub
+  end interface fsolve
   public :: fsolve
-  public :: fzero_hybrd
+  
+  public :: fzero_hybrd         !this should be replaced by fsolve_sub
 
   public :: fzero_broyden
   public :: broydn            !backward compatibility
@@ -134,7 +139,7 @@ contains
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   !MULTI-DIMENSIONAL:
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  subroutine fsolve(ff,x,tol,info)
+  subroutine fsolve_ff(ff,x,tol,info)
     procedure(hybrd_func)      :: ff
     real(8),dimension(:)       :: x      
     real(8),optional           :: tol
@@ -149,7 +154,7 @@ contains
     n=size(x)
     call hybrd1(func,n,x,fvec,tol_,info_)
     if(present(info))info=info_
-  end subroutine fsolve
+  end subroutine fsolve_ff
   !
   subroutine func(n,x,fvec,iflag)
     integer ::  n
@@ -158,6 +163,29 @@ contains
     integer ::  iflag
     fvec(:) = hybrd_funcv(x)
   end subroutine func
+
+  subroutine fsolve_sub(func,x,tol,info)
+    interface
+       subroutine func(n,x,fvec,iflag)
+         integer :: n
+         real(8) :: x(n)
+         real(8) :: fvec(n)
+         integer :: iflag
+       end subroutine func
+    end interface
+    real(8),dimension(:)       :: x
+    real(8),dimension(size(x)) :: fvec
+    integer                    :: n
+    real(8),optional           :: tol
+    integer,optional           :: info
+    real(8)                    :: tol_
+    integer                    :: info_
+    external func
+    tol_ = 1.d-15;if(present(tol))tol_=tol
+    n=size(x)
+    call hybrd1(func,n,x,fvec,tol_,info_)
+    if(present(info))info=info_
+  end subroutine fsolve_sub
 
   subroutine fzero_hybrd(func,x,tol,info)
     real(8),dimension(:)       :: x
