@@ -202,8 +202,67 @@ module SF_LINALG
   end interface
 
 
+  interface cross_product
+     ! module procedure cross_2d_d
+     module procedure cross_3d_d
+     ! module procedure cross_2d_c
+     module procedure cross_3d_c
+  end interface cross_product
+  public :: cross_product
+
+  interface s3_product
+     module procedure s3_product_d
+     module procedure s3_product_c
+  end interface s3_product
+  public :: s3_product
+
 
 contains
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE:  cross or vector product for 2d and 3d vectors. 
+  !+-----------------------------------------------------------------------------+!
+  ! function cross_2d_d(a,b) result(c)
+  !   real(8),dimension(2) :: a,b
+  !   real(8)              :: c
+  !   c = a(1)*b(2) - a(2)*b(1)
+  ! end function cross_2d_d
+  ! function cross_2d_c(a,b) result(c)
+  !   complex(8),dimension(2) :: a,b
+  !   complex(8)              :: c
+  !   c = a(1)*b(2) - a(2)*b(1)
+  ! end function cross_2d_c
+  function cross_3d_d(a,b) result(c)
+    real(8),dimension(3) :: a,b
+    real(8),dimension(3) :: c
+    c(1) = a(2)*b(3) - a(3)*b(2)
+    c(2) = a(3)*b(1) - a(1)*b(3)
+    c(3) = a(1)*b(2) - a(2)*b(1)
+  end function cross_3d_d
+  function cross_3d_c(a,b) result(c)
+    complex(8),dimension(3) :: a,b
+    complex(8),dimension(3) :: c
+    c(1) = a(2)*b(3) - a(3)*b(2)
+    c(2) = a(3)*b(1) - a(1)*b(3)
+    c(3) = a(1)*b(2) - a(2)*b(1)
+  end function cross_3d_c
+
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: evaluate the S3 product A.(BxC) for 3d vectors
+  !+-----------------------------------------------------------------------------+!
+  function s3_product_d(a,b,c) result(s3)
+    real(8),dimension(3),intent(in) :: a,b,c
+    real(8)                         :: s3
+    s3 = dot_product(a,cross_product(b, c))
+  end function s3_product_d
+  function s3_product_c(a,b,c) result(s3)
+    complex(8),dimension(3),intent(in) :: a,b,c
+    real(8)                            :: s3
+    s3 = dot_product(a,cross_product(b, c))
+  end function s3_product_c
 
 
 
