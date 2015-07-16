@@ -302,7 +302,7 @@ subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   Rmin=minval(dimag(Y));Rmax=maxval(dimag(Y))
   Zmin=minval(Rmin);Zmax=maxval(Rmax)
   open(10,file=adjustl(trim(pname))//"_im_map.gp")
-  write(10,*)"gnuplot -persist << EOF"
+  ! write(10,*)"gnuplot -persist << EOF"
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
   write(10,*)"#set output 'im_"//trim(fname)//".gif'"

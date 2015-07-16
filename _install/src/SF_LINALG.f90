@@ -32,6 +32,14 @@ module SF_LINALG
   end interface eigvals
   public :: eigvals
 
+  ! eigenvalues for symmetric/hermitian matrices:
+  interface eigvalsh
+     module procedure deigvalsh
+     module procedure zeigvalsh
+  end interface eigvalsh
+  public :: eigvalsh
+
+
   ! matrix inversion for real/complex matrices:
   interface inv
      module procedure dinv
@@ -202,8 +210,67 @@ module SF_LINALG
   end interface
 
 
+  interface cross_product
+     ! module procedure cross_2d_d
+     module procedure cross_3d_d
+     ! module procedure cross_2d_c
+     module procedure cross_3d_c
+  end interface cross_product
+  public :: cross_product
+
+  interface s3_product
+     module procedure s3_product_d
+     module procedure s3_product_c
+  end interface s3_product
+  public :: s3_product
+
 
 contains
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE:  cross or vector product for 2d and 3d vectors. 
+  !+-----------------------------------------------------------------------------+!
+  ! function cross_2d_d(a,b) result(c)
+  !   real(8),dimension(2) :: a,b
+  !   real(8)              :: c
+  !   c = a(1)*b(2) - a(2)*b(1)
+  ! end function cross_2d_d
+  ! function cross_2d_c(a,b) result(c)
+  !   complex(8),dimension(2) :: a,b
+  !   complex(8)              :: c
+  !   c = a(1)*b(2) - a(2)*b(1)
+  ! end function cross_2d_c
+  function cross_3d_d(a,b) result(c)
+    real(8),dimension(3) :: a,b
+    real(8),dimension(3) :: c
+    c(1) = a(2)*b(3) - a(3)*b(2)
+    c(2) = a(3)*b(1) - a(1)*b(3)
+    c(3) = a(1)*b(2) - a(2)*b(1)
+  end function cross_3d_d
+  function cross_3d_c(a,b) result(c)
+    complex(8),dimension(3) :: a,b
+    complex(8),dimension(3) :: c
+    c(1) = a(2)*b(3) - a(3)*b(2)
+    c(2) = a(3)*b(1) - a(1)*b(3)
+    c(3) = a(1)*b(2) - a(2)*b(1)
+  end function cross_3d_c
+
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: evaluate the S3 product A.(BxC) for 3d vectors
+  !+-----------------------------------------------------------------------------+!
+  function s3_product_d(a,b,c) result(s3)
+    real(8),dimension(3),intent(in) :: a,b,c
+    real(8)                         :: s3
+    s3 = dot_product(a,cross_product(b, c))
+  end function s3_product_d
+  function s3_product_c(a,b,c) result(s3)
+    complex(8),dimension(3),intent(in) :: a,b,c
+    real(8)                            :: s3
+    s3 = dot_product(a,cross_product(b, c))
+  end function s3_product_c
 
 
 
@@ -525,7 +592,7 @@ contains
   !-------------------------------------------------------------------------------------------
   function deigvals(A) result(lam)
     real(8), intent(in)     :: A(:, :) ! matrix for eigenvalue compuation
-    complex(8), allocatable :: lam(:)  ! eigenvalues: A c = lam c
+    complex(8)              :: lam(size(A,1))  ! eigenvalues: A c = lam c
     real(8), allocatable    :: At(:,:),vl(:,: ),vr(:,:),wi(:),work(:),wr(:)
     real(8)                 :: lwork_guess(1)
     integer                 :: info, lda, ldvl, ldvr, lwork, n
@@ -571,7 +638,7 @@ contains
 
   function zeigvals(A) result(lam)
     complex(8), intent(in)  :: A(:, :)  ! matrix to solve eigenproblem for
-    complex(8), allocatable :: lam(:)  ! eigenvalues: A c = lam c
+    complex(8)              :: lam(size(A,1))  ! eigenvalues: A c = lam c
     integer                 :: info, lda, ldvl, ldvr, lwork, n, lrwork
     real(8), allocatable    :: rwork(:)
     complex(8), allocatable :: At(:,:), vl(:,:), vr(:,:), work(:)
@@ -616,6 +683,82 @@ contains
     end if
   end function zeigvals
 
+
+
+
+  !-------------------------------------------------------------------------------------------
+  !PURPOSE:  comment
+  !-------------------------------------------------------------------------------------------
+  function deigvalsh(A) result(lam)
+    real(8), intent(in)  :: A(:, :)         ! matrix for eigenvalue compuation
+    real(8)              :: lam(size(A,1))  ! eigenvalues: A c = lam c
+    real(8), allocatable :: At(:,:),work(:),iwork(:)
+    real(8)              :: lwork_guess(1),liwork_guess(1)
+    integer              :: info,lda,lwork,liwork,n
+    lda   = size(A(:,1))
+    n     = size(A(1,:))
+    call assert_shape(A,[n,n],"solve","A")
+    allocate(At(n,n))
+    !Copy the input Matrix
+    At    = A
+    !1st Call: Query the right size for the working array.
+    call dsyevd('N','U', n, At, lda, lam, lwork_guess, -1, liwork_guess, -1, info )
+    if(info /= 0) then
+       print*, "dsyevd returned info = ",info
+       stop
+    endif
+    lwork  = int(lwork_guess(1))  ;allocate(work(lwork))
+    liwork = int(liwork_guess(1)) ;allocate(iwork(liwork))
+    !2nd Call: Actual solution of the eigenproblem
+    call dsyevd('N','U', n, At, lda, lam, work, lwork, iwork, liwork, info )
+    if(info /= 0) then
+       print *, "ssyevd returned info = ",info
+       if (info < 0) then
+          print*, "the",-info,"-th argument had an illegal value"
+       else
+          print*,"the algorithm failed to converge"
+          print*,"the",info,"off-diagonal elements of an intermediate"
+          print*,"tridiagonal form did not converge to zero"
+       end if
+       stop 'deigvalsh error: 2nd call dsyevd'
+    end if
+  end function deigvalsh
+
+  function zeigvalsh(A) result(lam)
+    complex(8),intent(in) :: A(:, :)         ! matrix for eigenvalue compuation
+    real(8)               :: lam(size(A,1))  ! eigenvalues: A c = lam c
+    real(8), allocatable  :: At(:,:),work(:),rwork(:),iwork(:)
+    real(8)               :: lwork_guess(1),lrwork_guess(1),liwork_guess(1)
+    integer               :: info, lda,lwork,lrwork,liwork,n
+    lda   = size(A(:,1))
+    n     = size(A(1,:))
+    call assert_shape(A,[n,n],"solve","A")
+    allocate(At(n,n))
+    !Copy the input Matrix
+    At    = A
+    !1st Call: Query the right size for the working array.
+    call zheevd('N','U', n, At, lda, lam, lwork_guess,-1, lrwork_guess,-1, liwork_guess,-1, info )
+    if(info /= 0) then
+       print*, "zsyevd returned info = ",info
+       stop
+    endif
+    lwork  = int(lwork_guess(1))  ;allocate(work(lwork))
+    rwork  = int(lrwork_guess(1)) ;allocate(rwork(lrwork))
+    liwork = int(liwork_guess(1)) ;allocate(iwork(liwork))
+    !2nd Call: Actual solution of the eigenproblem
+    call zheevd('N','U', n, At, lda, lam, work,lwork, rwork,lrwork, iwork,liwork, info )
+    if(info /= 0) then
+       print *, "zheevd returned info = ",info
+       if (info < 0) then
+          print*, "the",-info,"-th argument had an illegal value"
+       else
+          print*,"the algorithm failed to converge"
+          print*,"the",info,"off-diagonal elements of an intermediate"
+          print*,"tridiagonal form did not converge to zero"
+       end if
+       stop 'zeigvalsh error: 2nd call zheevd'
+    end if
+  end function zeigvalsh
 
 
 
@@ -1520,80 +1663,45 @@ contains
   ! two complex matrices M1 and M2. nr1(nr2) and nc1(nc2) are 
   ! the number of rows and columns of the Matrix M1 and M2
   !---------------------------------------------------------------------
-  ! function i_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
-  !   integer               :: i, j
-  !   integer,intent(in)    :: nr1,nc1,nr2,nc2
-  !   integer,intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
-  !   integer               :: M1_kp_M2(nr1*nr2,nc1*nc2)
-  !   M1_kp_M2 = zero
-  !   forall(i =1:nr1,j=1:nc1)
-  !      M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
-  !   end forall
-  ! end function i_kronecker_product
-  ! !
-  ! function d_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
-  !   integer               :: i, j
-  !   integer,intent(in)    :: nr1,nc1,nr2,nc2
-  !   real(8),intent(in)    :: M1(nr1,nc1), M2(nr2,nc2)
-  !   real(8)               :: M1_kp_M2(nr1*nr2,nc1*nc2)
-  !   M1_kp_M2 = zero
-  !   forall(i =1:nr1,j=1:nc1)
-  !      M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
-  !   end forall
-  ! end function d_kronecker_product
-  ! !
-  ! function c_kronecker_product(M1, nr1, nc1, M2, nr2, nc2) result(M1_kp_M2)
-  !   integer               :: i, j
-  !   integer,intent(in)    :: nr1,nc1,nr2,nc2
-  !   complex(8),intent(in) :: M1(nr1,nc1), M2(nr2,nc2)
-  !   complex(8)            :: M1_kp_M2(nr1*nr2,nc1*nc2)
-  !   M1_kp_M2 = zero
-  !   forall(i =1:nr1,j=1:nc1)
-  !      M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
-  !   end forall
-  ! end function c_kronecker_product
-  function i_kronecker_product(M1,M2) result(M1_kp_M2)
-    integer               :: i, j
-    integer               :: nr1,nc1,nr2,nc2
-    integer,intent(in)    :: M1(:,:), M2(:,:)
-    integer               :: M1_kp_M2(size(M1,1)*size(M2,1),size(M1,2)*size(M2,2))
-    M1_kp_M2 = zero
-    nr1=size(M1,1)
-    nc1=size(M1,2)
-    nr2=size(M2,1)
-    nc2=size(m2,2)
-    forall(i =1:nr1,j=1:nc1)
-       M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+  function i_kronecker_product(A,B) result(AxB)
+    integer,intent(in) :: A(:,:), B(:,:)
+    integer            :: i,j
+    integer            :: rowA,colA
+    integer            :: rowB,colB
+    integer            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
+    AxB = 0
+    rowA=size(A,1) ; colA=size(A,2)
+    rowB=size(B,1) ; colB=size(B,2)
+    forall(i=1:rowA,j=1:colA)
+       AxB(1+rowB*(i-1):rowB*i,1+colB*(j-1):colB*j)  =  A(i,j)*B(:,:)
     end forall
   end function i_kronecker_product
   !
-  function d_kronecker_product(M1,M2) result(M1_kp_M2)
-    integer               :: i, j
-    integer               :: nr1,nc1,nr2,nc2
-    real(8),intent(in)    :: M1(:,:), M2(:,:)
-    real(8)               :: M1_kp_M2(size(M1,1)*size(M2,1),size(M1,2)*size(M2,2))
-    M1_kp_M2 = zero
-    nr1=size(M1,1)
-    nc1=size(M1,2)
-    nr2=size(M2,1)
-    nc2=size(m2,2)
-    forall(i =1:nr1,j=1:nc1)
-       M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+  function d_kronecker_product(A,B) result(AxB)
+    real(8),intent(in) :: A(:,:), B(:,:)
+    integer            :: i,j
+    integer            :: rowA,colA
+    integer            :: rowB,colB
+    real(8)            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
+    AxB = 0
+    rowA=size(A,1) ; colA=size(A,2)
+    rowB=size(B,1) ; colB=size(B,2)
+    forall(i=1:rowA,j=1:colA)
+       AxB(1+rowB*(i-1):rowB*i,1+colB*(j-1):colB*j)  =  A(i,j)*B(:,:)
     end forall
   end function d_kronecker_product
   !
-  function c_kronecker_product(M1,M2) result(M1_kp_M2)
-    integer               :: i, j
-    integer               :: nr1,nc1,nr2,nc2
-    complex(8),intent(in) :: M1(:,:), M2(:,:)
-    complex(8)            :: M1_kp_M2(size(M1,1)*size(M2,1),size(M1,2)*size(M2,2))
-    M1_kp_M2 = zero
-    nr1=size(M1,1)
-    nc1=size(M1,2)
-    nr2=size(M2,1)
-    nc2=size(m2,2)
-    forall(i =1:nr1,j=1:nc1)
-       M1_kp_M2(nr2*(i-1)+1 : nr2*i , nc2*(j-1)+1 : nc2*j)  =  M1(i,j)*M2
+  function c_kronecker_product(A,B) result(AxB)
+    complex(8),intent(in) :: A(:,:), B(:,:)
+    integer               :: i,j
+    integer               :: rowA,colA
+    integer               :: rowB,colB
+    complex(8)            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
+    AxB = 0
+    rowA=size(A,1) ; colA=size(A,2)
+    rowB=size(B,1) ; colB=size(B,2)
+    forall(i=1:rowA,j=1:colA)
+       AxB(1+rowB*(i-1):rowB*i,1+colB*(j-1):colB*j)  =  A(i,j)*B(:,:)
     end forall
   end function c_kronecker_product
 

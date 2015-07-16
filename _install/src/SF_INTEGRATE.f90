@@ -1,4 +1,5 @@
 module SF_INTEGRATE
+  USE SF_ARRAYS, only: linspace
   implicit none
   private
 
@@ -27,8 +28,20 @@ module SF_INTEGRATE
 
   public :: kronig
   public :: trapz
+  public :: trapz2d             !only for F:\RRR^2--->\RRR
   public :: simps
+  public :: simps2d             !only for F:\RRR^2--->\RRR
   public :: int_simps
+
+
+  !<TODO
+  ! add routines which interface to array function in the 2D case
+  ! add routines which interaface to fortran functions in the 1d case
+  ! add routines for the 3d case
+  ! add interaface to QUADPACK
+  ! add Montecarlo base 1d/2d/3d integrals
+  !>TODO
+
 
   ! now in a separate library with separate MODULE interface.
   ! Here we provide only standard functions and 
@@ -416,6 +429,183 @@ contains
 
 
 
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: evaluate 2D integrals using trapz and simps rule.
+  ! trapz2d: recursive interaface to trapz2d_
+  ! simps2d: recursive interaface to simps2d_
+  ! NOTE: alike the previous routines valid for a given array
+  ! these routines use actual fortran functions.
+  !+-----------------------------------------------------------------------------+!
+  function trapz2d(func,xrange,yrange,N0,iterative,threshold) result(int)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8)              :: func
+       end function func
+    end interface
+    real(8),dimension(2)      :: xrange,yrange
+    integer                   :: N,icount
+    real(8)                   :: int,eps,int0
+    integer,optional          :: N0
+    integer                   :: N0_
+    logical,optional          :: iterative
+    logical                   :: iterative_
+    real(8),optional          :: threshold
+    real(8)                   :: threshold_
+    iterative_=.false.;if(present(iterative))iterative_=iterative
+    N0_=51;if(present(N0))N0_=N0
+    threshold_=1d0;if(iterative_)threshold_=5.d-3
+    if(present(threshold))threshold_=threshold
+    N=N0_
+    eps=1d0
+    icount=1
+    int=trapz2d_(func,xrange,yrange,N,N)
+    do while (eps>threshold_)
+       icount=icount+1
+       int0=int
+       N=2*N-10
+       int=trapz2d_(func,xrange,yrange,N,N)
+       eps=abs(int-int0)/abs(int)
+    enddo
+  end function trapz2d
+
+  function simps2d(func,xrange,yrange,N0,iterative,threshold) result(int)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8)              :: func
+       end function func
+    end interface
+    real(8),dimension(2)      :: xrange,yrange
+    integer                   :: N,icount
+    real(8)                   :: int,eps,int0
+    integer,optional          :: N0
+    integer                   :: N0_
+    logical,optional          :: iterative
+    logical                   :: iterative_
+    real(8),optional          :: threshold
+    real(8)                   :: threshold_
+    iterative_=.false.;if(present(iterative))iterative_=iterative
+    N0_=51;if(present(N0))N0_=N0
+    threshold_=1d0;if(iterative_)threshold_=1.d-3
+    if(present(threshold))threshold_=threshold
+    N=N0_
+    eps=1d0
+    icount=1
+    int=simps2d_(func,xrange,yrange,N,N)
+    do while (eps>threshold_)
+       icount=icount+1
+       int0=int
+       N=2*N-10
+       int=simps2d_(func,xrange,yrange,N,N)
+       eps=abs(int-int0)/abs(int)
+    enddo
+  end function simps2d
+
+  !PURPOSE:  working procedures:
+  function trapz2d_(func,xrange,yrange,Nx,Ny) result(int)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8)              :: func
+       end function func
+    end interface
+    real(8),dimension(2) :: xrange,yrange
+    integer :: Nx,Ny,i,j
+    real(8) :: int,xx(Nx),yy(Ny)
+    real(8) :: hx,hy
+    hx=xrange(2)-xrange(1)
+    hx=hx/Nx
+    hy=yrange(2)-yrange(1)
+    hy=hy/Ny
+    int=&
+         func([xrange(1),yrange(1)])+&
+         func([xrange(1),yrange(2)])+&
+         func([xrange(2),yrange(1)])+&
+         func([xrange(2),yrange(2)])
+    xx=linspace(xrange(1),xrange(2),Nx)
+    yy=linspace(yrange(1),yrange(2),Ny)
+    do i=2,Nx
+       do j=2,Ny
+          int=int+4d0*func([xx(i),yy(j)])
+       enddo
+    enddo
+    do j=2,Ny
+       int=int+2d0*( func([xrange(1),yy(j)]) + func([xrange(2),yy(j)]) )
+    enddo
+    do i=2,Nx
+       int=int+2d0*( func([xx(i),yrange(1)]) + func([xx(i),yrange(2)]) )
+    enddo
+    int=int*hx*hy/4d0
+  end function trapz2d_
+
+  function simps2d_(func,xrange,yrange,Nx,Ny) result(int)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8)              :: func
+       end function func
+    end interface
+    real(8),dimension(2) :: xrange,yrange
+    integer :: Nx,Ny,i,j
+    real(8) :: int,xx(2*Nx),yy(2*Ny)
+    real(8) :: hx,hy
+    hx=xrange(2)-xrange(1)
+    hx=hx/Nx/2
+    hy=yrange(2)-yrange(1)
+    hy=hy/Ny/2
+    xx=linspace(xrange(1),xrange(2),2*Nx)
+    yy=linspace(yrange(1),yrange(2),2*Ny)
+    !
+    int=&
+         func([xrange(1),yrange(1)])+&
+         func([xrange(1),yrange(2)])+&
+         func([xrange(2),yrange(1)])+&
+         func([xrange(2),yrange(2)])
+    !
+    do j=1,Ny
+       int=int+4d0*(func([xrange(1),yy(2*j-1)])+func([xrange(2),yy(2*j-1)]))
+    enddo
+    do j=1,Ny-1
+       int=int+2d0*(func([xrange(1),yy(2*j)])+func([xrange(2),yy(2*j)]))
+    enddo
+    !
+    do i=1,Nx
+       int=int+4d0*(func([xx(2*i-1),yrange(1)])+func([xx(2*i-1),yrange(2)]))
+    enddo
+    do i=1,Nx-1
+       int=int+2d0*(func([xx(2*i),yrange(1)])+func([xx(2*i),yrange(2)]))
+    enddo
+    !
+    do j=1,Ny
+       do i=1,Nx
+          int=int+16d0*func([xx(2*i-1),yy(2*j-1)])
+       enddo
+    enddo
+    do j=1,Ny-1
+       do i=1,Nx
+          int=int+8d0*func([xx(2*i-1),yy(2*j)])
+       enddo
+    enddo
+    !
+    do j=1,Ny
+       do i=1,Nx-1
+          int=int+8d0*func([xx(2*i),yy(2*j-1)])
+       enddo
+    enddo
+    do j=1,Ny-1
+       do i=1,Nx-1
+          int=int+4d0*func([xx(2*i),yy(2*j)])
+       enddo
+    enddo
+    int=int*hx*hy/9d0
+  end function simps2d_
+
+
+
+
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : Perform a fast Kramers-K\"onig integration: 
   !+-----------------------------------------------------------------+
@@ -434,7 +624,6 @@ contains
     do i=2,M-1
        deriv(i) = (fi(i+1)-fi(i-1))/(2*dh)
     enddo
-
     fr=0.d0
     do i=1,M
        sum=0.d0

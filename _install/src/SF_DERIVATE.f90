@@ -165,7 +165,7 @@ contains
   !    -Output, real(8) FJAC(N,N) the approximate jacobian matrix.
   !    -Input,optional integer ML, MU, specify the number of subdiagonals and
   !    superdiagonals within the band of the jacobian matrix. Default values N-1
-  !    -Input,optional real(8) EPSFCN, is used in determining a suitable step
+  !    -Input,optional real(8) EPSFCN, is used in determining a suitable step
   !    length for the forward-difference approximation.  This approximation
   !    assumes that the relative errors in the functions are of the order of
   !    EPSFCN.  If EPSFCN is less than the machine precision, it is assumed that
