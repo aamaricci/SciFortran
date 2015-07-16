@@ -2,10 +2,26 @@ MODULE SF_FONTS
   implicit none
   private
 
-  public :: bold,underline,highlight,erased
-  public :: red,green,yellow,blue
-  public :: bold_red,bold_green,bold_yellow,bold_blue
-  public :: bg_red,bg_green,bg_yellow,bg_blue
+  public :: bold
+  public :: underline
+  public :: highlight
+  public :: erased
+  !
+  public :: red
+  public :: green
+  public :: yellow
+  public :: blue
+  !
+  public :: bold_red
+  public :: bold_green
+  public :: bold_yellow
+  public :: bold_blue
+  !
+  public :: bg_red
+  public :: bg_green
+  public :: bg_yellow
+  public :: bg_blue
+
 
 contains
 
