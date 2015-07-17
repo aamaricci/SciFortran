@@ -582,7 +582,7 @@ contains
           h = hk_model(kpoint,Norb)
           call matrix_diagonalize(h,Eval)
           do iorb=1,Norb
-             coeff(:)=h(iorb,:)*conjg(h(iorb,:))
+             coeff(:)=h(:,iorb)*conjg(h(:,iorb))
              c(iorb) = coeff.dot.corb
           enddo
           write(unit,'(I12,100(F18.12,I18))')ic,(Eval(iorb),rgb(c(iorb)),iorb=1,Norb)
@@ -595,7 +595,7 @@ contains
     enddo
     xtics=reg(xtics)//"'"//reg(points_name(Npts))//"'"//reg(txtfy((Npts-1)*Nk))//""
     open(unit,file=reg(file_)//".gp")
-    write(unit,*)"gnuplot -persist << EOF"
+    ! write(unit,*)"gnuplot -persist << EOF"
     write(unit,*)"set term wxt"
     write(unit,*)"set nokey"
     write(unit,*)"set xtics ("//reg(xtics)//")"
@@ -607,10 +607,13 @@ contains
        write(unit,*)"rep '"//reg(file_)//"' u 1:"&
             //reg(txtfy(u1))//":"//reg(txtfy(u2))//" w l lw 3 lc rgb variable"
     enddo
-    write(unit,*)"#set term png size 1920,1280"
+    ! write(unit,*)"#set term png size 1920,1280"
+    write(unit,*)"#set terminal pngcairo size 350,262 enhanced font 'Verdana,10'"
     write(unit,*)"#set out '"//reg(file_)//".png'"
+    write(unit,*)"#set terminal svg size 350,262 fname 'Verdana, Helvetica, Arial, sans-serif'"
+    write(unit,*)"#set out '"//reg(file_)//".svg'"
     write(unit,*)"#rep"
-    write(unit,"(A)")"EOF"
+    ! write(unit,"(A)")"EOF"
     close(unit)
     call system("chmod +x "//reg(file_)//".gp")
   end subroutine solve_Hk_along_BZpath
@@ -644,7 +647,7 @@ contains
     do ipts=1,Npts-1
        kstart = kpath(ipts,:)
        kstop  = kpath(ipts+1,:)
-       kdiff  = (kstop-kstart)/dble(Nkpath)
+       kdiff  = (kstop-kstart)/Nkpath
        do ik=1,Nkpath
           ic=ic+1
           kpoint = kstart + (ik-1)*kdiff
@@ -659,15 +662,16 @@ contains
        enddo
     enddo
     if(ic/=Nktot)stop "solve_HkR_along_BZpath error: bad counting of the k-points along the path"
-    unit=free_unit()
-    open(unit,file=reg(file_))
-    do ilat=1,Nlat
-       do ik=1,Nktot
-          write(unit,"(I4,4F18.9)")ik,(Eval(ilat,iorb,ik),iorb=1,Norb)
+    do iorb=1,Norb
+       open(free_unit(unit),file="l_"//reg(txtfy(iorb))//"_"//reg(file_))
+       do ilat=1,Nlat
+          do ik=1,Nktot
+             write(unit,"(I4,4F18.9)")ik,Eval(ilat,iorb,ik)
+          enddo
+          write(unit,*)""
        enddo
-       write(unit,*)""
+       close(unit)
     enddo
-    close(unit)
   end subroutine solve_HkR_along_BZpath
 
 
