@@ -24,16 +24,225 @@ module SF_MISC
      module procedure D_nearless, R_nearless, I_nearless
   end interface nearless
 
+  interface assert_shape
+     module procedure i_assert_shape_N2
+     module procedure i_assert_shape_N3
+     module procedure i_assert_shape_N4
+     module procedure i_assert_shape_N5
+     module procedure i_assert_shape_N6
+     module procedure i_assert_shape_N7
+     module procedure d_assert_shape_N2
+     module procedure d_assert_shape_N3
+     module procedure d_assert_shape_N4
+     module procedure d_assert_shape_N5
+     module procedure d_assert_shape_N6
+     module procedure d_assert_shape_N7
+     module procedure z_assert_shape_N2
+     module procedure z_assert_shape_N3
+     module procedure z_assert_shape_N4
+     module procedure z_assert_shape_N5
+     module procedure z_assert_shape_N6
+     module procedure z_assert_shape_N7
+  end interface assert_shape
 
   !SORT,UNIQ,SHUFFLE:
   public :: sort
   public :: sort_array
   public :: reshuffle
+  public :: assert_shape
   public :: uniq
   public :: uniinv
   public :: unista
 
 contains
+
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: assert shape of a fiven array up to 7 dimensions (gnu gfortran max rank)
+  !+-----------------------------------------------------------------------------+!
+  subroutine i_assert_shape_N2(A,Ndim,routine,matname)
+    integer,dimension(:,:),intent(in)          :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine i_assert_shape_N2
+  subroutine i_assert_shape_N3(A,Ndim,routine,matname)
+    integer,dimension(:,:,:),intent(in)        :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine i_assert_shape_N3
+  subroutine i_assert_shape_N4(A,Ndim,routine,matname)
+    integer,dimension(:,:,:,:),intent(in)        :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine i_assert_shape_N4
+  subroutine i_assert_shape_N5(A,Ndim,routine,matname)
+    integer,dimension(:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine i_assert_shape_N5
+  subroutine i_assert_shape_N6(A,Ndim,routine,matname)
+    integer,dimension(:,:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine i_assert_shape_N6
+  subroutine i_assert_shape_N7(A,Ndim,routine,matname)
+    integer,dimension(:,:,:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine i_assert_shape_N7
+  !
+  subroutine d_assert_shape_N2(A,Ndim,routine,matname)
+    real(8),dimension(:,:),intent(in)          :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine d_assert_shape_N2
+  subroutine d_assert_shape_N3(A,Ndim,routine,matname)
+    real(8),dimension(:,:,:),intent(in)        :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine d_assert_shape_N3
+  subroutine d_assert_shape_N4(A,Ndim,routine,matname)
+    real(8),dimension(:,:,:,:),intent(in)        :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine d_assert_shape_N4
+  subroutine d_assert_shape_N5(A,Ndim,routine,matname)
+    real(8),dimension(:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine d_assert_shape_N5
+  subroutine d_assert_shape_N6(A,Ndim,routine,matname)
+    real(8),dimension(:,:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine d_assert_shape_N6
+  subroutine d_assert_shape_N7(A,Ndim,routine,matname)
+    real(8),dimension(:,:,:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine d_assert_shape_N7
+  !
+  subroutine z_assert_shape_N2(A,Ndim,routine,matname)
+    complex(8),dimension(:,:),intent(in)          :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine z_assert_shape_N2
+  subroutine z_assert_shape_N3(A,Ndim,routine,matname)
+    complex(8),dimension(:,:,:),intent(in)        :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine z_assert_shape_N3
+  subroutine z_assert_shape_N4(A,Ndim,routine,matname)
+    complex(8),dimension(:,:,:,:),intent(in)        :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine z_assert_shape_N4
+  subroutine z_assert_shape_N5(A,Ndim,routine,matname)
+    complex(8),dimension(:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine z_assert_shape_N5
+  subroutine z_assert_shape_N6(A,Ndim,routine,matname)
+    complex(8),dimension(:,:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine z_assert_shape_N6
+  subroutine z_assert_shape_N7(A,Ndim,routine,matname)
+    complex(8),dimension(:,:,:,:,:,:,:),intent(in)    :: A
+    integer,dimension(:),intent(in)            :: Ndim
+    character(len=*),optional                  :: routine, matname
+    if(any(shape(A) /= Ndim)) then
+       if(present(routine).AND.present(matname))&
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+       stop "assert_shape error: wrong matrix shape"
+    end if
+  end subroutine z_assert_shape_N7
 
 
 
