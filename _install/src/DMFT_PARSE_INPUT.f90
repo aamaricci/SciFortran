@@ -12,19 +12,29 @@ module DMFT_PARSE_INPUT
   end type input_variable
 
   interface parse_cmd_variable
-     module procedure &
-          i_parse_variable,  d_parse_variable,  l_parse_variable,  ch_parse_variable,&
-          iv_parse_variable, dv_parse_variable, lv_parse_variable, chv_parse_variable
+     module procedure i_parse_variable
+     module procedure d_parse_variable
+     module procedure l_parse_variable
+     module procedure ch_parse_variable
+     module procedure iv_parse_variable
+     module procedure dv_parse_variable
+     module procedure lv_parse_variable
+     module procedure chv_parse_variable
   end interface parse_cmd_variable
 
   interface parse_input_variable
-     module procedure &
-          i_parse_input,  d_parse_input,  l_parse_input,  ch_parse_input, &
-          iv_parse_input, dv_parse_input, lv_parse_input, chv_parse_input
+     module procedure i_parse_input
+     module procedure d_parse_input
+     module procedure l_parse_input
+     module procedure ch_parse_input
+     module procedure iv_parse_input
+     module procedure dv_parse_input
+     module procedure lv_parse_input
+     module procedure chv_parse_input
   end interface parse_input_variable
 
 
-  public  :: input_variable
+  ! public  :: input_variable
   public  :: parse_cmd_variable
   public  :: parse_input_variable
   public  :: get_cmd_variable
@@ -79,6 +89,7 @@ contains
        endif
     enddo
   end subroutine get_help_input
+
 
   subroutine save_input_file(file)
     character(len=*)   :: file
@@ -139,9 +150,11 @@ contains
     endif
     iscalar=(scan(var%value,",")==0)
     if(iscalar)then
-       print*,"error in parse_cmd array:",trim(var%name)
+       print*,"warning scalar in parse_cmd array:   ",trim(var%name)
        print*,"expecting a comma separated list of: ",ndim
-       stop
+       ! print*,"error in parse_cmd array:",trim(var%name)
+       ! print*,"expecting a comma separated list of: ",ndim
+       ! stop
     endif
     ncount=0
     do j=1,len(var%value)
@@ -149,9 +162,11 @@ contains
     enddo
     nargs=ncount+1
     if(nargs/=ndim)then
-       print*,"parse_variable wrong dimensions: ",trim(var%name)
+       print*,"wrong dimensions parsing variable:   ",trim(var%name)
        print*,"expecting a comma separated list of: ",ndim
-       stop
+       ! print*,"parse_variable wrong dimensions: ",trim(var%name)
+       ! print*,"expecting a comma separated list of: ",ndim
+       ! stop
     endif
   end function check_cmd_vector_size
 

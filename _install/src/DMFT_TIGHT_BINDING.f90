@@ -9,9 +9,14 @@ module DMFT_TIGHT_BINDING
 
   interface build_hk_model
      module procedure build_hk_model_Norb_d
-     module procedure build_hk_model_1_d 
      module procedure build_hk_model_Norb_c
+     module procedure build_hk_model_1_d
      module procedure build_hk_model_1_c
+     !
+     module procedure build_hkpath_model_Norb_d
+     module procedure build_hkpath_model_Norb_c
+     module procedure build_hkpath_model_1_d 
+     module procedure build_hkpath_model_1_c
   end interface build_hk_model
 
 
@@ -88,56 +93,6 @@ contains
   ! > multi-orbital/lattice sites Norb: real,complex
   ! > single orbital/lattice site: real,complex
   !-------------------------------------------------------------------------------------------
-  function build_hk_model_1_d(hk_model,kxgrid,kygrid,kzgrid) result(Hk)
-    integer                                                      :: Nk,Nkx,Nky,Nkz
-    integer                                                      :: ik,ix,iy,iz
-    real(8),dimension(:)                                         :: kxgrid,kygrid,kzgrid
-    real(8)                                                      :: kx,ky,kz
-    real(8),dimension(size(kxgrid)*size(kygrid)*size(kzgrid))    :: hk
-    interface 
-       function hk_model(kpoint)
-         real(8),dimension(:)   :: kpoint
-         real(8)                :: hk_model
-       end function hk_model
-    end interface
-    Nkx = size(kxgrid)
-    Nky = size(kygrid)
-    Nkz = size(kzgrid)
-    Nk  = Nkx*Nky*Nkz
-    do ik=1,Nk
-       call indx2coord(ik,ix,iy,iz,[Nkx,Nky,Nkz])
-       kx=kxgrid(ix)
-       ky=kygrid(iy)
-       kz=kzgrid(iz)
-       Hk(ik) = hk_model([kx,ky,kz])
-    enddo
-  end function build_hk_model_1_d
-
-  function build_hk_model_1_c(hk_model,kxgrid,kygrid,kzgrid) result(Hk)
-    integer                                                      :: Nk,Nkx,Nky,Nkz
-    integer                                                      :: ik,ix,iy,iz
-    real(8),dimension(:)                                         :: kxgrid,kygrid,kzgrid
-    real(8)                                                      :: kx,ky,kz
-    complex(8),dimension(size(kxgrid)*size(kygrid)*size(kzgrid)) :: hk
-    interface 
-       function hk_model(kpoint)
-         real(8),dimension(:)      :: kpoint
-         complex(8)                :: hk_model
-       end function hk_model
-    end interface
-    Nkx = size(kxgrid)
-    Nky = size(kygrid)
-    Nkz = size(kzgrid)
-    Nk  = Nkx*Nky*Nkz
-    do ik=1,Nk
-       call indx2coord(ik,ix,iy,iz,[Nkx,Nky,Nkz])
-       kx=kxgrid(ix)
-       ky=kygrid(iy)
-       kz=kzgrid(iz)
-       Hk(ik) = hk_model([kx,ky,kz])
-    enddo
-  end function build_hk_model_1_c
-
   function build_hk_model_Norb_d(hk_model,Norb,kxgrid,kygrid,kzgrid) result(Hk)
     integer                                                             :: Norb
     integer                                                             :: Nk,Nkx,Nky,Nkz
@@ -164,6 +119,38 @@ contains
     enddo
   end function build_hk_model_Norb_d
 
+  function build_hkpath_model_Norb_d(hk_model,Norb,kpath,Nkpath) result(Hk)
+    interface 
+       function hk_model(kpoint,N)
+         real(8),dimension(:)   :: kpoint
+         real(8),dimension(N,N) :: hk_model
+       end function hk_model
+    end interface
+    integer                                                   :: Norb
+    real(8),dimension(:,:)                                    :: kpath
+    integer                                                   :: Nkpath
+    !
+    integer                                                   :: Ndim,Npts,Nk
+    integer                                                   :: ik,i
+    real(8),dimension((size(kpath,1)-1)*Nkpath,size(kpath,2)) :: kgrid
+    real(8),dimension(size(kpath,2))                          :: kvec
+    !
+    real(8),dimension(Norb,Norb,(size(kpath,1)-1)*Nkpath)     :: hk
+    Npts=size(kpath,1)          !# of k-points along the path
+    Ndim=size(kpath,2)          !# of dimension of the k-vectors
+    Nk  = (Npts-1)*Nkpath
+    if(Ndim>3)stop "build_hkpath_model_Norb_d error: Ndim > 3"
+    do i=1,Ndim
+       kgrid(:,i) = kgrid_from_path(kpath,Npts,Nkpath,i)
+    enddo
+    do ik=1,Nk
+       Hk(:,:,ik) = hk_model(kgrid(ik,:) , Norb)
+    enddo
+  end function build_hkpath_model_Norb_d
+
+
+
+
   function build_hk_model_Norb_c(hk_model,Norb,kxgrid,kygrid,kzgrid) result(Hk)
     integer                                                                :: Norb
     integer                                                                :: Nk,Nkx,Nky,Nkz
@@ -189,6 +176,151 @@ contains
        Hk(:,:,ik) = hk_model([kx,ky,kz],Norb)
     enddo
   end function build_hk_model_Norb_c
+
+  function build_hkpath_model_Norb_c(hk_model,Norb,kpath,Nkpath) result(Hk)
+    interface 
+       function hk_model(kpoint,N)
+         real(8),dimension(:)      :: kpoint
+         complex(8),dimension(N,N) :: hk_model
+       end function hk_model
+    end interface
+    integer                                                   :: Norb
+    real(8),dimension(:,:)                                    :: kpath
+    integer                                                   :: Nkpath
+    !
+    integer                                                   :: Ndim,Npts,Nk
+    integer                                                   :: ik,i
+    real(8),dimension((size(kpath,1)-1)*Nkpath,size(kpath,2)) :: kgrid
+    real(8),dimension(size(kpath,2))                          :: kvec
+    !
+    complex(8),dimension(Norb,Norb,(size(kpath,1)-1)*Nkpath)  :: hk
+    Npts=size(kpath,1)          !# of k-points along the path
+    Ndim=size(kpath,2)          !# of dimension of the k-vectors
+    Nk  = (Npts-1)*Nkpath
+    if(Ndim>3)stop "build_hkpath_model_Norb_c error: Ndim > 3"
+    do i=1,Ndim
+       kgrid(:,i) = kgrid_from_path(kpath,Npts,Nkpath,i)
+    enddo
+    do ik=1,Nk
+       Hk(:,:,ik) = hk_model(kgrid(ik,:) , Norb)
+    enddo
+  end function build_hkpath_model_Norb_c
+
+
+
+
+  function build_hk_model_1_d(hk_model,kxgrid,kygrid,kzgrid) result(Hk)
+    integer                                                      :: Nk,Nkx,Nky,Nkz
+    integer                                                      :: ik,ix,iy,iz
+    real(8),dimension(:)                                         :: kxgrid,kygrid,kzgrid
+    real(8)                                                      :: kx,ky,kz
+    real(8),dimension(size(kxgrid)*size(kygrid)*size(kzgrid))    :: hk
+    interface 
+       function hk_model(kpoint)
+         real(8),dimension(:)   :: kpoint
+         real(8)                :: hk_model
+       end function hk_model
+    end interface
+    Nkx = size(kxgrid)
+    Nky = size(kygrid)
+    Nkz = size(kzgrid)
+    Nk  = Nkx*Nky*Nkz
+    do ik=1,Nk
+       call indx2coord(ik,ix,iy,iz,[Nkx,Nky,Nkz])
+       kx=kxgrid(ix)
+       ky=kygrid(iy)
+       kz=kzgrid(iz)
+       Hk(ik) = hk_model([kx,ky,kz])
+    enddo
+  end function build_hk_model_1_d
+
+  function build_hkpath_model_1_d(hk_model,kpath,Nkpath) result(Hk)
+    interface 
+       function hk_model(kpoint)
+         real(8),dimension(:) :: kpoint
+         real(8)              :: hk_model
+       end function hk_model
+    end interface
+    real(8),dimension(:,:)                                    :: kpath
+    integer                                                   :: Nkpath
+    !
+    integer                                                   :: Ndim,Npts,Nk
+    integer                                                   :: ik,i
+    real(8),dimension((size(kpath,1)-1)*Nkpath,size(kpath,2)) :: kgrid
+    real(8),dimension(size(kpath,2))                          :: kvec
+    !
+    real(8),dimension((size(kpath,1)-1)*Nkpath)               :: hk
+    !
+    Npts=size(kpath,1)          !# of k-points along the path
+    Ndim=size(kpath,2)          !# of dimension of the k-vectors
+    Nk  = (Npts-1)*Nkpath
+    if(Ndim>3)stop "build_hk_model_Norb_d error: Ndim > 3"
+    do i=1,Ndim
+       kgrid(:,i) = kgrid_from_path(kpath,Npts,Nkpath,i)
+    enddo
+    do ik=1,Nk
+       Hk(ik) = hk_model(kgrid(ik,:))
+    enddo
+  end function build_hkpath_model_1_d
+
+
+
+
+  function build_hk_model_1_c(hk_model,kxgrid,kygrid,kzgrid) result(Hk)
+    integer                                                      :: Nk,Nkx,Nky,Nkz
+    integer                                                      :: ik,ix,iy,iz
+    real(8),dimension(:)                                         :: kxgrid,kygrid,kzgrid
+    real(8)                                                      :: kx,ky,kz
+    complex(8),dimension(size(kxgrid)*size(kygrid)*size(kzgrid)) :: hk
+    interface 
+       function hk_model(kpoint)
+         real(8),dimension(:)      :: kpoint
+         complex(8)                :: hk_model
+       end function hk_model
+    end interface
+    Nkx = size(kxgrid)
+    Nky = size(kygrid)
+    Nkz = size(kzgrid)
+    Nk  = Nkx*Nky*Nkz
+    do ik=1,Nk
+       call indx2coord(ik,ix,iy,iz,[Nkx,Nky,Nkz])
+       kx=kxgrid(ix)
+       ky=kygrid(iy)
+       kz=kzgrid(iz)
+       Hk(ik) = hk_model([kx,ky,kz])
+    enddo
+  end function build_hk_model_1_c
+
+  function build_hkpath_model_1_c(hk_model,kpath,Nkpath) result(Hk)
+    interface 
+       function hk_model(kpoint)
+         real(8),dimension(:) :: kpoint
+         complex(8)           :: hk_model
+       end function hk_model
+    end interface
+    real(8),dimension(:,:)                                    :: kpath
+    integer                                                   :: Nkpath
+    !
+    integer                                                   :: Ndim,Npts,Nk
+    integer                                                   :: ik,i
+    real(8),dimension((size(kpath,1)-1)*Nkpath,size(kpath,2)) :: kgrid
+    real(8),dimension(size(kpath,2))                          :: kvec
+    !
+    complex(8),dimension((size(kpath,1)-1)*Nkpath)            :: hk
+    !
+    Npts=size(kpath,1)          !# of k-points along the path
+    Ndim=size(kpath,2)          !# of dimension of the k-vectors
+    Nk  = (Npts-1)*Nkpath
+    if(Ndim>3)stop "build_hk_model_Norb_d error: Ndim > 3"
+    do i=1,Ndim
+       kgrid(:,i) = kgrid_from_path(kpath,Npts,Nkpath,i)
+    enddo
+    do ik=1,Nk
+       Hk(ik) = hk_model(kgrid(ik,:))
+    enddo
+  end function build_hkpath_model_1_c
+
+
 
 
 
@@ -860,7 +992,7 @@ contains
                   '(',dreal(Hloc(ispin,jspin,iorb,jorb)),',',dimag(Hloc(ispin,jspin,iorb,jorb)),')',&
                   jorb =1,Norb),&
                   jspin=1,Nspin)
-          enddo         
+          enddo
        enddo
        write(unit,*)""
     endif

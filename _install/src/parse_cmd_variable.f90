@@ -80,14 +80,12 @@ subroutine iv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
      var = get_cmd_variable(i)
      if(var%name==name_)then
-        iscalar=(scan(var%value,",")==0)
         nargs=check_cmd_vector_size(ndim,var)
         allocate(var%args(nargs))
         iarg=0
@@ -103,7 +101,7 @@ subroutine iv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100I6)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine iv_parse_variable
@@ -115,7 +113,6 @@ subroutine dv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
@@ -137,7 +134,7 @@ subroutine dv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(0,"(A,100F18.9)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100F18.9)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine dv_parse_variable
@@ -149,7 +146,6 @@ subroutine chv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
@@ -183,7 +179,6 @@ subroutine lv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
