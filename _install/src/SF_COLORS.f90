@@ -751,9 +751,11 @@ contains
   end function dot_scalar_colors
 
   function pick_color(string) result(crgb)
-    character(len=*) :: string
-    type(rgb_color)  :: crgb
-    select case(string)
+    character(len=*)                                     :: string
+    type(rgb_color)                                      :: crgb
+    character(len=len_trim(trim(adjustl(trim(string))))) :: color_name
+    color_name=trim(adjustl(trim(string)))
+    select case(color_name)
     case("black")
        crgb=black
     case("red")
@@ -771,7 +773,9 @@ contains
     case("magenta")
        crgb=magenta
     case default
-       stop "pick_color: color name does not exist"
+       print*,"pick_color: color name ",color_name," does not exist"
+       print*,"set color to black"
+       crgb=black
     end select
   end function pick_color
 

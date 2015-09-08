@@ -7,7 +7,11 @@ module IOFILE
   integer,save :: store_size=2048
 
   interface txtfy
-     module procedure i_to_ch,r_to_ch,c_to_ch,l_to_ch
+     module procedure i_to_ch
+     module procedure r_to_ch
+     module procedure c_to_ch
+     module procedure l_to_ch
+     module procedure ch_to_ch
   end interface txtfy
 
   interface reg
@@ -345,6 +349,11 @@ contains
     if(bool)string='T'
   end function l_to_ch
 
+  function ch_to_ch(txt) result(string)
+    character(len=*)              :: txt
+    character(len=len(trim(txt))) :: string
+    string=trim(txt)
+  end function ch_to_ch
 
 
 
