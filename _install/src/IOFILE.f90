@@ -30,11 +30,15 @@ module IOFILE
      module procedure create_data_dir
   end interface create_dir
 
+  interface newunit
+     module procedure free_unit
+  end interface newunit
+  
   public :: txtfy
   public :: file_size
   public :: file_length
   public :: file_info
-  public :: free_unit
+  public :: free_unit,newunit
   public :: free_units
   public :: set_store_size
   public :: data_open
@@ -89,8 +93,8 @@ contains
 
   function free_unit(n) result(unit_)
     integer,optional :: n
-    integer :: unit_,ios
-    logical :: opened
+    integer          :: unit_,ios
+    logical          :: opened
     unit_=100
     do 
        unit_=unit_+1

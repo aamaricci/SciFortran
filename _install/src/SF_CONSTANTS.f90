@@ -149,7 +149,8 @@ module SF_CONSTANTS
 
   public :: timestamp
 
-
+  public :: stop_error
+  
   interface isnan
      module procedure i_isnan
      module procedure d_isnan
@@ -252,6 +253,26 @@ contains
          "Timestamp: +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
     write(unit,*)""
   end subroutine print_date
+
+
+
+  subroutine stop_error(msg)
+    ! Aborts the program with nonzero exit code
+    !
+    ! The statement "stop msg" will return 0 exit code when compiled using
+    ! gfortran.
+    ! stop_error() uses the statement "stop 1" which returns an exit code
+    ! 1 and a print statement to print the message.
+    !
+    ! Example
+    ! -------
+    ! call stop_error("Invalid argument")
+    character(len=*) :: msg ! Message to print on stderr
+    write(0,*) msg
+    stop 1
+  end subroutine stop_error
+
+
 
 END MODULE SF_CONSTANTS
 
