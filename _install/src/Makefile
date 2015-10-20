@@ -4,126 +4,43 @@ REV = $(shell git rev-parse HEAD)
 
 DIR = ./scifor_portable
 
-all: version mkdir allmod libscifor.a rmdir
+.SUFFIXES:.f90 .f
+
+all: version allmod libscifor.a 
 
 
-mkdir:
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(MOD_DIR)
-
-rmdir:
-	@rm -rfv $(OBJ_DIR)
-	@rm -rfv $(MOD_DIR)
-
-allmod: SCIFOR_VERSION SF_COLORS SF_PAULI SF_FONTS SF_CONSTANTS SF_TIMER SF_IOTOOLS SF_FFT SF_MISC SF_ARRAYS SF_DERIVATE SF_OPTIMIZE SF_SPECIAL SF_INTEGRATE SF_LINALG SF_INTERPOLATE SF_RANDOM SF_STAT SCIFOR
+allmod: SCIFOR_VERSION.o SF_COLORS.o SF_PAULI.o SF_FONTS.o SF_CONSTANTS.o SF_TIMER.o IOFILE.o IOPLOT.o IOREAD.o SF_IOTOOLS.o SF_FFT.o SF_MISC.o SF_ARRAYS.o SF_DERIVATE.o optimize_broyden_routines.o OPTIMIZE_ROOT_FINDING.o minimize.o cgfam.o cgsearch.o cgblas.o optimize_cgfit_routines.o OPTIMIZE_ROOT_FINDING.o OPTIMIZE_MINIMIZE.o SF_OPTIMIZE.o SF_SPECIAL.o SF_INTEGRATE.o SF_LINALG.o SF_INTERPOLATE.o SF_RANDOM.o SF_STAT.o SCIFOR.o
 
 
 libscifor.a: 
-	@rsync -avP $(MOD_DIR)/*.mod $(MOD_SCIFOR)/
-	ar crv $(LIB_SCIFOR) `ls $(OBJ_DIR)/*.o | sort | uniq`  
+	ar crv $(LIB_SCIFOR) `ls *.o | sort | uniq`
 	ranlib $(LIB_SCIFOR)
 	@echo 'LIBRARY IS DONE.........'
-	@echo ' '
-
 
 version:
 	@echo "Actual version is: $(REV)"
 	@echo 'character(len=41),parameter,public :: version_scifor = "$(REV)"' > scifor_version.inc
 
-clean: 
-	@rm -fv *.o *.mod *.a
+
+clean:
+	@echo ""
+	@echo "Cleaning ..."
+	rm -fv *.o
+	@echo ""
+	@echo "done."
+	@echo ""
+
 
 portable:
 	./create_portable.sh $(DIR)
 
-libupdate:
-	@echo "	rsync -avP $(MOD_DIR)/*.mod $(MOD_SCIFOR)/"
-	@rsync -avP $(MOD_DIR)/*.mod $(MOD_SCIFOR)/
-	ar crv $(LIB_SCIFOR) `ls $(OBJ_DIR)/*.o | sort | uniq`  
-	ranlib $(LIB_SCIFOR)
-	@echo 'LIBRARY IS UPDATED.........'
-	@echo ' '
 
 cmdexit:
 	exit 1
 
 
-SCIFOR_VERSION: version
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
+.f90.o:
+	$(FC) -c $(FFLAGS) -I$(INC_TARGET)/ $(MOPT)$(INC_TARGET)/ $<
 
-SF_COLORS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_PAULI: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_FONTS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_CONSTANTS: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-
-
-SF_TIMER: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_IOTOOLS: 
-	$(FC) -c $(FFLAGS) IOFILE.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/IOFILE.o $(MOPT)$(MOD_DIR)/	
-	$(FC) -c $(FFLAGS) IOPLOT.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/IOPLOT.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) IOREAD.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/IOREAD.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_FFT: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_MISC:  
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_ARRAYS:  
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_DERIVATE: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-OPTIMIZE_ROOT_FINDING: 
-	$(FC) -c $(FFLAGS) optimize_broyden_routines.f90 -o $(OBJ_DIR)/optimize_broyden_routines.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-OPTIMIZE_MINIMIZE: 
-	$(FC) -c $(FFLAGS) minimize.f -o $(OBJ_DIR)/minimize.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) CGFAM.f -o $(OBJ_DIR)/CGFAM.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) CGSEARCH.f -o $(OBJ_DIR)/CGSEARCH.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) CGBLAS.f -o $(OBJ_DIR)/CGBLAS.o $(MOPT)$(MOD_DIR)/
-	$(FC) -c $(FFLAGS) optimize_cgfit_routines.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/optimize_cgfit_routines.o $(MOPT)$(MOD_DIR)/ 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/  -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-SF_OPTIMIZE: OPTIMIZE_ROOT_FINDING OPTIMIZE_MINIMIZE 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_SPECIAL: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_INTEGRATE: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_LINALG: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_INTERPOLATE: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_RANDOM: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SF_STAT: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-SCIFOR: 
-	$(FC) -c $(FFLAGS) $@.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/$@.o $(MOPT)$(MOD_DIR)/
-
-
-
-# LIST: 
-# 	$(FC) -c $(FFLAGS) LIST_D_ORDERED.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/LIST_D_ORDERED.o $(MOPT)$(MOD_DIR)/	
-# 	$(FC) -c $(FFLAGS) LIST_D_UNORDERED.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/LIST_D_UNORDERED.o $(MOPT)$(MOD_DIR)/	
-# 	$(FC) -c $(FFLAGS) LIST_Z_UNORDERED.f90 -I$(MOD_DIR)/ -o $(OBJ_DIR)/LIST_Z_UNORDERED.o $(MOPT)$(MOD_DIR)/	
-
+.f.o:
+	$(FC) -c $(FFLAGS) $< 
