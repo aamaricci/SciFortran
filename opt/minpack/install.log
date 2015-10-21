@@ -1,0 +1,195 @@
+Installing in /opt/scifor/gnu_debug.
+Creating directories:
+Copying init script for MINPACK
+/opt/scifor/opt/minpack/bin/configvars.sh -> /opt/scifor/gnu_debug/bin/configvars.sh
+
+Generating environment module file for MINPACK
+
+Compiling MINPACK library on platform gnu_debug:
+
+building file list ... done
+
+sent 29 bytes  received 20 bytes  98.00 bytes/sec
+total size is 0  speedup is 0.00
+gfortran -c -O0 -p -g -Wall -fbacktrace -static chkder.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static dogleg.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static enorm.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static enorm2.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static fdjac1.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static fdjac2.f90
+fdjac2.f90:86:24:
+
+   integer ( kind = 4 ) i
+                        1
+Warning: Unused variable 'i' declared at (1) [-Wunused-variable]
+gfortran -c -O0 -p -g -Wall -fbacktrace -static hybrd.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static hybrd1.f90
+hybrd1.f90:86:24:
+
+   integer ( kind = 4 ) j
+                        1
+Warning: Unused variable 'j' declared at (1) [-Wunused-variable]
+hybrd1.f90:76:26:
+
+   integer ( kind = 4 ) lwa
+                          1
+Warning: Unused variable 'lwa' declared at (1) [-Wunused-variable]
+gfortran -c -O0 -p -g -Wall -fbacktrace -static hybrj.f90
+hybrj.f90:197:5:
+
+    20 continue
+     1
+Warning: Label 20 at (1) defined but not used
+gfortran -c -O0 -p -g -Wall -fbacktrace -static hybrj1.f90
+hybrj1.f90:95:24:
+
+   integer ( kind = 4 ) j
+                        1
+Warning: Unused variable 'j' declared at (1) [-Wunused-variable]
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmder.f90
+lmder.f90:165:24:
+
+   integer ( kind = 4 ) i
+                        1
+Warning: Unused variable 'i' declared at (1) [-Wunused-variable]
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmder1.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmdif.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmdif1.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmpar.f90
+lmpar.f90:110:24:
+
+   integer ( kind = 4 ) i
+                        1
+Warning: Unused variable 'i' declared at (1) [-Wunused-variable]
+lmpar.f90:121:28:
+
+   real    ( kind = 8 ) qnorm
+                            1
+Warning: Unused variable 'qnorm' declared at (1) [-Wunused-variable]
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmstr.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static lmstr1.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static qform.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static qrfac.f90
+qrfac.f90:86:24:
+
+   integer ( kind = 4 ) i
+                        1
+Warning: Unused variable 'i' declared at (1) [-Wunused-variable]
+gfortran -c -O0 -p -g -Wall -fbacktrace -static qrsolv.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static r1mpyq.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static r1updt.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static r8vec_print.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static rwupdt.f90
+gfortran -c -O0 -p -g -Wall -fbacktrace -static timestamp.f90
+ar cvq /opt/scifor/gnu_debug/lib/libminpack.a `ls *.o | sort | uniq`  
+q - chkder.o
+q - dogleg.o
+q - enorm.o
+q - enorm2.o
+q - fdjac1.o
+q - fdjac2.o
+q - hybrd.o
+q - hybrd1.o
+q - hybrj.o
+q - hybrj1.o
+q - lmder.o
+q - lmder1.o
+q - lmdif.o
+q - lmdif1.o
+q - lmpar.o
+q - lmstr.o
+q - lmstr1.o
+q - qform.o
+q - qrfac.o
+q - qrsolv.o
+q - r1mpyq.o
+q - r1updt.o
+q - r8vec_print.o
+q - rwupdt.o
+q - timestamp.o
+ranlib /opt/scifor/gnu_debug/lib/libminpack.a
+/opt/scifor/gnu_debug/lib/libminpack.a is done...
+ 
+rsync -avP *.o /opt/scifor/opt/minpack/src/obj_gnu_debug/
+building file list ... 
+ 0 files...25 files to consider
+chkder.o
+        5760 100%    0.00kB/s    0:00:00        5760 100%    0.00kB/s    0:00:00 (xfer#1, to-check=24/25)
+dogleg.o
+        8460 100%    8.07MB/s    0:00:00        8460 100%    8.07MB/s    0:00:00 (xfer#2, to-check=23/25)
+enorm.o
+        2732 100%    2.61MB/s    0:00:00        2732 100%    2.61MB/s    0:00:00 (xfer#3, to-check=22/25)
+enorm2.o
+        4404 100%    4.20MB/s    0:00:00        4404 100%    4.20MB/s    0:00:00 (xfer#4, to-check=21/25)
+fdjac1.o
+        6816 100%    6.50MB/s    0:00:00        6816 100%    6.50MB/s    0:00:00 (xfer#5, to-check=20/25)
+fdjac2.o
+        4564 100%    4.35MB/s    0:00:00        4564 100%    4.35MB/s    0:00:00 (xfer#6, to-check=19/25)
+hybrd.o
+       16528 100%    7.88MB/s    0:00:00       16528 100%    7.88MB/s    0:00:00 (xfer#7, to-check=18/25)
+hybrd1.o
+        5332 100%    2.54MB/s    0:00:00        5332 100%    2.54MB/s    0:00:00 (xfer#8, to-check=17/25)
+hybrj.o
+       16276 100%    5.17MB/s    0:00:00       16276 100%    5.17MB/s    0:00:00 (xfer#9, to-check=16/25)
+hybrj1.o
+        4980 100%    1.58MB/s    0:00:00        4980 100%    1.58MB/s    0:00:00 (xfer#10, to-check=15/25)
+lmder.o
+       15988 100%    5.08MB/s    0:00:00       15988 100%    5.08MB/s    0:00:00 (xfer#11, to-check=14/25)
+lmder1.o
+        4876 100%    1.16MB/s    0:00:00        4876 100%    1.16MB/s    0:00:00 (xfer#12, to-check=13/25)
+lmdif.o
+       16144 100%    3.85MB/s    0:00:00       16144 100%    3.85MB/s    0:00:00 (xfer#13, to-check=12/25)
+lmdif1.o
+        5100 100%    1.22MB/s    0:00:00        5100 100%    1.22MB/s    0:00:00 (xfer#14, to-check=11/25)
+lmpar.o
+       11200 100%    2.14MB/s    0:00:00       11200 100%    2.14MB/s    0:00:00 (xfer#15, to-check=10/25)
+lmstr.o
+       17508 100%    2.78MB/s    0:00:00       17508 100%    2.78MB/s    0:00:00 (xfer#16, to-check=9/25)
+lmstr1.o
+        4876 100%  793.62kB/s    0:00:00        4876 100%  793.62kB/s    0:00:00 (xfer#17, to-check=8/25)
+qform.o
+        5516 100%  769.53kB/s    0:00:00        5516 100%  769.53kB/s    0:00:00 (xfer#18, to-check=7/25)
+qrfac.o
+        8892 100%    1.21MB/s    0:00:00        8892 100%    1.21MB/s    0:00:00 (xfer#19, to-check=6/25)
+qrsolv.o
+        8584 100%    1.02MB/s    0:00:00        8584 100%    1.02MB/s    0:00:00 (xfer#20, to-check=5/25)
+r1mpyq.o
+        5060 100%  549.05kB/s    0:00:00        5060 100%  549.05kB/s    0:00:00 (xfer#21, to-check=4/25)
+r1updt.o
+        7648 100%  829.86kB/s    0:00:00        7648 100%  829.86kB/s    0:00:00 (xfer#22, to-check=3/25)
+r8vec_print.o
+        4480 100%  486.11kB/s    0:00:00        4480 100%  486.11kB/s    0:00:00 (xfer#23, to-check=2/25)
+rwupdt.o
+        5188 100%  506.64kB/s    0:00:00        5188 100%  506.64kB/s    0:00:00 (xfer#24, to-check=1/25)
+timestamp.o
+        5180 100%  459.87kB/s    0:00:00        5180 100%  459.87kB/s    0:00:00 (xfer#25, to-check=0/25)
+
+sent 203630 bytes  received 570 bytes  408400.00 bytes/sec
+total size is 202092  speedup is 0.99
+rm -fv  *.o
+chkder.o
+dogleg.o
+enorm.o
+enorm2.o
+fdjac1.o
+fdjac2.o
+hybrd.o
+hybrd1.o
+hybrj.o
+hybrj1.o
+lmder.o
+lmder1.o
+lmdif.o
+lmdif1.o
+lmpar.o
+lmstr.o
+lmstr1.o
+qform.o
+qrfac.o
+qrsolv.o
+r1mpyq.o
+r1updt.o
+r8vec_print.o
+rwupdt.o
+timestamp.o
+/opt/scifor/opt/minpack/make.inc -> /opt/scifor/gnu_debug/etc/make.inc.minpack
