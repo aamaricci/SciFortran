@@ -1,0 +1,331 @@
+Installing in /opt/scifor/gnu_debug.
+Creating directories:
+mkdir: created directory ‘/opt/scifor/gnu_debug/etc/modules/blas’
+Copying init script for BLAS
+cp: cannot stat ‘/opt/scifor/opt/blas/bin/configvars.sh’: No such file or directory
+
+Generating environment module file for BLAS
+
+Compiling BLAS library on platform gnu_debug:
+
+sending incremental file list
+caxpy.o
+ccopy.o
+cdotc.o
+cdotu.o
+cgbmv.o
+cgemm.o
+cgemv.o
+cgerc.o
+cgeru.o
+chbmv.o
+chemm.o
+chemv.o
+cher.o
+cher2.o
+cher2k.o
+cherk.o
+chpmv.o
+chpr.o
+chpr2.o
+crotg.o
+cscal.o
+csrot.o
+csscal.o
+cswap.o
+csymm.o
+csyr2k.o
+csyrk.o
+ctbmv.o
+ctbsv.o
+ctpmv.o
+ctpsv.o
+ctrmm.o
+ctrmv.o
+ctrsm.o
+ctrsv.o
+dasum.o
+daxpy.o
+dcabs1.o
+dcopy.o
+ddot.o
+dgbmv.o
+dgemm.o
+dgemv.o
+dger.o
+dnrm2.o
+drot.o
+drotg.o
+drotm.o
+drotmg.o
+dsbmv.o
+dscal.o
+dsdot.o
+dspmv.o
+dspr.o
+dspr2.o
+dswap.o
+dsymm.o
+dsymv.o
+dsyr.o
+dsyr2.o
+dsyr2k.o
+dsyrk.o
+dtbmv.o
+dtbsv.o
+dtpmv.o
+dtpsv.o
+dtrmm.o
+dtrmv.o
+dtrsm.o
+dtrsv.o
+dzasum.o
+dznrm2.o
+icamax.o
+idamax.o
+isamax.o
+izamax.o
+lsame.o
+sasum.o
+saxpy.o
+scabs1.o
+scasum.o
+scnrm2.o
+scopy.o
+sdot.o
+sdsdot.o
+sgbmv.o
+sgemm.o
+sgemv.o
+sger.o
+snrm2.o
+srot.o
+srotg.o
+srotm.o
+srotmg.o
+ssbmv.o
+sscal.o
+sspmv.o
+sspr.o
+sspr2.o
+sswap.o
+ssymm.o
+ssymv.o
+ssyr.o
+ssyr2.o
+ssyr2k.o
+ssyrk.o
+stbmv.o
+stbsv.o
+stpmv.o
+stpsv.o
+strmm.o
+strmv.o
+strsm.o
+strsv.o
+xerbla.o
+zaxpy.o
+zcopy.o
+zdotc.o
+zdotu.o
+zdrot.o
+zdscal.o
+zgbmv.o
+zgemm.o
+zgemv.o
+zgerc.o
+zgeru.o
+zhbmv.o
+zhemm.o
+zhemv.o
+zher.o
+zher2.o
+zher2k.o
+zherk.o
+zhpmv.o
+zhpr.o
+zhpr2.o
+zrotg.o
+zscal.o
+zswap.o
+zsymm.o
+zsyr2k.o
+zsyrk.o
+ztbmv.o
+ztbsv.o
+ztpmv.o
+ztpsv.o
+ztrmm.o
+ztrmv.o
+ztrsm.o
+ztrsv.o
+
+sent 1,361,204 bytes  received 2,866 bytes  2,728,140.00 bytes/sec
+total size is 1,351,960  speedup is 0.99
+( cd src; make )
+make[1]: Entering directory `/opt/scifor/opt/blas/src'
+ar cr /opt/scifor/gnu_debug/lib/libblas.a `ls *.o | sort | uniq`
+ranlib /opt/scifor/gnu_debug/lib/libblas.a
+/opt/scifor/gnu_debug/lib/libblas.a is done...
+ 
+rsync -avP *.o /opt/scifor/opt/blas/src/obj_gnu_debug/
+sending incremental file list
+
+sent 2,694 bytes  received 12 bytes  5,412.00 bytes/sec
+total size is 1,351,960  speedup is 499.62
+make[1]: Leaving directory `/opt/scifor/opt/blas/src'
+( cd src; make clean)
+make[1]: Entering directory `/opt/scifor/opt/blas/src'
+rm -fv *.o
+removed ‘caxpy.o’
+removed ‘ccopy.o’
+removed ‘cdotc.o’
+removed ‘cdotu.o’
+removed ‘cgbmv.o’
+removed ‘cgemm.o’
+removed ‘cgemv.o’
+removed ‘cgerc.o’
+removed ‘cgeru.o’
+removed ‘chbmv.o’
+removed ‘chemm.o’
+removed ‘chemv.o’
+removed ‘cher.o’
+removed ‘cher2.o’
+removed ‘cher2k.o’
+removed ‘cherk.o’
+removed ‘chpmv.o’
+removed ‘chpr.o’
+removed ‘chpr2.o’
+removed ‘crotg.o’
+removed ‘cscal.o’
+removed ‘csrot.o’
+removed ‘csscal.o’
+removed ‘cswap.o’
+removed ‘csymm.o’
+removed ‘csyr2k.o’
+removed ‘csyrk.o’
+removed ‘ctbmv.o’
+removed ‘ctbsv.o’
+removed ‘ctpmv.o’
+removed ‘ctpsv.o’
+removed ‘ctrmm.o’
+removed ‘ctrmv.o’
+removed ‘ctrsm.o’
+removed ‘ctrsv.o’
+removed ‘dasum.o’
+removed ‘daxpy.o’
+removed ‘dcabs1.o’
+removed ‘dcopy.o’
+removed ‘ddot.o’
+removed ‘dgbmv.o’
+removed ‘dgemm.o’
+removed ‘dgemv.o’
+removed ‘dger.o’
+removed ‘dnrm2.o’
+removed ‘drot.o’
+removed ‘drotg.o’
+removed ‘drotm.o’
+removed ‘drotmg.o’
+removed ‘dsbmv.o’
+removed ‘dscal.o’
+removed ‘dsdot.o’
+removed ‘dspmv.o’
+removed ‘dspr.o’
+removed ‘dspr2.o’
+removed ‘dswap.o’
+removed ‘dsymm.o’
+removed ‘dsymv.o’
+removed ‘dsyr.o’
+removed ‘dsyr2.o’
+removed ‘dsyr2k.o’
+removed ‘dsyrk.o’
+removed ‘dtbmv.o’
+removed ‘dtbsv.o’
+removed ‘dtpmv.o’
+removed ‘dtpsv.o’
+removed ‘dtrmm.o’
+removed ‘dtrmv.o’
+removed ‘dtrsm.o’
+removed ‘dtrsv.o’
+removed ‘dzasum.o’
+removed ‘dznrm2.o’
+removed ‘icamax.o’
+removed ‘idamax.o’
+removed ‘isamax.o’
+removed ‘izamax.o’
+removed ‘lsame.o’
+removed ‘sasum.o’
+removed ‘saxpy.o’
+removed ‘scabs1.o’
+removed ‘scasum.o’
+removed ‘scnrm2.o’
+removed ‘scopy.o’
+removed ‘sdot.o’
+removed ‘sdsdot.o’
+removed ‘sgbmv.o’
+removed ‘sgemm.o’
+removed ‘sgemv.o’
+removed ‘sger.o’
+removed ‘snrm2.o’
+removed ‘srot.o’
+removed ‘srotg.o’
+removed ‘srotm.o’
+removed ‘srotmg.o’
+removed ‘ssbmv.o’
+removed ‘sscal.o’
+removed ‘sspmv.o’
+removed ‘sspr.o’
+removed ‘sspr2.o’
+removed ‘sswap.o’
+removed ‘ssymm.o’
+removed ‘ssymv.o’
+removed ‘ssyr.o’
+removed ‘ssyr2.o’
+removed ‘ssyr2k.o’
+removed ‘ssyrk.o’
+removed ‘stbmv.o’
+removed ‘stbsv.o’
+removed ‘stpmv.o’
+removed ‘stpsv.o’
+removed ‘strmm.o’
+removed ‘strmv.o’
+removed ‘strsm.o’
+removed ‘strsv.o’
+removed ‘xerbla.o’
+removed ‘zaxpy.o’
+removed ‘zcopy.o’
+removed ‘zdotc.o’
+removed ‘zdotu.o’
+removed ‘zdrot.o’
+removed ‘zdscal.o’
+removed ‘zgbmv.o’
+removed ‘zgemm.o’
+removed ‘zgemv.o’
+removed ‘zgerc.o’
+removed ‘zgeru.o’
+removed ‘zhbmv.o’
+removed ‘zhemm.o’
+removed ‘zhemv.o’
+removed ‘zher.o’
+removed ‘zher2.o’
+removed ‘zher2k.o’
+removed ‘zherk.o’
+removed ‘zhpmv.o’
+removed ‘zhpr.o’
+removed ‘zhpr2.o’
+removed ‘zrotg.o’
+removed ‘zscal.o’
+removed ‘zswap.o’
+removed ‘zsymm.o’
+removed ‘zsyr2k.o’
+removed ‘zsyrk.o’
+removed ‘ztbmv.o’
+removed ‘ztbsv.o’
+removed ‘ztpmv.o’
+removed ‘ztpsv.o’
+removed ‘ztrmm.o’
+removed ‘ztrmv.o’
+removed ‘ztrsm.o’
+removed ‘ztrsv.o’
+make[1]: Leaving directory `/opt/scifor/opt/blas/src'
+‘/opt/scifor/opt/blas/make.inc’ -> ‘/opt/scifor/gnu_debug/etc/make.inc.blas’

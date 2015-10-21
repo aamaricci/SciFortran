@@ -1,0 +1,55 @@
+Installing in /opt/scifor/gnu.
+Creating directories:
+Copying init script for DMFTT
+cp: cannot stat ‘/opt/scifor/opt/dmft_tools/bin/configvars.sh’: No such file or directory
+
+Generating environment module file for DMFTT
+
+Compiling DMFTT library on platform gnu:
+
+make[1]: Entering directory `/opt/scifor/opt/dmft_tools/src'
+Actual version is: 0294ba8c262e95a3d2ea1b810f49c0bb2e6bbc6a
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_TOOLS_VERSION.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ PARSE_LIST_INPUT.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_PARSE_INPUT.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_FFTGF.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_FFTAUX.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_MISC.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_CONVERGENCE.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_VECTORS.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_TIGHT_BINDING.f90
+gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_TOOLS.f90
+ar crv /opt/scifor/gnu/lib/libdmftt.a `ls *.o | sort | uniq` 
+r - DMFT_CONVERGENCE.o
+r - DMFT_FFTAUX.o
+r - DMFT_FFTGF.o
+r - DMFT_MISC.o
+r - DMFT_PARSE_INPUT.o
+r - DMFT_TIGHT_BINDING.o
+r - DMFT_TOOLS.o
+r - DMFT_TOOLS_VERSION.o
+r - DMFT_VECTORS.o
+r - PARSE_LIST_INPUT.o
+ranlib /opt/scifor/gnu/lib/libdmftt.a
+LIBRARY IS DONE.........
+ 
+make[1]: Leaving directory `/opt/scifor/opt/dmft_tools/src'
+make[1]: Entering directory `/opt/scifor/opt/dmft_tools/src'
+
+Cleaning ...
+rm -fv *.o
+removed ‘DMFT_CONVERGENCE.o’
+removed ‘DMFT_FFTAUX.o’
+removed ‘DMFT_FFTGF.o’
+removed ‘DMFT_MISC.o’
+removed ‘DMFT_PARSE_INPUT.o’
+removed ‘DMFT_TIGHT_BINDING.o’
+removed ‘DMFT_TOOLS.o’
+removed ‘DMFT_TOOLS_VERSION.o’
+removed ‘DMFT_VECTORS.o’
+removed ‘PARSE_LIST_INPUT.o’
+
+done.
+
+make[1]: Leaving directory `/opt/scifor/opt/dmft_tools/src'
+‘/opt/scifor/opt/dmft_tools/make.inc’ -> ‘/opt/scifor/gnu/etc/make.inc.dmfttols’
