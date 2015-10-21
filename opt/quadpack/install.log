@@ -1,0 +1,95 @@
+Installing in /opt/scifor/intel.
+Creating directories:
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/quadpack’
+mkdir: created directory ‘/opt/scifor/opt/quadpack/src/obj_intel’
+mkdir: created directory ‘/opt/scifor/opt/quadpack/src/mod_intel’
+Copying init script for QUADPACK
+cp: cannot stat ‘/opt/scifor/opt/quadpack/bin/configvars.sh’: No such file or directory
+
+Generating environment module file for QUADPACK
+
+Compiling QUADPACK library on platform intel:
+
+sending incremental file list
+
+sent 18 bytes  received 12 bytes  60.00 bytes/sec
+total size is 0  speedup is 0.00
+make -C ./src/
+make[1]: Entering directory `/opt/scifor/opt/quadpack/src'
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qagi.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qags.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qawf.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qaws.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qag.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qagp.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qawc.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qawo.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_qng.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ quadpack_aux.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/opt/quadpack/src/mod_intel/ -module /opt/scifor/opt/quadpack/src/mod_intel/ MOD_QUADPACK.f90
+ar cvq /opt/scifor/intel/lib/libquadpack.a `ls *.o | sort | uniq`  
+a - MOD_QUADPACK.o
+a - quadpack_aux.o
+a - quadpack_qagi.o
+a - quadpack_qag.o
+a - quadpack_qagp.o
+a - quadpack_qags.o
+a - quadpack_qawc.o
+a - quadpack_qawf.o
+a - quadpack_qawo.o
+a - quadpack_qaws.o
+a - quadpack_qng.o
+ranlib /opt/scifor/intel/lib/libquadpack.a
+/opt/scifor/intel/lib/libquadpack.a is done...
+
+rsync -avP *.o /opt/scifor/opt/quadpack/src/obj_intel/
+sending incremental file list
+MOD_QUADPACK.o
+         32,768  12%    0.00kB/s    0:00:00          261,968 100%  218.58MB/s    0:00:00 (xfr#1, to-chk=10/11)
+quadpack_aux.o
+         32,768  38%   31.25MB/s    0:00:00           85,144 100%   40.60MB/s    0:00:00 (xfr#2, to-chk=9/11)
+quadpack_qag.o
+         13,248 100%    6.32MB/s    0:00:00           13,248 100%    6.32MB/s    0:00:00 (xfr#3, to-chk=8/11)
+quadpack_qagi.o
+          7,840 100%    3.74MB/s    0:00:00            7,840 100%    3.74MB/s    0:00:00 (xfr#4, to-chk=7/11)
+quadpack_qagp.o
+         10,392 100%    4.96MB/s    0:00:00           10,392 100%    4.96MB/s    0:00:00 (xfr#5, to-chk=6/11)
+quadpack_qags.o
+          7,824 100%    3.73MB/s    0:00:00            7,824 100%    3.73MB/s    0:00:00 (xfr#6, to-chk=5/11)
+quadpack_qawc.o
+          8,736 100%    4.17MB/s    0:00:00            8,736 100%    4.17MB/s    0:00:00 (xfr#7, to-chk=4/11)
+quadpack_qawf.o
+          9,000 100%    4.29MB/s    0:00:00            9,000 100%    4.29MB/s    0:00:00 (xfr#8, to-chk=3/11)
+quadpack_qawo.o
+          2,192 100%    1.05MB/s    0:00:00            2,192 100%    1.05MB/s    0:00:00 (xfr#9, to-chk=2/11)
+quadpack_qaws.o
+         11,472 100%    3.65MB/s    0:00:00           11,472 100%    3.65MB/s    0:00:00 (xfr#10, to-chk=1/11)
+quadpack_qng.o
+          8,584 100%    2.73MB/s    0:00:00            8,584 100%    2.73MB/s    0:00:00 (xfr#11, to-chk=0/11)
+
+sent 427,200 bytes  received 225 bytes  854,850.00 bytes/sec
+total size is 426,400  speedup is 1.00
+rsync -avP /opt/scifor/opt/quadpack/src/mod_intel/*.mod /opt/scifor/intel/include/
+sending incremental file list
+quadpack.mod
+         32,768  62%    0.00kB/s    0:00:00           52,097 100%   18.43MB/s    0:00:00 (xfr#1, to-chk=0/1)
+
+sent 52,219 bytes  received 35 bytes  104,508.00 bytes/sec
+total size is 52,097  speedup is 1.00
+make[1]: Leaving directory `/opt/scifor/opt/quadpack/src'
+make clean -C ./src/
+make[1]: Entering directory `/opt/scifor/opt/quadpack/src'
+rm -fv *.o 
+removed ‘MOD_QUADPACK.o’
+removed ‘quadpack_aux.o’
+removed ‘quadpack_qag.o’
+removed ‘quadpack_qagi.o’
+removed ‘quadpack_qagp.o’
+removed ‘quadpack_qags.o’
+removed ‘quadpack_qawc.o’
+removed ‘quadpack_qawf.o’
+removed ‘quadpack_qawo.o’
+removed ‘quadpack_qaws.o’
+removed ‘quadpack_qng.o’
+make[1]: Leaving directory `/opt/scifor/opt/quadpack/src'
+‘/opt/scifor/opt/quadpack/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.quadpack’

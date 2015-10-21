@@ -1,0 +1,58 @@
+Installing in /opt/scifor/intel.
+Creating directories:
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/dmftt’
+mkdir: created directory ‘/opt/scifor/opt/dmft_tools/src/obj_intel’
+mkdir: created directory ‘/opt/scifor/opt/dmft_tools/src/mod_intel’
+Copying init script for DMFTT
+cp: cannot stat ‘/opt/scifor/opt/dmft_tools/bin/configvars.sh’: No such file or directory
+
+Generating environment module file for DMFTT
+
+Compiling DMFTT library on platform intel:
+
+make[1]: Entering directory `/opt/scifor/opt/dmft_tools/src'
+Actual version is: bbfc35f31fb77e64b99bc413c83666fb4042cb4a
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_TOOLS_VERSION.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ PARSE_LIST_INPUT.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_PARSE_INPUT.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_FFTGF.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_FFTAUX.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_MISC.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_CONVERGENCE.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_VECTORS.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_TIGHT_BINDING.f90
+ifort -c -O2 -ftz -static-intel -I/opt/scifor/intel/include/ -I/opt/scifor/intel/include/ -module /opt/scifor/intel/include/ DMFT_TOOLS.f90
+ar crv /opt/scifor/intel/lib/libdmftt.a `ls *.o | sort | uniq` 
+a - DMFT_CONVERGENCE.o
+a - DMFT_FFTAUX.o
+a - DMFT_FFTGF.o
+a - DMFT_MISC.o
+a - DMFT_PARSE_INPUT.o
+a - DMFT_TIGHT_BINDING.o
+a - DMFT_TOOLS.o
+a - DMFT_TOOLS_VERSION.o
+a - DMFT_VECTORS.o
+a - PARSE_LIST_INPUT.o
+ranlib /opt/scifor/intel/lib/libdmftt.a
+LIBRARY IS DONE.........
+ 
+make[1]: Leaving directory `/opt/scifor/opt/dmft_tools/src'
+make[1]: Entering directory `/opt/scifor/opt/dmft_tools/src'
+
+Cleaning ...
+rm -fv *.o
+removed ‘DMFT_CONVERGENCE.o’
+removed ‘DMFT_FFTAUX.o’
+removed ‘DMFT_FFTGF.o’
+removed ‘DMFT_MISC.o’
+removed ‘DMFT_PARSE_INPUT.o’
+removed ‘DMFT_TIGHT_BINDING.o’
+removed ‘DMFT_TOOLS.o’
+removed ‘DMFT_TOOLS_VERSION.o’
+removed ‘DMFT_VECTORS.o’
+removed ‘PARSE_LIST_INPUT.o’
+
+done.
+
+make[1]: Leaving directory `/opt/scifor/opt/dmft_tools/src'
+‘/opt/scifor/opt/dmft_tools/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.dmfttols’

@@ -1,0 +1,156 @@
+Installing in /opt/scifor/intel.
+Creating directories:
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/minpack’
+mkdir: created directory ‘/opt/scifor/opt/minpack/src/obj_intel’
+mkdir: created directory ‘/opt/scifor/opt/minpack/src/mod_intel’
+Copying init script for MINPACK
+cp: cannot stat ‘/opt/scifor/opt/minpack/bin/configvars.sh’: No such file or directory
+
+Generating environment module file for MINPACK
+
+Compiling MINPACK library on platform intel:
+
+sending incremental file list
+
+sent 18 bytes  received 12 bytes  60.00 bytes/sec
+total size is 0  speedup is 0.00
+make[1]: Entering directory `/opt/scifor/opt/minpack/src'
+ifort -c -O2 -ftz -static-intel chkder.f90
+ifort -c -O2 -ftz -static-intel dogleg.f90
+ifort -c -O2 -ftz -static-intel enorm.f90
+ifort -c -O2 -ftz -static-intel enorm2.f90
+ifort -c -O2 -ftz -static-intel fdjac1.f90
+ifort -c -O2 -ftz -static-intel fdjac2.f90
+ifort -c -O2 -ftz -static-intel hybrd.f90
+ifort -c -O2 -ftz -static-intel hybrd1.f90
+ifort -c -O2 -ftz -static-intel hybrj.f90
+ifort -c -O2 -ftz -static-intel hybrj1.f90
+ifort -c -O2 -ftz -static-intel lmder.f90
+ifort -c -O2 -ftz -static-intel lmder1.f90
+ifort -c -O2 -ftz -static-intel lmdif.f90
+ifort -c -O2 -ftz -static-intel lmdif1.f90
+ifort -c -O2 -ftz -static-intel lmpar.f90
+ifort -c -O2 -ftz -static-intel lmstr.f90
+ifort -c -O2 -ftz -static-intel lmstr1.f90
+ifort -c -O2 -ftz -static-intel qform.f90
+ifort -c -O2 -ftz -static-intel qrfac.f90
+ifort -c -O2 -ftz -static-intel qrsolv.f90
+ifort -c -O2 -ftz -static-intel r1mpyq.f90
+ifort -c -O2 -ftz -static-intel r1updt.f90
+ifort -c -O2 -ftz -static-intel r8vec_print.f90
+ifort -c -O2 -ftz -static-intel rwupdt.f90
+ifort -c -O2 -ftz -static-intel timestamp.f90
+ar cvq /opt/scifor/intel/lib/libminpack.a `ls *.o | sort | uniq`  
+a - chkder.o
+a - dogleg.o
+a - enorm2.o
+a - enorm.o
+a - fdjac1.o
+a - fdjac2.o
+a - hybrd1.o
+a - hybrd.o
+a - hybrj1.o
+a - hybrj.o
+a - lmder1.o
+a - lmder.o
+a - lmdif1.o
+a - lmdif.o
+a - lmpar.o
+a - lmstr1.o
+a - lmstr.o
+a - qform.o
+a - qrfac.o
+a - qrsolv.o
+a - r1mpyq.o
+a - r1updt.o
+a - r8vec_print.o
+a - rwupdt.o
+a - timestamp.o
+ranlib /opt/scifor/intel/lib/libminpack.a
+/opt/scifor/intel/lib/libminpack.a is done...
+ 
+rsync -avP *.o /opt/scifor/opt/minpack/src/obj_intel/
+sending incremental file list
+chkder.o
+          5,920 100%    0.00kB/s    0:00:00            5,920 100%    0.00kB/s    0:00:00 (xfr#1, to-chk=24/25)
+dogleg.o
+          5,520 100%    5.26MB/s    0:00:00            5,520 100%    5.26MB/s    0:00:00 (xfr#2, to-chk=23/25)
+enorm.o
+          1,608 100%    1.53MB/s    0:00:00            1,608 100%    1.53MB/s    0:00:00 (xfr#3, to-chk=22/25)
+enorm2.o
+          1,920 100%    1.83MB/s    0:00:00            1,920 100%    1.83MB/s    0:00:00 (xfr#4, to-chk=21/25)
+fdjac1.o
+          3,840 100%    3.66MB/s    0:00:00            3,840 100%    3.66MB/s    0:00:00 (xfr#5, to-chk=20/25)
+fdjac2.o
+          2,400 100%    2.29MB/s    0:00:00            2,400 100%    2.29MB/s    0:00:00 (xfr#6, to-chk=19/25)
+hybrd.o
+         11,232 100%   10.71MB/s    0:00:00           11,232 100%   10.71MB/s    0:00:00 (xfr#7, to-chk=18/25)
+hybrd1.o
+          2,072 100%    1.98MB/s    0:00:00            2,072 100%    1.98MB/s    0:00:00 (xfr#8, to-chk=17/25)
+hybrj.o
+         10,776 100%   10.28MB/s    0:00:00           10,776 100%   10.28MB/s    0:00:00 (xfr#9, to-chk=16/25)
+hybrj1.o
+          2,008 100%    1.91MB/s    0:00:00            2,008 100%    1.91MB/s    0:00:00 (xfr#10, to-chk=15/25)
+lmder.o
+         10,832 100%   10.33MB/s    0:00:00           10,832 100%   10.33MB/s    0:00:00 (xfr#11, to-chk=14/25)
+lmder1.o
+          1,784 100%    1.70MB/s    0:00:00            1,784 100%    1.70MB/s    0:00:00 (xfr#12, to-chk=13/25)
+lmdif.o
+         11,192 100%   10.67MB/s    0:00:00           11,192 100%   10.67MB/s    0:00:00 (xfr#13, to-chk=12/25)
+lmdif1.o
+          1,848 100%    1.76MB/s    0:00:00            1,848 100%    1.76MB/s    0:00:00 (xfr#14, to-chk=11/25)
+lmpar.o
+          6,712 100%    6.40MB/s    0:00:00            6,712 100%    6.40MB/s    0:00:00 (xfr#15, to-chk=10/25)
+lmstr.o
+         11,392 100%   10.86MB/s    0:00:00           11,392 100%   10.86MB/s    0:00:00 (xfr#16, to-chk=9/25)
+lmstr1.o
+          1,784 100%    1.70MB/s    0:00:00            1,784 100%    1.70MB/s    0:00:00 (xfr#17, to-chk=8/25)
+qform.o
+          4,680 100%    4.46MB/s    0:00:00            4,680 100%    4.46MB/s    0:00:00 (xfr#18, to-chk=7/25)
+qrfac.o
+          6,280 100%    5.99MB/s    0:00:00            6,280 100%    5.99MB/s    0:00:00 (xfr#19, to-chk=6/25)
+qrsolv.o
+          5,992 100%    5.71MB/s    0:00:00            5,992 100%    5.71MB/s    0:00:00 (xfr#20, to-chk=5/25)
+r1mpyq.o
+          3,888 100%    3.71MB/s    0:00:00            3,888 100%    3.71MB/s    0:00:00 (xfr#21, to-chk=4/25)
+r1updt.o
+          6,016 100%    5.74MB/s    0:00:00            6,016 100%    5.74MB/s    0:00:00 (xfr#22, to-chk=3/25)
+r8vec_print.o
+          2,968 100%    2.83MB/s    0:00:00            2,968 100%    2.83MB/s    0:00:00 (xfr#23, to-chk=2/25)
+rwupdt.o
+          2,064 100%    1.97MB/s    0:00:00            2,064 100%    1.97MB/s    0:00:00 (xfr#24, to-chk=1/25)
+timestamp.o
+          6,280 100%    5.99MB/s    0:00:00            6,280 100%    5.99MB/s    0:00:00 (xfr#25, to-chk=0/25)
+
+sent 132,582 bytes  received 491 bytes  266,146.00 bytes/sec
+total size is 131,008  speedup is 0.98
+make[1]: Leaving directory `/opt/scifor/opt/minpack/src'
+make[1]: Entering directory `/opt/scifor/opt/minpack/src'
+rm -fv  *.o
+removed ‘chkder.o’
+removed ‘dogleg.o’
+removed ‘enorm.o’
+removed ‘enorm2.o’
+removed ‘fdjac1.o’
+removed ‘fdjac2.o’
+removed ‘hybrd.o’
+removed ‘hybrd1.o’
+removed ‘hybrj.o’
+removed ‘hybrj1.o’
+removed ‘lmder.o’
+removed ‘lmder1.o’
+removed ‘lmdif.o’
+removed ‘lmdif1.o’
+removed ‘lmpar.o’
+removed ‘lmstr.o’
+removed ‘lmstr1.o’
+removed ‘qform.o’
+removed ‘qrfac.o’
+removed ‘qrsolv.o’
+removed ‘r1mpyq.o’
+removed ‘r1updt.o’
+removed ‘r8vec_print.o’
+removed ‘rwupdt.o’
+removed ‘timestamp.o’
+make[1]: Leaving directory `/opt/scifor/opt/minpack/src'
+‘/opt/scifor/opt/minpack/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.minpack’
