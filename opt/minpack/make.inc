@@ -1,0 +1,9 @@
+FC=gfortran
+FFLAG= -O2 -funroll-all-loops -static
+PLAT=gnu
+RANLIB=ranlib
+MOPT=-J
+LIBMINPACK=/Users/amaricci/opt/scifor/gnu/lib/libminpack.a
+INC_TARGET=/Users/amaricci/opt/scifor/gnu/include
+OBJ_INSTALL=/opt/scifor/opt/minpack/src/obj_gnu
+INC_INSTALL=/opt/scifor/opt/minpack/src/mod_gnu

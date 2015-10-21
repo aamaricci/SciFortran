@@ -1,0 +1,9 @@
+FC=gfortran
+FFLAG= -O2 -funroll-all-loops -static
+PLAT=gnu
+RANLIB=ranlib
+MOPT=-J
+LIBQUADPACK=/Users/amaricci/opt/scifor/gnu/lib/libquadpack.a
+INC_TARGET=/Users/amaricci/opt/scifor/gnu/include
+OBJ_INSTALL=/opt/scifor/opt/quadpack/src/obj_gnu
+INC_INSTALL=/opt/scifor/opt/quadpack/src/mod_gnu

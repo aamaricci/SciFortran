@@ -1,0 +1,9 @@
+FC=gfortran
+FFLAGS=-O2 -funroll-all-loops -static
+MOPT=-J
+PLAT=gnu
+LIB_DMFTT=/Users/amaricci/opt/scifor/gnu/lib/libdmftt.a
+INC_SCIFOR=/Users/amaricci/opt/scifor/gnu/include
+INC_TARGET=/Users/amaricci/opt/scifor/gnu/include
+OBJ_INSTALL=/opt/scifor/opt/dmft_tools/src/obj_gnu
+INC_INSTALL=/opt/scifor/opt/dmft_tools/src/mod_gnu
