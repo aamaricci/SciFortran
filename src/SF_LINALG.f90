@@ -100,6 +100,46 @@ module SF_LINALG
   public :: matrix_inverse_gj
 
 
+
+  !>TRIDIAGONAL MATRICES:
+  !check the matrix is actually (block) tridiagonal
+  interface check_tridiag
+     module procedure d_check_tridiag
+     module procedure c_check_tridiag
+     module procedure d_check_tridiag_block
+     module procedure c_check_tridiag_block
+  end interface check_tridiag
+  public :: check_tridiag
+
+  !get the main (block) diagonals from a (block) tridiagonal matrix
+  interface get_tridiag
+     module procedure d_get_tridiag
+     module procedure c_get_tridiag
+     module procedure d_get_tridiag_block
+     module procedure c_get_tridiag_block
+  end interface get_tridiag
+  public :: get_tridiag
+
+  !build a (block) tridigonal matrix from the main (block) diagonals
+  interface build_tridiag
+     module procedure d_build_tridiag
+     module procedure c_build_tridiag
+     module procedure d_build_tridiag_block
+     module procedure c_build_tridiag_block
+  end interface build_tridiag
+  public :: build_tridiag
+
+  !invert a (block) tridiagonal matrix using the iterative algorithm
+  interface inv_tridiag
+     module procedure d_invert_tridiag_matrix
+     module procedure c_invert_tridiag_matrix
+     module procedure d_invert_tridiag_block_matrix
+     module procedure c_invert_tridiag_block_matrix
+  end interface inv_tridiag
+  public :: inv_tridiag
+
+
+
   ! solution to linear systems of equation with real/complex coefficients:
   interface solve
      module procedure dsolve_1rhs
@@ -1563,6 +1603,468 @@ contains
 
 
 
+
+  !******************************************************************
+  !                TRIDIAGONAL MATRICES ROUTINES
+  !******************************************************************
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE:  comment
+  !+-----------------------------------------------------------------------------+!
+  function d_check_tridiag(Amat) result(Mcheck)
+    real(8),dimension(:,:)                       :: Amat
+    logical,dimension(size(Amat,1),size(Amat,2)) :: Lmat
+    logical                                      :: Mcheck
+    integer                                      :: i,j,N
+    N=size(Amat,1)
+    call assert_shape(Amat,[N,N],"d_check_tridiag","Amat")
+    Lmat=.true.
+    forall(i=1:N-1)
+       Lmat(i+1,i)=.false.
+       Lmat(i,i)  =.false.
+       Lmat(i,i+1)=.false.
+    end forall
+    Lmat(N,N)=.false.
+    Mcheck = .not.(sum(abs(Amat),mask=Lmat)>0d0)
+  end function d_check_tridiag
+  function c_check_tridiag(Amat) result(Mcheck)
+    complex(8),dimension(:,:)                    :: Amat
+    logical,dimension(size(Amat,1),size(Amat,2)) :: Lmat
+    logical                                      :: Mcheck
+    integer                                      :: i,N
+    N=size(Amat,1)
+    call assert_shape(Amat,[N,N],"c_check_tridiag","Amat")
+    Lmat=.true.
+    forall(i=1:N-1)
+       Lmat(i+1,i)=.false.
+       Lmat(i,i)  =.false.
+       Lmat(i,i+1)=.false.
+    end forall
+    Lmat(N,N)=.false.
+    Mcheck = .not.(sum(abs(Amat),mask=Lmat)>0d0)
+  end function c_check_tridiag
+  function d_check_tridiag_block(Nblock,Nsize,Amat) result(Mcheck)
+    integer                                          :: Nblock
+    integer                                          :: Nsize
+    real(8),dimension(Nblock*Nsize,Nblock*Nsize)     :: Amat
+    logical,dimension(Nblock*Nsize,Nblock*Nsize)     :: Lmat
+    integer                                          :: i,j,iblock,is,js
+    logical                                          :: Mcheck
+    Lmat=.true.
+    do iblock=1,Nblock-1
+       do i=1,Nsize
+          do j=1,Nsize
+             is = i + (iblock-1)*Nsize
+             js = j + (iblock-1)*Nsize
+             Lmat(Nsize+is,js) =.false.
+             Lmat(is,js)       =.false.
+             Lmat(is,Nsize+js) =.false.
+          enddo
+       enddo
+    enddo
+    do i=1,Nsize
+       do j=1,Nsize
+          is = i + (Nblock-1)*Nsize
+          js = j + (Nblock-1)*Nsize
+          Lmat(is,js)=.false.
+       enddo
+    enddo
+    Mcheck = .not.(sum(abs(Amat),mask=Lmat)>0d0)
+  end function d_check_tridiag_block
+  function c_check_tridiag_block(Nblock,Nsize,Amat) result(Mcheck)
+    integer                                         :: Nblock
+    integer                                         :: Nsize
+    complex(8),dimension(Nblock*Nsize,Nblock*Nsize) :: Amat
+    logical,dimension(Nblock*Nsize,Nblock*Nsize)    :: Lmat
+    integer                                         :: i,j,iblock,is,js
+    logical                                         :: Mcheck
+    Lmat=.true.
+    do iblock=1,Nblock-1
+       do i=1,Nsize
+          do j=1,Nsize
+             is = i + (iblock-1)*Nsize
+             js = j + (iblock-1)*Nsize
+             Lmat(Nsize+is,js) =.false.
+             Lmat(is,js)       =.false.
+             Lmat(is,Nsize+js) =.false.
+          enddo
+       enddo
+    enddo
+    do i=1,Nsize
+       do j=1,Nsize
+          is = i + (Nblock-1)*Nsize
+          js = j + (Nblock-1)*Nsize
+          Lmat(is,js)=.false.
+       enddo
+    enddo
+    Mcheck = .not.(sum(abs(Amat),mask=Lmat)>0d0)
+  end function c_check_tridiag_block
+
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: Get a the three (sub,main,over) diagonals of a Tridiagonal matrix
+  !+-----------------------------------------------------------------------------+!
+  subroutine d_get_tridiag(Amat,sub,diag,over)
+    real(8),dimension(:,:)                     :: Amat
+    real(8),dimension(size(Amat,1))            :: diag
+    real(8),dimension(size(Amat,1)-1)          :: sub
+    real(8),dimension(size(Amat,1)-1),optional :: over
+    real(8),dimension(size(Amat,1)-1)          :: over_
+    integer                                    :: i,N
+    N=size(Amat,1)
+    call assert_shape(Amat,[N,N],"d_get_tridiag","Amat")
+    forall(i=1:N-1)
+       sub(i)  = Amat(i+1,i)
+       diag(i) = Amat(i,i)
+       over_(i)= Amat(i,i+1)
+    end forall
+    diag(N) = Amat(N,N)
+    if(present(over))over=over_
+  end subroutine d_get_tridiag
+  subroutine c_get_tridiag(Amat,sub,diag,over)
+    complex(8),dimension(:,:)                     :: Amat
+    complex(8),dimension(size(Amat,1))            :: diag
+    complex(8),dimension(size(Amat,1)-1)          :: sub
+    complex(8),dimension(size(Amat,1)-1),optional :: over
+    complex(8),dimension(size(Amat,1)-1)          :: over_
+    integer                                       :: i,N
+    N=size(Amat,1)
+    call assert_shape(Amat,[N,N],"d_get_tridiag","Amat")
+    forall(i=1:N-1)
+       sub(i)  = Amat(i+1,i)
+       diag(i) = Amat(i,i)
+       over_(i)= Amat(i,i+1)
+    end forall
+    diag(N) = Amat(N,N)
+    if(present(over))over=over_
+  end subroutine c_get_tridiag
+  subroutine d_get_tridiag_block(Nblock,Nsize,Amat,sub,diag,over)
+    integer                                          :: Nblock
+    integer                                          :: Nsize
+    real(8),dimension(Nblock*Nsize,Nblock*Nsize)     :: Amat
+    real(8),dimension(Nblock-1,Nsize,Nsize)          :: sub
+    real(8),dimension(Nblock,Nsize,Nsize)            :: diag
+    real(8),dimension(Nblock-1,Nsize,Nsize),optional :: over
+    real(8),dimension(Nblock-1,Nsize,Nsize)          :: over_
+    integer                                          :: i,j,iblock,is,js
+    do iblock=1,Nblock-1
+       do i=1,Nsize
+          do j=1,Nsize
+             is = i + (iblock-1)*Nsize
+             js = j + (iblock-1)*Nsize
+             Sub(iblock,i,j)   = Amat(Nsize+is,js)
+             Diag(iblock,i,j)  = Amat(is,js)
+             Over_(iblock,i,j) = Amat(is,Nsize+js)
+          enddo
+       enddo
+    enddo
+    do i=1,Nsize
+       do j=1,Nsize
+          is = i + (Nblock-1)*Nsize
+          js = j + (Nblock-1)*Nsize
+          Diag(Nblock,i,j) = Amat(is,js)
+       enddo
+    enddo
+    if(present(over))over=over_
+  end subroutine d_get_tridiag_block
+  subroutine c_get_tridiag_block(Nblock,Nsize,Amat,sub,diag,over)
+    integer                                          :: Nblock
+    integer                                          :: Nsize
+    complex(8),dimension(Nblock*Nsize,Nblock*Nsize)     :: Amat
+    complex(8),dimension(Nblock-1,Nsize,Nsize)          :: sub
+    complex(8),dimension(Nblock,Nsize,Nsize)            :: diag
+    complex(8),dimension(Nblock-1,Nsize,Nsize),optional :: over
+    complex(8),dimension(Nblock-1,Nsize,Nsize)          :: over_
+    integer                                          :: i,j,iblock,is,js
+    do iblock=1,Nblock-1
+       do i=1,Nsize
+          do j=1,Nsize
+             is = i + (iblock-1)*Nsize
+             js = j + (iblock-1)*Nsize
+             Sub(iblock,i,j)   = Amat(Nsize+is,js)
+             Diag(iblock,i,j)  = Amat(is,js)
+             Over_(iblock,i,j) = Amat(is,Nsize+js)
+          enddo
+       enddo
+    enddo
+    do i=1,Nsize
+       do j=1,Nsize
+          is = i + (Nblock-1)*Nsize
+          js = j + (Nblock-1)*Nsize
+          Diag(Nblock,i,j) = Amat(is,js)
+       enddo
+    enddo
+    if(present(over))over=over_
+  end subroutine c_get_tridiag_block
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: Build a tridiagonal Matrix Amat from the three (sub,main,over) diagonal.
+  ! In this version the over-diagonal is optional
+  !+-----------------------------------------------------------------------------+!
+  function d_build_tridiag(sub,diag,over) result(Amat)
+    real(8),dimension(:)                     :: diag
+    real(8),dimension(size(diag)-1)          :: sub
+    real(8),dimension(size(diag)-1),optional :: over
+    real(8),dimension(size(diag),size(diag)) :: Amat
+    real(8),dimension(size(diag)-1)          :: over_
+    integer                                  :: i,N
+    over_=sub;if(present(over))over_=over
+    N=size(diag)
+    Amat=0d0
+    forall(i=1:N-1)
+       Amat(i+1,i) = sub(i)
+       Amat(i,i)   = diag(i)
+       Amat(i,i+1) = over_(i)
+    end forall
+    Amat(N,N)=diag(N)
+  end function d_build_tridiag
+  function c_build_tridiag(sub,diag,over) result(Amat)
+    complex(8),dimension(:)                     :: diag
+    complex(8),dimension(size(diag)-1)          :: sub
+    complex(8),dimension(size(diag)-1),optional :: over
+    complex(8),dimension(size(diag),size(diag)) :: Amat
+    complex(8),dimension(size(diag)-1)          :: over_
+    integer                                     :: i,N
+    over_=sub;if(present(over))over_=over
+    N=size(diag)
+    Amat=dcmplx(0d0,0d0)
+    forall(i=1:N-1)
+       Amat(i+1,i) = sub(i)
+       Amat(i,i)   = diag(i)
+       Amat(i,i+1) = over_(i)
+    end forall
+    Amat(N,N)=diag(N)
+  end function c_build_tridiag
+  function d_build_tridiag_block(Nblock,Nsize,sub,diag,over) result(Amat)
+    integer                                          :: Nblock
+    integer                                          :: Nsize
+    real(8),dimension(Nblock*Nsize,Nblock*Nsize)     :: Amat
+    real(8),dimension(Nblock-1,Nsize,Nsize)          :: sub
+    real(8),dimension(Nblock,Nsize,Nsize)            :: diag
+    real(8),dimension(Nblock-1,Nsize,Nsize),optional :: over
+    real(8),dimension(Nblock-1,Nsize,Nsize)          :: over_
+    integer                                          :: i,j,iblock,is,js
+    over_=sub;if(present(over))over_=over
+    !
+    Amat=0d0
+    !
+    do iblock=1,Nblock-1
+       do i=1,Nsize
+          do j=1,Nsize
+             is = i + (iblock-1)*Nsize
+             js = j + (iblock-1)*Nsize
+             Amat(Nsize+is,js) = Sub(iblock,i,j)
+             Amat(is,js)       = Diag(iblock,i,j)
+             Amat(is,Nsize+js) = Over_(iblock,i,j)
+          enddo
+       enddo
+    enddo
+    do i=1,Nsize
+       do j=1,Nsize
+          is = i + (Nblock-1)*Nsize
+          js = j + (Nblock-1)*Nsize
+          Amat(is,js)       = Diag(Nblock,i,j)
+       enddo
+    enddo
+  end function d_build_tridiag_block
+  function c_build_tridiag_block(Nblock,Nsize,sub,diag,over) result(Amat)
+    integer                                          :: Nblock
+    integer                                          :: Nsize
+    complex(8),dimension(Nblock*Nsize,Nblock*Nsize)     :: Amat
+    complex(8),dimension(Nblock-1,Nsize,Nsize)          :: sub
+    complex(8),dimension(Nblock,Nsize,Nsize)            :: diag
+    complex(8),dimension(Nblock-1,Nsize,Nsize),optional :: over
+    complex(8),dimension(Nblock-1,Nsize,Nsize)          :: over_
+    integer                                          :: i,j,iblock,is,js
+    over_=sub;if(present(over))over_=over
+    !
+    Amat=0d0
+    !
+    do iblock=1,Nblock-1
+       do i=1,Nsize
+          do j=1,Nsize
+             is = i + (iblock-1)*Nsize
+             js = j + (iblock-1)*Nsize
+             Amat(Nsize+is,js) = Sub(iblock,i,j)
+             Amat(is,js)       = Diag(iblock,i,j)
+             Amat(is,Nsize+js) = Over_(iblock,i,j)
+          enddo
+       enddo
+    enddo
+    do i=1,Nsize
+       do j=1,Nsize
+          is = i + (Nblock-1)*Nsize
+          js = j + (Nblock-1)*Nsize
+          Amat(is,js)       = Diag(Nblock,i,j)
+       enddo
+    enddo
+  end function c_build_tridiag_block
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: return the N diagonal elements of the inverse matrix.
+  ! b = sub-diagonal
+  ! d = main-diagonal
+  ! a = over-diagonal
+  !+-----------------------------------------------------------------------------+!
+  function d_invert_tridiag_matrix(N,sub,diag,over) result(Inv)
+    integer                         :: i,j,N
+    real(8),dimension(N)            :: diag
+    real(8),dimension(N-1)          :: sub
+    real(8),dimension(N-1),optional :: over
+    real(8),dimension(N-1)          :: over_
+    real(8),dimension(N)            :: Inv
+    real(8)                         :: Foo,Cleft,Cright
+    real(8),dimension(N)            :: dleft
+    real(8),dimension(N)            :: dright
+    !
+    over_ = sub;if(present(over))over_=over
+    !
+    !DOWNWARD:
+    dleft(1) = diag(1)
+    if(dleft(1)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    do i=2,N
+       foo      = 1d0/dleft(i-1)
+       cleft    = sub(i-1)*foo
+       dleft(i) = diag(i) - cleft*over_(i-1)
+       if(dleft(i)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    enddo
+    !
+    !UPWARD:
+    dright(N) = diag(N)
+    if(dright(N)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    do i=N-1,1,-1
+       foo       = 1d0/dright(i+1)
+       cright    = over_(i)*foo
+       dright(i) = diag(i) - cright*sub(i)
+       if(dright(i)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    enddo
+    !
+    do i=1,N
+       Foo    =  dleft(i) + dright(i) - diag(i)
+       Inv(i) = 1d0/Foo
+    end do
+  end function d_invert_tridiag_matrix
+
+  function c_invert_tridiag_matrix(N,sub,diag,over) result(Inv)
+    integer                            :: i,j,N
+    complex(8),dimension(N)            :: diag
+    complex(8),dimension(N-1)          :: sub
+    complex(8),dimension(N-1),optional :: over
+    complex(8),dimension(N-1)          :: over_
+    complex(8),dimension(N)            :: Inv
+    complex(8)                         :: Foo,Cleft,Cright
+    complex(8),dimension(N)            :: dleft
+    complex(8),dimension(N)            :: dright
+    !
+    over_ = sub;if(present(over))over_=over
+    !
+    !DOWNWARD:
+    dleft(1) = diag(1)
+    if(dleft(1)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    do i=2,N
+       foo      = 1d0/dleft(i-1)
+       cleft    = sub(i-1)*foo
+       dleft(i) = diag(i) - cleft*over_(i-1) !over_(i-1)/dleft(i-1)*sub(i)
+       if(dleft(i)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    enddo
+    !
+    !UPWARD:
+    dright(N) = diag(N)
+    if(dright(N)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    do i=N-1,1,-1
+       foo       = 1d0/dright(i+1)
+       cright    = over_(i)*foo
+       dright(i) = diag(i) - cright*sub(i) !sub(i+1)/dright(i+1)*over_(i)
+       if(dright(i)==0d0)stop "matrix is ill-conditioned: no inverse exists"
+    enddo
+    !
+    do i=1,N
+       Foo    =  dleft(i) + dright(i) - diag(i)
+       Inv(i) = 1d0/Foo
+    end do
+  end function c_invert_tridiag_matrix
+
+
+
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: return the Nb diagonal NxN blocks of the inverse matrix.
+  ! b = sub-diagonal
+  ! d = main-diagonal
+  ! a = over-diagonal = sub-diagonal (symmetric matrix)
+  !+-----------------------------------------------------------------------------+!
+  function d_invert_tridiag_block_matrix(Nb,N,sub,diag,over) result(Ainv)
+    integer                              :: ib,i,j,Nb,N
+    real(8),dimension(Nb,N,N)            :: diag
+    real(8),dimension(Nb-1,N,N)          :: sub
+    real(8),dimension(Nb-1,N,N),optional :: over
+    real(8),dimension(Nb-1,N,N)          :: over_
+    real(8),dimension(Nb,N,N)            :: Ainv
+    real(8),dimension(N,N)               :: Foo,Cleft,Cright
+    real(8),dimension(Nb,N,N)            :: Dleft
+    real(8),dimension(Nb,N,N)            :: Dright
+    !
+    over_ = sub;if(present(over))over_=over
+    !
+    !DOWNWARD:
+    dleft(1,:,:) = diag(1,:,:)
+    do i=2,Nb
+       foo  = dleft(i-1,:,:) ; call inv(foo)
+       cleft= matmul(sub(i-1,:,:),foo)
+       dleft(i,:,:) = diag(i,:,:) - matmul(cleft,over_(i-1,:,:))
+    enddo
+    !
+    !BACKWARD:
+    dright(Nb,:,:) = diag(Nb,:,:)
+    do i=Nb-1,1,-1
+       foo   = dright(i+1,:,:) ; call inv(foo)
+       cright= matmul(over_(i,:,:),foo)
+       dright(i,:,:) = diag(i,:,:) - matmul(cright,sub(i,:,:))
+    enddo
+    !
+    do ib=1,Nb
+       Ainv(ib,:,:)    =  dleft(ib,:,:) + dright(ib,:,:) - diag(ib,:,:)
+       call inv(Ainv(ib,:,:))
+    end do
+  end function d_invert_tridiag_block_matrix
+
+  function c_invert_tridiag_block_matrix(Nb,N,sub,diag,over) result(Ainv)
+    integer                               :: ib,i,j,Nb,N
+    complex(8),dimension(Nb,N,N)          :: diag
+    complex(8),dimension(Nb-1,N,N)          :: sub
+    complex(8),dimension(Nb-1,N,N),optional :: over
+    complex(8),dimension(Nb-1,N,N)          :: over_
+    complex(8),dimension(Nb,N,N)          :: Ainv
+    complex(8),dimension(N,N)             :: Foo,Cleft,Cright
+    complex(8),dimension(Nb,N,N)          :: Dleft
+    complex(8),dimension(Nb,N,N)          :: Dright
+    !
+    over_ = sub;if(present(over))over_=over
+    !
+    !DOWNWARD:
+    dleft(1,:,:) = diag(1,:,:)
+    do i=2,Nb
+       foo  = dleft(i-1,:,:) ; call inv(foo)
+       cleft= matmul(sub(i-1,:,:),foo)
+       dleft(i,:,:) = diag(i,:,:) - matmul(cleft,over_(i-1,:,:))
+    enddo
+    !
+    !BACKWARD:
+    dright(Nb,:,:) = diag(Nb,:,:)
+    do i=Nb-1,1,-1
+       foo   = dright(i+1,:,:) ; call inv(foo)
+       cright= matmul(over_(i,:,:),foo)
+       dright(i,:,:) = diag(i,:,:) - matmul(cright,sub(i,:,:))
+    enddo
+    !
+    do ib=1,Nb
+       Ainv(ib,:,:)    =  dleft(ib,:,:) + dright(ib,:,:) - diag(ib,:,:)
+       call inv(Ainv(ib,:,:))
+    end do
+  end function c_invert_tridiag_block_matrix
 
 
 

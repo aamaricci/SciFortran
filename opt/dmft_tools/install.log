@@ -1,25 +1,770 @@
-Installing in /opt/scifor/gnu.
+Installing in /opt/scifor/gnu_debug.
 Creating directories:
 Copying init script for DMFTT
-cp: cannot stat ‘/opt/scifor/opt/dmft_tools/bin/configvars.sh’: No such file or directory
+‘/opt/scifor/opt/dmft_tools/bin/configvars.sh’ -> ‘/opt/scifor/gnu_debug/bin/configvars.sh’
 
 Generating environment module file for DMFTT
 
-Compiling DMFTT library on platform gnu:
+Compiling DMFTT library on platform gnu_debug:
 
 make[1]: Entering directory `/opt/scifor/opt/dmft_tools/src'
-Actual version is: 0294ba8c262e95a3d2ea1b810f49c0bb2e6bbc6a
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_TOOLS_VERSION.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ PARSE_LIST_INPUT.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_PARSE_INPUT.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_FFTGF.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_FFTAUX.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_MISC.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_CONVERGENCE.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_VECTORS.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_TIGHT_BINDING.f90
-gfortran -c -O2 -funroll-all-loops -static -I/opt/scifor/gnu/include/ -I/opt/scifor/gnu/include/ -J/opt/scifor/gnu/include/ DMFT_TOOLS.f90
-ar crv /opt/scifor/gnu/lib/libdmftt.a `ls *.o | sort | uniq` 
+Actual version is: 7fad1c3f1eaf78abf57adb190753b7a4225dd183
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_TOOLS_VERSION.f90
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ PARSE_LIST_INPUT.f90
+parse_list_print.f90:54.28:
+    Included at PARSE_LIST_INPUT.f90:179:
+
+  integer          :: unit,i
+                            1
+Warning: Unused variable 'i' declared at (1)
+parse_list_print.f90:4.28:
+    Included at PARSE_LIST_INPUT.f90:179:
+
+  integer            :: clen
+                            1
+Warning: Unused variable 'clen' declared at (1)
+parse_list_print.f90:5.30:
+    Included at PARSE_LIST_INPUT.f90:179:
+
+  integer            :: unit,i
+                              1
+Warning: Unused variable 'i' declared at (1)
+parse_list_print.f90:5.28:
+    Included at PARSE_LIST_INPUT.f90:179:
+
+  integer            :: unit,i
+                            1
+Warning: Unused variable 'unit' declared at (1)
+PARSE_LIST_INPUT.f90:152.37:
+
+    logical                   :: bool
+                                     1
+Warning: Unused variable 'bool' declared at (1)
+PARSE_LIST_INPUT.f90:150.34:
+
+    integer                   :: i,counter,unit
+                                  1
+Warning: Unused variable 'i' declared at (1)
+PARSE_LIST_INPUT.f90:150.47:
+
+    integer                   :: i,counter,unit
+                                               1
+Warning: Unused variable 'unit' declared at (1)
+PARSE_LIST_INPUT.f90:120.37:
+
+    logical                   :: bool
+                                     1
+Warning: Unused variable 'bool' declared at (1)
+PARSE_LIST_INPUT.f90:118.34:
+
+    integer                   :: i,counter,unit
+                                  1
+Warning: Unused variable 'i' declared at (1)
+In file included from PARSE_LIST_INPUT.f90:178:0:
+parse_list_aux.f90:82:0: warning: ‘c_to_ch’ defined but not used [-Wunused-function]
+ function c_to_ch(c) result(string)
+ ^
+parse_list_aux.f90:14:0: warning: ‘lower_case’ defined but not used [-Wunused-function]
+ subroutine lower_case(s)
+ ^
+parse_list_aux.f90:1:0: warning: ‘upper_case’ defined but not used [-Wunused-function]
+ subroutine upper_case(s)
+ ^
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_PARSE_INPUT.f90
+DMFT_PARSE_INPUT.f90:129.27:
+
+    integer            :: i,pos,iloc,len
+                           1
+Warning: Unused variable 'i' declared at (1)
+DMFT_PARSE_INPUT.f90:129.36:
+
+    integer            :: i,pos,iloc,len
+                                    1
+Warning: Unused variable 'iloc' declared at (1)
+DMFT_PARSE_INPUT.f90:96.34:
+
+    character(len=256) :: cmd_line
+                                  1
+Warning: Unused variable 'cmd_line' declared at (1)
+DMFT_PARSE_INPUT.f90:97.27:
+
+    integer            :: i
+                           1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:341.48:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:341.71:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                                       1
+Warning: Unused variable 'ncount' declared at (1)
+parse_input_variable.f90:286.48:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:286.71:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                                       1
+Warning: Unused variable 'ncount' declared at (1)
+parse_input_variable.f90:231.48:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:231.71:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                                       1
+Warning: Unused variable 'ncount' declared at (1)
+parse_input_variable.f90:174.48:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:174.71:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                                    ::i,unit,pos,j,ndim,ncount,nargs,p
+                                                                       1
+Warning: Unused variable 'ncount' declared at (1)
+parse_input_variable.f90:131.30:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                  ::i,unit,pos
+                              1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:90.30:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                  ::i,unit,pos
+                              1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:50.30:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                  ::i,unit,pos
+                              1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:10.31:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  integer                  :: i,unit,pos
+                               1
+Warning: Unused variable 'i' declared at (1)
+parse_input_variable.f90:12.43:
+    Included at DMFT_PARSE_INPUT.f90:59:
+
+  logical                  :: bool,idefault=.true.
+                                           1
+Warning: Unused variable 'idefault' declared at (1)
+parse_cmd_variable.f90:181.63:
+    Included at DMFT_PARSE_INPUT.f90:52:
+
+  integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+                                                               1
+Warning: Unused variable 'ncount' declared at (1)
+parse_cmd_variable.f90:148.63:
+    Included at DMFT_PARSE_INPUT.f90:52:
+
+  integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+                                                               1
+Warning: Unused variable 'ncount' declared at (1)
+parse_cmd_variable.f90:115.63:
+    Included at DMFT_PARSE_INPUT.f90:52:
+
+  integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+                                                               1
+Warning: Unused variable 'ncount' declared at (1)
+parse_cmd_variable.f90:82.63:
+    Included at DMFT_PARSE_INPUT.f90:52:
+
+  integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+                                                               1
+Warning: Unused variable 'ncount' declared at (1)
+DMFT_PARSE_INPUT.f90:208:0: warning: ‘lower_case’ defined but not used [-Wunused-function]
+   subroutine lower_case(s)
+ ^
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_FFTGF.f90
+DMFT_FFTGF.f90:996.3:
+
+100 continue
+   1
+Warning: Label 100 at (1) defined but not used
+DMFT_FFTGF.f90:978.2:
+
+90  continue
+  1
+Warning: Label 90 at (1) defined but not used
+DMFT_FFTGF.f90:341.15:
+
+    gt = cmplx(0.d0,0.d0)
+               1
+Warning: Conversion from REAL(8) to default-kind COMPLEX(4) at (1) might loose precision, consider using the KIND argument
+DMFT_FFTGF.f90:813.41:
+
+    integer                       :: i, j
+                                         1
+Warning: Unused variable 'j' declared at (1)
+DMFT_FFTGF.f90:820.41:
+
+    real(8)                       :: x, y
+                                         1
+Warning: Unused variable 'y' declared at (1)
+DMFT_FFTGF.f90:745.47:
+
+    integer                      :: khi,klo,n,i
+                                               1
+Warning: Unused variable 'i' declared at (1)
+DMFT_FFTGF.f90:678.35:
+
+    integer                    :: i,L
+                                   1
+Warning: Unused variable 'i' declared at (1)
+DMFT_FFTGF.f90:678.37:
+
+    integer                    :: i,L
+                                     1
+Warning: Unused variable 'l' declared at (1)
+DMFT_FFTGF.f90:478.44:
+
+    real(8)                             :: A,B,Zp,Zm
+                                            1
+Warning: Unused variable 'a' declared at (1)
+DMFT_FFTGF.f90:478.46:
+
+    real(8)                             :: A,B,Zp,Zm
+                                              1
+Warning: Unused variable 'b' declared at (1)
+DMFT_FFTGF.f90:477.54:
+
+    real(8),dimension(:),allocatable    :: tau,wm,taup
+                                                      1
+Warning: Unused variable 'taup' declared at (1)
+DMFT_FFTGF.f90:476.69:
+
+    real(8),dimension(:),allocatable    :: Ttau,Ftau,Itau,TtauP,TtauM
+                                                                     1
+Warning: Unused variable 'ttaum' declared at (1)
+DMFT_FFTGF.f90:476.63:
+
+    real(8),dimension(:),allocatable    :: Ttau,Ftau,Itau,TtauP,TtauM
+                                                               1
+Warning: Unused variable 'ttaup' declared at (1)
+DMFT_FFTGF.f90:478.52:
+
+    real(8)                             :: A,B,Zp,Zm
+                                                    1
+Warning: Unused variable 'zm' declared at (1)
+DMFT_FFTGF.f90:478.49:
+
+    real(8)                             :: A,B,Zp,Zm
+                                                 1
+Warning: Unused variable 'zp' declared at (1)
+DMFT_FFTGF.f90:379.47:
+
+    real(8)                             :: dtau
+                                               1
+Warning: Unused variable 'dtau' declared at (1)
+DMFT_FFTGF.f90:382.54:
+
+    real(8),dimension(:),allocatable    :: tau,wm,taup
+                                                      1
+Warning: Unused variable 'taup' declared at (1)
+DMFT_FFTGF.f90:330.53:
+
+    integer                             :: i,n,L,itau,M
+                                                     1
+Warning: Unused variable 'itau' declared at (1)
+DMFT_FFTGF.f90:330.55:
+
+    integer                             :: i,n,L,itau,M
+                                                       1
+Warning: Unused variable 'm' declared at (1)
+DMFT_FFTGF.f90: In function ‘ppvalu’:
+DMFT_FFTGF.f90:1149:0: warning: control reaches end of non-void function [-Wreturn-type]
+        return
+ ^
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_FFTAUX.f90
+DMFT_FFTAUX.f90:106.34:
+
+    real(8)                :: dens,xmu
+                                  1
+Warning: Unused variable 'dens' declared at (1)
+DMFT_FFTAUX.f90:94.34:
+
+    real(8)                :: dens,xmu
+                                  1
+Warning: Unused variable 'dens' declared at (1)
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_MISC.f90
+DMFT_MISC.f90:184.16:
+
+       gmats_re=zero;gmats_im=zero
+                1
+Warning: Possible change of value in conversion from COMPLEX(8) to REAL(8) at (1)
+DMFT_MISC.f90:184.30:
+
+       gmats_re=zero;gmats_im=zero
+                              1
+Warning: Possible change of value in conversion from COMPLEX(8) to REAL(8) at (1)
+DMFT_MISC.f90:191.26:
+
+       dummy_out(j)=cmplx(gmats_re,gmats_im)
+                          1
+Warning: Conversion from REAL(8) to default-kind COMPLEX(4) at (1) might loose precision, consider using the KIND argument
+DMFT_MISC.f90:152.42:
+
+       w  = wini + dble(i-1)*dew;iw=cmplx(w,eta)
+                                          1
+Warning: Conversion from REAL(8) to default-kind COMPLEX(4) at (1) might loose precision, consider using the KIND argument
+DMFT_MISC.f90:209.16:
+
+    integer :: i,j,k
+                1
+Warning: Unused variable 'i' declared at (1)
+DMFT_MISC.f90:209.18:
+
+    integer :: i,j,k
+                  1
+Warning: Unused variable 'j' declared at (1)
+DMFT_MISC.f90:140.41:
+
+    integer                       :: i,ik,Lk,L
+                                         1
+Warning: Unused variable 'ik' declared at (1)
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_CONVERGENCE.f90
+error_convergence_global.f90:130.10:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_global.f90:79.10:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_global.f90:31.10:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_local.f90:131.10:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_local.f90:78.10:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_local.f90:29.10:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_relative.f90:139.10:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_relative.f90:83.10:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_relative.f90:31.10:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+     Xold=0.d0
+          1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+error_convergence_global.f90:369.53:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  integer                                      :: i,j,Msize1,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_global.f90:323.55:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_global.f90:321.53:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_global.f90:327.55:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_global.f90:215.53:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  integer                                      :: i,j,Msize1,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_global.f90:169.55:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_global.f90:167.53:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_global.f90:173.55:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_global.f90:61.53:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  integer                                      :: i,j,Msize1,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_global.f90:15.55:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_global.f90:13.53:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_global.f90:19.55:
+    Included at DMFT_CONVERGENCE.f90:61:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_local.f90:365.53:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize1
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_local.f90:323.55:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_local.f90:321.51:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                   1
+Warning: Unused variable 'i' declared at (1)
+error_convergence_local.f90:321.53:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_local.f90:326.55:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_local.f90:321.59:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                           1
+Warning: Unused variable 'msize' declared at (1)
+error_convergence_local.f90:211.53:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize1
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_local.f90:169.55:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_local.f90:167.51:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                   1
+Warning: Unused variable 'i' declared at (1)
+error_convergence_local.f90:167.53:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_local.f90:172.55:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_local.f90:167.59:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                           1
+Warning: Unused variable 'msize' declared at (1)
+error_convergence_local.f90:57.53:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize1
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_local.f90:60.51:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  real(8),dimension(size(Xnew))                :: M,Verror
+                                                   1
+Warning: Unused variable 'm' declared at (1)
+error_convergence_local.f90:15.55:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_local.f90:13.51:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                   1
+Warning: Unused variable 'i' declared at (1)
+error_convergence_local.f90:13.53:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_local.f90:18.55:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_local.f90:13.59:
+    Included at DMFT_CONVERGENCE.f90:58:
+
+  integer                                      :: i,j,Msize
+                                                           1
+Warning: Unused variable 'msize' declared at (1)
+error_convergence_relative.f90:438.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msize1,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:391.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_relative.f90:389.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:395.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_relative.f90:272.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msize1,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:225.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_relative.f90:223.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:229.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_relative.f90:179.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_relative.f90:177.51:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msum
+                                                   1
+Warning: Unused variable 'i' declared at (1)
+error_convergence_relative.f90:177.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:183.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+error_convergence_relative.f90:177.58:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msum
+                                                          1
+Warning: Unused variable 'msum' declared at (1)
+error_convergence_relative.f90:62.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msize1,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:15.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  real(8)                                      :: error,err
+                                                       1
+Warning: Unused variable 'error' declared at (1)
+error_convergence_relative.f90:13.53:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  integer                                      :: i,j,Msum
+                                                     1
+Warning: Unused variable 'j' declared at (1)
+error_convergence_relative.f90:19.55:
+    Included at DMFT_CONVERGENCE.f90:55:
+
+  character(len=2)                             :: label
+                                                       1
+Warning: Unused variable 'label' declared at (1)
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_VECTORS.f90
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_TIGHT_BINDING.f90
+DMFT_TIGHT_BINDING.f90:717.22:
+
+             coeff(:)=h(:,iorb)*conjg(h(:,iorb))
+                      1
+Warning: Possible change of value in conversion from COMPLEX(8) to REAL(8) at (1)
+DMFT_TIGHT_BINDING.f90:759.55:
+
+    character(len=256)                   :: file_,xtics
+                                                       1
+Warning: Unused variable 'xtics' declared at (1)
+DMFT_TIGHT_BINDING.f90:634.51:
+
+    integer                     :: ik,ix,iy,iz,iorb,jorb
+                                                   1
+Warning: Unused variable 'iorb' declared at (1)
+DMFT_TIGHT_BINDING.f90:634.56:
+
+    integer                     :: ik,ix,iy,iz,iorb,jorb
+                                                        1
+Warning: Unused variable 'jorb' declared at (1)
+DMFT_TIGHT_BINDING.f90:630.34:
+
+  subroutine read_hk_w90_2(file,No,Nd,Np,Nineq,hk,kxgrid,kygrid,kzgrid)
+                                  1
+Warning: Unused dummy argument 'no' at (1)
+DMFT_TIGHT_BINDING.f90:564.47:
+
+    integer                 :: ik,ix,iy,iz,iorb,jorb
+                                               1
+Warning: Unused variable 'iorb' declared at (1)
+DMFT_TIGHT_BINDING.f90:564.52:
+
+    integer                 :: ik,ix,iy,iz,iorb,jorb
+                                                    1
+Warning: Unused variable 'jorb' declared at (1)
+DMFT_TIGHT_BINDING.f90:560.35:
+
+  subroutine write_hk_w90_4(file,No,Nd,Np,Nineq,hk,kxgrid,kygrid,kzgrid)
+                                   1
+Warning: Unused dummy argument 'no' at (1)
+DMFT_TIGHT_BINDING.f90:502.54:
+
+    integer                        :: ik,ix,iy,iz,iorb,jorb
+                                                      1
+Warning: Unused variable 'iorb' declared at (1)
+DMFT_TIGHT_BINDING.f90:502.59:
+
+    integer                        :: ik,ix,iy,iz,iorb,jorb
+                                                           1
+Warning: Unused variable 'jorb' declared at (1)
+DMFT_TIGHT_BINDING.f90:498.35:
+
+  subroutine write_hk_w90_2(file,No,Nd,Np,Nineq,hk_model,kxgrid,kygrid,kzgrid)
+                                   1
+Warning: Unused dummy argument 'no' at (1)
+DMFT_TIGHT_BINDING.f90:307.69:
+
+    real(8),dimension(size(kpath,2))                          :: kvec
+                                                                     1
+Warning: Unused variable 'kvec' declared at (1)
+DMFT_TIGHT_BINDING.f90:250.69:
+
+    real(8),dimension(size(kpath,2))                          :: kvec
+                                                                     1
+Warning: Unused variable 'kvec' declared at (1)
+DMFT_TIGHT_BINDING.f90:194.69:
+
+    real(8),dimension(size(kpath,2))                          :: kvec
+                                                                     1
+Warning: Unused variable 'kvec' declared at (1)
+DMFT_TIGHT_BINDING.f90:136.69:
+
+    real(8),dimension(size(kpath,2))                          :: kvec
+                                                                     1
+Warning: Unused variable 'kvec' declared at (1)
+gfortran -c -O0 -p -g -Wall -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -static -I/opt/scifor/gnu_debug/include/ -I/opt/scifor/gnu_debug/include/ -J/opt/scifor/gnu_debug/include/ DMFT_TOOLS.f90
+ar crv /opt/scifor/gnu_debug/lib/libdmftt.a `ls *.o | sort | uniq` 
 r - DMFT_CONVERGENCE.o
 r - DMFT_FFTAUX.o
 r - DMFT_FFTGF.o
@@ -30,7 +775,7 @@ r - DMFT_TOOLS.o
 r - DMFT_TOOLS_VERSION.o
 r - DMFT_VECTORS.o
 r - PARSE_LIST_INPUT.o
-ranlib /opt/scifor/gnu/lib/libdmftt.a
+ranlib /opt/scifor/gnu_debug/lib/libdmftt.a
 LIBRARY IS DONE.........
  
 make[1]: Leaving directory `/opt/scifor/opt/dmft_tools/src'
@@ -52,4 +797,4 @@ removed ‘PARSE_LIST_INPUT.o’
 done.
 
 make[1]: Leaving directory `/opt/scifor/opt/dmft_tools/src'
-‘/opt/scifor/opt/dmft_tools/make.inc’ -> ‘/opt/scifor/gnu/etc/make.inc.dmfttols’
+‘/opt/scifor/opt/dmft_tools/make.inc’ -> ‘/opt/scifor/gnu_debug/etc/make.inc.dmfttols’
