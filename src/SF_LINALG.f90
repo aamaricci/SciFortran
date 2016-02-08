@@ -135,6 +135,10 @@ module SF_LINALG
      module procedure c_invert_tridiag_matrix
      module procedure d_invert_tridiag_block_matrix
      module procedure c_invert_tridiag_block_matrix
+     module procedure d_invert_tridiag_matrix_mat
+     module procedure c_invert_tridiag_matrix_mat
+     module procedure d_invert_tridiag_block_matrix_mat
+     module procedure c_invert_tridiag_block_matrix_mat
   end interface inv_tridiag
   public :: inv_tridiag
 
@@ -1902,6 +1906,9 @@ contains
   end function c_build_tridiag_block
 
 
+
+
+
   !+-----------------------------------------------------------------------------+!
   !PURPOSE: return the N diagonal elements of the inverse matrix.
   ! b = sub-diagonal
@@ -2067,6 +2074,86 @@ contains
   end function c_invert_tridiag_block_matrix
 
 
+
+  !
+  !
+  !
+
+  subroutine d_invert_tridiag_matrix_mat(Amat)
+    real(8),dimension(:,:),intent(inout)         :: Amat
+    real(8),dimension(size(Amat,1))              :: diag
+    real(8),dimension(size(Amat,1)-1)            :: sub
+    real(8),dimension(size(Amat,1)-1)            :: over
+    real(8),dimension(size(Amat,1))              :: Inv
+    integer                                      :: i,N
+    N=size(Amat,1)
+    call assert_shape(Amat,[N,N],"d_invert_tridiag_matrix_mat","Amat")
+    call get_tridiag(Amat,sub,diag,over)
+    Inv = inv_tridiag(N,sub,diag,over)
+    Amat= 0d0
+    forall(i=1:N)Amat(i,i)=Inv(i)
+  end subroutine d_invert_tridiag_matrix_mat
+
+  subroutine c_invert_tridiag_matrix_mat(Amat)
+    complex(8),dimension(:,:),intent(inout)         :: Amat
+    complex(8),dimension(size(Amat,1))              :: diag
+    complex(8),dimension(size(Amat,1)-1)            :: sub
+    complex(8),dimension(size(Amat,1)-1)            :: over
+    complex(8),dimension(size(Amat,1))              :: Inv
+    integer                                         :: i,N
+    N=size(Amat,1)
+    call assert_shape(Amat,[N,N],"d_invert_tridiag_matrix_mat","Amat")
+    call get_tridiag(Amat,sub,diag,over)
+    Inv = inv_tridiag(N,sub,diag,over)
+    Amat= dcmplx(0d0,0d0)
+    forall(i=1:N)Amat(i,i)=Inv(i)
+  end subroutine c_invert_tridiag_matrix_mat
+
+  subroutine d_invert_tridiag_block_matrix_mat(Nb,N,Amat)
+    integer,intent(in)                         :: Nb
+    integer,intent(in)                         :: N
+    real(8),dimension(Nb*N,Nb*N),intent(inout) :: Amat
+    real(8),dimension(Nb-1,N,N)                :: sub
+    real(8),dimension(Nb,N,N)                  :: diag
+    real(8),dimension(Nb-1,N,N)                :: over
+    real(8),dimension(Nb,N,N)                  :: Inv
+    integer                                    :: i,j,is,js,iblock
+    call get_tridiag(Nb,N,Amat,sub,diag,over)
+    Inv = inv_tridiag(Nb,N,sub,diag,over)
+    Amat=0d0
+    do iblock=1,Nb
+       do i=1,N
+          do j=1,N
+             is = i + (iblock-1)*N
+             js = j + (iblock-1)*N
+             Amat(is,js) = Inv(iblock,i,j)
+          enddo
+       enddo
+    enddo
+  end subroutine d_invert_tridiag_block_matrix_mat
+
+  subroutine c_invert_tridiag_block_matrix_mat(Nb,N,Amat)
+    integer,intent(in)                            :: Nb
+    integer,intent(in)                            :: N
+    complex(8),dimension(Nb*N,Nb*N),intent(inout) :: Amat
+    complex(8),dimension(Nb-1,N,N)                :: sub
+    complex(8),dimension(Nb,N,N)                  :: diag
+    complex(8),dimension(Nb-1,N,N)                :: over
+    complex(8),dimension(Nb,N,N)                  :: Inv
+    integer                                       :: i,j,is,js,iblock
+    call get_tridiag(Nb,N,Amat,sub,diag,over)
+    Inv = inv_tridiag(Nb,N,sub,diag,over)
+    Amat= dcmplx(0d0,0d0)
+    do iblock=1,Nb
+       do i=1,N
+          do j=1,N
+             is = i + (iblock-1)*N
+             js = j + (iblock-1)*N
+             Amat(is,js) = Inv(iblock,i,j)
+          enddo
+       enddo
+    enddo
+  end subroutine c_invert_tridiag_block_matrix_mat
 
 
 

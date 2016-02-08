@@ -1,12 +1,12 @@
-Installing in /opt/scifor/gnu_debug.
+Installing in /opt/scifor/intel.
 Creating directories:
-mkdir: created directory ‘/opt/scifor/gnu_debug/etc/modules/blas’
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/blas’
 Copying init script for BLAS
 cp: cannot stat ‘/opt/scifor/opt/blas/bin/configvars.sh’: No such file or directory
 
 Generating environment module file for BLAS
 
-Compiling BLAS library on platform gnu_debug:
+Compiling BLAS library on platform intel:
 
 sending incremental file list
 caxpy.o
@@ -160,19 +160,19 @@ ztrmv.o
 ztrsm.o
 ztrsv.o
 
-sent 1,361,204 bytes  received 2,866 bytes  2,728,140.00 bytes/sec
-total size is 1,351,960  speedup is 0.99
+sent 1,012,476 bytes  received 2,866 bytes  2,030,684.00 bytes/sec
+total size is 1,003,080  speedup is 0.99
 ( cd src; make )
 make[1]: Entering directory `/opt/scifor/opt/blas/src'
-ar cr /opt/scifor/gnu_debug/lib/libblas.a `ls *.o | sort | uniq`
-ranlib /opt/scifor/gnu_debug/lib/libblas.a
-/opt/scifor/gnu_debug/lib/libblas.a is done...
+ar cr /opt/scifor/intel/lib/libblas.a `ls *.o | sort | uniq`
+ranlib /opt/scifor/intel/lib/libblas.a
+/opt/scifor/intel/lib/libblas.a is done...
  
-rsync -avP *.o /opt/scifor/opt/blas/src/obj_gnu_debug/
+rsync -avP *.o /opt/scifor/opt/blas/src/obj_intel/
 sending incremental file list
 
-sent 2,694 bytes  received 12 bytes  5,412.00 bytes/sec
-total size is 1,351,960  speedup is 499.62
+sent 2,842 bytes  received 12 bytes  5,708.00 bytes/sec
+total size is 1,003,080  speedup is 351.46
 make[1]: Leaving directory `/opt/scifor/opt/blas/src'
 ( cd src; make clean)
 make[1]: Entering directory `/opt/scifor/opt/blas/src'
@@ -328,4 +328,4 @@ removed ‘ztrmv.o’
 removed ‘ztrsm.o’
 removed ‘ztrsv.o’
 make[1]: Leaving directory `/opt/scifor/opt/blas/src'
-‘/opt/scifor/opt/blas/make.inc’ -> ‘/opt/scifor/gnu_debug/etc/make.inc.blas’
+‘/opt/scifor/opt/blas/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.blas’

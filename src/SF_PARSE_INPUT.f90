@@ -1,4 +1,4 @@
-module DMFT_PARSE_INPUT
+module SF_PARSE_INPUT
   USE PARSE_LIST_INPUT
   implicit none
   private
@@ -269,7 +269,7 @@ contains
     enddo
   end function free_unit
 
-end module DMFT_PARSE_INPUT
+end module SF_PARSE_INPUT
 
 
 

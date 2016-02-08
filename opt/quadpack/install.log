@@ -1,12 +1,12 @@
-Installing in /opt/scifor/gnu_debug.
+Installing in /opt/scifor/intel.
 Creating directories:
-mkdir: created directory ‘/opt/scifor/gnu_debug/etc/modules/quadpack’
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/quadpack’
 Copying init script for QUADPACK
 cp: cannot stat ‘/opt/scifor/opt/quadpack/bin/configvars.sh’: No such file or directory
 
 Generating environment module file for QUADPACK
 
-Compiling QUADPACK library on platform gnu_debug:
+Compiling QUADPACK library on platform intel:
 
 sending incremental file list
 MOD_QUADPACK.o
@@ -21,11 +21,11 @@ quadpack_qawo.o
 quadpack_qaws.o
 quadpack_qng.o
 
-sent 368,058 bytes  received 225 bytes  736,566.00 bytes/sec
-total size is 367,280  speedup is 1.00
+sent 427,200 bytes  received 225 bytes  854,850.00 bytes/sec
+total size is 426,400  speedup is 1.00
 make -C ./src/
 make[1]: Entering directory `/opt/scifor/opt/quadpack/src'
-ar cvq /opt/scifor/gnu_debug/lib/libquadpack.a `ls *.o | sort | uniq`  
+ar cvq /opt/scifor/intel/lib/libquadpack.a `ls *.o | sort | uniq`  
 a - MOD_QUADPACK.o
 a - quadpack_aux.o
 a - quadpack_qagi.o
@@ -37,21 +37,21 @@ a - quadpack_qawf.o
 a - quadpack_qawo.o
 a - quadpack_qaws.o
 a - quadpack_qng.o
-ranlib /opt/scifor/gnu_debug/lib/libquadpack.a
-/opt/scifor/gnu_debug/lib/libquadpack.a is done...
+ranlib /opt/scifor/intel/lib/libquadpack.a
+/opt/scifor/intel/lib/libquadpack.a is done...
 
-rsync -avP *.o /opt/scifor/opt/quadpack/src/obj_gnu_debug/
+rsync -avP *.o /opt/scifor/opt/quadpack/src/obj_intel/
 sending incremental file list
 
-sent 241 bytes  received 12 bytes  506.00 bytes/sec
-total size is 367,280  speedup is 1,451.70
-rsync -avP /opt/scifor/opt/quadpack/src/mod_gnu_debug/*.mod /opt/scifor/gnu_debug/include/
+sent 247 bytes  received 12 bytes  518.00 bytes/sec
+total size is 426,400  speedup is 1,646.33
+rsync -avP /opt/scifor/opt/quadpack/src/mod_intel/*.mod /opt/scifor/intel/include/
 sending incremental file list
 quadpack.mod
-         32,768  58%    0.00kB/s    0:00:00           55,935 100%   22.09MB/s    0:00:00 (xfr#1, to-chk=0/1)
+         32,768  62%    0.00kB/s    0:00:00           52,097 100%   18.43MB/s    0:00:00 (xfr#1, to-chk=0/1)
 
-sent 56,056 bytes  received 35 bytes  112,182.00 bytes/sec
-total size is 55,935  speedup is 1.00
+sent 52,219 bytes  received 35 bytes  104,508.00 bytes/sec
+total size is 52,097  speedup is 1.00
 make[1]: Leaving directory `/opt/scifor/opt/quadpack/src'
 make clean -C ./src/
 make[1]: Entering directory `/opt/scifor/opt/quadpack/src'
@@ -68,4 +68,4 @@ removed ‘quadpack_qawo.o’
 removed ‘quadpack_qaws.o’
 removed ‘quadpack_qng.o’
 make[1]: Leaving directory `/opt/scifor/opt/quadpack/src'
-‘/opt/scifor/opt/quadpack/make.inc’ -> ‘/opt/scifor/gnu_debug/etc/make.inc.quadpack’
+‘/opt/scifor/opt/quadpack/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.quadpack’

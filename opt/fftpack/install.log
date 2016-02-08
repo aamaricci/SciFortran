@@ -1,12 +1,12 @@
-Installing in /opt/scifor/gnu_debug.
+Installing in /opt/scifor/intel.
 Creating directories:
-mkdir: created directory ‘/opt/scifor/gnu_debug/etc/modules/fftpack’
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/fftpack’
 Copying init script for FFTPACK
 cp: cannot stat ‘/opt/scifor/opt/fftpack/bin/configvars.sh’: No such file or directory
 
 Generating environment module file for FFTPACK
 
-Compiling FFTPACK library on platform gnu_debug:
+Compiling FFTPACK library on platform intel:
 
 sending incremental file list
 c1f2kb.o
@@ -121,10 +121,10 @@ w2r.o
 xercon.o
 xerfft.o
 
-sent 931,736 bytes  received 2,125 bytes  1,867,722.00 bytes/sec
-total size is 925,072  speedup is 0.99
+sent 551,201 bytes  received 2,125 bytes  1,106,652.00 bytes/sec
+total size is 544,528  speedup is 0.98
 make[1]: Entering directory `/opt/scifor/opt/fftpack/src'
-ar cvq /opt/scifor/gnu_debug/lib/libfftpack.a `ls *.o | sort | uniq`  
+ar cvq /opt/scifor/intel/lib/libfftpack.a `ls *.o | sort | uniq`  
 a - c1f2kb.o
 a - c1f2kf.o
 a - c1f3kb.o
@@ -236,14 +236,14 @@ a - sintmi.o
 a - w2r.o
 a - xercon.o
 a - xerfft.o
-ranlib /opt/scifor/gnu_debug/lib/libfftpack.a
+ranlib /opt/scifor/intel/lib/libfftpack.a
  is done...
  
-rsync -avP *.o /opt/scifor/opt/fftpack/src/obj_gnu_debug/
+rsync -avP *.o /opt/scifor/opt/fftpack/src/obj_intel/
 sending incremental file list
 
-sent 1,827 bytes  received 12 bytes  3,678.00 bytes/sec
-total size is 925,072  speedup is 503.03
+sent 1,864 bytes  received 12 bytes  3,752.00 bytes/sec
+total size is 544,528  speedup is 290.26
 make[1]: Leaving directory `/opt/scifor/opt/fftpack/src'
 make[1]: Entering directory `/opt/scifor/opt/fftpack/src'
 rm -fv *.o 
@@ -359,4 +359,4 @@ removed ‘w2r.o’
 removed ‘xercon.o’
 removed ‘xerfft.o’
 make[1]: Leaving directory `/opt/scifor/opt/fftpack/src'
-‘/opt/scifor/opt/fftpack/make.inc’ -> ‘/opt/scifor/gnu_debug/etc/make.inc.fftpack’
+‘/opt/scifor/opt/fftpack/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.fftpack’

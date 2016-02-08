@@ -1,12 +1,12 @@
-Installing in /opt/scifor/gnu_debug.
+Installing in /opt/scifor/intel.
 Creating directories:
-mkdir: created directory ‘/opt/scifor/gnu_debug/etc/modules/minpack’
+mkdir: created directory ‘/opt/scifor/intel/etc/modules/minpack’
 Copying init script for MINPACK
 cp: cannot stat ‘/opt/scifor/opt/minpack/bin/configvars.sh’: No such file or directory
 
 Generating environment module file for MINPACK
 
-Compiling MINPACK library on platform gnu_debug:
+Compiling MINPACK library on platform intel:
 
 sending incremental file list
 chkder.o
@@ -35,10 +35,10 @@ r8vec_print.o
 rwupdt.o
 timestamp.o
 
-sent 207,212 bytes  received 491 bytes  415,406.00 bytes/sec
-total size is 205,632  speedup is 0.99
+sent 132,582 bytes  received 491 bytes  53,229.20 bytes/sec
+total size is 131,008  speedup is 0.98
 make[1]: Entering directory `/opt/scifor/opt/minpack/src'
-ar cvq /opt/scifor/gnu_debug/lib/libminpack.a `ls *.o | sort | uniq`  
+ar cvq /opt/scifor/intel/lib/libminpack.a `ls *.o | sort | uniq`  
 a - chkder.o
 a - dogleg.o
 a - enorm2.o
@@ -64,14 +64,14 @@ a - r1updt.o
 a - r8vec_print.o
 a - rwupdt.o
 a - timestamp.o
-ranlib /opt/scifor/gnu_debug/lib/libminpack.a
-/opt/scifor/gnu_debug/lib/libminpack.a is done...
+ranlib /opt/scifor/intel/lib/libminpack.a
+/opt/scifor/intel/lib/libminpack.a is done...
  
-rsync -avP *.o /opt/scifor/opt/minpack/src/obj_gnu_debug/
+rsync -avP *.o /opt/scifor/opt/minpack/src/obj_intel/
 sending incremental file list
 
-sent 489 bytes  received 12 bytes  1,002.00 bytes/sec
-total size is 205,632  speedup is 410.44
+sent 487 bytes  received 12 bytes  998.00 bytes/sec
+total size is 131,008  speedup is 262.54
 make[1]: Leaving directory `/opt/scifor/opt/minpack/src'
 make[1]: Entering directory `/opt/scifor/opt/minpack/src'
 rm -fv  *.o
@@ -101,4 +101,4 @@ removed ‘r8vec_print.o’
 removed ‘rwupdt.o’
 removed ‘timestamp.o’
 make[1]: Leaving directory `/opt/scifor/opt/minpack/src'
-‘/opt/scifor/opt/minpack/make.inc’ -> ‘/opt/scifor/gnu_debug/etc/make.inc.minpack’
+‘/opt/scifor/opt/minpack/make.inc’ -> ‘/opt/scifor/intel/etc/make.inc.minpack’
