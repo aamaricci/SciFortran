@@ -14,14 +14,14 @@ usage(){
     echo ""
     echo "usage:"
     echo ""
-    echo "$0  -p,--plat=FC_PLAT  [ --prefix=PREFIX_DIR  -o,--opt-lib=OPT_LIB  -q,--quiet -c,--clean  -w,--wdmftt  -d,--debug  -h,--help ]"
+    echo "$0  -p,--plat=FC_PLAT  [ --prefix=PREFIX_DIR  -o,--opt-lib=OPT_LIB  -q,--quiet -c,--clean  -d,--debug  -h,--help]"
     echo ""
     echo "    -p,--plat   : specifies the actual platform/compiler to use [intel,gnu]"
     echo "    --prefix    : specifies the target directory [default: FC_PLAT]"
-    echo "    -o,--opt-lib: to install a single 3rd party lib [arpack blas fftpack lapack minpack quadpack dmftt]. "
+    echo "    -o,--opt-lib: to install a single 3rd party lib [arpack blas fftpack lapack minpack quadpack]. "
     echo "    -q,--quiet  : assume Y to all questions."
     echo "    -c,--clean  : clean out the former compilation."
-    echo "    -w,--wdmftt : complete SciFor with DMFT_TOOLS library."
+    # echo "    -w,--wdmftt : complete SciFor with DMFT_TOOLS library."
     echo "    -d,--debug  : debug flag"
     echo "    -h,--help   : this help"
     echo ""
@@ -45,7 +45,7 @@ LIST_ARGS=$*
 
 
 #>>> GET LONG & SHORT OPTIONS
-params="$(getopt -n "$0" --options p:o:qcwdh --longoptions plat:,prefix:,opt-lib:,quiet,clean,wdmftt,debug,help -- "$@")"
+params="$(getopt -n "$0" --options p:o:qcwdh --longoptions plat:,prefix:,opt-lib:,quiet,clean,debug,help -- "$@")"
 if [ $? -ne 0 ];then
     usage
 fi
@@ -63,7 +63,7 @@ fi
 WPLAT=1
 DEBUG=1
 OPT=""
-WDMFTT=1
+# WDMFTT=1
 QUIET=0
 VERSION=$(git describe --tags 2>/dev/null)
 WRK_INSTALL=$(pwd)
@@ -113,7 +113,7 @@ do
 	    ;;
 	-q|--quiet) QUIET=1;shift ;;
 	-c|--clean) OPT=clean;shift ;;
-	-w|--wdmftt) OPT=wdmftt;WDMFTT=0;shift ;;
+	# -w|--wdmftt) OPT=wdmftt;WDMFTT=0;shift ;;
 	-d|--debug) DEBUG=0;shift ;;
         -h|--help) usage ;;
         --) shift; break ;;
@@ -272,11 +272,11 @@ case $OPT in
 	./install.sh $LIST_ARGS
 	exit
 	;;
-    dmftt)
-	cd $OPT_INSTALL/dmft_tools
-	./install.sh $LIST_ARGS
-	exit
-	;;
+    # dmftt)
+    # 	cd $OPT_INSTALL/dmft_tools
+    # 	./install.sh $LIST_ARGS
+    # 	exit
+    # 	;;
     fftpack)
 	cd $OPT_INSTALL/fftpack
 	./install.sh $LIST_ARGS
@@ -397,15 +397,15 @@ else
 fi
 
 
-#IF REQUIRED IT GENERATES THE DMFT_TOOLS LIBRARY
-if [ $WDMFTT == 0 ];then
-    HERE=$(pwd)
-    echo "Generating the DMFT_TOOLS library for $PLAT" 
-    cd $OPT_INSTALL/dmft_tools
-    ./install.sh $LIST_ARGS
-    [[ $? == 0 ]] || exit 1
-    cd $HERE
-fi
+# #IF REQUIRED IT GENERATES THE DMFT_TOOLS LIBRARY
+# if [ $WDMFTT == 0 ];then
+#     HERE=$(pwd)
+#     echo "Generating the DMFT_TOOLS library for $PLAT" 
+#     cd $OPT_INSTALL/dmft_tools
+#     ./install.sh $LIST_ARGS
+#     [[ $? == 0 ]] || exit 1
+#     cd $HERE
+# fi
 
 
 #LAST TOUCH COPY THE CONFIGVARS AND CREATE THE USER MODULES FILE. PRINT USAGE DETAILS.
