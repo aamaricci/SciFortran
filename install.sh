@@ -8,6 +8,8 @@ LOG=install.log
 exec >  >(tee -a $LOG)
 exec 2> >(tee -a $LOG >&2)
 
+USER=$(id -un)
+GUSER=$(id -gn)
 
 #>>> USAGE FUNCTION
 usage(){
@@ -130,12 +132,23 @@ done
 [[ $DEBUG == 0 ]] && PLAT=${PLAT}_debug
 
 
+
 #>>> SET STANDARD NAMES FOR THE TARGET DIRECTORY
 DIR_TARGET=$PREFIX/$PLAT
 BIN_TARGET=$DIR_TARGET/bin
 ETC_TARGET=$DIR_TARGET/etc
 LIB_TARGET=$DIR_TARGET/lib
 INC_TARGET=$DIR_TARGET/include
+
+DIR_TARGET_W=0
+if [ ! -w $PREFIX ];then
+    DIR_TARGET_W=1
+    echo "Can not crate $DIR_TARGET: $PREFIX has no write access"
+    sleep 1
+    echo "Try to grant root privileges to create $DIR_TARGET for $USER:$GROUP"
+    sudo -v
+fi
+
 
 if [ $QUIET == 0 ];then
     _DIR=Y
@@ -182,12 +195,19 @@ fi
 create_makeinc(){
     local PLAT=$1
     cd $WRK_INSTALL
-    echo "Creating directories:" 
-    mkdir -pv $DIR_TARGET
-    mkdir -pv $BIN_TARGET
-    mkdir -pv $ETC_TARGET/modules/$LNAME
-    mkdir -pv $LIB_TARGET
-    mkdir -pv $INC_TARGET
+    # echo "Creating directories:"
+    # if [ $DIR_TARGET_W -eq 0 ];then
+    # 	echo "mkdir -pv $DIR_TARGET"
+    # 	mkdir -pv $DIR_TARGET
+    # else
+    # 	echo "sudo mkdir -pv $DIR_TARGET && sudo chown $USER:$GROUP $DIR_TARGET"
+    # 	sudo mkdir -pv $DIR_TARGET && sudo chown $USER:$GROUP $DIR_TARGET
+    # fi
+    # exit
+    # mkdir -pv $BIN_TARGET
+    # mkdir -pv $ETC_TARGET/modules/$LNAME
+    # mkdir -pv $LIB_TARGET
+    # mkdir -pv $INC_TARGET
     case $PLAT in
 	intel)
 	    FC=ifort
@@ -254,6 +274,22 @@ EOF
 #>>> GET THE ACTUAL DIRECTORY
 HERE=$(pwd)
 
+
+# >>> CREATE THE DIRECTORY HIERARCHY:
+echo "Creating directories:"
+if [ $DIR_TARGET_W -eq 0 ];then
+    echo "mkdir -pv $DIR_TARGET"
+    mkdir -pv $DIR_TARGET
+else
+    echo "sudo mkdir -pv $DIR_TARGET && sudo chown $USER:$GROUP $DIR_TARGET"
+    sudo mkdir -pv $DIR_TARGET && sudo chown $USER:$GROUP $DIR_TARGET
+fi
+mkdir -pv $BIN_TARGET
+mkdir -pv $ETC_TARGET/modules/$LNAME
+mkdir -pv $LIB_TARGET
+mkdir -pv $INC_TARGET
+
+
 #INSTALL A SINGLE OPTIONAL LIB IF REQUIRED:
 case $OPT in
     arpack)
@@ -272,11 +308,6 @@ case $OPT in
 	./install.sh $LIST_ARGS
 	exit
 	;;
-    # dmftt)
-    # 	cd $OPT_INSTALL/dmft_tools
-    # 	./install.sh $LIST_ARGS
-    # 	exit
-    # 	;;
     fftpack)
 	cd $OPT_INSTALL/fftpack
 	./install.sh $LIST_ARGS
@@ -396,16 +427,6 @@ else
     exit 1
 fi
 
-
-# #IF REQUIRED IT GENERATES THE DMFT_TOOLS LIBRARY
-# if [ $WDMFTT == 0 ];then
-#     HERE=$(pwd)
-#     echo "Generating the DMFT_TOOLS library for $PLAT" 
-#     cd $OPT_INSTALL/dmft_tools
-#     ./install.sh $LIST_ARGS
-#     [[ $? == 0 ]] || exit 1
-#     cd $HERE
-# fi
 
 
 #LAST TOUCH COPY THE CONFIGVARS AND CREATE THE USER MODULES FILE. PRINT USAGE DETAILS.

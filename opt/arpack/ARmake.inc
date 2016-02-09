@@ -1,12 +1,12 @@
 FC=gfortran
 FFLAGS=-O2 -funroll-all-loops -static
 PLAT=gnu
-OBJ_INSTALL=/opt/scifor/opt/arpack/src/obj_gnu
-BLAS_INSTALL=/opt/scifor/opt/arpack/blas/blas_gnu
-LAPACK_INSTALL=/opt/scifor/opt/arpack/lapack/lapack_gnu
-UTIL_INSTALL=/opt/scifor/opt/arpack/util/util_gnu
+OBJ_INSTALL=/Users/amaricci/projects_src/scifor/opt/arpack/src/obj_gnu
+BLAS_INSTALL=/Users/amaricci/projects_src/scifor/opt/arpack/blas/blas_gnu
+LAPACK_INSTALL=/Users/amaricci/projects_src/scifor/opt/arpack/lapack/lapack_gnu
+UTIL_INSTALL=/Users/amaricci/projects_src/scifor/opt/arpack/util/util_gnu
 
-home=/opt/scifor/opt/arpack
+home=/Users/amaricci/projects_src/scifor/opt/arpack
 
 BLASdir      = $(home)/blas
 LAPACKdir    = $(home)/lapack
@@ -16,7 +16,7 @@ DIRS   = $(BLASdir) $(LAPACKdir) $(UTILdir) $(SRCdir)
 
 
 #  The name of the libraries to be created/linked to
-ARPACKLIB  = /Users/amaricci/opt/scifor/gnu/lib/libarpack.a
+ARPACKLIB  = /Users/amaricci/projects_src/scifor/gnu/lib/libarpack.a
 LAPACKLIB = 
 BLASLIB = 
 ALIBS =  $(ARPACKLIB) $(LAPACKLIB) $(BLASLIB) 
