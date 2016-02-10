@@ -16,14 +16,16 @@ usage(){
     echo ""
     echo "usage:"
     echo ""
-    echo "$0  -p,--plat=FC_PLAT  [ --prefix=PREFIX_DIR  -o,--opt-lib=OPT_LIB  -q,--quiet -c,--clean  -d,--debug  -h,--help]"
+    echo "$0  -p,--plat=FC_PLAT --prefix=PREFIX_DIR  [-o,--opt-lib=OPT_LIB  -q,--quiet -c,--clean  -d,--debug  -h,--help]"
     echo ""
+    echo "mandatory arguments:" 
     echo "    -p,--plat   : specifies the actual platform/compiler to use [intel,gnu]"
     echo "    --prefix    : specifies the target directory [default: FC_PLAT]"
+    echo ""    
+    echo "optional arguments:" 
     echo "    -o,--opt-lib: to install a single 3rd party lib [arpack blas fftpack lapack minpack quadpack]. "
     echo "    -q,--quiet  : assume Y to all questions."
     echo "    -c,--clean  : clean out the former compilation."
-    # echo "    -w,--wdmftt : complete SciFor with DMFT_TOOLS library."
     echo "    -d,--debug  : debug flag"
     echo "    -h,--help   : this help"
     echo ""
@@ -45,9 +47,8 @@ nparent_dir(){
 #>>> GET THE ENTIRE LIST OF ARGUMENTS PASSED TO STDIN
 LIST_ARGS=$*
 
-
 #>>> GET LONG & SHORT OPTIONS
-params="$(getopt -n "$0" --options p:o:qcwdh --longoptions plat:,prefix:,opt-lib:,quiet,clean,debug,help -- "$@")"
+params="$(getopt -n "$0" --options p:o:qcdh --longoptions plat:,prefix:,mpi,opt-lib:,quiet,clean,debug,help -- "$@")"
 if [ $? -ne 0 ];then
     usage
 fi
@@ -64,12 +65,13 @@ fi
 #>>> SET SOME DEFAULTS VARIABLES AND OTHER ONES
 WPLAT=1
 DEBUG=1
+CLEAN=1
+WMPI=1
 OPT=""
-# WDMFTT=1
 QUIET=0
 VERSION=$(git describe --tags 2>/dev/null)
 WRK_INSTALL=$(pwd)
-PREFIX=$WRK_INSTALL
+#PREFIX=$WRK_INSTALL
 BIN_INSTALL=$WRK_INSTALL/bin
 ETC_INSTALL=$WRK_INSTALL/etc
 OPT_INSTALL=$WRK_INSTALL/opt
@@ -113,9 +115,9 @@ do
 		exit 1
 	    }
 	    ;;
+	--mpi) WMPI=0;shift ;;
 	-q|--quiet) QUIET=1;shift ;;
-	-c|--clean) OPT=clean;shift ;;
-	# -w|--wdmftt) OPT=wdmftt;WDMFTT=0;shift ;;
+	-c|--clean) CLEAN=0;shift ;;
 	-d|--debug) DEBUG=0;shift ;;
         -h|--help) usage ;;
         --) shift; break ;;
@@ -123,15 +125,12 @@ do
     esac
 done
 
-#>>> CHECK THAT THE MANDATORY OPTION -p,-plat IS PRESENT:
-[[ $WPLAT == 0 ]] || usage
-
+#>>> CHECK THAT THE MANDATORY OPTIONS ARE PRESENT:
+[[ $WPLAT == 0 ]] && [[ ! -z $PREFIX ]] || usage
 
 
 #RENAME WITH DEBUG IF NECESSARY 
 [[ $DEBUG == 0 ]] && PLAT=${PLAT}_debug
-
-
 
 #>>> SET STANDARD NAMES FOR THE TARGET DIRECTORY
 DIR_TARGET=$PREFIX/$PLAT
@@ -139,33 +138,21 @@ BIN_TARGET=$DIR_TARGET/bin
 ETC_TARGET=$DIR_TARGET/etc
 LIB_TARGET=$DIR_TARGET/lib
 INC_TARGET=$DIR_TARGET/include
-
 DIR_TARGET_W=0
 if [ ! -w $PREFIX ];then
     DIR_TARGET_W=1
-    echo "Can not crate $DIR_TARGET: $PREFIX has no write access"
+    echo "Can not create $DIR_TARGET: $PREFIX has no write access"
     sleep 1
     echo "Try to grant root privileges to create $DIR_TARGET for $USER:$GROUP"
     sudo -v
 fi
 
 
-if [ $QUIET == 0 ];then
-    _DIR=Y
-    echo -n "Installing in $DIR_TARGET. Continue [Y/n]: "
-    read _DIR;
-    _DIR=`echo $_DIR |tr [:lower:] [:upper:]`
-    [[ $_DIR == Y ]] || exit 1
-else
-    echo "Installing SCIFOR in $DIR_TARGET (quiet mode): "
-    sleep 2
-fi
 
 #>>> TEST MPI
 FMPI=mpif90
 which $FMPI >/dev/null 2>&1
 WMPI=$?
-
 if [ $WMPI == 0 ];then
     _MPI=Y
     echo "Using the following MPI compiler:"
@@ -176,38 +163,27 @@ if [ $WMPI == 0 ];then
     MPIFC=$(mpif90 -show | awk '{print $1}')
     if [ "$MPIFC" != "$_FC_" ];then
 	echo "Possible mismatch between MPI:+$MPIFC and Platform $PLAT:+$_FC_" 
-	sleep 3
-	echo "Proceeding in non-quiet mode.."
+	sleep 2
+	echo "Fall back into the non-MPI mode"
 	sleep 1
-	QUIET=0
+	WMPI=1
+	# QUIET=0
     fi
-    if [ $QUIET == 0 ];then
-	echo -n "Continue (this will install P-Arpack) [Y/n]: "
-	read _MPI;
-	sleep 1
-	_MPI=`echo $_MPI |tr [:lower:] [:upper:]`
-	[[ $_MPI == Y ]] || exit 1
-    fi
+    # if [ $QUIET == 0 ];then
+    # 	echo -n "Continue (this will install P-Arpack) [Y/n]: "
+    # 	read _MPI;
+    # 	sleep 1
+    # 	_MPI=`echo $_MPI |tr [:lower:] [:upper:]`
+    # 	[[ $_MPI == Y ]] || exit 1
+    # fi
 fi
+
 
 
 #>>> CREATE THE MAKE.INC IN THE FOLLOWING FUNCTION
 create_makeinc(){
     local PLAT=$1
     cd $WRK_INSTALL
-    # echo "Creating directories:"
-    # if [ $DIR_TARGET_W -eq 0 ];then
-    # 	echo "mkdir -pv $DIR_TARGET"
-    # 	mkdir -pv $DIR_TARGET
-    # else
-    # 	echo "sudo mkdir -pv $DIR_TARGET && sudo chown $USER:$GROUP $DIR_TARGET"
-    # 	sudo mkdir -pv $DIR_TARGET && sudo chown $USER:$GROUP $DIR_TARGET
-    # fi
-    # exit
-    # mkdir -pv $BIN_TARGET
-    # mkdir -pv $ETC_TARGET/modules/$LNAME
-    # mkdir -pv $LIB_TARGET
-    # mkdir -pv $INC_TARGET
     case $PLAT in
 	intel)
 	    FC=ifort
@@ -247,36 +223,45 @@ PLAT=$PLAT
 INC_TARGET=$INC_TARGET
 LIB_SCIFOR=$LIB_TARGET/$LIBNAME
 EOF
-
-    echo "Copying init script for $UNAME" 
-    cp -fv $BIN_INSTALL/scifor_completion.sh  $BIN_TARGET/scifor_completion.sh
-    cp -fv $BIN_INSTALL/configvars.sh $BIN_TARGET/configvars.sh
-    cat <<EOF >> $BIN_TARGET/configvars.sh
-add_library_to_system ${PREFIX}/${PLAT}
-EOF
-    echo "" 
-
-    echo "Generating environment module file for $UNAME" 
-    cat <<EOF > $ETC_TARGET/modules/$LNAME/$PLAT
-#%Modules
-set	root	$PREFIX
-set	plat	$PLAT
-set	version	"$VERSION ($PLAT)"
-EOF
-    cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/${LNAME}/$PLAT
-    echo "" 
-    echo "Compiling $UNAME library on platform $PLAT:"
-    echo "" 
 }
-
 
 
 #>>> GET THE ACTUAL DIRECTORY
 HERE=$(pwd)
 
 
+create_makeinc $PLAT
+sleep 1
+if [ $CLEAN == 0 ];then
+    echo "Cleaning the .o files in all OPT libraries for platform $PLAT: " 
+    cd $OPT_INSTALL
+    for dir in *;do
+	cd $dir/
+	./install.sh $LIST_ARGS --clean
+	cd ../
+    done
+    cd $HERE
+    make clean
+    exit 0
+fi
+
+
+
+if [ $QUIET == 0 ];then
+    _DIR=Y
+    echo -n "Installing in $DIR_TARGET. Continue [Y/n]: "
+    read _DIR;
+    _DIR=`echo $_DIR |tr [:lower:] [:upper:]`
+    [[ $_DIR == Y ]] || exit 1
+else
+    echo "Installing SCIFOR in $DIR_TARGET (quiet mode): "
+    sleep 2
+fi
+
+
 # >>> CREATE THE DIRECTORY HIERARCHY:
 echo "Creating directories:"
+sleep 1
 if [ $DIR_TARGET_W -eq 0 ];then
     echo "mkdir -pv $DIR_TARGET"
     mkdir -pv $DIR_TARGET
@@ -288,18 +273,21 @@ mkdir -pv $BIN_TARGET
 mkdir -pv $ETC_TARGET/modules/$LNAME
 mkdir -pv $LIB_TARGET
 mkdir -pv $INC_TARGET
+sleep 1
+
+
 
 
 #INSTALL A SINGLE OPTIONAL LIB IF REQUIRED:
 case $OPT in
     arpack)
 	if [ $WMPI == 1 ];then
-	    cd $OPT_INSTALL/arpack
+	    cd $OPT_INSTALL/parpack
 	    ./install.sh $LIST_ARGS
 	    exit
 	else
 	    cd $OPT_INSTALL/parpack
-	    ./install.sh $LIST_ARGS
+	    ./install.sh $LIST_ARGS --mpi
 	    exit
 	fi
 	;;
@@ -328,16 +316,6 @@ case $OPT in
 	./install.sh $LIST_ARGS
 	exit
 	;;
-    clean)
-	echo "Cleaning the .o files in all OPT libraries for platform $PLAT: " 
-	cd $OPT_INSTALL
-	for dir in *;do
-	    cd $dir/
-	    ./install.sh --plat=$PLAT --clean
-	    cd ../
-	done
-	exit 1
-	;;
 esac
 cd $HERE
 
@@ -346,68 +324,68 @@ cd $HERE
 for LIB in $LIST_OPT;do
     case $LIB in
 	arpack)
-	    if [ $WMPI == 1 ];then
-		if [ ! -e $LIB_TARGET/libarpack.a ];then
-		    cd $OPT_INSTALL/arpack
-		    ./install.sh $LIST_ARGS
-		    [[ $? == 0 ]] || exit 1
-		else
+	    if [ $WMPI == 0 ];then
+		if [ -e $LIB_TARGET/libarpack.a ] && [ -e $LIB_TARGET/libparpack.a ];then
 		    echo "$LIB_TARGET/libarpack.a exists. skip" 
+		    echo "$LIB_TARGET/libparpack.a exists. skip" 
+		else
+		    cd $OPT_INSTALL/parpack
+		    ./install.sh $LIST_ARGS --mpi
+		    [[ $? == 0 ]] || exit 1
 		fi
 	    else
-		if [ ! -e $LIB_TARGET/libparpack.a ] ;then
+		if [ -e $LIB_TARGET/libarpack.a ] ;then
+		    echo "$LIB_TARGET/libarpack.a exists. skip" 
+		else
 		    cd $OPT_INSTALL/parpack
 		    ./install.sh $LIST_ARGS
 		    [[ $? == 0 ]] || exit 1
-		else
-		    echo "$LIB_TARGET/libarpack.a exists. skip" 
-		    echo "$LIB_TARGET/libparpack.a exists. skip" 
 		fi
 	    fi
             ;;
 	blas)
-	    if [ ! -e $LIB_TARGET/libblas.a ];then
+	    if [ -e $LIB_TARGET/libblas.a ];then
+		echo "$LIB_TARGET/libblas.a exists. skip" 
+	    else
 		cd $OPT_INSTALL/$LIB
 		./install.sh $LIST_ARGS
 		[[ $? == 0 ]] || exit 1
-	    else
-		echo "$LIB_TARGET/libblas.a exists. skip" 
 	    fi
 	    ;;
 	fftpack)
-	    if [ ! -e $LIB_TARGET/libfftpack.a ];then
+	    if [ -e $LIB_TARGET/libfftpack.a ];then
+		echo "$LIB_TARGET/libfftpack.a exists. skip" 
+	    else
 		cd $OPT_INSTALL/$LIB
 		./install.sh $LIST_ARGS
 		[[ $? == 0 ]] || exit 1
-	    else
-		echo "$LIB_TARGET/libfftpack.a exists. skip" 
 	    fi
 	    ;;
 	lapack)
-	    if [ ! -e $LIB_TARGET/liblapack.a ];then
+	    if [ -e $LIB_TARGET/liblapack.a ];then
+		echo "$LIB_TARGET/liblapack.a exists. skip" 
+	    else
 		cd $OPT_INSTALL/$LIB
 		./install.sh $LIST_ARGS
 		[[ $? == 0 ]] || exit 1
-	    else
-		echo "$LIB_TARGET/liblapack.a exists. skip" 
 	    fi
 	    ;;
 	minpack)
-	    if [ ! -e $LIB_TARGET/libminpack.a ];then
+	    if [ -e $LIB_TARGET/libminpack.a ];then
+		echo "$LIB_TARGET/libminpack.a exists. skip" 
+	    else
 		cd $OPT_INSTALL/$LIB
 		./install.sh $LIST_ARGS
 		[[ $? == 0 ]] || exit 1
-	    else
-		echo "$LIB_TARGET/libminpack.a exists. skip" 
 	    fi
 	    ;;
 	quadpack)
-	    if [ ! -e $LIB_TARGET/libquadpack.a ];then
+	    if [ -e $LIB_TARGET/libquadpack.a ];then
+		echo "$LIB_TARGET/libquadpack.a exists. skip" 
+	    else
 		cd $OPT_INSTALL/$LIB
 		./install.sh $LIST_ARGS
 		[[ $? == 0 ]] || exit 1
-	    else
-		echo "$LIB_TARGET/libquadpack.a exists. skip" 
 	    fi
 	    ;;
     esac	
@@ -415,10 +393,37 @@ done
 cd $HERE
 
 
+echo "Copying init script for $UNAME" 
+cp -fv $BIN_INSTALL/scifor_completion.sh  $BIN_TARGET/scifor_completion.sh
+cp -fv $BIN_INSTALL/configvars.sh $BIN_TARGET/configvars.sh
+cat <<EOF >> $BIN_TARGET/configvars.sh
+add_library_to_system ${PREFIX}/${PLAT}
+EOF
+echo "" 
+sleep 1
+
+
+echo "Generating environment module file for $UNAME" 
+cat <<EOF > $ETC_TARGET/modules/$LNAME/$PLAT
+#%Modules
+set	root	$PREFIX
+set	plat	$PLAT
+set	version	"$VERSION ($PLAT)"
+EOF
+cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/${LNAME}/$PLAT
+echo "" 
+sleep 1
+
+echo "Compiling $UNAME library on platform $PLAT:"
+echo "" 
+sleep 1
+
+
+
 #CREATING THE SCIFOR LIBRARY:
 rm -fv $LIB_TARGET/$LIBNAME
-create_makeinc $PLAT
 make all
+sleep 1
 if [ $? == 0 ];then
     make clean
     mv -vf $WRK_INSTALL/make.inc $ETC_TARGET/make.inc.scifor

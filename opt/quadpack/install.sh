@@ -14,7 +14,7 @@ usage(){
     echo ""
     echo "usage:"
     echo ""
-    echo "$0  -p,--plat=FC_PLAT  [ --prefix=PREFIX_DIR  -c,--clean -d,--debug  -h,--help ]"
+    echo "$0  -p,--plat=FC_PLAT  --prefix=PREFIX_DIR [ -c,--clean -d,--debug  -h,--help ]"
     echo ""
     echo "    -p,--plat   : specifies the actual platform/compiler to use [intel,gnu]"
     echo "    --prefix    : specifies the target directory [default: FC_PLAT]"
@@ -63,7 +63,6 @@ WPLAT=1
 DEBUG=1
 CLEAN=1
 WRK_INSTALL=$(pwd)
-PREFIX=$(nparent_dir $WRK_INSTALL 2)
 BIN_INSTALL=$WRK_INSTALL/bin
 ETC_INSTALL=$WRK_INSTALL/etc
 OPT_INSTALL=$WRK_INSTALL/opt
@@ -95,16 +94,15 @@ do
 	-c|--clean) CLEAN=0;shift ;;
 	-d|--debug) DEBUG=0;shift ;;
         -h|--help) usage ;;
-	-o|--opt-lib) shift 2;;
 	-q|--quiet) shift ;;
-	-w|--wdmftt) shift;;
         --) shift; break ;;
         *) usage ;;
     esac
 done
 
-#>>> CHECK THAT THE MANDATORY OPTION -p,-plat IS PRESENT:
-[[ $WPLAT == 0 ]] || usage
+
+#>>> CHECK THAT THE MANDATORY OPTIONS ARE PRESENT:
+[[ $WPLAT == 0 ]] && [[ ! -z $PREFIX ]] || usage
 
 
 #RENAME WITH DEBUG IF NECESSARY 
@@ -118,23 +116,13 @@ BIN_TARGET=$DIR_TARGET/bin
 ETC_TARGET=$DIR_TARGET/etc
 LIB_TARGET=$DIR_TARGET/lib
 INC_TARGET=$DIR_TARGET/include
-echo "Installing in $DIR_TARGET."
-sleep 2
+OBJ_INSTALL=$SRC_INSTALL/obj_$PLAT
+INC_INSTALL=$SRC_INSTALL/mod_$PLAT
 
 
 create_makeinc(){
     local PLAT=$1
     cd $WRK_INSTALL
-    OBJ_INSTALL=$SRC_INSTALL/obj_$PLAT
-    INC_INSTALL=$SRC_INSTALL/mod_$PLAT
-    echo "Creating directories:" 
-    mkdir -pv $DIR_TARGET
-    mkdir -pv $BIN_TARGET
-    mkdir -pv $ETC_TARGET/modules/$LNAME
-    mkdir -pv $LIB_TARGET
-    mkdir -pv $INC_TARGET
-    mkdir -pv $OBJ_INSTALL
-    mkdir -pv $INC_INSTALL
     case $PLAT in
 	intel)
 	    local FC=ifort
@@ -172,39 +160,64 @@ INC_TARGET=$INC_TARGET
 OBJ_INSTALL=$OBJ_INSTALL
 INC_INSTALL=$INC_INSTALL
 EOF
+}
 
-    echo "Copying init script for $UNAME" 
-    cp -fv $BIN_INSTALL/configvars.sh $BIN_TARGET/configvars.sh
-    cat <<EOF >> $BIN_TARGET/configvars.sh
-add_library_to_system ${PREFIX}/${PLAT}
-EOF
-    echo "" 
-    echo "Generating environment module file for $UNAME" 
-    cat <<EOF > $ETC_TARGET/modules/$LNAME/$PLAT
+
+create_makeinc $PLAT
+sleep 1
+if [ $CLEAN == 0 ];then
+    make cleanall
+    exit 0
+fi
+
+echo "Installing in $DIR_TARGET."
+sleep 2
+
+
+
+echo "Creating directories:"
+mkdir -pv $DIR_TARGET
+mkdir -pv $BIN_TARGET
+mkdir -pv $ETC_TARGET/modules/$LNAME
+mkdir -pv $LIB_TARGET
+mkdir -pv $INC_TARGET
+mkdir -pv $OBJ_INSTALL
+mkdir -pv $INC_INSTALL
+sleep 1
+
+
+# echo "Copying init script for $UNAME" 
+# cp -fv $BIN_INSTALL/configvars.sh $BIN_TARGET/configvars.sh
+# cat <<EOF >> $BIN_TARGET/configvars.sh
+# add_library_to_system ${PREFIX}/${PLAT}
+# EOF
+# echo "" 
+# sleep 1
+
+echo "Generating environment module file for $UNAME" 
+cat <<EOF > $ETC_TARGET/modules/$LNAME/$PLAT
 #%Modules
 set	root	$PREFIX
 set	plat	$PLAT
 set	version	"($PLAT)"
 EOF
-    cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/$LNAME/$PLAT
-    echo "" 
-    echo "Compiling $UNAME library on platform $PLAT:"
-    echo "" 
-}
+cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/$LNAME/$PLAT
+echo "" 
+sleep 1
+
+echo "Compiling $UNAME library on platform $PLAT:"
+echo "" 
+sleep 1
 
 
 
-create_makeinc $PLAT
-if [ $CLEAN == 0 ];then
-    make cleanall
-    exit 0
-fi
-if [ -d $OBJ_INSTALL ];then
-    rsync -av $OBJ_INSTALL/* $SRC_INSTALL/ 2>/dev/null
-fi
+# if [ -d $OBJ_INSTALL ];then
+#     rsync -av $OBJ_INSTALL/* $SRC_INSTALL/ 2>/dev/null
+# fi
 make all
 if [ $? == 0 ];then
-    make clean
+    #make clean
+    make cleanall
     mv -vf $WRK_INSTALL/make.inc $ETC_TARGET/make.inc.quadpack
 else
     echo "Error from Makefile. STOP here."

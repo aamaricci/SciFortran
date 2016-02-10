@@ -14,10 +14,11 @@ usage(){
     echo ""
     echo "usage:"
     echo ""
-    echo "$0  -p,--plat=FC_PLAT  [ --prefix=PREFIX_DIR  -c,--clean -d,--debug  -h,--help ]"
+    echo "$0  -p,--plat=FC_PLAT  --prefix=PREFIX_DIR [ --mpi -c,--clean -d,--debug  -h,--help ]"
     echo ""
     echo "    -p,--plat   : specifies the actual platform/compiler to use [intel,gnu]"
     echo "    --prefix    : specifies the target directory [default: FC_PLAT]"
+    echo "    --mpi       : specifies MPI compilation"
     echo "    -q,--quiet  : assume Y to all questions."
     echo "    -c,--clean  : clean out the former compilation."
     echo "    -d,--debug  : debug flag"
@@ -44,13 +45,12 @@ test_mpi(){
     local TARGET="$2"
     local MPIF="$MPIROOT/include/mpif.h"
     if [ ! -e "$MPIF" ];then echo "Can not find the file $MPIF";exit;fi
-    if [ ! -d "$TARGET/PARPACK/SRC/MPI" ];then echo "Can not find $TARGET/PARPACK/SRC/MPI";exit;fi
-    if [ ! -d "$TARGET/PARPACK/UTIL/MPI" ];then echo "Can not find $TARGET/PARPACK/UTIL/MPI";exit;fi
-    if [ ! -d "$TARGET/PARPACK/EXAMPLES/MPI" ];then echo "Can not find $TARGET/PARPACK/UTIL/MPI";exit;fi
-    for DIR in SRC UTIL EXAMPLES
+    if [ ! -d "$TARGET/parpack/src/mpi" ];then echo "Can not find $TARGET/parpack/src/mpi";exit;fi
+    if [ ! -d "$TARGET/parpack/util/mpi" ];then echo "Can not find $TARGET/parpack/util/mpi";exit;fi
+    for DIR in src util
     do
 	SFX=$(date  +%d_%m_%y_%Hh%M)
-	FILE=$TARGET/PARPACK/$DIR/MPI/mpif.h
+	FILE=$TARGET/parpack/$DIR/mpi/mpif.h
 	if [ -e $FILE ];then
 	    mv -vf $FILE ${FILE}.OLD
 	fi
@@ -63,7 +63,7 @@ test_mpi(){
 LIST_ARGS=$*
 
 #>>> GET LONG & SHORT OPTIONS
-params="$(getopt -n "$0" --options p:o:qcwdh --longoptions plat:,prefix:,opt-lib:,quiet,clean,wdmftt,debug,help -- "$@")"
+params="$(getopt -n "$0" --options p:o:qcwdh --longoptions plat:,prefix:,mpi,opt-lib:,quiet,clean,wdmftt,debug,help -- "$@")"
 if [ $? -ne 0 ];then
     usage
 fi
@@ -82,8 +82,8 @@ fi
 WPLAT=1
 DEBUG=1
 CLEAN=1
+WMPI=1
 WRK_INSTALL=$(pwd)
-PREFIX=$(nparent_dir $WRK_INSTALL 2)
 BIN_INSTALL=$WRK_INSTALL/bin
 ETC_INSTALL=$WRK_INSTALL/etc
 OPT_INSTALL=$WRK_INSTALL/opt
@@ -111,19 +111,19 @@ do
 	    PREFIX=$2;
 	    shift 2
 	    ;;
+	--mpi) WMPI=0;shift ;;
 	-c|--clean) CLEAN=0;shift ;;
 	-d|--debug) DEBUG=0;shift ;;
         -h|--help) usage ;;
 	-o|--opt-lib) shift 2;;
 	-q|--quiet) shift ;;
-	-w|--wdmftt) shift;;
         --) shift; break ;;
         *) usage ;;
     esac
 done
 
-#>>> CHECK THAT THE MANDATORY OPTION -p,-plat IS PRESENT:
-[[ $WPLAT == 0 ]] || usage
+#>>> CHECK THAT THE MANDATORY OPTIONS ARE PRESENT:
+[[ $WPLAT == 0 ]] && [[ ! -z $PREFIX ]] || usage
 
 
 #RENAME WITH DEBUG IF NECESSARY 
@@ -137,32 +137,25 @@ BIN_TARGET=$DIR_TARGET/bin
 ETC_TARGET=$DIR_TARGET/etc
 LIB_TARGET=$DIR_TARGET/lib
 INC_TARGET=$DIR_TARGET/include
-echo "Installing in $DIR_TARGET."
-sleep 2
 
+if [ $WMPI == 0 ];then
+    FMPI=mpif90
+    which $FMPI >/dev/null 2>&1
+    [[ $? == 0 ]] || usage
+    MPIROOT=$(nparent_dir $(which $FMPI) 2)
+    test_mpi $MPIROOT $WRK_INSTALL
+fi
 
-FMPI=mpif90
-which $FMPI >/dev/null 2>&1
-[[ $? == 0 ]] || usage
-MPIROOT=$(nparent_dir $(which $FMPI) 2)
-test_mpi $MPIROOT $WRK_INSTALL
+BLAS_INSTALL=$WRK_INSTALL/blas/blas_$PLAT
+LAPACK_INSTALL=$WRK_INSTALL/lapack/lapack_$PLAT
+UTIL_INSTALL=$WRK_INSTALL/util/util_$PLAT
+OBJ_INSTALL=$SRC_INSTALL/obj_$PLAT
+PUTIL_INSTALL=$WRK_INSTALL/parpack/util/mpi/util_$PLAT
+POBJ_INSTALL=$WRK_INSTALL/parpack/src/mpi/obj_$PLAT
 
 print_ARmake(){
     local PLAT=$1
     cd $WRK_INSTALL
-    BLAS_INSTALL=$WRK_INSTALL/BLAS/blas_$PLAT
-    LAPACK_INSTALL=$WRK_INSTALL/LAPACK/lapack_$PLAT
-    UTIL_INSTALL=$WRK_INSTALL/UTIL/util_$PLAT
-    OBJ_INSTALL=$SRC_INSTALL/obj_$PLAT
-    PUTIL_INSTALL=$WRK_INSTALL/PARPACK/UTIL/MPI/util_$PLAT
-    POBJ_INSTALL=$WRK_INSTALL/PARPACK/SRC/MPI/obj_$PLAT
-    echo "Creating directories:" 
-    mkdir -pv $DIR_TARGET
-    mkdir -pv $BIN_TARGET
-    mkdir -pv $ETC_TARGET/modules/$LNAME
-    mkdir -pv $LIB_TARGET
-    mkdir -pv $INC_TARGET
-    mkdir -pv $OBJ_INSTALL $POBJ_INSTALL $BLAS_INSTALL $LAPACK_INSTALL $UTIL_INSTALL $PUTIL_INSTALL 
     case $PLAT in
 	intel)
 	    FC=ifort
@@ -197,14 +190,14 @@ PUTIL_INSTALL=$PUTIL_INSTALL
 POBJ_INSTALL=$POBJ_INSTALL
 
 home=$WRK_INSTALL
-COMMLIB     = MPI
+COMMLIB     = mpi
 
-BLASdir      = \$(home)/BLAS
-LAPACKdir    = \$(home)/LAPACK
-UTILdir      = \$(home)/UTIL
-SRCdir       = \$(home)/SRC
-PSRCdir      = \$(home)/PARPACK/SRC/\$(COMMLIB)
-PUTILdir     = \$(home)/PARPACK/UTIL/\$(COMMLIB)
+BLASdir      = \$(home)/blas
+LAPACKdir    = \$(home)/lapack
+UTILdir      = \$(home)/util
+SRCdir       = \$(home)/src
+PSRCdir      = \$(home)/parpack/src/\$(COMMLIB)
+PUTILdir     = \$(home)/parpack/util/\$(COMMLIB)
 DIRS   = \$(BLASdir) \$(LAPACKdir) \$(UTILdir) \$(SRCdir)
 
 
@@ -271,24 +264,6 @@ help:
 	@\$(ECHO) "usage: make ?"
 
 EOF
-	
-	echo "Copying init script for $UNAME" 
-	cp -fv $BIN_INSTALL/configvars.sh $BIN_TARGET/configvars.sh
-	cat <<EOF >> $BIN_TARGET/configvars.sh
-add_library_to_system ${WRKDIR}/${PLAT}
-EOF
-	echo "" 
-	echo "Generating environment module file for $UNAME" 
-	cat <<EOF > $ETC_TARGET/modules/$LNAME/$PLAT
-#%Modules
-set	root	$WRKDIR
-set	plat	$PLAT
-set	version	"$VERSION ($PLAT)"
-EOF
-	cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/$LNAME/$PLAT
-	echo "" 
-	echo "Compiling $UNAME library on platform $PLAT:"
-	echo "" 
 }
 
 
@@ -297,27 +272,74 @@ if [ $CLEAN == 0 ];then
     make cleanall
     exit 0
 fi
-if [ -d $BLAS_INSTALL ];then
-    rsync -av $BLAS_INSTALL/* $WRK_INSTALL/BLAS/
+
+echo "Installing in $DIR_TARGET."
+sleep 2
+
+
+echo "Creating directories:" 
+mkdir -pv $DIR_TARGET
+mkdir -pv $BIN_TARGET
+mkdir -pv $ETC_TARGET/modules/$LNAME
+mkdir -pv $LIB_TARGET
+mkdir -pv $INC_TARGET
+mkdir -pv $OBJ_INSTALL $POBJ_INSTALL $BLAS_INSTALL $LAPACK_INSTALL $UTIL_INSTALL $PUTIL_INSTALL 
+sleep 1
+
+
+	
+# echo "Copying init script for $UNAME" 
+# cp -fv $BIN_INSTALL/configvars.sh $BIN_TARGET/configvars.sh
+# cat <<EOF >> $BIN_TARGET/configvars.sh
+# add_library_to_system ${WRKDIR}/${PLAT}
+# EOF
+# echo "" 
+# sleep 1
+
+
+echo "Generating environment module file for $UNAME" 
+cat <<EOF > $ETC_TARGET/modules/$LNAME/$PLAT
+#%Modules
+set	root	$WRKDIR
+set	plat	$PLAT
+set	version	"$VERSION ($PLAT)"
+EOF
+cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/$LNAME/$PLAT
+echo "" 
+sleep 1
+
+echo "Compiling $UNAME library on platform $PLAT:"
+echo "" 
+sleep 1
+
+
+
+# if [ -d $BLAS_INSTALL ];then
+#     rsync -av $BLAS_INSTALL/* $WRK_INSTALL/blas/
+# fi
+# if [ -d $LAPACK_INSTALL ];then
+#     rsync -av $LAPACK_INSTALL/* $WRK_INSTALL/lapack/
+# fi
+# if [ -d $UTIL_INSTALL ];then
+#     rsync -av $UTIL_INSTALL/* $WRK_INSTALL/util/
+# fi
+# if [ -d $OBJ_INSTALL ];then
+#     rsync -av $OBJ_INSTALL/* $SRC_INSTALL/
+# fi
+# if [ -d $POBJ_INSTALL ];then
+#     rsync -av $POBJ_INSTALL/* $WRK_INSTALL/parpack/src/mpi/
+# fi
+# if [ -d $PUTIL_INSTALL ];then
+#     rsync -av $POBJ_INSTALL/* $WRK_INSTALL/parpack/util/mpi/
+# fi
+if [ $WMPI == 0 ];then
+    make parallel
+else
+    make serial
 fi
-if [ -d $LAPACK_INSTALL ];then
-    rsync -av $LAPACK_INSTALL/* $WRK_INSTALL/LAPACK/
-fi
-if [ -d $UTIL_INSTALL ];then
-    rsync -av $UTIL_INSTALL/* $WRK_INSTALL/UTIL/
-fi
-if [ -d $OBJ_INSTALL ];then
-    rsync -av $OBJ_INSTALL/* $SRC_INSTALL/
-fi
-if [ -d $POBJ_INSTALL ];then
-    rsync -av $POBJ_INSTALL/* $WRK_INSTALL/PARPACK/SRC/MPI/
-fi
-if [ -d $PUTIL_INSTALL ];then
-    rsync -av $POBJ_INSTALL/* $WRK_INSTALL/PARPACK/UTIL/MPI/
-fi
-make all
 if [ $? == 0 ];then
-    make clean
+    # make clean
+    make cleanall
     mv -vf $WRK_INSTALL/ARmake.inc $ETC_TARGET/make.inc.parpack
 else
     echo "Error from Makefile. STOP here."

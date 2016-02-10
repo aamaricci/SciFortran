@@ -46,9 +46,10 @@ PRECISIONS = single double complex complex16
 #
 ############################################################################
 
-all: lib
+all: parallel
 
-lib: parpacklib
+serial: arpacklib
+parallel: parpacklib
 
 clean: cleanlib 
 
@@ -59,6 +60,17 @@ cleanall: clean
 	rm -rfv $(UTILdir)/util_*
 	rm -rfv $(PSRCdir)/obj_*
 	rm -rfv $(PUTILdir)/util_*
+
+arpacklib:
+	@( \
+	for f in $(DIRS); \
+	do \
+		$(CD) $$f; \
+		$(ECHO) Making lib in $$f; \
+		$(MAKE) $(PRECISIONS); \
+		$(CD) ..; \
+	done );
+	$(RANLIB) $(ARPACKLIB)
 
 parpacklib:
 	@( \
