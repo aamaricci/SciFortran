@@ -8,22 +8,32 @@ LOG=install.log
 exec >  >(tee -a $LOG)
 exec 2> >(tee -a $LOG >&2)
 
+echo ""
+echo "Invoked as:"
+echo "$0 $*"
+echo ""
+
 USER=$(id -un)
 GUSER=$(id -gn)
+
+
+#>>> GET THE ACTUAL DIRECTORY
+HERE=$(pwd)
 
 #>>> USAGE FUNCTION
 usage(){
     echo ""
     echo "usage:"
     echo ""
-    echo "$0  -p,--plat=FC_PLAT --prefix=PREFIX_DIR  [-o,--opt-lib=OPT_LIB  -q,--quiet -c,--clean  -d,--debug  -h,--help]"
+    echo "$0  -p,--plat=FC_PLAT --prefix=PREFIX_DIR  [-o,--opt-lib=OPT_LIB --mpi=MPI_ROOT  -q,--quiet -c,--clean  -d,--debug  -h,--help]"
     echo ""
     echo "mandatory arguments:" 
-    echo "    -p,--plat   : specifies the actual platform/compiler to use [intel,gnu]"
-    echo "    --prefix    : specifies the target directory [default: FC_PLAT]"
+    echo "    -p,--plat   : specifies the actual platform/compiler to use [default: intel] (valid: intel, gnu)"
+    echo "    --prefix    : specifies the target directory [default: /opt/scifor]"
     echo ""    
     echo "optional arguments:" 
     echo "    -o,--opt-lib: to install a single 3rd party lib [arpack blas fftpack lapack minpack quadpack]. "
+    echo "    --mpi       : specifies the MPI ROOT directory [default is the detected one]"
     echo "    -q,--quiet  : assume Y to all questions."
     echo "    -c,--clean  : clean out the former compilation."
     echo "    -d,--debug  : debug flag"
@@ -48,7 +58,7 @@ nparent_dir(){
 LIST_ARGS=$*
 
 #>>> GET LONG & SHORT OPTIONS
-params="$(getopt -n "$0" --options p:o:qcdh --longoptions plat:,prefix:,mpi,opt-lib:,quiet,clean,debug,help -- "$@")"
+params="$(getopt -n "$0" --options p:o:qcdh --longoptions plat:,prefix:,mpi:,opt-lib:,quiet,clean,debug,help -- "$@")"
 if [ $? -ne 0 ];then
     usage
 fi
@@ -63,15 +73,18 @@ fi
 
 
 #>>> SET SOME DEFAULTS VARIABLES AND OTHER ONES
-WPLAT=1
 DEBUG=1
 CLEAN=1
-WMPI=1
+IMPI=1
 OPT=""
 QUIET=0
+IDEFAULT=0
+#DEFAULT PREFIX
+PREFIX=/opt/scifor
+#DEFAULT PLATFORM
+PLAT=intel
 VERSION=$(git describe --tags 2>/dev/null)
 WRK_INSTALL=$(pwd)
-#PREFIX=$WRK_INSTALL
 BIN_INSTALL=$WRK_INSTALL/bin
 ETC_INSTALL=$WRK_INSTALL/etc
 OPT_INSTALL=$WRK_INSTALL/opt
@@ -89,7 +102,7 @@ while true
 do
     case $1 in
 	-p|--plat)
-	    WPLAT=0
+	    IDEFAULT=1
 	    PLAT=$2
 	    shift 2
 	    [[ ! $LIST_FC =~ (^|[[:space:]])"$PLAT"($|[[:space:]]) ]] && {
@@ -97,12 +110,9 @@ do
 		echo " available values are: $LIST_FC"
 		exit 1
 	    }
-	    case $PLAT in
-		gnu) _FC_=gfortran ;;
-		intel) _FC_=ifort ;;
-	    esac
 	    ;;
 	--prefix)
+	    IDEFAULT=1
 	    PREFIX=$2;
 	    shift 2
 	    ;;
@@ -115,7 +125,11 @@ do
 		exit 1
 	    }
 	    ;;
-	--mpi) WMPI=0;shift ;;
+	--mpi)
+	    IMPI=1;
+	    MPIROOT=$2;
+	    shift 2
+	    ;;
 	-q|--quiet) QUIET=1;shift ;;
 	-c|--clean) CLEAN=0;shift ;;
 	-d|--debug) DEBUG=0;shift ;;
@@ -126,7 +140,17 @@ do
 done
 
 #>>> CHECK THAT THE MANDATORY OPTIONS ARE PRESENT:
-[[ $WPLAT == 0 ]] && [[ ! -z $PREFIX ]] || usage
+[[ $IDEFAULT == 0 ]] && {
+    echo "Using default configuaration --prefix=$PREFIX, --plat=$PLAT"; sleep 0.5;echo ""
+}
+
+[[ ! -z $PLAT ]] && [[ ! -z $PREFIX ]] || usage
+
+
+case $PLAT in
+    gnu) _FC_=gfortran ;;
+    intel) _FC_=ifort ;;
+esac
 
 
 #RENAME WITH DEBUG IF NECESSARY 
@@ -142,7 +166,7 @@ DIR_TARGET_W=0
 if [ ! -w $PREFIX ];then
     DIR_TARGET_W=1
     echo "Can not create $DIR_TARGET: $PREFIX has no write access"
-    sleep 1
+    sleep 0.5
     echo "Try to grant root privileges to create $DIR_TARGET for $USER:$GROUP"
     sudo -v
 fi
@@ -157,22 +181,22 @@ if [ $WMPI == 0 ];then
     _MPI=Y
     echo "Using the following MPI compiler:"
     mpif90 -show
-    sleep 1.5
+    sleep 0.5
     echo "On platform: $PLAT"
-    sleep 2
+    sleep 0.5
     MPIFC=$(mpif90 -show | awk '{print $1}')
     if [ "$MPIFC" != "$_FC_" ];then
 	echo "Possible mismatch between MPI:+$MPIFC and Platform $PLAT:+$_FC_" 
 	sleep 2
 	echo "Fall back into the non-MPI mode"
-	sleep 1
+	sleep 0.5
 	WMPI=1
 	# QUIET=0
     fi
     # if [ $QUIET == 0 ];then
     # 	echo -n "Continue (this will install P-Arpack) [Y/n]: "
     # 	read _MPI;
-    # 	sleep 1
+    # 	sleep 0.5
     # 	_MPI=`echo $_MPI |tr [:lower:] [:upper:]`
     # 	[[ $_MPI == Y ]] || exit 1
     # fi
@@ -226,12 +250,8 @@ EOF
 }
 
 
-#>>> GET THE ACTUAL DIRECTORY
-HERE=$(pwd)
-
-
 create_makeinc $PLAT
-sleep 1
+sleep 0.5
 if [ $CLEAN == 0 ];then
     echo "Cleaning the .o files in all OPT libraries for platform $PLAT: " 
     cd $OPT_INSTALL
@@ -261,7 +281,7 @@ fi
 
 # >>> CREATE THE DIRECTORY HIERARCHY:
 echo "Creating directories:"
-sleep 1
+sleep 0.5
 if [ $DIR_TARGET_W -eq 0 ];then
     echo "mkdir -pv $DIR_TARGET"
     mkdir -pv $DIR_TARGET
@@ -273,7 +293,7 @@ mkdir -pv $BIN_TARGET
 mkdir -pv $ETC_TARGET/modules/$LNAME
 mkdir -pv $LIB_TARGET
 mkdir -pv $INC_TARGET
-sleep 1
+sleep 0.5
 
 
 
@@ -400,7 +420,7 @@ cat <<EOF >> $BIN_TARGET/configvars.sh
 add_library_to_system ${PREFIX}/${PLAT}
 EOF
 echo "" 
-sleep 1
+sleep 0.5
 
 
 echo "Generating environment module file for $UNAME" 
@@ -412,18 +432,17 @@ set	version	"$VERSION ($PLAT)"
 EOF
 cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/${LNAME}/$PLAT
 echo "" 
-sleep 1
+sleep 0.5
 
 echo "Compiling $UNAME library on platform $PLAT:"
 echo "" 
-sleep 1
+sleep 0.5
 
 
 
 #CREATING THE SCIFOR LIBRARY:
 rm -fv $LIB_TARGET/$LIBNAME
 make all
-sleep 1
 if [ $? == 0 ];then
     make clean
     mv -vf $WRK_INSTALL/make.inc $ETC_TARGET/make.inc.scifor
@@ -431,7 +450,7 @@ else
     echo "Error from Makefile. STOP here."
     exit 1
 fi
-
+sleep 0.5
 
 
 #LAST TOUCH COPY THE CONFIGVARS AND CREATE THE USER MODULES FILE. PRINT USAGE DETAILS.
@@ -439,6 +458,21 @@ CONFIGFILE=$PREFIX/$PLAT/bin/configvars.sh
 MODULEFILE=$PREFIX/$PLAT/etc/modules/$LNAME/$PLAT
 mkdir -pv $HOME/.modules.d/$LNAME
 cp -vf $MODULEFILE $HOME/.modules.d/$LNAME/$PLAT
+
+echo ""
+echo "Merge all libraries into ${LIBNAME%.a}_all.a"
+sleep 0.5
+cd $LIB_TARGET
+rm -fv ${LIBNAME%.a}_all.a
+for LIB in lib*.a;
+do 
+    DIRLIB=tmp_${LIB%.a};
+    mkdir -pv $DIRLIB;
+    ar -xv $LIB && mv -v *.o $DIRLIB/;
+done
+ar -crv ${LIBNAME%.a}_all.a `ls tmp_*/*.o |sort |uniq` && rm -rfv tmp_*
+sleep 0.5
+echo ""
 echo "" 
 echo "USAGE:" 
 echo "" 
@@ -457,3 +491,5 @@ fi
 echo ""
 echo "Enjoy... (for info: adriano.amaricciATgmail.com)"
 echo ""
+cd $HERE
+cp -v $LOG $PREFIX/$PLAT/

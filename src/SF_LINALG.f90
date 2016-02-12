@@ -4,14 +4,84 @@ module SF_LINALG
   private
 
 
+  !>EIGENVALUE PROBLEM:
+  !Eigenvalue/-vector problem for real symmetric/complex hermitian matrices using Jacobi method (unsorted out):
+  public :: eigh_jacobi
   !Eigenvalue/-vector problem for general matrices:
+  public :: eig
+  !Eigenvalue/-vector problem for real symmetric/complex hermitian matrices:
+  public :: eigh, matrix_diagonalize
+  !Eigenvalues for general matrices:
+  public :: eigvals
+  !Eigenvalues for symmetric/hermitian matrices:
+  public :: eigvalsh
+
+  !>MATRIX INVERSION:
+  !Matrix inversion for real/complex matrices:
+  public :: inv, matrix_inverse
+  !Matrix inversion for real/complex symmetric matrices:
+  public :: inv_sym, matrix_inverse_sym
+  ! matrix inversion for complex hermitian matrices:
+  public :: inv_her, matrix_inverse_her
+  ! matrix inversion for real/complex triangular matrices:
+  public :: inv_triang, matrix_inverse_triang
+  ! matrix inversion for real/complex  matrices using Gauss-Jordan elimination:
+  public :: inv_gj, matrix_inverse_gj
+
+
+  !>TRIDIAGONAL MATRICES INVERSION (diagonal elements only):
+  !invert a (block) tridiagonal matrix using the iterative algorithm
+  public :: inv_tridiag
+
+
+  !>LINEAR SYSTEM SOLUTION:
+  ! solution to linear systems of equation with real/complex coefficients:
+  public :: solve, solve_linear_system
+  !least square solutions the real/complex systems of equations of possibly non-square shape:
+  public :: lstsq
+
+
+  !>AUXILIARY:
+  ! determinants of real/complex square matrices:
+  public :: det
+  !Returns the real/complex identity matrix of size n x n .
+  public :: eye, deye, zeye, deye_tridiag, zeye_tridiag
+  !check the matrix is actually (block) tridiagonal
+  public :: check_tridiag
+  !get the main (block) diagonals from a (block) tridiagonal matrix
+  public :: get_tridiag
+  !build a (block) tridigonal matrix from the main (block) diagonals
+  public :: build_tridiag
+  !construction of square matrices from the diagonal elements:
+  public :: diag
+  !trace of real/complex matrices:
+  public :: trace
+
+
+  !>SVD DECOMPOSITION:
+  !singular values of real/complex matrices:
+  public :: svdvals
+  !singular value decomposition of real/complex matrices:
+  public :: svd
+
+
+  !>EXTERNAL PRODUCTS
+  !Kroenecker product of matrices
+  public :: kron
+  public :: kronecker_product
+  public :: kroenecker_product
+  !outer product of two 1d arrays to form a matrix
+  public :: outerprod
+  public :: cross_product
+  public :: s3_product
+
+
+  !>EIGENVALUE PROBLEM:
   interface eig
      module procedure deig
      module procedure zeig
   end interface eig
-  public :: eig
 
-  ! eigenvalue/-vector problem for real symmetric/complex hermitian matrices:
   interface eigh
      module procedure deigh_generalized
      module procedure zeigh_generalized
@@ -22,35 +92,25 @@ module SF_LINALG
      module procedure deigh_simple
      module procedure zeigh_simple
   end interface matrix_diagonalize
-  public :: eigh
-  public :: matrix_diagonalize
 
-
-  ! eigenvalue/-vector problem for real symmetric/complex hermitian matrices using Jacobi method (unsorted out):
   interface eigh_jacobi
      module procedure d_jacobi
      module procedure c_jacobi
   end interface eigh_jacobi
-  public :: eigh_jacobi
 
-
-
-  ! eigenvalues for general matrices:
   interface eigvals
      module procedure deigvals
      module procedure zeigvals
   end interface eigvals
-  public :: eigvals
 
-  ! eigenvalues for symmetric/hermitian matrices:
   interface eigvalsh
      module procedure deigvalsh
      module procedure zeigvalsh
   end interface eigvalsh
-  public :: eigvalsh
 
 
-  ! matrix inversion for real/complex matrices:
+
+  !>MATRIX INVERSION:
   interface inv
      module procedure dinv
      module procedure zinv
@@ -59,10 +119,7 @@ module SF_LINALG
      module procedure dinv
      module procedure zinv
   end interface matrix_inverse
-  public :: inv
-  public :: matrix_inverse
 
-  ! matrix inversion for real/complex symmetric matrices:
   interface inv_sym
      module procedure dinv_sym
      module procedure zinv_sym
@@ -71,21 +128,14 @@ module SF_LINALG
      module procedure dinv_sym
      module procedure zinv_sym
   end interface matrix_inverse_sym
-  public :: inv_sym
-  public :: matrix_inverse_sym
 
-
-  ! matrix inversion for complex hermitian matrices:
   interface inv_her
      module procedure zinv_her
   end interface inv_her
   interface matrix_inverse_her
      module procedure zinv_her
   end interface matrix_inverse_her
-  public :: inv_her
-  public :: matrix_inverse_her
 
-  ! matrix inversion for real/complex triangular matrices:
   interface inv_triang
      module procedure dinv_triang
      module procedure zinv_triang
@@ -94,10 +144,7 @@ module SF_LINALG
      module procedure dinv_triang
      module procedure zinv_triang
   end interface matrix_inverse_triang
-  public :: inv_triang
-  public :: matrix_inverse_triang
 
-  ! matrix inversion for real/complex  matrices using Gauss-Jordan elimination:
   interface inv_gj
      module procedure dinv_gj
      module procedure zinv_gj
@@ -106,40 +153,8 @@ module SF_LINALG
      module procedure dinv_gj
      module procedure zinv_gj
   end interface matrix_inverse_gj
-  public :: inv_gj
-  public :: matrix_inverse_gj
 
-
-
-  !>TRIDIAGONAL MATRICES:
-  !check the matrix is actually (block) tridiagonal
-  interface check_tridiag
-     module procedure d_check_tridiag
-     module procedure c_check_tridiag
-     module procedure d_check_tridiag_block
-     module procedure c_check_tridiag_block
-  end interface check_tridiag
-  public :: check_tridiag
-
-  !get the main (block) diagonals from a (block) tridiagonal matrix
-  interface get_tridiag
-     module procedure d_get_tridiag
-     module procedure c_get_tridiag
-     module procedure d_get_tridiag_block
-     module procedure c_get_tridiag_block
-  end interface get_tridiag
-  public :: get_tridiag
-
-  !build a (block) tridigonal matrix from the main (block) diagonals
-  interface build_tridiag
-     module procedure d_build_tridiag
-     module procedure c_build_tridiag
-     module procedure d_build_tridiag_block
-     module procedure c_build_tridiag_block
-  end interface build_tridiag
-  public :: build_tridiag
-
-  !invert a (block) tridiagonal matrix using the iterative algorithm
+  !>TRIDIAGONAL MATRICES INVERSION (diagonal elements only):
   interface inv_tridiag
      module procedure d_invert_tridiag_matrix
      module procedure c_invert_tridiag_matrix
@@ -150,11 +165,11 @@ module SF_LINALG
      module procedure d_invert_tridiag_block_matrix_mat
      module procedure c_invert_tridiag_block_matrix_mat
   end interface inv_tridiag
-  public :: inv_tridiag
 
 
 
-  ! solution to linear systems of equation with real/complex coefficients:
+
+  !>LINEAR SYSTEM SOLUTION:
   interface solve
      module procedure dsolve_1rhs
      module procedure zsolve_1rhs
@@ -167,60 +182,77 @@ module SF_LINALG
      module procedure dsolve_Mrhs
      module procedure zsolve_Mrhs
   end interface solve_linear_system
-  public :: solve
-  public :: solve_linear_system
 
-  ! determinants of real/complex square matrices:
-  interface det
-     module procedure ddet
-     module procedure zdet
-  end interface det
-  public :: det
-
-  !Returns the real/complex identity matrix of size n x n .
-  interface eye
-     module procedure deye
-  end interface eye
-  public :: eye
-  public :: deye
-  public :: zeye
-
-  !least square solutions the real/complex systems of equations of possibly non-square shape:
   interface lstsq
      module procedure dlstsq
      module procedure zlstsq
   end interface lstsq
-  public :: lstsq
 
-  !construction of square matrices from the diagonal elements:
+
+
+
+  !>AUXILIARY:
+  interface det
+     module procedure ddet
+     module procedure zdet
+  end interface det
+
+  interface eye
+     module procedure deye
+     module procedure deye_tridiag
+  end interface eye
+
+  interface eye_tridiag
+     module procedure deye_tridiag
+  end interface eye_tridiag
+
   interface diag
      module procedure ddiag
      module procedure zdiag
   end interface diag
-  public :: diag
 
-  !trace of real/complex matrices:
   interface trace
      module procedure dtrace
      module procedure ztrace
   end interface trace
-  public :: trace
 
-  !singular values of real/complex matrices:
+  interface check_tridiag
+     module procedure d_check_tridiag
+     module procedure c_check_tridiag
+     module procedure d_check_tridiag_block
+     module procedure c_check_tridiag_block
+  end interface check_tridiag
+
+  interface get_tridiag
+     module procedure d_get_tridiag
+     module procedure c_get_tridiag
+     module procedure d_get_tridiag_block
+     module procedure c_get_tridiag_block
+  end interface get_tridiag
+
+  interface build_tridiag
+     module procedure d_build_tridiag
+     module procedure c_build_tridiag
+     module procedure d_build_tridiag_block
+     module procedure c_build_tridiag_block
+  end interface build_tridiag
+
+
+  !>SVD DECOMPOSITION:
   interface svdvals
      module procedure dsvdvals
      module procedure zsvdvals
   end interface svdvals
-  public :: svdvals
 
-  !singular value decomposition of real/complex matrices:
   interface svd
      module procedure dsvd
      module procedure zsvd
   end interface svd
-  public :: svd
 
-  !Kroenecker product of matrices
+
+
+
+  !>EXTERNAL PRODUCTS
   interface kron
      module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
   end interface kron
@@ -230,31 +262,21 @@ module SF_LINALG
   interface kroenecker_product
      module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
   end interface kroenecker_product
-  public :: kron
-  public :: kronecker_product
-  public :: kroenecker_product
 
-
-  !outer product of two 1d arrays to form a matrix
   interface outerprod
      module procedure outerprod_d,outerprod_c
   end interface outerprod
-  public :: outerprod
-
 
   interface cross_product
-     ! module procedure cross_2d_d
-     ! module procedure cross_2d_c
      module procedure cross_3d_d
      module procedure cross_3d_c
   end interface cross_product
-  public :: cross_product
 
   interface s3_product
      module procedure s3_product_d
      module procedure s3_product_c
   end interface s3_product
-  public :: s3_product
+
 
 
   !NOT PUBLIC:
@@ -276,6 +298,8 @@ module SF_LINALG
        integer       ispec, n1, n2, n3, n4
      end function ilaenv
   end interface
+
+
 
 
 
@@ -2475,6 +2499,25 @@ contains
     end do
   end function zeye
 
+  function deye_tridiag(Nblock,N) result(eye_block)
+    integer                       :: Nblock
+    integer                       :: N
+    real(8),dimension(Nblock,N,N) :: eye_block
+    integer                       :: iblock
+    do iblock=1,Nblock
+       eye_block(iblock,:,:) = eye(N)
+    enddo
+  end function deye_tridiag
+
+  function zeye_tridiag(Nblock,N) result(eye_block)
+    integer                          :: Nblock
+    integer                          :: N
+    complex(8),dimension(Nblock,N,N) :: eye_block
+    integer                          :: iblock
+    do iblock=1,Nblock
+       eye_block(iblock,:,:) = zeye(N)
+    enddo
+  end function zeye_tridiag
 
 
   !---------------------------------------------------------------------

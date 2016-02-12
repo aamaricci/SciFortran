@@ -8,6 +8,7 @@ module IOFILE
 
   interface txtfy
      module procedure i_to_ch
+     module procedure i_to_ch_pad
      module procedure r_to_ch
      module procedure c_to_ch
      module procedure l_to_ch
@@ -33,7 +34,7 @@ module IOFILE
   interface newunit
      module procedure free_unit
   end interface newunit
-  
+
   public :: txtfy
   public :: file_size
   public :: file_length
@@ -327,6 +328,13 @@ contains
     call i4_to_s_left(i4,string)
   end function i_to_ch
 
+  function i_to_ch_pad(i4,Npad) result(string)
+    integer             :: Npad
+    character(len=Npad) :: string
+    integer             :: i4
+    call i4_to_s_zero(i4,string)
+  end function i_to_ch_pad
+
   function r_to_ch(r8) result(string)
     character(len=32) :: string
     character(len=16) :: string_
@@ -485,6 +493,84 @@ contains
        ch = '*'
     end if
   end subroutine digit_to_ch
+
+
+  subroutine i4_to_s_zero ( intval, s )
+    !! I4_TO_S_ZERO converts an I4 to a string, with zero padding.
+    !    An I4 is an integer ( kind = 4 ).
+    !  Example:
+    !    Assume that S is 6 characters long:
+    !    INTVAL  S
+    !         1  000001
+    !        -1  -00001
+    !         0  000000
+    !      1952  001952
+    !    123456  123456
+    !   1234567  ******  <-- Not enough room!
+    !  Parameters:
+    !    Input, integer ( kind = 4 ) INTVAL, an integer to be converted.
+    !    Output, character ( len = * ) S, the representation of the integer.
+    !    The integer will be right justified, and zero padded.
+    !    If there is not enough space, the string will be filled with stars.
+    implicit none
+    character c
+    integer ( kind = 4 ) i
+    integer ( kind = 4 ) idig
+    integer ( kind = 4 ) ihi
+    integer ( kind = 4 ) ilo
+    integer ( kind = 4 ) intval
+    integer ( kind = 4 ) ipos
+    integer ( kind = 4 ) ival
+    character ( len = * ) s
+    s = ' '
+    ilo = 1
+    ihi = len ( s )
+    if ( ihi <= 0 ) then
+       return
+    end if
+    !
+    !  Make a copy of the integer.
+    !
+    ival = intval
+    !
+    !  Handle the negative sign.
+    !
+    if ( ival < 0 ) then
+       if ( ihi <= 1 ) then
+          s(1:1) = '*'
+          return
+       end if
+       ival = -ival
+       s(1:1) = '-'
+       ilo = 2
+    end if
+    !
+    !  Working from right to left, strip off the digits of the integer
+    !  and place them into S(ILO:IHI).
+    !
+    ipos = ihi
+    do while ( ival /= 0 .or. ipos == ihi )
+       idig = mod ( ival, 10 )
+       ival = ival / 10
+       if ( ipos < ilo ) then
+          do i = 1, ihi
+             s(i:i) = '*'
+          end do
+          return
+       end if
+       call digit_to_ch ( idig, c )
+       s(ipos:ipos) = c
+       ipos = ipos - 1
+    end do
+    !
+    !  Fill the empties with zeroes.
+    !
+    do i = ilo, ipos
+       s(i:i) = '0'
+    end do
+    return
+  end subroutine i4_to_s_zero
+
 
 end module IOFILE
 
