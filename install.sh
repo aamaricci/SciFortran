@@ -141,6 +141,7 @@ done
 
 #>>> CHECK THAT THE MANDATORY OPTIONS ARE PRESENT:
 [[ $IDEFAULT == 0 ]] && {
+    LIST_ARGS+="--prefix=$PREFIX --plat=$PLAT"
     echo "Using default configuaration --prefix=$PREFIX, --plat=$PLAT"; sleep 0.5;echo ""
 }
 
