@@ -94,7 +94,7 @@ SRC_INSTALL=$WRK_INSTALL/src
 
 #>>> A COUPLE OF LISTS OF ALLOWED OPTIONS
 LIST_FC="gnu intel"
-LIST_OPT="parpack blas fftpack lapack minpack quadpack"
+LIST_OPT="arpack blas fftpack lapack minpack quadpack"
 
 
 #>>> GO THROUGH THE INPUT ARGUMENTS. FOR EACH ONE IF REQUIRED TAKE ACTION BY SETTING VARIABLES.
