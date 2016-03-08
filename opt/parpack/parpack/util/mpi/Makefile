@@ -42,7 +42,7 @@ ZOBJ  = pzvout.o  pzmout.o
 .SUFFIXES:      .o .F .f
 
 .f.o:
-	$(FC) $(FFLAGS) -c $<
+	$(MPIFC) $(FFLAGS) -c $<
 #
 #  make the library containing both single and double precision
 #

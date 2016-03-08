@@ -45,7 +45,7 @@ ZOBJ  = pznaitr.o pznapps.o pznaup2.o pznaupd.o pzneigh.o \
 		pzneupd.o pzngets.o pzgetv0.o pdznorm2.o pzlarnv.o
 
 .f.o:
-	$(FC) $(FFLAGS) -c $<
+	$(MPIFC) $(FFLAGS) -c $<
 
 all: single complex double complex16
 

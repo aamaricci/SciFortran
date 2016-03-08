@@ -94,7 +94,7 @@ SRC_INSTALL=$WRK_INSTALL/src
 
 #>>> A COUPLE OF LISTS OF ALLOWED OPTIONS
 LIST_FC="gnu intel"
-LIST_OPT="arpack blas fftpack lapack minpack quadpack"
+LIST_OPT="parpack blas fftpack lapack minpack quadpack"
 
 
 #>>> GO THROUGH THE INPUT ARGUMENTS. FOR EACH ONE IF REQUIRED TAKE ACTION BY SETTING VARIABLES.
@@ -141,7 +141,7 @@ done
 
 #>>> CHECK THAT THE MANDATORY OPTIONS ARE PRESENT:
 [[ $IDEFAULT == 0 ]] && {
-    LIST_ARGS+="--prefix=$PREFIX --plat=$PLAT"
+    LIST_ARGS+=" --prefix=$PREFIX --plat=$PLAT"
     echo "Using default configuaration --prefix=$PREFIX, --plat=$PLAT"; sleep 0.5;echo ""
 }
 

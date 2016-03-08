@@ -1,5 +1,5 @@
 module SF_PARSE_INPUT
-  USE PARSE_LIST_INPUT
+  USE PARSE_LIST_INPUT, get_input_variable => get_from_input_list
   implicit none
   private
 
@@ -37,7 +37,7 @@ module SF_PARSE_INPUT
   ! public  :: input_variable
   public  :: parse_cmd_variable
   public  :: parse_input_variable
-  public  :: get_cmd_variable
+  public  :: get_input_variable
   public  :: save_input_file
   public  :: get_help_input
 
@@ -106,10 +106,37 @@ contains
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   !---------------------------------------------------------------------
-  !PURPOSE: ACCESSORY ROUTINES
+  !PURPOSE: AUXILIARY ROUTINES
   !---------------------------------------------------------------------
-  function get_cmd_variable(i)  result(var)
+  function scan_comment(buffer) result(pos)
+    character(len=255),intent(in)           :: buffer
+    integer                                 :: pos
+    character(len=1),dimension(4),parameter :: comments=["!","c","#","%"]
+    integer :: i
+    pos=0
+    do i=1,4
+       pos=scan(buffer,comments(i))
+       if(pos/=0)return
+    end do
+  end function scan_comment
+
+  function scan_cmd_variable(i)  result(var)
     integer            :: i,ncount,pos
     type(input_variable) :: var
     character(len=512) :: buffer
@@ -122,9 +149,9 @@ contains
     pos      = scan(buffer,"=")
     var%name = buffer(1:pos-1);call upper_case(var%name)
     var%value= buffer(pos+1:)
-  end function get_cmd_variable
+  end function scan_cmd_variable
 
-  function get_input_variable(buffer)  result(var)
+  function scan_input_variable(buffer)  result(var)
     character(len=*)   :: buffer
     integer            :: i,pos,iloc,len
     type(input_variable) :: var
@@ -138,7 +165,7 @@ contains
     else
        var%value= buffer(pos+1:)
     endif
-  end function get_input_variable
+  end function scan_input_variable
 
   function check_cmd_vector_size(ndim,var) result(nargs)
     integer            :: ndim,ncount,j,nargs
@@ -152,9 +179,6 @@ contains
     if(iscalar)then
        print*,"warning scalar in parse_cmd array:   ",trim(var%name)
        print*,"expecting a comma separated list of: ",ndim
-       ! print*,"error in parse_cmd array:",trim(var%name)
-       ! print*,"expecting a comma separated list of: ",ndim
-       ! stop
     endif
     ncount=0
     do j=1,len(var%value)
@@ -164,34 +188,9 @@ contains
     if(nargs/=ndim)then
        print*,"wrong dimensions parsing variable:   ",trim(var%name)
        print*,"expecting a comma separated list of: ",ndim
-       ! print*,"parse_variable wrong dimensions: ",trim(var%name)
-       ! print*,"expecting a comma separated list of: ",ndim
-       ! stop
     endif
   end function check_cmd_vector_size
 
-  ! subroutine parse_cmd_help()
-  !   character(len=256)            :: cmd_line
-  !   character(len=*),dimension(:) :: buffer
-  !   integer                       :: i,lines,N
-  !   if(present(status))status=.false.
-  !   do i=1,command_argument_count()
-  !      call get_command_argument(i,cmd_line)
-  !      if(cmd_line=="--help" .OR. &
-  !           cmd_line=="-h"   .OR. &
-  !           cmd_line=="info" .OR. &
-  !           cmd_line=="--h"  .OR. &
-  !           cmd_line=="help")then
-  !         call help_input_list()
-  !      endif
-  !   enddo
-  ! end subroutine parse_cmd_help
-
-
-
-  !---------------------------------------------------------------------
-  !PURPOSE: AUXILIARY ROUTINES
-  !---------------------------------------------------------------------
   subroutine upper_case(s)
     character              ch
     integer   ( kind = 4 ) i

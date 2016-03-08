@@ -21,8 +21,8 @@ subroutine i_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            read(var%value,*)variable
            exit var_search
@@ -61,8 +61,8 @@ subroutine d_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            read(var%value,*)variable
            exit var_search
@@ -101,9 +101,8 @@ subroutine ch_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            read(var%value,*)variable
            exit var_search
@@ -142,9 +141,8 @@ subroutine l_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            read(var%value,*)variable
            exit var_search
@@ -161,8 +159,17 @@ subroutine l_parse_input(variable,name,file,default,comment)
   return
 end subroutine l_parse_input
 
-!=====================1-dimension=====================================
 
+
+
+
+
+
+
+
+
+
+!=====================1-dimension=====================================
 subroutine iv_parse_input(variable,name,file,default,comment)
   integer,dimension(:)                       :: variable
   integer,dimension(size(variable)),optional :: default
@@ -186,9 +193,8 @@ subroutine iv_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            nargs=check_cmd_vector_size(ndim,var)
            allocate(var%args(nargs))
@@ -219,7 +225,6 @@ subroutine iv_parse_input(variable,name,file,default,comment)
   return
 end subroutine iv_parse_input
 
-
 subroutine dv_parse_input(variable,name,file,default,comment)
   real(8),dimension(:)                       :: variable
   real(8),dimension(size(variable)),optional :: default
@@ -243,8 +248,8 @@ subroutine dv_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            nargs=check_cmd_vector_size(ndim,var)
            allocate(var%args(nargs))
@@ -298,8 +303,8 @@ subroutine chv_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            nargs=check_cmd_vector_size(ndim,var)
            allocate(var%args(nargs))
@@ -353,8 +358,8 @@ subroutine lv_parse_input(variable,name,file,default,comment)
      status=0
      var_search: do while(status>=0)
         read(unit,"(A255)",iostat=status)buffer
-        pos=scan(buffer,"!");if(pos/=0)buffer=buffer(1:pos-1)
-        var = get_input_variable(trim(buffer))
+        pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+        var = scan_input_variable(trim(buffer))
         if(var%name==name_)then
            nargs=check_cmd_vector_size(ndim,var)
            allocate(var%args(nargs))
@@ -385,8 +390,21 @@ subroutine lv_parse_input(variable,name,file,default,comment)
   return
 end subroutine lv_parse_input
 
-! !=====================2-dimension=====================================
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+! !=====================2-dimension=====================================
 ! subroutine im_parse_input(variable,name,file,default,comment)
 !   integer,dimension(:,:)                     :: variable
 !   integer,dimension(size(variable))          :: dummy_var
@@ -411,7 +429,7 @@ end subroutine lv_parse_input
 !      status=0
 !      var_search: do while(status>=0)
 !         read(unit,"(A255)",iostat=status)buffer
-!         var = get_input_variable(trim(buffer))
+!         var = scan_input_variable(trim(buffer))
 !         if(var%name==name_)then
 !            nargs=check_cmd_vector_size(ndim,var)
 !            allocate(var%args(nargs))
@@ -468,7 +486,7 @@ end subroutine lv_parse_input
 !      status=0
 !      var_search: do while(status>=0)
 !         read(unit,"(A255)",iostat=status)buffer
-!         var = get_input_variable(trim(buffer))
+!         var = scan_input_variable(trim(buffer))
 !         if(var%name==name_)then
 !            nargs=check_cmd_vector_size(ndim,var)
 !            allocate(var%args(nargs))

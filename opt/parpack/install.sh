@@ -40,6 +40,7 @@ nparent_dir(){
     echo $DIR
 }
 
+
 test_mpi(){
     local MPIROOT="$1"
     local TARGET="$2"
@@ -58,9 +59,11 @@ test_mpi(){
     done
 }
 
+
 ################### >>>> PREAMBLE <<<<<< ###################
 #>>> GET THE ENTIRE LIST OF ARGUMENTS PASSED TO STDIN
 LIST_ARGS=$*
+
 
 #>>> GET LONG & SHORT OPTIONS
 params="$(getopt -n "$0" --options p:o:qcwdh --longoptions plat:,prefix:,mpi,opt-lib:,quiet,clean,wdmftt,debug,help -- "$@")"
@@ -143,7 +146,8 @@ if [ $WMPI == 0 ];then
     which $FMPI >/dev/null 2>&1
     [[ $? == 0 ]] || usage
     MPIROOT=$(nparent_dir $(which $FMPI) 2)
-    test_mpi $MPIROOT $WRK_INSTALL
+    echo "MPI root dir: $MPIROOT"
+    #test_mpi $MPIROOT $WRK_INSTALL
 fi
 
 BLAS_INSTALL=$WRK_INSTALL/blas/blas_$PLAT
@@ -180,6 +184,7 @@ print_ARmake(){
     
     cat << EOF > ARmake.inc
 FC=$FC
+MPIFC=$FMPI
 FFLAGS=$FFLAGS
 PLAT=$PLAT
 OBJ_INSTALL=$OBJ_INSTALL
