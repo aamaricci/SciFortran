@@ -21,11 +21,15 @@ MODULE OPTIMIZE_ROOT_FINDING
   public :: zbrent
 
   interface fsolve
-     module procedure fsolve_ff
      module procedure fsolve_sub
   end interface fsolve
   public :: fsolve
-  
+
+  interface f_fsolve
+     module procedure fsolve_ff
+  end interface f_fsolve
+  public :: f_fsolve
+
   public :: fzero_hybrd         !this should be replaced by fsolve_sub
 
   public :: fzero_broyden

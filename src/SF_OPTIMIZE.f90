@@ -7,7 +7,7 @@ MODULE SF_OPTIMIZE
   public :: fzero_brentq
   public :: zbrent
 
-  public :: fsolve
+  public :: fsolve,f_fsolve
   public :: fzero_hybrd
 
   public :: fzero_broyden
