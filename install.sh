@@ -431,7 +431,7 @@ set	root	$PREFIX
 set	plat	$PLAT
 set	version	"$VERSION ($PLAT)"
 EOF
-cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/${LNAME}/$PLAT
+cat $ENVMOD_INSTALL/module >> $ETC_TARGET/modules/$LNAME/$PLAT
 echo "" 
 sleep 0.5
 

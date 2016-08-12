@@ -1,3 +1,4 @@
+!========================0-dimension==================================
 subroutine i_append_to_input_list(variable,name,comment)
   integer                  :: variable
   character(len=*)         :: name
@@ -126,8 +127,20 @@ subroutine ch_append_to_input_list(variable,name,comment)
   c=>null()
 end subroutine ch_append_to_input_list
 
-!========================1-dimension==================================
 
+
+
+
+
+
+
+
+
+
+
+
+
+!========================1-dimension==================================
 subroutine iv_append_to_input_list(variable,name,comment)
   integer,dimension(:)     :: variable
   character(len=*)         :: name
@@ -259,8 +272,17 @@ subroutine chv_append_to_input_list(variable,name,comment)
   c=>null()
 end subroutine chv_append_to_input_list
 
-! !========================2-dimension==================================
 
+
+
+
+
+
+
+
+
+
+! !========================2-dimension==================================
 ! subroutine im_append_to_input_list(variable,name,comment)
 !   integer,dimension(:,:)                               :: variable
 !   character(len=*)                                     :: name

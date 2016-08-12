@@ -1,5 +1,5 @@
 module SF_PARSE_INPUT
-  USE PARSE_LIST_INPUT, get_input_variable => get_from_input_list
+  USE LIST_INPUT          !, get_input_variable => get_from_input_list
   implicit none
   private
 
@@ -12,97 +12,610 @@ module SF_PARSE_INPUT
   end type input_variable
 
   interface parse_cmd_variable
-     module procedure i_parse_variable
-     module procedure d_parse_variable
-     module procedure l_parse_variable
-     module procedure ch_parse_variable
-     module procedure iv_parse_variable
-     module procedure dv_parse_variable
-     module procedure lv_parse_variable
-     module procedure chv_parse_variable
+     module procedure :: i_parse_cmd_variable
+     module procedure :: d_parse_cmd_variable
+     module procedure :: l_parse_cmd_variable
+     module procedure :: iv_parse_cmd_variable
+     module procedure :: dv_parse_cmd_variable
+     module procedure :: lv_parse_cmd_variable
+     module procedure :: ch_parse_cmd_variable
   end interface parse_cmd_variable
 
+
   interface parse_input_variable
-     module procedure i_parse_input
-     module procedure d_parse_input
-     module procedure l_parse_input
-     module procedure ch_parse_input
-     module procedure iv_parse_input
-     module procedure dv_parse_input
-     module procedure lv_parse_input
-     module procedure chv_parse_input
+     module procedure :: i_parse_input
+     module procedure :: d_parse_input
+     module procedure :: l_parse_input
+     module procedure :: iv_parse_input
+     module procedure :: dv_parse_input
+     module procedure :: lv_parse_input
+     module procedure :: ch_parse_input
   end interface parse_input_variable
 
 
-  ! public  :: input_variable
+  interface save_input
+     module procedure :: save_input_file
+  end interface save_input
+
+  interface print_input
+     module procedure :: print_input_list
+  end interface print_input
+
   public  :: parse_cmd_variable
   public  :: parse_input_variable
-  public  :: get_input_variable
+
   public  :: save_input_file
-  public  :: get_help_input
+  public  :: save_input
+  public  :: print_input
+
+  !DISABLED
+  ! public  :: get_input_variable
 
   logical :: IOinput=.true.
 
 
 contains
 
+
+
+  
   !---------------------------------------------------------------------
-  !PURPOSE: PARSE CMD LINE VARIABLES:
+  !PURPOSE: PARSE INPUT  VARIABLES from file/CMD Line
   !---------------------------------------------------------------------
-  include 'parse_cmd_variable.f90'
+  !=====================SCALAR=====================================
+  subroutine i_parse_input(variable,name,file,default,comment)
+    integer                  :: variable
+    integer,optional         :: default
+    character(len=*)         :: name
+    character(len=*),optional:: comment
+    character(len=*)         :: file
+    character(len=len(name)) :: name_
+    type(input_variable)     :: var
+    integer                  :: i,unit,pos
+    integer                  :: status
+    logical                  :: bool,idefault=.true.
+    character(len=255)       :: buffer
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine i_parse_input
+
+  subroutine d_parse_input(variable,name,file,default,comment)
+    real(8)                  :: variable
+    real(8),optional         :: default
+    character(len=*)         :: name
+    character(len=*),optional:: comment
+    character(len=*)         :: file
+    character(len=len(name)) :: name_
+    type(input_variable)       :: var
+    integer                  ::i,unit,pos
+    integer                  :: status
+    logical                  :: bool
+    character(len=255)       :: buffer
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine d_parse_input
+
+  subroutine l_parse_input(variable,name,file,default,comment)
+    logical               :: variable
+    logical,optional         :: default
+    character(len=*)         :: name
+    character(len=*),optional:: comment
+    character(len=*)         :: file
+    character(len=len(name)) :: name_
+    type(input_variable)       :: var
+    integer                  ::i,unit,pos
+    integer                  :: status
+    logical                  :: bool
+    character(len=255)       :: buffer
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine l_parse_input
+
+
+  !=====================VECTOR=====================================
+  subroutine iv_parse_input(variable,name,file,default,comment)
+    integer,dimension(:)                       :: variable
+    integer,dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=*),optional:: comment
+    character(len=*)                           :: file
+    character(len=len(name))                   :: name_
+    type(input_variable)                         :: var
+    integer                                    ::i,unit,pos,j,ndim,ncount,nargs,pos0,iarg
+    integer                                    :: status
+    logical                                    :: bool
+    character(len=255)                         :: buffer
+    If(present(default))variable=default
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine iv_parse_input
+
+  subroutine dv_parse_input(variable,name,file,default,comment)
+    real(8),dimension(:)                       :: variable
+    real(8),dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=*),optional:: comment
+    character(len=*)                           :: file
+    character(len=len(name))                   :: name_
+    type(input_variable)                        :: var
+    integer                                    ::i,unit,pos,j,ndim,ncount,nargs,pos0,iarg
+    integer                                    :: status
+    logical                                    :: bool
+    character(len=255)                         :: buffer
+    If(present(default))variable=default
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine dv_parse_input
+
+  subroutine lv_parse_input(variable,name,file,default,comment)
+    logical,dimension(:)                       :: variable
+    logical,dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=*),optional:: comment
+    character(len=*)                           :: file
+    character(len=len(name))                   :: name_
+    type(input_variable)                         :: var
+    integer                                    ::i,unit,pos,j,ndim,ncount,nargs,pos0,iarg
+    integer                                    :: status
+    logical                                    :: bool
+    character(len=255)                         :: buffer
+    If(present(default))variable=default
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             nargs=check_cmd_vector_size(ndim,var)
+             allocate(var%args(nargs))
+             iarg=0
+             pos0=0
+             do j=1,len(var%value)
+                if(var%value(j:j)==",")then
+                   iarg=iarg+1
+                   var%args(iarg)=var%value(pos0+1:j-1)
+                   pos0=j
+                endif
+             enddo
+             var%args(nargs)=var%value(pos0+1:)
+             do iarg=1,nargs
+                read(var%args(iarg),*)variable(iarg)
+             enddo
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine lv_parse_input
+
+
+  !=====================STRING=====================================
+  subroutine ch_parse_input(variable,name,file,default,comment)
+    character(len=*)                  :: variable
+    character(len=*),optional         :: default
+    character(len=*)         :: name
+    character(len=*),optional:: comment
+    character(len=*)         :: file
+    character(len=len(name)) :: name_
+    type(input_variable)       :: var
+    integer                  ::i,unit,pos
+    integer                  :: status
+    logical                  :: bool
+    character(len=255)       :: buffer
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    inquire(file=file,exist=bool)
+    if(.not.bool)IOinput=.false.
+    if(bool)then
+       unit=free_unit()
+       open(unit,file=file)
+       status=0
+       var_search: do while(status>=0)
+          read(unit,"(A255)",iostat=status)buffer
+          pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+          var = scan_input_variable(trim(buffer))
+          if(var%name==name_)then
+             read(var%value,*)variable
+             exit var_search
+          endif
+       enddo var_search
+       close(unit)
+    endif
+    call parse_cmd_variable(variable,name_)
+    if(present(comment))then
+       call append_to_input_list(variable,name_,comment)
+    else
+       call append_to_input_list(variable,name_)
+    endif
+    return
+  end subroutine ch_parse_input
+
+
+
+
+
+
 
 
 
   !---------------------------------------------------------------------
-  !PURPOSE: PARSE INPUT FILE VARIABLES
+  !PURPOSE: PARSE INPUT  VARIABLES from CMD LINE
+  ! - from file/CMD Line
   !---------------------------------------------------------------------
-  include 'parse_input_variable.f90'
+  !=====================SCALAR=====================================
+  subroutine i_parse_cmd_variable(variable,name,default)
+    integer                   :: variable
+    integer,optional          :: default
+    character(len=*)          :: name
+    character(len=len(name)) :: name_
+    type(input_variable)        :: var
+    integer                   :: i
+    If(present(default))variable=default
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          read(var%value,*)variable
+          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+       endif
+    enddo
+  end subroutine i_parse_cmd_variable
+
+  subroutine d_parse_cmd_variable(variable,name,default)
+    real(8)                   :: variable
+    real(8),optional          :: default
+    character(len=*)          :: name
+    character(len=len(name)) :: name_
+    type(input_variable)        :: var
+    integer                   :: i
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          read(var%value,*)variable
+          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+       endif
+    enddo
+  end subroutine d_parse_cmd_variable
+
+  subroutine l_parse_cmd_variable(variable,name,default)
+    logical                   :: variable
+    logical,optional          :: default
+    character(len=*)          :: name
+    character(len=len(name)) :: name_
+    type(input_variable)        :: var
+    integer                   :: i
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          read(var%value,*)variable
+          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+       endif
+    enddo
+  end subroutine l_parse_cmd_variable
+
+
+  !=====================VECTOR=====================================
+  subroutine iv_parse_cmd_variable(variable,name,default)
+    integer,dimension(:)                       :: variable
+    integer,dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=len(name))                  :: name_
+    type(input_variable)                         :: var
+    integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+    If(present(default))variable=default
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)variable(iarg)
+          enddo
+          write(0,"(A,100I6)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine iv_parse_cmd_variable
+
+  subroutine dv_parse_cmd_variable(variable,name,default)
+    real(8),dimension(:)                       :: variable
+    real(8),dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=len(name))                  :: name_
+    type(input_variable)                         :: var
+    integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+    If(present(default))variable=default
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)variable(iarg)
+          enddo
+          write(0,"(A,100F18.9)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine dv_parse_cmd_variable
+
+  subroutine lv_parse_cmd_variable(variable,name,default)
+    logical,dimension(:)                       :: variable
+    logical,dimension(size(variable)),optional :: default
+    character(len=*)                           :: name
+    character(len=len(name))                  :: name_
+    type(input_variable)                         :: var
+    integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+    If(present(default))variable=default
+    ndim=size(variable)
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          nargs=check_cmd_vector_size(ndim,var)
+          allocate(var%args(nargs))
+          iarg=0
+          pos0=0
+          do j=1,len(var%value)
+             if(var%value(j:j)==",")then
+                iarg=iarg+1
+                var%args(iarg)=var%value(pos0+1:j-1)
+                pos0=j
+             endif
+          enddo
+          var%args(nargs)=var%value(pos0+1:)
+          do iarg=1,nargs
+             read(var%args(iarg),*)variable(iarg)
+          enddo
+          write(0,"(A,100L3)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+       endif
+    enddo
+  end subroutine lv_parse_cmd_variable
+
+
+  !=====================STRING=====================================
+  subroutine ch_parse_cmd_variable(variable,name,default)
+    character(len=*)          :: variable
+    character(len=*),optional :: default
+    character(len=*)          :: name
+    character(len=len(name)) :: name_
+    type(input_variable)        :: var
+    integer                   :: i
+    if(present(default))variable=default
+    name_=name;call upper_case(name_)
+    do i=1,command_argument_count()
+       var = scan_cmd_variable(i)
+       if(var%name==name_)then
+          read(var%value,*)variable
+          write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
+       endif
+    enddo
+  end subroutine ch_parse_cmd_variable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
   !---------------------------------------------------------------------
   !PURPOSE:
   !---------------------------------------------------------------------
-  subroutine get_help_input(buffer)
-    character(len=*),dimension(:),optional :: buffer
-    character(len=256)                     :: cmd_line
-    integer                                :: i,line
-    do i=1,command_argument_count()
-       call get_command_argument(i,cmd_line)
-       if(cmd_line=="--help" .OR. &
-            cmd_line=="-h"   .OR. &
-            cmd_line=="info" .OR. &
-            cmd_line=="--h"  .OR. &
-            cmd_line=="help")then
-          if(present(buffer))then
-             do line=1,size(buffer)
-                write(*,*)buffer(i)
-             enddo
-             stop
-          else
-             write(*,*)"List of available input variables:"
-             call print_help_list()
-             write(*,*)"usage:"
-             write(*,*)"exe var1=value1 var2=value2 ... "
-             stop 
-          endif
-       endif
-    enddo
-  end subroutine get_help_input
-
-
   subroutine save_input_file(file)
     character(len=*)   :: file
-    character(len=256) :: cmd_line
-    integer            :: i
-    if(.not.IOinput)then
+    if(IOinput)then
+       call print_input_list(trim(file))
+    else
        write(*,*)"input file can not be found. dumped a default version in used."//trim(file)
        call print_input_list(trim(file))
-       stop 
-    else
-       call print_input_list(trim(file))
+       stop
     endif
   end subroutine save_input_file
+
+
+
+
+
+
+
 
 
 
@@ -268,22 +781,329 @@ contains
     enddo
   end function free_unit
 
+
+
+
+
+
+
+
+  ! subroutine chv_parse_cmd_variable(variable,name,default)
+  !   character(len=*),dimension(:)                       :: variable
+  !   character(len=*),dimension(size(variable)),optional :: default
+  !   character(len=*)                           :: name
+  !   character(len=len(name))                  :: name_
+  !   type(input_variable)                         :: var
+  !   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
+  !   If(present(default))variable=default
+  !   ndim=size(variable)
+  !   name_=name;call upper_case(name_)
+  !   do i=1,command_argument_count()
+  !      var = scan_cmd_variable(i)
+  !      if(var%name==name_)then
+  !         nargs=check_cmd_vector_size(ndim,var)
+  !         allocate(var%args(nargs))
+  !         iarg=0
+  !         pos0=0
+  !         do j=1,len(var%value)
+  !            if(var%value(j:j)==",")then
+  !               iarg=iarg+1
+  !               var%args(iarg)=var%value(pos0+1:j-1)
+  !               pos0=j
+  !            endif
+  !         enddo
+  !         var%args(nargs)=var%value(pos0+1:)
+  !         do iarg=1,nargs
+  !            read(var%args(iarg),*)variable(iarg)
+  !         enddo
+  !         write(0,"(A,100A20)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+  !      endif
+  !   enddo
+  ! end subroutine chv_parse_cmd_variable
+
+
+
+  ! !=====================2-dimension=====================================
+  ! subroutine im_parse_cmd_variable(variable,name,default)
+  !   integer,dimension(:,:)                     :: variable
+  !   integer,dimension(size(variable))          :: dummy_var
+  !   integer,dimension(size(variable)),optional :: default
+  !   character(len=*)                           :: name
+  !   character(len=len(name))                   :: name_
+  !   type(input_variable)                         :: var
+  !   integer                                    :: i,j,ndim,nargs,pos0,iarg
+  !   If(present(default))variable=transpose(reshape(default,shape(variable)))
+  !   ndim=size(variable)
+  !   name_=name;call upper_case(name_)
+  !   do i=1,command_argument_count()
+  !      var = scan_cmd_variable(i)
+  !      if(var%name==name_)then
+  !         nargs=check_cmd_vector_size(ndim,var)
+  !         allocate(var%args(nargs))
+  !         iarg=0
+  !         pos0=0
+  !         do j=1,len(var%value)
+  !            if(var%value(j:j)==",")then
+  !               iarg=iarg+1
+  !               var%args(iarg)=var%value(pos0+1:j-1)
+  !               pos0=j
+  !            endif
+  !         enddo
+  !         var%args(nargs)=var%value(pos0+1:)
+  !         do iarg=1,nargs
+  !            read(var%args(iarg),*)dummy_var(iarg)
+  !         enddo
+  !         variable=transpose(reshape(dummy_var,shape(variable)))
+  !         write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
+  !      endif
+  !   enddo
+  ! end subroutine im_parse_cmd_variable
+
+  ! subroutine dm_parse_cmd_variable(variable,name,default)
+  !   real(8),dimension(:,:)                     :: variable
+  !   real(8),dimension(size(variable))          :: dummy_var
+  !   real(8),dimension(size(variable)),optional :: default
+  !   character(len=*)                           :: name
+  !   character(len=len(name))                   :: name_
+  !   type(input_variable)                         :: var
+  !   integer                                    :: i,j,ndim,nargs,pos0,iarg
+  !   If(present(default))variable=transpose(reshape(default,shape(variable)))
+  !   ndim=size(variable)
+  !   name_=name;call upper_case(name_)
+  !   do i=1,command_argument_count()
+  !      var = scan_cmd_variable(i)
+  !      if(var%name==name_)then
+  !         nargs=check_cmd_vector_size(ndim,var)
+  !         allocate(var%args(nargs))
+  !         iarg=0
+  !         pos0=0
+  !         do j=1,len(var%value)
+  !            if(var%value(j:j)==",")then
+  !               iarg=iarg+1
+  !               var%args(iarg)=var%value(pos0+1:j-1)
+  !               pos0=j
+  !            endif
+  !         enddo
+  !         var%args(nargs)=var%value(pos0+1:)
+  !         do iarg=1,nargs
+  !            read(var%args(iarg),*)dummy_var(iarg)
+  !         enddo
+  !         variable=transpose(reshape(dummy_var,shape(variable)))
+  !         write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(dummy_var(iarg),iarg=1,ndim)
+  !      endif
+  !   enddo
+  ! end subroutine dm_parse_cmd_variable
+
+
+
+
+  ! subroutine chv_parse_input(variable,name,file,default,comment)
+  !   character(len=*),dimension(:)                       :: variable
+  !   character(len=*),dimension(size(variable)),optional :: default
+  !   character(len=*)                           :: name
+  !   character(len=*),optional:: comment
+  !   character(len=*)                           :: file
+  !   character(len=len(name))                   :: name_
+  !   type(input_variable)                         :: var
+  !   integer                                    ::i,unit,pos,j,ndim,ncount,nargs,pos0,iarg
+  !   integer                                    :: status
+  !   logical                                    :: bool
+  !   character(len=255)                         :: buffer
+  !   If(present(default))variable=default
+  !   ndim=size(variable)
+  !   name_=name;call upper_case(name_)
+  !   inquire(file=file,exist=bool)
+  !   if(.not.bool)IOinput=.false.
+  !   if(bool)then
+  !      unit=free_unit()
+  !      open(unit,file=file)
+  !      status=0
+  !      var_search: do while(status>=0)
+  !         read(unit,"(A255)",iostat=status)buffer
+  !         pos=scan_comment(buffer);if(pos/=0)buffer=buffer(1:pos-1)
+  !         var = scan_input_variable(trim(buffer))
+  !         if(var%name==name_)then
+  !            nargs=check_cmd_vector_size(ndim,var)
+  !            allocate(var%args(nargs))
+  !            iarg=0
+  !            pos0=0
+  !            do j=1,len(var%value)
+  !               if(var%value(j:j)==",")then
+  !                  iarg=iarg+1
+  !                  var%args(iarg)=var%value(pos0+1:j-1)
+  !                  pos0=j
+  !               endif
+  !            enddo
+  !            var%args(nargs)=var%value(pos0+1:)
+  !            do iarg=1,nargs
+  !               read(var%args(iarg),*)variable(iarg)
+  !            enddo
+  !            exit var_search
+  !         endif
+  !      enddo var_search
+  !      close(unit)
+  !   endif
+  !   call parse_cmd_variable(variable,name_)
+  !   if(present(comment))then
+  !      call append_to_input_list(variable,name_,comment)
+  !   else
+  !      call append_to_input_list(variable,name_)
+  !   endif
+  !   return
+  ! end subroutine chv_parse_input
+
+
+
+
+
+
+
+
+  ! !=====================2-dimension=====================================
+  ! subroutine im_parse_input(variable,name,file,default,comment)
+  !   integer,dimension(:,:)                     :: variable
+  !   integer,dimension(size(variable))          :: dummy_var
+  !   integer,dimension(size(variable)),optional :: default
+  !   character(len=*)                           :: name
+  !   character(len=*),optional:: comment
+  !   character(len=*)                           :: file
+  !   character(len=len(name))                   :: name_
+  !   type(input_variable)                         :: var
+  !   integer                                    ::i,unit,pos,j,ndim,nargs,pos0,iarg
+  !   integer                                    :: status
+  !   logical                                    :: bool
+  !   character(len=255)                         :: buffer
+  !   If(present(default))variable=transpose(reshape(default,shape(variable)))
+  !   ndim=size(variable)
+  !   name_=name;call upper_case(name_)
+  !   inquire(file=file,exist=bool)
+  !   if(.not.bool)IOinput=.false.
+  !   if(bool)then
+  !      unit=free_unit()
+  !      open(unit,file=file)
+  !      status=0
+  !      var_search: do while(status>=0)
+  !         read(unit,"(A255)",iostat=status)buffer
+  !         var = scan_input_variable(trim(buffer))
+  !         if(var%name==name_)then
+  !            nargs=check_cmd_vector_size(ndim,var)
+  !            allocate(var%args(nargs))
+  !            iarg=0
+  !            pos0=0
+  !            do j=1,len(var%value)
+  !               if(var%value(j:j)==",")then
+  !                  iarg=iarg+1
+  !                  var%args(iarg)=var%value(pos0+1:j-1)
+  !                  pos0=j
+  !               endif
+  !            enddo
+  !            var%args(nargs)=var%value(pos0+1:)
+  !            do iarg=1,nargs
+  !               read(var%args(iarg),*)dummy_var(iarg)
+  !            enddo
+  !            variable=transpose(reshape(dummy_var,shape(variable)))
+  !            exit var_search
+  !         endif
+  !      enddo var_search
+  !   endif
+  !   call parse_cmd_variable(variable,name_)
+  !   close(unit)
+  !   if(present(comment))then
+  ! call append_to_input_list(variable,name_,comment)
+  ! else
+  ! call append_to_input_list(variable,name_)
+  ! endif
+  !   return
+  ! end subroutine im_parse_input
+
+
+  ! subroutine dm_parse_input(variable,name,file,default,comment)
+  !   real(8),dimension(:,:)                     :: variable
+  !   real(8),dimension(size(variable))          :: dummy_var
+  !   real(8),dimension(size(variable)),optional :: default
+  !   character(len=*)                           :: name
+  !   character(len=*),optional:: comment
+  !   character(len=*)                           :: file
+  !   character(len=len(name))                   :: name_
+  !   type(input_variable)                         :: var
+  !   integer                                    ::i,unit,pos,j,ndim,nargs,pos0,iarg
+  !   integer                                    :: status
+  !   logical                                    :: bool
+  !   character(len=255)                         :: buffer
+  !   If(present(default))variable=transpose(reshape(default,shape(variable)))
+  !   ndim=size(variable)
+  !   name_=name;call upper_case(name_)
+  !   inquire(file=file,exist=bool)
+  !   if(.not.bool)IOinput=.false.
+  !   if(bool)then
+  !      unit=free_unit()
+  !      open(unit,file=file)
+  !      status=0
+  !      var_search: do while(status>=0)
+  !         read(unit,"(A255)",iostat=status)buffer
+  !         var = scan_input_variable(trim(buffer))
+  !         if(var%name==name_)then
+  !            nargs=check_cmd_vector_size(ndim,var)
+  !            allocate(var%args(nargs))
+  !            iarg=0
+  !            pos0=0
+  !            do j=1,len(var%value)
+  !               if(var%value(j:j)==",")then
+  !                  iarg=iarg+1
+  !                  var%args(iarg)=var%value(pos0+1:j-1)
+  !                  pos0=j
+  !               endif
+  !            enddo
+  !            var%args(nargs)=var%value(pos0+1:)
+  !            do iarg=1,nargs
+  !               read(var%args(iarg),*)dummy_var(iarg)
+  !            enddo
+  !            variable=transpose(reshape(dummy_var,shape(variable)))
+  !            exit var_search
+  !         endif
+  !      enddo var_search
+  !   endif
+  !   call parse_cmd_variable(variable,name_)
+  !   close(unit)
+  !   if(present(comment))then
+  ! call append_to_input_list(variable,name_,comment)
+  ! else
+  ! call append_to_input_list(variable,name_)
+  ! endif
+  !   return
+  ! end subroutine dm_parse_input
+
+
+  ! !---------------------------------------------------------------------
+  ! !PURPOSE:
+  ! !---------------------------------------------------------------------
+  ! subroutine get_help_input(buffer)
+  !   character(len=*),dimension(:),optional :: buffer
+  !   character(len=256)                     :: cmd_line
+  !   integer                                :: i,line
+  !   do i=1,command_argument_count()
+  !      call get_command_argument(i,cmd_line)
+  !      if(cmd_line=="--help" .OR. &
+  !           cmd_line=="-h"   .OR. &
+  !           cmd_line=="info" .OR. &
+  !           cmd_line=="--h"  .OR. &
+  !           cmd_line=="help")then
+  !         if(present(buffer))then
+  !            do line=1,size(buffer)
+  !               write(*,*)buffer(i)
+  !            enddo
+  !            stop
+  !         else
+  !            write(*,*)"List of available input variables:"
+  !            call print_help_list()
+  !            write(*,*)"usage:"
+  !            write(*,*)"exe var1=value1 var2=value2 ... "
+  !            stop 
+  !         endif
+  !      endif
+  !   enddo
+  ! end subroutine get_help_input
+
 end module SF_PARSE_INPUT
 
 
-
-! program test_parse_vars
-!   USE PARSE_INPUT
-!   integer              :: L,M(2),A(2,2)
-!   real(8)        :: x,xx(2)
-!   L=0
-!   M=0
-!   A=0
-!   x=0.d0
-!   xx=0.d0
-!   call parse_input_variable(L,"l","input.in")
-!   call parse_input_variable(M,"m","input.in",default=[2,2])
-!   call parse_input_variable(A,"A","input.in",default=[2,2,2,2])
-!   call parse_input_variable(x,"x","input.in",default=1.d0)
-!   call parse_input_variable(xx,"xx","input.in",default=[1.d0,0.d0])
-! end program test_parse_vars

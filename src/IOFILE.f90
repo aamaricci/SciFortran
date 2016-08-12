@@ -15,6 +15,15 @@ module IOFILE
      module procedure ch_to_ch
   end interface txtfy
 
+  interface str
+     module procedure i_to_ch
+     module procedure i_to_ch_pad
+     module procedure r_to_ch
+     module procedure c_to_ch
+     module procedure l_to_ch
+     module procedure ch_to_ch
+  end interface str
+
   interface reg
      module procedure reg_filename
   end interface reg
@@ -35,7 +44,7 @@ module IOFILE
      module procedure free_unit
   end interface newunit
 
-  public :: txtfy
+  public :: txtfy,str
   public :: file_size
   public :: file_length
   public :: file_info

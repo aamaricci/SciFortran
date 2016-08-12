@@ -9,7 +9,7 @@ subroutine i_parse_variable(variable,name,default)
   If(present(default))variable=default
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
         write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
@@ -27,7 +27,7 @@ subroutine d_parse_variable(variable,name,default)
   if(present(default))variable=default
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
         write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
@@ -45,7 +45,7 @@ subroutine ch_parse_variable(variable,name,default)
   if(present(default))variable=default
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
         write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
@@ -63,7 +63,7 @@ subroutine l_parse_variable(variable,name,default)
   if(present(default))variable=default
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         read(var%value,*)variable
         write(0,*)"Variable "//trim(var%name)//" updated to "//trim(var%value)
@@ -71,8 +71,16 @@ subroutine l_parse_variable(variable,name,default)
   enddo
 end subroutine l_parse_variable
 
-!=====================1-dimension=====================================
 
+
+
+
+
+
+
+
+
+!=====================1-dimension=====================================
 subroutine iv_parse_variable(variable,name,default)
   integer,dimension(:)                       :: variable
   integer,dimension(size(variable)),optional :: default
@@ -80,14 +88,12 @@ subroutine iv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
-        iscalar=(scan(var%value,",")==0)
         nargs=check_cmd_vector_size(ndim,var)
         allocate(var%args(nargs))
         iarg=0
@@ -103,7 +109,7 @@ subroutine iv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(*,"(A,100I6)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100I6)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine iv_parse_variable
@@ -115,12 +121,11 @@ subroutine dv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         nargs=check_cmd_vector_size(ndim,var)
         allocate(var%args(nargs))
@@ -137,7 +142,7 @@ subroutine dv_parse_variable(variable,name,default)
         do iarg=1,nargs
            read(var%args(iarg),*)variable(iarg)
         enddo
-        write(0,"(A,100F18.9)")" Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
+        write(0,"(A,100F18.9)")"Variable "//trim(var%name)//" updated to ",(variable(iarg),iarg=1,ndim)
      endif
   enddo
 end subroutine dv_parse_variable
@@ -149,12 +154,11 @@ subroutine chv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         nargs=check_cmd_vector_size(ndim,var)
         allocate(var%args(nargs))
@@ -183,12 +187,11 @@ subroutine lv_parse_variable(variable,name,default)
   character(len=len(name))                  :: name_
   type(input_variable)                         :: var
   integer                                    :: i,j,ndim,ncount,nargs,pos0,iarg
-  logical                                    :: iscalar
   If(present(default))variable=default
   ndim=size(variable)
   name_=name;call upper_case(name_)
   do i=1,command_argument_count()
-     var = get_cmd_variable(i)
+     var = scan_cmd_variable(i)
      if(var%name==name_)then
         nargs=check_cmd_vector_size(ndim,var)
         allocate(var%args(nargs))
@@ -210,8 +213,12 @@ subroutine lv_parse_variable(variable,name,default)
   enddo
 end subroutine lv_parse_variable
 
-! !=====================2-dimension=====================================
 
+
+
+
+
+! !=====================2-dimension=====================================
 ! subroutine im_parse_variable(variable,name,default)
 !   integer,dimension(:,:)                     :: variable
 !   integer,dimension(size(variable))          :: dummy_var
@@ -224,7 +231,7 @@ end subroutine lv_parse_variable
 !   ndim=size(variable)
 !   name_=name;call upper_case(name_)
 !   do i=1,command_argument_count()
-!      var = get_cmd_variable(i)
+!      var = scan_cmd_variable(i)
 !      if(var%name==name_)then
 !         nargs=check_cmd_vector_size(ndim,var)
 !         allocate(var%args(nargs))
@@ -259,7 +266,7 @@ end subroutine lv_parse_variable
 !   ndim=size(variable)
 !   name_=name;call upper_case(name_)
 !   do i=1,command_argument_count()
-!      var = get_cmd_variable(i)
+!      var = scan_cmd_variable(i)
 !      if(var%name==name_)then
 !         nargs=check_cmd_vector_size(ndim,var)
 !         allocate(var%args(nargs))

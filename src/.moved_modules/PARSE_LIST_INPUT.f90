@@ -22,10 +22,26 @@ module PARSE_LIST_INPUT
 
 
   interface append_to_input_list
-     module procedure &
-          i_append_to_input_list,d_append_to_input_list,ch_append_to_input_list,l_append_to_input_list,&
-          iv_append_to_input_list,dv_append_to_input_list,chv_append_to_input_list,lv_append_to_input_list
+     module procedure i_append_to_input_list
+     module procedure d_append_to_input_list
+     module procedure ch_append_to_input_list
+     module procedure l_append_to_input_list
+     module procedure iv_append_to_input_list
+     module procedure dv_append_to_input_list
+     module procedure chv_append_to_input_list
+     module procedure lv_append_to_input_list
   end interface append_to_input_list
+
+  interface get_from_input_list
+     module procedure i_get_input_variable
+     module procedure d_get_input_variable
+     module procedure l_get_input_variable
+     module procedure ch_get_input_variable
+     module procedure iv_get_input_variable
+     module procedure dv_get_input_variable
+     module procedure lv_get_input_variable
+     module procedure chv_get_input_variable
+  end interface get_from_input_list
 
 
   interface txtfy
@@ -37,14 +53,21 @@ module PARSE_LIST_INPUT
   public :: destroy_input_list
   public :: size_input_list
   public :: append_to_input_list
+  public :: get_from_input_list
   public :: print_input_list
   public :: print_help_list
 
   type(input_list)   :: default_list
   character(len=255) :: p_buffer
   character(len=7)   :: file_status
+  integer,parameter  :: pos_comment=46 !72
+
+
+
 
 contains  
+
+
 
 
 
@@ -65,6 +88,10 @@ contains
        default_list%root%next=>null()
     endif
   end subroutine init_input_list
+
+
+
+
 
   !+------------------------------------------------------------------+
   !PURPOSE: delete the list
@@ -96,6 +123,8 @@ contains
   end subroutine destroy_input_list
 
 
+
+
   !+------------------------------------------------------------------+
   !PURPOSE: get list size
   !+------------------------------------------------------------------+
@@ -108,13 +137,15 @@ contains
 
 
 
+
+
   !+------------------------------------------------------------------+
   !PURPOSE: print the list to file
   !+------------------------------------------------------------------+
   subroutine print_input_list(file,list)
     type(input_list),optional :: list
     character(len=*)          :: file
-    integer                   :: i,counter,unit
+    integer                   :: i,counter,unit,size
     type(input_node),pointer  :: c
     logical                   :: bool
     if(present(list))then
@@ -125,7 +156,9 @@ contains
     counter = 0 
     unit=free_unit()
     file_status='replace'
-    if(default_list%size>0)then
+    size=default_list%size
+    if(present(list))size=list%size
+    if(size>0)then
        do
           if(.not.associated(c))exit
           counter=counter+1
@@ -141,8 +174,13 @@ contains
 
 
 
+
+
+
+
+
   !+------------------------------------------------------------------+
-  !PURPOSE: print the list to file
+  !PURPOSE: print the list help using comments
   !+------------------------------------------------------------------+
   subroutine print_help_list(list)
     type(input_list),optional :: list
@@ -171,11 +209,21 @@ contains
 
 
 
+
   !+------------------------------------------------------------------+
   !PURPOSE: add input to the list, print to file, aux routines
   !+------------------------------------------------------------------+
+  !Append input data to the list:
   include 'parse_list_append.f90'
+
+  !Get input variable from the list:
+  include 'parse_list_get.f90'
+
+  !Print the list nodes:
   include 'parse_list_print.f90'
+
+  !Auxiliary routines:
   include 'parse_list_aux.f90'
+
 
 end module PARSE_LIST_INPUT
