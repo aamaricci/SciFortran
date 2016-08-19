@@ -1,0 +1,1 @@
+./bin/update.sh
