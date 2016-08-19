@@ -1,40 +1,4 @@
-! MODULE SF_MPI_VARS
-!   implicit none
-!   integer          :: MPIID=0
-!   integer          :: MPISIZE=1
-!   integer          :: MPIERR
-!   character(len=3) :: MPICHAR
-!   ! public :: init_mpi
-!   ! public :: finalize_mpi
-!   ! contains
-!   !   subroutine init_mpi
-!   !     call MPI_INIT(mpiERR)
-!   !     call MPI_COMM_RANK(MPI_COMM_WORLD,mpiID,mpiERR)
-!   !     call MPI_COMM_SIZE(MPI_COMM_WORLD,mpiSIZE,mpiERR)
-!   !     write(*,"(A,I4,A,I4,A)")'Processor ',mpiID,' of ',mpiSIZE,' is alive'
-!   !     call MPI_BARRIER(MPI_COMM_WORLD,mpiERR)
-!   !   end subroutine init_mpi
-!   !   subroutine finalize_mpi
-!   !     call MPI_FINALIZE(mpiERR)
-!   !   end subroutine finalize_mpi
-! END MODULE SF_MPI_VARS
-
-! MODULE SF_OMP_VARS
-!   implicit none
-!   integer :: omp_num_threads
-!   integer :: omp_id
-!   integer :: omp_size
-! END MODULE SF_OMP_VARS
-
-
-
-
-
-
-
 module SF_CONSTANTS
-  ! USE SF_MPI_VARS
-  ! USE SF_OMP_VARS
   USE SF_COLORS
   USE SF_PAULI
   implicit none
@@ -57,12 +21,6 @@ module SF_CONSTANTS
   integer,parameter,public    :: ddp=16            ! "quad"   precision
   integer,parameter,public    :: sp = kind(1.0)    ! "single" precision
 
-
-  !MPI VARIABLES:
-  integer                     :: MPIID=0
-  integer                     :: MPISIZE=1
-  integer                     :: MPIERR
-  character(len=3)            :: MPICHAR
 
 
   !PHYSICAL CONSTANTS (expressed in the SI unit)
@@ -150,7 +108,7 @@ module SF_CONSTANTS
   public :: timestamp
 
   public :: stop_error
-  
+
   interface isnan
      module procedure i_isnan
      module procedure d_isnan

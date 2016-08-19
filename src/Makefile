@@ -6,16 +6,42 @@ DIR = ./scifor_portable
 
 .SUFFIXES:.f90 .f
 
-all: version allmod libscifor.a 
+.PHONY: arpack blas fftpack lapack minpack parpack quadpack scifor
 
 
-allmod: SCIFOR_VERSION.o SF_COLORS.o SF_PAULI.o SF_FONTS.o SF_CONSTANTS.o SF_TIMER.o IOFILE.o IOPLOT.o IOREAD.o SF_IOTOOLS.o SF_FFT.o SF_MISC.o SF_ARRAYS.o SF_DERIVATE.o optimize_broyden_routines.o OPTIMIZE_ROOT_FINDING.o minimize.o cgfam.o cgsearch.o cgblas.o optimize_cgfit_routines.o OPTIMIZE_ROOT_FINDING.o OPTIMIZE_MINIMIZE.o SF_OPTIMIZE.o SF_SPECIAL.o SF_INTEGRATE.o SF_LINALG.o SF_INTERPOLATE.o SF_RANDOM.o SF_STAT.o LIST_INPUT.o SF_PARSE_INPUT.o SCIFOR.o
+serial:   version  arpack blas fftpack lapack minpack quadpack scifor lib
+parallel: version parpack blas fftpack lapack minpack quadpack scifor lib
+update: version scifor lib
+
+arpack:
+	@make -C ./arpack serial
+
+blas:
+	@make -C ./blas
+
+fftpack:
+	@make -C ./fftpack
+
+lapack:
+	@make -C ./lapack
+
+minpack:
+	@make -C ./minpack
+
+parpack:
+	@make -C ./arpack parallel
+
+quadpack:
+	@make -C ./quadpack
+
+scifor: SCIFOR_VERSION.o SF_COLORS.o SF_PAULI.o SF_FONTS.o SF_CONSTANTS.o SF_MPI.o SF_TIMER.o IOFILE.o IOPLOT.o IOREAD.o SF_IOTOOLS.o SF_FFT.o SF_MISC.o SF_ARRAYS.o SF_DERIVATE.o optimize_broyden_routines.o OPTIMIZE_ROOT_FINDING.o minimize.o cgfam.o cgsearch.o cgblas.o optimize_cgfit_routines.o OPTIMIZE_ROOT_FINDING.o OPTIMIZE_MINIMIZE.o SF_OPTIMIZE.o SF_SPECIAL.o SF_INTEGRATE.o SF_LINALG.o SF_SP_LINALG.o SF_INTERPOLATE.o SF_RANDOM.o SF_STAT.o LIST_INPUT.o SF_PARSE_INPUT.o SCIFOR.o
 
 
-libscifor.a: 
+lib:
+	@rsync -avP *.mod $(INC_TARGET)/
 	ar crv $(LIB_SCIFOR) `ls *.o | sort | uniq`
 	ranlib $(LIB_SCIFOR)
-	@echo 'LIBRARY IS DONE.........'
+	@echo 'SciFortran library is done.........'
 
 version:
 	@echo "Actual version is: $(REV)"
@@ -40,7 +66,7 @@ cmdexit:
 
 
 .f90.o:
-	$(FC) -c $(FFLAGS) -I$(INC_TARGET)/ $(MOPT)$(INC_TARGET)/ $<
+	$(FC) -c $(FCOPT) -I./ $(MOPT)./ $< -o ./$@
 
 .f.o:
-	$(FC) -c $(FFLAGS) $< 
+	$(FC) -c $(FCOPT) $< -o ./$@

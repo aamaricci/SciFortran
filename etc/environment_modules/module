@@ -5,18 +5,16 @@ proc ModulesHelp { } {
         puts stderr "\tIt includes: Blas, LApack, FFTpack, QUADpack, MINpack, ARpack\n";
 }
 
-module-whatis "Scientific Fortran (SciFor) $version (w/ Blas,LApack,FFTpack,QUADpack,MINpack,ARpack)"
+module-whatis "Scientific Fortran (SciFor) $version (w/ Blas,LApack,FFTpack,QUADpack,MINpack,(P)ARpack)"
 
 
 setenv       SFROOT  		 $root
+setenv	     FC			 $compiler
 prepend-path LD_LIBRARY_PATH    "$root/$plat/lib"
 prepend-path LIBRARY_PATH       "$root/$plat/lib"
 prepend-path CPATH		"$root/$plat/include"
 prepend-path FPATH		"$root/$plat/include"
 prepend-path PATH		"$root/$plat/bin"
-
-set-alias sf_print_sf_args {echo "tentative linking arguments (including MKL):"; echo "-lscifor -lfftpack -lminpack -lquadpack -llapack -lblas -larpack"}
-set-alias sf_print_mkl_args {echo "-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm"}
 
 puts stderr " > (un)load SciFor $version"
 #EOF
