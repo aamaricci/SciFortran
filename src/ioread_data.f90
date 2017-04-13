@@ -5,7 +5,7 @@ subroutine data_readV_I(pname,Y1)
   Np=size(Y1)  
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Np
      read(719,*)Y1(i)
   enddo
@@ -20,7 +20,7 @@ subroutine data_readV_R(pname,Y1)
   Np=size(Y1)
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Np
      read(719,*)Y1(i)
   enddo
@@ -36,7 +36,7 @@ subroutine data_readV_C(pname,Y1)
   Np=size(Y1)  
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Np
      read(719,*)imY1,reY1
      Y1(i)=cmplx(reY1,imY1,8)
@@ -57,7 +57,7 @@ subroutine data_readM_I(pname,Y1,X)
   Ny1=size(Y1,1) ; Ny2=size(Y1,2)
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Ny1
      do j=1,Ny2
         if(present(X))then
@@ -79,7 +79,7 @@ subroutine data_readM_R(pname,Y1,X)
   Ny1=size(Y1,1) ; Ny2=size(Y1,2)
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Ny1
      do j=1,Ny2
         if(present(X))then
@@ -102,7 +102,7 @@ subroutine data_readM_C(pname,Y1,X)
   Ny1=size(Y1,1) ; Ny2=size(Y1,2)
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Ny1
      do j=1,Ny2
         if(present(X))then
@@ -130,7 +130,7 @@ subroutine data_readA3_I(pname,Y1,X)
   Ny1=size(Y1,1) ; Ny2=size(Y1,2) ; Ny3=size(Y1,3) 
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Ny1
      do j=1,Ny2
         do k=1,Ny3
@@ -154,7 +154,7 @@ subroutine data_readA3_R(pname,Y1,X)
   Ny1=size(Y1,1) ; Ny2=size(Y1,2) ; Ny3=size(Y1,3) 
   call data_open(trim(pname))
   include "ioread_control.f90"
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Ny1
      do j=1,Ny2
         do k=1,Ny3
@@ -180,7 +180,7 @@ subroutine data_readA3_C(pname,Y1,X)
   call data_open(trim(pname))
   include "ioread_control.f90"
 
-  open(719,file=reg_filename(pname))
+  open(719,file=str(pname))
   do i=1,Ny1
      do j=1,Ny2
         do k=1,Ny3

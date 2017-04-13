@@ -6,35 +6,25 @@ module IOFILE
   !file size to be stored automagically (in Kb)
   integer,save :: store_size=2048
 
-  interface txtfy
-     module procedure i_to_ch
-     module procedure i_to_ch_pad
-     module procedure r_to_ch
-     module procedure c_to_ch
-     module procedure l_to_ch
-     module procedure ch_to_ch
-  end interface txtfy
-
   interface str
-     module procedure i_to_ch
-     module procedure i_to_ch_pad
-     module procedure r_to_ch
-     module procedure c_to_ch
-     module procedure l_to_ch
-     module procedure ch_to_ch
+     module procedure str_i_to_ch
+     module procedure str_r_to_ch
+     module procedure str_c_to_ch
+     module procedure str_l_to_ch
+     module procedure str_ch_to_ch
   end interface str
+
+  interface txtfy
+     module procedure str_i_to_ch
+     module procedure str_r_to_ch
+     module procedure str_c_to_ch
+     module procedure str_l_to_ch
+     module procedure str_ch_to_ch
+  end interface txtfy
 
   interface reg
      module procedure reg_filename
   end interface reg
-
-  interface txtfit
-     module procedure reg_filename
-  end interface txtfit
-
-  interface txtcut
-     module procedure reg_filename
-  end interface txtcut
 
   interface create_dir
      module procedure create_data_dir
@@ -44,18 +34,24 @@ module IOFILE
      module procedure free_unit
   end interface newunit
 
-  public :: txtfy,str
+  public :: str
+  public :: txtfy !obsolete
+  public :: reg
+  !
   public :: file_size
   public :: file_length
   public :: file_info
   public :: free_unit,newunit
   public :: free_units
+  !
   public :: set_store_size
   public :: data_open
   public :: data_store
-  public :: reg_filename,reg,txtfit,txtcut
-  public :: create_data_dir,create_dir
   public :: close_file
+  !
+  !
+  public :: create_dir
+  !
   public :: get_filename
   public :: get_filepath
 
@@ -93,12 +89,6 @@ contains
     pname=string(1:i)
   end function get_filepath
 
-  subroutine close_file(pname)
-    character(len=*) :: pname
-    open(10,file=reg(pname),position="APPEND")
-    write(10,*)""
-    close(10)
-  end subroutine close_file
 
   function free_unit(n) result(unit_)
     integer,optional :: n
@@ -248,8 +238,30 @@ contains
 
 
 
+  
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : 
+  !+-----------------------------------------------------------------+
+  subroutine close_file(pname)
+    character(len=*) :: pname
+    open(10,file=reg(pname),position="APPEND")
+    write(10,*)""
+    close(10)
+  end subroutine close_file
 
 
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : 
+  !+-----------------------------------------------------------------+
+  subroutine set_store_size(size)
+    integer :: size
+    store_size=size
+    write(*,"(A)")"store size ="//trim(txtfy(size))//"Kb"
+  end subroutine set_store_size
+
+  
 
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
@@ -269,20 +281,7 @@ contains
     endif
   end subroutine data_store
 
-
-
-  !+-----------------------------------------------------------------+
-  !PURPOSE  : 
-  !+-----------------------------------------------------------------+
-  subroutine set_store_size(size)
-    integer :: size
-    store_size=size
-    write(*,"(A)")"store size ="//trim(txtfy(size))//"Kb"
-  end subroutine set_store_size
-
-
-
-
+  
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -301,11 +300,12 @@ contains
        if(present(tar))tar =compressed
        if(.not.compressed)return
     endif
-
     write(*,*) "deflate "//reg(filename)//reg(type)
     call system("gunzip "//reg(filename)//(type))
     return
   end subroutine data_open
+
+
 
 
   !******************************************************************
@@ -330,50 +330,93 @@ contains
   !******************************************************************
 
 
-  function i_to_ch(i4) result(string)
-    character(len=32) :: string
-    integer           :: i4
-    call i4_to_s_left(i4,string)
-  end function i_to_ch
 
-  function i_to_ch_pad(i4,Npad) result(string)
-    integer             :: Npad
-    character(len=Npad) :: string
-    integer             :: i4
-    call i4_to_s_zero(i4,string)
-  end function i_to_ch_pad
+  ! function i_to_ch(i4) result(string)
+  !   character(len=32) :: string
+  !   integer           :: i4
+  !   call i4_to_s_left(i4,string)
+  ! end function i_to_ch
+  ! function i_to_ch_pad(i4,Npad) result(string)
+  !   integer             :: Npad
+  !   character(len=Npad) :: string
+  !   integer             :: i4
+  !   call i4_to_s_zero(i4,string)
+  ! end function i_to_ch_pad
+  ! function r_to_ch(r8) result(string)
+  !   character(len=32) :: string
+  !   character(len=16) :: string_
+  !   real(8)           :: r8
+  !   call r8_to_s_left(r8,string_)
+  !   string=adjustl(string_)
+  ! end function r_to_ch
+  ! function c_to_ch(c) result(string)
+  !   character(len=32+3) :: string
+  !   character(len=16) :: sre,sim
+  !   complex(8)        :: c
+  !   real(8)           :: re,im
+  !   re=real(c,8);im=aimag(c)
+  !   call r8_to_s_left(re,sre)
+  !   call r8_to_s_left(im,sim)
+  !   string="("//trim(sre)//","//trim(sim)//")"
+  ! end function c_to_ch
+  ! function l_to_ch(bool) result(string)
+  !   logical :: bool
+  !   character(len=1) :: string
+  !   string='F'
+  !   if(bool)string='T'
+  ! end function l_to_ch
+  ! function ch_to_ch(txt) result(string)
+  !   character(len=*)              :: txt
+  !   character(len=len(trim(txt))) :: string
+  !   string=trim(txt)
+  ! end function ch_to_ch
 
-  function r_to_ch(r8) result(string)
-    character(len=32) :: string
-    character(len=16) :: string_
-    real(8)           :: r8
+
+
+  function str_i_to_ch(i4,Npad) result(string)
+    integer                      :: i4
+    integer,optional             :: Npad
+    character(len=:),allocatable :: string
+    character(len=32)            :: string_
+    character(len=:),allocatable :: string_pad
+    if(.not.present(Npad))then
+       call i4_to_s_left(i4,string_)
+       string=trim(adjustl(trim(string_)))
+    else
+       allocate(character(len=Npad) :: string_pad)
+       call i4_to_s_zero(i4,string_pad)
+       string=trim(adjustl(trim(string_pad)))
+    endif
+  end function str_i_to_ch
+
+  function str_r_to_ch(r8) result(string)
+    real(8)                      :: r8
+    character(len=:),allocatable :: string
+    character(len=32)            :: string_
     call r8_to_s_left(r8,string_)
-    string=adjustl(string_)
-  end function r_to_ch
-
-  function c_to_ch(c) result(string)
-    character(len=32+3) :: string
-    character(len=16) :: sre,sim
-    complex(8)        :: c
-    real(8)           :: re,im
-    re=real(c,8);im=aimag(c)
+    string=trim(adjustl(trim(string_)))
+  end function str_r_to_ch
+  function str_c_to_ch(c) result(string)
+    complex(8)                   :: c
+    character(len=:),allocatable :: string
+    character(len=32)            :: sre,sim
+    real(8)                      :: re,im
+    re=dreal(c);im=dimag(c)
     call r8_to_s_left(re,sre)
     call r8_to_s_left(im,sim)
-    string="("//trim(sre)//","//trim(sim)//")"
-  end function c_to_ch
-
-  function l_to_ch(bool) result(string)
-    logical :: bool
+    string="("//trim(adjustl(trim(sre)))//","//trim(adjustl(trim(sim)))//")"
+  end function str_c_to_ch
+  function str_l_to_ch(bool) result(string)
+    logical          :: bool
     character(len=1) :: string
     string='F'
     if(bool)string='T'
-  end function l_to_ch
-
-  function ch_to_ch(txt) result(string)
-    character(len=*)              :: txt
-    character(len=len(trim(txt))) :: string
-    string=trim(txt)
-  end function ch_to_ch
+  end function str_l_to_ch
+  function str_ch_to_ch(txt) result(string)
+    character(len=*)                             :: txt
+    character(len=len(trim(adjustl(trim(txt))))) :: string
+    string=trim(adjustl(trim(txt)))
+  end function str_ch_to_ch
 
 
 
