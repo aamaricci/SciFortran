@@ -209,7 +209,7 @@ subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
   allocate(v(ldv,ncv))
   allocate(workd(3*n))
   allocate(workev(3*ncv))
-  allocate(workl(lworkl))
+  allocate(workl(ncv*(3*ncv+5) + 10))
   allocate(rwork(ncv))
   allocate(rd(ncv,3))
   allocate(select(ncv))

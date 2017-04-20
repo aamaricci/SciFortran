@@ -33,7 +33,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                      :: ipntr(11)
   !Control Vars:
   integer                      :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                      :: rvec,verb
+  logical                      :: verb
   integer                      :: i
   real(8)                      :: sigma
   real(8)                      :: tol_
@@ -234,11 +234,9 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   mpi_size  = Get_size_MPI(MpiComm)
   mpi_rank  = Get_rank_MPI(MpiComm)
   mpi_master= Get_master_MPI(MpiComm)
-  !
   mpiQ = Ns/mpi_size
   mpiR = 0
   if(mpi_rank == mpi_size-1)mpiR=mod(Ns,mpi_size)
-
   !
   maxn   = Ns
   maxnev = Neigen
@@ -248,23 +246,21 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   n      = maxn
   nev    = maxnev
   ncv    = maxncv
-  !
-  nloc   = mpiQ + mpiR
-  ldv    = maxn
-  !
   bmat   = 'I'
   maxitr = Nitermax
   !
-  if(nloc < ncv)stop "LANCZOS_PARPACK_C error: Nloc < maxNblock. Unstable! Find a way to increase Nloc... (less cpu?)"
+  ! Setup distribution of data to nodes:
+  ldv = mpiQ+mpiR             !ldv is the SMALL dimension
+  if(ldv < ncv)stop "LANCZOS_PARPACK_C error: ldv < maxNblock. Unstable! Find a way to increase ldv... (less cpu?)"
   !
   !
-  allocate(ax(nloc))
+  allocate(ax(ldv))
   allocate(d(ncv))
-  allocate(resid(nloc))
+  allocate(resid(ldv))
   allocate(v(ldv,ncv))
-  allocate(workd(3*nloc))
+  allocate(workd(3*ldv))
   allocate(workev(3*ncv))
-  allocate(workl(ncv*(3*ncv+5) ))
+  allocate(workl(ncv*(3*ncv+5) + 10))
   allocate(rwork(ncv))
   allocate(rd(ncv,3))
   allocate(select(ncv))
@@ -278,8 +274,8 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   workev = zero
   rwork  = zero
   rd     = zero
-  lworkl = ncv*(3*ncv+5)! + 10
-  info   = 0
+  lworkl = ncv*(3*ncv+5) + 10
+  info   = 1
   ido    = 0
   ishfts    = 1
   mode1     = 1
@@ -287,8 +283,6 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   iparam(3) = maxitr
   iparam(7) = mode1
   !
-  ! Setup distribution of data to nodes:
-  ldv = mpiQ+mpiR             !ldv is the SMALL dimension
   !
   allocate(vec(n))
   if(present(v0))then
@@ -314,9 +308,8 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   !
   !  MAIN LOOP (Reverse communication loop)
   do
-     call pznaupd(MpiComm,ido,bmat,nloc,which_,  &
-          nev,tol_,resid,ncv,v,ldv,iparam,ipntr, &
-          workd,workl,lworkl,rwork,info)
+     call pznaupd(MpiComm,ido,bmat,ldv,which_,nev,tol_,resid,&
+          ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,info)
      !
      if(ido/=-1.AND.ido/=1)exit
      !  Perform matrix vector multiplication:
@@ -329,10 +322,8 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      !
   else
      !
-     call pzneupd(MpiComm,.true.,'A',select,d,v,ldv,sigma, &
-          workev,bmat,nloc,which_,nev,tol_,resid,ncv,       &
-          v,ldv,iparam,ipntr,workd,workl,lworkl,           &
-          rwork,ierr)
+     call pzneupd (MpiComm,.true.,'All',select,d,v,ldv,sigma,workev,bmat,&
+          mpiQ+mpiR,which_,nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,ierr)
      !
      do j=1,neigen
         eval(j)=dreal(d(j))
