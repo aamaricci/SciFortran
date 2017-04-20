@@ -6,7 +6,7 @@ DIR = ./scifor_portable
 
 .SUFFIXES:.f90 .f
 
-.PHONY: arpack blas fftpack lapack minpack parpack quadpack scifor
+.PHONY: arpack blas fftpack lapack minpack parpack quadpack sf_init sf_mpi sf_iotools sf_fft  sf_derivate sf_optimize sf_special sf_integrate sf_interpolate sf_random sf_linalg sf_sp_linalg  sf_parse_input scifor 
 
 
 serial:   version  arpack blas fftpack lapack minpack quadpack scifor lib
@@ -34,7 +34,46 @@ parpack:
 quadpack:
 	@make -C ./quadpack
 
-scifor: SCIFOR_VERSION.o SF_COLORS.o SF_PAULI.o SF_FONTS.o SF_CONSTANTS.o SF_MPI.o SF_TIMER.o IOFILE.o IOPLOT.o IOREAD.o SF_IOTOOLS.o SF_FFT.o SF_MISC.o SF_ARRAYS.o SF_DERIVATE.o optimize_broyden_routines.o OPTIMIZE_ROOT_FINDING.o minimize.o cgfam.o cgsearch.o cgblas.o optimize_cgfit_routines.o OPTIMIZE_ROOT_FINDING.o OPTIMIZE_MINIMIZE.o SF_OPTIMIZE.o SF_SPECIAL.o SF_INTEGRATE.o SF_LINALG.o SF_SP_LINALG.o SF_INTERPOLATE.o SF_RANDOM.o SF_STAT.o LIST_INPUT.o SF_PARSE_INPUT.o SCIFOR.o
+sf_init:
+	@make -C ./SF_INIT
+
+sf_mpi:
+	@make -C ./SF_MPI
+
+sf_iotools:
+	@make -C ./SF_IOTOOLS
+
+sf_derivate:
+	@make -C ./SF_DERIVATE
+
+sf_linalg:
+	@make -C ./SF_LINALG
+
+sf_sp_linalg:
+	@make -C ./SF_SP_LINALG
+
+sf_optimize:
+	@make -C ./SF_OPTIMIZE
+
+sf_integrate:
+	@make -C ./SF_INTEGRATE
+
+sf_interpolate:
+	@make -C ./SF_INTERPOLATE
+
+sf_special:
+	@make -C ./SF_SPECIAL
+
+sf_fft:
+	@make -C ./SF_FFT
+
+sf_random:
+	@make -C ./SF_RANDOM
+
+sf_parse_input:
+	@make -C ./SF_PARSE_INPUT
+
+scifor: SCIFOR_VERSION.o sf_init sf_mpi sf_iotools sf_fft  sf_derivate sf_optimize sf_special sf_integrate sf_interpolate sf_random sf_linalg sf_sp_linalg  sf_parse_input SCIFOR.o
 
 
 lib:

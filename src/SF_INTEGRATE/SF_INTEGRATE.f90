@@ -111,10 +111,10 @@ contains
   !PURPOSE:
   ! evaluate 1D and 2D integrals using trapz (2nd order) and simps (4th order) rule.
   !+-----------------------------------------------------------------------------+!
-  include "integrate_func_1d.f90"
-  include "integrate_sample_1d.f90"
-  include "integrate_func_2d.f90"
-  include "integrate_sample_2d.f90"
+  include "SF_INTEGRATE/integrate_func_1d.f90"
+  include "SF_INTEGRATE/integrate_sample_1d.f90"
+  include "SF_INTEGRATE/integrate_func_2d.f90"
+  include "SF_INTEGRATE/integrate_sample_2d.f90"
 
 
 

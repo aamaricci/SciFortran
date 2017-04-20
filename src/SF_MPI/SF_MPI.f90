@@ -8,7 +8,7 @@ MODULE SF_MPI
 
 
 #ifdef _MPI
-  interface Bcast_mpi
+  interface Bcast_MPI
      module procedure :: MPI_Bcast_Bool_0
      module procedure :: MPI_Bcast_Bool_1
      module procedure :: MPI_Bcast_Bool_2
@@ -146,7 +146,6 @@ MODULE SF_MPI
   public :: Bcast_MPI
   public :: AllGather_MPI
   public :: AllReduce_MPI
-
 
 
   integer :: ierr

@@ -318,7 +318,7 @@ contains
     call wofz(x,y,u,v,flag)
     wfun=cmplx(u,v)
   contains
-    include "functions_wofz.f90"
+    include "SF_SPECIAL/functions_wofz.f90"
   end function wfun
 
 
@@ -327,13 +327,13 @@ contains
   !*******************************************************************
 
   !Double precision complex argument Error function
-  include "functions_zerf.f90"
+  include "SF_SPECIAL/functions_zerf.f90"
 
 
   !###################################################################
   ! BETHE:
   !###################################################################
-  include "functions_bethe.f90"
+  include "SF_SPECIAL/functions_bethe.f90"
 
 
 
@@ -370,7 +370,7 @@ contains
   end function dens_2dsquare
 
 
-  include "special_functions.f90"
+  include "SF_SPECIAL/special_functions.f90"
 
 
 END MODULE SF_SPECIAL
