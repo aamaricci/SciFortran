@@ -2,7 +2,8 @@
 proc ModulesHelp { } {
         puts stderr "\tThis module provides access to Scientific Fortran (SciFor) library\n";
 	puts stderr "\tVersion $version\n"
-        puts stderr "\tIt includes: Blas, LApack, FFTpack, QUADpack, MINpack, ARpack\n";
+	puts stderr "\t compiled with $compiler\n"	
+        puts stderr "\tIt includes: Blas, LApack, FFTpack, QUADpack, MINpack, p-ARpack\n";
 }
 
 module-whatis "Scientific Fortran (SciFor) $version (w/ Blas,LApack,FFTpack,QUADpack,MINpack,(P)ARpack)"
@@ -10,11 +11,11 @@ module-whatis "Scientific Fortran (SciFor) $version (w/ Blas,LApack,FFTpack,QUAD
 
 setenv       SFROOT  		 $root
 setenv	     FC			 $compiler
-prepend-path LD_LIBRARY_PATH    "$root/$plat/lib"
-prepend-path LIBRARY_PATH       "$root/$plat/lib"
-prepend-path CPATH		"$root/$plat/include"
-prepend-path FPATH		"$root/$plat/include"
-prepend-path PATH		"$root/$plat/bin"
+prepend-path LD_LIBRARY_PATH    "$root/lib"
+prepend-path LIBRARY_PATH       "$root/lib"
+prepend-path CPATH		"$root/include"
+prepend-path FPATH		"$root/include"
+prepend-path PATH		"$root/bin"
 
 puts stderr " > (un)load SciFor $version"
 #EOF
