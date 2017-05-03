@@ -175,11 +175,11 @@ contains
 
   !  DOUBLE PRECISION
   !------------------------
-  include 'SF_DERIVATE/derivate_fjacobian_d.f90'
+  include 'derivate_fjacobian_d.f90'
 
   !  DOUBLE COMPLEX
   !------------------------
-  include 'SF_DERIVATE/derivate_fjacobian_c.f90'
+  include 'derivate_fjacobian_c.f90'
 
 
 
