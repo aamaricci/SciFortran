@@ -23,7 +23,7 @@ IF(USE_MPI)
   FIND_PACKAGE(MPI REQUIRED)
   SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
   SET(MPI_CPP "MPI")
-  MESSAGE("-+ Set Fortran compiler FC to ${CMAKE_Fortran_COMPILER}")
+  MESSAGE(STATUS "Set Fortran compiler FC to ${CMAKE_Fortran_COMPILER}")
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -35,7 +35,8 @@ ELSE(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(VERBOSE)
 
-# This executes code that sets the compile flags for DEBUG, RELEASE, and TESTING.  
+# This executes code that sets the compile flags for DEBUG, RELEASE, and TESTING.
+INCLUDE(${CMAKE_MODULE_PATH}/ColorsMsg.cmake)
 INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
 
 
@@ -50,14 +51,14 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
       OUTPUT_VARIABLE GIT_SHA1
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
-    MESSAGE( STATUS "Git version: ${GIT_SHA1}" )
+    MESSAGE( STATUS "${Magenta}Git version: ${GIT_SHA1}${ColourReset}" )
   ELSE(GIT_FOUND)
     SET(GIT_SHA1 0)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
-SET(SF_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/scifor_version.inc)
+SET(SF_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/${PROJECT_NAME}_version.inc)
 FILE(WRITE  ${SF_VERSION_FILE}
-  "character(len=41),parameter,public :: version_scifor = \"${GIT_SHA1}\"\n")
+  "character(len=41),parameter,public :: ${PROJECT_NAME}_version_sha1 = \"${GIT_SHA1}\"\n")
 
 
 #set MPI preprocessing defition:
@@ -73,6 +74,8 @@ ENDIF(USE_MPI)
 # Define the actual files and folders that make up the build
 ############################################################
 SET(USER_HOME $ENV{HOME})
+SET(USER $ENV{USER})
+
 
 #make sure FC_PLAT is lowecase
 STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
@@ -225,23 +228,67 @@ ADD_CUSTOM_TARGET(distclean
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/distclean.cmake
 )
 
+
+
+
+SET(PERMISSION_777
+  OWNER_WRITE OWNER_READ OWNER_EXECUTE
+  GROUP_WRITE GROUP_READ GROUP_EXECUTE
+  WORLD_WRITE WORLD_READ WORLD_EXECUTE)
+
+SET(PERMISSION_733
+  OWNER_WRITE OWNER_READ OWNER_EXECUTE
+  GROUP_READ GROUP_EXECUTE
+  WORLD_READ WORLD_EXECUTE)
+
+
+
 INCLUDE(${CMAKE_MODULE_PATH}/PostBuildScifor.cmake)
 
-SET(SF_TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${FC_PLAT})
-BUILD_SF_ENV_MODULE(${SF_TMP_ENV_MODULE_FILE})
-SET(SF_TMP_CONFIGVARS_FILE ${SF_TMP_BIN}/configvars.sh)
-BUILD_SF_CONFIGVARS(${SF_TMP_CONFIGVARS_FILE})
+SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${FC_PLAT})
+BUILD_ENV_MODULE(${TMP_ENV_MODULE_FILE})
+
+SET(TMP_CONFIGVARS_FILE ${SF_TMP_BIN}/configvars.sh)
+BUILD_CONFIGVARS(${TMP_CONFIGVARS_FILE})
+
+SET(TMP_PKCONFIG_FILE ${SF_TMP_ETC}/${PROJECT_NAME}.pc)
+BUILD_PKCONFIG(${TMP_PKCONFIG_FILE})
 
 INSTALL(DIRECTORY ${CMAKE_Fortran_MODULE_DIRECTORY}/ DESTINATION ${SF_TARGET_INC})
+
 INSTALL(TARGETS scifor DESTINATION ${SF_TARGET_LIB})
+
 INSTALL(DIRECTORY ${SF_TMP_ETC}/ DESTINATION ${SF_TARGET_ETC})
+
 INSTALL(FILES ${SF_BIN}/scifor_completion.sh DESTINATION ${SF_TARGET_BIN}/
-  PERMISSIONS
-  OWNER_WRITE OWNER_READ OWNER_EXECUTE
-  GROUP_READ GROUP_WRITE GROUP_EXECUTE
-  WORLD_READ WORLD_WRITE WORLD_EXECUTE)
-INSTALL(FILES ${SF_TMP_CONFIGVARS_FILE} DESTINATION ${SF_TARGET_BIN}/
-  PERMISSIONS
-  OWNER_WRITE OWNER_READ OWNER_EXECUTE
-  GROUP_READ GROUP_WRITE GROUP_EXECUTE
-  WORLD_READ WORLD_WRITE WORLD_EXECUTE)
+  PERMISSIONS ${PERMISSION_777} SETUID)
+
+INSTALL(FILES ${TMP_CONFIGVARS_FILE} DESTINATION ${SF_TARGET_BIN}/
+  PERMISSIONS ${PERMISSION_777} SETUID)
+
+
+# INSTALL(DIRECTORY  ${SF_TMP_ETC}/modules/ DESTINATION $ENV{HOME}/.modules.d/libraries
+#   USE_SOURCE_PERMISSIONS
+#   FILE_PERMISSIONS ${PERMISSION_777} SETUID)
+
+# INSTALL(FILES  ${TMP_PKCONFIG_FILE} DESTINATION $ENV{HOME}/.pkgconfig.d/)
+
+MESSAGE( STATUS "After installation usage options:")
+MESSAGE( STATUS
+  "Pick one choice (put it in your bash profile file to make it permanent):
+${Magenta}A. source the file: ${SF_TARGET_BIN}/configvars.sh ${ColourReset}
+i.e.
+$ source ${SF_TARGET_BIN}/configvars.sh
+
+${Magenta}B. use the provided ${PROJECT_NAME} environment module in ${SF_TARGET_ETC}:${ColourReset}
+i.e.
+$ mkdir -p $HOME/.modules.d
+$ module use $HOME/.modules.d
+$ cp -r ${SF_TARGET_ETC}/modules $HOME/.modules.d
+$ module load ${PROJECT_NAME}/${FC_PLAT}
+
+${Magenta}C. use pkg-config with the provided ${PROJECT_NAME}.pc in ${SF_TARGET_ETC}: ${ColourReset}
+i.e.
+$ export PKG_CONFIG_PATH=${SF_TARGET_ETC}/:$PKG_CONFIG_PATH
+$ pkg-config --cflags --libs ${PROJECT_NAME} (to get lib info)
+")
