@@ -5,7 +5,7 @@ file(GLOB SF_OPTIMIZE_LOCAL_SRC
   minimize.f
   cgfam.f
   cgsearch.f
-  cgblas.f
+  # cgblas.f
   optimize_cgfit_routines.f90
   OPTIMIZE_ROOT_FINDING.f90
   OPTIMIZE_MINIMIZE.f90

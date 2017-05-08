@@ -379,11 +379,13 @@ contains
     character(len=:),allocatable :: string
     character(len=32)            :: string_
     character(len=:),allocatable :: string_pad
+    integer                      :: Npad_
+    Npad=1;if(present(Npad))Npad_=Npad
     if(.not.present(Npad))then
        call i4_to_s_left(i4,string_)
        string=trim(adjustl(trim(string_)))
     else
-       allocate(character(len=Npad) :: string_pad)
+       allocate(character(len=Npad_) :: string_pad)
        call i4_to_s_zero(i4,string_pad)
        string=trim(adjustl(trim(string_pad)))
     endif

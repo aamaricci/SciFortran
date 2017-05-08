@@ -40,5 +40,10 @@ add_library_to_system(){
 	else
 	    export PATH=$LIB/bin:$PATH
 	fi
+	if [ -z "${PKG_CONFIG_PATH}" ];then
+	    export PKG_CONFIG_PATH=$HOME/.pkgconfig
+	else
+	    export PKG_CONFIG_PATH=$HOME/.pkgconfig:$PKG_CONFIG_PATH
+	fi
     fi
 }
