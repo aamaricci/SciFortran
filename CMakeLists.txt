@@ -3,7 +3,7 @@
 ##################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
 PROJECT(scifor Fortran)
-SET(VERSION 4.1.1)
+SET(VERSION 4.1.2)
 
 SET(BUILD_TYPE "RELEASE" CACHE STRING "Build type")
 MESSAGE(STATUS "BUILD_TYPE=${BUILD_TYPE}")

@@ -8,6 +8,7 @@ module IOFILE
 
   interface str
      module procedure str_i_to_ch
+     module procedure str_i_to_ch_pad
      module procedure str_r_to_ch
      module procedure str_c_to_ch
      module procedure str_l_to_ch
@@ -16,6 +17,7 @@ module IOFILE
 
   interface txtfy
      module procedure str_i_to_ch
+     module procedure str_i_to_ch_pad
      module procedure str_r_to_ch
      module procedure str_c_to_ch
      module procedure str_l_to_ch
@@ -238,7 +240,7 @@ contains
 
 
 
-  
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -261,7 +263,7 @@ contains
     write(*,"(A)")"store size ="//trim(txtfy(size))//"Kb"
   end subroutine set_store_size
 
-  
+
 
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
@@ -281,7 +283,7 @@ contains
     endif
   end subroutine data_store
 
-  
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -373,52 +375,56 @@ contains
 
 
 
-  function str_i_to_ch(i4,Npad) result(string)
+  function str_i_to_ch(i4) result(string)
     integer                      :: i4
-    integer,optional             :: Npad
     character(len=:),allocatable :: string
-    character(len=32)            :: string_
-    character(len=:),allocatable :: string_pad
-    integer                      :: Npad_
-    Npad=1;if(present(Npad))Npad_=Npad
-    if(.not.present(Npad))then
-       call i4_to_s_left(i4,string_)
-       string=trim(adjustl(trim(string_)))
-    else
-       allocate(character(len=Npad_) :: string_pad)
-       call i4_to_s_zero(i4,string_pad)
-       string=trim(adjustl(trim(string_pad)))
-    endif
+    character(len=16)            :: string_
+    call i4_to_s_left(i4,string_)
+    string=trim(adjustl(trim(string_)))
   end function str_i_to_ch
+
+  function str_i_to_ch_pad(i4,Npad) result(string)
+    integer                      :: i4
+    integer                      :: Npad
+    character(len=:),allocatable :: string
+    character(len=Npad)          :: string_pad
+    call i4_to_s_zero(i4,string_pad)
+    string=trim(adjustl(trim(string_pad)))
+  end function str_i_to_ch_pad
 
   function str_r_to_ch(r8) result(string)
     real(8)                      :: r8
     character(len=:),allocatable :: string
-    character(len=32)            :: string_
+    character(len=16)            :: string_
     call r8_to_s_left(r8,string_)
     string=trim(adjustl(trim(string_)))
   end function str_r_to_ch
+
   function str_c_to_ch(c) result(string)
     complex(8)                   :: c
     character(len=:),allocatable :: string
-    character(len=32)            :: sre,sim
+    character(len=16)            :: sre,sim
     real(8)                      :: re,im
     re=dreal(c);im=dimag(c)
     call r8_to_s_left(re,sre)
     call r8_to_s_left(im,sim)
     string="("//trim(adjustl(trim(sre)))//","//trim(adjustl(trim(sim)))//")"
   end function str_c_to_ch
+
   function str_l_to_ch(bool) result(string)
     logical          :: bool
     character(len=1) :: string
     string='F'
     if(bool)string='T'
   end function str_l_to_ch
+
   function str_ch_to_ch(txt) result(string)
     character(len=*)                             :: txt
-    character(len=len(trim(adjustl(trim(txt))))) :: string
+    ! character(len=len(trim(adjustl(trim(txt))))) :: string
+    character(len=:),allocatable :: string
     string=trim(adjustl(trim(txt)))
   end function str_ch_to_ch
+
 
 
 
@@ -497,27 +503,24 @@ contains
   subroutine r8_to_s_left ( r8, s )
     !! R8_TO_S_LEFT writes an R8 into a left justified string.
     !    An R8 is a real ( kind = 8 ) value.
-    !    A 'G14.6' format is used with a WRITE statement.
+    !    A 'G<len(s)>.6' format is used with a WRITE statement.
     !  Parameters:
     !    Input, real ( kind = 8 ) R8, the number to be written into the string.
     !    Output, character ( len = * ) S, the string into which
     !    the real number is to be written.  If the string is less than 14
     !    characters long, it will will be returned as a series of asterisks.
-    integer :: i
-    real(8) :: r8
-    integer :: s_length
-    character(len=*) ::  s
-    character(len=16) :: s2
+    character(len=12)   :: fmt
+    integer             :: i
+    real(8)             :: r8
+    character(len=*)    :: s
+    integer             :: s_length
+    ! character(len=16)   :: s2
     s_length = len ( s )
-    if ( s_length < 16 ) then
-       do i = 1, s_length
-          s(i:i) = '*'
-       end do
-    else if ( r8 == 0.0D+00 ) then
-       s(1:16) = '     0.0      '
+    write(fmt,"(A2,I0,A3)")"(G",s_length,".6)"
+    if ( r8 == 0D0 ) then
+       s = '0.0';s=trim(s)
     else
-       write ( s2, '(g16.9)' ) r8
-       s(1:16) = s2
+       write ( s, fmt ) r8
     end if
     !  Shift the string left.
     s = adjustl ( s )
