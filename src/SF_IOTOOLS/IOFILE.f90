@@ -8,6 +8,7 @@ module IOFILE
 
   interface str
      module procedure str_i_to_ch
+     module procedure str_i_to_ch_pad
      module procedure str_r_to_ch
      module procedure str_c_to_ch
      module procedure str_l_to_ch
@@ -16,6 +17,7 @@ module IOFILE
 
   interface txtfy
      module procedure str_i_to_ch
+     module procedure str_i_to_ch_pad
      module procedure str_r_to_ch
      module procedure str_c_to_ch
      module procedure str_l_to_ch
@@ -238,7 +240,7 @@ contains
 
 
 
-  
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -261,7 +263,7 @@ contains
     write(*,"(A)")"store size ="//trim(txtfy(size))//"Kb"
   end subroutine set_store_size
 
-  
+
 
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
@@ -281,7 +283,7 @@ contains
     endif
   end subroutine data_store
 
-  
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -373,23 +375,22 @@ contains
 
 
 
-  function str_i_to_ch(i4,Npad) result(string)
+  function str_i_to_ch(i4) result(string)
     integer                      :: i4
-    integer,optional             :: Npad
     character(len=:),allocatable :: string
     character(len=32)            :: string_
-    character(len=:),allocatable :: string_pad
-    integer                      :: Npad_
-    Npad=1;if(present(Npad))Npad_=Npad
-    if(.not.present(Npad))then
-       call i4_to_s_left(i4,string_)
-       string=trim(adjustl(trim(string_)))
-    else
-       allocate(character(len=Npad_) :: string_pad)
-       call i4_to_s_zero(i4,string_pad)
-       string=trim(adjustl(trim(string_pad)))
-    endif
+    call i4_to_s_left(i4,string_)
+    string=trim(adjustl(trim(string_)))
   end function str_i_to_ch
+
+  function str_i_to_ch_pad(i4,Npad) result(string)
+    integer                      :: i4
+    integer                      :: Npad
+    character(len=:),allocatable :: string
+    character(len=Npad)          :: string_pad
+    call i4_to_s_zero(i4,string_pad)
+    string=trim(adjustl(trim(string_pad)))
+  end function str_i_to_ch_pad
 
   function str_r_to_ch(r8) result(string)
     real(8)                      :: r8
