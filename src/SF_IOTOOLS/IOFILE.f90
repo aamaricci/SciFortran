@@ -1,5 +1,4 @@
 module IOFILE
-  !USE MPI_VARS
   implicit none
   private
 
@@ -273,14 +272,16 @@ contains
     integer,optional  :: size
     logical           :: control
     character(len=9)  :: csize 
-    integer           :: cstatus,fsize
+    integer           :: cstatus,fsize,unit
     write(*,*) "storing "//file
-    inquire(file=reg(file),exist=control)
+    inquire(file=reg(file),exist=control,number=unit)
     if(control)then
        fsize=store_size;if(present(size))fsize=size
        if(file_size(reg(file))>fsize)&
             call system("gzip -fv "//reg(file))
     endif
+    inquire(file=reg(file),number=unit)
+    close(unit)
   end subroutine data_store
 
 
@@ -288,10 +289,11 @@ contains
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
   subroutine data_open(filename,tar)
-    character(len=*)               :: filename
-    character(len=10)              :: type
-    logical                        :: compressed,control
-    logical,optional,intent(out)   :: tar
+    character(len=*)             :: filename
+    character(len=10)            :: type
+    logical                      :: compressed,control
+    logical,optional,intent(out) :: tar
+    integer                      :: unit
     type=".gz"
     inquire(file=reg(filename),exist=control)
     if(control)then             !If exist return (no untar)
@@ -304,6 +306,8 @@ contains
     endif
     write(*,*) "deflate "//reg(filename)//reg(type)
     call system("gunzip "//reg(filename)//(type))
+    inquire(file=reg(filename),number=unit)
+    close(unit)
     return
   end subroutine data_open
 
