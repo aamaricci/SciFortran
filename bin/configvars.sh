@@ -19,22 +19,6 @@ add_library_to_system(){
 	    export LIBRARY_PATH=$LIB/lib:$LIBRARY_PATH
 	fi
 	#
-	if [ -z "${FPATH}" ];then
-	    export FPATH=$LIB/include
-	else
-	    export FPATH=$LIB/include:$FPATH
-	fi
-	#
-	if [ -z "${CPATH}" ];then
-	    export CPATH=$LIB/include
-	else
-	    export CPATH=$LIB/include:$CPATH
-	fi
-	if [ -z "${MANPATH}" ];then
-	    export MANPATH=$LIB/man
-	else
-	    export MANPATH=$LIB/man:$MANPATH
-	fi
 	if [ -z "${PATH}" ];then
 	    export PATH=$LIB/bin
 	else
