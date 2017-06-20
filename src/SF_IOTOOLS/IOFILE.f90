@@ -1,5 +1,4 @@
 module IOFILE
-  !USE MPI_VARS
   implicit none
   private
 
@@ -36,6 +35,8 @@ module IOFILE
      module procedure free_unit
   end interface newunit
 
+  public :: set_store_size
+  !
   public :: str
   public :: txtfy !obsolete
   public :: reg
@@ -43,14 +44,12 @@ module IOFILE
   public :: file_size
   public :: file_length
   public :: file_info
-  public :: free_unit,newunit
+  public :: file_gzip           !data_store
+  public :: file_gunzip         !data_open
+  !
+  public :: newunit
+  public :: free_unit
   public :: free_units
-  !
-  public :: set_store_size
-  public :: data_open
-  public :: data_store
-  public :: close_file
-  !
   !
   public :: create_dir
   !
@@ -210,7 +209,7 @@ contains
     inquire(file=reg(file),exist=IOfile)
     if(.not.IOfile)then
        inquire(file=reg(file)//".gz",exist=IOfile)
-       if(IOfile)call data_open(reg(file))
+       if(IOfile)call file_gunzip(reg(file))
     endif
     lines=0
     if(.not.IOfile)then
@@ -241,16 +240,6 @@ contains
 
 
 
-  !+-----------------------------------------------------------------+
-  !PURPOSE  : 
-  !+-----------------------------------------------------------------+
-  subroutine close_file(pname)
-    character(len=*) :: pname
-    open(10,file=reg(pname),position="APPEND")
-    write(10,*)""
-    close(10)
-  end subroutine close_file
-
 
 
 
@@ -265,47 +254,47 @@ contains
 
 
 
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
-  subroutine data_store(file,size)
+  subroutine file_gzip(file,size)
     character(len=*)  :: file
     integer,optional  :: size
     logical           :: control
     character(len=9)  :: csize 
-    integer           :: cstatus,fsize
-    write(*,*) "storing "//file
+    integer           :: cstatus,fsize,unit
+    fsize=store_size;if(present(size))fsize=size
+    write(*,"(A)") "Storing "//file
     inquire(file=reg(file),exist=control)
-    if(control)then
-       fsize=store_size;if(present(size))fsize=size
-       if(file_size(reg(file))>fsize)&
-            call system("gzip -fv "//reg(file))
-    endif
-  end subroutine data_store
+    if(control.AND.file_size(reg(file))>fsize)call system("gzip -fv "//reg(file))
+    inquire(file=reg(file),opened=control,number=unit)
+    if(control)close(unit)
+  end subroutine file_gzip
 
 
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
-  subroutine data_open(filename,tar)
-    character(len=*)               :: filename
-    character(len=10)              :: type
-    logical                        :: compressed,control
-    logical,optional,intent(out)   :: tar
-    type=".gz"
-    inquire(file=reg(filename),exist=control)
-    if(control)then             !If exist return (no untar)
-       if(present(tar))tar  = .false.
-       return
-    else                        !else search the correct compress format
-       inquire(file=reg(filename)//reg(type),exist=compressed)
-       if(present(tar))tar =compressed
-       if(.not.compressed)return
+  subroutine file_gunzip(filename)
+    character(len=*)             :: filename
+    character(len=3),parameter   :: type='.gz'
+    logical                      :: iexist,iopen
+    integer                      :: unit
+    !
+    inquire(file=reg(filename),exist=iexist)
+    if(iexist)return           !nothing to be done:
+    !
+    inquire(file=reg(filename)//type,exist=iexist)
+    if(.not.iexist)then
+       write(*,"(A)")"file "//reg(filename)//" not found, not even with .gz extension"
+       stop
     endif
-    write(*,*) "deflate "//reg(filename)//reg(type)
-    call system("gunzip "//reg(filename)//(type))
-    return
-  end subroutine data_open
+    write(*,"(A)")"deflate "//reg(filename)//type
+    call system("gunzip "//reg(filename)//type)
+    inquire(file=reg(filename),opened=iopen,number=unit)
+    if(iopen)close(unit)
+  end subroutine file_gunzip
 
 
 

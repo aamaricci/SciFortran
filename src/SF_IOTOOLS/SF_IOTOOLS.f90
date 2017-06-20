@@ -6,24 +6,29 @@ MODULE SF_IOTOOLS
 
   public :: splot
   public :: splot3d
-  public :: store_data
-
+  public :: save_array
+  !
   public :: sread
-  public :: read_data
-
+  public :: read_array
+  !
   public :: set_store_size
-  public :: txtfy
+  !
   public :: str
+  public :: txtfy !obsolete
+  public :: reg
+  !
   public :: file_size
   public :: file_length
   public :: file_info
+  public :: file_gzip           !data_store
+  public :: file_gunzip         !data_open
+  !
+  public :: newunit
   public :: free_unit
   public :: free_units
-  public :: data_open
-  public :: data_store
-  public :: reg_filename,reg,txtfit,txtcut
-  public :: create_data_dir,create_dir
-  public :: close_file
+  !
+  public :: create_dir
+  !
   public :: get_filename
   public :: get_filepath
 
