@@ -381,24 +381,53 @@ contains
     string=trim(adjustl(trim(string_pad)))
   end function str_i_to_ch_pad
 
-  function str_r_to_ch(r8) result(string)
+  function str_r_to_ch(r8,d) result(string)
     real(8)                      :: r8
+    integer,optional             :: d
+    integer                      :: w_,d_
     character(len=:),allocatable :: string
-    character(len=16)            :: string_
-    call r8_to_s_left(r8,string_)
+    character(len=:),allocatable :: string_
+    d_=6 ;if(present(d))d_=d
+    if(r8==0d0)then
+       w_=d_+3
+    else
+       w_=floor(log10(abs(r8)))+d_+3
+    endif
+    !
+    allocate(character(len=w_) :: string_)
+    call r8_to_s_left(r8,string_,d_)
     string=trim(adjustl(trim(string_)))
   end function str_r_to_ch
 
-  function str_c_to_ch(c) result(string)
+
+  function str_c_to_ch(c,d) result(string)
     complex(8)                   :: c
+    integer,optional             :: d
+    integer                      :: w_,d_
     character(len=:),allocatable :: string
-    character(len=16)            :: sre,sim
+    character(len=:),allocatable :: sre,sim
     real(8)                      :: re,im
-    re=dreal(c);im=dimag(c)
-    call r8_to_s_left(re,sre)
-    call r8_to_s_left(im,sim)
+    d_=6 ;if(present(d))d_=d
+    re=dreal(c)
+    if(re==0d0)then
+       w_=d_+3
+    else
+       w_=floor(log10(abs(re)))+d_+3
+    endif
+    allocate(character(len=w_) :: sre)
+    call r8_to_s_left(re,sre,d_)
+    !
+    im=dimag(c)
+    if(im==0d0)then
+       w_=d_+3
+    else
+       w_=floor(log10(abs(im)))+d_+3
+    endif
+    allocate(character(len=w_) :: sim)
+    call r8_to_s_left(im,sim,d_)
     string="("//trim(adjustl(trim(sre)))//","//trim(adjustl(trim(sim)))//")"
   end function str_c_to_ch
+
 
   function str_l_to_ch(bool) result(string)
     logical          :: bool
@@ -409,7 +438,6 @@ contains
 
   function str_ch_to_ch(txt) result(string)
     character(len=*)                             :: txt
-    ! character(len=len(trim(adjustl(trim(txt))))) :: string
     character(len=:),allocatable :: string
     string=trim(adjustl(trim(txt)))
   end function str_ch_to_ch
@@ -489,28 +517,22 @@ contains
     s(ilo+ihi-ipos:ihi) = ' '
   end subroutine i4_to_s_left
 
-  subroutine r8_to_s_left ( r8, s )
+
+  subroutine r8_to_s_left( r8, s, digits)
     !! R8_TO_S_LEFT writes an R8 into a left justified string.
     !    An R8 is a real ( kind = 8 ) value.
-    !    A 'G<len(s)>.6' format is used with a WRITE statement.
-    !  Parameters:
-    !    Input, real ( kind = 8 ) R8, the number to be written into the string.
-    !    Output, character ( len = * ) S, the string into which
-    !    the real number is to be written.  If the string is less than 14
-    !    characters long, it will will be returned as a series of asterisks.
+    !    A 'F<len(s)>.DIGITS' format is used with a WRITE statement.
     character(len=12)   :: fmt
     integer             :: i
     real(8)             :: r8
     character(len=*)    :: s
     integer             :: s_length
+    integer             :: digits
     ! character(len=16)   :: s2
     s_length = len ( s )
-    write(fmt,"(A2,I0,A3)")"(G",s_length,".6)"
-    if ( r8 == 0D0 ) then
-       s = '0.0';s=trim(s)
-    else
-       write ( s, fmt ) r8
-    end if
+    ! print*,s_length,digits
+    write(fmt,"(A2,I0,A1,I0,A1)")"(F",s_length,".",digits,")"
+    write ( s, fmt ) r8
     !  Shift the string left.
     s = adjustl ( s )
   end subroutine r8_to_s_left

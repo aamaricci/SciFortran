@@ -176,7 +176,7 @@ contains
     if(rank==0)write(*,'(a)')"---------------MPI----------------"
     do i=0,size-1
        if(rank==i)then
-          write(*,"(A,I6,A,I6,A)"),"rank:",rank,"of ",size," alive"
+          write(*,"(A,I6,A,I6,A)")"rank:",rank,"of ",size," alive"
           call MPI_Barrier(comm,ierr)
        endif
     enddo
