@@ -13,24 +13,24 @@ Clone the repo:
 
 And from the repository directory (`cd scifor`) make a standard out-of-source CMake compilation:
 
-`mkdir build`
-`cd build`
-`cmake ..` 
-`make`
-`make install`
-`make post-install`
+`mkdir build`  
+`cd build`  
+`cmake ..`   
+`make`  
+`make install`  
+`make post-install`  
 
 Please follow the instructions on the screen to complete installation on your environment.  
 The library can be loaded using one of the following, automatically generated, files :  
 
 * pkg-config file in `~/.pkg-config.d/scifor.pc`  
-* environment module file `~/.modules.d/scifor/gnu`  
-* homebrew `bash` script `SF_PREFIX/bin/configvars.sh`
+* environment module file `~/.modules.d/scifor/<PLAT>`  
+* homebrew `bash` script `<PREFIX>/bin/configvars.sh`
  
 
 The `CMake` compilation can be tuned using the following additional variables:   
 
-* `-DPREFIX=prefix directory <~/opt/scifor/SVERSION/PLAT>` 
+* `-DPREFIX=prefix directory <~/opt/scifor/VERSION/PLAT>` 
 
 * `-DUSE_MPI=<yes>/no`  
 
