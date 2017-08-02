@@ -196,10 +196,13 @@ module SF_LINALG
   public :: det
   !Returns the real/complex identity matrix of size n x n .
   public :: eye, deye, zeye
+  !Returns a matrix of zeros or ones of specified size
+  public :: zeros, ones
   !construction of square matrices from the diagonal elements:
   public :: diag
   !trace of real/complex matrices:
   public :: trace
+
   !
   interface det
      module procedure ddet
@@ -219,13 +222,26 @@ module SF_LINALG
      module procedure dtrace
      module procedure ztrace
   end interface trace
-
-
-
-
-
-
-
+  !
+  interface zeros
+     module procedure zzeros_1
+     module procedure zzeros_2
+     module procedure zzeros_3
+     module procedure zzeros_4
+     module procedure zzeros_5
+     module procedure zzeros_6
+     module procedure zzeros_7
+  end interface zeros
+  !
+  interface ones
+     module procedure zones_1
+     module procedure zones_2
+     module procedure zones_3
+     module procedure zones_4
+     module procedure zones_5
+     module procedure zones_6
+     module procedure zones_7
+  end interface ones
 
 
   !>EXTERNAL PRODUCTS

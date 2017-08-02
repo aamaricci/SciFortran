@@ -159,3 +159,102 @@ function zeye(n) result(A)
      A(i,i) = one
   end do
 end function zeye
+
+
+
+
+
+
+!-------------------------------------------------------------------------------------------
+!PURPOSE:  Returns an array of zeros of specified size from 1 to 7 dimension
+!-------------------------------------------------------------------------------------------
+function zzeros_1(n) result(A)
+  integer, intent(in) :: n
+  complex(8)          :: A(n)
+  A = zero
+end function zzeros_1
+!
+function zzeros_2(n1,n2) result(A)
+  integer, intent(in) :: n1,n2
+  complex(8)          :: A(n1,n2)
+  A = zero
+end function zzeros_2
+!
+function zzeros_3(n1,n2,n3) result(A)
+  integer, intent(in) :: n1,n2,n3
+  complex(8)          :: A(n1,n2,n3)
+  A = zero
+end function zzeros_3
+!
+function zzeros_4(n1,n2,n3,n4) result(A)
+  integer, intent(in) :: n1,n2,n3,n4
+  complex(8)          :: A(n1,n2,n3,n4)
+  A = zero
+end function zzeros_4
+!
+function zzeros_5(n1,n2,n3,n4,n5) result(A)
+  integer, intent(in) :: n1,n2,n3,n4,n5
+  complex(8)          :: A(n1,n2,n3,n4,n5)
+  A = zero
+end function zzeros_5
+!
+function zzeros_6(n1,n2,n3,n4,n5,n6) result(A)
+  integer, intent(in) :: n1,n2,n3,n4,n5,n6
+  complex(8)          :: A(n1,n2,n3,n4,n5,n6)
+  A = zero
+end function zzeros_6
+!
+function zzeros_7(n1,n2,n3,n4,n5,n6,n7) result(A)
+  integer, intent(in) :: n1,n2,n3,n4,n5,n6,n7
+  complex(8)          :: A(n1,n2,n3,n4,n5,n6,n7)
+  A = zero
+end function zzeros_7
+
+
+
+function zones_1(n) result(A)
+  integer, intent(in) :: n
+  complex(8)          :: A(n)
+  A = one
+end function zones_1
+!
+function zones_2(n1,n2) result(A)
+  integer, intent(in) :: n1,n2
+  complex(8)          :: A(n1,n2)
+  A = one
+end function zones_2
+!
+function zones_3(n1,n2,n3) result(A)
+  integer, intent(in) :: n1,n2,n3
+  complex(8)          :: A(n1,n2,n3)
+  A = one
+end function zones_3
+!
+function zones_4(n1,n2,n3,n4) result(A)
+  integer, intent(in) :: n1,n2,n3,n4
+  complex(8)          :: A(n1,n2,n3,n4)
+  A = one
+end function zones_4
+!
+function zones_5(n1,n2,n3,n4,n5) result(A)
+  integer, intent(in) :: n1,n2,n3,n4,n5
+  complex(8)          :: A(n1,n2,n3,n4,n5)
+  A = one
+end function zones_5
+!
+function zones_6(n1,n2,n3,n4,n5,n6) result(A)
+  integer, intent(in) :: n1,n2,n3,n4,n5,n6
+  complex(8)          :: A(n1,n2,n3,n4,n5,n6)
+  A = one
+end function zones_6
+!
+function zones_7(n1,n2,n3,n4,n5,n6,n7) result(A)
+  integer, intent(in) :: n1,n2,n3,n4,n5,n6,n7
+  complex(8)          :: A(n1,n2,n3,n4,n5,n6,n7)
+  A = one
+end function zones_7
+
+
+
+
+
