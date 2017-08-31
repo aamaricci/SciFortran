@@ -157,14 +157,18 @@ contains
   !****************************************
   !              MPI START/STOP
   !****************************************
-  subroutine Init_MPI()
+  subroutine Init_MPI(comm)
+    integer,optional :: comm
     call MPI_Init(ierr)
     call Error_MPI(ierr,"MPI_Start")
+    if(present(comm))comm=MPI_COMM_WORLD
   end subroutine Init_MPI
 
-  subroutine Finalize_MPI()
+  subroutine Finalize_MPI(comm)
+    integer,optional :: comm
     call MPI_Finalize(ierr)
     call Error_MPI(ierr,"MPI_Stop")
+    if(present(comm))comm=MPI_COMM_NULL
   end subroutine Finalize_MPI
 
   subroutine StartMsg_MPI(comm)

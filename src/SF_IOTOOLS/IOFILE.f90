@@ -35,6 +35,12 @@ module IOFILE
      module procedure free_unit
   end interface newunit
 
+  interface print_matrix
+     module procedure print_array_d
+     module procedure print_array_c
+  end interface print_matrix
+
+  
   public :: set_store_size
   !
   public :: str
@@ -55,7 +61,9 @@ module IOFILE
   !
   public :: get_filename
   public :: get_filepath
-
+  !
+  public :: print_matrix
+  
 contains
 
 
@@ -389,9 +397,9 @@ contains
     character(len=:),allocatable :: string_
     d_=6 ;if(present(d))d_=d
     if(r8==0d0)then
-       w_=d_+3
+       w_=d_+4
     else
-       w_=floor(log10(abs(r8)))+d_+3
+       w_=floor(log10(abs(r8)))+d_+4
     endif
     !
     allocate(character(len=w_) :: string_)
@@ -410,18 +418,18 @@ contains
     d_=6 ;if(present(d))d_=d
     re=dreal(c)
     if(re==0d0)then
-       w_=d_+3
+       w_=d_+4
     else
-       w_=floor(log10(abs(re)))+d_+3
+       w_=floor(log10(abs(re)))+d_+4
     endif
     allocate(character(len=w_) :: sre)
     call r8_to_s_left(re,sre,d_)
     !
     im=dimag(c)
     if(im==0d0)then
-       w_=d_+3
+       w_=d_+4
     else
-       w_=floor(log10(abs(im)))+d_+3
+       w_=floor(log10(abs(im)))+d_+4
     endif
     allocate(character(len=w_) :: sim)
     call r8_to_s_left(im,sim,d_)
@@ -639,6 +647,47 @@ contains
   end subroutine i4_to_s_zero
 
 
+
+
+
+
+  subroutine print_array_d(M,file,w,d)
+    real(8),dimension(:,:)    :: M
+    character(len=*),optional :: file
+    integer,optional          :: w,d
+    integer                   :: w_,d_
+    integer                   :: i,j
+    integer                   :: unit
+    character(len=128)        :: fmt
+    unit=6
+    if(present(file))open(free_unit(unit),file=reg(file))
+    w_=5;if(present(w))w_=w
+    d_=2;if(present(d))d_=d
+    write(fmt,"(A1,I0,A2,I0,A1,I0,A5)")"(",size(M,2),"(F",w_,".",d_,",1x))"
+    do i=1,size(M,1)
+       write(unit,fmt)(M(i,j),j=1,size(M,2))
+    enddo
+  end subroutine print_array_d
+
+  subroutine print_array_c(M,file,w,d)
+    complex(8),dimension(:,:) :: M
+    character(len=*),optional :: file
+    integer,optional          :: w,d
+    integer                   :: w_,d_
+    integer                   :: i,j
+    integer                   :: unit
+    character(len=128)        :: fmt
+    unit=6
+    if(present(file))open(free_unit(unit),file=reg(file))
+    w_=5;if(present(w))w_=w
+    d_=2;if(present(d))d_=d
+    write(fmt,"(A1,I0,A5,I0,A1,I0,A5,I0,A1,I0,A7)")"(",size(M,2),"(A1,F",w_,".",d_,",A1,F",w_,".",d_,"A1,1x))"
+    do i=1,size(M,1)
+       write(unit,fmt)("(",dreal(M(i,j)),",",dimag(M(i,j)),")",j=1,size(M,2))
+    enddo
+  end subroutine print_array_c
+
+  
 end module IOFILE
 
 

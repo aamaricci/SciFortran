@@ -31,5 +31,7 @@ MODULE SF_IOTOOLS
   !
   public :: get_filename
   public :: get_filepath
+  !
+  public :: print_matrix
 
 END MODULE SF_IOTOOLS
