@@ -67,7 +67,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N2
@@ -77,7 +77,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N3
@@ -87,7 +87,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N4
@@ -97,7 +97,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N5
@@ -107,7 +107,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N6
@@ -117,7 +117,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N7
@@ -128,7 +128,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N2
@@ -138,7 +138,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N3
@@ -148,7 +148,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N4
@@ -158,7 +158,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N5
@@ -168,7 +168,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N6
@@ -178,7 +178,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N7
@@ -189,7 +189,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N2
@@ -199,7 +199,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N3
@@ -209,7 +209,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N4
@@ -219,7 +219,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N5
@@ -229,7 +229,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N6
@@ -239,7 +239,7 @@ contains
     character(len=*),optional                  :: routine, matname
     if(any(shape(A) /= Ndim)) then
        if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//"has illegal shape"
+            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N7

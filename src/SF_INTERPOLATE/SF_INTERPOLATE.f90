@@ -275,7 +275,7 @@
       call CUBSPL(xa,ya,Lin,0,0)
       x = Xout
       Fout = PPVALU(xa,ya,Lin-1,4,x,0)
-      if(Xin(Lin) >= Xout)Fout=Fin(Lin)
+      ! if(Xin(Lin) >= Xout)Fout=Fin(Lin)
     end subroutine d_cub_interp_s
     !+-------------------------------------------------------------------+
     subroutine d_cub_interp_v(Xin,Fin,Xout,Fout)
@@ -297,12 +297,13 @@
          x = Xout(i)
          Fout(i) = PPVALU(xa,ya,Lin-1,4,x,0)
       enddo
-      if(Xin(Lin) >= Xout(Lout))then
-         Fout(Lout)=Fin(Lin)
-      else
-         Fout(Lout) = Fout(Lout-2) + &
-              (Xout(Lout)-Xout(Lout-2))/(Xout(Lout-1)-Xout(Lout-2))*(Fout(Lout-1)-Fout(Lout-2))
-      endif
+      ! if(Xin(Lin) >= Xout(Lout))then
+      !    Fout(Lout)=Fin(Lin)
+      ! ! else
+      ! !    Fout(Lout) = Fout(Lout-2) + &
+      ! !         (Xout(Lout)-Xout(Lout-2))/(Xout(Lout-1)-Xout(Lout-2))*(Fout(Lout-1)-Fout(Lout-2))
+      ! !    print*,Fout(Lout)
+      ! endif
     end subroutine d_cub_interp_v
     !+-------------------------------------------------------------------+
     subroutine c_cub_interp_s(Xin,Fin,Xout,Fout)

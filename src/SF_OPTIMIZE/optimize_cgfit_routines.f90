@@ -1,4 +1,6 @@
-module CGFIT_FUNC_INTERFACE
+MODULE CGFIT_ROUTINES
+  implicit none
+
   abstract interface
      function cgfit_func(a)
        real(8),dimension(:)  ::  a
@@ -9,24 +11,9 @@ module CGFIT_FUNC_INTERFACE
        real(8),dimension(size(a)) :: cgfit_fjac
      end function cgfit_fjac
   end interface
-end module CGFIT_FUNC_INTERFACE
 
 
 
-
-!********************************************************************
-!********************************************************************
-!********************************************************************
-!********************************************************************
-!********************************************************************
-!********************************************************************
-
-
-
-
-MODULE CGFIT_ROUTINES
-  USE CGFIT_FUNC_INTERFACE
-  implicit none
   integer                        :: ncom
   real(8), dimension(:), pointer :: pcom,xicom
   procedure(cgfit_func),pointer  :: func
