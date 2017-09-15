@@ -6,7 +6,7 @@ file(GLOB SF_OPTIMIZE_LOCAL_SRC
   cgsearch.f
   optimize_cgfit_routines.f90
   ROOT_FINDING.f90
-  MINIMIZATION.f90
+  OPTIMIZATION.f90
   SF_OPTIMIZE.f90
   )
 SET(SF_OPTIMIZE_src ${SF_OPTIMIZE_LOCAL_SRC})
