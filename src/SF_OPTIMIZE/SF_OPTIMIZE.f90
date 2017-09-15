@@ -6,9 +6,10 @@ MODULE SF_OPTIMIZE
   !OPTIMIZATION:
   !
   !General purpose
-  public :: fmin_cg
-  public :: fmin_cgplus
-  public :: fmin_cgminimize
+  public :: fmin                !Nelder-Mead
+  public :: fmin_cg             !Conjugate-Gradient 1
+  public :: fmin_cgplus         !Conjugate-Gradient 2
+  public :: fmin_cgminimize     !Conjugate-Gradient 3 (very old f77)
   !
   !Constrained (multivariate)
   !
