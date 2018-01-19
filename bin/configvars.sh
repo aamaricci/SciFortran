@@ -25,9 +25,9 @@ add_library_to_system(){
 	    export PATH=$LIB/bin:$PATH
 	fi
 	if [ -z "${PKG_CONFIG_PATH}" ];then
-	    export PKG_CONFIG_PATH=$HOME/.pkgconfig
+	    export PKG_CONFIG_PATH=$HOME/.pkgconfig.d
 	else
-	    export PKG_CONFIG_PATH=$HOME/.pkgconfig:$PKG_CONFIG_PATH
+	    export PKG_CONFIG_PATH=$HOME/.pkgconfig.d:$PKG_CONFIG_PATH
 	fi
     fi
 }
