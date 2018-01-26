@@ -1,55 +1,50 @@
-! now in a separate library with separate MODULE interface.
-! Here we provide only standard functions and 
-! will add more object oriented interface to QUADPACK
-! which will require to have this lib installed at compilation time.
-! public :: qc25c
-! public :: qc25o
-! public :: qc25s
-! public :: qcheb
-! public :: qextr
-! public :: qfour
-! public :: qk15
-! public :: qk15i
-! public :: qk15w
-! public :: qk21
-! public :: qk31
-! public :: qk41
-! public :: qk51
-! public :: qk61
-! public :: qmomo
-! public :: qsort
-! public :: qag
-! public :: qage
-! public :: qagi
-! public :: qagp
-! public :: qags
-! public :: qawc
-! public :: qawce
-! public :: qawf
-! public :: qawfe
-! public :: qawo
-! public :: qaws
-! public :: qawse
-! public :: qng
+! ABOUT QUADPACK:
+! How to decide what routine to use, if your integration region is finite:
+!
+! If you can factor the integrand as F(X)=W(X)*G(X), where G is smooth on [A,B] and W(X)=COS(OMEGA*X) or SIN(OMEGA*X) then use QAWO.
+! Otherwise, if you can factor F(X)=W(X)*G(X) where G is smooth and W(X)=(X-A)**ALFA * (B-X)**BETA * (LOG(X-A))**L * (LOG(B-X))**K with K, L = 0 or 1, and ALFA, BETA greater than -1, then use QAWS.
+!
+! Otherwise, if you can factor F(X)=W(X)*G(X) where G is smooth and W(X)=1/(X-C) for some constant C, use QAWC.
+! Otherwise, if you do not care too much about possible inefficient use of computer time, and do not want to further analyze the problem, use QAGS.
+! Otherwise, if the integrand is smooth, use QNG or QAG.
+! Otherwise, if there are discontinuities or singularities of the integrand or of its derivative, and you know where they are, split the integration range at these points and analyze each subinterval. You can also use QAGP, which is to be provided with the x-locations of the singularities or discontinuities.
+! Otherwise, if the integrand has end point singularities, use QAGS.
+! Otherwise, if the integrand has an oscillatory behavior of nonspecific type, and no singularities, use QAG with KEY=6.
+! Otherwise, use QAGS.
+!  
+! Routines for an infinite region:
+! If the integrand decays rapidly to zero, truncate the interval and use the finite interval decision tree.
+! Otherwise, if the integrand oscillates over the entire infinite range, and the integral is a Fourier transform, use QAWF.
+! Or, if the integrand oscillates over the entire infinite range, but is not a Fourier transform, then sum the successive positive and negative contributions by integrating between the zeroes of the integrand. Apply convergence acceleration with QELG.
+! Otherwise, if you are not constrained by computer time, and do not wish to analyze the problem further, use QAGI.
+! Otherwise, if the integrand has a non-smooth behavior in the range, and you know where it occurs, split off these regions and use the appropriate finite range routines to integrate over them. Then begin this tree again to handle the remainder of the region.
+! Otherwise, truncation of the interval, or application of a suitable transformation for reducing the problem to a finite range may be possible. And you may also call QAGI.
 
 module SF_INTEGRATE
-  USE SF_CONSTANTS, only: one,zero,xi,pi
-  USE SF_ARRAYS, only: linspace
   implicit none
   private
 
-  !TRAPEZIOSAL RULE:
+
+  complex(8),parameter :: zero=(0.d0,0.d0)
+  complex(8),parameter :: xi=(0.d0,1.d0)
+  complex(8),parameter :: one=(1.d0,0.d0)
+  real(8),parameter    :: pi    = 3.14159265358979323846264338327950288419716939937510d0
+
+
+  !TRAPEZIODAL RULE:
   interface trapz
-     module procedure d_trapz_func
-     module procedure c_trapz_func
-     ! module procedure d_trapz_sample
-     ! module procedure c_trapz_sample
-     module procedure d_trapz_dh_sample
-     module procedure c_trapz_dh_sample
+     !SAMPLE:
      module procedure d_trapz_ab_sample
      module procedure c_trapz_ab_sample
+     module procedure d_trapz_dh_sample
+     module procedure c_trapz_dh_sample
      module procedure d_trapz_nonlin_sample
      module procedure c_trapz_nonlin_sample
+     !FUNCTION:
+     module procedure d_trapz_ab_func
+     module procedure c_trapz_ab_func
+     module procedure d_trapz_nonlin_func
+     module procedure c_trapz_nonlin_func
   end interface trapz
   !
   interface trapz2d
@@ -60,24 +55,25 @@ module SF_INTEGRATE
      module procedure d_trapz2d_sample
      module procedure c_trapz2d_sample
   end interface trapz2d
-  !
-  public :: trapz
-  public :: trapz2d
+
+
 
 
 
   !SIMPSON'S RULE
   interface simps
-     module procedure d_simps_func
-     module procedure c_simps_func
-     ! module procedure d_simps_sample
-     ! module procedure c_simps_sample
+     !SAMPLE:
      module procedure d_simpson_dh_sample
      module procedure c_simpson_dh_sample
      module procedure d_simpson_ab_sample
      module procedure c_simpson_ab_sample
      module procedure d_simpson_nonlin_sample
      module procedure c_simpson_nonlin_sample
+     !FUNCTION:
+     module procedure d_simps_ab_func
+     module procedure c_simps_ab_func
+     module procedure d_simps_nonlin_func
+     module procedure c_simps_nonlin_func
   end interface simps
   !
   interface simps2d
@@ -89,16 +85,33 @@ module SF_INTEGRATE
      module procedure c_simps2d_sample
   end interface simps2d
   !
+
+
+  !QUADPACK global interface
+  interface quad
+     module procedure :: quad_func
+     module procedure :: quad_sample
+  end interface quad
+
+
+
+  !1D
+  public :: quad
+  public :: trapz
   public :: simps
+  !2D
+  public :: trapz2d
   public :: simps2d
-
-
-
   !KRAMERS-KRONIG:
   public :: kronig
+
+  !AUX:
+  public :: get_quadrature_weights
+
+
+
   !<TODO
   ! add routines for the 3d case
-  ! add interaface to QUADPACK
   ! add Montecarlo base 1d/2d/3d integrals
   !>TODO
 
@@ -117,6 +130,39 @@ contains
   include "integrate_sample_2d.f90"
 
 
+
+
+  !+-----------------------------------------------------------------------------+!
+  !PURPOSE: 
+  !generic interface to QUADPACK routines:
+  !non-automatic integrator:
+  !estimate the integral on [a,b] using 15, 21,..., 61
+  !point rule and return an error estimate.
+  ! public :: QNG 
+  ! public :: QK15
+  ! public :: QK21
+  ! public :: QK31
+  ! public :: QK41
+  ! public :: QK51
+  ! public :: QK61
+  !automatic integrator:
+  !without weights:
+  ! public :: QAG  !globally adaptive integrator
+  ! public :: QAGI !integration over infinite intervals
+  ! public :: QAGS !globally adaptive interval subdivisio with epsilon extrapolation
+  ! public :: QAGP !serves the same purposes as qags, but user-supplied information about singularities
+  !with weights:
+  ! public :: QAWO !integration of cos(omega*x)*f(x) sin(omega*x)*f(x) over a finite interval (a,b).
+  ! public :: QAWF !Fourier cosine or fourier sine transform of f(x)
+  ! public :: QAWC !computes the cauchy principal value of f(x)/(x-c) over a finite interval (a,b)
+  ! public :: QAWS !integrates w(x)*f(x) over (a,b) with a < b finite,
+  ! !              ! and   w(x) = ((x-a)**alfa)*((b-x)**beta)*v(x)
+  ! !              ! where v(x) = 1 or log(x-a) or log(b-x)
+  ! !              !              or log(x-a)*log(b-x)
+  ! !              ! and   -1 < alfa, -1 < beta.
+  !+-----------------------------------------------------------------------------+!
+  include "integrate_quad_func.f90"
+  include "integrate_quad_sample.f90"
 
 
 
@@ -152,6 +198,10 @@ contains
     enddo
     return
   end function kronig
+
+
+
+
 
 
   !+-----------------------------------------------------------------+
@@ -220,140 +270,205 @@ contains
 
 
 
-  ! !+-----------------------------------------------------------------+
-  ! !PURPOSE  : A slower (but possibly more accurate) Kramers-Kr\"onig 
-  ! ! integral, using local interpolation w/ polynomial of order-5
-  ! !+-----------------------------------------------------------------+
-  ! function kramers_kronig(fi,x,L) result(fr)
-  !   integer                 :: i,L
-  !   real(8),dimension(L)    :: fi,fr,x
-  !   real(8)                 :: dx
-  !   integer, parameter :: LIMIT = 500
-  !   integer            :: IERSUM,NEVAL,IER,LAST
-  !   real(8)            :: EPSABS,EPSREL,A,B,C,ABSERR
-  !   real(8)            :: ALIST(LIMIT),BLIST(LIMIT),ELIST(LIMIT),RLIST(LIMIT)
-  !   integer            :: IORD(limit)
-  !   if(allocated(finterX))deallocate(finterX)
-  !   if(allocated(finterF))deallocate(finterF)
-  !   allocate(finterX(1:L),finterF(1:L))
-  !   finterX    = x
-  !   finterF    = fi/pi
-  !   finterImin = 1
-  !   finterImax = L
-  !   finterN    = 5
-  !   EPSABS = 0.0d0
-  !   EPSREL = 1.d-12
-  !   IERSUM = 0
-  !   A      = x(1)             !minval(x)      
-  !   B      = x(L)             !maxval(x)
-  !   do i=1,L
-  !      C = x(i)
-  !      CALL QAWCE(kkfinter,A,B,C,EPSABS,EPSREL,LIMIT,fr(i),ABSERR,NEVAL,&
-  !           IER,alist,blist,rlist,elist,iord,last)
-  !      IERSUM=IERSUM+IER
-  !   enddo
-  !   !Some regularization at the borders: (thanks Jan Tomczak)
-  !   dx=x(2)-x(1)
-  !   fr(L) =(fr(L-2) - fr(L-1))*dx  + fr(L-1)
-  !   fr(1)=(fr(1+1)- fr(1+2))*dx + fr(1+1)
-  ! end function kramers_kronig
-  ! !
-  ! function kkfinter(x) result(finter)
-  !   real(8) :: finter
-  !   real(8) :: x,y,dy
-  !   integer :: itmp,k
-  !   integer :: n
-  !   n=finterN    !order of polynomial interpolation
-  !   finter=0.d0
-  !   itmp=locate(finterX(FinterImin:finterImax),x)
-  !   k=max(itmp-(N-1)/2,1)
-  !   if (k < finterImin)k=finterImin
-  !   if(k+n+1 <= finterImax)then
-  !      call polint(finterX(k:k+n+1),finterF(k:k+n+1),x,y,dy)
-  !   else
-  !      call polint(finterX(k:finterImax),finterF(k:finterImax),x,y,dy)
-  !   endif
-  !   finter=y
-  !   return
-  ! end function kkfinter
-  ! subroutine polint(xa,ya,x,y,dy)
-  !   real(8), dimension(:), intent(in) :: xa,ya
-  !   real(8), intent(in)          :: x
-  !   real(8), intent(out)         :: y,dy
-  !   integer                      :: m,n,ns
-  !   real(8), dimension(size(xa)) :: c,d,den,ho
-  !   n=assert_eq2(size(xa),size(ya),'polint')
-  !   c=ya
-  !   d=ya
-  !   ho=xa-x
-  !   ns=iminloc(abs(x-xa))
-  !   y=ya(ns)
-  !   ns=ns-1
-  !   do m=1,n-1
-  !      den(1:n-m)=ho(1:n-m)-ho(1+m:n)
-  !      if (any(den(1:n-m) == 0.0))then
-  !         print*,'polint: calculation failure'
-  !         stop
-  !      endif
-  !      den(1:n-m)=(c(2:n-m+1)-d(1:n-m))/den(1:n-m)
-  !      d(1:n-m)=ho(1+m:n)*den(1:n-m)
-  !      c(1:n-m)=ho(1:n-m)*den(1:n-m)
-  !      if (2*ns < n-m) then
-  !         dy=c(ns+1)
-  !      else
-  !         dy=d(ns)
-  !         ns=ns-1
-  !      end if
-  !      y=y+dy
-  !   end do
-  ! end subroutine polint
-  ! function locate(xx,x)
-  !   real(8), dimension(:), intent(in) :: xx
-  !   real(8), intent(in) :: x
-  !   integer :: locate
-  !   integer :: n,jl,jm,ju
-  !   logical :: ascnd
-  !   n=size(xx)
-  !   ascnd = (xx(n) >= xx(1))
-  !   jl=0
-  !   ju=n+1
-  !   do
-  !      if (ju-jl <= 1) exit
-  !      jm=(ju+jl)/2
-  !      if (ascnd .eqv. (x >= xx(jm))) then
-  !         jl=jm
-  !      else
-  !         ju=jm
-  !      end if
-  !   end do
-  !   if (x == xx(1)) then
-  !      locate=1
-  !   else if (x == xx(n)) then
-  !      locate=n-1
-  !   else
-  !      locate=jl
-  !   end if
-  ! end function locate
-  ! function iminloc(arr)
-  !   real(8), dimension(:), intent(in) :: arr
-  !   integer, dimension(1) :: imin
-  !   integer :: iminloc
-  !   imin=minloc(arr(:))
-  !   iminloc=imin(1)
-  ! end function iminloc
-  ! function assert_eq2(n1,n2,string)
-  !   character(len=*), intent(in) :: string
-  !   integer, intent(in) :: n1,n2
-  !   integer :: assert_eq2
-  !   if (n1 == n2) then
-  !      assert_eq2=n1
-  !   else
-  !      write (*,*) 'nrerror: an assert_eq failed with this tag:', &
-  !           string
-  !      stop 'program terminated by assert_eq2'
-  !   end if
-  ! end function assert_eq2
+
+  !-----------------------------------------------------------------------------
+  ! Purpose:
+  !-----------------------------------------------------------------------------
+  function linspace(start,stop,num,istart,iend,mesh) result(array)
+    integer          :: num,i
+    real(8)          :: start,stop,step,array(num)
+    logical,optional :: istart,iend
+    logical          :: startpoint_,endpoint_
+    real(8),optional :: mesh
+    if(num<0)stop "linspace: N<0, abort."
+    startpoint_=.true.;if(present(istart))startpoint_=istart
+    endpoint_=.true.;if(present(iend))endpoint_=iend
+    if(startpoint_.AND.endpoint_)then
+       if(num<2)stop "linspace: N<2 with both start and end points"
+       step = (stop-start)/real(num-1,8)
+       forall(i=1:num)array(i)=start + real(i-1,8)*step
+    elseif(startpoint_.AND.(.not.endpoint_))then
+       step = (stop-start)/real(num,8)
+       forall(i=1:num)array(i)=start + real(i-1,8)*step
+    elseif(.not.startpoint_.AND.endpoint_)then
+       step = (stop-start)/real(num,8)
+       forall(i=1:num)array(i)=start + real(i,8)*step
+    else
+       step = (stop-start)/real(num+1,8)
+       forall(i=1:num)array(i)=start + real(i,8)*step
+    endif
+    if(present(mesh))mesh=step
+  end function linspace
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  subroutine polint(xa,ya,x,y,dy)
+    real(8), dimension(:), intent(in) :: xa,ya
+    real(8), intent(in)          :: x
+    real(8), intent(out)         :: y,dy
+    integer                      :: m,n,ns
+    real(8), dimension(size(xa)) :: c,d,den,ho
+    n=assert_eq2(size(xa),size(ya),'polint')
+    c=ya
+    d=ya
+    ho=xa-x
+    ns=iminloc(abs(x-xa))
+    y=ya(ns)
+    ns=ns-1
+    do m=1,n-1
+       den(1:n-m)=ho(1:n-m)-ho(1+m:n)
+       if (any(den(1:n-m) == 0.0))then
+          print*,'polint: calculation failure'
+          stop
+       endif
+       den(1:n-m)=(c(2:n-m+1)-d(1:n-m))/den(1:n-m)
+       d(1:n-m)=ho(1+m:n)*den(1:n-m)
+       c(1:n-m)=ho(1:n-m)*den(1:n-m)
+       if (2*ns < n-m) then
+          dy=c(ns+1)
+       else
+          dy=d(ns)
+          ns=ns-1
+       end if
+       y=y+dy
+    end do
+  end subroutine polint
+  function locate(xx,x)
+    real(8), dimension(:), intent(in) :: xx
+    real(8), intent(in) :: x
+    integer :: locate
+    integer :: n,jl,jm,ju
+    logical :: ascnd
+    n=size(xx)
+    ascnd = (xx(n) >= xx(1))
+    jl=0
+    ju=n+1
+    do
+       if (ju-jl <= 1) exit
+       jm=(ju+jl)/2
+       if (ascnd .eqv. (x >= xx(jm))) then
+          jl=jm
+       else
+          ju=jm
+       end if
+    end do
+    if (x == xx(1)) then
+       locate=1
+    else if (x == xx(n)) then
+       locate=n-1
+    else
+       locate=jl
+    end if
+  end function locate
+  function iminloc(arr)
+    real(8), dimension(:), intent(in) :: arr
+    integer, dimension(1) :: imin
+    integer :: iminloc
+    imin=minloc(arr(:))
+    iminloc=imin(1)
+  end function iminloc
+  function assert_eq2(n1,n2,string)
+    character(len=*), intent(in) :: string
+    integer, intent(in) :: n1,n2
+    integer :: assert_eq2
+    if (n1 == n2) then
+       assert_eq2=n1
+    else
+       write (*,*) 'nrerror: an assert_eq failed with this tag:', &
+            string
+       stop 'program terminated by assert_eq2'
+    end if
+  end function assert_eq2
 
 end module SF_INTEGRATE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+! !+-----------------------------------------------------------------+
+! !PURPOSE  : A slower (but possibly more accurate) Kramers-Kr\"onig 
+! ! integral, using local interpolation w/ polynomial of order-5
+! !+-----------------------------------------------------------------+
+! function kramers_kronig(fi,x,L) result(fr)
+!   integer                 :: i,L
+!   real(8),dimension(L)    :: fi,fr,x
+!   real(8)                 :: dx
+!   integer, parameter :: LIMIT = 500
+!   integer            :: IERSUM,NEVAL,IER,LAST
+!   real(8)            :: EPSABS,EPSREL,A,B,C,ABSERR
+!   real(8)            :: ALIST(LIMIT),BLIST(LIMIT),ELIST(LIMIT),RLIST(LIMIT)
+!   integer            :: IORD(limit)
+!   if(allocated(finterX))deallocate(finterX)
+!   if(allocated(finterF))deallocate(finterF)
+!   allocate(finterX(1:L),finterF(1:L))
+!   finterX    = x
+!   finterF    = fi/pi
+!   finterImin = 1
+!   finterImax = L
+!   finterN    = 5
+!   EPSABS = 0.0d0
+!   EPSREL = 1.d-12
+!   IERSUM = 0
+!   A      = x(1)             !minval(x)      
+!   B      = x(L)             !maxval(x)
+!   do i=1,L
+!      C = x(i)
+!      CALL QAWCE(kkfinter,A,B,C,EPSABS,EPSREL,LIMIT,fr(i),ABSERR,NEVAL,&
+!           IER,alist,blist,rlist,elist,iord,last)
+!      IERSUM=IERSUM+IER
+!   enddo
+!   !Some regularization at the borders: (thanks Jan Tomczak)
+!   dx=x(2)-x(1)
+!   fr(L) =(fr(L-2) - fr(L-1))*dx  + fr(L-1)
+!   fr(1)=(fr(1+1)- fr(1+2))*dx + fr(1+1)
+! end function kramers_kronig
+! !
+! function kkfinter(x) result(finter)
+!   real(8) :: finter
+!   real(8) :: x,y,dy
+!   integer :: itmp,k
+!   integer :: n
+!   n=finterN    !order of polynomial interpolation
+!   finter=0.d0
+!   itmp=locate(finterX(FinterImin:finterImax),x)
+!   k=max(itmp-(N-1)/2,1)
+!   if (k < finterImin)k=finterImin
+!   if(k+n+1 <= finterImax)then
+!      call polint(finterX(k:k+n+1),finterF(k:k+n+1),x,y,dy)
+!   else
+!      call polint(finterX(k:finterImax),finterF(k:finterImax),x,y,dy)
+!   endif
+!   finter=y
+!   return
+! end function kkfinter
