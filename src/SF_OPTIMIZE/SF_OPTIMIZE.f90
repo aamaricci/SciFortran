@@ -11,6 +11,9 @@ MODULE SF_OPTIMIZE
   public :: fmin_cgplus         !Conjugate-Gradient 2
   public :: fmin_cgminimize     !Conjugate-Gradient 3 (very old f77)
   !
+  public :: leastsq             
+  public :: curvefit            
+  !
   !Constrained (multivariate)
   !
   !Global
@@ -30,7 +33,7 @@ MODULE SF_OPTIMIZE
 
   !Multidimensional
   !General nonlinear solvers:
-  public :: fsolve
+  public :: fsolve              !
   public :: broyden1
   !Large-scale nonlinear solvers:
 
