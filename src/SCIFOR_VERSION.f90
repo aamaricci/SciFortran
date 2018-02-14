@@ -1,7 +1,7 @@
 MODULE SF_VERSION
   implicit none
 
-  include "scifor_version.inc"
+  include "scifor_version_current_sha1.inc"
 
 contains
 
