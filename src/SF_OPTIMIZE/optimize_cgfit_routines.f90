@@ -33,12 +33,11 @@ contains
   ! MNBRAK and BRENT.
   !+-------------------------------------------------------------------+
   SUBROUTINE linmin(p,xi,fret,ftol)
-    real(8), intent(out) :: fret
+    real(8), intent(out)                         :: fret
     real(8), dimension(:), target, intent(inout) :: p,xi
-    real(8),optional :: ftol
-    real(8)          :: tol
-    !real(8), parameter :: tol=1.d-6
-    real(8) :: ax,bx,fa,fb,fx,xmin,xx
+    real(8),optional                             :: ftol
+    real(8)                                      :: tol
+    real(8)                                      :: ax,bx,fa,fb,fx,xmin,xx
     tol=1.d-6;if(present(ftol))tol=ftol
     ncom=size(p) ; if(ncom /= size(xi))stop "Error in LinMin"
     pcom=>p
@@ -53,12 +52,11 @@ contains
   end subroutine linmin
 
   SUBROUTINE dlinmin(p,xi,fret,ftol)
-    real(8), intent(out) :: fret
+    real(8), intent(out)                         :: fret
     real(8), dimension(:), target, intent(inout) :: p,xi
-    real(8),optional :: ftol
-    real(8)          :: tol
-    !real(8), parameter :: tol=1.d-6
-    real(8) :: ax,bx,fa,fb,fx,xmin,xx
+    real(8),optional                             :: ftol
+    real(8)                                      :: tol
+    real(8)                                      :: ax,bx,fa,fb,fx,xmin,xx
     tol=1.d-6;if(present(ftol))tol=ftol
     ncom=size(p) ; if(ncom /= size(xi))stop "Error in LinMin"
     pcom=>p
@@ -129,6 +127,8 @@ contains
     cx=bx+GOLD*(bx-ax)
     fc=func(cx)
     do
+       !print*,"mnbrak count",ax,cx,bx
+       if(isnan(ax).OR.isnan(cx).OR.isnan(bx))stop "MNBRAK error: ax/bx/cx are Nan!"
        if (fb < fc) RETURN
        r=(bx-ax)*(fb-fc)
        q=(bx-cx)*(fb-fa)
@@ -278,7 +278,7 @@ contains
           end if
        end if
     end do
-    !pause 'brent: exceed maximum iterations'
+    ! pause 'brent: exceed maximum iterations'
   contains
     subroutine shft(a,b,c,d)
       real(8), intent(out) :: a
@@ -408,6 +408,22 @@ contains
       c=f
     end subroutine mov3
   end function dbrent_
+
+
+
+
+  function isinfty(a) result(bool)
+    real(8) :: a
+    logical :: bool
+    bool = (a-1 == a)
+  end function isinfty
+
+  function isnan(a) result(bool)
+    real(8) :: a
+    logical :: bool
+    bool = (a /= a)
+  end function isnan
+
 
 end module CGFIT_ROUTINES
 

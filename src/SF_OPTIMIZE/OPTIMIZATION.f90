@@ -36,15 +36,15 @@ MODULE OPTIMIZE_MINIMIZE
 
 
   !General-purpose
-  public :: fmin         !Minimize a function using the downhill simplex algorithm.
+  public   :: fmin         !Minimize a function using the downhill simplex algorithm.
   ! public :: fmin_powell  !Minimize a function using modified Powell’s method. This method
-  public :: fmin_cg
-  public :: fmin_cgplus
-  public :: fmin_cgminimize
+  public   :: fmin_cg
+  public   :: fmin_cgplus
+  public   :: fmin_cgminimize
   ! public :: fmin_bfgs    !Minimize a function using the BFGS algorithm.
   ! public :: fmin_ncg     !Unconstrained minimization of a function using the Newton-CG method.
-  public :: leastsq      !Minimize the sum of squares of a set of equations. a wrapper around MINPACKs lmdif and lmder algorithms.
-  public :: curvefit     !Use non-linear least squares to fit a function, f, to data.
+  public   :: leastsq      !Minimize the sum of squares of a set of equations. a wrapper around MINPACKs lmdif and lmder algorithms.
+  public   :: curvefit     !Use non-linear least squares to fit a function, f, to data.
 
   !Global
   ! public :: anneal       !Minimize a function using simulated annealing.
@@ -52,12 +52,12 @@ MODULE OPTIMIZE_MINIMIZE
 
 
   !Scalar function minimizers
-  public :: brent         !minimize a given a function of one-variable with a possible bracketing interval without using derivative information
-  public :: dbrent        !minimize a given a function of one-variable with a possible bracketing interval  using derivative information
-  public :: bracket       !Bracket the minimum of the function.
+  public   :: brent         !minimize a given a function of one-variable with a possible bracketing interval without using derivative information
+  public   :: dbrent        !minimize a given a function of one-variable with a possible bracketing interval  using derivative information
+  public   :: bracket       !Bracket the minimum of the function.
 
 
-
+  real(8)  :: df_eps=0d0
 
 
 contains
@@ -1309,8 +1309,8 @@ contains
     integer                              :: its
     real(8)                              :: dgg,fp,gam,gg,err_
     real(8), dimension(size(p))          :: g,h,xi
-    logical,optional :: iverbose
-    logical           :: iverbose_
+    logical,optional                     :: iverbose
+    logical                              :: iverbose_
     !
     if(associated(func))nullify(func) ; func=>f
     if(associated(fjac))nullify(fjac) ; fjac=>df
@@ -1382,20 +1382,20 @@ contains
   !
   !
   !NUMERICAL EVALUATION OF THE GRADIENT:
-  subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,eps,istop,type,iverbose)
+  subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,eps,istop,type,deps,iverbose)
     procedure(cgfit_func)                :: f
     real(8), dimension(:), intent(inout) :: p
     integer, intent(out)                 :: iter
     real(8), intent(out)                 :: fret
-    real(8),optional                     :: ftol,eps
-    real(8)                              :: ftol_,eps_
+    real(8),optional                     :: ftol,eps,deps
+    real(8)                              :: ftol_,eps_,deps_
     integer, optional                    :: itmax,type,istop
     integer                              :: itmax_,type_,istop_
     integer                              :: its
     real(8)                              :: dgg,fp,gam,gg,err_
     real(8), dimension(size(p))          :: g,h,xi
-    logical,optional :: iverbose
-    logical           :: iverbose_
+    logical,optional                     :: iverbose
+    logical                              :: iverbose_
     !
     !this is just to ensure that routine needing dfunc allocated
     !and properly definted will continue to work.
@@ -1428,14 +1428,23 @@ contains
        type_=type
        if(iverbose_)write(*,"(A,I3)")"CG: type update to:",type
     endif
+    deps_=0d0
+    if(present(deps))then
+       deps_=deps
+       if(iverbose_)write(*,"(A,ES9.2)")"CG: deps update to:",deps
+    endif
+    df_eps = deps_
     !
     fp=func(p)
-    xi=fjac(p)!f_dgradient(func,size(p),p)
-    g=-xi
+    xi=fjac(p)
+    g=-xi;
     h=g
     xi=h
     do its=1,itmax_
        iter=its
+       ! print*,"iter:",its,"--",p
+       ! print*,"f(p): >>",fp
+       ! print*,"grad: >>",xi
        call dlinmin(p,xi,fret,ftol_)
        select case(istop_)
        case default
@@ -1447,15 +1456,20 @@ contains
        end select
        if( err_ <= ftol_)return
        fp=fret
-       xi = fjac(p)!f_dgradient(func,size(p),p)        
+       xi = fjac(p)
+       ! if(ifix_)then
+       !    if(dot_product(xi,xi)<1d-15)xi=xi+1d-15
+       ! endif
+       !
        gg=dot_product(g,g)
+       !
        select case(type_)
        case default             
           dgg=dot_product(xi+g,xi)  !polak-ribiere
        case (1)
           dgg=dot_product(xi,xi)   !fletcher-reeves.
        end select
-       if (gg == 0.0) return
+       if (gg == 0d0) return
        gam=dgg/gg
        g=-xi
        h=g+gam*h
@@ -1483,37 +1497,44 @@ contains
   !     Adapted from unkown minimize.f routine.
   !     don't worry it works...
   !+-------------------------------------------------------------------+
-  subroutine fmin_cgminimize_func(p,fcn,iter,fret,ftol,itmax,iprint,mode)
+  subroutine fmin_cgminimize_func(p,fcn,iter,fret,ftol,itmax,iverbose,mode)
     real(8),dimension(:),intent(inout) :: p
     procedure(cgfit_func)              :: fcn
     integer                            :: iter
     real(8)                            :: fret
     real(8),optional                   :: ftol
     real(8)                            :: ftol_
-    integer, optional                  :: itmax,mode,iprint
+    integer, optional                  :: itmax,mode
     integer                            :: itmax_,mode_,iprint_
     integer                            :: n
     real(8)                            :: f
     real(8),allocatable,dimension(:)   :: x,g,h,w,xprmt
     real(8)                            :: dfn,deps,hh
     integer                            :: iexit,itn
+    logical,optional                   :: iverbose
+    logical                            :: iverbose_
+    !
     if(associated(func))nullify(func) ; func=>fcn
-    iprint_=0;if(present(iprint))iprint_=iprint
+    !
+    iverbose_=.false.;if(present(iverbose))iverbose_=iverbose
+    iprint_=0;if(iverbose_)iprint_=1
+    !
     ftol_=1.d-5
     if(present(ftol))then
        ftol_=ftol
-       if(iprint_>0)write(*,"(A,ES9.2)")"CG-mininize: ftol updated to:",ftol
+       if(iverbose_)write(*,"(A,ES9.2)")"CG-mininize: ftol updated to:",ftol
     endif
     itmax_=1000
     if(present(itmax))then
        itmax_=itmax
-       if(iprint_>0)write(*,"(A,I5)")"CG-minimize: itmax updated to:",itmax
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: itmax updated to:",itmax
     endif
     mode_ =1
     if(present(mode))then
        mode_=mode_
-       if(iprint_>0)write(*,"(A,I5)")"CG-minimize: mode updated to:",mode       
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: mode updated to:",mode       
     endif
+    !
     N=size(p)
     allocate(x(N),g(N),h(N*N),w(100*N),xprmt(N))
     dfn=-0.5d0
@@ -1537,7 +1558,7 @@ contains
     f=func(x)
   end subroutine fcn_
   !
-  subroutine fmin_cgminimize_sub(p,fcn,iter,fret,ftol,itmax,iprint,mode)
+  subroutine fmin_cgminimize_sub(p,fcn,iter,fret,ftol,itmax,iverbose,mode)
     real(8),dimension(:),intent(inout) :: p
     interface 
        subroutine fcn(n,x_,f_)
@@ -1550,28 +1571,33 @@ contains
     real(8)                            :: fret
     real(8),optional                   :: ftol
     real(8)                            :: ftol_
-    integer, optional                  :: itmax,mode,iprint
+    integer, optional                  :: itmax,mode
     integer                            :: itmax_,mode_,iprint_
     integer                            :: n
     real(8)                            :: f
     real(8),allocatable,dimension(:)   :: x,g,h,w,xprmt
     real(8)                            :: dfn,deps,hh
     integer                            :: iexit,itn
-    iprint_=0;if(present(iprint))iprint_=iprint
+    logical,optional                   :: iverbose
+    logical                            :: iverbose_
+    !
+    iverbose_=.false.;if(present(iverbose))iverbose_=iverbose
+    iprint_=0;if(iverbose_)iprint_=1
+    !
     ftol_=1.d-5
     if(present(ftol))then
        ftol_=ftol
-       if(iprint_>0)write(*,"(A,ES9.2)")"CG-mininize: ftol updated to:",ftol
+       if(iverbose_)write(*,"(A,ES9.2)")"CG-mininize: ftol updated to:",ftol
     endif
     itmax_=1000
     if(present(itmax))then
        itmax_=itmax
-       if(iprint_>0)write(*,"(A,I5)")"CG-minimize: itmax updated to:",itmax
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: itmax updated to:",itmax
     endif
     mode_ =1
     if(present(mode))then
        mode_=mode_
-       if(iprint_>0)write(*,"(A,I5)")"CG-minimize: mode updated to:",mode       
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: mode updated to:",mode       
     endif
     n=size(p)
     allocate(x(n),g(n),h(n*n),w(100*n),xprmt(n))
@@ -1686,7 +1712,7 @@ contains
     if(iprint(1)>=0.AND.iter>=itmax_)write(0,*)"CG+ exit with iter >= itmax"
   end subroutine fmin_cgplus_df
 
-  subroutine fmin_cgplus_f(p,fcn,iter,fret,ftol,itmax,imethod,iverb1,iverb2)
+  subroutine fmin_cgplus_f(p,fcn,iter,fret,ftol,itmax,imethod,deps,iverb1,iverb2)
     real(8),dimension(:),intent(inout) :: p
     integer                            :: N,i
     ! interface 
@@ -1698,8 +1724,8 @@ contains
     procedure(cgfit_func)              :: fcn
     integer,intent(out)                :: iter
     real(8)                            :: fret
-    real(8),optional                   :: ftol
-    real(8)                            :: ftol_
+    real(8),optional                   :: ftol,deps
+    real(8)                            :: ftol_,deps_
     integer, optional                  :: itmax,iverb1,iverb2,imethod
     integer                            :: itmax_
     real(8),allocatable,dimension(:)   :: x,g,d,gold,w
@@ -1722,6 +1748,13 @@ contains
        itmax_=itmax
        if(iprint(1)>=0)write(*,"(A,I5)")"CG+: itmax updated to:",itmax
     endif
+    deps_=0d0
+    if(present(deps))then
+       deps_=deps
+       if(iprint(1)>=0)write(*,"(A,ES9.2)")"CG: deps update to:",deps
+    endif
+    df_eps = deps_
+    !
     n     = size(p)
     finish= .false. 
     irest = 1
@@ -1804,7 +1837,7 @@ contains
     real(8)          ::  wa2
     integer          :: i,j,k
     n=size(x)
-    eps_= 0.d0; if(present(epsfcn))eps_=epsfcn
+    eps_= df_eps; if(present(epsfcn))eps_=epsfcn
     epsmch = epsilon(epsmch)
     eps  = sqrt(max(eps_,epsmch))
     !  Evaluate the function
@@ -1842,7 +1875,7 @@ contains
     real(8)          ::  wa2
     integer          :: i,j,k
     n=size(x)
-    eps_= 0.d0; if(present(epsfcn))eps_=epsfcn
+    eps_= df_eps; if(present(epsfcn))eps_=epsfcn
     epsmch = epsilon(epsmch)
     eps  = sqrt(max(eps_,epsmch))
     !  Evaluate the function
