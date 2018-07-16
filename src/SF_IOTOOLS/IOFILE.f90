@@ -40,7 +40,7 @@ module IOFILE
      module procedure print_array_c
   end interface print_matrix
 
-  
+
   public :: set_store_size
   !
   public :: str
@@ -63,7 +63,7 @@ module IOFILE
   public :: get_filepath
   !
   public :: print_matrix
-  
+
 contains
 
 
@@ -396,12 +396,7 @@ contains
     character(len=:),allocatable :: string
     character(len=:),allocatable :: string_
     d_=6 ;if(present(d))d_=d
-    if(r8==0d0)then
-       w_=d_+4
-    else
-       w_=floor(log10(abs(r8)))+d_+4
-    endif
-    !
+    w_ = get_w_(r8,d_)
     allocate(character(len=w_) :: string_)
     call r8_to_s_left(r8,string_,d_)
     string=trim(adjustl(trim(string_)))
@@ -417,20 +412,12 @@ contains
     real(8)                      :: re,im
     d_=6 ;if(present(d))d_=d
     re=dreal(c)
-    if(re==0d0)then
-       w_=d_+4
-    else
-       w_=floor(log10(abs(re)))+d_+4
-    endif
+    w_ = get_w_(re,d_)
     allocate(character(len=w_) :: sre)
     call r8_to_s_left(re,sre,d_)
     !
     im=dimag(c)
-    if(im==0d0)then
-       w_=d_+4
-    else
-       w_=floor(log10(abs(im)))+d_+4
-    endif
+    w_ = get_w_(im,d_)
     allocate(character(len=w_) :: sim)
     call r8_to_s_left(im,sim,d_)
     string="("//trim(adjustl(trim(sre)))//","//trim(adjustl(trim(sim)))//")"
@@ -450,6 +437,22 @@ contains
     string=trim(adjustl(trim(txt)))
   end function str_ch_to_ch
 
+
+  function get_w_(r8,d) result(w)
+    real(8) :: r8
+    integer :: d
+    integer :: w
+    if(r8==0d0)then
+       w=d+4
+    else
+       w=floor(log10(abs(r8)))
+       if(w < -1)then
+          w = d + 4 + 4
+       else
+          w = w + d + 4
+       endif
+    endif
+  end function get_w_
 
 
 
@@ -534,16 +537,17 @@ contains
     integer             :: i
     real(8)             :: r8
     character(len=*)    :: s
-    integer             :: s_length
+    integer             :: s_length,w_
     integer             :: digits
-    ! character(len=16)   :: s2
     s_length = len ( s )
-    ! print*,s_length,digits
     write(fmt,"(A2,I0,A1,I0,A1)")"(F",s_length,".",digits,")"
+    w_=floor(log10(abs(r8)))
+    if(w_<-1)write(fmt,"(A3,I0,A1,I0,A1)")"(ES",s_length,".",digits,")"
     write ( s, fmt ) r8
     !  Shift the string left.
-    s = adjustl ( s )
+    s = trim(adjustl(trim( s )))
   end subroutine r8_to_s_left
+
 
   subroutine digit_to_ch(digit,ch)
     !! DIGIT_TO_CH returns the character representation of a decimal digit.
@@ -687,7 +691,7 @@ contains
     enddo
   end subroutine print_array_c
 
-  
+
 end module IOFILE
 
 
