@@ -116,22 +116,31 @@ subroutine lanczos_arpack_d(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
         ! endif
      enddo
      !
+     !=========================================================================
      !  Compute the residual norm
      !    ||  A*x - lambda*x ||
      !  for the NCONV accurately computed eigenvalues and 
      !  eigenvectors.  (iparam(5) indicates how many are 
      !  accurate to the requested tolerance)
      if(ierr/=0)then
-        write(*,'(a,i6)')'Error with DSEUPD (get Evec), ierr = ',ierr
-        ! else
-        !    nconv =  iparam(5)
-        !    do j = 1, nconv
-        !       call MatVec(n, v(1,j), ax )
-        !       call daxpy( n, -d(j,1), v(1,j), 1, ax, 1 )
-        !       d(j,2) = dnrm2(n,ax,1)
-        !       d(j,2) = d(j,2) / abs ( d(j,1) )
-        !    end do
-        !    if(verb)call dmout(6,nconv,2,d,maxncv,-6,'Ritz values and relative residuals')
+        write(*,'(a,i6)')'Error with DSEUPD, IERR = ',ierr
+        write(*,'(a)')'Check the documentation of SSEUPD.'
+     else
+        nconv =  iparam(5)
+     end if
+
+     if(verb)then
+ write(*,'(a)') ''
+        write(*,'(a)') 'ARPACK::'
+        write(*,'(a)') ''
+        write(*,'(a,i6)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
+        write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
+        write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
+        write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
+        write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
+        write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
+        write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
      end if
      !
      if(info==1) then
@@ -280,24 +289,31 @@ subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
         evec(:,j)=v(:,Eorder(j))
      enddo
      !
+     !=========================================================================
      !  Compute the residual norm
      !    ||  A*x - lambda*x ||
      !  for the NCONV accurately computed eigenvalues and 
      !  eigenvectors.  (iparam(5) indicates how many are 
      !  accurate to the requested tolerance)
      if(ierr/=0)then
-        write(*,'(a,i6)')'Error with DSEUPD (get Evec), ierr = ',ierr
-        ! else
-        !    nconv =  iparam(5)
-        !    do j = 1, nconv
-        !       call hprod(1, n, v(1,j), ax )
-        !       call zaxpy( n, -d(j), v(1,j), 1, ax, 1 )
-        !       rd(j,1) = dble (d(j))
-        !       rd(j,2) = dimag (d(j))
-        !       rd(j,3) = dznrm2 (n, ax, 1)
-        !       rd(j,3) = rd(j,3) / dlapy2 (rd(j,1),rd(j,2))
-        !    end do
-        !    if(verb)call dmout(6,nconv,3,rd,maxncv,-6,'Ritz values and relative residuals')
+        write(*,'(a,i6)')'Error with ZNEUPD, IERR = ',ierr
+        write(*,'(a)')'Check the documentation of SSEUPD.'
+     else
+        nconv =  iparam(5)
+     end if
+
+     if(verb)then
+        write(*,'(a)') ''
+        write(*,'(a)') 'ARPACK::'
+        write(*,'(a)') ''
+        write(*,'(a,i6)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
+        write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
+        write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
+        write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
+        write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
+        write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
+        write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
      end if
      !
      if(info==1) then

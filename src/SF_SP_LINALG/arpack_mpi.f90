@@ -1,4 +1,4 @@
-subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose)
+subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,mpi_reduce)
   !Arguments
   integer                      :: MpiComm
   !Interface to Matrix-Vector routine:
@@ -14,16 +14,16 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                      :: Nblock
   integer                      :: Nitermax
   real(8)                      :: eval(Neigen)
-  real(8)                      :: evec(Ns,Neigen)
+  real(8)                      :: evec(:,:) ![Ns,Neigen]if Reduce=F (default) OR [Nloc,Neigen] if Reduce=T
   character(len=2),optional    :: which
   real(8),optional             :: v0(ns)
   real(8),optional             :: tol
-  logical,optional             :: iverbose
+  logical,optional             :: iverbose,mpi_reduce
   !Dimensions:
   integer                      :: maxn,maxnev,maxncv,ldv
   integer                      :: n,nconv,ncv,nev
   !Arrays:
-  real(8)                      :: evec_tmp(Ns)
+  real(8),allocatable          :: evec_tmp(:) ![Ns] OR [Nloc] see above
   real(8),allocatable          :: ax(:),d(:,:)
   real(8),allocatable          :: resid(:),vec(:)
   real(8),allocatable          :: workl(:),workd(:)
@@ -33,7 +33,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                      :: ipntr(11)
   !Control Vars:
   integer                      :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                      :: verb
+  logical                      :: verb,reduce_
   integer                      :: i
   real(8)                      :: sigma
   real(8)                      :: tol_
@@ -48,9 +48,10 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                      :: mpiQ
   integer                      :: mpiR
   !
-  which_='SA';if(present(which))which_=which
-  tol_=0d0;if(present(tol))tol_=tol
-  verb=.false.;if(present(iverbose))verb=iverbose
+  which_ = 'SA'   ; if(present(which))which_=which
+  tol_   = 0d0    ; if(present(tol))tol_=tol
+  verb   = .false.; if(present(iverbose))verb=iverbose
+  reduce_= .true.; if(present(mpi_reduce))reduce_=mpi_reduce
   !
   !MPI setup:
   mpi_size  = Get_size_MPI(MpiComm)
@@ -98,21 +99,27 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   lworkl = ncv*(ncv+8)
   info   = 1
   ido    = 0
-  allocate(vec(n))
+  !
   if(present(v0))then
-     vec=v0
+     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
+        resid(i-mpi_rank*mpiQ)=v0(i)
+     enddo
   else
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
      allocate(seed_random(nrandom))
      seed_random=1234567
      call random_seed(put=seed_random)
+     !
+     allocate(vec(n))
      call random_number(vec)
+     vec=vec/sqrt(dot_product(vec,vec))
+     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
+        resid(i-mpi_rank*mpiQ)=vec(i)
+     enddo
+     deallocate(vec)
   endif
-  vec=vec/sqrt(dot_product(vec,vec))
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     resid(i-mpi_rank*mpiQ)=vec(i)
-  enddo
+  !
   ishfts    = 1
   mode1     = 1
   iparam(1) = ishfts
@@ -138,19 +145,72 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      do j=1,neigen
         eval(j)=d(j,1)
      enddo
-     ! if(present(evec))then
-     evec=0d0
-     do j=1,neigen
-        evec_tmp=0d0
-        do i=1 + mpi_rank*mpiQ , (mpi_rank+1)*mpiQ+mpiR
-           evec_tmp(i)=v(i-mpi_rank*mpiQ,j)
-        enddo
-        call MPI_Allreduce(evec_tmp,evec(:,j),Ns,MPI_DOUBLE_PRECISION,MPI_SUM,MpiComm,mpi_ierr)
-     enddo
-     ! endif
-     nconv =  iparam(5)
      !
-     if(mpi_master)then
+     ! if(present(evec))then
+     select case(reduce_)
+     case(.false.)
+        if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
+        evec=0d0
+        do j=1,neigen
+           do i=1,mpiQ+mpiR
+              evec(i,j)=v(i,j)
+           enddo
+        enddo
+        !
+     case(.true.)
+        if(any(shape(evec)/=[Ns,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=F"
+        evec=0d0
+        allocate(evec_tmp(Ns))
+        do j=1,neigen
+           evec_tmp=0d0
+           do i=1 + mpi_rank*mpiQ , (mpi_rank+1)*mpiQ+mpiR
+              evec_tmp(i)=v(i-mpi_rank*mpiQ,j)
+           enddo
+           call MPI_Allreduce(evec_tmp,evec(:,j),Ns,MPI_DOUBLE_PRECISION,MPI_SUM,MpiComm,mpi_ierr)
+        enddo
+        deallocate(evec_tmp)
+        !
+     end select
+     ! endif
+     !
+     !=========================================================================
+     !  Compute the residual norm
+     !    ||  A*x - lambda*x ||
+     !  for the NCONV accurately computed eigenvalues and 
+     !  eigenvectors.  (iparam(5) indicates how many are 
+     !  accurate to the requested tolerance)
+     if(ierr/=0)then
+        write(*,'(a,i6)')'Error with PDSEUPD, IERR = ',ierr
+        write(*,'(a)')'Check the documentation of SSEUPD.'
+     else
+        nconv =  iparam(5)
+        !
+        ! do j = 1, nconv
+        !    call hprod( n, v(1,j), ax )
+        !    call zaxpy( n, -d(j), v(1,j), 1, ax, 1 )
+        !    rd(j,1) = dble (d(j))
+        !    rd(j,2) = dimag (d(j))
+        !    rd(j,3) = dznrm2 (n, ax, 1)
+        !    rd(j,3) = rd(j,3) / dlapy2 (rd(j,1),rd(j,2))
+        ! end do
+        ! if(mpi_master.AND.verb)call dmout(6,nconv,3,rd,maxncv,-6,'Ritz values and relative residuals')
+     end if
+
+     if(mpi_master.AND.verb)then
+ write(*,'(a)') ''
+        write(*,'(a)') 'ARPACK::'
+        write(*,'(a)') ''
+        write(*,'(a,i6)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
+        write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
+        write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
+        write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
+        write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
+        write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
+        write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
+     end if
+
+     if(mpi_master)then       
         if(info==1) then
            write(*,'(a)' ) ' '
            write(*,'(a)' ) '  Maximum number of iterations reached.'
@@ -174,7 +234,7 @@ end subroutine lanczos_parpack_d
 
 
 
-subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose)
+subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,mpi_reduce)
   !Arguments
   integer                           :: MpiComm
   !Interface to Matrix-Vector routine:
@@ -190,16 +250,16 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                           :: Nblock
   integer                           :: Nitermax
   real(8)                           :: eval(Neigen)
-  complex(8)                        :: evec(Ns,Neigen)
+  complex(8)                        :: evec(:,:) ![Ns,Neigen]if Reduce=F (default) OR [Nloc,Neigen] if Reduce=T
   character(len=2),optional         :: which
   complex(8),optional               :: v0(ns)
   real(8),optional                  :: tol
-  logical,optional                  :: iverbose
+  logical,optional                  :: iverbose,mpi_reduce
   !Dimensions:
   integer                           :: maxn,maxnev,maxncv,ldv,nloc
   integer                           :: n,nconv,ncv,nev
   !Arrays:
-  complex(8)                        :: evec_tmp(Ns)
+  complex(8),allocatable            :: evec_tmp(:)
   complex(8),allocatable            :: ax(:),d(:)
   complex(8),allocatable            :: v(:,:)
   complex(8),allocatable            :: workl(:),workd(:),workev(:)
@@ -210,7 +270,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                           :: ipntr(14)
   !Control Vars:
   integer                           :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                           :: verb
+  logical                           :: verb,reduce_
   integer                           :: i
   real(8)                           :: sigma
   real(8)                           :: tol_
@@ -227,9 +287,10 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                           :: mpiQ
   integer                           :: mpiR
   !
-  which_='SR';if(present(which))which_=which
-  tol_=1d-12;if(present(tol))tol_=tol
-  verb=.false.;if(present(iverbose))verb=iverbose
+  which_ = 'SR'   ; if(present(which))which_=which
+  tol_   = 1d-12  ; if(present(tol))tol_=tol
+  verb   = .false.; if(present(iverbose))verb=iverbose
+  reduce_= .true.; if(present(mpi_reduce))reduce_=mpi_reduce
   !
   !MPI setup:
   mpi_size  = Get_size_MPI(MpiComm)
@@ -285,26 +346,27 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   iparam(7) = mode1
   !
   !
-  allocate(vec(n))
   if(present(v0))then
-     vec=v0
+     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
+        resid(i-mpi_rank*mpiQ)=v0(i)
+     enddo
   else
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
      allocate(seed_random(nrandom))
      seed_random=1234567
      call random_seed(put=seed_random)
-     allocate(reV(n),imV(n))
+     allocate(vec(n),reV(n),imV(n))
      call random_number(reV)
      call random_number(imV)
      vec=dcmplx(reV,imV)
+     vec=vec/sqrt(dot_product(vec,vec))
+     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
+        resid(i-mpi_rank*mpiQ)=vec(i)
+     enddo
      deallocate(reV,imV)
   endif
   !
-  vec=vec/sqrt(dot_product(vec,vec))
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     resid(i-mpi_rank*mpiQ)=vec(i)
-  enddo
   !
   !
   !  MAIN LOOP (Reverse communication loop)
@@ -331,16 +393,72 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      enddo
      allocate(Eorder(Neigen))
      call sort_array(Eval,Eorder)
-     evec=zero
-     do j=1,neigen
-        evec_tmp=zero
-        do i=1 + mpi_rank*mpiQ , (mpi_rank+1)*mpiQ+mpiR
-           evec_tmp(i)=v(i-mpi_rank*mpiQ,Eorder(j))!j)
-        enddo
-        call MPI_Allreduce(evec_tmp,evec(:,j),Ns,MPI_DOUBLE_COMPLEX,MPI_SUM,MpiComm,mpi_ierr)
-     enddo
      !
-     nconv =  iparam(5)
+     ! if(present(evec))then
+     select case(reduce_)
+     case(.false.)
+        if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
+        evec=zero
+        do j=1,neigen
+           do i=1,mpiQ+mpiR
+              evec(i,j)=v(i,Eorder(j))!j)
+           enddo
+        enddo
+        !
+     case(.true.)
+        if(any(shape(evec)/=[Ns,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=F"
+        evec=zero
+        allocate(evec_tmp(Ns))
+        do j=1,neigen
+           evec_tmp=zero
+           do i=1 + mpi_rank*mpiQ , (mpi_rank+1)*mpiQ+mpiR
+              evec_tmp(i)=v(i-mpi_rank*mpiQ,Eorder(j))!j)
+           enddo
+           call MPI_Allreduce(evec_tmp,evec(:,j),Ns,MPI_DOUBLE_COMPLEX,MPI_SUM,MpiComm,mpi_ierr)
+        enddo
+        deallocate(evec_tmp)
+        !
+     end select
+     ! endif
+     !
+
+     !=========================================================================
+     !  Compute the residual norm
+     !    ||  A*x - lambda*x ||
+     !  for the NCONV accurately computed eigenvalues and 
+     !  eigenvectors.  (iparam(5) indicates how many are 
+     !  accurate to the requested tolerance)
+     if(ierr/=0)then
+        write(*,'(a,i6)')'Error with PDSEUPD, IERR = ',ierr
+        write(*,'(a)')'Check the documentation of SSEUPD.'
+     else
+        nconv =  iparam(5)
+        !
+        ! do j = 1, nconv
+        !    call hprod( n, v(1,j), ax )
+        !    call zaxpy( n, -d(j), v(1,j), 1, ax, 1 )
+        !    rd(j,1) = dble (d(j))
+        !    rd(j,2) = dimag (d(j))
+        !    rd(j,3) = dznrm2 (n, ax, 1)
+        !    rd(j,3) = rd(j,3) / dlapy2 (rd(j,1),rd(j,2))
+        ! end do
+        ! if(mpi_master.AND.verb)call dmout(6,nconv,3,rd,maxncv,-6,'Ritz values and relative residuals')
+     end if
+     !
+     if(mpi_master.AND.verb)then
+        write(*,'(a)') ''
+        write(*,'(a)') 'ARPACK::'
+        write(*,'(a)') ''
+        write(*,'(a,i6)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
+        write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
+        write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
+        write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
+        write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
+        write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
+        write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
+     end if
+
      !
      if(mpi_master)then
         if(info==1) then
