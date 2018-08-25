@@ -1,4 +1,4 @@
-subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,mpi_reduce)
+subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose)
   !Arguments
   integer                      :: MpiComm
   !Interface to Matrix-Vector routine:
@@ -14,16 +14,16 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                      :: Nblock
   integer                      :: Nitermax
   real(8)                      :: eval(Neigen)
-  real(8)                      :: evec(:,:) ![Ns,Neigen]if Reduce=F (default) OR [Nloc,Neigen] if Reduce=T
+  real(8)                      :: evec(:,:) ![Nloc,Neigen]
   character(len=2),optional    :: which
-  real(8),optional             :: v0(ns)
+  real(8),optional             :: v0(size(evec,1))
   real(8),optional             :: tol
-  logical,optional             :: iverbose,mpi_reduce
+  logical,optional             :: iverbose
   !Dimensions:
   integer                      :: maxn,maxnev,maxncv,ldv
   integer                      :: n,nconv,ncv,nev
   !Arrays:
-  real(8),allocatable          :: evec_tmp(:) ![Ns] OR [Nloc] see above
+  real(8),allocatable          :: evec_tmp(:) ![Nloc] see above
   real(8),allocatable          :: ax(:),d(:,:)
   real(8),allocatable          :: resid(:),vec(:)
   real(8),allocatable          :: workl(:),workd(:)
@@ -33,38 +33,31 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                      :: ipntr(11)
   !Control Vars:
   integer                      :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                      :: verb,reduce_
+  logical                      :: verb
   integer                      :: i
-  real(8)                      :: sigma
+  real(8)                      :: sigma,norm,norm_tmp
   real(8)                      :: tol_
   character                    :: bmat  
   character(len=2)             :: which_
   real(8),external             :: dnrm2
   !MPI
-  integer                      :: mpi_ierr
-  integer                      :: mpi_rank
-  integer                      :: mpi_size
   logical                      :: mpi_master
-  integer                      :: mpiQ
-  integer                      :: mpiR
   !
   which_ = 'SA'   ; if(present(which))which_=which
   tol_   = 0d0    ; if(present(tol))tol_=tol
   verb   = .false.; if(present(iverbose))verb=iverbose
-  reduce_= .true.; if(present(mpi_reduce))reduce_=mpi_reduce
   !
   !MPI setup:
-  mpi_size  = Get_size_MPI(MpiComm)
-  mpi_rank  = Get_rank_MPI(MpiComm)
   mpi_master= Get_master_MPI(MpiComm)
-  mpiQ = Ns/mpi_size
-  mpiR = 0
-  if(mpi_rank == mpi_size-1)mpiR=mod(Ns,mpi_size)
+  !
   maxn   = Ns
   maxnev = Neigen
   maxncv = Nblock
   ldv    = maxn
-  if(maxncv>Ns)maxncv=Ns
+  if(maxncv>Ns)then
+     maxncv=Ns
+     print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
+  endif
   !
   n      = maxn
   nev    = maxnev
@@ -73,7 +66,8 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   maxitr = Nitermax
   !=========================================================================
   ! Setup distribution of data to nodes:
-  ldv = mpiQ+mpiR             !ldv is the SMALL dimension
+  ldv = size(evec,1)            !ldv is the SMALL dimension
+  if(ldv < ncv)stop "LANCZOS_PARPACK_D error: ldv < maxNblock. Unstable! Find a way to increase ldv... (less cpu?)"
   if ( ldv > maxn ) then
      stop ' ERROR with _SDRV1: NLOC is greater than MAXNLOC '
   else if ( nev > maxnev ) then
@@ -101,9 +95,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   ido    = 0
   !
   if(present(v0))then
-     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-        resid(i-mpi_rank*mpiQ)=v0(i)
-     enddo
+     resid = v0
   else
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
@@ -111,12 +103,12 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      seed_random=1234567
      call random_seed(put=seed_random)
      !
-     allocate(vec(n))
+     allocate(vec(ldv))
      call random_number(vec)
-     vec=vec/sqrt(dot_product(vec,vec))
-     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-        resid(i-mpi_rank*mpiQ)=vec(i)
-     enddo
+     norm_tmp = dot_product(vec,vec)
+     norm = 0d0
+     call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     resid=vec/sqrt(norm)
      deallocate(vec)
   endif
   !
@@ -130,6 +122,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   do
      call pdsaupd(MpiComm,ido,bmat,ldv,which_,nev,tol_,resid,&
           ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,info )
+     !
      if(ido/=-1.AND.ido/=1)exit
      !  Perform matrix vector multiplication
      !    y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
@@ -146,32 +139,14 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         eval(j)=d(j,1)
      enddo
      !
-     ! if(present(evec))then
-     select case(reduce_)
-     case(.false.)
-        if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
-        evec=0d0
-        do j=1,neigen
-           do i=1,mpiQ+mpiR
-              evec(i,j)=v(i,j)
-           enddo
+     if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
+     evec=0d0
+     do j=1,neigen
+        do i=1,ldv
+           evec(i,j)=v(i,j)
         enddo
-        !
-     case(.true.)
-        if(any(shape(evec)/=[Ns,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=F"
-        evec=0d0
-        allocate(evec_tmp(Ns))
-        do j=1,neigen
-           evec_tmp=0d0
-           do i=1 + mpi_rank*mpiQ , (mpi_rank+1)*mpiQ+mpiR
-              evec_tmp(i)=v(i-mpi_rank*mpiQ,j)
-           enddo
-           call MPI_Allreduce(evec_tmp,evec(:,j),Ns,MPI_DOUBLE_PRECISION,MPI_SUM,MpiComm,mpi_ierr)
-        enddo
-        deallocate(evec_tmp)
-        !
-     end select
-     ! endif
+     enddo
+     !
      !
      !=========================================================================
      !  Compute the residual norm
@@ -184,23 +159,13 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         write(*,'(a)')'Check the documentation of SSEUPD.'
      else
         nconv =  iparam(5)
-        !
-        ! do j = 1, nconv
-        !    call hprod( n, v(1,j), ax )
-        !    call zaxpy( n, -d(j), v(1,j), 1, ax, 1 )
-        !    rd(j,1) = dble (d(j))
-        !    rd(j,2) = dimag (d(j))
-        !    rd(j,3) = dznrm2 (n, ax, 1)
-        !    rd(j,3) = rd(j,3) / dlapy2 (rd(j,1),rd(j,2))
-        ! end do
-        ! if(mpi_master.AND.verb)call dmout(6,nconv,3,rd,maxncv,-6,'Ritz values and relative residuals')
      end if
-
+     !
      if(mpi_master.AND.verb)then
- write(*,'(a)') ''
+        write(*,'(a)') ''
         write(*,'(a)') 'ARPACK::'
         write(*,'(a)') ''
-        write(*,'(a,i6)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i12)') '  Size of the matrix is:                      ', n
         write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
         write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
         write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
@@ -209,7 +174,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
         write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
      end if
-
+     !
      if(mpi_master)then       
         if(info==1) then
            write(*,'(a)' ) ' '
@@ -221,7 +186,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         end if
      endif
   endif
-  call mpi_barrier(MpiComm,mpi_ierr)
+  call Barrier_MPI(MpiComm)
   deallocate(ax,resid,workd,v,d,workl,select)
 end subroutine lanczos_parpack_d
 
@@ -231,10 +196,7 @@ end subroutine lanczos_parpack_d
 
 
 
-
-
-
-subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,mpi_reduce)
+subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose)
   !Arguments
   integer                           :: MpiComm
   !Interface to Matrix-Vector routine:
@@ -252,14 +214,14 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   real(8)                           :: eval(Neigen)
   complex(8)                        :: evec(:,:) ![Ns,Neigen]if Reduce=F (default) OR [Nloc,Neigen] if Reduce=T
   character(len=2),optional         :: which
-  complex(8),optional               :: v0(ns)
+  complex(8),optional               :: v0(size(evec,1))
   real(8),optional                  :: tol
-  logical,optional                  :: iverbose,mpi_reduce
+  logical,optional                  :: iverbose
   !Dimensions:
   integer                           :: maxn,maxnev,maxncv,ldv,nloc
   integer                           :: n,nconv,ncv,nev
   !Arrays:
-  complex(8),allocatable            :: evec_tmp(:)
+  complex(8),allocatable            :: evec_tmp(:) ![Nloc] see above
   complex(8),allocatable            :: ax(:),d(:)
   complex(8),allocatable            :: v(:,:)
   complex(8),allocatable            :: workl(:),workd(:),workev(:)
@@ -272,7 +234,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                           :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
   logical                           :: verb,reduce_
   integer                           :: i
-  real(8)                           :: sigma
+  real(8)                           :: sigma,norm,norm_tmp
   real(8)                           :: tol_
   character                         :: bmat  
   character(len=2)                  :: which_
@@ -280,30 +242,22 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   real(8),allocatable               :: reV(:),imV(:)
   integer,allocatable               :: Eorder(:)
   !MPI
-  integer                           :: mpi_ierr
-  integer                           :: mpi_rank
-  integer                           :: mpi_size
   logical                           :: mpi_master
-  integer                           :: mpiQ
-  integer                           :: mpiR
   !
   which_ = 'SR'   ; if(present(which))which_=which
   tol_   = 1d-12  ; if(present(tol))tol_=tol
   verb   = .false.; if(present(iverbose))verb=iverbose
-  reduce_= .true.; if(present(mpi_reduce))reduce_=mpi_reduce
   !
   !MPI setup:
-  mpi_size  = Get_size_MPI(MpiComm)
-  mpi_rank  = Get_rank_MPI(MpiComm)
   mpi_master= Get_master_MPI(MpiComm)
-  mpiQ = Ns/mpi_size
-  mpiR = 0
-  if(mpi_rank == mpi_size-1)mpiR=mod(Ns,mpi_size)
   !
   maxn   = Ns
   maxnev = Neigen
   maxncv = Nblock
-  if(maxncv>Ns)maxncv=Ns
+  if(maxncv>Ns)then
+     maxncv=Ns
+     print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
+  endif
   !
   n      = maxn
   nev    = maxnev
@@ -312,7 +266,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   maxitr = Nitermax
   !
   ! Setup distribution of data to nodes:
-  ldv = mpiQ+mpiR             !ldv is the SMALL dimension
+  ldv = size(evec,1)             !ldv is the SMALL dimension
   if(ldv < ncv)stop "LANCZOS_PARPACK_C error: ldv < maxNblock. Unstable! Find a way to increase ldv... (less cpu?)"
   !
   !
@@ -347,24 +301,23 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   !
   !
   if(present(v0))then
-     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-        resid(i-mpi_rank*mpiQ)=v0(i)
-     enddo
+     resid = v0
   else
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
      allocate(seed_random(nrandom))
      seed_random=1234567
      call random_seed(put=seed_random)
-     allocate(vec(n),reV(n),imV(n))
+     !
+     allocate(vec(ldv),reV(ldv),imV(ldv))
      call random_number(reV)
      call random_number(imV)
      vec=dcmplx(reV,imV)
-     vec=vec/sqrt(dot_product(vec,vec))
-     do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-        resid(i-mpi_rank*mpiQ)=vec(i)
-     enddo
-     deallocate(reV,imV)
+     norm_tmp = dot_product(vec,vec)
+     norm = 0d0
+     call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     resid=vec/sqrt(norm)
+     deallocate(Vec,reV,imV)
   endif
   !
   !
@@ -386,7 +339,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   else
      !
      call pzneupd (MpiComm,.true.,'All',select,d,v,ldv,sigma,workev,bmat,&
-          mpiQ+mpiR,which_,nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,ierr)
+          ldv,which_,nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,ierr)
      !
      do j=1,neigen
         eval(j)=dreal(d(j))
@@ -394,34 +347,15 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      allocate(Eorder(Neigen))
      call sort_array(Eval,Eorder)
      !
-     ! if(present(evec))then
-     select case(reduce_)
-     case(.false.)
-        if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
-        evec=zero
-        do j=1,neigen
-           do i=1,mpiQ+mpiR
-              evec(i,j)=v(i,Eorder(j))!j)
-           enddo
+     if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
+     evec=zero
+     do j=1,neigen
+        do i=1,ldv
+           evec(i,j)=v(i,Eorder(j))
         enddo
-        !
-     case(.true.)
-        if(any(shape(evec)/=[Ns,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=F"
-        evec=zero
-        allocate(evec_tmp(Ns))
-        do j=1,neigen
-           evec_tmp=zero
-           do i=1 + mpi_rank*mpiQ , (mpi_rank+1)*mpiQ+mpiR
-              evec_tmp(i)=v(i-mpi_rank*mpiQ,Eorder(j))!j)
-           enddo
-           call MPI_Allreduce(evec_tmp,evec(:,j),Ns,MPI_DOUBLE_COMPLEX,MPI_SUM,MpiComm,mpi_ierr)
-        enddo
-        deallocate(evec_tmp)
-        !
-     end select
-     ! endif
+     enddo
      !
-
+     !
      !=========================================================================
      !  Compute the residual norm
      !    ||  A*x - lambda*x ||
@@ -434,22 +368,13 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      else
         nconv =  iparam(5)
         !
-        ! do j = 1, nconv
-        !    call hprod( n, v(1,j), ax )
-        !    call zaxpy( n, -d(j), v(1,j), 1, ax, 1 )
-        !    rd(j,1) = dble (d(j))
-        !    rd(j,2) = dimag (d(j))
-        !    rd(j,3) = dznrm2 (n, ax, 1)
-        !    rd(j,3) = rd(j,3) / dlapy2 (rd(j,1),rd(j,2))
-        ! end do
-        ! if(mpi_master.AND.verb)call dmout(6,nconv,3,rd,maxncv,-6,'Ritz values and relative residuals')
      end if
      !
      if(mpi_master.AND.verb)then
         write(*,'(a)') ''
         write(*,'(a)') 'ARPACK::'
         write(*,'(a)') ''
-        write(*,'(a,i6)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i12)') '  Size of the matrix is:                      ', n
         write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
         write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
         write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
@@ -458,7 +383,6 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
         write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
      end if
-
      !
      if(mpi_master)then
         if(info==1) then
@@ -471,13 +395,12 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         end if
      endif
   endif
-  call mpi_barrier(MpiComm,mpi_ierr)
-  deallocate(ax,resid,workd,v,d,workl,select)
-
-
-
+  call Barrier_MPI(MpiComm)
+  deallocate(ax,d,resid,v,workd,workev,workl,rwork,rd,select)
+  !
+  !
 contains
-
+  !
   !+------------------------------------------------------------------+
   !PURPOSE  : Sort an array, gives the new ordering of the label.
   !+------------------------------------------------------------------+
@@ -560,6 +483,15 @@ contains
        compare=1
     endif
   end function compare
-
-
+  !
+  !
 end subroutine lanczos_parpack_c
+
+
+
+
+
+
+
+
+
