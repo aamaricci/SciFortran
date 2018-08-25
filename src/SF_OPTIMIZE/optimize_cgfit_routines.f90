@@ -58,7 +58,7 @@ contains
     real(8)                                      :: tol
     real(8)                                      :: ax,bx,fa,fb,fx,xmin,xx
     tol=1.d-6;if(present(ftol))tol=ftol
-    ncom=size(p) ; if(ncom /= size(xi))stop "Error in LinMin"
+    ncom=size(p) ; if(ncom /= size(xi))stop "Error in DLinMin"
     pcom=>p
     xicom=>xi
     ax=0.d0
@@ -106,12 +106,12 @@ contains
   !+-------------------------------------------------------------------+
   subroutine mnbrak(ax,bx,cx,fa,fb,fc,func)
     real(8), intent(inout) :: ax,bx
-    real(8), intent(out) :: cx,fa,fb,fc
+    real(8), intent(out)   :: cx,fa,fb,fc
     !...the first parameter is the default ratio by which successive intervals
     !   are magnified; the second is the maximum magnification allowed for a
     !   parabolic-fit step
-    real(8), parameter :: gold=1.618034d0,glimit=100.d0,tiny=1.d-20
-    real(8) :: fu,q,r,u,ulim
+    real(8), parameter     :: gold=(1d0+sqrt(5d0))/2d0,glimit=10d0,tiny=1.d-20
+    real(8)                :: fu,q,r,u,ulim
     interface
        function func(x)
          real(8), intent(in) :: x
@@ -120,36 +120,37 @@ contains
     end interface
     fa=func(ax)
     fb=func(bx)
-    if (fb > fa) then
+    if (fb > fa) then           !switch the role of a and b to that we can go downhill
        call swap(ax,bx)
        call swap(fa,fb)
     end if
     cx=bx+GOLD*(bx-ax)
     fc=func(cx)
-    do
-       !print*,"mnbrak count",ax,cx,bx
+    ! do while (fb.ge.fc)
+    do                          !do while”: keep returning here until we bracket.
+       ! print*,"mnbrak count",ax,cx,bx
        if(isnan(ax).OR.isnan(cx).OR.isnan(bx))stop "MNBRAK error: ax/bx/cx are Nan!"
        if (fb < fc) RETURN
-       r=(bx-ax)*(fb-fc)
-       q=(bx-cx)*(fb-fa)
-       u=bx-((bx-cx)*q-(bx-ax)*r)/(2.0*sign(max(abs(q-r),TINY),q-r))
+       r=(bx-ax)*(fb-fc)        !Compute u by parabolic extrapolation from a, b, c. TINY
+       q=(bx-cx)*(fb-fa)        !is used to prevent any possible division by zero
+       u=bx-((bx-cx)*q-(bx-ax)*r)/(2d0*sign(max(abs(q-r),TINY),q-r))
        ulim=bx+GLIMIT*(cx-bx)
-       if ((bx-u)*(u-cx) > 0.d0) then
+       if ((bx-u)*(u-cx) > 0.d0) then !Parabolic u is between b and c: try it.
           fu=func(u)
-          if (fu < fc) then
+          if (fu < fc) then     !Got a minimum between b and c.
              ax=bx
              fa=fb
              bx=u
              fb=fu
              RETURN
-          else if (fu > fb) then
+          else if (fu > fb) then !Got a minimum between between a and u.
              cx=u
              fc=fu
              RETURN
           end if
-          u=cx+GOLD*(cx-bx)
+          u=cx+GOLD*(cx-bx)     !Parabolic fit was no use. Use default magnification.
           fu=func(u)
-       else if ((cx-u)*(u-ulim) > 0.d0) then
+       else if ((cx-u)*(u-ulim) > 0.d0) then !Parabolic fit is between c and its allowed limit
           fu=func(u)
           if (fu < fc) then
              bx=cx
@@ -157,13 +158,13 @@ contains
              u=cx+GOLD*(cx-bx)
              call shft(fb,fc,fu,func(u))
           end if
-       else if ((u-ulim)*(ulim-cx) >= 0.d0) then
+       else if ((u-ulim)*(ulim-cx) >= 0.d0) then !Limit parabolic u to maximum allowed value.
           u=ulim
           fu=func(u)
-       else
+       else                     !Reject parabolic u, use default magnification.
           u=cx+GOLD*(cx-bx)
           fu=func(u)
-       end if
+       end if                   !Eliminate oldest point and continue.
        call shft(ax,bx,cx,u)
        call shft(fa,fb,fc,fu)
     end do
@@ -202,7 +203,8 @@ contains
     real(8), intent(out) :: xmin
     real(8)              :: brent_
     integer, parameter   :: itmax=100
-    real(8), parameter   :: cgold=0.3819660d0,zeps=1.0d-3*epsilon(ax)
+    real(8), parameter   :: zeps=1d0-3d0*epsilon(ax)
+    real(8), parameter   :: cgold=(3d0-sqrt(5d0))/2d0 !0.3819660d0
     integer              :: iter
     real(8)              :: a,b,d,e,etemp,fu,fv,fw,fx,p,q,r,tol1,tol2,u,v,w,x,xm
     interface

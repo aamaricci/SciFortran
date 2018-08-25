@@ -137,9 +137,6 @@ MODULE SF_MPI
   public :: Get_Rank_MPI
   public :: Get_Master_MPI
   public :: Get_Last_MPI
-  public :: Get_Q_MPI
-  public :: Get_R_MPI
-  public :: Get_Chunk_MPI
   public :: Get_Wtime_MPI
   public :: Get_Wtick_MPI
   public :: Error_MPI
@@ -246,37 +243,7 @@ contains
     if(rank==size-1)last=.true.
   end function Get_last_MPI
 
-  function Get_Q_MPI(comm,N) result(mpiQ)
-    integer :: comm
-    integer :: N
-    integer :: size
-    integer :: rank
-    integer :: mpiQ
-    size = Get_size_MPI(comm)
-    mpiQ = N/size
-  end function Get_Q_MPI
 
-  function Get_R_MPI(comm,N) result(mpiR)
-    integer :: comm
-    integer :: N
-    integer :: size
-    integer :: rank
-    integer :: mpiR
-    logical :: last
-    size = Get_size_MPI(comm)
-    last = Get_last_MPI(comm)
-    mpiR=0
-    if(last)mpiR = mod(N,size)
-  end function Get_R_MPI
-
-  function Get_Chunk_MPI(comm,N) result(Nchunk)
-    integer :: comm
-    integer :: N
-    integer :: Nchunk
-    Nchunk = Get_Q_MPI(comm,N)+Get_R_MPI(comm,N)
-  end function Get_Chunk_MPI
-
-  
   !returns an elapsed time on the calling processor
   function Get_Wtime_MPI() result(time)
     real(8) :: time
@@ -429,9 +396,6 @@ contains
   public :: Get_Rank_MPI
   public :: Get_Master_MPI
   public :: Get_Last_MPI
-  public :: Get_Q_MPI
-  public :: Get_R_MPI
-  public :: Get_Chunk_MPI
   !
 
   integer :: size
@@ -486,29 +450,66 @@ contains
     last=.true.
   end function Get_last_MPI
 
-  function Get_Q_MPI(comm,N) result(mpiQ)
-    integer :: comm
-    integer :: N
-    integer :: mpiQ
-    mpiQ = N
-  end function Get_Q_MPI
-
-  function Get_R_MPI(comm,N) result(mpiR)
-    integer :: comm
-    integer :: N
-    integer :: mpiR
-    mpiR=0
-  end function Get_R_MPI
-
-  function Get_Chunk_MPI(comm,N) result(Nchunk)
-    integer :: comm
-    integer :: N
-    integer :: Nchunk
-    Nchunk = N
-  end function Get_Chunk_MPI
 
 #endif
 
 END MODULE SF_MPI
 
 
+
+
+
+
+
+! function Get_Q_MPI(comm,N) result(mpiQ)
+!   integer :: comm
+!   integer :: N
+!   integer :: size
+!   integer :: rank
+!   integer :: mpiQ
+!   size = Get_size_MPI(comm)
+!   mpiQ = N/size
+! end function Get_Q_MPI
+
+! function Get_R_MPI(comm,N) result(mpiR)
+!   integer :: comm
+!   integer :: N
+!   integer :: size
+!   integer :: rank
+!   integer :: mpiR
+!   logical :: last
+!   size = Get_size_MPI(comm)
+!   last = Get_last_MPI(comm)
+!   mpiR=0
+!   if(last)mpiR = mod(N,size)
+! end function Get_R_MPI
+
+! function Get_Chunk_MPI(comm,N) result(Nchunk)
+!   integer :: comm
+!   integer :: N
+!   integer :: Nchunk
+!   Nchunk = Get_Q_MPI(comm,N)+Get_R_MPI(comm,N)
+! end function Get_Chunk_MPI
+
+
+
+! function Get_Q_MPI(comm,N) result(mpiQ)
+!   integer :: comm
+!   integer :: N
+!   integer :: mpiQ
+!   mpiQ = N
+! end function Get_Q_MPI
+
+! function Get_R_MPI(comm,N) result(mpiR)
+!   integer :: comm
+!   integer :: N
+!   integer :: mpiR
+!   mpiR=0
+! end function Get_R_MPI
+
+! function Get_Chunk_MPI(comm,N) result(Nchunk)
+!   integer :: comm
+!   integer :: N
+!   integer :: Nchunk
+!   Nchunk = N
+! end function Get_Chunk_MPI

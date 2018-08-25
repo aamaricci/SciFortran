@@ -4,50 +4,42 @@
 subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck)
   integer                              :: MpiComm
   interface 
-     subroutine MatVec(Nchunk,vin,vout)
-       integer :: Nchunk
-       real(8) :: vin(Nchunk)
-       real(8) :: vout(Nchunk)
+     subroutine MatVec(Nloc,vin,vout)
+       integer :: Nloc
+       real(8) :: vin(Nloc)
+       real(8) :: vout(Nloc)
      end subroutine MatVec
   end interface
   integer                              :: Ndim
   integer                              :: Nitermax
   integer                              :: Nloc
   real(8)                              :: egs
-  real(8),dimension(Ndim)              :: vect
+  real(8),dimension(:)                 :: vect !Nloc
   real(8),optional                     :: threshold
   integer,optional                     :: ncheck
   logical,optional                     :: iverbose
   !
-  real(8),dimension(:),allocatable     :: vin,vout,vtmp
+  real(8),dimension(size(vect))        :: vin,vout
   integer                              :: iter,nlanc
   real(8),dimension(Nitermax+1)        :: alanc,blanc
   real(8),dimension(Nitermax,Nitermax) :: Z
   real(8),dimension(Nitermax)          :: diag,subdiag,esave
-  real(8)                              :: a_,b_,norm,diff
+  real(8)                              :: a_,b_,norm,diff,norm_tmp
   integer                              :: i,ierr
   !
-  integer                              :: mpi_rank
-  integer                              :: mpi_size
   logical                              :: mpi_master
-  integer                              :: mpiQ
-  integer                              :: mpiR
   !
-  mpi_rank=get_rank_MPI(MpiComm)
-  mpi_size=get_size_MPI(MpiComm)
   mpi_master=get_master_MPI(MpiComm)
   !
-  mpiQ = Ndim/mpi_size
-  mpiR = 0
-  if(mpi_rank == mpi_size-1)mpiR=mod(Ndim,mpi_size)
-  !
-  Nloc = mpiQ+mpiR
+  Nloc = size(vect)
   !
   if(present(iverbose))verb=iverbose
   if(present(threshold))threshold_=threshold
   if(present(ncheck))ncheck_=ncheck
   !
-  norm=dot_product(vect,vect)
+  norm_tmp=dot_product(vect,vect)
+  call AllReduce_MPI(MpiComm,norm_tmp,norm)
+  !
   if(norm==0d0)then
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
@@ -55,27 +47,23 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      seed_random=1234567
      call random_seed(put=seed_random)
      call random_number(vect)
-     vect=vect/sqrt(dot_product(vect,vect))
+     norm_tmp=dot_product(vect,vect)
+     call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     vect=vect/sqrt(norm)
      if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
   endif
   !
   !============= LANCZOS LOOP =====================
   !
-  allocate(vin(Nloc),vout(Nloc))
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     vin(i-mpi_rank*mpiQ)=vect(i)
-  enddo
-  vout= 0d0
-  alanc=0d0
-  blanc=0d0
-  nlanc=0
+  Vin  = Vect                   !save input vector for Eigenvector calculation:
+  Vout = 0d0
+  alanc= 0d0
+  blanc= 0d0
+  nlanc= 0
   !
   lanc_loop: do iter=1,Nitermax
      !
-     if(verb.AND.mpi_master)then
-        print*,""
-        write(*,*)"Lanczos iteration:",iter
-     endif
+     if(verb.AND.mpi_master)write(*,*)"Lanczos iteration:",iter
      !
      call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,a_,b_)
      if(abs(b_)<threshold_)exit lanc_loop
@@ -91,15 +79,7 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call tql2(Nlanc,diag,subdiag,Z,ierr)
      !
-     if(verb.AND.mpi_master)then
-        print *,'---> lowest eigenvalue  <---'
-        write(*,*)"E_lowest    = ",diag(1)
-        open(10,file="lanc_eigenvals.dat")
-        do i=1,Nlanc
-           write(10,*)i,diag(i)
-        enddo
-        close(10)
-     endif
+     if(verb.AND.mpi_master)write(*,*)"E_lowest    = ",diag(1)
      !
      if(nlanc >= Ncheck_)then
         esave(nlanc-(Ncheck_-1))=diag(1)
@@ -109,8 +89,11 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
            if(abs(diff).le.threshold_)exit lanc_loop
         endif
      endif
+     if(verb.AND.mpi_master)write(*,*)""
      !
   enddo lanc_loop
+  if(verb.AND.mpi_master)write(*,*)""
+  if(verb.AND.mpi_master)write(*,*)""
   if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
   if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
   !
@@ -127,69 +110,56 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   egs = diag(1)
   !
   !Get the Eigenvector:
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     vin(i-mpi_rank*mpiQ)=vect(i)
-  enddo
-  allocate(vtmp(Nloc))
-  vtmp= 0d0
+  Vin = Vect
   vout= 0d0
+  vect= 0d0
   do iter=1,nlanc
      call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
-     vtmp = vtmp + vin*Z(iter,1)
+     vect = vect + vin*Z(iter,1)
   end do
-  vect= 0d0
-  call AllReduce_MPI(MpiComm,vtmp,vect)
-  norm=sqrt(dot_product(vect,vect))
-  vect=vect/norm
+  norm_tmp = dot_product(vect,vect)
+  call Allreduce_MPI(MpiComm,norm_tmp,norm)
+  vect=vect/sqrt(norm)
 end subroutine mpi_lanczos_eigh_d
 
 subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck)
   integer                              :: MpiComm
   interface 
-     subroutine MatVec(Nchunk,vin,vout)
-       integer    :: Nchunk
-       complex(8) :: vin(Nchunk)
-       complex(8) :: vout(Nchunk)
+     subroutine MatVec(Nloc,vin,vout)
+       integer    :: Nloc
+       complex(8) :: vin(Nloc)
+       complex(8) :: vout(Nloc)
      end subroutine MatVec
   end interface
   integer                              :: Ndim
   integer                              :: Nitermax
   integer                              :: Nloc
   real(8)                              :: egs
-  complex(8),dimension(Ndim)           :: vect
+  complex(8),dimension(:)              :: vect
   real(8),optional                     :: threshold
   integer,optional                     :: ncheck
   logical,optional                     :: iverbose
   !
-  complex(8),dimension(:),allocatable  :: vin,vout,vtmp
+  complex(8),dimension(size(vect))     :: vin,vout
   integer                              :: iter,nlanc
   real(8),dimension(Nitermax+1)        :: alanc,blanc
   real(8),dimension(Nitermax,Nitermax) :: Z
   real(8),dimension(Nitermax)          :: diag,subdiag,esave
-  real(8)                              :: a_,b_,norm,diff,ran(2)
+  real(8)                              :: a_,b_,norm,diff,ran(2),norm_tmp
   integer                              :: i,ierr
   !
-  integer                              :: mpi_rank
-  integer                              :: mpi_size
   logical                              :: mpi_master
-  integer                              :: mpiQ
-  integer                              :: mpiR
   !
-  mpi_rank=get_rank_MPI(MpiComm)
-  mpi_size=get_size_MPI(MpiComm)
   mpi_master=get_master_MPI(MpiComm)
   !
-  mpiQ = Ndim/mpi_size
-  mpiR = 0
-  if(mpi_rank == mpi_size-1)mpiR=mod(Ndim,mpi_size)
-  !
-  Nloc = mpiQ+mpiR
+  Nloc = size(vect)
   !
   if(present(iverbose))verb=iverbose
   if(present(threshold))threshold_=threshold
   if(present(ncheck))ncheck_=ncheck
   !
-  norm=dot_product(vect,vect)
+  norm_tmp=dot_product(vect,vect)
+  call AllReduce_Mpi(MpiComm,norm_tmp,norm)
   if(norm==0d0)then
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
@@ -200,16 +170,15 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
         call random_number(ran)
         vect(i)=dcmplx(ran(1),ran(2))
      enddo
-     vect=vect/sqrt(dot_product(vect,vect))
+     norm_tmp=dot_product(vect,vect)
+     call AllReduce_Mpi(MpiComm,norm_tmp,norm)
+     vect=vect/sqrt(norm)
      if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
   endif
   !
   !============= LANCZOS LOOP =====================
   !
-  allocate(vin(Nloc),vout(Nloc))
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     vin(i-mpi_rank*mpiQ)=vect(i)
-  enddo
+  vin = vect
   vout= zero
   alanc=0d0
   blanc=0d0
@@ -217,10 +186,7 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !
   lanc_loop: do iter=1,Nitermax
      !
-     if(verb.AND.mpi_master)then
-        print*,""
-        write(*,*)"Lanczos iteration:",iter
-     endif
+     if(verb.AND.mpi_master)write(*,*)"Lanczos iteration:",iter
      !
      call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,a_,b_)
      if(abs(b_)<threshold_)exit lanc_loop
@@ -236,15 +202,7 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call tql2(Nlanc,diag,subdiag,Z,ierr)
      !
-     if(verb.AND.mpi_master)then
-        print *,'---> lowest eigenvalue  <---'
-        write(*,*)"E_lowest    = ",diag(1)
-        open(10,file="lanc_eigenvals.dat")
-        do i=1,Nlanc
-           write(10,*)i,diag(i)
-        enddo
-        close(10)
-     endif
+     if(verb.AND.mpi_master)write(*,*)"E_lowest    = ",diag(1)
      !
      if(nlanc >= Ncheck_)then
         esave(nlanc-(Ncheck_-1))=diag(1)
@@ -254,8 +212,11 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
            if(abs(diff).le.threshold_)exit lanc_loop
         endif
      endif
+     if(verb.AND.mpi_master)write(*,*)
      !
   enddo lanc_loop
+  if(verb.AND.mpi_master)write(*,*)
+  if(verb.AND.mpi_master)write(*,*)
   if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
   if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
   !
@@ -272,20 +233,15 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   egs = diag(1)
   !
   !Get the Eigenvector:
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     vin(i-mpi_rank*mpiQ)=vect(i)
-  enddo
-  allocate(vtmp(Nloc))
-  vtmp= zero
+  vin = vect
   vout= zero
   do iter=1,nlanc
      call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
-     vtmp = vtmp + vin*Z(iter,1)
+     vect = vect + vin*Z(iter,1)
   end do
-  vect= 0d0
-  call AllReduce_MPI(MpiComm,vtmp,vect)
-  norm=sqrt(dot_product(vect,vect))
-  vect=vect/norm
+  norm_tmp=sqrt(dot_product(vect,vect))
+  call AllReduce_MPI(MpiComm,norm_tmp,norm)
+  vect=vect/sqrt(norm)
 end subroutine mpi_lanczos_eigh_c
 
 
@@ -300,14 +256,14 @@ end subroutine mpi_lanczos_eigh_c
 subroutine mpi_lanczos_tridiag_d(MpiComm,MatVec,vin,alanc,blanc,threshold)
   integer                                      :: MpiComm
   interface
-     subroutine MatVec(Nchunk,vin,vout)
-       integer                   :: Nchunk
-       real(8),dimension(Nchunk) :: vin
-       real(8),dimension(Nchunk) :: vout
+     subroutine MatVec(Nloc,vin,vout)
+       integer                 :: Nloc
+       real(8),dimension(Nloc) :: vin
+       real(8),dimension(Nloc) :: vout
      end subroutine MatVec
   end interface
-  real(8),dimension(:),intent(inout)           :: vin
-  real(8),dimension(:),allocatable             :: vout,vtmp
+  real(8),dimension(:),intent(inout)           :: vin !Nloc
+  real(8),dimension(size(vin))                 :: vout,vtmp
   real(8),dimension(:),intent(inout)           :: alanc
   real(8),dimension(size(alanc)),intent(inout) :: blanc
   integer                                      :: Nitermax,Nloc,i
@@ -315,28 +271,15 @@ subroutine mpi_lanczos_tridiag_d(MpiComm,MatVec,vin,alanc,blanc,threshold)
   real(8)                                      :: a_,b_
   real(8),optional                             :: threshold
   !
-  integer                                      :: mpi_rank
-  integer                                      :: mpi_size
   logical                                      :: mpi_master
-  integer                                      :: mpiQ
-  integer                                      :: mpiR
   !
-  mpi_rank=get_rank_MPI(MpiComm)
-  mpi_size=get_size_MPI(MpiComm)
   mpi_master=get_master_MPI(MpiComm)
   !
-  mpiQ = size(vin)/mpi_size
-  mpiR = 0
-  if(mpi_rank == mpi_size-1)mpiR=mod(size(vin),mpi_size)
-  !
-  Nloc = mpiQ+mpiR
+  Nloc = size(vin)
   !
   if(present(threshold))threshold_=threshold
   !
-  allocate(vtmp(Nloc),vout(Nloc))
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     vtmp(i-mpi_rank*mpiQ)=vin(i)
-  enddo
+  vtmp = vin
   Nitermax = size(alanc)
   a_=0d0
   b_=0d0
@@ -348,20 +291,19 @@ subroutine mpi_lanczos_tridiag_d(MpiComm,MatVec,vin,alanc,blanc,threshold)
      if(iter<nitermax)blanc(iter+1)=b_
   enddo
   if(iter==nitermax.AND.mpi_master)write(*,"(A)")"MPI_LANCZOS_TRIDIAG_D: reach Nitermax"
-  deallocate(vtmp,vout)
 end subroutine mpi_lanczos_tridiag_d
 
 subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
   integer                                      :: MpiComm
   interface
-     subroutine MatVec(Nchunk,vin,vout)
-       integer                      :: Nchunk
-       complex(8),dimension(Nchunk) :: vin
-       complex(8),dimension(Nchunk) :: vout
+     subroutine MatVec(Nloc,vin,vout)
+       integer                    :: Nloc
+       complex(8),dimension(Nloc) :: vin
+       complex(8),dimension(Nloc) :: vout
      end subroutine MatVec
   end interface
-  complex(8),dimension(:),intent(inout)        :: vin
-  complex(8),dimension(:),allocatable          :: vout,vtmp
+  complex(8),dimension(:),intent(inout)        :: vin !Nloc
+  complex(8),dimension(size(vin))              :: vout,vtmp
   real(8),dimension(:),intent(inout)           :: alanc
   real(8),dimension(size(alanc)),intent(inout) :: blanc
   integer                                      :: Nitermax,Nloc,i
@@ -369,28 +311,15 @@ subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
   real(8)                                      :: a_,b_
   real(8),optional                             :: threshold
   !
-  integer                                      :: mpi_rank
-  integer                                      :: mpi_size
   logical                                      :: mpi_master
-  integer                                      :: mpiQ
-  integer                                      :: mpiR
   !
-  mpi_rank=get_rank_MPI(MpiComm)
-  mpi_size=get_size_MPI(MpiComm)
   mpi_master=get_master_MPI(MpiComm)
   !
-  mpiQ = size(vin)/mpi_size
-  mpiR = 0
-  if(mpi_rank == mpi_size-1)mpiR=mod(size(vin),mpi_size)
-  !
-  Nloc = mpiQ+mpiR
+  Nloc = size(vin)
   !
   if(present(threshold))threshold_=threshold
   !
-  allocate(vtmp(Nloc),vout(Nloc))
-  do i=1 + mpi_rank*mpiQ, (mpi_rank+1)*mpiQ + mpiR
-     vtmp(i-mpi_rank*mpiQ)=vin(i)
-  enddo
+  vtmp=vin
   Nitermax = size(alanc)
   a_=0d0
   b_=0d0
@@ -402,7 +331,6 @@ subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
      if(iter<nitermax)blanc(iter+1)=b_
   enddo
   if(iter==nitermax.AND.mpi_master)write(*,"(A)")"MPI_LANCZOS_TRIDIAG_D: reach Nitermax"
-  deallocate(vtmp,vout)
 end subroutine mpi_lanczos_tridiag_c
 
 
@@ -421,13 +349,13 @@ end subroutine mpi_lanczos_tridiag_c
 subroutine mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,a,b)
   integer                                    :: MpiComm
   interface
-     subroutine MatVec(Nchunk,vin,vout)
-       integer                   :: Nchunk
-       real(8),dimension(Nchunk) :: vin
-       real(8),dimension(Nchunk) :: vout
+     subroutine MatVec(Nloc,vin,vout)
+       integer                 :: Nloc
+       real(8),dimension(Nloc) :: vin
+       real(8),dimension(Nloc) :: vout
      end subroutine MatVec
   end interface
-  real(8),dimension(:),intent(inout)         :: vin
+  real(8),dimension(:),intent(inout)         :: vin !Nloc
   real(8),dimension(size(vin)),intent(inout) :: vout
   real(8),dimension(size(vin))               :: tmp
   real(8),intent(inout)                      :: a,b
@@ -467,13 +395,13 @@ end subroutine mpi_lanczos_iteration_d
 subroutine mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,a,b)
   integer                                       :: MpiComm
   interface
-     subroutine MatVec(Nchunk,vin,vout)
-       integer                      :: Nchunk
-       complex(8),dimension(Nchunk) :: vin
-       complex(8),dimension(Nchunk) :: vout
+     subroutine MatVec(Nloc,vin,vout)
+       integer                    :: Nloc
+       complex(8),dimension(Nloc) :: vin
+       complex(8),dimension(Nloc) :: vout
      end subroutine MatVec
   end interface
-  complex(8),dimension(:),intent(inout)         :: vin
+  complex(8),dimension(:),intent(inout)         :: vin !Nloc
   complex(8),dimension(size(vin)),intent(inout) :: vout
   complex(8),dimension(size(vin))               :: tmp
   real(8),intent(inout)                         :: a,b
