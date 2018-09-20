@@ -176,24 +176,28 @@ contains
     integer          :: comm_,size
     integer          :: i
     comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    rank = Get_Rank_MPI(comm_)
-    size = Get_Size_MPI(comm_)
-    if(rank==0)write(*,'(a)')"---------------MPI----------------"
-    do i=0,size-1
+    if(comm_ /= Mpi_Comm_Null)then
+       rank = Get_Rank_MPI(comm_)
+       size = Get_Size_MPI(comm_)
+       if(rank==0)write(*,'(a)')"---------------MPI----------------"
+       do i=0,size-1
+          call MPI_Barrier(comm_,ierr)
+          if(rank==i)write(*,"(A,I6,A,I6,A)")"rank:",rank," of ",size," alive"          
+       enddo
        call MPI_Barrier(comm_,ierr)
-       if(rank==i)write(*,"(A,I6,A,I6,A)")"rank:",rank," of ",size," alive"          
-    enddo
-    call MPI_Barrier(comm_,ierr)
-    if(rank==0)write(*,'(a)')"----------------------------------"
-    if(rank==0)write(*,'(a)')""
+       if(rank==0)write(*,'(a)')"----------------------------------"
+       if(rank==0)write(*,'(a)')""
+    endif
   end subroutine StartMsg_MPI
 
   subroutine Barrier_MPI(comm)
     integer,optional :: comm
     integer          :: comm_
     comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    call MPI_Barrier(comm_,ierr)
-    call Error_MPI(ierr,"Barrier_MPI")
+    if(comm_/=Mpi_Comm_Null)then
+       call MPI_Barrier(comm_,ierr)
+       call Error_MPI(ierr,"Barrier_MPI")
+    endif
   end subroutine Barrier_MPI
 
 
@@ -203,33 +207,38 @@ contains
   function Get_size_MPI(comm) result(size)
     integer :: comm
     integer :: size
-    call MPI_Comm_size(comm,size,ierr)
-    call Error_MPI(ierr,"Get_Size_MPI")
+    if(comm/=Mpi_Comm_Null)then
+       call MPI_Comm_size(comm,size,ierr)
+       call Error_MPI(ierr,"Get_Size_MPI")
+    else
+       return
+    endif
   end function Get_size_MPI
 
   function Get_rank_MPI(comm) result(rank)
     integer :: comm
     integer :: rank
-    call MPI_Comm_rank(comm,rank,ierr)
-    call Error_MPI(ierr,"Get_Rank_MPI")
+    if(comm/=Mpi_Comm_Null)then
+       call MPI_Comm_rank(comm,rank,ierr)
+       call Error_MPI(ierr,"Get_Rank_MPI")
+    else
+       return
+    endif
   end function Get_rank_MPI
-
-  function Get_Processor_MPI() result(workstation)
-    integer                               :: istat
-    character(len=MPI_MAX_PROCESSOR_NAME) :: workstation
-    call MPI_GET_PROCESSOR_NAME(workstation,istat,ierr)
-    call Error_MPI(ierr,"Get_Processor_MPI")
-  end function Get_Processor_MPI
 
   function Get_master_MPI(comm) result(master)
     integer :: comm
     integer :: size
     integer :: rank
     logical :: master
-    call MPI_Comm_rank(comm,rank,ierr)
-    call Error_MPI(ierr,"Get_Master_MPI")
-    master=.false.
-    if(rank==0)master=.true.
+    if(comm/=Mpi_Comm_Null)then    
+       call MPI_Comm_rank(comm,rank,ierr)
+       call Error_MPI(ierr,"Get_Master_MPI")
+       master=.false.
+       if(rank==0)master=.true.
+    else
+       master=.false.
+    endif
   end function Get_master_MPI
 
   function Get_last_MPI(comm) result(last)
@@ -237,10 +246,14 @@ contains
     integer :: size
     integer :: rank
     logical :: last
-    call MPI_Comm_rank(comm,rank,ierr)
-    call MPI_Comm_size(comm,size,ierr)    
-    last=.false.
-    if(rank==size-1)last=.true.
+    if(comm/=Mpi_Comm_Null)then
+       call MPI_Comm_rank(comm,rank,ierr)
+       call MPI_Comm_size(comm,size,ierr)    
+       last=.false.
+       if(rank==size-1)last=.true.
+    else
+       last=.false.
+    endif
   end function Get_last_MPI
 
 
@@ -258,6 +271,13 @@ contains
   end function Get_Wtick_MPI
 
 
+
+  function Get_Processor_MPI() result(workstation)
+    integer                               :: istat
+    character(len=MPI_MAX_PROCESSOR_NAME) :: workstation
+    call MPI_GET_PROCESSOR_NAME(workstation,istat,ierr)
+    call Error_MPI(ierr,"Get_Processor_MPI")
+  end function Get_Processor_MPI
 
 
 

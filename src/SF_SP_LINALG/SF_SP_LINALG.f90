@@ -69,6 +69,191 @@ contains
   !   MATRIX (defined via H*v)
   ! - DBLE and CMPLX versions included
   ! - SERIAL and PARALLEL-MPI versions included
+  !        [COMM    MPI  Communicator for the processor grid.  (INPUT)]
+  !        IDO     Integer.  (INPUT/OUTPUT)
+  !                Reverse communication flag.  IDO must be zero on the first
+  !                call to pdsaupd .  IDO will be set internally to
+  !                indicate the type of operation to be performed.  Control is
+  !                then given back to the calling routine which has the
+  !                responsibility to carry out the requested operation and call
+  !                pdsaupd  with the result.  The operand is given in
+  !                WORKD(IPNTR(1)), the result must be put in WORKD(IPNTR(2)).
+  !                (If Mode = 2 see remark 5 below)
+  !                -------------------------------------------------------------
+  !                IDO =  0: first call to the reverse communication interface
+  !                IDO = -1: compute  Y = OP * X  where
+  !                          IPNTR(1) is the pointer into WORKD for X,
+  !                          IPNTR(2) is the pointer into WORKD for Y.
+  !                          This is for the initialization phase to force the
+  !                          starting vector into the range of OP.
+  !                IDO =  1: compute  Y = OP * X where
+  !                          IPNTR(1) is the pointer into WORKD for X,
+  !                          IPNTR(2) is the pointer into WORKD for Y.
+  !                          In mode 3,4 and 5, the vector B * X is already
+  !                          available in WORKD(ipntr(3)).  It does not
+  !                          need to be recomputed in forming OP * X.
+  !                IDO =  2: compute  Y = B * X  where
+  !                          IPNTR(1) is the pointer into WORKD for X,
+  !                          IPNTR(2) is the pointer into WORKD for Y.
+  !                IDO =  3: compute the IPARAM(8) shifts where
+  !                          IPNTR(11) is the pointer into WORKL for
+  !                          placing the shifts. See remark 6 below.
+  !                IDO = 99: done
+  !                -------------------------------------------------------------
+  !        BMAT    Character*1.  (INPUT)
+  !                BMAT specifies the type of the matrix B that defines the
+  !                semi-inner product for the operator OP.
+  !                B = 'I' -> standard eigenvalue problem A*x = lambda*x
+  !                B = 'G' -> generalized eigenvalue problem A*x = lambda*B*x
+  !        N       Integer.  (INPUT)
+  !                Dimension of the eigenproblem.
+  !        WHICH   Character*2.  (INPUT)
+  !                Specify which of the Ritz values of OP to compute.
+  !                'LA' - compute the NEV largest (algebraic) eigenvalues.
+  !                'SA' - compute the NEV smallest (algebraic) eigenvalues.
+  !                'LM' - compute the NEV largest (in magnitude) eigenvalues.
+  !                'SM' - compute the NEV smallest (in magnitude) eigenvalues.
+  !                'BE' - compute NEV eigenvalues, half from each end of the
+  !                       spectrum.  When NEV is odd, compute one more from the
+  !                       high end than from the low end.
+  !                 (see remark 1 below)
+  !        NEV     Integer.  (INPUT)
+  !                Number of eigenvalues of OP to be computed. 0 < NEV < N.
+  !        TOL     Double precision  scalar.  (INPUT)
+  !                Stopping criterion: the relative accuracy of the Ritz value
+  !                is considered acceptable if BOUNDS(I) .LE. TOL*ABS(RITZ(I)).
+  !                If TOL .LE. 0. is passed a default is set:
+  !                DEFAULT = DLAMCH ('EPS')  (machine precision as computed
+  !                          by the LAPACK auxiliary subroutine DLAMCH ).
+  !        RESID   Double precision  array of length N.  (INPUT/OUTPUT)
+  !                On INPUT:
+  !                If INFO .EQ. 0, a random initial residual vector is used.
+  !                If INFO .NE. 0, RESID contains the initial residual vector,
+  !                                possibly from a previous run.
+  !                On OUTPUT:
+  !                RESID contains the final residual vector.
+  !        NCV     Integer.  (INPUT)
+  !                Number of columns of the matrix V (less than or equal to N).
+  !                This will indicate how many Lanczos vectors are generated
+  !                at each iteration.  After the startup phase in which NEV
+  !                Lanczos vectors are generated, the algorithm generates
+  !                NCV-NEV Lanczos vectors at each subsequent update iteration.
+  !                Most of the cost in generating each Lanczos vector is in the
+  !                matrix-vector product OP*x. (See remark 4 below).
+  !        V       Double precision  N by NCV array.  (OUTPUT)
+  !                The NCV columns of V contain the Lanczos basis vectors.
+  !        LDV     Integer.  (INPUT)
+  !                Leading dimension of V exactly as declared in the calling
+  !                program.
+  !        IPARAM  Integer array of length 11.  (INPUT/OUTPUT)
+  !                IPARAM(1) = ISHIFT: method for selecting the implicit shifts.
+  !                The shifts selected at each iteration are used to restart
+  !                the Arnoldi iteration in an implicit fashion.
+  !                -------------------------------------------------------------
+  !                ISHIFT = 0: the shifts are provided by the user via
+  !                            reverse communication.  The NCV eigenvalues of
+  !                            the current tridiagonal matrix T are returned in
+  !                            the part of WORKL array corresponding to RITZ.
+  !                            See remark 6 below.
+  !                ISHIFT = 1: exact shifts with respect to the reduced
+  !                            tridiagonal matrix T.  This is equivalent to
+  !                            restarting the iteration with a starting vector
+  !                            that is a linear combination of Ritz vectors
+  !                            associated with the "wanted" Ritz values.
+  !                -------------------------------------------------------------
+  !                IPARAM(2) = LEVEC
+  !                No longer referenced. See remark 2 below.
+  !                IPARAM(3) = MXITER
+  !                On INPUT:  maximum number of Arnoldi update iterations allowed.
+  !                On OUTPUT: actual number of Arnoldi update iterations taken.
+  !                IPARAM(4) = NB: blocksize to be used in the recurrence.
+  !                The code currently works only for NB = 1.
+  !                IPARAM(5) = NCONV: number of "converged" Ritz values.
+  !                This represents the number of Ritz values that satisfy
+  !                the convergence criterion.
+  !                IPARAM(6) = IUPD
+  !                No longer referenced. Implicit restarting is ALWAYS used.
+  !                IPARAM(7) = MODE
+  !                On INPUT determines what type of eigenproblem is being solved.
+  !                Must be 1,2,3,4,5; See under PURPOSE of pdsaupd  for the
+  !                five modes available.
+  !                IPARAM(8) = NP
+  !                When ido = 3 and the user provides shifts through reverse
+  !                communication (IPARAM(1)=0), pdsaupd  returns NP, the number
+  !                of shifts the user is to provide. 0 < NP <=NCV-NEV. See Remark
+  !                6 below.
+  !                IPARAM(9) = NUMOP, IPARAM(10) = NUMOPB, IPARAM(11) = NUMREO,
+  !                OUTPUT: NUMOP  = total number of OP*x operations,
+  !                        NUMOPB = total number of B*x operations if BMAT='G',
+  !                        NUMREO = total number of steps of re-orthogonalization.
+  !        IPNTR   Integer array of length 11.  (OUTPUT)
+  !                Pointer to mark the starting locations in the WORKD and WORKL
+  !                arrays for matrices/vectors used by the Lanczos iteration.
+  !                -------------------------------------------------------------
+  !                IPNTR(1): pointer to the current operand vector X in WORKD.
+  !                IPNTR(2): pointer to the current result vector Y in WORKD.
+  !                IPNTR(3): pointer to the vector B * X in WORKD when used in
+  !                          the shift-and-invert mode.
+  !                IPNTR(4): pointer to the next available location in WORKL
+  !                          that is untouched by the program.
+  !                IPNTR(5): pointer to the NCV by 2 tridiagonal matrix T in WORKL.
+  !                IPNTR(6): pointer to the NCV RITZ values array in WORKL.
+  !                IPNTR(7): pointer to the Ritz estimates in array WORKL associated
+  !                          with the Ritz values located in RITZ in WORKL.
+  !                IPNTR(11): pointer to the NP shifts in WORKL. See Remark 6 below.
+  !                Note: IPNTR(8:10) is only referenced by pdseupd . See Remark 2.
+  !                IPNTR(8): pointer to the NCV RITZ values of the original system.
+  !                IPNTR(9): pointer to the NCV corresponding error bounds.
+  !                IPNTR(10): pointer to the NCV by NCV matrix of eigenvectors
+  !                           of the tridiagonal matrix T. Only referenced by
+  !                           pdseupd  if RVEC = .TRUE. See Remarks.
+  !                -------------------------------------------------------------
+  !        WORKD   Double precision  work array of length 3*N.  (REVERSE COMMUNICATION)
+  !                Distributed array to be used in the basic Arnoldi iteration
+  !                for reverse communication.  The user should not use WORKD
+  !                as temporary workspace during the iteration. Upon termination
+  !                WORKD(1:N) contains B*RESID(1:N). If the Ritz vectors are desired
+  !                subroutine pdseupd  uses this output.
+  !                See Data Distribution Note below.
+  !        WORKL   Double precision  work array of length LWORKL.  (OUTPUT/WORKSPACE)
+  !                Private (replicated) array on each PE or array allocated on
+  !                the front end.  See Data Distribution Note below.
+  !        LWORKL  Integer.  (INPUT)
+  !                LWORKL must be at least NCV**2 + 8*NCV .
+  !        INFO    Integer.  (INPUT/OUTPUT)
+  !                If INFO .EQ. 0, a randomly initial residual vector is used.
+  !                If INFO .NE. 0, RESID contains the initial residual vector,
+  !                                possibly from a previous run.
+  !                Error flag on output.
+  !                =  0: Normal exit.
+  !                =  1: Maximum number of iterations taken.
+  !                      All possible eigenvalues of OP has been found. IPARAM(5)
+  !                      returns the number of wanted converged Ritz values.
+  !                =  2: No longer an informational error. Deprecated starting
+  !                      with release 2 of ARPACK.
+  !                =  3: No shifts could be applied during a cycle of the
+  !                      Implicitly restarted Arnoldi iteration. One possibility
+  !                      is to increase the size of NCV relative to NEV.
+  !                      See remark 4 below.
+  !                = -1: N must be positive.
+  !                = -2: NEV must be positive.
+  !                = -3: NCV must be greater than NEV and less than or equal to N.
+  !                = -4: The maximum number of Arnoldi update iterations allowed
+  !                      must be greater than zero.
+  !                = -5: WHICH must be one of 'LM', 'SM', 'LA', 'SA' or 'BE'.
+  !                = -6: BMAT must be one of 'I' or 'G'.
+  !                = -7: Length of private work array WORKL is not sufficient.
+  !                = -8: Error return from trid. eigenvalue calculation;
+  !                      Informatinal error from LAPACK routine dsteqr .
+  !                = -9: Starting vector is zero.
+  !                = -10: IPARAM(7) must be 1,2,3,4,5.
+  !                = -11: IPARAM(7) = 1 and BMAT = 'G' are incompatable.
+  !                = -12: IPARAM(1) must be equal to 0 or 1.
+  !                = -13: NEV and WHICH = 'BE' are incompatable.
+  !                = -9999: Could not build an Arnoldi factorization.
+  !                         IPARAM(5) returns the size of the current Arnoldi
+  !                         factorization. The user is advised to check that
+  !                         enough workspace and array storage has been allocated.
   !##################################################################
   include "arpack_serial.f90"
 #ifdef _MPI
@@ -86,6 +271,14 @@ contains
 #ifdef _MPI
   include "lanczos_mpi.f90"
 #endif
+
+
+
+
+
+
+
+
 
 
 

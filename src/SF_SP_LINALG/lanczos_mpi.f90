@@ -29,48 +29,77 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !
   logical                              :: mpi_master
   !
-  mpi_master=get_master_MPI(MpiComm)
-  !
-  Nloc = size(vect)
-  !
-  if(present(iverbose))verb=iverbose
-  if(present(threshold))threshold_=threshold
-  if(present(ncheck))ncheck_=ncheck
-  !
-  norm_tmp=dot_product(vect,vect)
-  call AllReduce_MPI(MpiComm,norm_tmp,norm)
-  !
-  if(norm==0d0)then
-     call random_seed(size=nrandom)
-     if(allocated(seed_random))deallocate(seed_random)
-     allocate(seed_random(nrandom))
-     seed_random=1234567
-     call random_seed(put=seed_random)
-     call random_number(vect)
+  if(MpiComm /= MPI_COMM_NULL)then
+     !
+     mpi_master=get_master_MPI(MpiComm)
+     !
+     Nloc = size(vect)
+     !
+     if(present(iverbose))verb=iverbose
+     if(present(threshold))threshold_=threshold
+     if(present(ncheck))ncheck_=ncheck
+     !
      norm_tmp=dot_product(vect,vect)
      call AllReduce_MPI(MpiComm,norm_tmp,norm)
-     vect=vect/sqrt(norm)
-     if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
-  endif
-  !
-  !============= LANCZOS LOOP =====================
-  !
-  Vin  = Vect                   !save input vector for Eigenvector calculation:
-  Vout = 0d0
-  alanc= 0d0
-  blanc= 0d0
-  nlanc= 0
-  !
-  lanc_loop: do iter=1,Nitermax
      !
-     if(verb.AND.mpi_master)write(*,*)"Lanczos iteration:",iter
+     if(norm==0d0)then
+        call random_seed(size=nrandom)
+        if(allocated(seed_random))deallocate(seed_random)
+        allocate(seed_random(nrandom))
+        seed_random=1234567
+        call random_seed(put=seed_random)
+        call random_number(vect)
+        norm_tmp=dot_product(vect,vect)
+        call AllReduce_MPI(MpiComm,norm_tmp,norm)
+        vect=vect/sqrt(norm)
+        if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
+     endif
      !
-     call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,a_,b_)
-     if(abs(b_)<threshold_)exit lanc_loop
+     !============= LANCZOS LOOP =====================
      !
-     nlanc=nlanc+1
+     Vin  = Vect                   !save input vector for Eigenvector calculation:
+     Vout = 0d0
+     alanc= 0d0
+     blanc= 0d0
+     nlanc= 0
      !
-     alanc(iter) = a_ ; blanc(iter+1) = b_
+     lanc_loop: do iter=1,Nitermax
+        !
+
+        !
+        call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,a_,b_)
+        if(abs(b_)<threshold_)exit lanc_loop
+        !
+        nlanc=nlanc+1
+        !
+        alanc(iter) = a_ ; blanc(iter+1) = b_
+        !
+        diag    = 0d0
+        subdiag = 0.d0
+        Z       = eye(Nlanc)
+        diag(1:Nlanc)    = alanc(1:Nlanc)
+        subdiag(2:Nlanc) = blanc(2:Nlanc)
+        call tql2(Nlanc,diag,subdiag,Z,ierr)
+        !
+        if(verb.AND.mpi_master)write(*,*)"Lanczos iteration, E_lowest    = ",iter,diag(1)
+        !
+        if(nlanc >= Ncheck_)then
+           esave(nlanc-(Ncheck_-1))=diag(1)
+           if(nlanc >= (Ncheck_+1))then
+              diff=esave(Nlanc-(Ncheck_-1))-esave(Nlanc-(Ncheck_-1)-1)
+              if(verb.AND.mpi_master)write(*,*)'test deltaE = ',diff
+              if(abs(diff).le.threshold_)exit lanc_loop
+           endif
+        endif
+        if(verb.AND.mpi_master)write(*,*)""
+        !
+     enddo lanc_loop
+     if(verb.AND.mpi_master)write(*,*)""
+     if(verb.AND.mpi_master)write(*,*)""
+     if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
+     if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
+     !
+     !============== END LANCZOS LOOP ======================
      !
      diag    = 0d0
      subdiag = 0.d0
@@ -79,47 +108,21 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call tql2(Nlanc,diag,subdiag,Z,ierr)
      !
-     if(verb.AND.mpi_master)write(*,*)"E_lowest    = ",diag(1)
+     !Get the Eigenvalues:
+     egs = diag(1)
      !
-     if(nlanc >= Ncheck_)then
-        esave(nlanc-(Ncheck_-1))=diag(1)
-        if(nlanc >= (Ncheck_+1))then
-           diff=esave(Nlanc-(Ncheck_-1))-esave(Nlanc-(Ncheck_-1)-1)
-           if(verb.AND.mpi_master)write(*,*)'test deltaE = ',diff
-           if(abs(diff).le.threshold_)exit lanc_loop
-        endif
-     endif
-     if(verb.AND.mpi_master)write(*,*)""
-     !
-  enddo lanc_loop
-  if(verb.AND.mpi_master)write(*,*)""
-  if(verb.AND.mpi_master)write(*,*)""
-  if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
-  if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
-  !
-  !============== END LANCZOS LOOP ======================
-  !
-  diag    = 0d0
-  subdiag = 0.d0
-  Z       = eye(Nlanc)
-  diag(1:Nlanc)    = alanc(1:Nlanc)
-  subdiag(2:Nlanc) = blanc(2:Nlanc)
-  call tql2(Nlanc,diag,subdiag,Z,ierr)
-  !
-  !Get the Eigenvalues:
-  egs = diag(1)
-  !
-  !Get the Eigenvector:
-  Vin = Vect
-  vout= 0d0
-  vect= 0d0
-  do iter=1,nlanc
-     call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
-     vect = vect + vin*Z(iter,1)
-  end do
-  norm_tmp = dot_product(vect,vect)
-  call Allreduce_MPI(MpiComm,norm_tmp,norm)
-  vect=vect/sqrt(norm)
+     !Get the Eigenvector:
+     Vin = Vect
+     vout= 0d0
+     vect= 0d0
+     do iter=1,nlanc
+        call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
+        vect = vect + vin*Z(iter,1)
+     end do
+     norm_tmp = dot_product(vect,vect)
+     call Allreduce_MPI(MpiComm,norm_tmp,norm)
+     vect=vect/sqrt(norm)
+  endif
 end subroutine mpi_lanczos_eigh_d
 
 subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck)
@@ -150,98 +153,101 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !
   logical                              :: mpi_master
   !
-  mpi_master=get_master_MPI(MpiComm)
-  !
-  Nloc = size(vect)
-  !
-  if(present(iverbose))verb=iverbose
-  if(present(threshold))threshold_=threshold
-  if(present(ncheck))ncheck_=ncheck
-  !
-  norm_tmp=dot_product(vect,vect)
-  call AllReduce_Mpi(MpiComm,norm_tmp,norm)
-  if(norm==0d0)then
-     call random_seed(size=nrandom)
-     if(allocated(seed_random))deallocate(seed_random)
-     allocate(seed_random(nrandom))
-     seed_random=1234567
-     call random_seed(put=seed_random)
-     do i=1,Ndim
-        call random_number(ran)
-        vect(i)=dcmplx(ran(1),ran(2))
-     enddo
+  if(MpiComm /= MPI_COMM_NULL)then
+     !
+     mpi_master=get_master_MPI(MpiComm)
+     !
+     Nloc = size(vect)
+     !
+     if(present(iverbose))verb=iverbose
+     if(present(threshold))threshold_=threshold
+     if(present(ncheck))ncheck_=ncheck
+     !
      norm_tmp=dot_product(vect,vect)
      call AllReduce_Mpi(MpiComm,norm_tmp,norm)
-     vect=vect/sqrt(norm)
-     if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
-  endif
-  !
-  !============= LANCZOS LOOP =====================
-  !
-  vin = vect
-  vout= zero
-  alanc=0d0
-  blanc=0d0
-  nlanc=0
-  !
-  lanc_loop: do iter=1,Nitermax
+     if(norm==0d0)then
+        call random_seed(size=nrandom)
+        if(allocated(seed_random))deallocate(seed_random)
+        allocate(seed_random(nrandom))
+        seed_random=1234567
+        call random_seed(put=seed_random)
+        do i=1,Nloc
+           call random_number(ran)
+           vect(i)=dcmplx(ran(1),ran(2))
+        enddo
+        norm_tmp=dot_product(vect,vect)
+        call AllReduce_Mpi(MpiComm,norm_tmp,norm)
+        vect=vect/sqrt(norm)
+        if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
+     endif
      !
-     if(verb.AND.mpi_master)write(*,*)"Lanczos iteration:",iter
+     !============= LANCZOS LOOP =====================
      !
-     call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,a_,b_)
-     if(abs(b_)<threshold_)exit lanc_loop
+     vin = vect
+     vout= zero
+     alanc=0d0
+     blanc=0d0
+     nlanc=0
      !
-     nlanc=nlanc+1
+     lanc_loop: do iter=1,Nitermax
+        !
+        if(verb.AND.mpi_master)write(*,*)"Lanczos iteration:",iter
+        !
+        call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,a_,b_)
+        if(abs(b_)<threshold_)exit lanc_loop
+        !
+        nlanc=nlanc+1
+        !
+        alanc(iter) = a_ ; blanc(iter+1) = b_
+        !
+        diag    = 0d0
+        subdiag = 0d0
+        Z       = eye(Nlanc)
+        diag(1:Nlanc)    = alanc(1:Nlanc)
+        subdiag(2:Nlanc) = blanc(2:Nlanc)
+        call tql2(Nlanc,diag,subdiag,Z,ierr)
+        !
+        if(verb.AND.mpi_master)write(*,*)"E_lowest    = ",diag(1)
+        !
+        if(nlanc >= Ncheck_)then
+           esave(nlanc-(Ncheck_-1))=diag(1)
+           if(nlanc >= (Ncheck_+1))then
+              diff=esave(Nlanc-(Ncheck_-1))-esave(Nlanc-(Ncheck_-1)-1)
+              if(verb.AND.mpi_master)write(*,*)'test deltaE = ',diff
+              if(abs(diff).le.threshold_)exit lanc_loop
+           endif
+        endif
+        if(verb.AND.mpi_master)write(*,*)
+        !
+     enddo lanc_loop
+     if(verb.AND.mpi_master)write(*,*)
+     if(verb.AND.mpi_master)write(*,*)
+     if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
+     if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
      !
-     alanc(iter) = a_ ; blanc(iter+1) = b_
+     !============== END LANCZOS LOOP ======================
      !
      diag    = 0d0
-     subdiag = 0d0
+     subdiag = 0.d0
      Z       = eye(Nlanc)
      diag(1:Nlanc)    = alanc(1:Nlanc)
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call tql2(Nlanc,diag,subdiag,Z,ierr)
      !
-     if(verb.AND.mpi_master)write(*,*)"E_lowest    = ",diag(1)
+     !Get the Eigenvalues:
+     egs = diag(1)
      !
-     if(nlanc >= Ncheck_)then
-        esave(nlanc-(Ncheck_-1))=diag(1)
-        if(nlanc >= (Ncheck_+1))then
-           diff=esave(Nlanc-(Ncheck_-1))-esave(Nlanc-(Ncheck_-1)-1)
-           if(verb.AND.mpi_master)write(*,*)'test deltaE = ',diff
-           if(abs(diff).le.threshold_)exit lanc_loop
-        endif
-     endif
-     if(verb.AND.mpi_master)write(*,*)
-     !
-  enddo lanc_loop
-  if(verb.AND.mpi_master)write(*,*)
-  if(verb.AND.mpi_master)write(*,*)
-  if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
-  if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
-  !
-  !============== END LANCZOS LOOP ======================
-  !
-  diag    = 0d0
-  subdiag = 0.d0
-  Z       = eye(Nlanc)
-  diag(1:Nlanc)    = alanc(1:Nlanc)
-  subdiag(2:Nlanc) = blanc(2:Nlanc)
-  call tql2(Nlanc,diag,subdiag,Z,ierr)
-  !
-  !Get the Eigenvalues:
-  egs = diag(1)
-  !
-  !Get the Eigenvector:
-  vin = vect
-  vout= zero
-  do iter=1,nlanc
-     call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
-     vect = vect + vin*Z(iter,1)
-  end do
-  norm_tmp=sqrt(dot_product(vect,vect))
-  call AllReduce_MPI(MpiComm,norm_tmp,norm)
-  vect=vect/sqrt(norm)
+     !Get the Eigenvector:
+     vin = vect
+     vout= zero
+     do iter=1,nlanc
+        call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
+        vect = vect + vin*Z(iter,1)
+     end do
+     norm_tmp=sqrt(dot_product(vect,vect))
+     call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     vect=vect/sqrt(norm)
+  endif
 end subroutine mpi_lanczos_eigh_c
 
 
@@ -273,24 +279,27 @@ subroutine mpi_lanczos_tridiag_d(MpiComm,MatVec,vin,alanc,blanc,threshold)
   !
   logical                                      :: mpi_master
   !
-  mpi_master=get_master_MPI(MpiComm)
-  !
-  Nloc = size(vin)
-  !
-  if(present(threshold))threshold_=threshold
-  !
-  vtmp = vin
-  Nitermax = size(alanc)
-  a_=0d0
-  b_=0d0
-  vout=0d0
-  do iter=1,Nitermax
-     call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vtmp,vout,a_,b_)
-     alanc(iter)=a_
-     if(abs(b_)<threshold_)exit
-     if(iter<nitermax)blanc(iter+1)=b_
-  enddo
-  if(iter==nitermax.AND.mpi_master)write(*,"(A)")"MPI_LANCZOS_TRIDIAG_D: reach Nitermax"
+  if(MpiComm /= MPI_COMM_NULL)then
+     !
+     mpi_master=get_master_MPI(MpiComm)
+     !
+     Nloc = size(vin)
+     !
+     if(present(threshold))threshold_=threshold
+     !
+     vtmp = vin
+     Nitermax = size(alanc)
+     a_=0d0
+     b_=0d0
+     vout=0d0
+     do iter=1,Nitermax
+        call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vtmp,vout,a_,b_)
+        alanc(iter)=a_
+        if(abs(b_)<threshold_)exit
+        if(iter<nitermax)blanc(iter+1)=b_
+     enddo
+     if(iter==nitermax.AND.mpi_master)write(*,"(A)")"MPI_LANCZOS_TRIDIAG_D: reach Nitermax"
+  endif
 end subroutine mpi_lanczos_tridiag_d
 
 subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
@@ -313,24 +322,27 @@ subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
   !
   logical                                      :: mpi_master
   !
-  mpi_master=get_master_MPI(MpiComm)
-  !
-  Nloc = size(vin)
-  !
-  if(present(threshold))threshold_=threshold
-  !
-  vtmp=vin
-  Nitermax = size(alanc)
-  a_=0d0
-  b_=0d0
-  vout=zero
-  do iter=1,Nitermax
-     call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vtmp,vout,a_,b_)
-     alanc(iter)=a_
-     if(abs(b_)<threshold_)exit
-     if(iter<nitermax)blanc(iter+1)=b_
-  enddo
-  if(iter==nitermax.AND.mpi_master)write(*,"(A)")"MPI_LANCZOS_TRIDIAG_D: reach Nitermax"
+  if(MpiComm /= MPI_COMM_NULL)then
+     !
+     mpi_master=get_master_MPI(MpiComm)
+     !
+     Nloc = size(vin)
+     !
+     if(present(threshold))threshold_=threshold
+     !
+     vtmp=vin
+     Nitermax = size(alanc)
+     a_=0d0
+     b_=0d0
+     vout=zero
+     do iter=1,Nitermax
+        call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vtmp,vout,a_,b_)
+        alanc(iter)=a_
+        if(abs(b_)<threshold_)exit
+        if(iter<nitermax)blanc(iter+1)=b_
+     enddo
+     if(iter==nitermax.AND.mpi_master)write(*,"(A)")"MPI_LANCZOS_TRIDIAG_C: reach Nitermax"
+  endif
 end subroutine mpi_lanczos_tridiag_c
 
 
@@ -419,7 +431,7 @@ subroutine mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,a,b)
      norm = 0d0
      norm_tmp=dot_product(vin,vin)
      call AllReduce_MPI(MpiComm,norm_tmp,norm)
-     if(mpi_master.AND.norm==0d0)stop "MPI_LANCZOS_ITERATION_D: norm = 0!!"
+     if(mpi_master.AND.norm==0d0)stop "MPI_LANCZOS_ITERATION_C: norm = 0!!"
      vin=vin/sqrt(norm)
      b=0d0
   end if

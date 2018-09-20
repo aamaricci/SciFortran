@@ -340,8 +340,8 @@ contains
   !+-----------------------------------------------------------------+
   subroutine sort(ARR,M)
     implicit none
-    integer :: i,j,M
-    real(8) :: a
+    integer              :: i,j,M
+    real(8)              :: a
     real(8),dimension(M) :: ARR
     do j=2, M
        a=ARR(j)
