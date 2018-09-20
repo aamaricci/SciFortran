@@ -541,10 +541,11 @@ contains
     integer             :: digits
     s_length = len ( s )
     write(fmt,"(A2,I0,A1,I0,A1)")"(F",s_length,".",digits,")"
-    w_=floor(log10(abs(r8)))
-    if(w_<-1)write(fmt,"(A3,I0,A1,I0,A1)")"(ES",s_length,".",digits,")"
+    if(r8/=0d0)then
+       w_=floor(log10(abs(r8)))
+       if(w_<-1)write(fmt,"(A3,I0,A1,I0,A1)")"(ES",s_length,".",digits,")"
+    endif
     write ( s, fmt ) r8
-    !  Shift the string left.
     s = trim(adjustl(trim( s )))
   end subroutine r8_to_s_left
 
