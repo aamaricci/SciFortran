@@ -5,7 +5,7 @@ This is a unitary collection of fortran modules and procedures for scientific ca
 There are large areas that are still not covered.  
 Anyone is welcome to contribute or to test the software. 
 
-###Installation 
+### Installation 
 Installation is now available using CMake.
 
 Clone the repo:
@@ -28,7 +28,7 @@ The library can be loaded using one of the following, automatically generated, f
 * homebrew `bash` script `<PREFIX>/bin/configvars.sh`
  
 
-The `CMake` compilation can be tuned using the following additional variables:   
+The `CMake` compilation can be controlled using the following additional variables:   
 
 * `-DPREFIX=prefix directory <~/opt/scifor/VERSION/PLAT>` 
 
@@ -45,7 +45,7 @@ adriano DOT amaricci @ gmail DOT com
 --
 
 ***LICENSE***  
-Copyright (C) 2012-2017  Adriano Amaricci
+Copyright (C) Adriano Amaricci
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
