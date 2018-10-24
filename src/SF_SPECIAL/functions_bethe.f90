@@ -33,9 +33,9 @@ elemental function dens_bethe(x,D)
   complex(8)                  :: root,d2
   d_=1.d0;if(present(d))d_=d
   d2=dcmplx(d_,0.d0)
-  root=dcmplx((1.d0-1.d0*((x/d))**2),0.d0)
+  root=dcmplx((1.d0-1.d0*((x/d_))**2),0.d0)
   root=sqrt(root)
-  dens_bethe=(2.d0/(3.141592653589793238d0*d))*root
+  dens_bethe=(2.d0/(3.141592653589793238d0*d_))*root
 end function dens_bethe
 
 

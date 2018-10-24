@@ -102,7 +102,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      endif
   endif
   !
-  write(*,"(A,A)")"QUAD: selected procedure =", routine_name
+  if(verbose_)write(*,"(A,A)")"QUAD: selected procedure =", routine_name
   !
   select case(routine_name)
   case ('QNG')
@@ -115,7 +115,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -130,7 +130,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -147,7 +147,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -167,7 +167,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -183,7 +183,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -207,7 +207,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -235,7 +235,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -257,7 +257,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !
@@ -281,7 +281,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier/=0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           ! stop
         endif
      endif
      !

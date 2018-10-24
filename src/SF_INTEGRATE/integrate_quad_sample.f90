@@ -94,7 +94,7 @@ subroutine quad_sample(fsample,a,b,&
   if(present(omega))routine_name='QAWO'
   if(present(alfa).AND.present(beta))routine_name='QAWS'
   !
-  write(*,"(A,A)")"QUAD: selected procedure =", routine_name
+  if(verbose_)write(*,"(A,A)")"QUAD: selected procedure =", routine_name
   !
   select case(routine_name)
   case ('QNG')
