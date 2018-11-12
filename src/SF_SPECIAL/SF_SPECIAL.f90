@@ -285,12 +285,12 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE:  evaluate the sign of a given number (I,R)
   !+-------------------------------------------------------------------+
-  pure function i_sgn(x) result(sgn)
+  elemental function i_sgn(x) result(sgn)
     integer,intent(in) :: x
     integer            :: sgn
     sgn=x/abs(x)
   end function i_sgn
-  pure function d_sgn(x) result(sgn)
+  elemental function d_sgn(x) result(sgn)
     real(8),intent(in) :: x
     real(8)            :: sgn
     sgn=x/abs(x)

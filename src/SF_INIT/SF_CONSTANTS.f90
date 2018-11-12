@@ -131,19 +131,19 @@ contains
   !+-----------------------------------------------------------------------------+!
   !PURPOSE: test if a given number if infinity
   !+-----------------------------------------------------------------------------+!
-  function i_isinfty(a) result(bool)
-    integer :: a
-    logical :: bool
+  elemental function i_isinfty(a) result(bool)
+    integer,intent(in) :: a
+    logical            :: bool
     bool = (a-1 == a)
   end function i_isinfty
-  function d_isinfty(a) result(bool)
-    real(8) :: a
-    logical :: bool
+  elemental function d_isinfty(a) result(bool)
+    real(8),intent(in) :: a
+    logical            :: bool
     bool = (a-1 == a)
   end function d_isinfty
-  function z_isinfty(a) result(bool)
-    complex(8) :: a
-    logical    :: bool
+  elemental function z_isinfty(a) result(bool)
+    complex(8),intent(in) :: a
+    logical               :: bool
     bool = (a-1 == a)
   end function z_isinfty
 
@@ -151,20 +151,20 @@ contains
   !+-----------------------------------------------------------------------------+!
   !PURPOSE: test if a given number is actually NaN
   !+-----------------------------------------------------------------------------+!
-  function i_isnan(a) result(bool)
-    integer :: a
-    logical :: bool
-    bool = (a /= a)
+  elemental function i_isnan(a) result(bool)
+    integer,intent(in)    :: a
+    logical               :: bool
+    bool = (a /= a) .OR. (a-1 == a)
   end function i_isnan
-  function d_isnan(a) result(bool)
-    real(8) :: a
-    logical :: bool
-    bool = (a /= a)
+  elemental function d_isnan(a) result(bool)
+    real(8),intent(in)    :: a
+    logical               :: bool
+    bool = (a /= a) .OR. (a-1 == a)
   end function d_isnan
-  function z_isnan(a) result(bool)
-    complex(8) :: a
-    logical    :: bool
-    bool = (a /= a)
+  elemental function z_isnan(a) result(bool)
+    complex(8),intent(in) :: a
+    logical               :: bool
+    bool = (a /= a) .OR. (a-1 == a)
   end function z_isnan
 
 

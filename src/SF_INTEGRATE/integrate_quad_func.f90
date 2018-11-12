@@ -113,9 +113,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -128,9 +128,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -145,9 +145,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -165,9 +165,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -181,9 +181,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -205,9 +205,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -233,9 +233,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -255,9 +255,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
@@ -279,9 +279,9 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier/=0)then
+        if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           ! stop
+           stop
         endif
      endif
      !
