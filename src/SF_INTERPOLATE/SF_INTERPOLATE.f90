@@ -27,48 +27,40 @@
        logical             :: status=.false.
     end type finter2d_type
 
+
     interface linear_spline
-       module procedure &
-            d_linear_spline_s,&
-            d_linear_spline_v,&
-            c_linear_spline_s,&
-            c_linear_spline_v
+       module procedure :: d_linear_spline_s
+       module procedure :: d_linear_spline_v
+       module procedure :: c_linear_spline_s
+       module procedure :: c_linear_spline_v
+       !
+       module procedure :: d_linear_spline_2d_s
+       module procedure :: d_linear_spline_2d_v
+       module procedure :: c_linear_spline_2d_s
+       module procedure :: c_linear_spline_2d_v
     end interface linear_spline
 
 
     interface poly_spline
-       module procedure &
-            d_poly_spline_s,&
-            d_poly_spline_v,&
-            c_poly_spline_s,&
-            c_poly_spline_v
+       module procedure :: d_poly_spline_s
+       module procedure :: d_poly_spline_v
+       module procedure :: c_poly_spline_s
+       module procedure :: c_poly_spline_v
+       !
+       module procedure :: d_poly_spline_2d_s
+       module procedure :: d_poly_spline_2d_v
+       module procedure :: c_poly_spline_2d_s
+       module procedure :: c_poly_spline_2d_v
     end interface poly_spline
 
+
     interface cubic_spline
-       module procedure  &
-            d_cub_interp_s,&
-            d_cub_interp_v,&
-            c_cub_interp_s,&
-            c_cub_interp_v
+       module procedure :: d_cub_interp_s
+       module procedure :: d_cub_interp_v
+       module procedure :: c_cub_interp_s
+       module procedure :: c_cub_interp_v
     end interface cubic_spline
 
-
-    interface linear_spline2d
-       module procedure &
-            d_linear_spline_2d_s,&
-            d_linear_spline_2d_v,&
-            c_linear_spline_2d_s,&
-            c_linear_spline_2d_v
-    end interface linear_spline2d
-
-
-    interface poly_spline2d
-       module procedure &
-            d_poly_spline_2d_s,&
-            d_poly_spline_2d_v,&
-            c_poly_spline_2d_s,&
-            c_poly_spline_2d_v
-    end interface poly_spline2d
 
 
     !AVAILABLE FROM NR
@@ -77,26 +69,28 @@
     public :: polin2
 
     !AVAILABLE FROM INTERPOLATE
+    public :: poly_spline
+    public :: cubic_spline
+    public :: linear_spline
+
+    
+    !Function polynomial interpolation: 
     !1-dimension
     public :: finter_type
     public :: init_finter
     public :: delete_finter
     public :: finter
-    public :: poly_spline
-    public :: cubic_spline
-    public :: linear_spline
 
     !2-dimension
     public :: finter2d_type
     public :: init_finter2d
     public :: delete_finter2d
     public :: finter2d
-    public :: linear_spline2d
-    public :: poly_spline2d
 
 
   contains
 
+    
     !*******************************************************************
     ! 1-DIMENSIONAL SPLINES:
     !*******************************************************************

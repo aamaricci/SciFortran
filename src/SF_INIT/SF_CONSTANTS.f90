@@ -106,7 +106,7 @@ module SF_CONSTANTS
 
 
   public :: timestamp
-
+  public :: wait  
   public :: stop_error
 
   interface isnan
@@ -231,6 +231,22 @@ contains
   end subroutine stop_error
 
 
+
+  subroutine wait(time)
+    real                 :: time ! desired sleep interval [ms]
+    integer,dimension(8) :: t    ! arguments for date_and_time
+    integer              :: s1,s2,ms1,ms2 ! start and end times [ms]
+    ! Get start time:
+    call date_and_time(values=t)
+    ms1=(t(5)*3600+t(6)*60+t(7))*1000+t(8)
+    !
+    do ! check time:
+       call date_and_time(values=t)
+       ms2=(t(5)*3600+t(6)*60+t(7))*1000+t(8)
+       if(ms2-ms1>=time)exit
+    enddo
+    return
+  end subroutine wait
 
 END MODULE SF_CONSTANTS
 

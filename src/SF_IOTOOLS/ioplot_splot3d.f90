@@ -55,8 +55,8 @@ subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   open(10,file=adjustl(trim(pname))//"_surface.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title '"//trim(fname)//"'"
-  write(10,*)"set nokey"
-  write(10,*)"set grid"
+  write(10,*)"unset key"
+  write(10,*)"unset grid"
   write(10,*)"set view 50,10,1,1"
   write(10,*)"splot '"//trim(fname)//"' with pm3d"
   if(present(wlines))write(10,*)"rep '"//trim(pname)//"_withlines' with lines"
@@ -155,8 +155,8 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   open(10,file=adjustl(trim(pname))//"_re_surface.gp")
   write(10,*)"set term wxt"
   write(10,*)"set title 'Re_"//trim(fname)//"'"
-  write(10,*)"set nokey"
-  write(10,*)"set grid"
+  write(10,*)"unset key"
+  write(10,*)"unset grid"
   write(10,*)"set view 50,10,1,1"
   write(10,*)"splot 're_"//trim(fname)//"' with pm3d"
   if(present(wlines))write(10,*)"rep 're_"//trim(pname)//"_withlines' with lines"
