@@ -29,6 +29,16 @@ module SF_RANDOM
      module procedure :: grnd
   end interface mersenne
 
+  interface mt_random
+     module procedure :: d_grnd_1
+     module procedure :: d_grnd_2
+     module procedure :: d_grnd_3
+     module procedure :: d_grnd_4
+     module procedure :: d_grnd_5
+     module procedure :: d_grnd_6
+     module procedure :: d_grnd_7
+  end interface mt_random
+
   interface int_mersenne
      module procedure :: igrnd
   end interface int_mersenne
@@ -54,6 +64,7 @@ module SF_RANDOM
 
 
   public :: mersenne
+  public :: mt_random
   public :: mersenne_init
   public :: int_mersenne
   public :: gauss_mersenne

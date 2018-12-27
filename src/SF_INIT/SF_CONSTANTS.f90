@@ -106,23 +106,30 @@ module SF_CONSTANTS
 
 
   public :: timestamp
-  public :: wait  
+
   public :: stop_error
 
   interface isnan
-     module procedure i_isnan
-     module procedure d_isnan
-     module procedure z_isnan
+     module procedure :: i_isnan
+     module procedure :: d_isnan
+     module procedure :: z_isnan
   end interface isnan
   public :: isnan
 
   interface isinfty
-     module procedure i_isinfty
-     module procedure d_isinfty
-     module procedure z_isinfty
+     module procedure :: i_isinfty
+     module procedure :: d_isinfty
+     module procedure :: z_isinfty
   end interface isinfty
   public :: isinfty
 
+
+  interface wait
+     module procedure :: i_wait
+     module procedure :: r_wait
+     module procedure :: d_wait
+  end interface wait
+  public :: wait
 
 
 contains
@@ -231,8 +238,23 @@ contains
   end subroutine stop_error
 
 
+  subroutine i_wait(time)
+    integer              :: time ! desired sleep interval [ms]
+    integer,dimension(8) :: t    ! arguments for date_and_time
+    integer              :: s1,s2,ms1,ms2 ! start and end times [ms]
+    ! Get start time:
+    call date_and_time(values=t)
+    ms1=(t(5)*3600+t(6)*60+t(7))*1000+t(8)
+    !
+    do ! check time:
+       call date_and_time(values=t)
+       ms2=(t(5)*3600+t(6)*60+t(7))*1000+t(8)
+       if(ms2-ms1>=time)exit
+    enddo
+    return
+  end subroutine i_wait
 
-  subroutine wait(time)
+  subroutine r_wait(time)
     real                 :: time ! desired sleep interval [ms]
     integer,dimension(8) :: t    ! arguments for date_and_time
     integer              :: s1,s2,ms1,ms2 ! start and end times [ms]
@@ -246,7 +268,23 @@ contains
        if(ms2-ms1>=time)exit
     enddo
     return
-  end subroutine wait
+  end subroutine r_wait
+
+  subroutine d_wait(time)
+    real(8)              :: time ! desired sleep interval [ms]
+    integer,dimension(8) :: t    ! arguments for date_and_time
+    integer              :: s1,s2,ms1,ms2 ! start and end times [ms]
+    ! Get start time:
+    call date_and_time(values=t)
+    ms1=(t(5)*3600+t(6)*60+t(7))*1000+t(8)
+    !
+    do ! check time:
+       call date_and_time(values=t)
+       ms2=(t(5)*3600+t(6)*60+t(7))*1000+t(8)
+       if(ms2-ms1>=time)exit
+    enddo
+    return
+  end subroutine d_wait
 
 END MODULE SF_CONSTANTS
 
