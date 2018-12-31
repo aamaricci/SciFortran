@@ -65,7 +65,6 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      !
      lanc_loop: do iter=1,Nitermax
         !
-
         !
         call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,a_,b_)
         if(abs(b_)<threshold_)exit lanc_loop
@@ -81,13 +80,11 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
         subdiag(2:Nlanc) = blanc(2:Nlanc)
         call tql2(Nlanc,diag,subdiag,Z,ierr)
         !
-        if(verb.AND.mpi_master)write(*,*)"Lanczos iteration, E_lowest    = ",iter,diag(1)
-        !
         if(nlanc >= Ncheck_)then
            esave(nlanc-(Ncheck_-1))=diag(1)
            if(nlanc >= (Ncheck_+1))then
               diff=esave(Nlanc-(Ncheck_-1))-esave(Nlanc-(Ncheck_-1)-1)
-              if(verb.AND.mpi_master)write(*,*)'test deltaE = ',diff
+              if(verb.AND.mpi_master)write(*,*)"Iter,E_lowest, Err    = ",iter,diag(1),diff
               if(abs(diff).le.threshold_)exit lanc_loop
            endif
         endif
@@ -95,8 +92,6 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
         !
      enddo lanc_loop
      if(verb.AND.mpi_master)write(*,*)""
-     if(verb.AND.mpi_master)write(*,*)""
-     if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
      if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
      !
      !============== END LANCZOS LOOP ======================
@@ -207,13 +202,11 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
         subdiag(2:Nlanc) = blanc(2:Nlanc)
         call tql2(Nlanc,diag,subdiag,Z,ierr)
         !
-        if(verb.AND.mpi_master)write(*,*)"E_lowest    = ",diag(1)
-        !
         if(nlanc >= Ncheck_)then
            esave(nlanc-(Ncheck_-1))=diag(1)
            if(nlanc >= (Ncheck_+1))then
               diff=esave(Nlanc-(Ncheck_-1))-esave(Nlanc-(Ncheck_-1)-1)
-              if(verb.AND.mpi_master)write(*,*)'test deltaE = ',diff
+              if(verb.AND.mpi_master)write(*,*)"Iter,E_lowest, Err    = ",iter,diag(1),diff
               if(abs(diff).le.threshold_)exit lanc_loop
            endif
         endif
@@ -221,8 +214,6 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
         !
      enddo lanc_loop
      if(verb.AND.mpi_master)write(*,*)
-     if(verb.AND.mpi_master)write(*,*)
-     if(verb.AND.mpi_master)write(*,*)'Lanczos deltaE = ',diff
      if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
      !
      !============== END LANCZOS LOOP ======================
