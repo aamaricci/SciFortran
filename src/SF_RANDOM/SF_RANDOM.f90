@@ -25,6 +25,10 @@ module SF_RANDOM
      module procedure :: init_genrand
   end interface mersenne_init
 
+  interface mt_init
+     module procedure :: init_genrand
+  end interface mt_init
+
   interface mersenne
      module procedure :: grnd
   end interface mersenne
@@ -39,13 +43,55 @@ module SF_RANDOM
      module procedure :: d_grnd_7
   end interface mt_random
 
-  interface int_mersenne
+  interface mt_uniform
      module procedure :: igrnd
-  end interface int_mersenne
+     module procedure :: dgrnd_uniform
+  end interface mt_uniform
 
-  interface gauss_mersenne
+  interface mt_normal
      module procedure :: gaussrnd
-  end interface gauss_mersenne
+     module procedure :: normalrnd
+  end interface mt_normal
+
+  interface mt_exponential
+     module procedure :: exponentialrnd
+  end interface mt_exponential
+
+  interface mt_gamma
+     module procedure :: gammarnd
+  end interface mt_gamma
+
+  interface mt_chi_square
+     module procedure :: chi_squarernd
+  end interface mt_chi_square
+
+  interface mt_inverse_gamma
+     module procedure :: inverse_gammarnd
+  end interface mt_inverse_gamma
+
+  interface mt_weibull
+     module procedure :: weibullrnd
+  end interface mt_weibull
+
+  interface mt_cauchy
+     module procedure :: cauchyrnd
+  end interface mt_cauchy
+
+  interface mt_student_t
+     module procedure :: student_trnd
+  end interface mt_student_t
+
+  interface mt_laplace
+     module procedure :: laplacernd
+  end interface mt_laplace
+
+  interface mt_log_normal
+     module procedure :: log_normalrnd
+  end interface mt_log_normal
+
+  interface mt_beta
+     module procedure :: betarnd
+  end interface mt_beta
 
   ! Overload procedures for saving and getting mt state
   interface mt_save
@@ -58,22 +104,24 @@ module SF_RANDOM
      module procedure :: mtgetu
   end interface mt_get
 
-  interface mt_init
-     module procedure :: init_genrand
-  end interface mt_init
 
 
   public :: mersenne
-  public :: mt_random
   public :: mersenne_init
-  public :: int_mersenne
-  public :: gauss_mersenne
   !
-  public :: sgrnd
-  public :: init_genrand
-  public :: grnd
-  public :: igrnd
-  public :: gaussrnd
+  public :: mt_random
+  public :: mt_uniform
+  public :: mt_normal
+  public :: mt_exponential
+  public :: mt_gamma
+  public :: mt_chi_square
+  public :: mt_inverse_gamma
+  public :: mt_weibull
+  public :: mt_cauchy
+  public :: mt_student_t
+  public :: mt_laplace
+  public :: mt_log_normal
+  public :: mt_beta
   !
   public :: mt_save
   public :: mt_get
