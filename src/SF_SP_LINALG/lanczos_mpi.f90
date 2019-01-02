@@ -88,8 +88,6 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
               if(abs(diff).le.threshold_)exit lanc_loop
            endif
         endif
-        if(verb.AND.mpi_master)write(*,*)""
-        !
      enddo lanc_loop
      if(verb.AND.mpi_master)write(*,*)""
      if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
@@ -186,8 +184,6 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      !
      lanc_loop: do iter=1,Nitermax
         !
-        if(verb.AND.mpi_master)write(*,*)"Lanczos iteration:",iter
-        !
         call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,a_,b_)
         if(abs(b_)<threshold_)exit lanc_loop
         !
@@ -210,8 +206,6 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
               if(abs(diff).le.threshold_)exit lanc_loop
            endif
         endif
-        if(verb.AND.mpi_master)write(*,*)
-        !
      enddo lanc_loop
      if(verb.AND.mpi_master)write(*,*)
      if(nlanc==nitermax)print*,"LANCZOS_SIMPLE: reach Nitermax"
