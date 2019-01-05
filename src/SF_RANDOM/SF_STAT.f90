@@ -13,10 +13,10 @@ MODULE SF_STAT
   end type histogram
 
   type,public :: pdf_kernel
+     integer                          :: N=0
      real(8)                          :: xmin
      real(8)                          :: xmax
      real(8)                          :: dx
-     integer                          :: N=0
      integer                          :: Ndata=0     
      real(8),dimension(:),allocatable :: x
      real(8),dimension(:),allocatable :: pdf
@@ -27,10 +27,10 @@ MODULE SF_STAT
   end type pdf_kernel
 
   type,public :: pdf_kernel_2d
+     integer,dimension(2)               :: N
      real(8),dimension(2)               :: xmin
      real(8),dimension(2)               :: xmax
      real(8),dimension(2)               :: dx
-     integer,dimension(2)               :: N
      integer                            :: Ndata=0   
      real(8),dimension(:),allocatable   :: x,y
      real(8),dimension(:,:),allocatable :: pdf
@@ -50,6 +50,19 @@ MODULE SF_STAT
      module procedure :: pdf_deallocate_1d
      module procedure :: pdf_deallocate_2d
   end interface pdf_deallocate
+
+
+  interface pdf_save
+     module procedure :: pdf_save_1d
+     module procedure :: pdf_save_2d
+  end interface pdf_save
+
+
+  interface pdf_read
+     module procedure :: pdf_read_1d
+     module procedure :: pdf_read_2d
+  end interface pdf_read
+
 
   interface pdf_set_range
      module procedure :: pdf_set_range_1d
@@ -144,6 +157,8 @@ MODULE SF_STAT
   public :: pdf_push_sigma
   public :: pdf_accumulate
   public :: pdf_normalize
+  public :: pdf_save
+  public :: pdf_read
   public :: pdf_print
   public :: pdf_print_moments
   public :: pdf_mean

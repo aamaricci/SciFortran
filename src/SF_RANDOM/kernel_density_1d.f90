@@ -27,6 +27,49 @@ end subroutine pdf_deallocate_1d
 
 
 
+subroutine pdf_save_1d(self,pfile)
+  type(pdf_kernel) :: self    
+  character(len=*) :: pfile
+  integer          :: i,unit
+  if(.not.self%status)stop "PDF_SAVE: PDF not allocated"
+  open(free_unit(unit),file=trim(pfile))
+  write(unit,*)self%N
+  write(unit,*)self%xmin
+  write(unit,*)self%xmax
+  write(unit,*)self%dx
+  write(unit,*)self%Ndata
+  write(unit,*)self%x
+  write(unit,*)self%pdf
+  write(unit,*)self%sigma
+  write(unit,*)self%status
+  write(unit,*)self%variance
+  write(unit,*)self%rescale
+  close(unit)
+end subroutine pdf_save_1d
+
+
+subroutine pdf_read_1d(self,pfile)
+  type(pdf_kernel) :: self    
+  character(len=*) :: pfile
+  integer          :: i,N,unit
+  if(.not.self%status)write(*,"(A)")"PDF_READ: PDF not allocated"
+  open(free_unit(unit),file=trim(pfile))
+  read(unit,*)N
+  call pdf_allocate(self,N)
+  read(unit,*)self%xmin
+  read(unit,*)self%xmax
+  read(unit,*)self%dx
+  read(unit,*)self%Ndata   
+  read(unit,*)self%x
+  read(unit,*)self%pdf
+  read(unit,*)self%sigma
+  read(unit,*)self%status
+  read(unit,*)self%variance
+  read(unit,*)self%rescale
+  close(unit)
+end subroutine pdf_read_1d
+
+
 
 subroutine pdf_set_range_1d(self,a,b)
   type(pdf_kernel) :: self

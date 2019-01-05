@@ -166,3 +166,97 @@ subroutine zeigh_simple(M,E,jobz,uplo)
   end if
   deallocate(work,rwork)
 end subroutine zeigh_simple
+
+
+
+
+subroutine deigh_tridiag(D,U,Ev,Irange,Vrange)
+  real(8),dimension(:)                :: d
+  real(8),dimension(max(1,size(d)-1)) :: u
+  real(8),dimension(:,:),optional     :: Ev
+  integer,dimension(2),optional       :: Irange
+  integer,dimension(2),optional       :: Vrange
+  !
+  integer                             :: n
+  ! = 'N':  Compute eigenvalues only;
+  ! = 'V':  Compute eigenvalues and eigenvectors.
+  character                           :: jobz_
+  ! = 'A': all eigenvalues will be found
+  ! = 'V': all eigenvalues in the half-open interval (VL,VU] will be found.
+  ! = 'I': the IL-th through IU-th eigenvalues will be found.
+  ! For RANGE = 'V' or 'I' and IU - IL < N - 1, DSTEBZ and
+  ! DSTEIN are called
+  character                           :: range_
+  real(8)                             :: vl,vu 
+  integer                             :: il,iu
+  real(8),dimension(size(d))          :: w
+  real(8),dimension(:,:),allocatable  :: z
+  integer,dimension(:),allocatable    :: isuppz
+  integer                             :: lwork,liwork
+  real(8),dimension(:),allocatable    :: work
+  integer,dimension(:),allocatable    :: iwork
+  real(8)                             :: abstol = 0d0 !tolerance on approximation error of eigenvalues
+  integer                             :: m
+  integer                             :: ldz
+  integer                             :: info
+  !
+  n = size(d)
+  !
+  jobz_ = 'N'; if(present(Ev))jobz_='V'
+  !
+  range_= 'A'
+  m     = n
+  if(present(Irange).AND.present(Vrange))stop "EIGH_T: Irange & Vrange both present"
+  if(present(Irange))then
+     range_ = 'I'
+     il = Irange(1)
+     iu = Irange(2)
+     m  = iu-il+1
+  endif
+  if(present(Vrange))then
+     range_ = 'V'
+     vl     = Vrange(1)
+     vu     = Vrange(2)
+     m      = n
+  endif
+  !
+  if(present(Ev))then
+     if(any(shape(Ev)/=[n,m]))stop "EIGH_T ERROR: wrong dimension in Ev"
+  endif
+  !
+  ldz = n
+  !
+  allocate(z(n,m), isuppz(2*max(1,m)))
+  allocate(work(1),iwork(1))
+  call dstevr(jobz_,range_,n,d,u,vl,vu,il,iu,abstol,m,w,z,ldz,isuppz,work,-1,iwork,-1,info)
+  if(info/=0) then
+     print*, "dstevr returned info =", info
+     if (info < 0) then
+        print*, "the", -info, "-th argument had an illegal value"
+     else
+        print*, "Internal error"
+     end if
+     stop 'error dstevr: 1st call dstevr'
+  end if
+  !
+  lwork  = work(1)
+  liwork = iwork(1)
+  deallocate(work,iwork);allocate(work(lwork),iwork(liwork))
+  !
+  call dstevr(jobz_,range_,n,d,u,vl,vu,il,iu,abstol,m,w,z,ldz,isuppz,work,lwork,iwork,liwork,info)
+  if(info/=0) then
+     print*, "dstevr returned info =", info
+     if (info < 0) then
+        print*, "the", -info, "-th argument had an illegal value"
+     else
+        print*, "Internal error"
+     end if
+     stop 'error dstevr: 2nd call dstevr'
+  end if
+  !
+  d  = w
+  if(present(Ev)) Ev = z
+  !
+  deallocate(work,iwork,isuppz,z)
+  !
+end subroutine deigh_tridiag

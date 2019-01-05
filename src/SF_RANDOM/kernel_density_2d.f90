@@ -28,6 +28,52 @@ subroutine pdf_deallocate_2d(self)
 end subroutine pdf_deallocate_2d
 
 
+subroutine pdf_save_2d(self,pfile)
+  type(pdf_kernel_2d) :: self    
+  character(len=*) :: pfile
+  integer          :: i,unit
+  if(.not.self%status)stop "PDF_SAVE: PDF not allocated"
+  open(free_unit(unit),file=trim(pfile))
+  write(unit,*)self%N
+  write(unit,*)self%xmin
+  write(unit,*)self%xmax
+  write(unit,*)self%dx
+  write(unit,*)self%Ndata
+  write(unit,*)self%x
+  write(unit,*)self%y
+  write(unit,*)self%pdf
+  write(unit,*)self%sigma
+  write(unit,*)self%status
+  write(unit,*)self%variance
+  write(unit,*)self%rescale
+  close(unit)
+end subroutine pdf_save_2d
+
+
+subroutine pdf_read_2d(self,pfile)
+  type(pdf_kernel_2d) :: self    
+  character(len=*) :: pfile
+  integer          :: i,N1,N2,unit
+  if(.not.self%status)then
+     print*,"PDF_READ: PDF not allocated"
+  endif
+  open(free_unit(unit),file=trim(pfile))
+  read(unit,*)N1,N2
+  call pdf_allocate(self,[N1,N2])
+  read(unit,*)self%xmin
+  read(unit,*)self%xmax
+  read(unit,*)self%dx
+  read(unit,*)self%Ndata   
+  read(unit,*)self%x
+  read(unit,*)self%y
+  read(unit,*)self%pdf
+  read(unit,*)self%sigma
+  read(unit,*)self%status
+  read(unit,*)self%variance
+  read(unit,*)self%rescale
+  close(unit)
+end subroutine pdf_read_2d
+
 
 
 subroutine pdf_set_range_2d(self,a,b)
