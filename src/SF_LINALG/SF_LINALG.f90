@@ -33,6 +33,7 @@ module SF_LINALG
      module procedure zeigh_generalized
      module procedure deigh_simple
      module procedure zeigh_simple
+     module procedure deigh_tridiag
   end interface eigh
   !
   interface eigh_jacobi
