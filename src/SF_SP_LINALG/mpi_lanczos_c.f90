@@ -37,8 +37,9 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   if(present(threshold))threshold_=threshold
   if(present(ncheck))ncheck_=ncheck
   !
-  norm_tmp=dot_product(vect,vect)
+  norm_tmp= dot_product(vect,vect); norm=0d0
   call AllReduce_Mpi(MpiComm,norm_tmp,norm)
+  !
   if(norm==0d0)then
      call random_seed(size=nrandom)
      if(allocated(seed_random))deallocate(seed_random)
@@ -49,7 +50,7 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
         call random_number(ran)
         vect(i)=dcmplx(ran(1),ran(2))
      enddo
-     norm_tmp=dot_product(vect,vect)
+     norm_tmp=dot_product(vect,vect); norm=0d0
      call AllReduce_Mpi(MpiComm,norm_tmp,norm)
      vect=vect/sqrt(norm)
      if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
@@ -71,9 +72,6 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
      !
      alanc(iter) = a_ ; blanc(iter+1) = b_
      !
-     diag    = 0d0
-     subdiag = 0d0
-     Z       = eye(Nlanc)
      diag(1:Nlanc)    = alanc(1:Nlanc)
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call eigh(diag(1:Nlanc),subdiag(2:Nlanc),Ev=Z(:Nlanc,:Nlanc))
@@ -91,9 +89,6 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !
   !============== END LANCZOS LOOP ======================
   !
-  diag    = 0d0
-  subdiag = 0.d0
-  Z       = eye(Nlanc)
   diag(1:Nlanc)    = alanc(1:Nlanc)
   subdiag(2:Nlanc) = blanc(2:Nlanc)
   call eigh(diag(1:Nlanc),subdiag(2:Nlanc),Ev=Z(:Nlanc,:Nlanc))
@@ -104,11 +99,12 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !Get the Eigenvector:
   vin = vect
   vout= zero
+  vect= zero
   do iter=1,nlanc
      call mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
      vect = vect + vin*Z(iter,1)
   end do
-  norm_tmp=sqrt(dot_product(vect,vect))
+  norm_tmp=sqrt(dot_product(vect,vect)); norm=0d0
   call AllReduce_MPI(MpiComm,norm_tmp,norm)
   vect=vect/sqrt(norm)
   if(verb)then
@@ -205,8 +201,7 @@ subroutine mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,alfa,beta)
   mpi_master=get_master_MPI(MpiComm)
   !
   if(iter==1)then
-     norm_tmp=dot_product(vin,vin)
-     norm = 0d0 ; call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     norm_tmp=dot_product(vin,vin);norm = 0d0; call AllReduce_MPI(MpiComm,norm_tmp,norm)
      if(mpi_master.AND.norm==0d0)stop "MPI_LANCZOS_ITERATION_C: norm = 0!!"
      vin=vin/sqrt(norm)
   else

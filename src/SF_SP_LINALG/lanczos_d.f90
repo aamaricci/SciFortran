@@ -57,9 +57,7 @@ subroutine lanczos_eigh_d(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
      nlanc=nlanc+1
      !
      alanc(iter) = a_ ; blanc(iter+1) = b_
-     diag    = 0d0
-     subdiag = 0.d0
-     Z       = eye(Nlanc)
+     !
      diag(1:Nlanc)    = alanc(1:Nlanc)
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call eigh(diag(1:Nlanc),subdiag(2:Nlanc),Ev=Z(:Nlanc,:Nlanc))
@@ -78,9 +76,6 @@ subroutine lanczos_eigh_d(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   !
   !============== END LANCZOS LOOP ======================
   !
-  diag    = 0d0
-  subdiag = 0.d0
-  Z       = eye(Nlanc)
   diag(1:Nlanc)    = alanc(1:Nlanc)
   subdiag(2:Nlanc) = blanc(2:Nlanc)
   call eigh(diag(1:Nlanc),subdiag(2:Nlanc),Ev=Z(:Nlanc,:Nlanc))
@@ -90,8 +85,8 @@ subroutine lanczos_eigh_d(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   !
   !Get the Eigenvector:
   vin =vect
-  vout=0.d0
-  vect=0.d0
+  vout=0d0
+  vect=0d0
   do iter=1,Nlanc
      call lanczos_iteration_d(MatVec,iter,vin,vout,alanc(iter),blanc(iter))
      vect = vect + vin*Z(iter,1)

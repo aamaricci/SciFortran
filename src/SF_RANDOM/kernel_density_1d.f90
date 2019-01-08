@@ -131,7 +131,6 @@ subroutine pdf_accumulate_s_1d(self,data,sigma)
   real(8)          :: data,sigma_
   real(8),optional :: sigma
   if(.not.self%status)stop "PDF_ACCUMULATE: PDF not allocated"
-  if(.not.self%status)stop "PDF_ACCUMULATE: PDF not allocated"
   if(self%variance)then
      sigma_ = self%sigma
   else

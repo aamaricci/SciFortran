@@ -61,13 +61,9 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
      !
      alanc(iter) = a_ ; blanc(iter+1) = b_
      !
-     diag    = 0d0
-     subdiag = 0d0
-     Z       = eye(Nlanc)
      diag(1:Nlanc)    = alanc(1:Nlanc)
      subdiag(2:Nlanc) = blanc(2:Nlanc)
      call eigh(diag(1:Nlanc),subdiag(2:Nlanc),Ev=Z(:Nlanc,:Nlanc))
-     ! call tql2(Nlanc,diag,subdiag,Z,ierr)
      !
      if(nlanc >= Ncheck_)then
         esave(nlanc-(Ncheck_-1))=diag(1)
@@ -82,21 +78,17 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   !
   !============== END LANCZOS LOOP ======================
   !
-  diag    = 0d0
-  subdiag = 0.d0
-  Z       = eye(Nlanc)
   diag(1:Nlanc)    = alanc(1:Nlanc)
   subdiag(2:Nlanc) = blanc(2:Nlanc)
   call eigh(diag(1:Nlanc),subdiag(2:Nlanc),Ev=Z(:Nlanc,:Nlanc))
-  ! call tql2(Nlanc,diag,subdiag,Z,ierr)
   !
   !Get the Eigenvalues:
   egs = diag(1)
   !
   !Get the Eigenvector:
   vin =vect
-  vout=0.d0
-  vect=0.d0
+  vout=zero
+  vect=zero
   do iter=1,Nlanc
      call lanczos_iteration_c(MatVec,iter,vin,vout,alanc(iter),blanc(iter))
      vect = vect + vin*Z(iter,1)
@@ -195,7 +187,7 @@ subroutine lanczos_iteration_c(MatVec,iter,vin,vout,alfa,beta)
   !
   if(iter==1)then
      norm=sqrt(dot_product(vin,vin))
-     if(norm==0.d0)stop "LANCZOS_ITERATION_C: norm =0!!"
+     if(norm==0d0)stop "LANCZOS_ITERATION_C: norm =0!!"
      vin    = vin/norm
   else
      tmp = vin
