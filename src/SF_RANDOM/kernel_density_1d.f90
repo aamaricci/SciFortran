@@ -200,6 +200,7 @@ subroutine pdf_print_pfile_1d(self,pfile,normalize)
   do i=1,self%N
      write(unit,*)self%x(i),self%pdf(i)
   enddo
+  write(unit,*)
   close(unit)
 end subroutine pdf_print_pfile_1d
 
