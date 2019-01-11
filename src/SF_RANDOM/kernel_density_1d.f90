@@ -260,9 +260,6 @@ subroutine pdf_print_moments_pfile_1d(self,pfile)
   integer          :: i,unit
   if(.not.self%status)stop "PDF_WRITE: PDF not allocated"
   open(free_unit(unit),file=trim(pfile))
-  write(unit,*)pdf_mean_1d(self)
-  write(unit,*)pdf_sdev_1d(self)
-  write(unit,*)pdf_skew_1d(self)
-  write(unit,*)pdf_curt_1d(self)
+  write(unit,*)pdf_mean_1d(self),pdf_sdev_1d(self),pdf_skew_1d(self),pdf_curt_1d(self)
   close(unit)
 end subroutine pdf_print_moments_pfile_1d
