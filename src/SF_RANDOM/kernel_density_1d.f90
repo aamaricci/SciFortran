@@ -196,7 +196,7 @@ subroutine pdf_print_pfile_1d(self,pfile,normalize)
   if(.not.self%status)stop "PDF_WRITE: PDF not allocated"
   normalize_ = .true.; if(present(normalize))normalize_=normalize
   if(normalize_)call pdf_normalize_1d(self)
-  open(free_unit(unit),file=trim(pfile))
+  open(free_unit(unit),file=trim(pfile),access='append')
   do i=1,self%N
      write(unit,*)self%x(i),self%pdf(i)
   enddo
