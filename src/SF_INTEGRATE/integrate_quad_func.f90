@@ -8,6 +8,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      omega,&
      weight_func,&
      verbose,&
+     strict,&
      result)
   interface
      function func(x)
@@ -36,11 +37,13 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
   !                                                  !  weight_func = 3  (x-a)**alfa*(b-x)**beta*log(b-x)
   !                                                  !  weight_func = 4  (x-a)**alfa*(b-x)**beta*log(x-a)*log(b-x)
   logical,optional              :: verbose
+  logical,optional              :: strict
   real(8)                       :: result
   !actual default variables
   real(8)                       :: epsabs_
   real(8)                       :: epsrel_
   logical                       :: verbose_
+  logical                       :: strict_
   real(8)                       :: abserr
   integer                       :: Neval
   integer                       :: Ier,i
@@ -52,6 +55,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
   epsabs_ = 1d-12 ; if(present(epsabs))epsabs_=epsabs
   epsrel_ = 1d-6  ; if(present(epsrel))epsrel_=epsrel
   verbose_=.false.; if(present(verbose))verbose_=verbose
+  strict_ =.true. ; if(present(strict))strict_=strict
   !
   if(present(key).AND.(present(alfa).OR.present(beta)))stop "ERROR in quad: key & alfa,beta"
   if(present(key).AND.present(cpole))stop "ERROR in quad: key & cpole"
@@ -115,7 +119,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -130,7 +134,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -147,7 +151,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -167,7 +171,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -183,7 +187,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -207,7 +211,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -235,7 +239,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -257,7 +261,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
@@ -281,7 +285,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
      else
         if(ier>2)then
            write(*,'(A,I8)') 'Error return code IER =', ier
-           stop
+           if(strict_)stop
         endif
      endif
      !
