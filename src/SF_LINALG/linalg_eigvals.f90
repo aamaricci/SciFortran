@@ -42,6 +42,7 @@ function deigvals(A) result(lam)
      stop 'deig error: 2nd call dgeev'
   end if
   lam = wr + xi*wi
+  deallocate(At,wr,wi,vl,vr)
 end function deigvals
 
 function zeigvals(A) result(lam)
@@ -57,7 +58,7 @@ function zeigvals(A) result(lam)
   ldvl  = n
   ldvr  = n
   lrwork= 2*n
-  allocate(vl(ldvl,n),vr(ldvr,n),rwork(lrwork))
+  allocate(At(n,n),vl(ldvl,n),vr(ldvr,n),rwork(lrwork))
   !Copy the input Matrix
   At  = A
   !1st Call: Query the right size for the working array.
@@ -89,4 +90,5 @@ function zeigvals(A) result(lam)
      end if
      stop 'deig error: 2nd call zgeev'
   end if
+  deallocate(At,vl,vr,rwork)
 end function zeigvals
