@@ -456,6 +456,7 @@ contains
        write(*,*)"input list: empty"
        return
     endif
+    file_status='replace'
     c => null()
   end subroutine print_input_list
   !---------------------------------------------------------------------
@@ -510,12 +511,14 @@ contains
     if(clen<=0)clen=1
     p_buffer=trim(p_buffer)//blank(1:clen)//"!"//trim(c%comment)
     !
-    write(*,"(1x,A)")trim(p_buffer)
+    ! write(*,"(1x,A)")trim(p_buffer)
     if(present(file))then
        unit=free_unit()
        open(unit,file="used."//file,position='append',status=trim(file_status));file_status='old'
        write(unit,"(1x,A)")trim(p_buffer)
        close(unit)
+    else
+       write(unit,"(1x,A)")trim(p_buffer)
     endif
     p_buffer=""
   end subroutine print_input_node

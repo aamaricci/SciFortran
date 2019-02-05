@@ -604,8 +604,8 @@ contains
     if(IOinput)then
        call print_input_list(trim(file))
     else
-       write(*,*)"input file can not be found. dumped a default version in used."//trim(file)
        call print_input_list(trim(file))
+       write(*,*)"input file can not be found. Dumped a *default* version in: used."//trim(file)
        stop
     endif
   end subroutine save_input_file
