@@ -46,217 +46,218 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   !MPI
   logical                           :: mpi_master
   !
-  if(MpiComm /= MPI_COMM_NULL)then
+  ! if(MpiComm /= MPI_COMM_NULL)then
+  if(MpiComm == MPI_COMM_NULL)return
+  !
+  which_ = 'SR'   ; if(present(which))which_=which
+  tol_   = 1d-12  ; if(present(tol))tol_=tol
+  verb   = .false.; if(present(iverbose))verb=iverbose
+  !
+  !MPI setup:
+  mpi_master= Get_master_MPI(MpiComm)
+  !
+  maxn   = Ns
+  maxnev = Neigen
+  maxncv = Nblock
+  if(maxncv>Ns)then
+     maxncv=Ns
+     print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
+  endif
+  !
+  n      = maxn
+  nev    = maxnev
+  ncv    = maxncv
+  bmat   = 'I'
+  maxitr = Nitermax
+  !
+  ! Setup distribution of data to nodes:
+  ldv = size(evec,1)             !ldv is the SMALL dimension
+  ! if(ldv>0.AND.ldv < ncv)stop "LANCZOS_PARPACK_C error: ldv < maxNblock. Unstable! Find a way to increase ldv... (less cpu?)"
+  if ( ldv > maxn ) then
+     stop ' ERROR with _SDRV1: NLOC is greater than MAXNLOC '
+  else if ( nev > maxnev ) then
+     stop ' ERROR with _SDRV1: NEV is greater than MAXNEV '
+  else if ( ncv > maxncv ) then
+     stop ' ERROR with _SDRV1: NCV is greater than MAXNCV '
+  end if
+  !
+  allocate(ax(ldv))
+  allocate(d(ncv))
+  allocate(resid(ldv))
+  allocate(v(ldv,ncv))
+  allocate(workd(3*ldv))
+  allocate(workev(3*ncv))
+  allocate(workl(ncv*(3*ncv+5) + 10))
+  allocate(rwork(ncv))
+  allocate(rd(ncv,3))
+  allocate(select(ncv))
+  !
+  ax     = zero
+  d      = zero
+  v      = zero
+  workl  = zero
+  workd  = zero
+  resid  = zero
+  workev = zero
+  rwork  = zero
+  rd     = zero
+  lworkl = ncv*(3*ncv+5) + 10
+  info   = 1
+  ido    = 0
+  select = .true.
+  !
+  !
+  if(present(v0))then
+     resid = v0
+  else
+     call random_seed(size=nrandom)
+     if(allocated(seed_random))deallocate(seed_random)
+     allocate(seed_random(nrandom))
+     seed_random=1234567
+     call random_seed(put=seed_random)
      !
-     which_ = 'SR'   ; if(present(which))which_=which
-     tol_   = 1d-12  ; if(present(tol))tol_=tol
-     verb   = .false.; if(present(iverbose))verb=iverbose
+     allocate(vec(ldv),reV(ldv),imV(ldv))
+     call random_number(reV)
+     call random_number(imV)
+     vec=dcmplx(reV,imV)
+     norm_tmp = dot_product(vec,vec)
+     norm = 0d0
+     call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     resid=vec/sqrt(norm)
+     deallocate(Vec,reV,imV)
+  endif
+  !
+  ishfts    = 1
+  mode1     = 1
+  iparam(1) = ishfts
+  iparam(3) = maxitr
+  iparam(7) = mode1
+  !
+  !
+  !  MAIN LOOP (Reverse communication loop)
+  do
+     call pznaupd(MpiComm,ido,bmat,ldv,which_,nev,tol_,resid,&
+          ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,info)
      !
-     !MPI setup:
-     mpi_master= Get_master_MPI(MpiComm)
-     !
-     maxn   = Ns
-     maxnev = Neigen
-     maxncv = Nblock
-     if(maxncv>Ns)then
-        maxncv=Ns
-        print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
+     if(ido/=-1.AND.ido/=1)exit
+     !  Perform matrix vector multiplication:
+     !    y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
+     call MatVec(ldv,workd(ipntr(1)),workd(ipntr(2)))
+  end do
+  !
+  !POST PROCESSING:
+  if(info/=0)then
+     if(mpi_master)then
+        write(*,'(a,i6)')'Warning/Error in PZNAUPD, info = ', info
+        select case(info)
+        case(1)
+           write(*,'(a)')'Maximum number of iterations reached.'
+           write(*,'(a)')'All possible eigenvalues of OP has been found. '
+           write(*,'(a)')'IPARAM(5) returns the number of wanted converged Ritz values.'
+           write(*,'(a,I0)')'IPARAM(5) = ',Iparam(5)              
+        case(3)
+           write(*,'(a)') ' No shifts could be applied during implicit '&
+                //'Arnoldi update, try increasing NCV.'
+           stop
+        case(-1)
+           write(*,'(a)')'N must be positive.'
+           stop
+        case(-2)
+           write(*,'(a)')'NEV must be positive.'
+           stop
+        case(-3)
+           write(*,'(a)')'NCV must be greater than NEV and less than or equal to N.'
+           stop
+        case(-4)
+           write(*,'(a)')'The maximum number of Arnoldi update iterations allowed must be greater than zero.'
+           stop
+        case(-5)
+           write(*,'(a)')'WHICH must be one of LM, SM, LA, SA or BE.'
+           stop
+        case(-6)
+           write(*,'(a)')'BMAT must be one of I or G.'
+           stop
+        case(-7)
+           write(*,'(a)')'Length of private work array WORKL is not sufficient.'
+           stop
+        case(-8)
+           write(*,'(a)')'Error return from trid. eigenvalue calculation; Informatinal error from LAPACK routine dsteqr .'
+           stop
+        case(-9)
+           write(*,'(a)')'Starting vector is zero.'
+           stop
+        case(-10)
+           write(*,'(a)')'IPARAM(7) must be 1,2,3,4,5.'
+           stop
+        case(-11)
+           write(*,'(a)')'IPARAM(7) = 1 and BMAT = G are incompatable.'
+           stop
+        case(-12)
+           write(*,'(a)')'IPARAM(1) must be equal to 0 or 1.'
+           stop
+        case(-13)
+           write(*,'(a)')'NEV and WHICH = BE are incompatable.'
+           stop
+        case(-9999)
+           write(*,'(a)')'Could not build an Arnoldi factorization.'
+           write(*,'(a)')'IPARAM(5) returns the size of the current Arnoldi factorization.'
+           write(*,'(a)')'The user is advised to check that enough workspace and array storage has been allocated.'
+           stop
+        end select
      endif
+  else
      !
-     n      = maxn
-     nev    = maxnev
-     ncv    = maxncv
-     bmat   = 'I'
-     maxitr = Nitermax
+     call pzneupd (MpiComm,.true.,'All',select,d,v,ldv,sigma,workev,bmat,&
+          ldv,which_,nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,ierr)
      !
-     ! Setup distribution of data to nodes:
-     ldv = size(evec,1)             !ldv is the SMALL dimension
-     ! if(ldv>0.AND.ldv < ncv)stop "LANCZOS_PARPACK_C error: ldv < maxNblock. Unstable! Find a way to increase ldv... (less cpu?)"
-     if ( ldv > maxn ) then
-        stop ' ERROR with _SDRV1: NLOC is greater than MAXNLOC '
-     else if ( nev > maxnev ) then
-        stop ' ERROR with _SDRV1: NEV is greater than MAXNEV '
-     else if ( ncv > maxncv ) then
-        stop ' ERROR with _SDRV1: NCV is greater than MAXNCV '
+     do j=1,neigen
+        eval(j)=dreal(d(j))
+     enddo
+     allocate(Eorder(Neigen))
+     call sort_array(Eval,Eorder)
+     !
+     if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
+     evec=zero
+     do j=1,neigen
+        do i=1,ldv
+           evec(i,j)=v(i,Eorder(j))
+        enddo
+     enddo
+     !
+     !
+     !=========================================================================
+     !  Compute the residual norm
+     !    ||  A*x - lambda*x ||
+     !  for the NCONV accurately computed eigenvalues and 
+     !  eigenvectors.  (iparam(5) indicates how many are 
+     !  accurate to the requested tolerance)
+     if(ierr/=0)then
+        write(*,'(a,i6)')'Error with PZNEUPD, IERR = ',ierr
+        write(*,'(a)')'Check the documentation of PZNEUPD.'
+     else
+        nconv =  iparam(5)
      end if
      !
-     allocate(ax(ldv))
-     allocate(d(ncv))
-     allocate(resid(ldv))
-     allocate(v(ldv,ncv))
-     allocate(workd(3*ldv))
-     allocate(workev(3*ncv))
-     allocate(workl(ncv*(3*ncv+5) + 10))
-     allocate(rwork(ncv))
-     allocate(rd(ncv,3))
-     allocate(select(ncv))
-     !
-     ax     = zero
-     d      = zero
-     v      = zero
-     workl  = zero
-     workd  = zero
-     resid  = zero
-     workev = zero
-     rwork  = zero
-     rd     = zero
-     lworkl = ncv*(3*ncv+5) + 10
-     info   = 1
-     ido    = 0
-     select = .true.
+     if(mpi_master.AND.verb)then
+        write(*,'(a)') ''
+        write(*,'(a)') 'ARPACK::'
+        write(*,'(a)') ''
+        write(*,'(a,i12)') '  Size of the matrix is:                      ', n
+        write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
+        write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
+        write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
+        write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
+        write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
+        write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
+        write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
+     end if
      !
      !
-     if(present(v0))then
-        resid = v0
-     else
-        call random_seed(size=nrandom)
-        if(allocated(seed_random))deallocate(seed_random)
-        allocate(seed_random(nrandom))
-        seed_random=1234567
-        call random_seed(put=seed_random)
-        !
-        allocate(vec(ldv),reV(ldv),imV(ldv))
-        call random_number(reV)
-        call random_number(imV)
-        vec=dcmplx(reV,imV)
-        norm_tmp = dot_product(vec,vec)
-        norm = 0d0
-        call AllReduce_MPI(MpiComm,norm_tmp,norm)
-        resid=vec/sqrt(norm)
-        deallocate(Vec,reV,imV)
-     endif
-     !
-     ishfts    = 1
-     mode1     = 1
-     iparam(1) = ishfts
-     iparam(3) = maxitr
-     iparam(7) = mode1
-     !
-     !
-     !  MAIN LOOP (Reverse communication loop)
-     do
-        call pznaupd(MpiComm,ido,bmat,ldv,which_,nev,tol_,resid,&
-             ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,info)
-        !
-        if(ido/=-1.AND.ido/=1)exit
-        !  Perform matrix vector multiplication:
-        !    y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
-        call MatVec(ldv,workd(ipntr(1)),workd(ipntr(2)))
-     end do
-     !
-     !POST PROCESSING:
-     if(info/=0)then
-        if(mpi_master)then
-           write(*,'(a,i6)')'Warning/Error in PZNAUPD, info = ', info
-           select case(info)
-           case(1)
-              write(*,'(a)')'Maximum number of iterations reached.'
-              write(*,'(a)')'All possible eigenvalues of OP has been found. '
-              write(*,'(a)')'IPARAM(5) returns the number of wanted converged Ritz values.'
-              write(*,'(a,I0)')'IPARAM(5) = ',Iparam(5)              
-           case(3)
-              write(*,'(a)') ' No shifts could be applied during implicit '&
-                   //'Arnoldi update, try increasing NCV.'
-              stop
-           case(-1)
-              write(*,'(a)')'N must be positive.'
-              stop
-           case(-2)
-              write(*,'(a)')'NEV must be positive.'
-              stop
-           case(-3)
-              write(*,'(a)')'NCV must be greater than NEV and less than or equal to N.'
-              stop
-           case(-4)
-              write(*,'(a)')'The maximum number of Arnoldi update iterations allowed must be greater than zero.'
-              stop
-           case(-5)
-              write(*,'(a)')'WHICH must be one of LM, SM, LA, SA or BE.'
-              stop
-           case(-6)
-              write(*,'(a)')'BMAT must be one of I or G.'
-              stop
-           case(-7)
-              write(*,'(a)')'Length of private work array WORKL is not sufficient.'
-              stop
-           case(-8)
-              write(*,'(a)')'Error return from trid. eigenvalue calculation; Informatinal error from LAPACK routine dsteqr .'
-              stop
-           case(-9)
-              write(*,'(a)')'Starting vector is zero.'
-              stop
-           case(-10)
-              write(*,'(a)')'IPARAM(7) must be 1,2,3,4,5.'
-              stop
-           case(-11)
-              write(*,'(a)')'IPARAM(7) = 1 and BMAT = G are incompatable.'
-              stop
-           case(-12)
-              write(*,'(a)')'IPARAM(1) must be equal to 0 or 1.'
-              stop
-           case(-13)
-              write(*,'(a)')'NEV and WHICH = BE are incompatable.'
-              stop
-           case(-9999)
-              write(*,'(a)')'Could not build an Arnoldi factorization.'
-              write(*,'(a)')'IPARAM(5) returns the size of the current Arnoldi factorization.'
-              write(*,'(a)')'The user is advised to check that enough workspace and array storage has been allocated.'
-              stop
-           end select
-        endif
-     else
-        !
-        call pzneupd (MpiComm,.true.,'All',select,d,v,ldv,sigma,workev,bmat,&
-             ldv,which_,nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,ierr)
-        !
-        do j=1,neigen
-           eval(j)=dreal(d(j))
-        enddo
-        allocate(Eorder(Neigen))
-        call sort_array(Eval,Eorder)
-        !
-        if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
-        evec=zero
-        do j=1,neigen
-           do i=1,ldv
-              evec(i,j)=v(i,Eorder(j))
-           enddo
-        enddo
-        !
-        !
-        !=========================================================================
-        !  Compute the residual norm
-        !    ||  A*x - lambda*x ||
-        !  for the NCONV accurately computed eigenvalues and 
-        !  eigenvectors.  (iparam(5) indicates how many are 
-        !  accurate to the requested tolerance)
-        if(ierr/=0)then
-           write(*,'(a,i6)')'Error with PZNEUPD, IERR = ',ierr
-           write(*,'(a)')'Check the documentation of PZNEUPD.'
-        else
-           nconv =  iparam(5)
-        end if
-        !
-        if(mpi_master.AND.verb)then
-           write(*,'(a)') ''
-           write(*,'(a)') 'ARPACK::'
-           write(*,'(a)') ''
-           write(*,'(a,i12)') '  Size of the matrix is:                      ', n
-           write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
-           write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
-           write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
-           write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
-           write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
-           write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
-           write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
-        end if
-        !
-        !
-        ! if(mpi_master.and.nconv==0.and.verb)stop "None of the required values was found."
-     endif
-     call Barrier_MPI(MpiComm)
-     deallocate(ax,d,resid,v,workd,workev,workl,rwork,rd,select)
+     ! if(mpi_master.and.nconv==0.and.verb)stop "None of the required values was found."
   endif
+  call Barrier_MPI(MpiComm)
+  deallocate(ax,d,resid,v,workd,workev,workl,rwork,rd,select)
+  ! endif
   !
   !
 contains

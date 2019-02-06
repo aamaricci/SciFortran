@@ -29,6 +29,8 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !
   logical                              :: mpi_master
   !
+  if(MpiComm==Mpi_Comm_Null)return
+  !
   mpi_master=get_master_MPI(MpiComm)
   !
   Nloc = size(vect)
@@ -144,6 +146,8 @@ subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
   !
   logical                                      :: mpi_master
   !
+  if(MpiComm/=Mpi_Comm_Null)return
+  !
   mpi_master=get_master_MPI(MpiComm)
   !
   Nloc = size(vin)
@@ -195,6 +199,8 @@ subroutine mpi_lanczos_iteration_c(MpiComm,MatVec,iter,vin,vout,alfa,beta)
   real(8)                                       :: norm,norm_tmp
   !
   logical                                       :: mpi_master
+  !
+  if(MpiComm==Mpi_Comm_Null)return
   !
   nloc=size(vin)
   !
