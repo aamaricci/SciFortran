@@ -146,7 +146,7 @@ subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
   !
   logical                                      :: mpi_master
   !
-  if(MpiComm/=Mpi_Comm_Null)return
+  if(MpiComm==Mpi_Comm_Null)return
   !
   mpi_master=get_master_MPI(MpiComm)
   !
