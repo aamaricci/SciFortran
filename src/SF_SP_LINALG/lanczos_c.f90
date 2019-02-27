@@ -1,7 +1,7 @@
 !---------------------------------------------------------------------
 !Purpose: use plain lanczos to get the groundstate energy
 !---------------------------------------------------------------------
-subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck)
+subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck,vrandom)
   interface
      subroutine MatVec(Nloc,vin,vout)
        integer                    :: Nloc
@@ -16,6 +16,7 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   real(8),optional                     :: threshold
   integer,optional                     :: ncheck
   logical,optional                     :: iverbose
+  logical,optional                     :: vrandom
   !
   complex(8),dimension(Ndim)           :: vin,vout
   integer                              :: iter,nlanc
@@ -25,24 +26,32 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   real(8)                              :: a_,b_
   real(8)                              :: norm,diff,ran(2)
   integer                              :: i,ierr
+  logical                              :: vran=.true.
   !
   if(present(iverbose))verb=iverbose
   if(present(threshold))threshold_=threshold
   if(present(ncheck))ncheck_=ncheck
+  if(present(vrandom))vran=vrandom
   !
   norm=dot_product(vect,vect)
   if(norm==0d0)then
-     call random_seed(size=nrandom)
-     if(allocated(seed_random))deallocate(seed_random)
-     allocate(seed_random(nrandom))
-     seed_random=1234567
-     call random_seed(put=seed_random)
-     do i=1,Ndim
-        call random_number(ran)
-        vect(i)=dcmplx(ran(1),ran(2))
-     enddo
+     if(vran)then
+        call random_seed(size=nrandom)
+        if(allocated(seed_random))deallocate(seed_random)
+        allocate(seed_random(nrandom))
+        seed_random=1234567
+        call random_seed(put=seed_random)
+        deallocate(seed_random)
+        do i=1,Ndim
+           call random_number(ran)
+           vect(i)=dcmplx(ran(1),ran(2))
+        enddo
+        if(verb)write(*,*)"LANCZOS_EIGH_C: random initial vector generated:"
+     else
+        vect = one
+        if(verb)write(*,*)"LANCZOS_EIGH_C: unitary initial vector generated:"
+     endif
      vect=vect/sqrt(dot_product(vect,vect))
-     if(verb)write(*,*)"LANCZOS_EIGH_C: random initial vector generated:"
   endif
   !
   !============= LANCZOS LOOP =====================
@@ -195,8 +204,8 @@ subroutine lanczos_iteration_c(MatVec,iter,vin,vout,alfa,beta)
      vout= -beta*tmp
   endif
   call MatVec(nloc,vin,tmp)
-  vout    = vout + tmp
+  vout = vout + tmp
   alfa = dot_product(vin,vout)
-  vout    = vout - alfa*vin
+  vout = vout - alfa*vin
   beta = sqrt(dot_product(vout,vout))
 end subroutine lanczos_iteration_c

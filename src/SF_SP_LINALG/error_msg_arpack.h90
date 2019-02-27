@@ -1,0 +1,55 @@
+  select case(info)
+  case(1)
+     write(*,'(a)')'Maximum number of iterations reached.'
+     write(*,'(a)')'All possible eigenvalues of OP has been found. '
+     write(*,'(a)')'IPARAM(5) returns the number of wanted converged Ritz values.'
+     write(*,'(a,I0)')'IPARAM(5) = ',Iparam(5)              
+  case(3)
+     write(*,'(a)') ' No shifts could be applied during implicit '&
+          //'Arnoldi update, try increasing NCV.'
+     stop
+  case(-1)
+     write(*,'(a)')'N must be positive.'
+     stop
+  case(-2)
+     write(*,'(a)')'NEV must be positive.'
+     stop
+  case(-3)
+     write(*,'(a)')'NCV must be greater than NEV and less than or equal to N.'
+     stop
+  case(-4)
+     write(*,'(a)')'The maximum number of Arnoldi update iterations allowed must be greater than zero.'
+     stop
+  case(-5)
+     write(*,'(a)')'WHICH must be one of LM, SM, LA, SA or BE.'
+     stop
+  case(-6)
+     write(*,'(a)')'BMAT must be one of I or G.'
+     stop
+  case(-7)
+     write(*,'(a)')'Length of private work array WORKL is not sufficient.'
+     stop
+  case(-8)
+     write(*,'(a)')'Error return from trid. eigenvalue calculation; Informatinal error from LAPACK routine dsteqr .'
+     stop
+  case(-9)
+     write(*,'(a)')'Starting vector is zero.'
+     stop
+  case(-10)
+     write(*,'(a)')'IPARAM(7) must be 1,2,3,4,5.'
+     stop
+  case(-11)
+     write(*,'(a)')'IPARAM(7) = 1 and BMAT = G are incompatable.'
+     stop
+  case(-12)
+     write(*,'(a)')'IPARAM(1) must be equal to 0 or 1.'
+     stop
+  case(-13)
+     write(*,'(a)')'NEV and WHICH = BE are incompatable.'
+     stop
+  case(-9999)
+     write(*,'(a)')'Could not build an Arnoldi factorization.'
+     write(*,'(a)')'IPARAM(5) returns the size of the current Arnoldi factorization.'
+     write(*,'(a)')'The user is advised to check that enough workspace and array storage has been allocated.'
+     stop
+  end select

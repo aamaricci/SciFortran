@@ -35,30 +35,13 @@ module LIST_INPUT
   end interface append_to_input_list
 
 
-  ! DISABLED:
-  ! interface get_from_input_list
-  !    module procedure i_get_input_variable
-  !    module procedure d_get_input_variable
-  !    module procedure l_get_input_variable
-  !    module procedure iv_get_input_variable
-  !    module procedure dv_get_input_variable
-  !    module procedure lv_get_input_variable
-  !    module procedure ch_get_input_variable
-  ! end interface get_from_input_list
-
-
-
   public :: input_list
   public :: init_input_list
-  public :: destroy_input_list
+  public :: delete_input_list
   public :: size_input_list
   public :: append_to_input_list
-
   public :: print_input_list
 
-  !DISABLES
-  ! public :: get_from_input_list
-  ! public :: print_help_list
 
   type(input_list)   :: default_list
 
@@ -104,9 +87,10 @@ contains
   !+------------------------------------------------------------------+
   !PURPOSE: delete the list
   !+------------------------------------------------------------------+
-  subroutine destroy_input_list(list)
+  subroutine delete_input_list(list)
     type(input_list),optional :: list
     type(input_node),pointer  :: p,c
+    integer :: i
     if(present(list))then
        do
           p => list%root
@@ -114,9 +98,17 @@ contains
           if(.not.associated(c))exit  !empty list
           p%next => c%next !
           c%next=>null()
+          do i=1,size(c%var)
+             nullify(c%var(i)%i)
+             nullify(c%var(i)%d)
+             nullify(c%var(i)%l)
+             nullify(c%var(i)%ch)
+          enddo
+          deallocate(c%var)
           deallocate(c)
        end do
        list%status=.false.
+       deallocate(list%root)
     else
        do
           p => default_list%root
@@ -124,11 +116,21 @@ contains
           if(.not.associated(c))exit  !empty list
           p%next => c%next !
           c%next=>null()
+          do i=1,size(c%var)
+             nullify(c%var(i)%i)
+             nullify(c%var(i)%d)
+             nullify(c%var(i)%l)
+             nullify(c%var(i)%ch)
+          enddo
+          deallocate(c%var)
           deallocate(c)
        end do
        default_list%status=.false.
+       deallocate(default_list%root)
     endif
-  end subroutine destroy_input_list
+    p => null()
+    c => null()
+  end subroutine delete_input_list
 
 
 
@@ -166,12 +168,8 @@ contains
     end do
     allocate(p%next)                !Create a new element in the list
     !
-    ! allocate(p%next%i(1))
-    ! p%next%i(1)  = variable
-    !>NEW
     allocate(p%next%var(1))
     p%next%var(1)%i=>variable
-    !<
     p%next%name= name
     p%next%type='i'
     p%next%comment=""
@@ -202,12 +200,9 @@ contains
     end do
     allocate(p%next)                !Create a new element in the list
     !
-    ! allocate(p%next%d(1))
-    ! p%next%d(1) = variable
-    !>NEW
     allocate(p%next%var(1))
     p%next%var(1)%d=>variable
-    !<
+    !
     p%next%name= name
     p%next%type='d'
     p%next%comment=""
@@ -527,306 +522,6 @@ contains
 
 
 
-  !            
-  ! DISABLED 
-  !
-  ! !+------------------------------------------------------------------+
-  ! !PURPOSE:   !Get input variable from the list:
-  ! !+------------------------------------------------------------------+
-  ! !========================0-dimension==================================
-  ! subroutine i_get_input_variable(variable,name,list)
-  !   integer                   :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%i(1)
-  !            !>NEW
-  !            variable = c%var(1)%i
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine i_get_input_variable
-
-  ! subroutine d_get_input_variable(variable,name,list)
-  !   real(8)                   :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%d(1)
-  !            !>NEW
-  !            variable = c%var(1)%d
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine d_get_input_variable
-
-  ! subroutine l_get_input_variable(variable,name,list)
-  !   logical                   :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%l(1)
-  !            !>NEW
-  !            variable = c%var(1)%l
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine l_get_input_variable
-
-
-  ! !========================1-dimension==================================
-  ! subroutine iv_get_input_variable(variable,name,list)
-  !   integer,dimension(:)      :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%i(1:size(variable))
-  !            if(size(variable)/=size(c%var))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
-  !            !>NEW
-  !            do i=1,size(variable)
-  !               variable(i) = c%var(i)%i
-  !            enddo
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine iv_get_input_variable
-
-  ! subroutine dv_get_input_variable(variable,name,list)
-  !   real(8),dimension(:)      :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%d(1:size(variable))
-  !            if(size(variable)/=size(c%var))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
-  !            !>NEW
-  !            do i=1,size(variable)
-  !               variable(i) = c%var(i)%d
-  !            enddo
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine dv_get_input_variable
-
-  ! subroutine lv_get_input_variable(variable,name,list)
-  !   logical,dimension(:)      :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%l(1:size(variable))
-  !            if(size(variable)/=size(c%var))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
-  !            !>NEW
-  !            do i=1,size(variable)
-  !               variable(i) = c%var(i)%l
-  !            enddo
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine lv_get_input_variable
-
-
-  ! !========================STRING==================================
-  ! subroutine ch_get_input_variable(variable,name,list)
-  !   character(len=*)          :: variable
-  !   character(len=*)          :: name
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit,size_
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            ! variable=c%ch(1)
-  !            !>NEW
-  !            variable = c%var(1)%ch
-  !            !<
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine ch_get_input_variable
-
 
 
 
@@ -1050,242 +745,351 @@ contains
 
 
 
-
-  ! !+------------------------------------------------------------------+
-  ! !PURPOSE: print the list help using comments
-  ! !+------------------------------------------------------------------+
-  ! subroutine print_help_list(list)
-  !   type(input_list),optional :: list
-  !   integer                   :: i,counter,unit
-  !   type(input_node),pointer  :: c
-  !   logical                   :: bool
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   if(default_list%size>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         call help_input_node(c)
-  !         c => c%next
-  !      enddo
-  !   else
-  !      write(*,*)"input list empty: no help."
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine print_help_list
-  ! subroutine help_input_node(c)
-  !   type(input_node)   :: c
-  !   character(len=255) :: name
-  !   integer            :: clen
-  !   integer            :: unit,i
-  !   name=c%name
-  !   call s_blank_delete(name)
-  !   p_buffer=trim(name)//" : "//trim(c%comment)
-  !   write(*,"(1x,A)")trim(p_buffer)
-  ! end subroutine help_input_node
-
-
-
-  ! subroutine chv_append_to_input_list(variable,name,comment)
-  !   character(len=*),dimension(:),target :: variable
-  !   character(len=*)                     :: name
-  !   character(len=*),optional            :: comment
-  !   type(input_node),pointer             :: p,c
-  !   integer                              :: i
-  !   if(.not.default_list%status)call init_input_list()
-  !   p => default_list%root
-  !   c => p%next
-  !   do                            !traverse the list until obj < value (ordered list)
-  !      if(.not.associated(c))exit !empty list or beginning of the list
-  !      p => c
-  !      c => c%next
-  !   end do
-  !   allocate(p%next)                !Create a new element in the list
-  !   !
-  !   ! allocate(p%next%ch(size(variable)))
-  !   ! do i=1,size(variable)
-  !   !    p%next%ch(i) = trim(variable(i))
-  !   ! enddo
-  !   !>NEW
-  !   allocate(p%next%var(size(variable)))
-  !   do i=1,size(variable)
-  !      p%next%var(i)%ch=>trim(variable(i))
-  !   enddo
-  !   !<
-  !   p%next%name= name
-  !   p%next%type='ch'
-  !   p%next%comment=""
-  !   if(present(comment))p%next%comment=trim(comment)
-  !   !
-  !   default_list%size=default_list%size+1
-  !   if(.not.associated(c))then !end of the list special case (current=>current%next)
-  !      p%next%next  => null()
-  !   else
-  !      p%next%next  => c      !the %next of the new node come to current
-  !   end if
-  !   p=>null()
-  !   c=>null()
-  ! end subroutine chv_append_to_input_list
-
-
-
-
-
-
-
-
-
-
-  ! !========================POLYMORPHIC==================================
-  ! subroutine poly_append_to_input_list(variable,name,comment)
-  !   class(*),target           :: variable
-  !   character(len=*)          :: name
-  !   character(len=*),optional :: comment
-  !   type(input_node),pointer  :: p,c
-  !   if(.not.default_list%status)call init_input_list()
-  !   p => default_list%root
-  !   c => p%next
-  !   do                            !traverse the list until obj < value (ordered list)
-  !      if(.not.associated(c))exit !empty list or beginning of the list
-  !      p => c
-  !      c => c%next
-  !   end do
-  !   allocate(p%next)                !Create a new element in the list
-  !   !
-  !   allocate(p%next%var(1))
-  !   p%next%var(1)%item  => variable
-  !   p%next%name= name
-  !   p%next%type='i'
-  !   p%next%comment=""
-  !   if(present(comment))p%next%comment=trim(comment)
-  !   !
-  !   default_list%size=default_list%size+1
-  !   if(.not.associated(c))then !end of the list special case (current=>current%next)
-  !      p%next%next  => null()
-  !   else
-  !      p%next%next  => c      !the %next of the new node come to current
-  !   end if
-  !   p=>null()
-  !   c=>null()
-  ! end subroutine poly_append_to_input_list
-
-
-
-
-
-
-
-  ! !========================2-dimension==================================
-  ! subroutine im_append_to_input_list(variable,name,comment)
-  !   integer,dimension(:,:)                               :: variable
-  !   character(len=*)                                     :: name
-  ! character(len=*),optional:: comment
-  !   type(input_node),pointer                             :: p,c
-  !   if(.not.default_list%status)call init_input_list()
-  !   p => default_list%root
-  !   c => p%next
-  !   do                            !traverse the list until obj < value (ordered list)
-  !      if(.not.associated(c))exit !empty list or beginning of the list
-  !      p => c
-  !      c => c%next
-  !   end do
-  !   allocate(p%next)                !Create a new element in the list
-  !   !
-  !   allocate(p%next%i(size(variable)))
-  !   p%next%i   = pack(variable,.true.)
-  !   p%next%name= name
-  !   p%next%type='i'
-  ! p%next%comment=""
-  ! if(present(comment))p%next%comment=trim(comment)
-  !   !
-  !   default_list%size=default_list%size+1
-  !   if(.not.associated(c))then !end of the list special case (current=>current%next)
-  !      p%next%next  => null()
-  !   else
-  !      p%next%next  => c      !the %next of the new node come to current
-  !   end if
-  !   p=>null()
-  !   c=>null()
-  ! end subroutine im_append_to_input_list
-
-  ! subroutine dm_append_to_input_list(variable,name,comment)
-  !   real(8),dimension(:,:)                               :: variable
-  !   character(len=*)                                     :: name
-  !character(len=*),optional:: comment
-  !   type(input_node),pointer                             :: p,c
-  !   if(.not.default_list%status)call init_input_list()
-  !   p => default_list%root
-  !   c => p%next
-  !   do                            !traverse the list until obj < value (ordered list)
-  !      if(.not.associated(c))exit !empty list or beginning of the list
-  !      p => c
-  !      c => c%next
-  !   end do
-  !   allocate(p%next)                !Create a new element in the list
-  !   !
-  !   allocate(p%next%d(size(variable)))
-  !   p%next%d   = pack(variable,.true.)
-  !   p%next%name= name
-  !   p%next%type='d'
-  ! p%next%comment=""
-  ! if(present(comment))p%next%comment=trim(comment)
-  !   !
-  !   default_list%size=default_list%size+1
-  !   if(.not.associated(c))then !end of the list special case (current=>current%next)
-  !      p%next%next  => null()
-  !   else
-  !      p%next%next  => c      !the %next of the new node come to current
-  !   end if
-  !   p=>null()
-  !   c=>null()
-  ! end subroutine dm_append_to_input_list
-
-
-
-  ! subroutine chv_get_input_variable(variable,name,list)
-  !   character(len=*),dimension(:) :: variable
-  !   character(len=*)              :: name
-  !   type(input_list),optional     :: list
-  !   integer                       :: i,counter,unit,size_
-  !   type(input_node),pointer      :: c
-  !   logical                       :: bool
-  !   character(len=len(name)) :: name_
-  !   name_=name;call upper_case(name_)
-  !   if(present(list))then
-  !      c => list%root%next
-  !   else
-  !      c => default_list%root%next
-  !   endif
-  !   counter = 0 
-  !   unit=free_unit()
-  !   size_=default_list%size
-  !   if(present(list))size_=list%size
-  !   if(size_>0)then
-  !      do
-  !         if(.not.associated(c))exit
-  !         counter=counter+1
-  !         if(trim(c%name)==trim(name_))then
-  !            do i=1,size(variable)
-  !               variable(i)=trim(c%ch(i))
-  !            enddo
-  !            if(size(variable)/=size(c%ch))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
-  !            c=>null()
-  !            return
-  !         endif
-  !         c => c%next
-  !      enddo
-  !      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
-  !   else
-  !      write(*,"(A)")"input list: empty"
-  !      return
-  !   endif
-  !   c => null()
-  ! end subroutine chv_get_input_variable
-
-
 end module LIST_INPUT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+! !========================POLYMORPHIC==================================
+! subroutine poly_append_to_input_list(variable,name,comment)
+!   class(*),target           :: variable
+!   character(len=*)          :: name
+!   character(len=*),optional :: comment
+!   type(input_node),pointer  :: p,c
+!   if(.not.default_list%status)call init_input_list()
+!   p => default_list%root
+!   c => p%next
+!   do                            !traverse the list until obj < value (ordered list)
+!      if(.not.associated(c))exit !empty list or beginning of the list
+!      p => c
+!      c => c%next
+!   end do
+!   allocate(p%next)                !Create a new element in the list
+!   !
+!   allocate(p%next%var(1))
+!   p%next%var(1)%item  => variable
+!   p%next%name= name
+!   p%next%type='i'
+!   p%next%comment=""
+!   if(present(comment))p%next%comment=trim(comment)
+!   !
+!   default_list%size=default_list%size+1
+!   if(.not.associated(c))then !end of the list special case (current=>current%next)
+!      p%next%next  => null()
+!   else
+!      p%next%next  => c      !the %next of the new node come to current
+!   end if
+!   p=>null()
+!   c=>null()
+! end subroutine poly_append_to_input_list
+
+!            
+! DISABLED 
+!
+! !+------------------------------------------------------------------+
+! !PURPOSE:   !Get input variable from the list:
+! !+------------------------------------------------------------------+
+! !========================0-dimension==================================
+! subroutine i_get_input_variable(variable,name,list)
+!   integer                   :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%i(1)
+!            !>NEW
+!            variable = c%var(1)%i
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine i_get_input_variable
+
+! subroutine d_get_input_variable(variable,name,list)
+!   real(8)                   :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0 
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%d(1)
+!            !>NEW
+!            variable = c%var(1)%d
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine d_get_input_variable
+
+! subroutine l_get_input_variable(variable,name,list)
+!   logical                   :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0 
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%l(1)
+!            !>NEW
+!            variable = c%var(1)%l
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine l_get_input_variable
+
+
+! !========================1-dimension==================================
+! subroutine iv_get_input_variable(variable,name,list)
+!   integer,dimension(:)      :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0 
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%i(1:size(variable))
+!            if(size(variable)/=size(c%var))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
+!            !>NEW
+!            do i=1,size(variable)
+!               variable(i) = c%var(i)%i
+!            enddo
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine iv_get_input_variable
+
+! subroutine dv_get_input_variable(variable,name,list)
+!   real(8),dimension(:)      :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0 
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%d(1:size(variable))
+!            if(size(variable)/=size(c%var))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
+!            !>NEW
+!            do i=1,size(variable)
+!               variable(i) = c%var(i)%d
+!            enddo
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine dv_get_input_variable
+
+! subroutine lv_get_input_variable(variable,name,list)
+!   logical,dimension(:)      :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0 
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%l(1:size(variable))
+!            if(size(variable)/=size(c%var))write(*,"(A)")"get_input_variable warning: variable has wrong dimensions"
+!            !>NEW
+!            do i=1,size(variable)
+!               variable(i) = c%var(i)%l
+!            enddo
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine lv_get_input_variable
+
+
+! !========================STRING==================================
+! subroutine ch_get_input_variable(variable,name,list)
+!   character(len=*)          :: variable
+!   character(len=*)          :: name
+!   type(input_list),optional :: list
+!   integer                   :: i,counter,unit,size_
+!   type(input_node),pointer  :: c
+!   logical                   :: bool
+!   character(len=len(name)) :: name_
+!   name_=name;call upper_case(name_)
+!   if(present(list))then
+!      c => list%root%next
+!   else
+!      c => default_list%root%next
+!   endif
+!   counter = 0 
+!   unit=free_unit()
+!   size_=default_list%size
+!   if(present(list))size_=list%size
+!   if(size_>0)then
+!      do
+!         if(.not.associated(c))exit
+!         counter=counter+1
+!         if(trim(c%name)==trim(name_))then
+!            ! variable=c%ch(1)
+!            !>NEW
+!            variable = c%var(1)%ch
+!            !<
+!            c=>null()
+!            return
+!         endif
+!         c => c%next
+!      enddo
+!      write(*,"(A)")"Can not find variable "//trim(name_)//" in the default input list" ; stop "exiting"
+!   else
+!      write(*,"(A)")"input list: empty"
+!      return
+!   endif
+!   c => null()
+! end subroutine ch_get_input_variable

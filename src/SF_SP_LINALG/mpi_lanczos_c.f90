@@ -1,7 +1,7 @@
 !---------------------------------------------------------------------
 !Purpose: use plain lanczos to get the groundstate energy
 !---------------------------------------------------------------------
-subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck)
+subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck,vrandom)
   integer                              :: MpiComm
   interface 
      subroutine MatVec(Nloc,vin,vout)
@@ -18,6 +18,7 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   real(8),optional                     :: threshold
   integer,optional                     :: ncheck
   logical,optional                     :: iverbose
+  logical,optional                     :: vrandom
   !
   complex(8),dimension(size(vect))     :: vin,vout
   integer                              :: iter,nlanc
@@ -26,6 +27,7 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   real(8),dimension(Nitermax)          :: diag,subdiag,esave
   real(8)                              :: a_,b_,norm,diff,ran(2),norm_tmp
   integer                              :: i,ierr
+  logical                              :: vran=.true.
   !
   logical                              :: mpi_master
   !
@@ -38,24 +40,31 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   if(present(iverbose))verb=iverbose
   if(present(threshold))threshold_=threshold
   if(present(ncheck))ncheck_=ncheck
+  if(present(vrandom))vran=vrandom
   !
   norm_tmp= dot_product(vect,vect); norm=0d0
   call AllReduce_Mpi(MpiComm,norm_tmp,norm)
   !
   if(norm==0d0)then
-     call random_seed(size=nrandom)
-     if(allocated(seed_random))deallocate(seed_random)
-     allocate(seed_random(nrandom))
-     seed_random=1234567
-     call random_seed(put=seed_random)
-     do i=1,Nloc
-        call random_number(ran)
-        vect(i)=dcmplx(ran(1),ran(2))
-     enddo
+     if(vran)then
+        call random_seed(size=nrandom)
+        if(allocated(seed_random))deallocate(seed_random)
+        allocate(seed_random(nrandom))
+        seed_random=1234567
+        call random_seed(put=seed_random)
+        deallocate(seed_random)
+        do i=1,Nloc
+           call random_number(ran)
+           vect(i)=dcmplx(ran(1),ran(2))
+        enddo
+        if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
+     else
+        vect = one
+        if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: unitary initial vector generated:"
+     endif
      norm_tmp=dot_product(vect,vect); norm=0d0
      call AllReduce_Mpi(MpiComm,norm_tmp,norm)
      vect=vect/sqrt(norm)
-     if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
   endif
   !
   !============= LANCZOS LOOP =====================

@@ -1,4 +1,4 @@
-subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose)
+subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,vrandom)
   !Arguments
   integer                           :: MpiComm
   !Interface to Matrix-Vector routine:
@@ -19,6 +19,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   complex(8),optional               :: v0(size(evec,1))
   real(8),optional                  :: tol
   logical,optional                  :: iverbose
+  logical,optional                  :: vrandom
   !Dimensions:
   integer                           :: maxn,maxnev,maxncv,ldv,nloc
   integer                           :: n,nconv,ncv,nev
@@ -34,7 +35,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   integer                           :: ipntr(14)
   !Control Vars:
   integer                           :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                           :: verb,reduce_
+  logical                           :: verb,vran
   integer                           :: i
   real(8)                           :: sigma,norm,norm_tmp
   real(8)                           :: tol_
@@ -46,12 +47,12 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   !MPI
   logical                           :: mpi_master
   !
-  ! if(MpiComm /= MPI_COMM_NULL)then
   if(MpiComm == MPI_COMM_NULL)return
   !
   which_ = 'SR'   ; if(present(which))which_=which
-  tol_   = 1d-12  ; if(present(tol))tol_=tol
+  tol_   = 0d0    ; if(present(tol))tol_=tol
   verb   = .false.; if(present(iverbose))verb=iverbose
+  vran   = .true. ;if(present(vrandom))vran=vrandom
   !
   !MPI setup:
   mpi_master= Get_master_MPI(MpiComm)
@@ -110,21 +111,26 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   if(present(v0))then
      resid = v0
   else
-     call random_seed(size=nrandom)
-     if(allocated(seed_random))deallocate(seed_random)
-     allocate(seed_random(nrandom))
-     seed_random=1234567
-     call random_seed(put=seed_random)
-     !
-     allocate(vec(ldv),reV(ldv),imV(ldv))
-     call random_number(reV)
-     call random_number(imV)
-     vec=dcmplx(reV,imV)
+     allocate(Vec(ldv))
+     if(vran)then
+        call random_seed(size=nrandom)
+        if(allocated(seed_random))deallocate(seed_random)
+        allocate(seed_random(nrandom))
+        seed_random=1234567
+        call random_seed(put=seed_random)
+        allocate(reV(ldv),imV(ldv))
+        call random_number(reV)
+        call random_number(imV)
+        vec=dcmplx(reV,imV)
+        deallocate(reV,imV)
+     else
+        vec = one               !start with unitary vector 1/sqrt(Ndim)
+     endif
      norm_tmp = dot_product(vec,vec)
      norm = 0d0
      call AllReduce_MPI(MpiComm,norm_tmp,norm)
      resid=vec/sqrt(norm)
-     deallocate(Vec,reV,imV)
+     deallocate(Vec)
   endif
   !
   ishfts    = 1
@@ -149,61 +155,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   if(info/=0)then
      if(mpi_master)then
         write(*,'(a,i6)')'Warning/Error in PZNAUPD, info = ', info
-        select case(info)
-        case(1)
-           write(*,'(a)')'Maximum number of iterations reached.'
-           write(*,'(a)')'All possible eigenvalues of OP has been found. '
-           write(*,'(a)')'IPARAM(5) returns the number of wanted converged Ritz values.'
-           write(*,'(a,I0)')'IPARAM(5) = ',Iparam(5)              
-        case(3)
-           write(*,'(a)') ' No shifts could be applied during implicit '&
-                //'Arnoldi update, try increasing NCV.'
-           stop
-        case(-1)
-           write(*,'(a)')'N must be positive.'
-           stop
-        case(-2)
-           write(*,'(a)')'NEV must be positive.'
-           stop
-        case(-3)
-           write(*,'(a)')'NCV must be greater than NEV and less than or equal to N.'
-           stop
-        case(-4)
-           write(*,'(a)')'The maximum number of Arnoldi update iterations allowed must be greater than zero.'
-           stop
-        case(-5)
-           write(*,'(a)')'WHICH must be one of LM, SM, LA, SA or BE.'
-           stop
-        case(-6)
-           write(*,'(a)')'BMAT must be one of I or G.'
-           stop
-        case(-7)
-           write(*,'(a)')'Length of private work array WORKL is not sufficient.'
-           stop
-        case(-8)
-           write(*,'(a)')'Error return from trid. eigenvalue calculation; Informatinal error from LAPACK routine dsteqr .'
-           stop
-        case(-9)
-           write(*,'(a)')'Starting vector is zero.'
-           stop
-        case(-10)
-           write(*,'(a)')'IPARAM(7) must be 1,2,3,4,5.'
-           stop
-        case(-11)
-           write(*,'(a)')'IPARAM(7) = 1 and BMAT = G are incompatable.'
-           stop
-        case(-12)
-           write(*,'(a)')'IPARAM(1) must be equal to 0 or 1.'
-           stop
-        case(-13)
-           write(*,'(a)')'NEV and WHICH = BE are incompatable.'
-           stop
-        case(-9999)
-           write(*,'(a)')'Could not build an Arnoldi factorization.'
-           write(*,'(a)')'IPARAM(5) returns the size of the current Arnoldi factorization.'
-           write(*,'(a)')'The user is advised to check that enough workspace and array storage has been allocated.'
-           stop
-        end select
+        include "error_msg_arpack.h90"
      endif
   else
      !
@@ -224,13 +176,8 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         enddo
      enddo
      !
-     !
-     !=========================================================================
-     !  Compute the residual norm
-     !    ||  A*x - lambda*x ||
-     !  for the NCONV accurately computed eigenvalues and 
-     !  eigenvectors.  (iparam(5) indicates how many are 
-     !  accurate to the requested tolerance)
+     !  Compute the residual norm ||  A*x - lambda*x ||
+     !  for the NCONV accurately computed eigenvalues and eigenvectors.
      if(ierr/=0)then
         write(*,'(a,i6)')'Error with PZNEUPD, IERR = ',ierr
         write(*,'(a)')'Check the documentation of PZNEUPD.'
@@ -238,18 +185,8 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         nconv =  iparam(5)
      end if
      !
-     if(mpi_master.AND.verb)then
-        write(*,'(a)') ''
-        write(*,'(a)') 'ARPACK::'
-        write(*,'(a)') ''
-        write(*,'(a,i12)') '  Size of the matrix is:                      ', n
-        write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
-        write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
-        write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
-        write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
-        write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
-        write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
-        write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
+     if(mpi_master)then
+        include "info_msg_arpack.h90"
      end if
      !
      !
@@ -257,7 +194,6 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   endif
   call Barrier_MPI(MpiComm)
   deallocate(ax,d,resid,v,workd,workev,workl,rwork,rd,select)
-  ! endif
   !
   !
 contains

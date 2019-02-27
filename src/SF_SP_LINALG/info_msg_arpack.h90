@@ -1,0 +1,13 @@
+  if(verb)then
+     write(*,'(a)') ''
+     write(*,'(a)') 'ARPACK::'
+     write(*,'(a)') ''
+     write(*,'(a,i12)') '  Size of the matrix is:                      ', n
+     write(*,'(a,i6)') '  Number of Ritz values requested is:         ', nev
+     write(*,'(a,i6)') '  Number of Arnoldi vectors generated is:     ', ncv
+     write(*,'(a)')    '  Portion of the spectrum:                        '//trim(which_)
+     write(*,'(a,i6)') '  Number of converged Ritz values is:         ', nconv
+     write(*,'(a,i6)') '  Number of Implicit Arnoldi iterations is:   ', iparam(3)
+     write(*,'(a,i6)') '  Number of OP*x is:                          ', iparam(9)
+     write(*,'(a,ES14.6)') '  The convergence criterion is:           ', tol
+  end if
