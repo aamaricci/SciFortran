@@ -6,7 +6,7 @@ C          know who wrote this routine (original name: 'va10a'), and
 C          we find it very obscure.
 C          Don't worry, it works just fine.
 Cnoprint=+=========+=========+=========+=========+=========+=========+=$
-      subroutine minimize_(funct, n, x, f, g, h, w, dfn, xm,
+      subroutine minimize_krauth_(funct, n, x, f, g, h, w, dfn, xm,
      $  hh, eps, mode, maxfn, iprint, iexit,itn)
       implicit double precision (a-h,o-z)
       dimension x(*), g(*), h(*), w(*), xm(*)
