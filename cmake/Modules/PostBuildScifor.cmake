@@ -1,5 +1,5 @@
 FUNCTION(BUILD_ENV_MODULE FILE)
-  FILE(WRITE  ${FILE}  "#%Modules\n")
+  FILE(WRITE  ${FILE}  "#%Module\n")
   FILE(APPEND ${FILE} "set project ${PROJECT_NAME}\n")
   FILE(APPEND ${FILE} "set root ${PREFIX}\n")
   FILE(APPEND ${FILE} "set plat ${FC_PLAT}\n")

@@ -19,6 +19,13 @@ IF(NOT CMAKE_Fortran_COMPILER_SUPPORTS_F90)
    MESSAGE(FATAL_ERROR "Fortran compiler does not support F90")
 ENDIF(NOT CMAKE_Fortran_COMPILER_SUPPORTS_F90)
 
+IF( (${CMAKE_Fortran_COMPILER_ID} MATCHES Intel) OR (${CMAKE_Fortran_COMPILER_ID} MATCHES GNU))
+  MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
+ELSEIF()
+  MESSAGE(FATAL_ERROR "Unsupported Fortran compiler (use Intel or GNU). Try export FC=<your FC compiler> ")
+ENDIF()  
+
+ 
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
@@ -29,6 +36,14 @@ IF(USE_MPI)
   SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
   SET(MPI_CPP "MPI")
   MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
+  IF(MPI_Fortran_HAVE_F77_HEADER)    
+    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
+      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/src 
+      USE_SOURCE_PERMISSIONS)
+    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
+      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/util 
+      USE_SOURCE_PERMISSIONS)
+  ENDIF(MPI_Fortran_HAVE_F77_HEADER)  
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -60,9 +75,6 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
     SET(GIT_SHA1 0)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
-# SET(SF_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/${PROJECT_NAME}_version.inc)
-# FILE(WRITE  ${SF_VERSION_FILE}
-#   "character(len=41),parameter,public :: ${PROJECT_NAME}_version_sha1 = \"${GIT_SHA1}\"\n")
 
 
 #set MPI preprocessing defition:
@@ -84,7 +96,8 @@ SET(USER $ENV{USER})
 #make sure FC_PLAT is lowecase
 STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
 
-SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${VERSION}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
+# SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${VERSION}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
+SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
 
 SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
 
@@ -103,6 +116,7 @@ SET(SF_TARGET_LIB ${CMAKE_INSTALL_PREFIX}/lib)
 SET(SF_TARGET_INC ${CMAKE_INSTALL_PREFIX}/include)
 SET(SF_TARGET_ETC ${CMAKE_INSTALL_PREFIX}/etc)
 SET(SF_TARGET_BIN ${CMAKE_INSTALL_PREFIX}/bin)
+SET(SF_TARGET_VER ${CMAKE_INSTALL_PREFIX}/version)
 
 # Have the .mod files placed in the INC folder
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
@@ -291,6 +305,10 @@ INSTALL(FILES ${TMP_CONFIGVARS_USER_FILE} DESTINATION ${SF_TARGET_BIN}/
 INSTALL(FILES ${TMP_CONFIGVARS_GLOBAL_FILE} DESTINATION ${SF_TARGET_BIN}/
   PERMISSIONS ${PERMISSION_777} SETUID)
 
+FILE(WRITE  ${SF_TARGET_VER}  "${VERSION}\n")
+
+MESSAGE( STATUS "${Red}Library version:${ColourReset} ${VERSION}")
+MESSAGE( STATUS "${Red}Library will be installed in:${ColourReset} ${CMAKE_INSTALL_PREFIX}")
 
 MESSAGE( STATUS "${Yellow}To conclude installation:${ColourReset} 
 $ make
@@ -299,7 +317,8 @@ $ make post-install
 ")
 
 
-ADD_CUSTOM_TARGET(
+
+  ADD_CUSTOM_TARGET(
   post-install
   COMMAND "${CMAKE_COMMAND}" -P ${CMAKE_MODULE_PATH}/HomeInstall.cmake ${CMAKE_SOURCE_DIR} ${CMAKE_INSTALL_PREFIX} ${PROJECT_NAME} ${FC_PLAT} 
   WORKING_DIRECTORY
