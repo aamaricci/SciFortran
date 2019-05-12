@@ -36,14 +36,6 @@ IF(USE_MPI)
   SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
   SET(MPI_CPP "MPI")
   MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
-  IF(MPI_Fortran_HAVE_F77_HEADER)    
-    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
-      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/src 
-      USE_SOURCE_PERMISSIONS)
-    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
-      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/util 
-      USE_SOURCE_PERMISSIONS)
-  ENDIF(MPI_Fortran_HAVE_F77_HEADER)  
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -63,7 +55,7 @@ INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
 #create the current scifor_version.inc file
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
   FIND_PACKAGE(Git)
-  IF(GIT_FOUND)
+  IF(GIT_FOUND)    
     EXECUTE_PROCESS(
       COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -71,6 +63,15 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
     MESSAGE( STATUS "${Yellow}Git version: ${ColourReset}${GIT_SHA1}" )
+
+    EXECUTE_PROCESS(
+      COMMAND ${GIT_EXECUTABLE} describe --tags
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+      OUTPUT_VARIABLE GIT_SF_VERSION
+      ERROR_QUIET
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    MESSAGE(STATUS "${Yellow}Git tag: ${ColourReset}${GIT_SF_VERSION}" )
+    SET(VERSION ${GIT_SF_VERSION})    
   ELSE(GIT_FOUND)
     SET(GIT_SHA1 0)
   ENDIF(GIT_FOUND)
@@ -84,7 +85,16 @@ ELSE(USE_MPI)
   ADD_DEFINITIONS(-D_)
 ENDIF(USE_MPI)
 
-
+IF(USE_MPI)
+  IF(MPI_Fortran_HAVE_F77_HEADER)
+    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
+      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/src 
+      USE_SOURCE_PERMISSIONS)
+    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
+      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/util 
+      USE_SOURCE_PERMISSIONS)
+  ENDIF(MPI_Fortran_HAVE_F77_HEADER)  
+ENDIF()
 
 ############################################################
 # Define the actual files and folders that make up the build
