@@ -52,6 +52,8 @@ module IOFILE
   public :: file_info
   public :: file_gzip           !data_store
   public :: file_gunzip         !data_open
+  public :: file_targz
+  public :: file_untargz
   !
   public :: newunit
   public :: free_unit
@@ -281,6 +283,9 @@ contains
   end subroutine file_gzip
 
 
+
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -303,6 +308,44 @@ contains
     inquire(file=reg(filename),opened=iopen,number=unit)
     if(iopen)close(unit)
   end subroutine file_gunzip
+
+
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : 
+  !+-----------------------------------------------------------------+
+  subroutine file_targz(tarball,pattern)
+    character(len=*)           :: tarball
+    character(len=*)           :: pattern
+    character(len=4),parameter :: type='.tgz'
+    integer                    :: control
+    write(*,"(A)") "Store "//str(pattern)//" in "//str(tarball)//type
+    call system("tar -czf "//str(tarball)//type//" "//str(pattern),status=control)
+    if(control==0)call system("rm -f "//str(pattern))
+  end subroutine file_targz
+
+
+  !+-----------------------------------------------------------------+
+  !PURPOSE  : 
+  !+-----------------------------------------------------------------+
+  subroutine file_untargz(tarball)
+    character(len=*)           :: tarball
+    integer                    :: control
+    logical                    :: iexist,iopen
+    integer                    :: unit
+    character(len=4),parameter :: type='.tgz'
+    inquire(file=reg(tarball)//type,exist=iexist)
+    if(.not.iexist)then
+       write(*,"(A)")"Tarball "//str(tarball)//type//" not present: skip"
+       return           !nothing to be done:
+    endif
+    write(*,"(A)")"deflate "//reg(tarball)//type
+    call system("tar -xzf "//str(tarball)//type//" ",status=control)
+    if(control==0)call system("rm -f "//str(tarball)//type)
+  end subroutine file_untargz
+
+
 
 
 
