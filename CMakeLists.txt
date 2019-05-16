@@ -3,7 +3,7 @@
 ##################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
-SET(VERSION 4.5.10)
+SET(VERSION 4.5.11)
 
 SET(BUILD_TYPE "RELEASE" CACHE STRING "Build type")
 MESSAGE(STATUS "BUILD_TYPE=${BUILD_TYPE}")
@@ -42,14 +42,8 @@ IF(USE_MPI)
     MESSAGE(FATAL_ERROR "MPI Found but No MPI-Fortran compiler can be determined.")    
   ENDIF()
   IF(MPI_Fortran_HAVE_F77_HEADER)
-    MESSAGE(STATUS "Fortran mpif.h located in = ${MPI_Fortran_F77_HEADER_DIR}")
-    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
-      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/src 
-      USE_SOURCE_PERMISSIONS)
-    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
-      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/util 
-      USE_SOURCE_PERMISSIONS)
-  ENDIF(MPI_Fortran_HAVE_F77_HEADER)  
+    MESSAGE(STATUS "Fortran headers in = ${MPI_Fortran_F77_HEADER_DIR}")
+  endif(MPI_Fortran_HAVE_F77_HEADER)  
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -112,7 +106,6 @@ SET(USER $ENV{USER})
 #make sure FC_PLAT is lowecase
 STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
 
-# SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${VERSION}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
 SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
 
 SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
@@ -138,7 +131,6 @@ SET(SF_TARGET_DIR ${CMAKE_INSTALL_PREFIX})
 # Have the .mod files placed in the INC folder
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_Fortran_MODULE_DIRECTORY})
-
 
 
 SET(SRC_DIR_ARPACK ${SF_SRC}/arpack)
