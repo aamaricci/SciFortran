@@ -3,7 +3,7 @@
 ##################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
-SET(VERSION 4.5.9)
+SET(VERSION 4.5.10)
 
 SET(BUILD_TYPE "RELEASE" CACHE STRING "Build type")
 MESSAGE(STATUS "BUILD_TYPE=${BUILD_TYPE}")
@@ -33,9 +33,23 @@ OPTION(VERBOSE "Build a verbose Makefile" OFF)
 # reSet compiler to MPI is required 
 IF(USE_MPI)
   FIND_PACKAGE(MPI REQUIRED)
-  SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
-  SET(MPI_CPP "MPI")
-  MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
+  IF(MPI_Fortran_FOUND)
+    SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
+    MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
+    MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
+    SET(MPI_CPP "MPI")		#pre-processing option
+  ELSE()
+    MESSAGE(FATAL_ERROR "MPI Found but No MPI-Fortran compiler can be determined.")    
+  ENDIF()
+  IF(MPI_Fortran_HAVE_F77_HEADER)
+    MESSAGE(STATUS "Fortran mpif.h located in = ${MPI_Fortran_F77_HEADER_DIR}")
+    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
+      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/src 
+      USE_SOURCE_PERMISSIONS)
+    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
+      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/util 
+      USE_SOURCE_PERMISSIONS)
+  ENDIF(MPI_Fortran_HAVE_F77_HEADER)  
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -62,20 +76,20 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
       OUTPUT_VARIABLE GIT_SHA1
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
-    MESSAGE( STATUS "${Yellow}Git version: ${ColourReset}${GIT_SHA1}" )
-
+    MESSAGE( STATUS "${Yellow}Git SHA1: ${ColourReset}${GIT_SHA1}" )
     EXECUTE_PROCESS(
       COMMAND ${GIT_EXECUTABLE} describe --tags
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-      OUTPUT_VARIABLE GIT_SF_VERSION
+      OUTPUT_VARIABLE GIT_TAG
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
-    MESSAGE(STATUS "${Yellow}Git tag: ${ColourReset}${GIT_SF_VERSION}" )
-    SET(VERSION ${GIT_SF_VERSION})    
+    MESSAGE(STATUS "${Yellow}Git tag: ${ColourReset}${GIT_TAG}")
   ELSE(GIT_FOUND)
     SET(GIT_SHA1 0)
+    SET(GIT_TAG 0.0.0)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
+SET(VERSION ${GIT_TAG})    	#Update version
 
 
 #set MPI preprocessing defition:
@@ -85,16 +99,8 @@ ELSE(USE_MPI)
   ADD_DEFINITIONS(-D_)
 ENDIF(USE_MPI)
 
-IF(USE_MPI)
-  IF(MPI_Fortran_HAVE_F77_HEADER)
-    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
-      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/src 
-      USE_SOURCE_PERMISSIONS)
-    FILE(INSTALL ${MPI_Fortran_F77_HEADER_DIR}/mpif.h
-      DESTINATION ${CMAKE_SOURCE_DIR}/src/arpack/parpack/util 
-      USE_SOURCE_PERMISSIONS)
-  ENDIF(MPI_Fortran_HAVE_F77_HEADER)  
-ENDIF()
+
+
 
 ############################################################
 # Define the actual files and folders that make up the build
@@ -122,11 +128,12 @@ SET(SF_BIN ${CMAKE_SOURCE_DIR}/bin)
 SET(SF_TMP_INC ${CMAKE_BINARY_DIR}/include)
 SET(SF_TMP_ETC ${CMAKE_BINARY_DIR}/etc)
 SET(SF_TMP_BIN ${CMAKE_BINARY_DIR}/bin)
+SET(SF_TMP_VER ${CMAKE_BINARY_DIR}/version)
 SET(SF_TARGET_LIB ${CMAKE_INSTALL_PREFIX}/lib)
 SET(SF_TARGET_INC ${CMAKE_INSTALL_PREFIX}/include)
 SET(SF_TARGET_ETC ${CMAKE_INSTALL_PREFIX}/etc)
 SET(SF_TARGET_BIN ${CMAKE_INSTALL_PREFIX}/bin)
-SET(SF_TARGET_VER ${CMAKE_INSTALL_PREFIX}/version)
+SET(SF_TARGET_DIR ${CMAKE_INSTALL_PREFIX})
 
 # Have the .mod files placed in the INC folder
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
@@ -297,7 +304,8 @@ BUILD_CONFIGVARS_GLOBAL(${TMP_CONFIGVARS_GLOBAL_FILE})
 SET(TMP_PKCONFIG_FILE ${SF_TMP_ETC}/${PROJECT_NAME}.pc)
 BUILD_PKCONFIG(${TMP_PKCONFIG_FILE})
 
-
+FILE(WRITE  ${SF_TMP_VER}  "${VERSION}\n")
+  
 INSTALL(DIRECTORY ${CMAKE_Fortran_MODULE_DIRECTORY}/ DESTINATION ${SF_TARGET_INC})
 
 INSTALL(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E remove ${SF_VERSION_FILE})")
@@ -315,7 +323,9 @@ INSTALL(FILES ${TMP_CONFIGVARS_USER_FILE} DESTINATION ${SF_TARGET_BIN}/
 INSTALL(FILES ${TMP_CONFIGVARS_GLOBAL_FILE} DESTINATION ${SF_TARGET_BIN}/
   PERMISSIONS ${PERMISSION_777} SETUID)
 
-FILE(WRITE  ${SF_TARGET_VER}  "${VERSION}\n")
+INSTALL(FILES ${SF_TMP_VER} DESTINATION ${SF_TARGET_DIR} 
+  PERMISSIONS ${PERMISSION_777} SETUID)
+
 
 MESSAGE( STATUS "${Red}Library version:${ColourReset} ${VERSION}")
 MESSAGE( STATUS "${Red}Library will be installed in:${ColourReset} ${CMAKE_INSTALL_PREFIX}")
@@ -327,8 +337,7 @@ $ make post-install
 ")
 
 
-
-  ADD_CUSTOM_TARGET(
+ADD_CUSTOM_TARGET(
   post-install
   COMMAND "${CMAKE_COMMAND}" -P ${CMAKE_MODULE_PATH}/HomeInstall.cmake ${CMAKE_SOURCE_DIR} ${CMAKE_INSTALL_PREFIX} ${PROJECT_NAME} ${FC_PLAT} 
   WORKING_DIRECTORY
