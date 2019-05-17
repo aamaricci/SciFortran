@@ -15,7 +15,7 @@ MODULE SF_OPTIMIZE
   public :: curvefit            
   !
   !Constrained (multivariate)
-  !
+  public :: fmin_bfgs           !BFGS (constrained and not)
   !Global
   ! 
   !Scalar function minimizers

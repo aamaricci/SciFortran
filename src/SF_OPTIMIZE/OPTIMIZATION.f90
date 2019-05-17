@@ -34,6 +34,11 @@ MODULE OPTIMIZE_MINIMIZE
      module procedure :: dbrent_nograd
   end interface dbrent
 
+  interface fmin_bfgs
+     module procedure :: bfgs_with_grad
+     module procedure :: bfgs_no_grad
+  end interface fmin_bfgs
+
 
   !General-purpose
   public   :: fmin         !Minimize a function using the downhill simplex algorithm.
@@ -41,7 +46,7 @@ MODULE OPTIMIZE_MINIMIZE
   public   :: fmin_cg
   public   :: fmin_cgplus
   public   :: fmin_cgminimize
-  ! public :: fmin_bfgs    !Minimize a function using the BFGS algorithm.
+  public :: fmin_bfgs    !Minimize a function using the BFGS algorithm.
   ! public :: fmin_ncg     !Unconstrained minimization of a function using the Newton-CG method.
   public   :: leastsq      !Minimize the sum of squares of a set of equations. a wrapper around MINPACKs lmdif and lmder algorithms.
   public   :: curvefit     !Use non-linear least squares to fit a function, f, to data.
@@ -1808,6 +1813,125 @@ contains
     real(8),dimension(size(p)) :: dfcn
     dfcn=f_jac_1n_func(func,size(p),p)
   end function dfcn
+
+
+  !--------------------------------------------------------------------
+  ! Constrained BFGS (L-BFGS_B)
+  !  optimization problems, as described in the paper:
+  !
+  ! Ciyou Zhu , Richard H. Byrd , Peihuang Lu and Jorge Nocedal: "L-BFGS-B: 
+  ! FORTRAN SUBROUTINES FOR LARGE-SCALE BOUND CONSTRAINED OPTIMIZATION"
+  !--------------------------------------------------------------------
+
+
+
+  subroutine bfgs_with_grad(func,grad,x,l_,u_,nbd_)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8) :: func
+       end function func
+    end interface
+    interface
+       function grad(x)
+         real(8),dimension(:) :: x
+         real(8),dimension(size(x)) :: grad
+       end function grad
+    end interface
+    integer                                   :: n,m = 5, iprint = -1
+    real(8), parameter                        :: factr  = 1.0d+7, pgtol  = 1.0d-5
+    character(len=60)                         :: task, csave
+    logical                                   :: lsave(4)
+    integer                                   :: isave(44)
+    real(8)                                   :: dsave(29),f
+    integer,dimension(:),allocatable          :: iwa,nbd
+    integer,dimension(:),allocatable,optional :: nbd_
+    real(8),dimension(:),allocatable          :: x,l,u,g,wa
+    real(8),dimension(:),allocatable,optional :: l_,u_
+!
+    n=size(x)
+    allocate( g(n))
+    allocate ( iwa(3*n) )
+    allocate ( wa(2*m*n + 5*n + 11*m*m + 8*m) )
+    task = 'START'
+    if(present(nbd_))then
+      nbd=nbd_
+      l=l_
+      u=u_
+    else
+      allocate ( nbd(n), l(n), u(n))
+      nbd=0
+      l=0.d0
+      u=0.d0
+    endif
+!     The beginning of the loop
+ 
+    do while(task(1:2).eq.'FG'.or.task.eq.'NEW_X'.or.task.eq.'START') 
+         
+!     This is the call to the L-BFGS-B code.
+         
+      call setulb ( n, m, x, l, u, nbd, f, g, factr, pgtol, &
+                       wa, iwa, task, iprint,&
+                       csave, lsave, isave, dsave )
+      if (task(1:2) .eq. 'FG') then  
+        f=func(x)
+        g=grad(x)
+      endif
+    end do
+    deallocate (nbd,l,u,iwa,wa,g)
+  end subroutine bfgs_with_grad
+
+
+
+  subroutine bfgs_no_grad(func,x,l_,u_,nbd_)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8) :: func
+       end function func
+    end interface
+    integer                                   :: n,m = 5, iprint = -1
+    real(8), parameter                        :: factr  = 1.0d+7, pgtol  = 1.0d-5
+    character(len=60)                         :: task, csave
+    logical                                   :: lsave(4)
+    integer                                   :: isave(44)
+    real(8)                                   :: dsave(29),f
+    integer,dimension(:),allocatable          :: iwa,nbd
+    integer,dimension(:),allocatable,optional :: nbd_
+    real(8),dimension(:),allocatable          :: x,l,u,g,wa
+    real(8),dimension(:),allocatable,optional :: l_,u_
+!
+    n=size(x)
+    allocate( g(n))
+    allocate ( iwa(3*n) )
+    allocate ( wa(2*m*n + 5*n + 11*m*m + 8*m) )
+    task = 'START'
+    if(present(nbd_))then
+      nbd=nbd_
+      l=l_
+      u=u_
+    else
+      allocate ( nbd(n), l(n), u(n))
+      nbd=0
+      l=0.d0
+      u=0.d0
+    endif
+!     The beginning of the loop
+ 
+    do while(task(1:2).eq.'FG'.or.task.eq.'NEW_X'.or.task.eq.'START') 
+         
+!     This is the call to the L-BFGS-B code.
+         
+      call setulb ( n, m, x, l, u, nbd, f, g, factr, pgtol, &
+                       wa, iwa, task, iprint,&
+                       csave, lsave, isave, dsave )
+      if (task(1:2) .eq. 'FG') then  
+        f=func(x)
+        g=f_jac_1n_func(func,size(x),x)
+      endif
+    end do
+    deallocate (nbd,l,u,iwa,wa,g)
+  end subroutine bfgs_no_grad
 
 
 
