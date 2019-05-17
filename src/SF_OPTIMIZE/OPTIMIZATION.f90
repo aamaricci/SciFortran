@@ -1502,7 +1502,7 @@ contains
   !     Adapted from unkown minimize.f routine.
   !     don't worry it works...
   !+-------------------------------------------------------------------+
-  subroutine fmin_cgminimize_func(p,fcn,iter,fret,ftol,itmax,iverbose,mode)
+  subroutine fmin_cgminimize_func(p,fcn,iter,fret,ftol,itmax,iverbose,mode,new_version,hh_par)
     real(8),dimension(:),intent(inout) :: p
     procedure(cgfit_func)              :: fcn
     integer                            :: iter
@@ -1516,12 +1516,16 @@ contains
     real(8),allocatable,dimension(:)   :: x,g,h,w,xprmt
     real(8)                            :: dfn,deps,hh
     integer                            :: iexit,itn
+    logical,optional                   :: new_version
+    logical                            :: new_version_
     logical,optional                   :: iverbose
     logical                            :: iverbose_
+    real(8),optional                   :: hh_par
     !
     if(associated(func))nullify(func) ; func=>fcn
-    !
+    !    
     iverbose_=.false.;if(present(iverbose))iverbose_=iverbose
+    new_version_=.false.;if(present(new_version))new_version_=new_version
     iprint_=0;if(iverbose_)iprint_=1
     !
     ftol_=1.d-5
@@ -1543,13 +1547,21 @@ contains
     N=size(p)
     allocate(x(N),g(N),h(N*N),w(100*N),xprmt(N))
     dfn=-0.5d0
-    hh = 1.d-5
+    hh = 1d-5 ; if(present(hh_par))hh = hh_par
     iexit=0
     !set initial point
     x=p
     xprmt=abs(p)+1.d-15
-    call minimize_(fcn_,n,x,f,g,h,w,&
-         dfn,xprmt,hh,ftol_,mode_,itmax_,iprint_,iexit,itn)
+    select case(new_version_)
+    case (.true.)
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: using New version:"
+       call minimize_sascha_(fcn_,n,x,f,g,h,w,&
+            dfn,xprmt,hh,ftol_,mode_,itmax_,iprint_,iexit,itn)
+    case(.false.)
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: using Old version:"
+       call minimize_krauth_(fcn_,n,x,f,g,h,w,&
+            dfn,xprmt,hh,ftol_,mode_,itmax_,iprint_,iexit,itn)
+    end select
     !set output variables
     iter=itn
     fret=f
@@ -1563,7 +1575,7 @@ contains
     f=func(x)
   end subroutine fcn_
   !
-  subroutine fmin_cgminimize_sub(p,fcn,iter,fret,ftol,itmax,iverbose,mode)
+  subroutine fmin_cgminimize_sub(p,fcn,iter,fret,ftol,itmax,iverbose,mode,new_version,hh_par)
     real(8),dimension(:),intent(inout) :: p
     interface 
        subroutine fcn(n,x_,f_)
@@ -1583,10 +1595,14 @@ contains
     real(8),allocatable,dimension(:)   :: x,g,h,w,xprmt
     real(8)                            :: dfn,deps,hh
     integer                            :: iexit,itn
+    logical,optional                   :: new_version
+    logical                            :: new_version_
     logical,optional                   :: iverbose
     logical                            :: iverbose_
+    real(8),optional                   :: hh_par
     !
     iverbose_=.false.;if(present(iverbose))iverbose_=iverbose
+    new_version_=.false.;if(present(new_version))new_version_=new_version
     iprint_=0;if(iverbose_)iprint_=1
     !
     ftol_=1.d-5
@@ -1607,13 +1623,21 @@ contains
     n=size(p)
     allocate(x(n),g(n),h(n*n),w(100*n),xprmt(n))
     dfn=-0.5d0
-    hh = 1.d-5
+    hh = 1d-5 ; if(present(hh_par))hh = hh_par
     iexit=0
     !set initial point
     x=p
     xprmt=abs(p)+1.d-15
-    call minimize_(fcn,n,x,f,g,h,w,&
-         dfn,xprmt,hh,ftol_,mode_,itmax_,iprint_,iexit,itn)
+    select case(new_version_)
+    case (.true.)
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: using New version:"
+       call minimize_sascha_(fcn,n,x,f,g,h,w,&
+            dfn,xprmt,hh,ftol_,mode_,itmax_,iprint_,iexit,itn)
+    case (.false.)
+       if(iverbose_)write(*,"(A,I5)")"CG-minimize: using Old version:"
+       call minimize_krauth_(fcn,n,x,f,g,h,w,&
+            dfn,xprmt,hh,ftol_,mode_,itmax_,iprint_,iexit,itn)
+    end select
     !set output variables
     iter=itn
     fret=f

@@ -39,7 +39,7 @@ ENDIF(CMAKE_Fortran_FLAGS_RELEASE AND CMAKE_Fortran_FLAGS_TESTING AND CMAKE_Fort
 #####################
 # Set preprocessing directive:
 SET_COMPILE_FLAG(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS}" Fortran REQUIRED 
-  "-cpp"        # GNU and possibly all compilers
+  "-cpp"       # GNU and possibly all compilers
   "-fpp"       # Intel
   "/fpp"       # Intel Windows
   "/cpp"       # GNU Windows

@@ -19,6 +19,13 @@ IF(NOT CMAKE_Fortran_COMPILER_SUPPORTS_F90)
    MESSAGE(FATAL_ERROR "Fortran compiler does not support F90")
 ENDIF(NOT CMAKE_Fortran_COMPILER_SUPPORTS_F90)
 
+IF( (${CMAKE_Fortran_COMPILER_ID} MATCHES Intel) OR (${CMAKE_Fortran_COMPILER_ID} MATCHES GNU))
+  MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
+ELSEIF()
+  MESSAGE(FATAL_ERROR "Unsupported Fortran compiler (use Intel or GNU). Try export FC=<your FC compiler> ")
+ENDIF()  
+
+ 
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
@@ -26,9 +33,17 @@ OPTION(VERBOSE "Build a verbose Makefile" OFF)
 # reSet compiler to MPI is required 
 IF(USE_MPI)
   FIND_PACKAGE(MPI REQUIRED)
-  SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
-  SET(MPI_CPP "MPI")
-  MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
+  IF(MPI_Fortran_FOUND)
+    SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
+    MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
+    MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
+    SET(MPI_CPP "MPI")		#pre-processing option
+  ELSE()
+    MESSAGE(FATAL_ERROR "MPI Found but No MPI-Fortran compiler can be determined.")    
+  ENDIF()
+  IF(MPI_Fortran_HAVE_F77_HEADER)
+    MESSAGE(STATUS "Fortran headers in = ${MPI_Fortran_F77_HEADER_DIR}")
+  endif(MPI_Fortran_HAVE_F77_HEADER)  
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -48,21 +63,27 @@ INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
 #create the current scifor_version.inc file
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
   FIND_PACKAGE(Git)
-  IF(GIT_FOUND)
+  IF(GIT_FOUND)    
     EXECUTE_PROCESS(
       COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
       OUTPUT_VARIABLE GIT_SHA1
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
-    MESSAGE( STATUS "${Yellow}Git version: ${ColourReset}${GIT_SHA1}" )
+    MESSAGE( STATUS "${Yellow}Git SHA1: ${ColourReset}${GIT_SHA1}" )
+    EXECUTE_PROCESS(
+      COMMAND ${GIT_EXECUTABLE} describe --tags
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+      OUTPUT_VARIABLE GIT_TAG
+      ERROR_QUIET
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    MESSAGE(STATUS "${Yellow}Git tag: ${ColourReset}${GIT_TAG}")
   ELSE(GIT_FOUND)
     SET(GIT_SHA1 0)
+    SET(GIT_TAG 0.0.0)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
-# SET(SF_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/${PROJECT_NAME}_version.inc)
-# FILE(WRITE  ${SF_VERSION_FILE}
-#   "character(len=41),parameter,public :: ${PROJECT_NAME}_version_sha1 = \"${GIT_SHA1}\"\n")
+SET(VERSION ${GIT_TAG})    	#Update version
 
 
 #set MPI preprocessing defition:
@@ -71,6 +92,7 @@ IF(USE_MPI)
 ELSE(USE_MPI)
   ADD_DEFINITIONS(-D_)
 ENDIF(USE_MPI)
+
 
 
 
@@ -84,7 +106,7 @@ SET(USER $ENV{USER})
 #make sure FC_PLAT is lowecase
 STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
 
-SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${VERSION}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
+SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
 
 SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
 
@@ -99,15 +121,16 @@ SET(SF_BIN ${CMAKE_SOURCE_DIR}/bin)
 SET(SF_TMP_INC ${CMAKE_BINARY_DIR}/include)
 SET(SF_TMP_ETC ${CMAKE_BINARY_DIR}/etc)
 SET(SF_TMP_BIN ${CMAKE_BINARY_DIR}/bin)
+SET(SF_TMP_VER ${CMAKE_BINARY_DIR}/version)
 SET(SF_TARGET_LIB ${CMAKE_INSTALL_PREFIX}/lib)
 SET(SF_TARGET_INC ${CMAKE_INSTALL_PREFIX}/include)
 SET(SF_TARGET_ETC ${CMAKE_INSTALL_PREFIX}/etc)
 SET(SF_TARGET_BIN ${CMAKE_INSTALL_PREFIX}/bin)
+SET(SF_TARGET_DIR ${CMAKE_INSTALL_PREFIX})
 
 # Have the .mod files placed in the INC folder
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_Fortran_MODULE_DIRECTORY})
-
 
 
 SET(SRC_DIR_ARPACK ${SF_SRC}/arpack)
@@ -273,7 +296,8 @@ BUILD_CONFIGVARS_GLOBAL(${TMP_CONFIGVARS_GLOBAL_FILE})
 SET(TMP_PKCONFIG_FILE ${SF_TMP_ETC}/${PROJECT_NAME}.pc)
 BUILD_PKCONFIG(${TMP_PKCONFIG_FILE})
 
-
+FILE(WRITE  ${SF_TMP_VER}  "${VERSION}\n")
+  
 INSTALL(DIRECTORY ${CMAKE_Fortran_MODULE_DIRECTORY}/ DESTINATION ${SF_TARGET_INC})
 
 INSTALL(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E remove ${SF_VERSION_FILE})")
@@ -291,6 +315,12 @@ INSTALL(FILES ${TMP_CONFIGVARS_USER_FILE} DESTINATION ${SF_TARGET_BIN}/
 INSTALL(FILES ${TMP_CONFIGVARS_GLOBAL_FILE} DESTINATION ${SF_TARGET_BIN}/
   PERMISSIONS ${PERMISSION_777} SETUID)
 
+INSTALL(FILES ${SF_TMP_VER} DESTINATION ${SF_TARGET_DIR} 
+  PERMISSIONS ${PERMISSION_777} SETUID)
+
+
+MESSAGE( STATUS "${Red}Library version:${ColourReset} ${VERSION}")
+MESSAGE( STATUS "${Red}Library will be installed in:${ColourReset} ${CMAKE_INSTALL_PREFIX}")
 
 MESSAGE( STATUS "${Yellow}To conclude installation:${ColourReset} 
 $ make

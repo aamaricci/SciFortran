@@ -22,6 +22,8 @@ MODULE SF_IOTOOLS
   public :: file_info
   public :: file_gzip           !data_store
   public :: file_gunzip         !data_open
+  public :: file_targz
+  public :: file_untargz
   !
   public :: newunit
   public :: free_unit

@@ -1,7 +1,8 @@
 # SF_OPTIMIZE library
 file(GLOB SF_OPTIMIZE_LOCAL_SRC
   optimize_broyden_routines.f90
-  minimize.f
+  minimize_krauth.f
+  minimize_sascha.f
   cgfam.f
   cgsearch.f
   optimize_cgfit_routines.f90
