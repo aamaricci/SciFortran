@@ -1849,7 +1849,7 @@ contains
 
 
 
-  subroutine bfgs_with_grad(func,grad,x,l,u,nbd,factr,pgtol,iprint)
+  subroutine bfgs_with_grad(func,grad,x,l,u,nbd,factr,pgtol,iprint,nloop)
     interface
        function func(x)
          real(8),dimension(:) :: x
@@ -1863,7 +1863,7 @@ contains
        end function grad
     end interface
     integer                                   :: n,m = 5, iprint_ = -1
-    integer,optional                          :: iprint
+    integer,optional                          :: iprint,nloop
     real(8),optional                          :: factr, pgtol
     real(8)                                   :: factr_,pgtol_
     character(len=60)                         :: task, csave
@@ -1900,7 +1900,7 @@ contains
 !     The beginning of the loop
  
     do while(task(1:2).eq.'FG'.or.task.eq.'NEW_X'.or.task.eq.'START') 
-         
+!    
 !     This is the call to the L-BFGS-B code.
          
       call setulb ( n, m, x, l_, u_, nbd_, f, g, factr_, pgtol_, &
@@ -1910,13 +1910,16 @@ contains
         f=func(x)
         g=grad(x)
       endif
+      if(present(nloop))then
+        if(isave(30) .ge. nloop)task='STOP: TOTAL NO. OF LOOPS EXCEEDS LIMIT'
+      endif
     end do
     deallocate (nbd_,l_,u_,iwa,wa,g)
   end subroutine bfgs_with_grad
 
 
 
-  subroutine bfgs_no_grad(func,x,l,u,nbd,factr,pgtol,iprint)
+  subroutine bfgs_no_grad(func,x,l,u,nbd,factr,pgtol,iprint,nloop)
     interface
        function func(x)
          real(8),dimension(:) :: x
@@ -1924,7 +1927,7 @@ contains
        end function func
     end interface
     integer                                   :: n,m = 5, iprint_ = -1
-    integer,optional                          :: iprint
+    integer,optional                          :: iprint,nloop
     real(8),optional                          :: factr, pgtol
     real(8)                                   :: factr_,pgtol_
     character(len=60)                         :: task, csave
@@ -1970,6 +1973,9 @@ contains
       if (task(1:2) .eq. 'FG') then  
         f=func(x)
         g=f_jac_1n_func(func,size(x),x)
+      endif
+      if(present(nloop))then
+        if(isave(30) .ge. nloop)task='STOP: TOTAL NO. of f AND g EVALUATIONS EXCEEDS LIMIT'
       endif
     end do
     deallocate (nbd_,l_,u_,iwa,wa,g)
