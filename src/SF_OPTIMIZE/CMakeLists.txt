@@ -6,6 +6,9 @@ file(GLOB SF_OPTIMIZE_LOCAL_SRC
   cgfam.f
   cgsearch.f
   optimize_cgfit_routines.f90
+  timer.f
+  linpack.f
+  lbfgsb.f
   ROOT_FINDING.f90
   OPTIMIZATION.f90
   SF_OPTIMIZE.f90
