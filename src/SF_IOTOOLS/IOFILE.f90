@@ -315,11 +315,13 @@ contains
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
-  subroutine file_targz(tarball,pattern)
+  subroutine file_targz(tarball,pattern,size)
     character(len=*)           :: tarball
     character(len=*)           :: pattern
+    integer,optional           :: size
     character(len=4),parameter :: type='.tgz'
-    integer                    :: control
+    integer                    :: control,fsize
+    fsize=store_size;if(present(size))fsize=size
     write(*,"(A)") "Store "//str(pattern)//" in "//str(tarball)//type
     call system("tar -czf "//str(tarball)//type//" "//str(pattern),status=control)
     if(control==0)call system("rm -f "//str(pattern))

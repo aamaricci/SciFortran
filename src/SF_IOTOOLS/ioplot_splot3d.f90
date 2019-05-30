@@ -39,7 +39,7 @@ subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   if(present(wlines))close(720)
 
   open(10,file=adjustl(trim(pname))//"_map.gp")
-  write(10,*)"set term wxt"
+  
   write(10,*)"set title '"//trim(fname)//"'"
   write(10,*)"set pm3d map"
   write(10,*)"set size square"
@@ -53,7 +53,7 @@ subroutine d_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   close(10)
   if(present(nosurface).AND.nosurface)return
   open(10,file=adjustl(trim(pname))//"_surface.gp")
-  write(10,*)"set term wxt"
+  
   write(10,*)"set title '"//trim(fname)//"'"
   write(10,*)"unset key"
   write(10,*)"unset grid"
@@ -126,7 +126,7 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
 
   !Re:
   open(10,file=adjustl(trim(pname))//"_re_map.gp")
-  write(10,*)"set term wxt"
+  
   write(10,*)"set title 'Re_"//trim(fname)//"'"
   write(10,*)"set pm3d map"
   write(10,*)"set size square"
@@ -139,7 +139,7 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   close(10)
   !Im
   open(10,file=adjustl(trim(pname))//"_im_map.gp")
-  write(10,*)"set term wxt"
+  
   write(10,*)"set title 'Im_"//trim(fname)//"'"
   write(10,*)"set pm3d map"
   write(10,*)"set size square"
@@ -153,7 +153,7 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   if(present(nosurface).AND.nosurface)return
   !Re
   open(10,file=adjustl(trim(pname))//"_re_surface.gp")
-  write(10,*)"set term wxt"
+  
   write(10,*)"set title 'Re_"//trim(fname)//"'"
   write(10,*)"unset key"
   write(10,*)"unset grid"
@@ -166,7 +166,7 @@ subroutine c_splot3D(pname,X1,X2,Y,xmin,xmax,ymin,ymax,nosurface,wlines,nlines)
   close(10)
   !Im
   open(10,file=adjustl(trim(pname))//"_im_surface.gp")
-  write(10,*)"set term wxt"
+  
   write(10,*)"set title 'Im_"//trim(fname)//"'"
   write(10,*)"set nokey"
   write(10,*)"set grid"
@@ -220,7 +220,7 @@ subroutine d_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
   write(10,*)"#set output '"//trim(fname)//".gif'"
-  write(10,*)"set term wxt"
+  
   write(10,*)"set pm3d map"
   write(10,*)"set size square"
   write(10,*)"set xrange ["//trim(adjustl(trim(txtfy(X1min))))//":"//trim(adjustl(trim(txtfy(X1max))))//"]"
@@ -283,7 +283,7 @@ subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
   write(10,*)"#set output 're_"//trim(fname)//".gif'"
-  write(10,*)"set term wxt"
+
   write(10,*)"set pm3d map"
   write(10,*)"set size square"
   write(10,*)"set xrange ["//trim(adjustl(trim(txtfy(X1min))))//":"//trim(adjustl(trim(txtfy(X1max))))//"]"
@@ -306,7 +306,7 @@ subroutine c_splot3d_animate(pname,X1,X2,Y,xmin,xmax,ymin,ymax)
   write(10,*)"reset"
   write(10,*)"#set term gif animate"
   write(10,*)"#set output 'im_"//trim(fname)//".gif'"
-  write(10,*)"set term wxt"
+
   write(10,*)"set pm3d map"
   write(10,*)"set size square"
   write(10,*)"set xrange ["//trim(adjustl(trim(txtfy(X1min))))//":"//trim(adjustl(trim(txtfy(X1max))))//"]"
