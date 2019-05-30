@@ -321,10 +321,17 @@ contains
     integer,optional           :: size
     character(len=4),parameter :: type='.tgz'
     integer                    :: control,fsize
+    character(len=100)         :: cmsg
     fsize=store_size;if(present(size))fsize=size
     write(*,"(A)") "Store "//str(pattern)//" in "//str(tarball)//type
-    call system("tar -czf "//str(tarball)//type//" "//str(pattern),status=control)
-    if(control==0)call system("rm -f "//str(pattern))
+    call execute_command_line("tar -czf "//str(tarball)//type//" "//str(pattern),CMDSTAT=control,CMDMSG=cmsg)
+    if(control>0)then
+       write(*,"(A)")"Command tar -czf failed with error: "//str(cmsg)
+    elseif(control<0)then
+       write(*,"(A)")"Command tar -czf not supported"
+    else
+       call execute_command_line("rm -f "//str(pattern))
+    endif
   end subroutine file_targz
 
 
@@ -337,14 +344,22 @@ contains
     logical                    :: iexist,iopen
     integer                    :: unit
     character(len=4),parameter :: type='.tgz'
+    character(len=100)         :: cmsg
     inquire(file=reg(tarball)//type,exist=iexist)
     if(.not.iexist)then
        write(*,"(A)")"Tarball "//str(tarball)//type//" not present: skip"
        return           !nothing to be done:
     endif
     write(*,"(A)")"deflate "//reg(tarball)//type
-    call system("tar -xzf "//str(tarball)//type//" ",status=control)
-    if(control==0)call system("rm -f "//str(tarball)//type)
+    call execute_command_line("tar -xzf "//str(tarball)//type//" ",CMDSTAT=control,CMDMSG=cmsg)
+    if(control>0)then
+       write(*,"(A)")"Command tar -xzf failed with error: "//str(cmsg)
+    elseif(control<0)then
+       write(*,"(A)")"Command tar -xzf not supported"
+    else
+       call execute_command_line("rm -f "//str(tarball)//type)
+    endif
+
   end subroutine file_untargz
 
 
