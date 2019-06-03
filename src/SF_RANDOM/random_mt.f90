@@ -210,6 +210,113 @@ end subroutine d_grnd_7
 
 
 
+
+subroutine c_grnd_1(A)
+  complex(8),dimension(:) :: A
+  integer                 :: i
+  do i=1,size(A)
+     A(i) = dcmplx(mersenne(),mersenne())
+  enddo
+end subroutine c_grnd_1
+
+subroutine c_grnd_2(A)
+  complex(8),dimension(:,:) :: A
+  integer                   :: i1,i2
+  do i1=1,size(A,1)
+     do i2=2,size(A,2)
+        A(i1,i2) = dcmplx(mersenne(),mersenne())
+     enddo
+  enddo
+end subroutine c_grnd_2
+
+subroutine c_grnd_3(A)
+  complex(8),dimension(:,:,:) :: A
+  integer                     :: i1,i2,i3
+  do i1=1,size(A,1)
+     do i2=2,size(A,2)
+        do i3=2,size(A,3)
+           A(i1,i2,i3) = dcmplx(mersenne(),mersenne())
+        enddo
+     enddo
+  enddo
+end subroutine c_grnd_3
+
+subroutine c_grnd_4(A)
+  complex(8),dimension(:,:,:,:) :: A
+  integer                       :: i1,i2,i3,i4
+  do i1=1,size(A,1)
+     do i2=2,size(A,2)
+        do i3=2,size(A,3)
+           do i4=1,size(A,4)
+              A(i1,i2,i3,i4) = dcmplx(mersenne(),mersenne())
+           enddo
+        enddo
+     enddo
+  enddo
+end subroutine c_grnd_4
+
+subroutine c_grnd_5(A)
+  complex(8),dimension(:,:,:,:,:) :: A
+  integer                         :: i1,i2,i3,i4,i5
+  do i1=1,size(A,1)
+     do i2=2,size(A,2)
+        do i3=2,size(A,3)
+           do i4=1,size(A,4)
+              do i5=1,size(A,5)
+                 A(i1,i2,i3,i4,i5) = dcmplx(mersenne(),mersenne())
+              enddo
+           enddo
+        enddo
+     enddo
+  enddo
+end subroutine c_grnd_5
+
+subroutine c_grnd_6(A)
+  complex(8),dimension(:,:,:,:,:,:) :: A
+  integer                           :: i1,i2,i3,i4,i5,i6
+  do i1=1,size(A,1)
+     do i2=2,size(A,2)
+        do i3=2,size(A,3)
+           do i4=1,size(A,4)
+              do i5=1,size(A,5)
+                 do i6=1,size(A,6)
+                    A(i1,i2,i3,i4,i5,i6) = dcmplx(mersenne(),mersenne())
+                 enddo
+              enddo
+           enddo
+        enddo
+     enddo
+  enddo
+end subroutine c_grnd_6
+
+
+subroutine c_grnd_7(A)
+  complex(8),dimension(:,:,:,:,:,:,:) :: A
+  integer                             :: i1,i2,i3,i4,i5,i6,i7
+  do i1=1,size(A,1)
+     do i2=2,size(A,2)
+        do i3=2,size(A,3)
+           do i4=1,size(A,4)
+              do i5=1,size(A,5)
+                 do i6=1,size(A,6)
+                    do i7=1,size(A,7)
+                       A(i1,i2,i3,i4,i5,i6,i7) = dcmplx(mersenne(),mersenne())
+                    enddo
+                 enddo
+              enddo
+           enddo
+        enddo
+     enddo
+  enddo
+end subroutine c_grnd_7
+
+
+
+
+
+
+
+
 !---------------------------------------------------------------!
 ! Integer random number generator:                              !
 ! return a random integer between in [l,h]                      !
@@ -228,7 +335,7 @@ end function igrnd
 
 
 function dgrnd_uniform(a,b) result(c)
-  double precision :: a,b,c
+  real(8) :: a,b,c
   c = a + (b-a)*mersenne()
 end function dgrnd_uniform
 

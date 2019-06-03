@@ -1,6 +1,6 @@
-subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,vrandom)
+subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbose,vrandom)
   !Arguments
-  integer                      :: MpiComm
+  integer                   :: MpiComm
   !Interface to Matrix-Vector routine:
   interface
      subroutine MatVec(nchunk,vin,vout)
@@ -9,68 +9,72 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      end subroutine MatVec
   end interface
   !Arguments
-  integer                      :: Ns
-  integer                      :: Neigen
-  integer                      :: Nblock
-  integer                      :: Nitermax
-  real(8)                      :: eval(Neigen)
-  real(8)                      :: evec(:,:) ![Nloc,Neigen]
-  character(len=2),optional    :: which
-  real(8),optional             :: v0(size(evec,1))
-  real(8),optional             :: tol
-  logical,optional             :: iverbose
-  logical,optional             :: vrandom
+  real(8)                   :: eval(:)![Neigen]
+  real(8)                   :: evec(:,:)![Ns,Neigen]
+  integer,optional          :: Nblock
+  integer,optional          :: Nitermax
+  character(len=2),optional :: which
+  real(8),optional          :: v0(size(evec,1))
+  real(8),optional          :: tol
+  logical,optional          :: iverbose
+  logical,optional          :: vrandom
   !Dimensions:
-  integer                      :: maxn,maxnev,maxncv,ldv
-  integer                      :: n,nconv,ncv,nev
+  integer                   :: Ns
+  integer                   :: Neigen
+  integer                   :: maxn,maxnev,maxncv,ldv
+  integer                   :: n,nconv,ncv,nev
   !Arrays:
-  real(8),allocatable          :: evec_tmp(:) ![Nloc] see above
-  real(8),allocatable          :: ax(:),d(:,:)
-  real(8),allocatable          :: resid(:),vec(:)
-  real(8),allocatable          :: workl(:),workd(:)
-  real(8),allocatable          :: v(:,:)
-  logical,allocatable          :: select(:)
-  integer                      :: iparam(11)
-  integer                      :: ipntr(11)
+  real(8),allocatable       :: evec_tmp(:) ![Nloc] see above
+  real(8),allocatable       :: ax(:),d(:,:)
+  real(8),allocatable       :: resid(:),vec(:)
+  real(8),allocatable       :: workl(:),workd(:)
+  real(8),allocatable       :: v(:,:)
+  logical,allocatable       :: select(:)
+  integer                   :: iparam(11)
+  integer                   :: ipntr(11)
   !Control Vars:
-  integer                      :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                      :: verb,vran
-  integer                      :: i
-  real(8)                      :: sigma,norm,norm_tmp
-  real(8)                      :: tol_
-  character                    :: bmat  
-  character(len=2)             :: which_
-  real(8),external             :: dnrm2
+  integer                   :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
+  logical                   :: verb,vran
+  integer                   :: i
+  real(8)                   :: sigma,norm,norm_tmp
+  real(8)                   :: tol_
+  character                 :: bmat  
+  character(len=2)          :: which_
+  real(8),external          :: dnrm2
   !MPI
-  logical                      :: mpi_master
+  logical                   :: mpi_master
   !
   if(MpiComm == MPI_COMM_NULL)return
   !
-  which_ = 'SA'   ; if(present(which))which_=which
-  tol_   = 0d0    ; if(present(tol))tol_=tol
-  verb   = .false.; if(present(iverbose))verb=iverbose
-  vran   = .true. ;if(present(vrandom))vran=vrandom
-  !
-  !MPI setup:
-  mpi_master= Get_master_MPI(MpiComm)
+  Ns     = size(evec,1)
+  Neigen = size(eval)
+  call assert_shape(Evec,[Ns,Neigen],"P_arpack_d","Evec")
   !
   maxn   = Ns
   maxnev = Neigen
-  maxncv = Nblock
-  ldv    = maxn
+  !
+  maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
+  maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
+  which_ = 'SA'      ; if(present(which))which_=which
+  tol_   = 0d0       ; if(present(tol))tol_=tol
+  verb   = .false.   ; if(present(iverbose))verb=iverbose
+  vran   = .true.    ; if(present(vrandom))vran=vrandom
   if(maxncv>Ns)then
      maxncv=Ns
      print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
   endif
   !
+  !MPI setup:
+  mpi_master= Get_master_MPI(MpiComm)
+  !
+  ldv    = maxn
   n      = maxn
   nev    = maxnev
   ncv    = maxncv
   bmat   = 'I'
-  maxitr = Nitermax
+  !
   !=========================================================================
   ! Setup distribution of data to nodes:
-  ldv = size(evec,1)            !ldv is the SMALL dimension  
   if ( ldv > maxn ) then
      stop ' ERROR with _SDRV1: NLOC is greater than MAXNLOC '
   else if ( nev > maxnev ) then
@@ -103,13 +107,14 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
   else
      allocate(vec(ldv))
      if(vran)then
-        call random_seed(size=nrandom)
-        if(allocated(seed_random))deallocate(seed_random)
-        allocate(seed_random(nrandom))
-        seed_random=1234567
-        call random_seed(put=seed_random)
-        deallocate(seed_random)
-        call random_number(vec)
+        ! call random_seed(size=nrandom)
+        ! if(allocated(seed_random))deallocate(seed_random)
+        ! allocate(seed_random(nrandom))
+        ! seed_random=1234567
+        ! call random_seed(put=seed_random)
+        ! deallocate(seed_random)
+        ! call random_number(vec)
+        call mt_random(vec)
      else
         vec = 1d0              !start with unitary vector 1/sqrt(Ndim)
      endif
@@ -132,8 +137,7 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
           ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,info )
      !
      if(ido/=-1.AND.ido/=1)exit
-     !  Perform matrix vector multiplication
-     !    y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
+     !  Perform matrix vector multiplication: y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
      call MatVec(ldv,workd(ipntr(1)),workd(ipntr(2)))
   end do
   !
@@ -151,7 +155,6 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
         eval(j)=d(j,1)
      enddo
      !
-     if(any(shape(evec)/=[ldv,Neigen]))stop "arpack_mpi ERROR: evec has wrong dimension. Reduce=T"
      evec=0d0
      do j=1,neigen
         do i=1,ldv
@@ -175,6 +178,5 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,
      !
      ! if(mpi_master.and.nconv==0.and.verb)stop "None of the required values was found."
   endif
-  call Barrier_MPI(MpiComm)
   deallocate(ax,resid,workd,v,d,workl,select)
 end subroutine lanczos_parpack_d

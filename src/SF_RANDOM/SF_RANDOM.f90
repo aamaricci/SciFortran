@@ -41,6 +41,14 @@ module SF_RANDOM
      module procedure :: d_grnd_5
      module procedure :: d_grnd_6
      module procedure :: d_grnd_7
+     !
+     module procedure :: c_grnd_1
+     module procedure :: c_grnd_2
+     module procedure :: c_grnd_3
+     module procedure :: c_grnd_4
+     module procedure :: c_grnd_5
+     module procedure :: c_grnd_6
+     module procedure :: c_grnd_7
   end interface mt_random
 
   interface mt_uniform

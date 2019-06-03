@@ -1,4 +1,6 @@
 module SF_SP_LINALG
+  USE SF_MISC,   only: assert_shape
+  USE SF_RANDOM, only: mt_random
   USE SF_LINALG, only: eye,eigh
 #ifdef _MPI
   USE SF_MPI

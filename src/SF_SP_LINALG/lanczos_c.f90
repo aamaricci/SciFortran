@@ -1,7 +1,7 @@
 !---------------------------------------------------------------------
 !Purpose: use plain lanczos to get the groundstate energy
 !---------------------------------------------------------------------
-subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck,vrandom)
+subroutine lanczos_eigh_c(MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
   interface
      subroutine MatVec(Nloc,vin,vout)
        integer                    :: Nloc
@@ -9,16 +9,16 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
        complex(8),dimension(Nloc) :: vout
      end subroutine MatVec
   end interface
-  integer                              :: Ndim
-  integer                              :: Nitermax
   real(8)                              :: egs
-  complex(8),dimension(Ndim)           :: vect
+  complex(8),dimension(:)              :: vect
+  integer                              :: Nitermax
+  !
   real(8),optional                     :: threshold
   integer,optional                     :: ncheck
   logical,optional                     :: iverbose
   logical,optional                     :: vrandom
   !
-  complex(8),dimension(Ndim)           :: vin,vout
+  complex(8),dimension(size(vect))     :: vin,vout
   integer                              :: iter,nlanc
   real(8),dimension(Nitermax+1)        :: alanc,blanc
   real(8),dimension(Nitermax,Nitermax) :: Z
@@ -36,16 +36,17 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   norm=dot_product(vect,vect)
   if(norm==0d0)then
      if(vran)then
-        call random_seed(size=nrandom)
-        if(allocated(seed_random))deallocate(seed_random)
-        allocate(seed_random(nrandom))
-        seed_random=1234567
-        call random_seed(put=seed_random)
-        deallocate(seed_random)
-        do i=1,Ndim
-           call random_number(ran)
-           vect(i)=dcmplx(ran(1),ran(2))
-        enddo
+        ! call random_seed(size=nrandom)
+        ! if(allocated(seed_random))deallocate(seed_random)
+        ! allocate(seed_random(nrandom))
+        ! seed_random=1234567
+        ! call random_seed(put=seed_random)
+        ! deallocate(seed_random)
+        ! do i=1,Ndim
+        !    call random_number(ran)
+        !    vect(i)=dcmplx(ran(1),ran(2))
+        ! enddo
+        call mt_random(vect)
         if(verb)write(*,*)"LANCZOS_EIGH_C: random initial vector generated:"
      else
         vect = one
@@ -106,8 +107,8 @@ subroutine lanczos_eigh_c(MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,nchec
   vect=vect/norm
   !
   if(verb)then
-     call MatVec(Ndim,vect,vout)
-     write(*,*)"|H*v-E*v|=",sum(abs(vout-egs*vect))/Ndim
+     call MatVec(size(vect),vect,vout)
+     write(*,*)"|H*v-E*v|=",sum(abs(vout-egs*vect))/size(vect)
   endif
   Nitermax=Nlanc
   !

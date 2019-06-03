@@ -1,4 +1,4 @@
-subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,tol,iverbose,vrandom)
+subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbose,vrandom)
   !Interface to Matrix-Vector routine:
   interface
      subroutine MatVec(Nloc,vin,vout)
@@ -8,18 +8,18 @@ subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
      end subroutine MatVec
   end interface
   !Arguments
-  integer                      :: Ns
-  integer                      :: Neigen
-  integer                      :: Nblock
-  integer                      :: Nitermax
-  real(8)                      :: eval(Neigen)
-  complex(8)                   :: evec(Ns,Neigen)
+  real(8)                      :: eval(:)![Neigen]
+  complex(8)                   :: evec(:,:)![Ns,Neigen]
+  integer,optional             :: Nblock
+  integer,optional             :: Nitermax
   character(len=2),optional    :: which
-  complex(8),optional          :: v0(ns)
+  complex(8),optional          :: v0(size(evec,1))
   real(8),optional             :: tol
   logical,optional             :: iverbose
   logical,optional             :: vrandom
   !Dimensions:
+  integer                      :: Ns
+  integer                      :: Neigen
   integer                      :: maxn,maxnev,maxncv,ldv
   integer                      :: n,nconv,ncv,nev
   !Arrays:
@@ -41,23 +41,26 @@ subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
   character(len=2)             :: which_
   real(8),external             :: dznrm2,dlapy2
   real(8),allocatable          :: reV(:),imV(:)
-  integer,allocatable             :: Eorder(:)
+  integer,allocatable          :: Eorder(:)
   !
-  which_='SR'   ;if(present(which))which_=which
-  tol_  = 0d0   ;if(present(tol))tol_=tol
-  verb  =.false.;if(present(iverbose))verb=iverbose
-  vran  =.true. ;if(present(vrandom))vran=vrandom
+  Ns     = size(evec,1)
+  Neigen = size(eval)
+  call assert_shape(Evec,[Ns,Neigen],"Arpack_c","Evec")
   !
   maxn   = Ns
   maxnev = Neigen
-  maxncv = Nblock
-  ldv    = Ns
-  if(maxncv>Ns)maxncv=Ns
+  maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
+  maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
+  which_='SR'        ; if(present(which))which_=which
+  tol_  = 0d0        ; if(present(tol))tol_=tol
+  verb  =.false.     ; if(present(iverbose))verb=iverbose
+  vran  =.true.      ; if(present(vrandom))vran=vrandom
+  !
+  ldv    = Ns        ; if(maxncv>Ns)maxncv=Ns
   n      = maxn
   nev    = maxnev
   ncv    = maxncv
   bmat   = 'I'
-  maxitr = Nitermax
   ! 
   allocate(ax(n))
   allocate(d(ncv))
@@ -90,16 +93,17 @@ subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
      resid=v0
   else
      if(vran)then
-        call random_seed(size=nrandom)
-        if(allocated(seed_random))deallocate(seed_random)
-        allocate(seed_random(nrandom))
-        seed_random=1234567
-        call random_seed(put=seed_random)
-        allocate(reV(size(resid)),imV(size(resid)))
-        call random_number(reV)
-        call random_number(imV)
-        resid=dcmplx(reV,imV)
-        deallocate(reV,imV,seed_random)
+        ! call random_seed(size=nrandom)
+        ! if(allocated(seed_random))deallocate(seed_random)
+        ! allocate(seed_random(nrandom))
+        ! seed_random=1234567
+        ! call random_seed(put=seed_random)
+        ! allocate(reV(size(resid)),imV(size(resid)))
+        ! call random_number(reV)
+        ! call random_number(imV)
+        ! resid=dcmplx(reV,imV)
+        ! deallocate(reV,imV)!,seed_random)
+        call mt_random(resid)
      else
         resid = 1d0
      endif
@@ -111,8 +115,7 @@ subroutine lanczos_arpack_c(MatVec,Ns,Neigen,Nblock,Nitermax,eval,evec,which,v0,
      call znaupd(ido,bmat,n,which_,nev,tol_,resid,ncv,v,ldv,&
           iparam,ipntr,workd,workl,lworkl,rwork,info)
      if(ido/=-1.AND.ido/=1)exit
-     !  Perform matrix vector multiplication
-     !    y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
+     !  Perform matrix vector multiplication: y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
      call MatVec(N,workd(ipntr(1)),workd(ipntr(2)) )
   end do
   !

@@ -1,7 +1,7 @@
 !---------------------------------------------------------------------
 !Purpose: use plain lanczos to get the groundstate energy
 !---------------------------------------------------------------------
-subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,threshold,ncheck,vrandom)
+subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
   integer                              :: MpiComm
   interface 
      subroutine MatVec(Nloc,vin,vout)
@@ -10,11 +10,11 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
        complex(8) :: vout(Nloc)
      end subroutine MatVec
   end interface
-  integer                              :: Ndim
-  integer                              :: Nitermax
-  integer                              :: Nloc
   real(8)                              :: egs
   complex(8),dimension(:)              :: vect
+  integer                              :: Nitermax
+  !
+  integer                              :: Nloc
   real(8),optional                     :: threshold
   integer,optional                     :: ncheck
   logical,optional                     :: iverbose
@@ -47,16 +47,17 @@ subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Ndim,Nitermax,Egs,Vect,iverbose,thr
   !
   if(norm==0d0)then
      if(vran)then
-        call random_seed(size=nrandom)
-        if(allocated(seed_random))deallocate(seed_random)
-        allocate(seed_random(nrandom))
-        seed_random=1234567
-        call random_seed(put=seed_random)
-        deallocate(seed_random)
-        do i=1,Nloc
-           call random_number(ran)
-           vect(i)=dcmplx(ran(1),ran(2))
-        enddo
+        ! call random_seed(size=nrandom)
+        ! if(allocated(seed_random))deallocate(seed_random)
+        ! allocate(seed_random(nrandom))
+        ! seed_random=1234567
+        ! call random_seed(put=seed_random)
+        ! deallocate(seed_random)
+        ! do i=1,Nloc
+        !    call random_number(ran)
+        !    vect(i)=dcmplx(ran(1),ran(2))
+        ! enddo
+        call mt_random(vect)
         if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: random initial vector generated:"
      else
         vect = one
