@@ -35,15 +35,11 @@ IF(USE_MPI)
   FIND_PACKAGE(MPI REQUIRED)
   IF(MPI_Fortran_FOUND)
     SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
-    MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
-    MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
+    MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}, ID=${CMAKE_Fortran_COMPILER_ID}")
     SET(MPI_CPP "MPI")		#pre-processing option
   ELSE()
     MESSAGE(FATAL_ERROR "MPI Found but No MPI-Fortran compiler can be determined.")    
   ENDIF()
-  IF(MPI_Fortran_HAVE_F77_HEADER)
-    MESSAGE(STATUS "Fortran headers in = ${MPI_Fortran_F77_HEADER_DIR}")
-  endif(MPI_Fortran_HAVE_F77_HEADER)  
 ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
@@ -55,8 +51,46 @@ ELSE(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(VERBOSE)
 
+
+FIND_PACKAGE(BLAS REQUIRED)
+IF(BLAS_FOUND)
+  MESSAGE(STATUS "Found BLAS at ${BLAS_LIBRARIES}")
+ENDIF()
+FIND_PACKAGE(LAPACK REQUIRED)
+IF(LAPACK_FOUND)
+  MESSAGE(STATUS "Found LAPACK at ${LAPACK_LIBRARIES}")
+ENDIF()
 # This executes code that sets the compile flags for DEBUG, RELEASE, and TESTING.
-INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
+# INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
+if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
+  SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") # -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -funroll-loops") 
+  
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ") #remember the ending white space here 
+  SET(CMAKE_Fortran_FLAGS         "-fpp")
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -ftz")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-p -O0 -g -fpe1 -warn -debug extended -traceback -check all,noarg_temp_created")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ftz")
+
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES G95)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-fmod=")
+  SET(CMAKE_Fortran_FLAGS         "-cpp")
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O1  -fsloppy-char")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g -ftrace=full")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+  
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES PGI)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ")
+  SET(CMAKE_Fortran_FLAGS         "-")
+  SET(CMAKE_Fortran_FLAGS         "")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-g -O0 -Mframe")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -mcmodel=medium -fast -Munroll")
+endif()
+
 
 
 #Check for .git and extract the current SHA1 revision.
@@ -132,21 +166,19 @@ SET(SF_TARGET_DIR ${CMAKE_INSTALL_PREFIX})
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_Fortran_MODULE_DIRECTORY})
 
+SET(SRC_DIR_BLAS ${SF_SRC}/blas)
+ADD_SUBDIRECTORY(${SRC_DIR_BLAS})
+
+SET(SRC_DIR_LAPACK ${SF_SRC}/lapack)
+ADD_SUBDIRECTORY(${SRC_DIR_LAPACK})
+
 
 SET(SRC_DIR_ARPACK ${SF_SRC}/arpack)
 ADD_SUBDIRECTORY(${SRC_DIR_ARPACK})
 
 
-SET(SRC_DIR_BLAS ${SF_SRC}/blas)
-ADD_SUBDIRECTORY(${SRC_DIR_BLAS})
-
-
 SET(SRC_DIR_FFTPACK ${SF_SRC}/fftpack)
 ADD_SUBDIRECTORY(${SRC_DIR_FFTPACK})
-
-
-SET(SRC_DIR_LAPACK ${SF_SRC}/lapack)
-ADD_SUBDIRECTORY(${SRC_DIR_LAPACK})
 
 
 SET(SRC_DIR_MINPACK ${SF_SRC}/minpack)
@@ -210,9 +242,9 @@ ADD_SUBDIRECTORY(${SF_SRC})
 
 # # Build the scifor library and have it placed in the target lib folder
 ADD_LIBRARY(scifor
-  $<TARGET_OBJECTS:ARPACKLIB>
   $<TARGET_OBJECTS:BLASLIB>
   $<TARGET_OBJECTS:LAPACKLIB>
+  $<TARGET_OBJECTS:ARPACKLIB>
   $<TARGET_OBJECTS:FFTPACKLIB>
   $<TARGET_OBJECTS:MINPACKLIB>
   $<TARGET_OBJECTS:QUADPACKLIB>
