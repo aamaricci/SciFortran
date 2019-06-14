@@ -136,7 +136,7 @@ subroutine deigh_simple(A,W,jobz,uplo,vl,vu,il,iu,tol)
   allocate(iwork(liwork))
   call dsyevr(jobz_,range,uplo_,N,A,N,vl_,vu_,iL_,iU_,tol_,M,W,Z,N,Isuppz,work,lwork,iwork,liwork,info)
   !<copy the Evecs from Z to the input matrix A
-  print*,range,M
+  !print*,range,M
   A = 0d0
   A(:,1:M) = Z(:,1:M)    
 end subroutine deigh_simple
