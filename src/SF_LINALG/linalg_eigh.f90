@@ -81,91 +81,215 @@ subroutine zeigh_generalized(Am, Bm, lam, c)
 end subroutine zeigh_generalized
 
 
-subroutine deigh_simple(M,E,jobz,uplo)
-  real(8),dimension(:,:),intent(inout) :: M ! M v = E v/v(i,j) = ith component of jth vec.
-  real(8),dimension(:),intent(inout)   :: E ! eigenvalues
-  character(len=1),optional            :: jobz,uplo
-  character(len=1)                     :: jobz_,uplo_
-  integer                              :: i,j,n,lda,info,lwork
-  real(8),dimension(:),allocatable     :: work
-  real(8),dimension(1)                 :: lwork_guess
-  jobz_='V';if(present(jobz))jobz_=jobz
-  uplo_='U';if(present(uplo))uplo_=uplo
-  lda = max(1,size(M,1))
-  n   = size(M,2)
-  call assert_shape(M,[n,n],"eigh","M")
-  Call dsyev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,info)
-  if (info /= 0) then
-     print*, "dsyevd returned info =", info
-     if (info < 0) then
-        print*, "the", -info, "-th argument had an illegal value"
-     else
-        print*, "the algorithm failed to compute an eigenvalue while working"
-        print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
-        print*, "through", mod(info, n+1)
-     end if
-     stop 'error deigh: 1st call dsyev'
-  end if
-  lwork=lwork_guess(1)
+
+subroutine deigh_simple(A,W,jobz,uplo,vl,vu,il,iu,tol)
+  real(8),dimension(:,:),intent(inout)       :: A ! M v = E v/v(i,j) = ith component of jth vec.
+  real(8),dimension(size(A,2)),intent(inout) :: W ! eigenvalues
+  character(len=1),optional                  :: jobz,uplo
+  character(len=1)                           :: jobz_,uplo_,range
+  real(8),optional                           :: vl,vu,tol
+  integer,optional                           :: il,iu
+  real(8)                                    :: vL_,vU_,tol_
+  integer                                    :: iL_,iU_
+  integer                                    :: i,j,n,lda,info,ldz
+  integer                                    :: lwork,liwork,m
+  integer                                    :: guess_iwork(1)
+  real(8)                                    :: guess_work(1)
+  logical                                    :: boolV,boolI
+  real(8),dimension(:,:),allocatable         :: Z
+  real(8),dimension(:),allocatable           :: work
+  integer,dimension(:),allocatable           :: Isuppz
+  integer,dimension(:),allocatable           :: Iwork
+  !
+  !
+  jobz_='V'  ;if(present(jobz))jobz_=jobz
+  uplo_='U'  ;if(present(uplo))uplo_=uplo
+  vl_  = 1d0 ;if(present(vL))vL_=vL
+  vu_  = 1d0 ;if(present(vU))vU_=vU
+  iL_  = 1   ;if(present(iL))iL_=iL
+  iU_  = 1   ;if(present(iU))iU_=iU
+  tol_ = 0d0 ;if(present(tol))tol_=tol
+  !
+  W=0d0
+  !
+  range='A'
+  boolV=present(vL).AND.present(vU)
+  boolI=present(iL).OR.present(iU)
+  if(boolV.and.boolI)stop "vX and iX arguments both present. Can not set RANGE"
+  if(boolV)range='V'
+  if(boolI)range='I'
+  !
+  N     = max(1,size(A,1))
+  LDA   = max(1,size(A,2))
+  ! M     = N ; if(range=="I")M = iU_ - iL_ + 1
+  LDZ   = N
+  if(any(shape(A)/=[N,N]))stop "my_eighD error: A has illegal shape"
+  !
+  allocate(Z(N,N)) !Supplying N columns is always safe.
+  !
+  allocate(Isuppz(2*N))
+  !
+  call dsyevr(jobz_,range,uplo_,N,A,N,vl_,vu_,iL_,iU_,tol_,M,W,Z,N,Isuppz,guess_work,-1,guess_iwork,-1,info)
+  lwork = guess_work(1)
+  liwork= guess_iwork(1)
   allocate(work(lwork))
-  call dsyev(jobz_,uplo_,n,M,lda,E,work,lwork,info)
-  if (info /= 0) then
-     print*, "dsyevd returned info =", info
-     if (info < 0) then
-        print*, "the", -info, "-th argument had an illegal value"
-     else
-        print*, "the algorithm failed to compute an eigenvalue while working"
-        print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
-        print*, "through", mod(info, n+1)
-     end if
-     stop 'error deigh: 2nd call dsyev'
-  end if
-  deallocate(work)
+  allocate(iwork(liwork))
+  call dsyevr(jobz_,range,uplo_,N,A,N,vl_,vu_,iL_,iU_,tol_,M,W,Z,N,Isuppz,work,lwork,iwork,liwork,info)
+  !<copy the Evecs from Z to the input matrix A
+  print*,range,M
+  A = 0d0
+  A(:,1:M) = Z(:,1:M)    
 end subroutine deigh_simple
-!-----------------------------
-subroutine zeigh_simple(M,E,jobz,uplo)
-  complex(8),dimension(:,:),intent(inout) :: M! M v = E v/v(i,j) = ith component of jth vec.
-  real(8),dimension(:),intent(inout)      :: E! eigenvalues
-  character(len=1),optional               :: jobz,uplo
-  character(len=1)                        :: jobz_,uplo_
-  integer                                 :: i,j,n,lda,info,lwork
-  complex(8),dimension(1)                 :: lwork_guess
-  complex(8),dimension(:),allocatable     :: work
-  real(8),dimension(:),allocatable        :: rwork
-  !write(*,*)"matrix_diagonalization called with: jobz="//jobz_//" uplo="//uplo_
-  jobz_='V';if(present(jobz))jobz_=jobz
-  uplo_='U';if(present(uplo))uplo_=uplo
-  lda = max(1,size(M,1))
-  n   = size(M,2)
-  call assert_shape(M,[n,n],"eigh","M")
-  allocate(rwork(max(1,3*N-2)))
-  call zheev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,rwork,info)
-  if(info/=0) then
-     print*, "zheev returned info =", info
-     if (info < 0) then
-        print*, "the", -info, "-th argument had an illegal value"
-     else
-        print*, "the algorithm failed to compute an eigenvalue while working"
-        print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
-        print*, "through", mod(info, n+1)
-     end if
-     stop 'error zeigh: 1st call zheev'
-  end if
-  lwork=lwork_guess(1) ; allocate(work(lwork))
-  call zheev(jobz_,uplo_,n,M,lda,E,work,lwork,rwork,info)
-  if(info/=0) then
-     print*, "zheev returned info =", info
-     if (info < 0) then
-        print*, "the", -info, "-th argument had an illegal value"
-     else
-        print*, "the algorithm failed to compute an eigenvalue while working"
-        print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
-        print*, "through", mod(info, n+1)
-     end if
-     stop 'error zeigh: 2nd call zheev'
-  end if
-  deallocate(work,rwork)
+
+subroutine zeigh_simple(A,W,jobz,uplo,vl,vu,il,iu,tol)
+  complex(8),dimension(:,:),intent(inout)    :: A ! M v = E v/v(i,j) = ith component of jth vec.
+  real(8),dimension(size(A,2)),intent(inout) :: W ! eigenvalues
+  character(len=1),optional                  :: jobz,uplo
+  character(len=1)                           :: jobz_,uplo_,range
+  real(8),optional                           :: vl,vu,tol
+  integer,optional                           :: il,iu
+  real(8)                                    :: vL_,vU_,tol_
+  integer                                    :: iL_,iU_
+  integer                                    :: i,j,n,lda,info,ldz
+  integer                                    :: lwork,liwork,lrwork,m
+  integer                                    :: guess_iwork(1)
+  real(8)                                    :: guess_rwork(1)
+  complex(8)                                 :: guess_work(1)
+  logical                                    :: boolV,boolI
+  complex(8),dimension(:,:),allocatable      :: Z
+  complex(8),dimension(:),allocatable        :: work
+  complex(8),dimension(:),allocatable        :: rwork
+  integer,dimension(:),allocatable           :: Isuppz
+  integer,dimension(:),allocatable           :: Iwork
+  !
+  !
+  jobz_='V'  ;if(present(jobz))jobz_=jobz
+  uplo_='U'  ;if(present(uplo))uplo_=uplo
+  vl_  = 1d0 ;if(present(vL))vL_=vL
+  vu_  = 1d0 ;if(present(vU))vU_=vU
+  iL_  = 1   ;if(present(iL))iL_=iL
+  iU_  = 1   ;if(present(iU))iU_=iU
+  tol_ = 0d0 ;if(present(tol))tol_=tol
+  !
+  W=0d0
+  !
+  range='A'
+  boolV=present(vL).AND.present(vU)
+  boolI=present(iL).OR.present(iU)
+  if(boolV.and.boolI)stop "vX and iX arguments both present. Can not set RANGE"
+  if(boolV)range='V'
+  if(boolI)range='I'
+  !
+  N     = max(1,size(A,1))
+  LDA   = max(1,size(A,2))
+  ! M     = N ; if(range=="I")M = iU_ - iL_ + 1
+  LDZ   = N
+  if(any(shape(A)/=[N,N]))stop "my_eighD error: A has illegal shape"
+  !
+  allocate(Z(N,N)) !Supplying N columns is always safe.
+  !
+  allocate(Isuppz(2*N))
+  !
+  call zheevr(jobz_,range,uplo_,N,A,N,vl_,vu_,iL_,iU_,tol_,M,W,Z,N,Isuppz,guess_work,-1,guess_rwork,-1,guess_iwork,-1,info)
+  lwork = guess_work(1)
+  lrwork= guess_rwork(1)
+  liwork= guess_iwork(1)
+  allocate(work(lwork))
+  allocate(rwork(lrwork))
+  allocate(iwork(liwork))
+  call zheevr(jobz_,range,uplo_,N,A,N,vl_,vu_,iL_,iU_,tol_,M,W,Z,N,Isuppz,work,lwork,rwork,lrwork,iwork,liwork,info)
+  !<copy the Evecs from Z to the input matrix A
+  print*,range,M
+  A = dcmplx(0d0,0d0)
+  A(:,1:M) = Z(:,1:M)    
 end subroutine zeigh_simple
+
+
+! subroutine deigh_simple(M,E,jobz,uplo)
+!   real(8),dimension(:,:),intent(inout) :: M ! M v = E v/v(i,j) = ith component of jth vec.
+!   real(8),dimension(:),intent(inout)   :: E ! eigenvalues
+!   character(len=1),optional            :: jobz,uplo
+!   character(len=1)                     :: jobz_,uplo_
+!   integer                              :: i,j,n,lda,info,lwork
+!   real(8),dimension(:),allocatable     :: work
+!   real(8),dimension(1)                 :: lwork_guess
+!   jobz_='V';if(present(jobz))jobz_=jobz
+!   uplo_='U';if(present(uplo))uplo_=uplo
+!   lda = max(1,size(M,1))
+!   n   = size(M,2)
+!   call assert_shape(M,[n,n],"eigh","M")
+!   Call dsyev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,info)
+!   if (info /= 0) then
+!      print*, "dsyevd returned info =", info
+!      if (info < 0) then
+!         print*, "the", -info, "-th argument had an illegal value"
+!      else
+!         print*, "the algorithm failed to compute an eigenvalue while working"
+!         print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
+!         print*, "through", mod(info, n+1)
+!      end if
+!      stop 'error deigh: 1st call dsyev'
+!   end if
+!   lwork=lwork_guess(1)
+!   allocate(work(lwork))
+!   call dsyev(jobz_,uplo_,n,M,lda,E,work,lwork,info)
+!   if (info /= 0) then
+!      print*, "dsyevd returned info =", info
+!      if (info < 0) then
+!         print*, "the", -info, "-th argument had an illegal value"
+!      else
+!         print*, "the algorithm failed to compute an eigenvalue while working"
+!         print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
+!         print*, "through", mod(info, n+1)
+!      end if
+!      stop 'error deigh: 2nd call dsyev'
+!   end if
+!   deallocate(work)
+! end subroutine deigh_simple
+! !-----------------------------
+! subroutine zeigh_simple(M,E,jobz,uplo)
+!   complex(8),dimension(:,:),intent(inout) :: M! M v = E v/v(i,j) = ith component of jth vec.
+!   real(8),dimension(:),intent(inout)      :: E! eigenvalues
+!   character(len=1),optional               :: jobz,uplo
+!   character(len=1)                        :: jobz_,uplo_
+!   integer                                 :: i,j,n,lda,info,lwork
+!   complex(8),dimension(1)                 :: lwork_guess
+!   complex(8),dimension(:),allocatable     :: work
+!   real(8),dimension(:),allocatable        :: rwork
+!   !write(*,*)"matrix_diagonalization called with: jobz="//jobz_//" uplo="//uplo_
+!   jobz_='V';if(present(jobz))jobz_=jobz
+!   uplo_='U';if(present(uplo))uplo_=uplo
+!   lda = max(1,size(M,1))
+!   n   = size(M,2)
+!   call assert_shape(M,[n,n],"eigh","M")
+!   allocate(rwork(max(1,3*N-2)))
+!   call zheev(jobz_,uplo_,n,M,lda,E,lwork_guess,-1,rwork,info)
+!   if(info/=0) then
+!      print*, "zheev returned info =", info
+!      if (info < 0) then
+!         print*, "the", -info, "-th argument had an illegal value"
+!      else
+!         print*, "the algorithm failed to compute an eigenvalue while working"
+!         print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
+!         print*, "through", mod(info, n+1)
+!      end if
+!      stop 'error zeigh: 1st call zheev'
+!   end if
+!   lwork=lwork_guess(1) ; allocate(work(lwork))
+!   call zheev(jobz_,uplo_,n,M,lda,E,work,lwork,rwork,info)
+!   if(info/=0) then
+!      print*, "zheev returned info =", info
+!      if (info < 0) then
+!         print*, "the", -info, "-th argument had an illegal value"
+!      else
+!         print*, "the algorithm failed to compute an eigenvalue while working"
+!         print*, "on the submatrix lying in rows and columns", 1d0*info/(n+1)
+!         print*, "through", mod(info, n+1)
+!      end if
+!      stop 'error zeigh: 2nd call zheev'
+!   end if
+!   deallocate(work,rwork)
+! end subroutine zeigh_simple
 
 
 
