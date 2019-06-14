@@ -60,6 +60,7 @@ FIND_PACKAGE(LAPACK REQUIRED)
 IF(LAPACK_FOUND)
   MESSAGE(STATUS "Found LAPACK at ${LAPACK_LIBRARIES}")
 ENDIF()
+
 # This executes code that sets the compile flags for DEBUG, RELEASE, and TESTING.
 # INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
 if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
@@ -166,11 +167,14 @@ SET(SF_TARGET_DIR ${CMAKE_INSTALL_PREFIX})
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_Fortran_MODULE_DIRECTORY})
 
-SET(SRC_DIR_BLAS ${SF_SRC}/blas)
-ADD_SUBDIRECTORY(${SRC_DIR_BLAS})
+# We keep this here in case one wants to compile lapack + blas
+# independently if they are not available in the OS
+# SET(SRC_DIR_BLAS ${SF_SRC}/blas)
+# ADD_SUBDIRECTORY(${SRC_DIR_BLAS})
 
-SET(SRC_DIR_LAPACK ${SF_SRC}/lapack)
-ADD_SUBDIRECTORY(${SRC_DIR_LAPACK})
+# SET(SRC_DIR_LAPACK ${SF_SRC}/lapack)
+# ADD_SUBDIRECTORY(${SRC_DIR_LAPACK})
+
 
 
 SET(SRC_DIR_ARPACK ${SF_SRC}/arpack)
@@ -242,8 +246,8 @@ ADD_SUBDIRECTORY(${SF_SRC})
 
 # # Build the scifor library and have it placed in the target lib folder
 ADD_LIBRARY(scifor
-  $<TARGET_OBJECTS:BLASLIB>
-  $<TARGET_OBJECTS:LAPACKLIB>
+  # $<TARGET_OBJECTS:BLASLIB>
+  # $<TARGET_OBJECTS:LAPACKLIB>
   $<TARGET_OBJECTS:ARPACKLIB>
   $<TARGET_OBJECTS:FFTPACKLIB>
   $<TARGET_OBJECTS:MINPACKLIB>
