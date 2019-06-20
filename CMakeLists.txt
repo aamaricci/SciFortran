@@ -11,7 +11,6 @@ SET(CMAKE_BUILD_TYPE ${BUILD_TYPE} CACHE INTERNAL "Build type" FORCE)
 
 # Add our local CMAKE modules to the module path
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
-
 INCLUDE(${CMAKE_MODULE_PATH}/ColorsMsg.cmake)
 
 # Check that Fortran 90 is supported
@@ -29,7 +28,18 @@ ENDIF()
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
+IF(VERBOSE)
+  SET(CMAKE_VERBOSE_MAKEFILE ON)
+ELSE(VERBOSE)
+  SET(CMAKE_VERBOSE_MAKEFILE OFF)
+ENDIF(VERBOSE)
 
+
+
+
+############################################################
+# Look for MPI if needed
+############################################################
 # reSet compiler to MPI is required 
 IF(USE_MPI)
   FIND_PACKAGE(MPI REQUIRED)
@@ -44,58 +54,14 @@ ELSE(USE_MPI)
   SET(MPI_CPP "")
 ENDIF(USE_MPI)
 
-# Set verbosity of the Makefile according to option
-IF(VERBOSE)
-  SET(CMAKE_VERBOSE_MAKEFILE ON)
-ELSE(VERBOSE)
-  SET(CMAKE_VERBOSE_MAKEFILE OFF)
-ENDIF(VERBOSE)
-
-
-FIND_PACKAGE(BLAS REQUIRED)
-IF(BLAS_FOUND)
-  MESSAGE(STATUS "Found BLAS at ${BLAS_LIBRARIES}")
-ENDIF()
-FIND_PACKAGE(LAPACK REQUIRED)
-IF(LAPACK_FOUND)
-  MESSAGE(STATUS "Found LAPACK at ${LAPACK_LIBRARIES}")
-ENDIF()
-
-# This executes code that sets the compile flags for DEBUG, RELEASE, and TESTING.
-# INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
-if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
-  SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
-  SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") # -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
-  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
-  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
-  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -funroll-loops") 
-  
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
-  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ") #remember the ending white space here 
-  SET(CMAKE_Fortran_FLAGS         "-fpp")
-  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -ftz")
-  SET(CMAKE_Fortran_FLAGS_DEBUG   "-p -O0 -g -fpe1 -warn -debug extended -traceback -check all,noarg_temp_created")
-  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ftz")
-
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES G95)
-  SET(CMAKE_Fortran_MODDIR_FLAG   "-fmod=")
-  SET(CMAKE_Fortran_FLAGS         "-cpp")
-  SET(CMAKE_Fortran_FLAGS_TESTING "-O1  -fsloppy-char")
-  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g -ftrace=full")
-  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3")
-  
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES PGI)
-  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ")
-  SET(CMAKE_Fortran_FLAGS         "-")
-  SET(CMAKE_Fortran_FLAGS         "")
-  SET(CMAKE_Fortran_FLAGS_DEBUG   "-g -O0 -Mframe")
-  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -mcmodel=medium -fast -Munroll")
-endif()
 
 
 
-#Check for .git and extract the current SHA1 revision.
-#create the current scifor_version.inc file
+
+
+############################################################
+# Check for .git and extract the current SHA1 revision.
+############################################################
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
   FIND_PACKAGE(Git)
   IF(GIT_FOUND)    
@@ -119,6 +85,51 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
 SET(VERSION ${GIT_TAG})    	#Update version
+
+
+
+############################################################
+# Look for required libraries: blas,lapack,scifor,dmft_tools
+############################################################
+FIND_PACKAGE(BLAS REQUIRED)
+
+FIND_PACKAGE(LAPACK REQUIRED)
+
+
+
+
+
+############################################################
+# Set Fortran options based on BUILD_TYPE and FC ID
+############################################################
+if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
+  SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") # -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3  -ffast-math -march=native -funroll-loops") 
+  
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ") #remember the ending white space here 
+  SET(CMAKE_Fortran_FLAGS         "-fpp")
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -ftz")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-p -O0 -g -fpe1 -warn -debug extended -traceback -check all,noarg_temp_created")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ftz")
+
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES G95)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-fmod=")
+  SET(CMAKE_Fortran_FLAGS         "-cpp")
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O1  -fsloppy-char")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g -ftrace=full")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+  
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES PGI)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ")
+  SET(CMAKE_Fortran_FLAGS         "-")
+  SET(CMAKE_Fortran_FLAGS         "")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-g -O0 -Mframe")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -mcmodel=medium -fast -Munroll")
+endif()
 
 
 #set MPI preprocessing defition:
