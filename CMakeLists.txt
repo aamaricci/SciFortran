@@ -3,7 +3,7 @@
 ##################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
-SET(VERSION 4.5.19a)
+SET(VERSION 4.5.21)
 
 MESSAGE(STATUS "OS: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
 SET(BUILD_TYPE "RELEASE" CACHE STRING "Build type")
@@ -30,7 +30,7 @@ ENDIF()
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
-OPTION(WITH_BLAS_LAPACK "Use internal Blas/Lapack" OFF)
+OPTION(WITH_BLAS_LAPACK "Use internal Blas/Lapack" ON)
 IF(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE ON)
 ELSE(VERBOSE)
