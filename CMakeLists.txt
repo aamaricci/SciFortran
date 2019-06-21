@@ -5,13 +5,14 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
 SET(VERSION 4.5.19a)
 
+MESSAGE(STATUS "OS: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
 SET(BUILD_TYPE "RELEASE" CACHE STRING "Build type")
+STRING(TOUPPER "${BUILD_TYPE}" BUILD_TYPE)
 MESSAGE(STATUS "BUILD_TYPE=${BUILD_TYPE}")
 SET(CMAKE_BUILD_TYPE ${BUILD_TYPE} CACHE INTERNAL "Build type" FORCE)
 
 # Add our local CMAKE modules to the module path
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
-
 INCLUDE(${CMAKE_MODULE_PATH}/ColorsMsg.cmake)
 
 # Check that Fortran 90 is supported
@@ -29,41 +30,44 @@ ENDIF()
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
-
-# reSet compiler to MPI is required 
-IF(USE_MPI)
-  FIND_PACKAGE(MPI REQUIRED)
-  IF(MPI_Fortran_FOUND)
-    SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
-    MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}")
-    MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
-    SET(MPI_CPP "MPI")		#pre-processing option
-  ELSE()
-    MESSAGE(FATAL_ERROR "MPI Found but No MPI-Fortran compiler can be determined.")    
-  ENDIF()
-  IF(MPI_Fortran_HAVE_F77_HEADER)
-    MESSAGE(STATUS "Fortran headers in = ${MPI_Fortran_F77_HEADER_DIR}")
-  endif(MPI_Fortran_HAVE_F77_HEADER)  
-ELSE(USE_MPI)
-  SET(MPI_CPP "")
-ENDIF(USE_MPI)
-
-# Set verbosity of the Makefile according to option
+OPTION(WITH_BLAS_LAPACK "Use internal Blas/Lapack" OFF)
 IF(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE ON)
 ELSE(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(VERBOSE)
 
-# This executes code that sets the compile flags for DEBUG, RELEASE, and TESTING.
-INCLUDE(${CMAKE_MODULE_PATH}/SetFortranFlags.cmake)
 
 
-#Check for .git and extract the current SHA1 revision.
-#create the current scifor_version.inc file
+
+############################################################
+# Look for MPI if needed
+############################################################
+# reSet compiler to MPI is required 
+IF(USE_MPI)
+  FIND_PACKAGE(MPI REQUIRED)
+  IF(MPI_Fortran_FOUND)
+    SET(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER})
+    MESSAGE(STATUS "${Yellow}Set Fortran compiler FC to ${ColourReset}${CMAKE_Fortran_COMPILER}, ID=${CMAKE_Fortran_COMPILER_ID}")
+    SET(MPI_CPP "MPI")		#pre-processing option
+  ELSE()
+    MESSAGE(FATAL_ERROR "MPI Found but No MPI-Fortran compiler can be determined.")    
+  ENDIF()
+ELSE(USE_MPI)
+  SET(MPI_CPP "")
+ENDIF(USE_MPI)
+
+
+
+
+
+
+############################################################
+# Check for .git and extract the current SHA1 revision.
+############################################################
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
   FIND_PACKAGE(Git)
-  IF(GIT_FOUND)    
+  IF(GIT_FOUND)
     EXECUTE_PROCESS(
       COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -71,6 +75,15 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
     MESSAGE( STATUS "${Yellow}Git SHA1: ${ColourReset}${GIT_SHA1}" )
+    #
+    EXECUTE_PROCESS(
+      COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+      OUTPUT_VARIABLE GIT_BRANCH
+      ERROR_QUIET
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    MESSAGE( STATUS "${Yellow}Git branch: ${ColourReset}${GIT_BRANCH}" )
+    #
     EXECUTE_PROCESS(
       COMMAND ${GIT_EXECUTABLE} describe --tags
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -80,10 +93,50 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
     MESSAGE(STATUS "${Yellow}Git tag: ${ColourReset}${GIT_TAG}")
   ELSE(GIT_FOUND)
     SET(GIT_SHA1 0)
+    SET(GIT_BRANCH "master")
     SET(GIT_TAG 0.0.0)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
 SET(VERSION ${GIT_TAG})    	#Update version
+
+
+
+############################################################
+# Set Fortran options based on BUILD_TYPE and FC ID
+############################################################
+# -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
+if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
+  IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") 
+  ELSE()
+    SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none -ff2c") #ff2c takes care of making MKL working in Linux env
+  ENDIF()
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3  -ffast-math -march=native -funroll-loops") 
+  
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ") #remember the ending white space here 
+  SET(CMAKE_Fortran_FLAGS         "-fpp")
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -ftz")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-p -O0 -g -fpe1 -warn -debug extended -traceback -check all,noarg_temp_created")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ftz")
+
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES G95)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-fmod=")
+  SET(CMAKE_Fortran_FLAGS         "-cpp")
+  SET(CMAKE_Fortran_FLAGS_TESTING "-O1  -fsloppy-char")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g -ftrace=full")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+  
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES PGI)
+  SET(CMAKE_Fortran_MODDIR_FLAG   "-module ")
+  SET(CMAKE_Fortran_FLAGS         "-")
+  SET(CMAKE_Fortran_FLAGS         "")
+  SET(CMAKE_Fortran_FLAGS_DEBUG   "-g -O0 -Mframe")
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -mcmodel=medium -fast -Munroll")
+endif()
 
 
 #set MPI preprocessing defition:
@@ -102,13 +155,21 @@ ENDIF(USE_MPI)
 SET(USER_HOME $ENV{HOME})
 SET(USER $ENV{USER})
 
+#make sure FC_PLAT is lower case
+IF(GIT_BRANCH MATCHES "master")
+  STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
+ELSE()
+  SET(FC_PLAT "${GIT_BRANCH}")
+ENDIF()
 
-#make sure FC_PLAT is lowecase
-STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
 
-SET(PREFIX  "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
-
+IF("${CMAKE_BUILD_TYPE}" MATCHES "DEBUG")
+  SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}_${CMAKE_BUILD_TYPE}" CACHE PATH "Prefix prepended to install directories")
+ELSE()
+  SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
+ENDIF()
 SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
+
 
 # Define the library name
 SET(SCIFORLIB scifor)
@@ -133,20 +194,21 @@ SET(CMAKE_Fortran_MODULE_DIRECTORY ${SF_TMP_INC})
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_Fortran_MODULE_DIRECTORY})
 
 
+IF(WITH_BLAS_LAPACK)
+  SET(SRC_DIR_BLAS ${SF_SRC}/blas)
+  ADD_SUBDIRECTORY(${SRC_DIR_BLAS})
+
+  SET(SRC_DIR_LAPACK ${SF_SRC}/lapack)
+  ADD_SUBDIRECTORY(${SRC_DIR_LAPACK})
+ENDIF()
+
+
 SET(SRC_DIR_ARPACK ${SF_SRC}/arpack)
 ADD_SUBDIRECTORY(${SRC_DIR_ARPACK})
 
 
-SET(SRC_DIR_BLAS ${SF_SRC}/blas)
-ADD_SUBDIRECTORY(${SRC_DIR_BLAS})
-
-
 SET(SRC_DIR_FFTPACK ${SF_SRC}/fftpack)
 ADD_SUBDIRECTORY(${SRC_DIR_FFTPACK})
-
-
-SET(SRC_DIR_LAPACK ${SF_SRC}/lapack)
-ADD_SUBDIRECTORY(${SRC_DIR_LAPACK})
 
 
 SET(SRC_DIR_MINPACK ${SF_SRC}/minpack)
@@ -209,10 +271,11 @@ ADD_SUBDIRECTORY(${SRC_DIR_SF_PARSE_INPUT})
 ADD_SUBDIRECTORY(${SF_SRC})
 
 # # Build the scifor library and have it placed in the target lib folder
+IF(WITH_BLAS_LAPACK)
 ADD_LIBRARY(scifor
-  $<TARGET_OBJECTS:ARPACKLIB>
   $<TARGET_OBJECTS:BLASLIB>
   $<TARGET_OBJECTS:LAPACKLIB>
+  $<TARGET_OBJECTS:ARPACKLIB>
   $<TARGET_OBJECTS:FFTPACKLIB>
   $<TARGET_OBJECTS:MINPACKLIB>
   $<TARGET_OBJECTS:QUADPACKLIB>
@@ -231,7 +294,28 @@ ADD_LIBRARY(scifor
   $<TARGET_OBJECTS:SF_PARSE_INPUTLIB>
   $<TARGET_OBJECTS:SCIFORLIB>
   )
-
+ELSE()
+  ADD_LIBRARY(scifor
+  $<TARGET_OBJECTS:ARPACKLIB>
+  $<TARGET_OBJECTS:FFTPACKLIB>
+  $<TARGET_OBJECTS:MINPACKLIB>
+  $<TARGET_OBJECTS:QUADPACKLIB>
+  $<TARGET_OBJECTS:SF_INITLIB>
+  $<TARGET_OBJECTS:SF_MPILIB>
+  $<TARGET_OBJECTS:SF_IOTOOLSLIB>
+  $<TARGET_OBJECTS:SF_FFTLIB>
+  $<TARGET_OBJECTS:SF_LINALGLIB>
+  $<TARGET_OBJECTS:SF_DERIVATELIB>
+  $<TARGET_OBJECTS:SF_OPTIMIZELIB>
+  $<TARGET_OBJECTS:SF_SPECIALLIB>  
+  $<TARGET_OBJECTS:SF_INTEGRATELIB>
+  $<TARGET_OBJECTS:SF_INTERPOLATELIB>
+  $<TARGET_OBJECTS:SF_RANDOMLIB>
+  $<TARGET_OBJECTS:SF_SP_LINALGLIB>
+  $<TARGET_OBJECTS:SF_PARSE_INPUTLIB>
+  $<TARGET_OBJECTS:SCIFORLIB>
+  )
+ENDIF()
 
 SET(SF_VERSION_FILE ${SF_SRC}/${PROJECT_NAME}_version_current_sha1.inc)
 ADD_CUSTOM_COMMAND(OUTPUT ${SF_VERSION_FILE}
