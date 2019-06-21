@@ -5,7 +5,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
 SET(VERSION 4.5.17)
 
-
+MESSAGE(STATUS "OS: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
 SET(BUILD_TYPE "RELEASE" CACHE STRING "Build type")
 STRING(TOUPPER "${BUILD_TYPE}" BUILD_TYPE)
 MESSAGE(STATUS "BUILD_TYPE=${BUILD_TYPE}")
@@ -37,7 +37,7 @@ ELSE(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(VERBOSE)
 
-  
+
 
 
 ############################################################
@@ -102,24 +102,16 @@ SET(VERSION ${GIT_TAG})    	#Update version
 
 
 ############################################################
-# Look for required libraries: blas,lapack,scifor,dmft_tools
-############################################################
-IF(NOT WITH_BLAS_LAPACK)
-  FIND_PACKAGE(BLAS REQUIRED)
-  FIND_PACKAGE(LAPACK REQUIRED)
-ELSE()
-  MESSAGE(STATUS "Using internal Blas/Lapack")
-ENDIF()
-
-
-
-
-############################################################
 # Set Fortran options based on BUILD_TYPE and FC ID
 ############################################################
+# -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
 if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
   SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
-  SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none  -ff2c") # -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
+  IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") 
+  ELSE()
+    SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none -ff2c") #ff2c takes care of making MKL working in Linux env
+  ENDIF()
   SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
   SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
   SET(CMAKE_Fortran_FLAGS_RELEASE "-O3  -ffast-math -march=native -funroll-loops") 
