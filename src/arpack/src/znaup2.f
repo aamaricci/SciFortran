@@ -246,11 +246,9 @@ c     %--------------------%
 c     | External functions |
 c     %--------------------%
 c
-      Complex*16 
-     &           zdotc 
       Double precision   
      &           dznrm2 , dlamch , dlapy2 
-      external   zdotc , dznrm2 , dlamch , dlapy2 
+      external   dznrm2 , dlamch , dlapy2 
 c
 c     %---------------------%
 c     | Intrinsic Functions |
@@ -754,7 +752,7 @@ c
          end if
 c 
          if (bmat .eq. 'G') then         
-            cmpnorm = zdotc  (n, resid, 1, workd, 1)
+            call zdotc(cmpnorm, n, resid, 1, workd, 1)
             rnorm = sqrt(dlapy2 (dble (cmpnorm),dimag (cmpnorm)))
          else if (bmat .eq. 'I') then
             rnorm = dznrm2 (n, resid, 1)

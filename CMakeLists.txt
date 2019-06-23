@@ -107,10 +107,7 @@ SET(VERSION ${GIT_TAG})    	#Update version
 # -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
 if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
   SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
-  IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") 
-  ELSE()
-    SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none -ff2c") #ff2c takes care of making MKL working in Linux env
+  SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none")
   ENDIF()
   SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
   SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")

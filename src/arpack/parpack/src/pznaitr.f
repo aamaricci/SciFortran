@@ -305,11 +305,9 @@ c     %--------------------%
 c     | External Functions |
 c     %--------------------%
 c
-      Complex*16
-     &           zdotc 
       Double precision            
      &           pdlamch, pdznorm2, zlanhs, dlapy2
-      external   zdotc, pdznorm2, zlanhs, pdlamch, dlapy2
+      external   pdznorm2, zlanhs, pdlamch, dlapy2
 c
 c     %---------------------%
 c     | Intrinsic Functions |
@@ -576,7 +574,7 @@ c        | Compute the B-norm of OP*v_{j}.     |
 c        %-------------------------------------%
 c
          if (bmat .eq. 'G') then
-             cnorm_buf = zdotc (n, resid, 1, workd(ipj), 1)
+             call zdotc(cnorm_buf, n, resid, 1, workd(ipj), 1)
             call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
      &           MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
              wnorm = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
@@ -652,7 +650,7 @@ c        | Compute the B-norm of r_{j}. |
 c        %------------------------------%
 c
          if (bmat .eq. 'G') then
-            cnorm_buf = zdotc (n, resid, 1, workd(ipj), 1)
+            call zdotc(cnorm_buf, n, resid, 1, workd(ipj), 1)
             call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
      &           MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
             rnorm = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
@@ -756,7 +754,7 @@ c        | Compute the B-norm of the corrected residual r_{j}. |
 c        %-----------------------------------------------------%
 c 
          if (bmat .eq. 'G') then
-             cnorm_buf = zdotc (n, resid, 1, workd(ipj), 1)
+             call zdotc (cnorm_buf, n, resid, 1, workd(ipj), 1)
             call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
      &           MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
              rnorm1 = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
