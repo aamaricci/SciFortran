@@ -108,7 +108,6 @@ SET(VERSION ${GIT_TAG})    	#Update version
 if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
   SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
   SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none")
-  ENDIF()
   SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
   SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
   SET(CMAKE_Fortran_FLAGS_RELEASE "-O3  -ffast-math -march=native -funroll-loops") 
