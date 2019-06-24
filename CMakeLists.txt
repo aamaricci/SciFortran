@@ -30,6 +30,7 @@ ENDIF()
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
+OPTION(WITH_BLAS_LAPACK "Build using internal Blas/Lapack" OFF)
 IF(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE ON)
 ELSE(VERBOSE)
@@ -104,21 +105,22 @@ SET(VERSION ${GIT_TAG})    	#Update version
 ############################################################
 # Try to find MKL: IF found use it ELSE try finding Blas/Lapack
 # the system ELSE using internal Blas/Lapack
-FIND_PACKAGE(MKL QUIET)
-IF(MKL_FOUND)
-  MESSAGE(STATUS "MKL found at: ${MKL_ROOT_DIR}")
-  SET(BLA_LIBRARIES ${MKL_LIBRARIES})
-ELSE()
-  FIND_PACKAGE(BLAS QUIET)
-  FIND_PACKAGE(LAPACK QUIET)
-  IF(BLAS_FOUND AND LAPACK_FOUND)
-    MESSAGE(STATUS "BLAS/LAPACK found at: ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES}")
-    SET(BLA_LIBRARIES ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+IF(NOT WITH_BLAS_LAPACK)
+  FIND_PACKAGE(MKL QUIET)
+  IF(MKL_FOUND)
+    MESSAGE(STATUS "MKL found at: ${MKL_ROOT_DIR}")
+    SET(BLA_LIBRARIES ${MKL_LIBRARIES})
   ELSE()
-    SET(WITH_BLAS_LAPACK "ON")
+    FIND_PACKAGE(BLAS QUIET)
+    FIND_PACKAGE(LAPACK QUIET)
+    IF(BLAS_FOUND AND LAPACK_FOUND)
+      MESSAGE(STATUS "BLAS/LAPACK found at: ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES}")
+      SET(BLA_LIBRARIES ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+    ELSE()
+      SET(WITH_BLAS_LAPACK "ON")
+    ENDIF()
   ENDIF()
 ENDIF()
-
 
 
 ############################################################
