@@ -1,0 +1,73 @@
+# cmake script for finding MUMPS sparse direct solver
+cmake_minimum_required(VERSION 2.8)
+
+# If libraries are already defined, do nothing 
+IF(SCALAPACK_LIBRARIES)
+  SET(SCALAPACK_FOUND TRUE)
+  RETURN()
+ENDIF()
+
+message(STATUS "Finding SCALAPACK")
+
+SET(SCALAPACKLIB 
+  "${SCALAPACKROOT}"
+  "${SCALAPACKROOT}/lib"
+  "$ENV{SCALAPACKROOT}"
+  "$ENV{SCALAPACKROOT}/lib"
+  "$ENV{SCALAPACK_ROOT}"
+  "$ENV{SCALAPACK_ROOT}/lib"
+  "${CMAKE_SOURCE_DIR}/scalapack"
+  "${CMAKE_SOURCE_DIR}/scalapack/lib")
+
+FIND_LIBRARY(SCALAPACK_LIBRARIES
+  NAMES
+  "scalapack" "scalapack-pvm" "scalapack-mpi" "scalapack-mpich" 
+  "scalapack-mpich2" "scalapack-openmpi" "scalapack-lam"
+  HINTS ${SCALAPACKLIB} /usr/lib /usr/local/lib)
+
+
+IF (SCALAPACK_LIBRARIES)
+  MESSAGE(STATUS "Checking if BLACS library is needed by SCALAPACK")
+  # Check if separate BLACS libraries are needed
+  UNSET(BLACS_EMBEDDED)
+  INCLUDE(${CMAKE_ROOT}/Modules/CheckFortranFunctionExists.cmake)
+  SET(CMAKE_REQUIRED_LIBRARIES_OLD ${CMAKE_REQUIRED_LIBRARIES})
+  SET(CMAKE_REQUIRED_LIBRARIES 
+    ${CMAKE_Fortran_REQUIRED_LIBRARIES}
+    ${SCALAPACK_LIBRARIES})
+  CHECK_FORTRAN_FUNCTION_EXISTS("blacs_gridinit" BLACS_EMBEDDED)
+  SET(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES_OLD})
+
+  IF(NOT BLACS_EMBEDDED)
+    MESSAGE(STATUS "Checking if BLACS library is needed by SCALAPACK -- yes")
+    FIND_PACKAGE(BLACS ${SCALAPACK_FIND_QUIETLY})
+
+    IF(BLACS_FOUND)
+      SET(SCALAPACK_LIBRARIES ${SCALAPACK_LIBRARIES} ${BLACS_LIBRARIES})
+      SET(SCALAPACK_FOUND TRUE)
+    ELSE()
+      SET(SCALAPACK_FOUND FALSE)
+      MESSAGE(FATAL_ERROR "BLACS library not found, needed by found SCALAPACK library.")
+    ENDIF()
+  ELSE()
+    MESSAGE(STATUS "Checking if BLACS library is needed by SCALAPACK -- no")
+    SET(SCALAPACK_FOUND TRUE)
+  ENDIF()
+ENDIF()
+   
+IF (SCALAPACK_FOUND)
+  IF (NOT SCALAPACK_FIND_QUIETLY)
+    MESSAGE(STATUS "A library with SCALAPACK API found.")
+    MESSAGE(STATUS "SCALAPACK libraries: ${SCALAPACK_LIBRARIES}")
+  ENDIF()
+ELSE()
+  IF (SCALAPACK_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "SCALAPACK library not found.")
+  ENDIF()
+ENDIF()
+
+MARK_AS_ADVANCED(
+  BLACS_EMBEDDED
+  SCALAPACK_FOUND
+  SCALAPACK_LIBRARIES 
+  )

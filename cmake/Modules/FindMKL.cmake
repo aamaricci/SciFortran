@@ -39,7 +39,6 @@ SET(CMAKE_FIND_DEBUG_MODE 0)
 FIND_PATH(MKL_ROOT_DIR NAMES include/mkl.h include/mkl.fi  PATHS $ENV{MKLROOT})
 
 # Convert symlinks to real paths
-
 GET_FILENAME_COMPONENT(MKL_ROOT_DIR ${MKL_ROOT_DIR} REALPATH)
 
 IF (NOT MKL_ROOT_DIR)
@@ -57,21 +56,33 @@ SET(MKL_INCLUDE_DIR ${MKL_ROOT_DIR}/include)
 # set arguments to call the MKL provided tool for linking
 SET(MKL_LINK_TOOL ${MKL_ROOT_DIR}/tools/mkl_link_tool)
 
+EXECUTE_PROCESS(COMMAND  ${MKL_LINK_TOOL}
+  OUTPUT_QUIET  
+  RESULT_VARIABLE RET)
+
+IF(NOT RET EQUAL "0")
+  UNSET(MKL_LINK_TOOL)
+ENDIF()
+
 IF(EXISTS "${MKL_LINK_TOOL}")
+  #These options can be made available to the user in the end
+  SET(MKL_PARALLEL  "--parallel=no")
+  SET(MKL_LINKING   "--linking=static")
+  SET(MKL_SCALAPACK "--cluster_library=scalapack")
   IF(APPLE)			#do something specific for Apple
     IF(${CMAKE_Fortran_COMPILER_ID} MATCHES GNU)
-      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -libs -p no)
+      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
       set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -opts )
     ELSE()
-      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -libs -p no)
+      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
       set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -opts)
     ENDIF()    
   ELSE()			#Linux only system    
     IF(${CMAKE_Fortran_COMPILER_ID} MATCHES GNU)
-      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c gnu_f -libs -p no)
+      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c gnu_f -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
       set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -c gnu_f -opts)
     ELSE()
-      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -libs -p no)
+      set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
       set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -opts)
     ENDIF()    
   ENDIF()
@@ -80,6 +91,7 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     OUTPUT_VARIABLE MKL_LIBRARIES
     RESULT_VARIABLE COMMAND_WORKED
     TIMEOUT 2 ERROR_QUIET)
+  
   if ( MKL_FIND_REQUIRED AND (NOT ${COMMAND_WORKED} EQUAL 0))
     MESSAGE(FATAL_ERROR "Cannot find MKL libraries. The mkl_link_tool command executed was:\n ${MKL_LINK_TOOL_LIBS}.")
   endif()
@@ -88,39 +100,79 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     OUTPUT_VARIABLE MKL_INCLUDE
     RESULT_VARIABLE COMMAND_WORKED
     TIMEOUT 2 ERROR_QUIET)
+  
   if ( MKL_FIND_REQUIRED AND (NOT ${COMMAND_WORKED} EQUAL 0))
     MESSAGE(FATAL_ERROR "Cannot find MKL libraries. The mkl_link_tool command executed was:\n ${MKL_LINK_TOOL_INCS}.")
   endif()
 
+  # #CHECK IF SCALAPACK IS ACTUALLY SUPPORTED
+  FIND_LIBRARY(MKL_SCALAPACK_LIBRARY
+    NAMES mkl_scalapack_lp64 mkl_scalapack_core
+    PATHS ${MKL_ROOT_DIR}/lib
+    ${MKL_ROOT_DIR}/lib/intel64
+    $ENV{INTEL}/mkl/lib/intel64
+    NO_DEFAULT_PATH)
+  
+  FIND_LIBRARY(MKL_BLACS_LIBRARY
+    NAMES mkl_blacs_lp64 mkl_blacs_mpich_lp64 mkl_blacs_intelmpi_lp64 mkl_blacs_openmpi_lp64
+    PATHS ${MKL_ROOT_DIR}/lib
+    ${MKL_ROOT_DIR}/lib/intel64
+    $ENV{INTEL}/mkl/lib/intel64
+    NO_DEFAULT_PATH)
+
+  IF(MKL_SCALAPACK_LIBRARY AND MKL_BLACS_LIBRARY)
+    MESSAGE(STATUS "Found MKL Scalapack support")
+    SET(MKL_SCALAPACK_FOUND TRUE)
+  ENDIF()
+
+
+  
   SET(MKL_LIBRARIES_ ${MKL_LIBRARIES})
   SET(MKL_INCLUDE_ ${MKL_INCLUDE})
-  STRING(STRIP ${MKL_LIBRARIES_} MKL_LIBRARIES)
-  STRING(STRIP ${MKL_INCLUDE_} MKL_INCLUDE)
-  
+  IF(APPLE)
+    STRING(STRIP ${MKL_LIBRARIES_} MKL_LIBRARIES)
+    STRING(STRIP ${MKL_INCLUDE_} MKL_INCLUDE)
+  ELSE()
+    STRING(STRIP $MKL_LIBRARIES_ MKL_LIBRARIES)
+    STRING(STRIP $MKL_INCLUDE_ MKL_INCLUDE)
+  ENDIF()
 
-ELSE()
+  ELSE()
   
+  SET(FC_ID ${CMAKE_Fortran_COMPILER_ID})
+  STRING(TOUPPER "${FC_ID}" FC_ID)	
+
   #ON OSX THERE IS NO SUPPORT FOR GNU_F SO THERE IS NO DISTINCTION GNU/INTEL
   IF(APPLE)
     SET(LP64_LIB       "libmkl_intel_lp64.a")
     SET(SEQUENTIAL_LIB "libmkl_sequential.a")
     SET(THREAD_LIB     "libmkl_intel_thread.a")
-    SET(CORE_LIB       "libmkl_core.a")  
+    SET(CORE_LIB       "libmkl_core.a")
+    SET(PTHREAD_LIB    "libpthread.a")
+    SET(MATH_LIB       "libm.a")
+    SET(DL_LIB         "libdl.a")
   ELSE()
-    IF(${CMAKE_Fortran_COMPILER_ID} MATCHES GNU)
+    IF(${FC_ID} MATCHES GNU)
       SET(LP64_LIB       "libmkl_gf_lp64.a")
       SET(SEQUENTIAL_LIB "libmkl_sequential.a")
       SET(THREAD_LIB     "libmkl_gnu_thread.a")
-      SET(CORE_LIB       "libmkl_core.a")  
-    ELSEIF(${CMAKE_Fortran_COMPILER_ID} MATCHES INTEL)
+      SET(CORE_LIB       "libmkl_core.a")
+      SET(PTHREAD_LIB    "libpthread.a")
+      SET(MATH_LIB       "libm.a")
+      SET(DL_LIB         "libdl.a")
+    ELSEIF(${FC_ID} MATCHES INTEL)
       SET(LP64_LIB       "libmkl_intel_lp64.a")
       SET(SEQUENTIAL_LIB "libmkl_sequential.a")
       SET(THREAD_LIB     "libmkl_intel_thread.a")
       SET(CORE_LIB       "libmkl_core.a")
+      SET(PTHREAD_LIB    "libpthread.a")
+      SET(MATH_LIB       "libm.a")
+      SET(DL_LIB         "libdl.a")
     ELSE()
       MESSAGE(FATAL_ERROR "${CMAKE_Fortran_COMPILER_ID} not supported in MKL")
     ENDIF()
   ENDIF()
+
 
   FIND_LIBRARY(MKL_LP64_LIBRARY
     NAMES ${LP64_LIB}
@@ -128,13 +180,19 @@ ELSE()
     ${MKL_ROOT_DIR}/lib/intel64
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
-  
+  IF(NOT MKL_LP64_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${LP64_LIB} in MKL/ OS")
+  ENDIF()
+    
   FIND_LIBRARY(MKL_SEQUENTIAL_LIBRARY
     NAMES ${SEQUENTIAL_LIB}
     PATHS ${MKL_ROOT_DIR}/lib
     ${MKL_ROOT_DIR}/lib/intel64
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
+  IF(NOT MKL_SEQUENTIAL_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${SEQUENTIAL_LIB} in MKL/ OS")
+  ENDIF()
   
   FIND_LIBRARY(MKL_THREAD_LIBRARY
     NAMES ${THREAD_LIB}
@@ -142,6 +200,9 @@ ELSE()
     ${MKL_ROOT_DIR}/lib/intel64
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
+  IF(NOT MKL_THREAD_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${THREAD_LIB} in MKL/ OS")
+  ENDIF()
   
   FIND_LIBRARY(MKL_CORE_LIBRARY
     NAMES ${CORE_LIB}
@@ -149,9 +210,62 @@ ELSE()
     ${MKL_ROOT_DIR}/lib/intel64
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
+  IF(NOT MKL_CORE_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${CORE_LIB} in MKL/ OS")
+  ENDIF()
   
+  FIND_LIBRARY(PTHREAD_LIBRARY
+    NAMES ${PTHREAD_LIB}
+    NO_DEFAULT_PATH)
+  IF(NOT PTHREAD_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${PTHREAD_LIB} in OS")
+  ENDIF()
+  
+  FIND_LIBRARY(MATH_LIBRARY
+    NAMES ${MATH_LIB}
+    NO_DEFAULT_PATH)
+  IF(NOT MATH_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${MATH_LIB} in OS")
+  ENDIF()
+  
+  FIND_LIBRARY(DL_LIBRARY
+    NAMES ${DL_LIB}
+    NO_DEFAULT_PATH)
+  IF(NOT DL_LIBRARY)
+    MESSAGE(FATAL_ERROR "Can not find ${DL_LIB} in OS")
+  ENDIF()
+
+
+  # #TRY TO FIND SCALAPACK SUPPORT
+  FIND_LIBRARY(MKL_SCALAPACK_LIBRARY
+    NAMES mkl_scalapack_lp64 mkl_scalapack_core
+    PATHS ${MKL_ROOT_DIR}/lib
+    ${MKL_ROOT_DIR}/lib/intel64
+    $ENV{INTEL}/mkl/lib/intel64
+    NO_DEFAULT_PATH)
+  
+  FIND_LIBRARY(MKL_BLACS_LIBRARY
+    NAMES mkl_blacs_lp64 mkl_blacs_mpich_lp64 mkl_blacs_intelmpi_lp64 mkl_blacs_openmpi_lp64
+    PATHS ${MKL_ROOT_DIR}/lib
+    ${MKL_ROOT_DIR}/lib/intel64
+    $ENV{INTEL}/mkl/lib/intel64
+    NO_DEFAULT_PATH)
+
+  IF(MKL_SCALAPACK_LIBRARY AND MKL_BLACS_LIBRARY)
+    MESSAGE(STATUS "Found MKL Scalapack support")
+    SET(MKL_SCALAPACK_FOUND TRUE)
+  ENDIF()
+
   SET(MKL_INCLUDE ${MKL_INCLUDE_DIR})
-  SET(MKL_LIBRARIES "${MKL_LP64_LIBRARY} ${MKL_SEQUENTIAL_LIBRARY} ${MKL_THREAD_LIBRARY} ${MKL_CORE_LIBRARY}")
+  IF(MKL_SCALAPACK_FOUND)
+    SET(MKL_LIBRARIES "${MKL_LP64_LIBRARY} ${MKL_SEQUENTIAL_LIBRARY} 
+${MKL_THREAD_LIBRARY} ${MKL_CORE_LIBRARY} ${MKL_SCALAPACK_LIBRARY} ${MKL_BLACS_LIBRARY} 
+${PTHREAD_LIBRARY} ${MATH_LIBRARY} ${DL_LIBRARY}")
+  ELSE()
+    SET(MKL_LIBRARIES "${MKL_LP64_LIBRARY} ${MKL_SEQUENTIAL_LIBRARY} 
+${MKL_THREAD_LIBRARY} ${MKL_CORE_LIBRARY} ${PTHREAD_LIBRARY} ${MATH_LIBRARY} ${DL_LIBRARY}")
+  ENDIF()
+  
   
 ENDIF()
 

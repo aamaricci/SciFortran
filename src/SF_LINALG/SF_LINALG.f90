@@ -2,23 +2,19 @@ module SF_LINALG
   implicit none
   private
 
-
-
   !COMMONLY USED PARAMETERS
   complex(8),parameter :: zero=(0.d0,0.d0)
   complex(8),parameter :: xi=(0.d0,1.d0)
   complex(8),parameter :: one=(1.d0,0.d0)
-
-
 
   !>EIGENVALUE PROBLEM:
   !Eigenvalue/-vector problem for general matrices:
   public :: eig
   !Eigenvalue/-vector problem for real symmetric/complex hermitian matrices:
   public :: eigh
-  !#ifdef _SCALAPACK
+#ifdef _SCALAPACK
   public :: p_eigh
-  !#endif
+#endif
   !Eigenvalue/-vector problem for real symmetric/complex hermitian matrices using Jacobi method (unsorted out):
   public :: eigh_jacobi
   !Eigenvalues for general matrices:
@@ -38,11 +34,12 @@ module SF_LINALG
      module procedure zeigh_simple
      module procedure deigh_tridiag
   end interface eigh
+#ifdef _SCALAPACK
   interface p_eigh
      module procedure p_deigh_simple
      module procedure p_zeigh_simple
   end interface p_eigh
-
+#endif
   !
   interface eigh_jacobi
      module procedure d_jacobi
@@ -334,9 +331,9 @@ contains
   include "linalg_eigh_jacobi.f90"
   include "linalg_eigvals.f90"
   include "linalg_eigvalsh.f90"
-  !#idef _SCALAPACK
+#ifdef _SCALAPACK
   include "linalg_p_eigh.f90"
-  !#endif
+#endif
 
   !-------------------------------------------------------------------------------------------
   !PURPOSE: compute singular values s_i of a real/complex m x n matrix A
