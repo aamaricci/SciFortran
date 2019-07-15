@@ -107,6 +107,27 @@ end function zdiag
 
 
 
+!-------------------------------------------------------------------------------------------
+!PURPOSE:  return the diagonal of a matrix
+!-------------------------------------------------------------------------------------------
+function d_diagonal(A) result(dd)
+  real(8),intent(in)           :: A(:,:)
+  real(8),dimension(size(A,1)) :: dd
+  integer                      :: i
+  do i = 1,size(A,1)
+     dd(i) = A(i,i)
+  end do
+end function d_diagonal
+
+function z_diagonal(A) result(dd)
+  complex(8),intent(in)           :: A(:,:)
+  complex(8),dimension(size(A,1)) :: dd
+  integer                         :: i
+  do i = 1,size(A,1)
+     dd(i) = A(i,i)
+  end do
+end function z_diagonal
+
 
 
 

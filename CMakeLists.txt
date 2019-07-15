@@ -3,7 +3,7 @@
 ##################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
-SET(VERSION 4.6.0)
+SET(VERSION 4.6.1)
 
 
 MESSAGE(STATUS "OS: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
@@ -190,19 +190,23 @@ SET(USER_HOME $ENV{HOME})
 SET(USER $ENV{USER})
 
 #make sure FC_PLAT is lower case
-IF(GIT_BRANCH MATCHES "master")
-  STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_PLAT)
-ELSE()
-  SET(FC_PLAT "${GIT_BRANCH}")
-ENDIF()
-
-
+SET(LABEL "" CACHE STRING "Installation label")
 IF("${CMAKE_BUILD_TYPE}" MATCHES "DEBUG")
-  SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}_${CMAKE_BUILD_TYPE}" CACHE PATH "Prefix prepended to install directories")
-ELSE()
-  SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
+  SET(LABEL "_${CMAKE_BUILD_TYPE}" CACHE PATH "Installation label" FORCE)
 ENDIF()
-SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
+MESSAGE(STATUS ${LABEL})
+
+IF(GIT_BRANCH MATCHES "master")
+  STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}${LABEL}" FC_PLAT)
+ELSE()
+  SET(FC_PLAT "${CMAKE_Fortran_COMPILER_ID}${LABEL}_${GIT_BRANCH}" FORCE)
+ENDIF()
+
+
+SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix of the main installation directory" FORCE)
+SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix of the main installation directory" FORCE)
+
+
 
 
 # Define the library name
@@ -384,11 +388,8 @@ SET(PERMISSION_777
 INCLUDE(${CMAKE_MODULE_PATH}/PostBuildScifor.cmake)
 
 #Build the scifor module for environment modules
-IF("${CMAKE_BUILD_TYPE}" MATCHES "DEBUG")
-  SET(TMP_MODULE_NAME "${FC_PLAT}_${CMAKE_BUILD_TYPE}" CACHE PATH "Prefix prepended to install directories")
-ELSE()
-  SET(TMP_MODULE_NAME "${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
-ENDIF()
+FILE(REMOVE_RECURSE ${SF_TMP_ETC}/modules/)
+SET(TMP_MODULE_NAME "${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
 SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${TMP_MODULE_NAME})
 BUILD_ENV_MODULE(${TMP_ENV_MODULE_FILE})
 

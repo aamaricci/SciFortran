@@ -311,7 +311,7 @@ C     OF OUTPUT ARE CONTROLLED BY IPRINT.
 C     ---------------------------------------------------------------------
 C
       DOUBLE PRECISION X(N),G(N),F,GNORM,STP,BETAFR,BETAPR,BETA
-      INTEGER IPRINT(2),ITER,NFUN,LP,MP,N,NDES,IM
+      INTEGER IPRINT(2),ITER,NFUN,LP,MP,N,NDES,IM,I
       LOGICAL FINISH
 C      COMMON /CGDD/MP,LP
 C

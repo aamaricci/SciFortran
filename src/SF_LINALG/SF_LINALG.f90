@@ -83,6 +83,9 @@ module SF_LINALG
   !>MATRIX INVERSION:
   !Matrix inversion for real/complex matrices:
   public :: inv
+#ifdef _SCALAPACK
+  public :: p_inv
+#endif
   !Matrix inversion for real/complex symmetric matrices:
   public :: inv_sym
   ! matrix inversion for complex hermitian matrices:
@@ -96,6 +99,12 @@ module SF_LINALG
      module procedure dinv
      module procedure zinv
   end interface inv
+#ifdef _SCALAPACK
+  interface p_inv
+     module procedure p_dinv
+     module procedure p_zinv
+  end interface p_inv
+#endif
   !
   interface inv_sym
      module procedure dinv_sym
@@ -206,6 +215,8 @@ module SF_LINALG
   public :: zeros, ones
   !construction of square matrices from the diagonal elements:
   public :: diag
+  !get the diagonal from a matrix:
+  public :: diagonal
   !trace of real/complex matrices:
   public :: trace
 
@@ -223,6 +234,11 @@ module SF_LINALG
      module procedure ddiag
      module procedure zdiag
   end interface diag
+  !
+  interface diagonal
+     module procedure d_diagonal
+     module procedure z_diagonal
+  end interface diagonal
   !
   interface trace
      module procedure dtrace
@@ -358,7 +374,9 @@ contains
   include "linalg_inv_her.f90"
   include "linalg_inv_triang.f90"
   include "linalg_inv_gj.f90"
-
+#ifdef _SCALAPACK
+  include "linalg_p_inv.f90"
+#endif
 
   !+-----------------------------------------------------------------+
   !PROGRAM  : SOLVE LINEAR SYSTEM using LAPACK algorithms
