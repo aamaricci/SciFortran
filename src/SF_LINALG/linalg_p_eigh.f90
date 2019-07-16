@@ -1,14 +1,12 @@
 
-subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
+subroutine p_deigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
   real(8),dimension(:,:),intent(inout)       :: A ! M v = E v/v(i,j) = ith component of jth vec.
   real(8),dimension(size(A,2)),intent(inout) :: W ! eigenvalues
   integer                                    :: Nblock
-  integer,optional                           :: blacs_end
   integer                                    :: Nb
   character(len=*),optional                  :: method
   character(len=1),optional                  :: jobz,uplo
   character(len=1)                           :: jobz_,uplo_,range
-  integer                                    :: blacs_end_
   character(len=20)                          :: method_
   real(8),optional                           :: vl,vu,tol
   integer,optional                           :: il,iu
@@ -30,13 +28,10 @@ subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   real(8),external                           :: dlamch      
   !
   real(8),dimension(:,:),allocatable         :: A_loc,Z_loc
-  integer                                    :: p_size
-  integer                                    :: p_Nx,p_Ny
-  integer                                    :: p_context
-  integer                                    :: rank,rankX,rankY
+  integer                                    :: rankX,rankY
   integer                                    :: Nrow,Ncol
   integer                                    :: sendR,sendC
-  integer                                    :: myi,myj,unit,irank
+  integer                                    :: myi,myj,unit
   integer,dimension(9)                       :: descA,descAloc,descZloc
   real(8)                                    :: t_stop,t_start
   logical                                    :: master
@@ -49,7 +44,6 @@ subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   iL_  = 1       ;if(present(iL))iL_=iL
   iU_  = 1       ;if(present(iU))iU_=iU
   tol_ = dlamch('s')     ;if(present(tol))tol_=tol
-  blacs_end_=0   ;if(present(blacs_end))blacs_end_=blacs_end
   !
   W=0d0
   !
@@ -65,20 +59,9 @@ subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   !
   !INIT SCALAPACK TREATMENT:
   !
-  !< Initialize BLACS processor grid (like MPI)
-  call blacs_setup(rank,p_size)  ![id, size]
-  master = (rank==0)
-  do i=1,int( sqrt( dble(p_size) ) + 1 )
-     if(mod(p_size,i)==0) p_Nx = i
-  end do
-  p_Ny = p_size/p_Nx
-  !
-  !< Init context with p_Nx,p_Ny procs
-  call sl_init(p_context,p_Nx,p_Ny)
-  !
   !< Get coordinate of the processes
   call blacs_gridinfo( p_context, p_Nx, p_Ny, rankX, rankY)
-  !
+  master = (rankX==0).AND.(rankY==0)
   if(rankX<0.AND.rankY<0)goto 100
   !
   Nb = Nblock
@@ -87,10 +70,10 @@ subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   Qcols = numroc(Ns, Nb, rankY, 0, p_Ny)
   !
   if(master)then
-     unit = 513! + rank
+     unit = free_unit()
      open(unit,file="p_eigh.info")
      write(unit,"(A20,I8,A5,I8)")"Grid=",p_Nx,"x",p_Ny
-     write(unit,"(A20,I2,I8,A5,I8)")"Qrows x Qcols=",rank,Qrows,"x",Qcols
+     write(unit,"(A20,I8,A5,I8)")"Qrows x Qcols=",Qrows,"x",Qcols
   endif
   !
   !< allocate local distributed A
@@ -181,7 +164,7 @@ subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
            if(rankX==SendR .AND. rankY==SendC)then
               call dgesd2d(p_context,Nrow,Ncol,Z_loc(myi,myj),Qrows,0,0)
            endif
-           if(rank==0)then
+           if(master)then
               call dgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
            endif
         enddo
@@ -189,11 +172,8 @@ subroutine p_deigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
      if(master)call cpu_time(t_stop)
      if(master)write(unit,"(A20,F21.12)")"Time gather Z:",t_stop-t_start
   endif
-  !
   if(master)close(unit)
-  call blacs_gridexit(p_context)
 100 continue
-  call blacs_exit(blacs_end_)
   return
   !
 end subroutine p_deigh_simple
@@ -201,17 +181,15 @@ end subroutine p_deigh_simple
 
 
 
-subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
+subroutine p_zeigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
   complex(8),dimension(:,:),intent(inout)    :: A ! M v = E v/v(i,j) = ith component of jth vec.
   real(8),dimension(size(A,2)),intent(inout) :: W ! eigenvalues
   integer                                    :: Nblock
-  integer,optional                           :: blacs_end
   integer                                    :: Nb
   character(len=*),optional                  :: method
   character(len=1),optional                  :: jobz,uplo
   character(len=1)                           :: jobz_,uplo_,range
   character(len=20)                          :: method_
-  integer                                    :: blacs_end_
   real(8),optional                           :: vl,vu,tol
   integer,optional                           :: il,iu
   real(8)                                    :: vL_,vU_,tol_
@@ -241,10 +219,10 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   integer                                    :: p_size
   integer                                    :: p_Nx,p_Ny
   integer                                    :: p_context
-  integer                                    :: rank,rankX,rankY
+  integer                                    :: rankX,rankY
   integer                                    :: Nrow,Ncol
   integer                                    :: sendR,sendC
-  integer                                    :: myi,myj,unit,irank
+  integer                                    :: myi,myj,unit
   integer,dimension(9)                       :: descA,descAloc,descZloc
   real(8)                                    :: t_stop,t_start
   logical                                    :: master
@@ -258,7 +236,6 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   iL_  = 1       ;if(present(iL))iL_=iL
   iU_  = 1       ;if(present(iU))iU_=iU
   tol_ = dlamch('s')     ;if(present(tol))tol_=tol
-  blacs_end_=0   ;if(present(blacs_end))blacs_end_=blacs_end
   !
   !>DEBUG
   if(method_=="zheev" .OR. method_=="zheevd") then
@@ -283,20 +260,9 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   if(any(shape(A)/=[Ns,Ns]))stop "my_eighD error: A has illegal shape"
   !
   !INIT SCALAPACK TREATMENT:
-  !< Initialize BLACS processor grid (like MPI)
-  call blacs_setup(rank,p_size)  ![id, size]
-  master = (rank==0)
-  do i=1,int( sqrt( dble(p_size) ) + 1 )
-     if(mod(p_size,i)==0) p_Nx = i
-  end do
-  p_Ny = p_size/p_Nx
-  !
-  !< Init context with p_Nx,p_Ny procs
-  call sl_init(p_context,p_Nx,p_Ny)
-  !
   !< Get coordinate of the processes
   call blacs_gridinfo( p_context, p_Nx, p_Ny, rankX, rankY)
-  !
+  master = (rankX==0).AND.(rankY==0)
   if(rankX<0.AND.rankY<0)goto 200
   !
   Nb = Nblock
@@ -308,10 +274,10 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   call descinit( descAloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
   !
   if(master)then
-     unit = 513
+     unit = free_unit()
      open(unit,file="p_eigh.info")
      write(unit,"(A20,I8,A5,I8)")"Grid=",p_Nx,"x",p_Ny
-     write(unit,"(A20,I2,I8,A5,I8)")"Qrows x Qcols=",rank,Qrows,"x",Qcols
+     write(unit,"(A20,I8,A5,I8)")"Qrows x Qcols=",Qrows,"x",Qcols
   endif
   !
   !< allocate local distributed A
@@ -359,8 +325,7 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
      !    call PZHEEV(jobz_,uplo_,&
      !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
      !         work,lwork,rwork,lrwork,info)
-     !
-     !>>>ACTHUNG<< BUGGED DO NOT USE: --> zheevr, w UPLO='L'
+     !    ! >>>ACTHUNG<< BUGGED DO NOT USE: --> zheevr, w UPLO='L'
      ! case ("zheevd")
      !    call PZHEEVD('V',uplo_,&
      !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
@@ -372,7 +337,6 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
      !    call PZHEEVD('V',uplo_,&
      !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
      !         work,lwork,rwork,lrwork,iwork,liwork,info)
-     !
   case ("zheevx")
      allocate(Ifail(Ns))
      allocate(Iclustr(2*p_Nx*p_Ny))
@@ -404,7 +368,7 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
            if(rankX==SendR .AND. rankY==SendC)then
               call zgesd2d(p_context,Nrow,Ncol,Z_loc(myi,myj),Qrows,0,0)
            endif
-           if(rank==0)then
+           if(master)then
               call zgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
            endif
         enddo
@@ -414,9 +378,7 @@ subroutine p_zeigh_simple(A,W,Nblock,blacs_end,method,jobz,uplo,vl,vu,il,iu,tol)
   endif
   !
   if(master)close(unit)
-  call blacs_gridexit(p_context)
 200 continue
-  call blacs_exit(blacs_end_)
   return
 end subroutine p_zeigh_simple
 

@@ -1,4 +1,5 @@
 module SF_LINALG
+  USE SF_BLACS
   implicit none
   private
 
@@ -219,7 +220,6 @@ module SF_LINALG
   public :: diagonal
   !trace of real/complex matrices:
   public :: trace
-
   !
   interface det
      module procedure ddet
@@ -305,6 +305,34 @@ module SF_LINALG
 
 
 
+  !>BLAS INTERFACE
+  !Matrix-matrix product
+  public :: mat_product
+  public :: operator(.x.)
+#ifdef _SCALAPACK
+  public :: p_mat_product
+  public :: operator(.Px.)
+#endif
+  !
+  interface mat_product
+     module procedure :: d_matmul
+     module procedure :: z_matmul
+  end interface mat_product
+  interface operator (.x.)
+     module procedure :: d_matmul_
+     module procedure :: z_matmul_
+  end interface operator (.x.)
+#ifdef _SCALAPACK
+  interface p_mat_product
+     module procedure :: p_d_matmul
+     module procedure :: p_z_matmul
+  end interface p_mat_product
+  interface operator (.Px.)
+     module procedure :: p_d_matmul_f
+     module procedure :: p_z_matmul_f
+  end interface operator (.Px.)
+#endif  
+
 
 
   !NOT PUBLIC:
@@ -388,7 +416,13 @@ contains
 
 
 
-
+  !-------------------------------------------------------------------------------------------
+  !PURPOSE: wrap BLAS 1,2,3 operations
+  !-------------------------------------------------------------------------------------------
+  include "linalg_blas.f90"
+#ifdef _SCALAPACK
+  include "linalg_p_blas.f90"
+#endif
 
   !+-----------------------------------------------------------------+
   !PROGRAM  : BUILD,CHECK & INVERT TRIDIAGONAL MATRICES
@@ -416,6 +450,8 @@ contains
        eye_block(iblock,:,:) = zeye(N)
     enddo
   end function zeye_tridiag
+
+
 
 
 
@@ -531,7 +567,35 @@ contains
 
 
 
+  function shift_dw(x_in) result(x)
+    integer, intent(in) :: x_in
+    integer             :: x
+    x=x_in
+    x = ior(x,rshift(x, 1))
+    x = ior(x,rshift(x, 2))
+    x = ior(x,rshift(x, 4))
+    x = ior(x,rshift(x, 8))
+    x = ior(x,rshift(x, 16))
+    x = ior(x,rshift(x, 32))
+    x = x + 1
+    x = x/2
+  end function shift_dw
 
+
+
+  function free_unit(n) result(unit_)
+    integer,optional :: n
+    integer          :: unit_,ios
+    logical          :: opened
+    unit_=100
+    do 
+       unit_=unit_+1
+       INQUIRE(unit=unit_,OPENED=opened,iostat=ios)
+       if(.not.opened.AND.ios==0)exit 
+       if(unit_>900) stop "ERROR free_unit: no unit free smaller than 900. Possible BUG"
+    enddo
+    if(present(n))n=unit_
+  end function free_unit
 
 
 end module SF_LINALG

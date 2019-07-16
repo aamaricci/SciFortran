@@ -137,8 +137,7 @@ MODULE SF_MPI
   public :: Get_Rank_MPI
   public :: Get_Master_MPI
   public :: Get_Last_MPI
-  public :: Get_Wtime_MPI
-  public :: Get_Wtick_MPI
+  public :: cpu_time_MPI
   public :: Error_MPI
   !
   public :: Bcast_MPI
@@ -204,22 +203,26 @@ contains
   !****************************************
   !              MPI TOOLS
   !****************************************
-  function Get_size_MPI(comm) result(size)
-    integer :: comm
-    integer :: size
-    if(comm/=Mpi_Comm_Null)then
-       call MPI_Comm_size(comm,size,ierr)
+  function get_size_MPI(comm) result(size)
+    integer,optional :: comm
+    integer          :: comm_
+    integer          :: size
+    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm    
+    if(comm_/=Mpi_Comm_Null)then
+       call MPI_Comm_size(comm_,size,ierr)
        call Error_MPI(ierr,"Get_Size_MPI")
     else
        return
     endif
-  end function Get_size_MPI
+  end function get_size_MPI
 
   function Get_rank_MPI(comm) result(rank)
-    integer :: comm
-    integer :: rank
-    if(comm/=Mpi_Comm_Null)then
-       call MPI_Comm_rank(comm,rank,ierr)
+    integer,optional :: comm
+    integer          :: comm_
+    integer          :: rank
+    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+    if(comm_/=Mpi_Comm_Null)then
+       call MPI_Comm_rank(comm_,rank,ierr)
        call Error_MPI(ierr,"Get_Rank_MPI")
     else
        return
@@ -227,12 +230,13 @@ contains
   end function Get_rank_MPI
 
   function Get_master_MPI(comm) result(master)
-    integer :: comm
-    integer :: size
-    integer :: rank
-    logical :: master
-    if(comm/=Mpi_Comm_Null)then    
-       call MPI_Comm_rank(comm,rank,ierr)
+    integer,optional :: comm
+    integer          :: comm_
+    integer          :: rank
+    logical          :: master
+    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+    if(comm_/=Mpi_Comm_Null)then    
+       call MPI_Comm_rank(comm_,rank,ierr)
        call Error_MPI(ierr,"Get_Master_MPI")
        master=.false.
        if(rank==0)master=.true.
@@ -242,13 +246,15 @@ contains
   end function Get_master_MPI
 
   function Get_last_MPI(comm) result(last)
-    integer :: comm
-    integer :: size
-    integer :: rank
-    logical :: last
-    if(comm/=Mpi_Comm_Null)then
-       call MPI_Comm_rank(comm,rank,ierr)
-       call MPI_Comm_size(comm,size,ierr)    
+    integer,optional :: comm
+    integer          :: comm_
+    integer          :: size
+    integer          :: rank
+    logical          :: last
+    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+    if(comm_/=Mpi_Comm_Null)then
+       call MPI_Comm_rank(comm_,rank,ierr)
+       call MPI_Comm_size(comm_,size,ierr)    
        last=.false.
        if(rank==size-1)last=.true.
     else
@@ -258,18 +264,10 @@ contains
 
 
   !returns an elapsed time on the calling processor
-  function Get_Wtime_MPI() result(time)
+  function cpu_time_MPI() result(time)
     real(8) :: time
     time = MPI_WTIME()
-  end function Get_Wtime_MPI
-
-
-  !returns the resolution of MPI_Wtime
-  function Get_Wtick_MPI() result(tick)
-    real(8) :: tick
-    tick = MPI_WTICK()
-  end function Get_Wtick_MPI
-
+  end function Cpu_Time_MPI
 
 
   function Get_Processor_MPI() result(workstation)

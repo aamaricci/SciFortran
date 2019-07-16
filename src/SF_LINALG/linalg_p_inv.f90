@@ -1,9 +1,7 @@
-subroutine p_Dinv(A,Nblock,blacs_end)
+subroutine p_Dinv(A,Nblock)
   real(8),dimension(:,:),intent(inout)       :: A
   integer                                    :: Nblock
-  integer,optional                           :: blacs_end
   integer                                    :: Nb
-  integer                                    :: blacs_end_
   integer                                    :: Ns
   integer                                    :: Qrows,Qcols
   integer                                    :: i,j,lda,info
@@ -19,39 +17,23 @@ subroutine p_Dinv(A,Nblock,blacs_end)
   integer,external                           :: numroc,indxG2L,indxG2P,indxL2G
   real(8),external                           :: dlamch,Pilaenvx
   !
-  real(8),dimension(:,:),allocatable         :: A_loc
-  integer                                    :: p_size
-  integer                                    :: p_Nx,p_Ny
-  integer                                    :: p_context
-  integer                                    :: rank,rankX,rankY
+  real(8),dimension(:,:),allocatable         :: A_loc,Z_loc
+  integer                                    :: rankX,rankY
   integer                                    :: sendR,sendC,Nipiv
   integer                                    :: Nrow,Ncol
-  integer                                    :: myi,myj,unit,irank
+  integer                                    :: myi,myj,unit
   integer,dimension(9)                       :: descA,descAloc,descZloc
   real(8)                                    :: t_stop,t_start
   logical                                    :: master
-  !
-  blacs_end_=0   ;if(present(blacs_end))blacs_end_=blacs_end
   !
   !
   Ns    = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "my_eighD error: A has illegal shape"
   !
   !INIT SCALAPACK TREATMENT:
-  !
-  !< Initialize BLACS processor grid (like MPI)
-  call blacs_setup(rank,p_size)  ![id, size]
-  master = (rank==0)
-  do i=1,int( sqrt( dble(p_size) ) + 1 )
-     if(mod(p_size,i)==0) p_Nx = i
-  end do
-  p_Ny = p_size/p_Nx
-  !
-  !< Init context with p_Nx,p_Ny procs
-  call sl_init(p_context,p_Nx,p_Ny)
-  !
   !< Get coordinate of the processes
   call blacs_gridinfo( p_context, p_Nx, p_Ny, rankX, rankY)
+  master = (rankX==0).AND.(rankY==0)
   !
   if(rankX<0.AND.rankY<0)goto 100
   !
@@ -61,10 +43,10 @@ subroutine p_Dinv(A,Nblock,blacs_end)
   Qcols = numroc(Ns, Nb, rankY, 0, p_Ny)
   !
   if(master)then
-     unit = 519
+     unit = free_unit()
      open(unit,file="p_inv.info")
      write(unit,"(A20,I8,A5,I8)")"Grid=",p_Nx,"x",p_Ny
-     write(unit,"(A20,I2,I8,A5,I8)")"Qrows x Qcols=",rank,Qrows,"x",Qcols
+     write(unit,"(A20,I8,A5,I8)")"Qrows x Qcols=",Qrows,"x",Qcols
   endif
   !
   !< allocate local distributed A
@@ -84,7 +66,12 @@ subroutine p_Dinv(A,Nblock,blacs_end)
   if(master)call cpu_time(t_stop)
   if(master)write(unit,"(A20,F21.12)")"Time Distribute A:",t_stop-t_start
   !
+  !< Allocate distributed eigenvector matrix
+  allocate(Z_loc(Qrows,Qcols));Z_loc=0d0
+  call descinit( descZloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
+  !
   if(master)call cpu_time(t_start)
+  !
   allocate(Ipiv(Qrows*Nb))
   call PDGETRF(Ns, Ns, A_loc, 1, 1, descAloc, IPIV, INFO)
   if(info /= 0) then
@@ -113,6 +100,7 @@ subroutine p_Dinv(A,Nblock,blacs_end)
   if(master)call cpu_time(t_stop)
   if(master)write(unit,"(A20,F21.12)")"Time inv A_loc:",t_stop-t_start
   !
+  ! call pdlaprnt( Ns, Ns, Z_loc, 1, 1, descZloc, 0, 0, 'Z', 300, WORK )
   A=0d0
   if(master)call cpu_time(t_start)
   do i=1,Ns,Nb
@@ -123,30 +111,26 @@ subroutine p_Dinv(A,Nblock,blacs_end)
         if(rankX==SendR .AND. rankY==SendC)then
            call dgesd2d(p_context,Nrow,Ncol,A_loc(myi,myj),Qrows,0,0)
         endif
-        if(rank==0)then
+        if(master)then
            call dgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
         endif
      enddo
   enddo
   if(master)call cpu_time(t_stop)
   if(master)write(unit,"(A20,F21.12)")"Time gather A:",t_stop-t_start
-  !
   if(master)close(unit)
-  call blacs_gridexit(p_context)
+  !
 100 continue
-  call blacs_exit(blacs_end_)
   return
   !
 end subroutine p_Dinv
 
 
 
-subroutine p_Zinv(A,Nblock,blacs_end)
+subroutine p_Zinv(A,Nblock)
   complex(8),dimension(:,:),intent(inout) :: A
   integer                                 :: Nblock
-  integer,optional                        :: blacs_end
   integer                                 :: Nb
-  integer                                 :: blacs_end_
   integer                                 :: Ns
   integer                                 :: Qrows,Qcols
   integer                                 :: i,j,lda,info
@@ -161,39 +145,23 @@ subroutine p_Zinv(A,Nblock,blacs_end)
   !
   integer,external                        :: numroc,indxG2L,indxG2P,indxL2G
   !
-  complex(8),dimension(:,:),allocatable   :: A_loc
-  integer                                 :: p_size
-  integer                                 :: p_Nx,p_Ny
-  integer                                 :: p_context
-  integer                                 :: rank,rankX,rankY
+  complex(8),dimension(:,:),allocatable   :: A_loc,Z_loc
+  integer                                 :: rankX,rankY
   integer                                 :: sendR,sendC,Nipiv
   integer                                 :: Nrow,Ncol
-  integer                                 :: myi,myj,unit,irank
+  integer                                 :: myi,myj,unit
   integer,dimension(9)                    :: descA,descAloc,descZloc
   real(8)                                 :: t_stop,t_start
   logical                                 :: master
-  !
-  blacs_end_=0   ;if(present(blacs_end))blacs_end_=blacs_end
   !
   !
   Ns    = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "my_eighD error: A has illegal shape"
   !
   !INIT SCALAPACK TREATMENT:
-  !
-  !< Initialize BLACS processor grid (like MPI)
-  call blacs_setup(rank,p_size)  ![id, size]
-  master = (rank==0)
-  do i=1,int( sqrt( dble(p_size) ) + 1 )
-     if(mod(p_size,i)==0) p_Nx = i
-  end do
-  p_Ny = p_size/p_Nx
-  !
-  !< Init context with p_Nx,p_Ny procs
-  call sl_init(p_context,p_Nx,p_Ny)
-  !
   !< Get coordinate of the processes
   call blacs_gridinfo( p_context, p_Nx, p_Ny, rankX, rankY)
+  master = (rankX==0).AND.(rankY==0)
   !
   if(rankX<0.AND.rankY<0)goto 200
   !
@@ -203,10 +171,10 @@ subroutine p_Zinv(A,Nblock,blacs_end)
   Qcols = numroc(Ns, Nb, rankY, 0, p_Ny)
   !
   if(master)then
-     unit = 519
+     unit = free_unit()
      open(unit,file="p_inv.info")
      write(unit,"(A20,I8,A5,I8)")"Grid=",p_Nx,"x",p_Ny
-     write(unit,"(A20,I2,I8,A5,I8)")"Qrows x Qcols=",rank,Qrows,"x",Qcols
+     write(unit,"(A20,I8,A5,I8)")"Qrows x Qcols=",Qrows,"x",Qcols
   endif
   !
   !< allocate local distributed A
@@ -227,6 +195,9 @@ subroutine p_Zinv(A,Nblock,blacs_end)
   if(master)write(unit,"(A20,F21.12)")"Time Distribute A:",t_stop-t_start
   !
   !< Allocate distributed eigenvector matrix
+  allocate(Z_loc(Qrows,Qcols));Z_loc=0d0
+  call descinit( descZloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
+  !
   if(master)call cpu_time(t_start)
   allocate(Ipiv(Qrows*Nb))
   call PZGETRF(Ns, Ns, A_loc, 1, 1, descAloc, IPIV, INFO)
@@ -256,7 +227,7 @@ subroutine p_Zinv(A,Nblock,blacs_end)
   if(master)call cpu_time(t_stop)
   if(master)write(unit,"(A20,F21.12)")"Time inv A_loc:",t_stop-t_start
   !
-  A=zero
+  A=0d0
   if(master)call cpu_time(t_start)
   do i=1,Ns,Nb
      Nrow = Nb ; if(Ns-i<Nb-1)Nrow=Ns-i+1!;if(Nrow==0)Nrow=1
@@ -266,18 +237,15 @@ subroutine p_Zinv(A,Nblock,blacs_end)
         if(rankX==SendR .AND. rankY==SendC)then
            call zgesd2d(p_context,Nrow,Ncol,A_loc(myi,myj),Qrows,0,0)
         endif
-        if(rank==0)then
+        if(master)then
            call zgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
         endif
      enddo
   enddo
   if(master)call cpu_time(t_stop)
   if(master)write(unit,"(A20,F21.12)")"Time gather A:",t_stop-t_start
-  !
   if(master)close(unit)
-  call blacs_gridexit(p_context)
 200 continue
-  call blacs_exit(blacs_end_)
   return
   !
 end subroutine p_Zinv
