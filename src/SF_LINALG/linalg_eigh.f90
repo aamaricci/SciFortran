@@ -108,9 +108,9 @@ subroutine deigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   integer,dimension(:),allocatable           :: Isuppz,Ifail
   integer,dimension(:),allocatable           :: Iwork
   !
-  method_='dsyevr';if(present(method))method_=trim(method)
+  method_='dsyevd';if(present(method))method_=trim(method)
   jobz_='V'  ;if(present(jobz))jobz_=jobz
-  uplo_='L'  ;if(present(uplo))uplo_=uplo
+  uplo_='U'  ;if(present(uplo))uplo_=uplo
   vl_  = 1d0 ;if(present(vL))vL_=vL
   vu_  = 1d0 ;if(present(vU))vU_=vU
   iL_  = 1   ;if(present(iL))iL_=iL
@@ -196,9 +196,9 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   integer,dimension(:),allocatable           :: Ifail
   real(8),external :: dlamch
   !
-  method_='zheevr';if(present(method))method_=trim(method)
+  method_='zheevd';if(present(method))method_=trim(method)
   jobz_='V'  ;if(present(jobz))jobz_=jobz
-  uplo_='L'  ;if(present(uplo))uplo_=uplo
+  uplo_='U'  ;if(present(uplo))uplo_=uplo
   vl_  = 1d0 ;if(present(vL))vL_=vL
   vu_  = 1d0 ;if(present(vU))vU_=vU
   iL_  = 1   ;if(present(iL))iL_=iL

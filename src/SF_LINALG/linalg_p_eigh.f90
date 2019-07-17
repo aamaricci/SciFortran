@@ -1,4 +1,3 @@
-
 subroutine p_deigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
   real(8),dimension(:,:),intent(inout)       :: A ! M v = E v/v(i,j) = ith component of jth vec.
   real(8),dimension(size(A,2)),intent(inout) :: W ! eigenvalues
@@ -82,16 +81,7 @@ subroutine p_deigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
   call descinit( descAloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
   !
   !< Distribute A
-  if(master)call cpu_time(t_start)
-  do myi=1,Qrows
-     i  = indxL2G(myi,Nblock,rankX,0,p_Nx)
-     do myj=1,Qcols
-        j  = indxL2G(myj,Nblock,rankY,0,p_Ny)
-        A_loc(myi,myj) = A(i,j)
-     enddo
-  enddo
-  if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time Distribute A:",t_stop-t_start
+  call Distribute_BLACS(A,A_loc,descAloc,unit)
   !
   !< Allocate distributed eigenvector matrix
   allocate(Z_loc(Qrows,Qcols));Z_loc=0d0
@@ -151,26 +141,11 @@ subroutine p_deigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
           work,lwork,iwork,liwork,ifail,iclustr,gap,info)
   end select
   if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time diag A:",t_stop-t_start
+  if(master)write(unit,"(A20,F21.12)")"Time diag:",t_stop-t_start
   !
   if(jobz_=='V')then
      A=0d0
-     if(master)call cpu_time(t_start)
-     do i=1,Ns,Nb
-        Nrow = Nb ; if(Ns-i<Nb-1)Nrow=Ns-i+1!;if(Nrow==0)Nrow=1
-        do j=1,Ns,Nb
-           Ncol = Nb ; if(Ns-j<Nb-1)Ncol=Ns-j+1!;if(Ncol==0)Ncol=1
-           call infog2l(i,j,descA, p_Nx, p_Ny, rankX, rankY, myi, myj, SendR, SendC)
-           if(rankX==SendR .AND. rankY==SendC)then
-              call dgesd2d(p_context,Nrow,Ncol,Z_loc(myi,myj),Qrows,0,0)
-           endif
-           if(master)then
-              call dgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
-           endif
-        enddo
-     enddo
-     if(master)call cpu_time(t_stop)
-     if(master)write(unit,"(A20,F21.12)")"Time gather Z:",t_stop-t_start
+     call Gather_BLACS(Z_loc,A,descA,unit)
   endif
   if(master)close(unit)
 100 continue
@@ -212,13 +187,10 @@ subroutine p_zeigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
   integer,dimension(:),allocatable           :: Iclustr
   real(8),dimension(:),allocatable           :: Gap
   !
-  integer,external                           :: numroc,indxG2L,indxG2P,indxL2G
+  integer,external                           :: numroc,indxG2L,indxL2G
   real(8),external                           :: dlamch      
   !
   complex(8),dimension(:,:),allocatable      :: A_loc,Z_loc
-  integer                                    :: p_size
-  integer                                    :: p_Nx,p_Ny
-  integer                                    :: p_context
   integer                                    :: rankX,rankY
   integer                                    :: Nrow,Ncol
   integer                                    :: sendR,sendC
@@ -284,16 +256,7 @@ subroutine p_zeigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
   allocate(A_loc(Qrows,Qcols));A_loc=zero
   !
   !< Distribute A
-  if(master)call cpu_time(t_start)
-  do myi=1,Qrows
-     i  = indxL2G(myi,Nblock,rankX,0,p_Nx)
-     do myj=1,Qcols
-        j  = indxL2G(myj,Nblock,rankY,0,p_Ny)
-        A_loc(myi,myj) = A(i,j)
-     enddo
-  enddo
-  if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time Distribute A:",t_stop-t_start
+  call Distribute_BLACS(A,A_loc,descAloc,unit)
   !
   !< Allocate distributed eigenvector matrix
   allocate(Z_loc(Qrows,Qcols));Z_loc=zero
@@ -314,29 +277,6 @@ subroutine p_zeigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
           Ns,A_loc,1,1,descAloc,vl_,vu_,il_,iu_,mW,mZ,W,Z_loc,1,1,descZloc,&
           work, lwork, rwork, lrwork, iwork, liwork,info)
      !
-     !>>>ACTHUNG<< BUGGED DO NOT USE: --> zheevr, w UPLO='L'
-     ! case ("zheev")              !Bugged
-     !    call PZHEEV(jobz_,uplo_,&
-     !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
-     !         guess_lwork,-1,guess_lrwork,-1,info)
-     !    lwork = guess_lwork(1) ; lrwork = guess_lrwork(1)
-     !    allocate(work(lwork))
-     !    allocate(rwork(lrwork))
-     !    call PZHEEV(jobz_,uplo_,&
-     !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
-     !         work,lwork,rwork,lrwork,info)
-     !    ! >>>ACTHUNG<< BUGGED DO NOT USE: --> zheevr, w UPLO='L'
-     ! case ("zheevd")
-     !    call PZHEEVD('V',uplo_,&
-     !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
-     !         guess_lwork,-1,guess_lrwork,-1,guess_liwork,-1,INFO)
-     !    lwork = guess_lwork(1) ; lrwork= guess_lrwork(1) ; liwork= guess_liwork(1)
-     !    allocate(work(lwork))
-     !    allocate(rwork(lrwork))
-     !    allocate(iwork(liwork))
-     !    call PZHEEVD('V',uplo_,&
-     !         Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
-     !         work,lwork,rwork,lrwork,iwork,liwork,info)
   case ("zheevx")
      allocate(Ifail(Ns))
      allocate(Iclustr(2*p_Nx*p_Ny))
@@ -353,28 +293,40 @@ subroutine p_zeigh_simple(A,W,Nblock,method,jobz,uplo,vl,vu,il,iu,tol)
      call PZHEEVX(jobz_,range,uplo_,&
           Ns,A_loc,1,1,descAloc,vl_,vu_,il_,iu_,0d0,mW,mZ,W,-1d0,Z_loc,1,1,descZloc,&
           work,lwork,rwork,lrwork,iwork,liwork,ifail,iclustr,gap,info)
+     !
+     !
+     ! >>>ACTHUNG<< BUGGED DO NOT USE: --> zheevr, w UPLO='L'
+  case ("zheev")              !Bugged
+     call PZHEEV(jobz_,uplo_,&
+          Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
+          guess_lwork,-1,guess_lrwork,-1,info)
+     lwork = guess_lwork(1) ; lrwork = guess_lrwork(1)
+     allocate(work(lwork))
+     allocate(rwork(lrwork))
+     call PZHEEV(jobz_,uplo_,&
+          Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
+          work,lwork,rwork,lrwork,info)
+     !
+     !
+     ! >>>ACTHUNG<< BUGGED DO NOT USE: --> zheevr, w UPLO='L'
+  case ("zheevd")
+     call PZHEEVD('V',uplo_,&
+          Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
+          guess_lwork,-1,guess_lrwork,-1,guess_liwork,-1,INFO)
+     lwork = guess_lwork(1) ; lrwork= guess_lrwork(1) ; liwork= guess_liwork(1)
+     allocate(work(lwork))
+     allocate(rwork(lrwork))
+     allocate(iwork(liwork))
+     call PZHEEVD('V',uplo_,&
+          Ns,A_loc,1,1,descAloc,W,Z_loc,1,1,descZloc,&
+          work,lwork,rwork,lrwork,iwork,liwork,info)
   end select
   if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time diag A:",t_stop-t_start
+  if(master)write(unit,"(A20,F21.12)")"Time diag:",t_stop-t_start
   !
   if(jobz_=='V')then
      A=zero
-     if(master)call cpu_time(t_start)
-     do i=1,Ns,Nb
-        Nrow = Nb ; if(Ns-i<Nb-1)Nrow=Ns-i+1!;if(Nrow==0)Nrow=1
-        do j=1,Ns,Nb
-           Ncol = Nb ; if(Ns-j<Nb-1)Ncol=Ns-j+1!;if(Ncol==0)Ncol=1
-           call infog2l(i,j,descA, p_Nx, p_Ny, rankX, rankY, myi, myj, SendR, SendC)
-           if(rankX==SendR .AND. rankY==SendC)then
-              call zgesd2d(p_context,Nrow,Ncol,Z_loc(myi,myj),Qrows,0,0)
-           endif
-           if(master)then
-              call zgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
-           endif
-        enddo
-     enddo
-     if(master)call cpu_time(t_stop)
-     if(master)write(unit,"(A20,F21.12)")"Time gather Z:",t_stop-t_start
+     call Gather_BLACS(Z_loc,A,descA,unit)
   endif
   !
   if(master)close(unit)

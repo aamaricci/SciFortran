@@ -356,7 +356,17 @@ module SF_LINALG
   end interface
 
 
+#ifdef _SCALAPACK
+  interface Distribute_BLACS
+     module procedure :: D_Distribute_BLACS
+     module procedure :: Z_Distribute_BLACS
+  end interface Distribute_BLACS
 
+  interface Gather_BLACS
+     module procedure :: D_Gather_BLACS
+     module procedure :: Z_Gather_BLACS
+  end interface Gather_BLACS
+#endif
 
 
 
@@ -493,6 +503,10 @@ contains
   !##################################################################
   !                  OTHER COMPUTATIONAL ROUTINES
   !##################################################################
+#ifdef _SCALAPACK
+  include "linalg_blacs_aux.f90"
+#endif
+
 
   !-------------------------------------------------------------------------------------------
   !PURPOSE: Asser the correct shape of a matrix
@@ -563,8 +577,6 @@ contains
        end do
     end if
   end function arth
-
-
 
 
   function shift_dw(x_in) result(x)

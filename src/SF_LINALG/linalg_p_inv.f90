@@ -30,7 +30,6 @@ subroutine p_Dinv(A,Nblock)
   Ns    = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "my_eighD error: A has illegal shape"
   !
-  !INIT SCALAPACK TREATMENT:
   !< Get coordinate of the processes
   call blacs_gridinfo( p_context, p_Nx, p_Ny, rankX, rankY)
   master = (rankX==0).AND.(rankY==0)
@@ -55,34 +54,14 @@ subroutine p_Dinv(A,Nblock)
   call descinit( descAloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
   !
   !< Distribute A
-  if(master)call cpu_time(t_start)
-  do myi=1,Qrows
-     i  = indxL2G(myi,Nblock,rankX,0,p_Nx)
-     do myj=1,Qcols
-        j  = indxL2G(myj,Nblock,rankY,0,p_Ny)
-        A_loc(myi,myj) = A(i,j)
-     enddo
-  enddo
-  if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time Distribute A:",t_stop-t_start
-  !
-  !< Allocate distributed eigenvector matrix
-  allocate(Z_loc(Qrows,Qcols));Z_loc=0d0
-  call descinit( descZloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
+  call Distribute_BLACS(A,A_loc,descAloc,unit)
   !
   if(master)call cpu_time(t_start)
-  !
   allocate(Ipiv(Qrows*Nb))
   call PDGETRF(Ns, Ns, A_loc, 1, 1, descAloc, IPIV, INFO)
   if(info /= 0) then
      print*, "PDGETRF returned info =", info
-     if (info < 0) then
-        print*, "the", -info, "-th argument had an illegal value"
-     else
-        print*, "U(", info, ",", info, ") is zero; The factorization"
-        print*, "Factorization completed, but U is singular"
-     end if
-     stop ' Pdgetrf error'
+     stop
   end if
   !
   !
@@ -98,32 +77,19 @@ subroutine p_Dinv(A,Nblock)
   end if
   !
   if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time inv A_loc:",t_stop-t_start
+  if(master)write(unit,"(A20,F21.12)")"Time Invert :",t_stop-t_start
   !
-  ! call pdlaprnt( Ns, Ns, Z_loc, 1, 1, descZloc, 0, 0, 'Z', 300, WORK )
   A=0d0
-  if(master)call cpu_time(t_start)
-  do i=1,Ns,Nb
-     Nrow = Nb ; if(Ns-i<Nb-1)Nrow=Ns-i+1!;if(Nrow==0)Nrow=1
-     do j=1,Ns,Nb
-        Ncol = Nb ; if(Ns-j<Nb-1)Ncol=Ns-j+1!;if(Ncol==0)Ncol=1
-        call infog2l(i,j,descA, p_Nx, p_Ny, rankX, rankY, myi, myj, SendR, SendC)
-        if(rankX==SendR .AND. rankY==SendC)then
-           call dgesd2d(p_context,Nrow,Ncol,A_loc(myi,myj),Qrows,0,0)
-        endif
-        if(master)then
-           call dgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
-        endif
-     enddo
-  enddo
-  if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time gather A:",t_stop-t_start
+  call Gather_BLACS(A_loc,A,descA,unit)
+  !
   if(master)close(unit)
   !
 100 continue
   return
   !
 end subroutine p_Dinv
+
+
 
 
 
@@ -183,16 +149,7 @@ subroutine p_Zinv(A,Nblock)
   call descinit( descAloc, Ns, Ns, Nb, Nb, 0, 0, p_context, Qrows, info )
   !
   !< Distribute A
-  if(master)call cpu_time(t_start)
-  do myi=1,Qrows
-     i  = indxL2G(myi,Nblock,rankX,0,p_Nx)
-     do myj=1,Qcols
-        j  = indxL2G(myj,Nblock,rankY,0,p_Ny)
-        A_loc(myi,myj) = A(i,j)
-     enddo
-  enddo
-  if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time Distribute A:",t_stop-t_start
+  call Distribute_BLACS(A,A_loc,descAloc,unit)
   !
   !< Allocate distributed eigenvector matrix
   allocate(Z_loc(Qrows,Qcols));Z_loc=0d0
@@ -203,12 +160,6 @@ subroutine p_Zinv(A,Nblock)
   call PZGETRF(Ns, Ns, A_loc, 1, 1, descAloc, IPIV, INFO)
   if(info /= 0) then
      print*, "PZGETRF returned info =", info
-     if (info < 0) then
-        print*, "the", -info, "-th argument had an illegal value"
-     else
-        print*, "U(", info, ",", info, ") is zero; The factorization"
-        print*, "Factorization completed, but U is singular"
-     end if
      stop
   end if
   !
@@ -220,7 +171,7 @@ subroutine p_Zinv(A,Nblock)
   allocate(iwork(liwork))
   call PZGETRI( Ns, A_loc, 1, 1, descAloc, IPIV, Work, Lwork, Iwork, LIwork, INFO )
   if(info /= 0) then
-     print*, "PZGETRI ERROR. returned info =", info
+     print*, "PZGETRI returned info =", info
      stop
   end if
   !
@@ -228,22 +179,7 @@ subroutine p_Zinv(A,Nblock)
   if(master)write(unit,"(A20,F21.12)")"Time inv A_loc:",t_stop-t_start
   !
   A=0d0
-  if(master)call cpu_time(t_start)
-  do i=1,Ns,Nb
-     Nrow = Nb ; if(Ns-i<Nb-1)Nrow=Ns-i+1!;if(Nrow==0)Nrow=1
-     do j=1,Ns,Nb
-        Ncol = Nb ; if(Ns-j<Nb-1)Ncol=Ns-j+1!;if(Ncol==0)Ncol=1
-        call infog2l(i,j,descA, p_Nx, p_Ny, rankX, rankY, myi, myj, SendR, SendC)
-        if(rankX==SendR .AND. rankY==SendC)then
-           call zgesd2d(p_context,Nrow,Ncol,A_loc(myi,myj),Qrows,0,0)
-        endif
-        if(master)then
-           call zgerv2d(p_context,Nrow,Ncol,A(i,j),Ns,SendR,SendC)
-        endif
-     enddo
-  enddo
-  if(master)call cpu_time(t_stop)
-  if(master)write(unit,"(A20,F21.12)")"Time gather A:",t_stop-t_start
+  call Gather_BLACS(A_loc,A,descA,unit)
   if(master)close(unit)
 200 continue
   return
