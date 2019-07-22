@@ -17,16 +17,33 @@ SET(SCALAPACKLIB
   "$ENV{SCALAPACK_ROOT}"
   "$ENV{SCALAPACK_ROOT}/lib"
   "${CMAKE_SOURCE_DIR}/scalapack"
-  "${CMAKE_SOURCE_DIR}/scalapack/lib")
+  "${CMAKE_SOURCE_DIR}/scalapack/lib"
+  "/usr/lib"
+  "/usr/local/lib"
+  )
 
-FIND_LIBRARY(SCALAPACK_LIBRARIES
+FIND_LIBRARY(SCALAPACK_LIB
   NAMES
   "scalapack" "scalapack-pvm" "scalapack-mpi" "scalapack-mpich" 
   "scalapack-mpich2" "scalapack-openmpi" "scalapack-lam"
-  HINTS ${SCALAPACKLIB} /usr/lib /usr/local/lib)
+  HINTS ${SCALAPACKLIB} )
+
+GET_FILENAME_COMPONENT(SCALAPACK_LIB_DIR ${SCALAPACK_LIB} DIRECTORY)
+GET_FILENAME_COMPONENT(SCALAPACK_LIB_FILE ${SCALAPACK_LIB} NAME)
+STRING(REGEX REPLACE "\\.[^.]*$" "" SCALAPACK_LIB_FILE ${SCALAPACK_LIB_FILE})
+STRING(REPLACE "lib" "" SCALAPACK_LIB_FILE ${SCALAPACK_LIB_FILE})
+
+# MESSAGE(STATUS ${SCALAPACK_LIB})
+# MESSAGE(STATUS ${SCALAPACK_LIB_DIR})
+# MESSAGE(STATUS ${SCALAPACK_LIB_FILE})
 
 
-IF (SCALAPACK_LIBRARIES)
+
+
+IF (SCALAPACK_LIB)
+  #Actually search for the path to the found scalapack library. This enables to divide link arg as -L<path> -llib
+  SET(SCALAPACK_LIBRARIES "-L${SCALAPACK_LIB_DIR} -l${SCALAPACK_LIB_FILE}")
+  
   MESSAGE(STATUS "Checking if BLACS library is needed by SCALAPACK")
   # Check if separate BLACS libraries are needed
   UNSET(BLACS_EMBEDDED)

@@ -86,7 +86,6 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     MESSAGE(STATUS "Found MKL Scalapack support")
     SET(MKL_SCALAPACK_FOUND TRUE)
   ENDIF()
-  
 
   #These options can be made available to the user in the end
   SET(MKL_PARALLEL  "--parallel=no")
@@ -135,6 +134,7 @@ IF(EXISTS "${MKL_LINK_TOOL}")
   #Take care of the way mkl_link_tool handles the variable $(MKLROOT) in the linking flag. Replace it with actual
   #value of the MKLROOT
   STRING(REPLACE "$(MKLROOT)" ${MKL_ROOT_DIR} MKL_LIBRARIES ${MKL_LIBRARIES}) 
+  # STRING(REGEX REPLACE "\n$" "" MKL_LIBRARIES "${MKL_LIBRARIES}")
   
   SET(MKL_LIBRARIES_ ${MKL_LIBRARIES})
   SET(MKL_INCLUDE_ ${MKL_INCLUDE})

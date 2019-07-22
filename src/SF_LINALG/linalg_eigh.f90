@@ -126,11 +126,14 @@ subroutine deigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   if(boolV)range='V'
   if(boolI)range='I'
   !
+  if(jobz_/='V'.OR.jobz_/='N')stop "deigh_simple error: jobz has illegal value"
+  if(uplo_/='U'.OR.uplo_/='L')stop "deigh_simple error: uplo has illegal value"
+  !
   Ns = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "deigh_simple error: A has illegal shape"
   !
   select case(method_)
-  case default
+  case ("dsyevr")
      allocate(Isuppz(2*Ns))
      allocate(Z(Ns,Ns))
      call dsyevr(jobz_,range,uplo_,Ns,A,Ns,vl_,vu_,iL_,iU_,tol_,mE,E,Z,Ns,Isuppz,guess_lwork,-1,guess_liwork,-1,info)
@@ -147,7 +150,8 @@ subroutine deigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
      allocate(work(lwork))
      call dsyev(jobz_,uplo_,Ns,A,Ns,E,work,lwork,info)
      !
-  case("dsyevd")
+  case default
+     ! case("dsyevd")
      call dsyevd(jobz_,uplo_,Ns,A,Ns,E,guess_lwork,-1,guess_liwork,-1,info)
      lwork = guess_lwork(1)
      liwork= guess_liwork(1)
@@ -213,12 +217,15 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   if(boolV)range='V'
   if(boolI)range='I'
   !
+  if(jobz_/='V'.OR.jobz_/='N')stop "zeigh_simple error: jobz has illegal value"
+  if(uplo_/='U'.OR.uplo_/='L')stop "zeigh_simple error: uplo has illegal value"
+  !
   Ns = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "zeigh_simple error: A has illegal shape"
   !
   mE = Ns
   select case(method_)
-  case default
+  case ("zheevr")
      allocate(Isuppz(2*Ns))
      allocate(Z(Ns,Ns))
      call zheevr(jobz_,range,uplo_,&
@@ -247,7 +254,8 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
      allocate(work(lwork))
      call zheev(jobz_,uplo_,Ns,A,Ns,E,work,lwork,rwork,info)
      !
-  case("zheevd")
+  case default
+     ! case("zheevd")
      call zheevd(jobz_,uplo_,Ns,A,Ns,E,guess_lwork,-1,guess_lrwork,-1,guess_liwork,-1,info)
      lwork = guess_lwork(1) ; lrwork= guess_lrwork(1) ; liwork= guess_liwork(1)
      allocate(work(lwork))
