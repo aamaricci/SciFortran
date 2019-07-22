@@ -21,12 +21,11 @@
 #        target_link_libraries(<YourTarget> ${MKL_LIBRARIES})
 #    endif()
 #
-#-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lpthread -lm -ldl
-#-lmkl_gf_lp64 -lmkl_gf_thread -lmkl_core -lpthread -lm -ldl
-#
-# AUTHOR
+# AUTHORS
 # Adriano Amaricci (adriano.amaricci.AT.sissa.it)
-# essentially based on previous work of. Simplified version for SciFortran
+# Lorenzo Crippa (crippa.AT.sissa.it)
+#
+# essentially based on previous work of: 
 # Joan MASSICH (joan.massich-vall.AT.inria.fr).
 # Alexandre GRAMFORT (Alexandre.Gramfort.AT.inria.fr)
 # Théodore PAPADOPOULO (papadop.AT.inria.fr)
@@ -64,11 +63,38 @@ IF(NOT RET EQUAL "0")
   UNSET(MKL_LINK_TOOL)
 ENDIF()
 
+
+
 IF(EXISTS "${MKL_LINK_TOOL}")
+
+  #CHECK IF SCALAPACK IS ACTUALLY SUPPORTED
+  FIND_LIBRARY(MKL_SCALAPACK_LIBRARY
+    NAMES mkl_scalapack_lp64 mkl_scalapack_core mkl_scalapack
+    PATHS ${MKL_ROOT_DIR}/lib
+    ${MKL_ROOT_DIR}/lib/intel64
+    $ENV{INTEL}/mkl/lib/intel64
+    NO_DEFAULT_PATH)
+  
+  FIND_LIBRARY(MKL_BLACS_LIBRARY
+    NAMES mkl_blacs mkl_blacs_lp64 mkl_blacs_mpich_lp64 mkl_blacs_intelmpi_lp64 mkl_blacs_openmpi_lp64
+    PATHS ${MKL_ROOT_DIR}/lib
+    ${MKL_ROOT_DIR}/lib/intel64
+    $ENV{INTEL}/mkl/lib/intel64
+    NO_DEFAULT_PATH)
+
+  IF(MKL_SCALAPACK_LIBRARY AND MKL_BLACS_LIBRARY)
+    MESSAGE(STATUS "Found MKL Scalapack support")
+    SET(MKL_SCALAPACK_FOUND TRUE)
+  ENDIF()
+  
+
   #These options can be made available to the user in the end
   SET(MKL_PARALLEL  "--parallel=no")
-  SET(MKL_LINKING   "--linking=static")
-  SET(MKL_SCALAPACK "--cluster_library=scalapack")
+  #SET(MKL_LINKING   "--linking=static")
+  IF(MKL_SCALAPACK_FOUND)
+    SET(MKL_SCALAPACK "--cluster_library=scalapack")
+  ENDIF()
+  
   IF(APPLE)			#do something specific for Apple
     IF(${CMAKE_Fortran_COMPILER_ID} MATCHES GNU)
       set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
@@ -86,7 +112,8 @@ IF(EXISTS "${MKL_LINK_TOOL}")
       set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -opts)
     ENDIF()    
   ENDIF()
-  
+
+
   EXECUTE_PROCESS(COMMAND  ${MKL_LINK_TOOL_LIBS}
     OUTPUT_VARIABLE MKL_LIBRARIES
     RESULT_VARIABLE COMMAND_WORKED
@@ -105,39 +132,22 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     MESSAGE(FATAL_ERROR "Cannot find MKL libraries. The mkl_link_tool command executed was:\n ${MKL_LINK_TOOL_INCS}.")
   endif()
 
-  # #CHECK IF SCALAPACK IS ACTUALLY SUPPORTED
-  FIND_LIBRARY(MKL_SCALAPACK_LIBRARY
-    NAMES mkl_scalapack_lp64 mkl_scalapack_core
-    PATHS ${MKL_ROOT_DIR}/lib
-    ${MKL_ROOT_DIR}/lib/intel64
-    $ENV{INTEL}/mkl/lib/intel64
-    NO_DEFAULT_PATH)
-  
-  FIND_LIBRARY(MKL_BLACS_LIBRARY
-    NAMES mkl_blacs_lp64 mkl_blacs_mpich_lp64 mkl_blacs_intelmpi_lp64 mkl_blacs_openmpi_lp64
-    PATHS ${MKL_ROOT_DIR}/lib
-    ${MKL_ROOT_DIR}/lib/intel64
-    $ENV{INTEL}/mkl/lib/intel64
-    NO_DEFAULT_PATH)
-
-  IF(MKL_SCALAPACK_LIBRARY AND MKL_BLACS_LIBRARY)
-    MESSAGE(STATUS "Found MKL Scalapack support")
-    SET(MKL_SCALAPACK_FOUND TRUE)
-  ENDIF()
-
-
+  #Take care of the way mkl_link_tool handles the variable $(MKLROOT) in the linking flag. Replace it with actual
+  #value of the MKLROOT
+  STRING(REPLACE "$(MKLROOT)" ${MKL_ROOT_DIR} MKL_LIBRARIES ${MKL_LIBRARIES}) 
   
   SET(MKL_LIBRARIES_ ${MKL_LIBRARIES})
   SET(MKL_INCLUDE_ ${MKL_INCLUDE})
   IF(APPLE)
-    STRING(STRIP ${MKL_LIBRARIES_} MKL_LIBRARIES)
-    STRING(STRIP ${MKL_INCLUDE_} MKL_INCLUDE)
+    STRING(STRIP ${MKL_LIBRARIES_} ${MKL_LIBRARIES})
+    STRING(STRIP ${MKL_INCLUDE_} ${MKL_INCLUDE})
   ELSE()
-    STRING(STRIP $MKL_LIBRARIES_ MKL_LIBRARIES)
-    STRING(STRIP $MKL_INCLUDE_ MKL_INCLUDE)
+    STRING(STRIP $MKL_LIBRARIES_ ${MKL_LIBRARIES})
+    STRING(STRIP $MKL_INCLUDE_ ${MKL_INCLUDE})
   ENDIF()
 
-  ELSE()
+#NO MKL_LINK_TOOL: DO OUR OWN
+ELSE()
   
   SET(FC_ID ${CMAKE_Fortran_COMPILER_ID})
   STRING(TOUPPER "${FC_ID}" FC_ID)	

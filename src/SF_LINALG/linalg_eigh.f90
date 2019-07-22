@@ -127,7 +127,7 @@ subroutine deigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   if(boolI)range='I'
   !
   Ns = max(1,size(A,1))
-  if(any(shape(A)/=[Ns,Ns]))stop "my_eighD error: A has illegal shape"
+  if(any(shape(A)/=[Ns,Ns]))stop "deigh_simple error: A has illegal shape"
   !
   select case(method_)
   case default
@@ -194,7 +194,6 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   integer,dimension(:),allocatable           :: Iwork
   integer,dimension(:),allocatable           :: Isuppz
   integer,dimension(:),allocatable           :: Ifail
-  real(8),external :: dlamch
   !
   method_='zheevd';if(present(method))method_=trim(method)
   jobz_='V'  ;if(present(jobz))jobz_=jobz
@@ -203,7 +202,7 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   vu_  = 1d0 ;if(present(vU))vU_=vU
   iL_  = 1   ;if(present(iL))iL_=iL
   iU_  = 1   ;if(present(iU))iU_=iU
-  tol_ = dlamch('s') ;if(present(tol))tol_=tol
+  tol_ = 0d0 ;if(present(tol))tol_=tol
   !
   E=0d0
   !
@@ -215,7 +214,7 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   if(boolI)range='I'
   !
   Ns = max(1,size(A,1))
-  if(any(shape(A)/=[Ns,Ns]))stop "my_eighD error: A has illegal shape"
+  if(any(shape(A)/=[Ns,Ns]))stop "zeigh_simple error: A has illegal shape"
   !
   mE = Ns
   select case(method_)
