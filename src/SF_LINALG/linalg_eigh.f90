@@ -126,8 +126,8 @@ subroutine deigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   if(boolV)range='V'
   if(boolI)range='I'
   !
-  if(jobz_/='V'.OR.jobz_/='N')stop "deigh_simple error: jobz has illegal value"
-  if(uplo_/='U'.OR.uplo_/='L')stop "deigh_simple error: uplo has illegal value"
+  if(jobz_/='V'.AND.jobz_/='N')stop "deigh_simple error: jobz has illegal value"
+  if(uplo_/='U'.AND.uplo_/='L')stop "deigh_simple error: uplo has illegal value"
   !
   Ns = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "deigh_simple error: A has illegal shape"
@@ -217,8 +217,8 @@ subroutine zeigh_simple(A,E,method,jobz,uplo,vl,vu,il,iu,tol)
   if(boolV)range='V'
   if(boolI)range='I'
   !
-  if(jobz_/='V'.OR.jobz_/='N')stop "zeigh_simple error: jobz has illegal value"
-  if(uplo_/='U'.OR.uplo_/='L')stop "zeigh_simple error: uplo has illegal value"
+  if(jobz_/='V'.AND.jobz_/='N')stop "zeigh_simple error: jobz has illegal value"
+  if(uplo_/='U'.AND.uplo_/='L')stop "zeigh_simple error: uplo has illegal value"
   !
   Ns = max(1,size(A,1))
   if(any(shape(A)/=[Ns,Ns]))stop "zeigh_simple error: A has illegal shape"
