@@ -202,7 +202,7 @@ ELSE()
 ENDIF()
 
 
-SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix of the main installation directory" FORCE)
+SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix of the main installation directory")
 SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix of the main installation directory" FORCE)
 
 
