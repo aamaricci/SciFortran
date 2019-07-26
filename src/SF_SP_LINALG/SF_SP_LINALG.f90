@@ -39,6 +39,10 @@ module SF_SP_LINALG
   end interface sp_lanc_tridiag
 
 
+  interface sp_dvdson_eigh
+     module procedure :: dvdson_eigh_d
+  end interface sp_dvdson_eigh
+
 
   complex(8),parameter              :: zero=(0d0,0d0)
   complex(8),parameter              :: one=(1d0,0d0)
@@ -57,6 +61,7 @@ module SF_SP_LINALG
   public :: sp_eigh
   public :: sp_lanc_eigh
   public :: sp_lanc_tridiag
+  public :: sp_dvdson_eigh
   !****************************************************************************************
 
 
@@ -91,6 +96,10 @@ contains
   include "mpi_lanczos_c.f90"
 #endif
 
+
+  !##################################################################
+  ! DAVIDSON METHOD for LOWEST EigenSolution of a SPARSE MATRIX (defined via H*v)
+  include "dvdson_serial.f90"
 
 
 
