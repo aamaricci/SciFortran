@@ -48,15 +48,51 @@ module SF_MISC
      module procedure z_assert_shape_N7
   end interface assert_shape
 
-  !SORT,UNIQ,SHUFFLE:
+  interface reorder
+     module procedure :: reshuffle
+  end interface reorder
+
+  interface sort_insertion
+     module procedure :: sort_insertion_i
+     module procedure :: sort_insertion_d
+  end interface sort_insertion
+
+  interface sort_quicksort
+     module procedure :: sort_quicksort_i
+     module procedure :: sort_quicksort_d
+  end interface sort_quicksort
+
+  interface sort_qsort
+     module procedure :: sort_array_i
+     module procedure :: sort_array_d
+  end interface sort_qsort
+
+  interface sort
+     module procedure :: sort_quicksort_i
+     module procedure :: sort_quicksort_d
+  end interface sort
+
+  interface sort_array
+     module procedure :: sort_quicksort_i
+     module procedure :: sort_quicksort_d
+  end interface sort_array
+
   public :: sort
   public :: sort_array
+  public :: sort_quicksort
+  public :: sort_insertion
+  public :: sort_qsort
+  !
   public :: reshuffle
+  public :: reorder
+  !
   public :: assert_shape
+  !
   public :: uniq
+  !
   public :: uniinv
   public :: unista
-  
+
 contains
 
 
@@ -285,6 +321,348 @@ contains
 
   ! SORTING 1D:
   !###################################################################
+  !> sort using the insertion method (scale as N**2, small arrays)
+  subroutine sort_insertion_i(a,indx_a)
+    integer, dimension(:),intent(inout)      :: a
+    integer,dimension(size(a)),intent(inout) :: indx_a
+    integer                                  :: na
+    real(8)                                  :: temp
+    integer                                  :: i, j
+    integer                                  :: idx_tmp
+    !
+    nA=size(a)
+    do i=1,nA
+       indx_a(i)=i
+    enddo
+    !
+    do i = 2, nA
+       j = i - 1
+       temp = A(i)
+       idx_tmp = indx_a(i)
+       do
+          if (j == 0) exit
+          if (a(j) <= temp) exit
+          A(j+1) = A(j)
+          indx_a(j+1) = indx_a(j)
+          j = j - 1
+       end do
+       a(j+1) = temp
+       indx_a(j+1) = idx_tmp
+    end do
+  end subroutine sort_insertion_i
+  !
+  subroutine sort_insertion_d(a,indx_a)
+    real(8), dimension(:),intent(inout)      :: a
+    integer,dimension(size(a)),intent(inout) :: indx_a
+    integer                                  :: na
+    real(8)                                  :: temp
+    integer                                  :: i, j
+    integer                                  :: idx_tmp
+    !
+    nA=size(a)
+    do i=1,nA
+       indx_a(i)=i
+    enddo
+    !
+    do i = 2, nA
+       j = i - 1
+       temp = A(i)
+       idx_tmp = indx_a(i)
+       do
+          if (j == 0) exit
+          if (a(j) <= temp) exit
+          A(j+1) = A(j)
+          indx_a(j+1) = indx_a(j)
+          j = j - 1
+       end do
+       a(j+1) = temp
+       indx_a(j+1) = idx_tmp
+    end do
+  end subroutine sort_insertion_d
+
+
+  !> subroutine to sort using the quicksort algorithm
+  subroutine sort_quicksort_i(a,indx_a)
+    integer, dimension(:),intent(inout)      :: a
+    integer,dimension(size(a)),intent(inout) :: indx_a
+    integer                                  :: i
+    do i=1,size(a)
+       indx_a(i)=i
+    enddo
+    !
+    call quicksort_i(a,indx_a,size(a))
+    !
+  contains
+    !
+    recursive subroutine quicksort_i(list,order,nA)
+      integer              :: nA
+      integer              :: list(nA)
+      integer              :: order(nA)
+      integer              :: left, right, mid
+      integer              :: pivot, temp
+      integer              :: marker, idx_temp,i
+      !
+      if(na==1)return
+      !
+      mid = (1+nA)/2
+      if (list(mid) >= list(1)) then
+         if (list(mid) <= list(nA)) then
+            pivot = list(mid)
+         else if (list(nA) > list(1)) then
+            pivot = list(nA)
+         else
+            pivot = list(1)
+         end if
+      else if (list(1) <= list(nA)) then
+         pivot = list(1)
+      else if (list(nA) > list(mid)) then
+         pivot = list(nA)
+      else
+         pivot = list(mid)
+      end if
+      left  = 0
+      right = nA + 1
+      do while (left < right)
+         right = right - 1
+         do while (list(right) > pivot)
+            right = right - 1
+         end do
+         left = left + 1
+         do while (list(left) < pivot)
+            left = left + 1
+         end do
+         if (left < right) then
+            temp = list(left)
+            list(left) = list(right)
+            list(right) = temp
+            !
+            idx_temp     = order(left)
+            order(left)  = order(right)
+            order(right) = idx_temp
+         end if
+      end do
+      !
+      if (left == right) then
+         marker = left + 1
+      else
+         marker = left
+      end if
+      !
+      call quicksort_i(list(:marker-1),order(:marker-1),marker-1)
+      call quicksort_i(list(marker:),order(marker:),nA-marker+1)
+      !
+    end subroutine quicksort_i
+  end subroutine sort_quicksort_i
+
+  !
+  subroutine sort_quicksort_d(a,indx_a)
+    real(8), dimension(:),intent(inout)      :: a
+    integer,dimension(size(a)),intent(inout) :: indx_a
+    integer                                  :: i
+    do i=1,size(a)
+       indx_a(i)=i
+    enddo
+    !
+    call quicksort_d(a,indx_a,size(a))
+    !
+  contains
+    !
+    recursive subroutine quicksort_d(list,order,nA)
+      integer              :: nA
+      real(8)              :: list(nA)
+      integer              :: order(nA)
+      integer              :: left, right, mid
+      real(8)              :: pivot, temp
+      integer              :: marker, idx_temp,i
+      !
+      if(na==1)return
+      !
+      mid = (1+nA)/2
+      if (list(mid) >= list(1)) then
+         if (list(mid) <= list(nA)) then
+            pivot = list(mid)
+         else if (list(nA) > list(1)) then
+            pivot = list(nA)
+         else
+            pivot = list(1)
+         end if
+      else if (list(1) <= list(nA)) then
+         pivot = list(1)
+      else if (list(nA) > list(mid)) then
+         pivot = list(nA)
+      else
+         pivot = list(mid)
+      end if
+      left  = 0
+      right = nA + 1
+      do while (left < right)
+         right = right - 1
+         do while (list(right) > pivot)
+            right = right - 1
+         end do
+         left = left + 1
+         do while (list(left) < pivot)
+            left = left + 1
+         end do
+         if (left < right) then
+            temp = list(left)
+            list(left) = list(right)
+            list(right) = temp
+            !
+            idx_temp     = order(left)
+            order(left)  = order(right)
+            order(right) = idx_temp
+         end if
+      end do
+      !
+      if (left == right) then
+         marker = left + 1
+      else
+         marker = left
+      end if
+      !
+      call quicksort_d(list(:marker-1),order(:marker-1),marker-1)
+      call quicksort_d(list(marker:),order(marker:),nA-marker+1)
+      !
+    end subroutine quicksort_d
+  end subroutine sort_quicksort_d
+
+
+
+
+
+  !> subroutine to sort using the quicksort algorithm in a somehow slower implementation:
+  subroutine sort_array_i(a,indx_a)
+    integer, dimension(:),intent(inout)      :: a
+    integer,dimension(size(a)),intent(inout) :: indx_a
+    integer                                  :: na
+    integer,dimension(size(a))               :: a_tmp
+    integer                                  :: i
+    nA=size(a)
+    do i=1,nA
+       indx_a(i)=i
+    enddo
+    call qsort_sort(a, indx_a, 1, nA)
+    !
+    do i=1,nA
+       a_tmp(i) = a(indx_a(i))
+    enddo
+    a = a_tmp
+  contains
+    recursive subroutine qsort_sort( array, order, left, right )
+      implicit none
+      integer, dimension(:)                 :: array
+      integer, dimension(:)                 :: order
+      integer                               :: left
+      integer                               :: right
+      integer                               :: i
+      integer                               :: last
+      if ( left >= right ) return
+      call swap_order( order, left, ran_uniform(left,right))
+      last = left
+      do i = left+1, right
+         if ( array(order(i)) < array(order(left))  ) then
+            last = last + 1
+            call swap_order( order, last, i )
+         endif
+      enddo
+      call swap_order( order, left, last )      
+      call qsort_sort( array, order, left, last-1 )
+      call qsort_sort( array, order, last+1, right )
+    end subroutine qsort_sort
+    !
+    subroutine swap_order( order, first, second )
+      integer, dimension(:)                 :: order
+      integer                               :: first, second
+      integer                               :: tmp
+      tmp           = order(first)
+      order(first)  = order(second)
+      order(second) = tmp
+    end subroutine swap_order
+    !
+    function ran_uniform(l,h) result(igrnd)
+      integer,intent(in) :: l,h
+      real(8)            :: u,r
+      integer           :: igrnd
+      call random_number(u)
+      r=(h-l+1)*u+l
+      igrnd=int(r)
+    end function ran_uniform
+  end subroutine sort_array_i
+
+
+  subroutine sort_array_d(a,indx_a)
+    real(8), dimension(:),intent(inout)      :: a
+    integer,dimension(size(a)),intent(inout) :: indx_a
+    integer                                  :: na
+    real(8),dimension(size(a))               :: a_tmp
+    integer                                  :: i
+    nA=size(a)
+    do i=1,nA
+       indx_a(i)=i
+    enddo
+    call qsort_sort(a, indx_a, 1, nA)
+    !
+    do i=1,nA
+       a_tmp(i) = a(indx_a(i))
+    enddo
+    a = a_tmp
+  contains
+    recursive subroutine qsort_sort( array, order, left, right )
+      implicit none
+      real(8), dimension(:)                 :: array
+      integer, dimension(:)                 :: order
+      integer                               :: left
+      integer                               :: right
+      integer                               :: i
+      integer                               :: last
+      if ( left >= right ) return
+      call swap_order( order, left, ran_uniform(left,right))
+      last = left
+      do i = left+1, right
+         if ( array(order(i)) < array(order(left))  ) then
+            last = last + 1
+            call swap_order( order, last, i )
+         endif
+      enddo
+      call swap_order( order, left, last )      
+      call qsort_sort( array, order, left, last-1 )
+      call qsort_sort( array, order, last+1, right )
+    end subroutine qsort_sort
+    !
+    subroutine swap_order( order, first, second )
+      integer, dimension(:)                 :: order
+      integer                               :: first, second
+      integer                               :: tmp
+      tmp           = order(first)
+      order(first)  = order(second)
+      order(second) = tmp
+    end subroutine swap_order
+    !
+    function ran_uniform(l,h) result(igrnd)
+      integer,intent(in) :: l,h
+      real(8)            :: u,r
+      integer           :: igrnd
+      call random_number(u)
+      r=(h-l+1)*u+l
+      igrnd=int(r)
+    end function ran_uniform
+  end subroutine sort_array_d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE  :   
   !+-----------------------------------------------------------------+
@@ -331,117 +709,6 @@ contains
     forall(i=1:Lk)dummy(i)=array(order(i))
     array=dummy
   end subroutine reshuffle
-
-
-
-
-  !+-----------------------------------------------------------------+
-  !PURPOSE  :   
-  !+-----------------------------------------------------------------+
-  subroutine sort(ARR,M)
-    implicit none
-    integer              :: i,j,M
-    real(8)              :: a
-    real(8),dimension(M) :: ARR
-    do j=2, M
-       a=ARR(j)
-       do i=j-1,1,-1
-          if (ARR(i)<=a) goto 10
-          ARR(i+1)=ARR(i)
-       enddo
-       i=0
-10     ARR(i+1)=a
-    enddo
-    return
-  end subroutine sort
-
-
-
-
-  !+------------------------------------------------------------------+
-  !PURPOSE  : Sort an array, gives the new ordering of the label.
-  !+------------------------------------------------------------------+
-  subroutine sort_array(array,order2,no_touch_array)
-    implicit none
-    real(8),dimension(:)                    :: array
-    real(8),dimension(size(array))          :: backup
-    integer,dimension(size(array))          :: order
-    integer,dimension(size(array)),optional :: order2
-    integer                                 :: i
-    logical,optional                        :: no_touch_array
-    do i=1,size(order)
-       order(i)=i
-    enddo
-    call qsort_sort( array, order, 1, size(array) )
-    if(.not.present(no_touch_array))then
-       do i=1,size(order)
-          backup(i)=array(order(i))
-       enddo
-       array=backup
-    endif
-    if(present(order2)) order2=order
-  contains
-    recursive subroutine qsort_sort( array, order, left, right )
-      implicit none
-      real(8), dimension(:)                 :: array
-      integer, dimension(:)                 :: order
-      integer                               :: left
-      integer                               :: right
-      integer                               :: i
-      integer                               :: last
-      if ( left .ge. right ) return
-      call qsort_swap( order, left, qsort_rand(left,right) )
-      last = left
-      do i = left+1, right
-         if ( compare(array(order(i)), array(order(left)) ) .lt. 0 ) then
-            last = last + 1
-            call qsort_swap( order, last, i )
-         endif
-      enddo
-      call qsort_swap( order, left, last )
-      call qsort_sort( array, order, left, last-1 )
-      call qsort_sort( array, order, last+1, right )
-    end subroutine qsort_sort
-    !---------------------------------------------!
-    subroutine qsort_swap( order, first, second )
-      implicit none
-      integer, dimension(:)                 :: order
-      integer                               :: first, second
-      integer                               :: tmp
-      tmp           = order(first)
-      order(first)  = order(second)
-      order(second) = tmp
-    end subroutine qsort_swap
-    !---------------------------------------------!
-    integer function qsort_rand( lower, upper )
-      implicit none
-      integer                               :: lower, upper
-      real(4)                               :: r
-      r=drand()
-      qsort_rand =  lower + nint(r * (upper-lower))
-    end function qsort_rand
-    !---------------------------------------------!
-    function drand()
-      implicit none
-      real(8)                               :: drand
-      real(4)                               :: r
-      call random_number(r)
-      drand=dble(r)
-    end function drand
-    !---------------------------------------------!
-    function compare(f,g)
-      implicit none
-      real(8)                               :: f,g
-      integer                               :: compare
-      if(f<g) then
-         compare=-1
-      else
-         compare=1
-      endif
-    end function compare
-  end subroutine sort_array
-
-
 
 
 
