@@ -222,7 +222,7 @@ contains
   !+------------------------------------------------------------------+
   !PURPOSE  : calculate step function
   !+------------------------------------------------------------------+
-  pure function step_x(x,origin) result(step)
+  elemental function step_x(x,origin) result(step)
     real(8),intent(in)          :: x
     logical,optional,intent(in) :: origin
     real(8)                     :: step
@@ -265,14 +265,19 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : calculate the Fermi-Dirac distribution
   !+-------------------------------------------------------------------+
-  elemental function fermi(x,beta)
-    real(8),intent(in) :: x, beta 
-    real(8)            :: fermi
-    if(x*beta > 100.d0)then
-       fermi=0.d0
-       return
+  elemental function fermi(x,beta,limit)
+    real(8),intent(in)          :: x, beta
+    real(8),optional,intent(in) :: limit
+    real(8)                     :: fermi,arg,limit_
+    limit_ = 200d0 ; if(present(limit))limit_=abs(limit)
+    arg = x*beta
+    if(arg < -limit_)then
+       fermi = 1d0
+    elseif(arg > limit_)then
+       fermi = 0d0
+    else
+       fermi = 1d0/(1d0+exp(arg))
     endif
-    fermi = 1.d0/(1.d0+exp(beta*x))
   end function fermi
 
 

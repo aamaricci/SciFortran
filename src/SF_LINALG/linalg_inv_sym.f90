@@ -6,7 +6,7 @@ subroutine Dinv_sym(A,uplo)
   real(8),dimension(:,:)           :: A
   character(len=*),optional        :: uplo
   character(len=1)                 :: uplo_
-  integer                          :: n,lda,info,lwork
+  integer                          :: n,lda,info,lwork,i,j
   integer,dimension(:),allocatable :: ipvt
   real(8),dimension(:),allocatable :: work
   real(8),dimension(1)             :: lwork_guess
@@ -22,14 +22,20 @@ subroutine Dinv_sym(A,uplo)
   call dsytri(uplo_,n,A,lda,ipvt,work,info)
   if(info/=0)stop "Error MATRIX/D_mat_invertSYM: dsytri"
   deallocate(ipvt,work)
+  if(uplo_=="U")then
+     forall(i=1:size(A,1),j=1:size(A,2),i>j)A(i,j)=A(j,i)
+  elseif(uplo_=="L")then
+     forall(i=1:size(A,1),j=1:size(A,2),i<j)A(i,j)=A(j,i)
+  endif
+  !
 end subroutine Dinv_SYM
 !-----------------------------
 subroutine Zinv_sym(A,uplo)
   complex(8),dimension(:,:)           :: A
-  character(len=*),optional        :: uplo
-  character(len=1)                 :: uplo_
-  integer                          :: n,lda,info,lwork
-  integer,dimension(:),allocatable :: ipvt
+  character(len=*),optional           :: uplo
+  character(len=1)                    :: uplo_
+  integer                             :: n,lda,info,lwork,i,j
+  integer,dimension(:),allocatable    :: ipvt
   complex(8),dimension(:),allocatable :: work
   complex(8),dimension(1)             :: lwork_guess
   uplo_="U";if(present(uplo))uplo_=uplo
@@ -44,4 +50,9 @@ subroutine Zinv_sym(A,uplo)
   call zsytri(uplo_,n,A,lda,ipvt,work,info)
   if(info/=0)stop "Error MATRIX/D_mat_invertSYM: zsytri"
   deallocate(ipvt,work)
+  if(uplo_=="U")then
+     forall(i=1:size(A,1),j=1:size(A,2),i>j)A(i,j)=A(j,i)
+  elseif(uplo_=="L")then
+     forall(i=1:size(A,1),j=1:size(A,2),i<j)A(i,j)=A(j,i)
+  endif
 end subroutine Zinv_sym

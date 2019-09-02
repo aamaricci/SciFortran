@@ -69,8 +69,8 @@ contains
   subroutine fsolve_hybrd_func(func,x,tol,info)
     interface
        function func(x)
-         real(8),dimension(:) :: x
-         real(8),dimension(size(x)) :: func
+         real(8),dimension(:),intent(in) :: x
+         real(8),dimension(size(x))      :: func
        end function func
     end interface
     real(8),dimension(:)       :: x      
@@ -98,8 +98,8 @@ contains
   subroutine fsolve_hybrd_sub(func,x,tol,info)
     interface
        subroutine func(x,ff)
-         real(8),dimension(:) :: x
-         real(8),dimension(size(x)) :: ff
+         real(8),dimension(:),intent(in) :: x
+         real(8),dimension(size(x))      :: ff
        end subroutine func
     end interface
     real(8),dimension(:)       :: x      
@@ -134,12 +134,12 @@ contains
   subroutine fsolve_hybrj_func(func,dfunc,x,tol,info)
     interface
        function func(x)
-         real(8),dimension(:) :: x
-         real(8),dimension(size(x)) :: func
+         real(8),dimension(:),intent(in) :: x
+         real(8),dimension(size(x))      :: func
        end function func
        !
        function dfunc(x)
-         real(8),dimension(:)               :: x
+         real(8),dimension(:),intent(in)    :: x
          real(8),dimension(size(x),size(x)) :: dfunc
        end function dfunc
     end interface
@@ -175,12 +175,12 @@ contains
   subroutine fsolve_hybrj_sub(func,dfunc,x,tol,info)
     interface
        subroutine func(x,f)
-         real(8),dimension(:) :: x
-         real(8),dimension(size(x)) :: f
+         real(8),dimension(:),intent(in) :: x
+         real(8),dimension(size(x))      :: f
        end subroutine func
        !
        subroutine dfunc(x,df)
-         real(8),dimension(:)               :: x
+         real(8),dimension(:),intent(in)    :: x
          real(8),dimension(size(x),size(x)) :: df
        end subroutine dfunc
     end interface
