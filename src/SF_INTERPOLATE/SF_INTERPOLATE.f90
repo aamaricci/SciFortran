@@ -12,10 +12,11 @@
     private
 
     type finter_type
-       real(8),allocatable :: X(:)
-       real(8),allocatable :: F(:)
-       integer             :: Imin=0,Imax=0,N=0
-       logical             :: status=.false.
+       real(8),allocatable    :: X(:)
+       real(8),allocatable    :: F(:)
+       real(8),allocatable    :: G(:)
+       integer                :: Imin,Imax,N
+       logical                :: status=.false.
     end type finter_type
 
     type finter2d_type
@@ -73,13 +74,19 @@
     public :: cubic_spline
     public :: linear_spline
 
-    
-    !Function polynomial interpolation: 
+
+    !Function polynomial interpolation:
+    interface init_finter
+       module procedure :: init_finter_d
+       module procedure :: init_finter_c
+    end interface init_finter
+
     !1-dimension
     public :: finter_type
     public :: init_finter
     public :: delete_finter
     public :: finter
+    public :: cinter
 
     !2-dimension
     public :: finter2d_type
@@ -90,7 +97,7 @@
 
   contains
 
-    
+
     !*******************************************************************
     ! 1-DIMENSIONAL SPLINES:
     !*******************************************************************
@@ -176,7 +183,7 @@
       real(8),dimension(size(Xin)) :: Fin
       real(8)                      :: Xout
       real(8)                      :: Fout
-      type(finter_type)                :: pfinter
+      type(finter_type)            :: pfinter
       Lin =size(Fin)
       N_    = 5 ; if(present(N))N_ = N
       call init_finter(pfinter,Xin,Fin,N_)
@@ -526,68 +533,6 @@
 
 
 
-    !*******************************************************************
-    !*******************************************************************
-    !*******************************************************************
-
-
-
-
-
-
-    ! subroutine d_poly_fspline_2d_v(xin,yin,fin,xout,yout,fout,N)
-    !   real(8),dimension(:)                     :: xin
-    !   real(8),dimension(:)                     :: yin
-    !   real(8),dimension(size(xin),size(yin))   :: fin
-    !   integer                                  :: Lxin,Lyin
-    !   real(8),dimension(:)                     :: xout
-    !   real(8),dimension(:)                     :: yout
-    !   real(8),dimension(size(xout),size(yout)) :: fout
-    !   integer                                  :: Lxout,Lyout
-    !   integer :: N
-    !   integer                                  :: ix,iy
-    !   real(8),dimension(:,:),allocatable       :: fxtmp
-    !   Lxin = size(xin) ; Lyin = size(yin)
-    !   Lxout= size(xout); Lyout=size(yout)
-    !   allocate(fxtmp(Lxout,Lyin))
-    !   do iy=1,Lyin              !loop sulle righe griglia-vecchia
-    !      call poly_spline(xin,fin(:,iy),xout,fxtmp(:,iy),N) !spline sulle colonne, dell'ix-esima riga
-    !   enddo
-    !   do ix=1,Lxout
-    !      call poly_spline(yin,fxtmp(ix,:),yout,fout(ix,:),N)
-    !   enddo
-    ! end subroutine  d_poly_fspline_2d_v
-    ! !+-------------------------------------------------------------------+
-    ! subroutine c_poly_fspline_2d_v(xin,yin,fin,xout,yout,fout,N)
-    !   real(8),dimension(:)                        :: xin
-    !   real(8),dimension(:)                        :: yin
-    !   complex(8),dimension(size(xin),size(yin))   :: fin
-    !   integer :: N
-    !   integer                                     :: Lxin,Lyin
-    !   real(8),dimension(:)                        :: xout
-    !   real(8),dimension(:)                        :: yout
-    !   complex(8),dimension(size(xout),size(yout)) :: fout
-    !   integer                                     :: Lxout,Lyout
-    !   real(8),dimension(:,:),allocatable          :: reF,imF
-    !   Lxin = size(xin) ; Lyin = size(yin)
-    !   Lxout= size(xout); Lyout=size(yout)
-    !   allocate(reF(Lxout,Lyout),imF(Lxout,Lyout))
-    !   call d_poly_spline_2d_v(xin,yin,dreal(fin),xout,yout,reF,N)
-    !   call d_poly_spline_2d_v(xin,yin,dimag(fin),xout,yout,imF,N)
-    !   fout=cmplx(reF,imF,8)
-    !   deallocate(reF,imF)
-    ! end subroutine  c_poly_fspline_2d_v
-
-
-
-
-
-
-    !*******************************************************************
-    !*******************************************************************
-    !*******************************************************************
-
-
 
 
 
@@ -595,143 +540,10 @@
     !*******************************************************************
     ! computational ROUTINES:
     !*******************************************************************
-    subroutine init_finter(func,Xin,Fin,N)
-      type(finter_type) :: func
-      real(8)       :: xin(:)
-      real(8)       :: fin(size(xin))
-      integer       :: N,Lin
-      if(func%status)deallocate(func%x,func%f)
-      Lin=size(xin)
-      allocate(func%x(Lin),func%f(Lin))
-      func%X    = Xin
-      func%F    = Fin
-      func%Imax = Lin
-      func%Imin = 1
-      func%N    = N
-      func%status=.true.
-    end subroutine init_finter
+    include "interpolate_finter_1d.f90"
     !+-------------------------------------------------------------------+
-    subroutine init_finter2d(func,Xin,Yin,Fin,N)
-      type(finter2d_type) :: func
-      real(8)       :: xin(:),yin(:)
-      real(8)       :: fin(size(xin),size(yin))
-      integer       :: N,Lx,Ly
-      if(func%status)deallocate(func%x,func%y,func%f)
-      Lx=size(xin) ; Ly=size(yin)
-      allocate(func%x(Lx),func%y(Ly),func%f(Lx,Ly))
-      func%X    = Xin
-      func%Y    = Yin
-      func%F    = Fin
-      func%Imin = 1
-      func%Jmin = 1
-      func%Imax = Lx
-      func%Jmax = Ly
-      func%N    = N
-      func%status=.true.
-    end subroutine init_finter2d
+    include "interpolate_finter_2d.f90"
 
-
-    !*******************************************************************
-    !*******************************************************************
-    !*******************************************************************
-
-
-    subroutine delete_finter(func)
-      type(finter_type) :: func
-      if(allocated(func%x))deallocate(func%x)
-      if(allocated(func%f))deallocate(func%f)
-      func%imax=0
-      func%imin=0
-      func%N   =0
-      func%status=.false.
-    end subroutine delete_finter
-    !+-------------------------------------------------------------------+
-    subroutine delete_finter2d(func)
-      type(finter2d_type) :: func
-      if(allocated(func%x))deallocate(func%x)
-      if(allocated(func%y))deallocate(func%y)
-      if(allocated(func%f))deallocate(func%f)
-      func%imin=0
-      func%jmin=0
-      func%imax=0
-      func%jmax=0
-      func%N   =0
-      func%status=.false.
-    end subroutine delete_finter2d
-
-
-    !*******************************************************************
-    !*******************************************************************
-    !*******************************************************************
-
-
-    function finter(func,x)
-      real(8)           :: x
-      type(finter_type) :: func
-      real(8)           :: finter
-      real(8)           :: y,dy
-      integer           :: j,k,k0,k1
-      integer           :: n
-      N=func%N    !order of polynomial interpolation
-      finter=0.d0
-      j=locate(func%X(func%Imin:func%Imax),x)
-      !k = min(max(j-(N-1)/2,1),func%Imax+1-N)
-      k=max(j-(N-1)/2,1)
-      k0=k
-      if(k0 < func%Imin)k0=func%Imin
-      k1=k+N+1
-      if(k1 > func%Imax)then
-         k1=func%Imax
-         k0=k1-N-1
-      endif
-      call polint(func%X(k0:k1),func%F(k0:k1),x,y,dy)
-      !call polint(func%X(k:k+n),func%F(k:k+n),x,y,dy)
-      finter=y
-      return
-    end function finter
-
-
-
-    !*******************************************************************
-    !*******************************************************************
-    !*******************************************************************
-
-
-
-    function finter2d(func,x,y)
-      real(8)         :: x,y
-      type(finter2d_type) :: func
-      real(8)         :: finter2d
-      real(8)         :: f,df
-      integer         :: itmp,jtmp,kx,ky,k0x,k0y,k1x,k1y
-      integer         :: n
-      N=func%N    !order of polynomial interpolation
-      finter2d=0.d0
-      itmp=locate(func%X(func%Imin:func%Imax),x)
-      jtmp=locate(func%Y(func%Jmin:func%Jmax),y)
-      kx=max(itmp-(N-1)/2,1)
-      ky=max(jtmp-(N-1)/2,1)
-      k0x = kx ; if(k0x < func%Imin)k0x=func%Imin
-      k0y = ky ; if(k0y < func%Jmin)k0y=func%Jmin
-      k1x = kx+N+1
-      if(k1x > func%Imax)then         
-         k1x=func%Imax
-         k0x=k1x-N-1
-      endif
-      k1y = ky+N+1
-      if(k1y > func%Jmax)then
-         k1y=func%Jmax
-         k0y=k1y-N-1
-      endif
-      call polin2(func%X(k0x:k1x),func%Y(k0y:k1y),func%F(k0x:k1x,k0y:k1y),x,y,f,df)
-      finter2d=f
-      return
-    end function finter2d
-
-
-    !*******************************************************************
-    !*******************************************************************
-    !*******************************************************************
 
 
     !+-------------------------------------------------------------------+
@@ -946,5 +758,51 @@
     !      fout(i)=cmplx(rey,imy,8)
     !   enddo
     ! end subroutine poly_spline_cv
+
+
+
+
+    ! subroutine d_poly_fspline_2d_v(xin,yin,fin,xout,yout,fout,N)
+    !   real(8),dimension(:)                     :: xin
+    !   real(8),dimension(:)                     :: yin
+    !   real(8),dimension(size(xin),size(yin))   :: fin
+    !   integer                                  :: Lxin,Lyin
+    !   real(8),dimension(:)                     :: xout
+    !   real(8),dimension(:)                     :: yout
+    !   real(8),dimension(size(xout),size(yout)) :: fout
+    !   integer                                  :: Lxout,Lyout
+    !   integer :: N
+    !   integer                                  :: ix,iy
+    !   real(8),dimension(:,:),allocatable       :: fxtmp
+    !   Lxin = size(xin) ; Lyin = size(yin)
+    !   Lxout= size(xout); Lyout=size(yout)
+    !   allocate(fxtmp(Lxout,Lyin))
+    !   do iy=1,Lyin              !loop sulle righe griglia-vecchia
+    !      call poly_spline(xin,fin(:,iy),xout,fxtmp(:,iy),N) !spline sulle colonne, dell'ix-esima riga
+    !   enddo
+    !   do ix=1,Lxout
+    !      call poly_spline(yin,fxtmp(ix,:),yout,fout(ix,:),N)
+    !   enddo
+    ! end subroutine  d_poly_fspline_2d_v
+    ! !+-------------------------------------------------------------------+
+    ! subroutine c_poly_fspline_2d_v(xin,yin,fin,xout,yout,fout,N)
+    !   real(8),dimension(:)                        :: xin
+    !   real(8),dimension(:)                        :: yin
+    !   complex(8),dimension(size(xin),size(yin))   :: fin
+    !   integer :: N
+    !   integer                                     :: Lxin,Lyin
+    !   real(8),dimension(:)                        :: xout
+    !   real(8),dimension(:)                        :: yout
+    !   complex(8),dimension(size(xout),size(yout)) :: fout
+    !   integer                                     :: Lxout,Lyout
+    !   real(8),dimension(:,:),allocatable          :: reF,imF
+    !   Lxin = size(xin) ; Lyin = size(yin)
+    !   Lxout= size(xout); Lyout=size(yout)
+    !   allocate(reF(Lxout,Lyout),imF(Lxout,Lyout))
+    !   call d_poly_spline_2d_v(xin,yin,dreal(fin),xout,yout,reF,N)
+    !   call d_poly_spline_2d_v(xin,yin,dimag(fin),xout,yout,imF,N)
+    !   fout=cmplx(reF,imF,8)
+    !   deallocate(reF,imF)
+    ! end subroutine  c_poly_fspline_2d_v
 
   end module SF_INTERPOLATE

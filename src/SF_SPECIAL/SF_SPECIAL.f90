@@ -1,4 +1,5 @@
 module SF_SPECIAL
+  USE SF_INTEGRATE, only: quad
   implicit none
   private
 
@@ -31,6 +32,10 @@ module SF_SPECIAL
 
   !2D-SQUARE LATTICE ANALYTIC DOS:
   public :: dens_2dsquare
+
+  !3D-SIMPLE CUBIC LATTICE ANALYTIC DOS:
+  public :: dens_3dcubic
+
 
   !SPECIAL FUNCTIONS:
   public :: airya           ! AIRYA computes Airy functions and their derivatives.
@@ -286,6 +291,25 @@ contains
   !*******************************************************************
 
 
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : calculate the derivative of Fermi-Dirac distribution
+  !+-------------------------------------------------------------------+
+  elemental function dfermi(x,beta,limit)
+    real(8),intent(in)          :: x, beta
+    real(8),optional,intent(in) :: limit
+    real(8)                     :: fe,arg,limit_,dfermi
+    limit_ = 200d0 ; if(present(limit))limit_=abs(limit)
+    arg    = x*beta
+    fe     = fermi(x,beta,limit_)
+    dfermi = -exp(arg)*fe**2
+  end function dfermi
+
+
+  !*******************************************************************
+  !*******************************************************************
+  !*******************************************************************
+
+
 
   !+-------------------------------------------------------------------+
   !PURPOSE:  evaluate the sign of a given number (I,R)
@@ -358,24 +382,114 @@ contains
 
 
   !+-------------------------------------------------------------------+
-  !PURPOSE  : calculate the non-interacting dos for HYPERCUBIC lattice 
+  !PURPOSE  : calculate the non-interacting dos for 2D lattice
+  !
   !+-------------------------------------------------------------------+
   function dens_2dsquare(x,ts) result(dos)
     real(8),intent(in)          :: x
     real(8),intent(in),optional :: ts
-    real(8)                     :: wband,y,kint,eint,dos,pi
-    pi=acos(-1.d0)
+    real(8)                     :: wband,y,kint,eint,dos
+    real(8),parameter           :: pi=acos(-1d0)
     wband=4.d0;if(present(ts))wband=4.d0*ts
-    dos=0.d0
-    if(abs(x)<=wband)then
-       y=0.5d0*(x/wband)**2-1.d0
-       call comelp(y,kint,eint)
-       dos=2.d0/wband/pi**2*kint!*heaviside(wband-abs(y))
-    endif
+    dos=0d0
+    if(abs(x)>wband)return
+    y  = sqrt(1d0 - (x/wband)**2)
+    dos= 2/pi**2/wband*EllipticK(y)
   end function dens_2dsquare
+
+
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : calculate the non-interacting dos for SIMPLE CUBIC lattice
+  ! follows closely the works:
+  ! + Economou Greens functions in quantum physics
+  ! + Horiguchi, Journal of the Physical Society of Japan, Vol.30,N.5 (1971)
+  !+-------------------------------------------------------------------+
+  function dens_3dcubic(x,ts) result(dos)
+    real(8),intent(in) :: x
+    real(8),optional   :: ts
+    real(8)            :: ts_
+    real(8)            :: wband,dos
+    real(8)            :: a,b,e0,s
+    real(8),parameter  :: pi=acos(-1d0)
+    real(8)            :: ImG
+    ts_  = 1d0 ;if(present(ts))ts_=ts
+    e0   = 2d0*ts_
+    wband= 3d0*e0
+    dos  = 0d0
+    s = abs(x)
+    if(abs(x) > wband)return
+    !
+    a = 0d0
+    if(s/e0 <= 1d0)then
+       b = pi
+    else
+       b = acos(s/e0-2d0)
+    endif
+    call quad(func,a,b,result=ImG)
+    dos = ImG/pi**3/e0
+  contains
+    !> F(p) = K(k1')
+    !> k1'  = sqrt(1-k1**2)
+    !> k1   = (s-cos(p))/2 = 1/k
+    !> k    = 2/(s-cos(p))
+    function func(p)
+      real(8) :: p
+      real(8) :: func
+      real(8) :: k1,k1p
+      k1  = (s-e0*cos(p))/2d0/e0
+      k1p = sqrt(1d0-k1**2)
+      func= EllipticK(k1p)
+    end function func
+  end function dens_3dcubic
+
 
 
   include "special_functions.f90"
 
+  function EllipticK(z) result(K)
+    real(8) :: z
+    real(8) :: K
+    real(8),parameter :: pi=acos(-1d0)
+    K = ellf(pi/2d0,z)
+  end function EllipticK
+
+  function ellf(phi,ak)
+    real(8),intent(in) :: phi,ak
+    real(8)            :: ellf
+    real(8)            :: s
+    s=sin(phi)
+    ellf=s*rf(cos(phi)**2,(1.0d0-s*ak)*(1.0d0+s*ak),1.0d0)
+  end function ellf
+
+
+  function rf(x,y,z)
+    real(8), intent(in) :: x,y,z
+    real(8)             :: rf
+    real(8), parameter  :: errtol=0.08d0,tiny=1.5d-38,big=3.0d37
+    real(8), parameter  :: third=1.0d0/3.0d0
+    real(8), parameter  :: c1=1.0d0/24.0d0,C2=0.1d0,C3=3.0d0/44.0d0,C4=1.0d0/14.0d0
+    real(8)             :: alamb,ave,delx,dely,delz,e2,e3,sqrtx,sqrty,sqrtz,xt,yt,zt
+    if(.not. ((min(x,y,z) >= 0.0d0).AND.(min(x+y,x+z,y+z) >= TINY).AND.(max(x,y,z) <= BIG)) )stop 'rf `error'
+    xt=x
+    yt=y
+    zt=z
+    do
+       sqrtx=sqrt(xt)
+       sqrty=sqrt(yt)
+       sqrtz=sqrt(zt)
+       alamb=sqrtx*(sqrty+sqrtz)+sqrty*sqrtz
+       xt=0.25d0*(xt+alamb)
+       yt=0.25d0*(yt+alamb)
+       zt=0.25d0*(zt+alamb)
+       ave=THIRD*(xt+yt+zt)
+       delx=(ave-xt)/ave
+       dely=(ave-yt)/ave
+       delz=(ave-zt)/ave
+       if (max(abs(delx),abs(dely),abs(delz)) <= ERRTOL) exit
+    end do
+    e2=delx*dely-delz**2
+    e3=delx*dely*delz
+    rf=(1.0d0+(C1*e2-C2-C3*e3)*e2+C4*e3)/sqrt(ave)
+  END FUNCTION rf
 
 END MODULE SF_SPECIAL

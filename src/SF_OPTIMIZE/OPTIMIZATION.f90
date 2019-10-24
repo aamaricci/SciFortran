@@ -46,7 +46,7 @@ MODULE OPTIMIZE_MINIMIZE
   public   :: fmin_cg
   public   :: fmin_cgplus
   public   :: fmin_cgminimize
-  public :: fmin_bfgs    !Minimize a function using the BFGS algorithm.
+  public   :: fmin_bfgs    !Minimize a function using the BFGS algorithm.
   ! public :: fmin_ncg     !Unconstrained minimization of a function using the Newton-CG method.
   public   :: leastsq      !Minimize the sum of squares of a set of equations. a wrapper around MINPACKs lmdif and lmder algorithms.
   public   :: curvefit     !Use non-linear least squares to fit a function, f, to data.

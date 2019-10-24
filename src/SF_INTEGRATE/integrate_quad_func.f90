@@ -80,7 +80,7 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
   if(present(inf).AND.(present(alfa).OR.present(beta)))stop "ERROR in quad: inf & alfa,beta"
   !
   if(present(b))then
-     !QNG:  no need
+     !QNG>QAGS:  no need
      !QAGS: need singular_endpoint=T
      !QAG : need key=1,6
      !QAGP: need singular_points
@@ -108,16 +108,20 @@ subroutine quad_func(func,a,b,epsabs,epsrel,&
   !
   if(verbose_)write(*,"(A,A)")"QUAD: selected procedure =", routine_name
   !
+  result=0d0
+  !
   select case(routine_name)
   case ('QNG')
-     call QNG(func,a,b,epsabs_,epsrel_,result,abserr,neval,ier)
+     ! call QNG(func,a,b,epsabs_,epsrel_,result,abserr,neval,ier)
+     ! call QAG(func,a,b,epsabs_,epsrel_,1,result,abserr,neval,ier)
+     call QAGS(func,a,b,epsabs_,epsrel_,result,abserr,neval,ier)
      if(verbose_)then
         write(*,'(A,2F14.6)')'Endpoints (a,b)                             =', a,b
         write(*,'(A,F14.6)') 'Estimated integral                          =', result
         write(*,'(A,F14.6)') 'Estimated integral error                    =', abserr
         write(*,'(A,I8)')    'Error return code IER                       =', ier
      else
-        if(ier>2)then
+        if(ier>0)then
            write(*,'(A,I8)') 'Error return code IER =', ier
            if(strict_)stop
         endif

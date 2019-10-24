@@ -35,13 +35,6 @@ subroutine lanczos_eigh_d(MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vra
   norm=dot_product(vect,vect)
   if(norm==0d0)then
      if(vran)then
-        ! call random_seed(size=nrandom)
-        ! if(allocated(seed_random))deallocate(seed_random)
-        ! allocate(seed_random(nrandom))
-        ! seed_random=1234567
-        ! call random_seed(put=seed_random)
-        ! deallocate(seed_random)
-        ! call random_number(vect)
         call mt_random(vect)
         if(verb)write(*,*)"LANCZOS_EIGH_D: random initial vector generated:"
      else
