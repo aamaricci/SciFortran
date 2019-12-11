@@ -47,11 +47,27 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,t
   !MPI
   logical                   :: mpi_master
 
+  integer ::  logfil, ndigit, mgetv0,&
+       msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
+       mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
+       mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
+  common /debug/logfil, ndigit, mgetv0,&
+       msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
+       mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
+       mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
 
   if(MpiComm == MPI_COMM_NULL)return
   Ns     = size(evec,1)
   Neigen = size(eval)
   call assert_shape(Evec,[Ns,Neigen],"P_arpack_d","Evec")
+  !
+  if(verb)then
+     ndigit=-3
+     logfil = 6
+     mcaupd=1
+     mcaup2=1
+     mceupd=1
+  endif
   !
   maxn   = Ns
   maxnev = Neigen

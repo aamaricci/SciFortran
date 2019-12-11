@@ -41,7 +41,7 @@ contains
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   !SCALAR FUNCTIONS:
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  function brentq(func,a,b) result(fzero)
+  function brentq(func,a,b,tol) result(fzero)
     interface
        function func(x)
          real(8),intent(in) :: x
@@ -49,10 +49,11 @@ contains
        end function func
     end interface
     real(8),intent(in) :: a,b
-    real(8)            :: fzero
-    real(8)            :: tol
-    tol=epsilon(a)
-    fzero = zbrent(func,a,b,tol)
+    real(8),optional   :: tol
+    real(8)            :: fzero    
+    real(8)            :: tol_    
+    tol_=epsilon(a);if(present(tol))tol_=tol
+    fzero = zbrent(func,a,b,tol_)
   end function brentq
 
 
