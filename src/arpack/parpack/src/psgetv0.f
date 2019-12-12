@@ -5,13 +5,13 @@ c\Name: psgetv0
 c
 c Message Passing Layer: MPI
 c
-c\Description: 
+c\Description:
 c  Generate a random initial residual vector for the Arnoldi process.
-c  Force the residual vector to be in the range of the operator OP.  
+c  Force the residual vector to be in the range of the operator OP.
 c
 c\Usage:
 c  call psgetv0
-c     ( COMM, IDO, BMAT, ITRY, INITV, N, J, V, LDV, RESID, RNORM, 
+c     ( COMM, IDO, BMAT, ITRY, INITV, N, J, V, LDV, RESID, RNORM,
 c       IPNTR, WORKD, WORKL, IERR )
 c
 c\Arguments
@@ -40,7 +40,7 @@ c          B = 'I' -> standard eigenvalue problem A*x = lambda*x
 c          B = 'G' -> generalized eigenvalue problem A*x = lambda*B*x
 c
 c  ITRY    Integer.  (INPUT)
-c          ITRY counts the number of times that psgetv0 is called.  
+c          ITRY counts the number of times that psgetv0 is called.
 c          It should be set to 1 on the initial call to psgetv0.
 c
 c  INITV   Logical variable.  (INPUT)
@@ -59,11 +59,11 @@ c          The first J-1 columns of V contain the current Arnoldi basis
 c          if this is a "restart".
 c
 c  LDV     Integer.  (INPUT)
-c          Leading dimension of V exactly as declared in the calling 
+c          Leading dimension of V exactly as declared in the calling
 c          program.
 c
 c  RESID   Real array of length N.  (INPUT/OUTPUT)
-c          Initial residual vector to be generated.  If RESID is 
+c          Initial residual vector to be generated.  If RESID is
 c          provided, force RESID into the range of the operator OP.
 c
 c  RNORM   Real scalar.  (OUTPUT)
@@ -94,12 +94,12 @@ c\References:
 c  1. D.C. Sorensen, "Implicit Application of Polynomial Filters in
 c     a k-Step Arnoldi Method", SIAM J. Matr. Anal. Apps., 13 (1992),
 c     pp 357-385.
-c  2. R.B. Lehoucq, "Analysis and Implementation of an Implicitly 
+c  2. R.B. Lehoucq, "Analysis and Implementation of an Implicitly
 c     Restarted Arnoldi Iteration", Rice University Technical Report
 c     TR95-13, Department of Computational and Applied Mathematics.
 c
 c\Routines called:
-c     second   ARPACK utility routine for timing.
+c     arscnd   ARPACK utility routine for timing.
 c     psvout   Parallel ARPACK utility routine for vector output.
 c     pslarnv  Parallel wrapper for LAPACK routine slarnv (generates a random vector).
 c     sgemv    Level 2 BLAS routine for matrix vector multiplication.
@@ -112,8 +112,8 @@ c     Danny Sorensen               Phuong Vu
 c     Richard Lehoucq              Cray Research, Inc. &
 c     Dept. of Computational &     CRPC / Rice University
 c     Applied Mathematics          Houston, Texas
-c     Rice University           
-c     Houston, Texas            
+c     Rice University
+c     Houston, Texas
 c
 c\Parallel Modifications
 c     Kristi Maschhoff
@@ -121,15 +121,15 @@ c
 c\Revision history:
 c     Starting Point: Serial Code FILE: getv0.F   SID: 2.3
 c
-c\SCCS Information: 
-c FILE: getv0.F   SID: 1.4   DATE OF SID: 3/19/97   
+c\SCCS Information:
+c FILE: getv0.F   SID: 1.4   DATE OF SID: 3/19/97
 c
 c\EndLib
 c
 c-----------------------------------------------------------------------
 c
-      subroutine psgetv0 
-     &   ( comm, ido, bmat, itry, initv, n, j, v, ldv, resid, rnorm, 
+      subroutine psgetv0
+     &   ( comm, ido, bmat, itry, initv, n, j, v, ldv, resid, rnorm,
      &     ipntr, workd, workl, ierr )
 c
       include   'mpif.h'
@@ -183,14 +183,14 @@ c
      &           rnorm0
       save       first, iseed, inits, iter, msglvl, orth, rnorm0
 c
-      Real     
+      Real
      &           rnorm_buf
 c
 c     %----------------------%
 c     | External Subroutines |
 c     %----------------------%
 c
-      external   pslarnv, psvout, scopy, sgemv, second
+      external   pslarnv, psvout, scopy, sgemv, arscnd
 c
 c     %--------------------%
 c     | External Functions |
@@ -231,15 +231,15 @@ c
       end if
 c
       if (ido .eq.  0) then
-c 
+c
 c        %-------------------------------%
 c        | Initialize timing statistics  |
 c        | & message level for debugging |
 c        %-------------------------------%
 c
-         call second (t0)
+         call arscnd (t0)
          msglvl = mgetv0
-c 
+c
          ierr   = 0
          iter   = 0
          first  = .FALSE.
@@ -258,13 +258,13 @@ c
             idist = 2
             call pslarnv (comm, idist, iseed, n, resid)
          end if
-c 
+c
 c        %----------------------------------------------------------%
 c        | Force the starting vector into the range of OP to handle |
 c        | the generalized problem when B is possibly (singular).   |
 c        %----------------------------------------------------------%
 c
-         call second (t2)
+         call arscnd (t2)
          if (bmat .eq. 'G') then
             nopx = nopx + 1
             ipntr(1) = 1
@@ -274,7 +274,7 @@ c
             go to 9000
          end if
       end if
-c 
+c
 c     %-----------------------------------------%
 c     | Back from computing OP*(initial-vector) |
 c     %-----------------------------------------%
@@ -286,16 +286,16 @@ c     | Back from computing B*(orthogonalized-vector) |
 c     %-----------------------------------------------%
 c
       if (orth)  go to 40
-c 
-      call second (t3)
+c
+      call arscnd (t3)
       tmvopx = tmvopx + (t3 - t2)
-c 
+c
 c     %------------------------------------------------------%
 c     | Starting vector is now in the range of OP; r = OP*r; |
 c     | Compute B-norm of starting vector.                   |
 c     %------------------------------------------------------%
 c
-      call second (t2)
+      call arscnd (t2)
       first = .TRUE.
       if (bmat .eq. 'G') then
          nbx = nbx + 1
@@ -307,14 +307,14 @@ c
       else if (bmat .eq. 'I') then
          call scopy (n, resid, 1, workd, 1)
       end if
-c 
+c
    20 continue
 c
       if (bmat .eq. 'G') then
-         call second (t3)
+         call arscnd (t3)
          tmvbx = tmvbx + (t3 - t2)
       endif
-c 
+c
       first = .FALSE.
       if (bmat .eq. 'G') then
           rnorm_buf = sdot (n, resid, 1, workd, 1)
@@ -331,7 +331,7 @@ c     | Exit if this is the very first Arnoldi step |
 c     %---------------------------------------------%
 c
       if (j .eq. 1) go to 50
-c 
+c
 c     %----------------------------------------------------------------
 c     | Otherwise need to B-orthogonalize the starting vector against |
 c     | the current Arnoldi basis using Gram-Schmidt with iter. ref.  |
@@ -353,12 +353,12 @@ c
      &                    MPI_REAL, MPI_SUM, comm, ierr)
       call sgemv ('N', n, j-1, -one, v, ldv, workl, 1,
      &            one, resid, 1)
-c 
+c
 c     %----------------------------------------------------------%
 c     | Compute the B-norm of the orthogonalized starting vector |
 c     %----------------------------------------------------------%
 c
-      call second (t2)
+      call arscnd (t2)
       if (bmat .eq. 'G') then
          nbx = nbx + 1
          call scopy (n, resid, 1, workd(n+1), 1)
@@ -369,11 +369,11 @@ c
       else if (bmat .eq. 'I') then
          call scopy (n, resid, 1, workd, 1)
       end if
-c 
+c
    40 continue
 c
       if (bmat .eq. 'G') then
-         call second (t3)
+         call arscnd (t3)
          tmvbx = tmvbx + (t3 - t2)
       endif
 c
@@ -391,14 +391,14 @@ c     | Check for further orthogonalization. |
 c     %--------------------------------------%
 c
       if (msglvl .gt. 2) then
-          call psvout (comm, logfil, 1, rnorm0, ndigit, 
+          call psvout (comm, logfil, 1, rnorm0, ndigit,
      &                '_getv0: re-orthonalization ; rnorm0 is')
-          call psvout (comm, logfil, 1, rnorm, ndigit, 
+          call psvout (comm, logfil, 1, rnorm, ndigit,
      &                '_getv0: re-orthonalization ; rnorm is')
       end if
 c
       if (rnorm .gt. 0.717*rnorm0) go to 50
-c 
+c
       iter = iter + 1
       if (iter .le. 1) then
 c
@@ -420,7 +420,7 @@ c
          rnorm = zero
          ierr = -1
       end if
-c 
+c
    50 continue
 c
       if (msglvl .gt. 0) then
@@ -432,10 +432,10 @@ c
      &        '_getv0: initial / restarted starting vector')
       end if
       ido = 99
-c 
-      call second (t1)
+c
+      call arscnd (t1)
       tgetv0 = tgetv0 + (t1 - t0)
-c 
+c
  9000 continue
       return
 c

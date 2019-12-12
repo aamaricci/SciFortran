@@ -21,6 +21,7 @@ SET(UTIL_ZOBJ
 
 
 SET(P_UTIL_OBJS
+  parpack/src/pcontext.f
   parpack/util/pivout.f)
 SET(P_UTIL_SOBJ
   parpack/util/psvout.f
@@ -38,7 +39,7 @@ SET(P_UTIL_ZOBJ
 
 SET(SRC_SOBJ
   src/sgetv0.f
-  src/slaqrb.f
+  ##src/slaqrb.f
   src/sstqrb.f
   src/ssortc.f
   src/ssortr.f
@@ -64,7 +65,7 @@ SET(SRC_SOBJ
 
 SET(SRC_DOBJ
   src/dgetv0.f
-  src/dlaqrb.f
+  ##src/dlaqrb.f
   src/dstqrb.f
   src/dsortc.f
   src/dsortr.f
@@ -130,7 +131,7 @@ SET(P_SRC_SOBJ
   parpack/src/psneupd.f
   parpack/src/psseupd.f
   parpack/src/pslarnv.f
-  parpack/src/pslamch.f
+  parpack/src/pslamch10.f
   parpack/src/psnorm2.f)
 
 SET(P_SRC_DOBJ
@@ -150,7 +151,7 @@ SET(P_SRC_DOBJ
   parpack/src/pdneupd.f
   parpack/src/pdseupd.f
   parpack/src/pdlarnv.f
-  parpack/src/pdlamch.f
+  parpack/src/pdlamch10.f
   parpack/src/pdnorm2.f)
 
 SET(P_SRC_COBJ

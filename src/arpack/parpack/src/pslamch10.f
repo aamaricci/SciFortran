@@ -1,7 +1,7 @@
-      REAL               FUNCTION PSLAMCH( ICTXT, CMACH )
+      REAL               FUNCTION PSLAMCH10( ICTXT, CMACH )
 *
       include "mpif.h"
-*  -- ScaLAPACK auxilliary routine (version 1.0) --
+*  -- ScaLAPACK auxiliary routine (version 1.0) --
 *     University of Tennessee, Knoxville, Oak Ridge National Laboratory,
 *     and University of California, Berkeley.
 *     February 28, 1995
@@ -82,8 +82,8 @@
           TEMP = TEMP1
       END IF
 *
-      PSLAMCH = TEMP
+      PSLAMCH10 = TEMP
 *
-*     End of PSLAMCH
+*     End of PSLAMCH10
 *
       END

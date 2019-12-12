@@ -1,4 +1,4 @@
-      SUBROUTINE SECOND( T )
+      SUBROUTINE ARSCND( T )
 *
       REAL       T
 *
@@ -21,7 +21,7 @@
 *     ..
 *     .. External Functions ..
       REAL               ETIME
-c      EXTERNAL           ETIME
+      INTRINSIC          ETIME
 *     ..
 *     .. Executable Statements ..
 *
@@ -31,6 +31,6 @@ c      EXTERNAL           ETIME
 
       RETURN
 *
-*     End of SECOND
+*     End of ARSCND
 *
       END
