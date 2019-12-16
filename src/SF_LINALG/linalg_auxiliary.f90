@@ -83,7 +83,7 @@ end function zdet
 !-------------------------------------------------------------------------------------------
 !PURPOSE:  construct real matrix from diagonal elements
 !-------------------------------------------------------------------------------------------
-function ddiag(x) result(A)
+pure function ddiag(x) result(A)
   real(8), intent(in)  :: x(:)
   real(8), allocatable :: A(:,:)
   integer              :: i, n
@@ -93,7 +93,7 @@ function ddiag(x) result(A)
   forall(i=1:n) A(i,i) = x(i)
 end function ddiag
 !
-function zdiag(x) result(A)
+pure function zdiag(x) result(A)
   complex(8), intent(in)  :: x(:)
   complex(8), allocatable :: A(:,:)
   integer                 :: i, n
@@ -110,7 +110,7 @@ end function zdiag
 !-------------------------------------------------------------------------------------------
 !PURPOSE:  return the diagonal of a matrix
 !-------------------------------------------------------------------------------------------
-function d_diagonal(A) result(dd)
+pure function d_diagonal(A) result(dd)
   real(8),intent(in)           :: A(:,:)
   real(8),dimension(size(A,1)) :: dd
   integer                      :: i
@@ -119,7 +119,7 @@ function d_diagonal(A) result(dd)
   end do
 end function d_diagonal
 
-function z_diagonal(A) result(dd)
+pure function z_diagonal(A) result(dd)
   complex(8),intent(in)           :: A(:,:)
   complex(8),dimension(size(A,1)) :: dd
   integer                         :: i
@@ -134,7 +134,7 @@ end function z_diagonal
 !-------------------------------------------------------------------------------------------
 !PURPOSE:  return trace along the main diagonal
 !-------------------------------------------------------------------------------------------
-function dtrace(A) result(t)
+pure function dtrace(A) result(t)
   real(8), intent(in) :: A(:,:)
   real(8)             :: t
   integer             :: i
@@ -144,7 +144,7 @@ function dtrace(A) result(t)
   end do
 end function dtrace
 
-function ztrace(A) result(t)
+pure function ztrace(A) result(t)
   complex(8), intent(in) :: A(:,:)
   complex(8)             :: t
   integer                :: i
@@ -161,7 +161,7 @@ end function ztrace
 !-------------------------------------------------------------------------------------------
 !PURPOSE:  Returns the identity matrix of size n x n and type real.
 !-------------------------------------------------------------------------------------------
-function deye(n) result(A)
+pure function deye(n) result(A)
   integer, intent(in) :: n
   real(8)             :: A(n, n)
   integer             :: i
@@ -171,7 +171,7 @@ function deye(n) result(A)
   end do
 end function deye
 
-function zeye(n) result(A)
+pure function zeye(n) result(A)
   integer, intent(in) :: n
   complex(8)          :: A(n, n)
   integer             :: i
@@ -189,43 +189,43 @@ end function zeye
 !-------------------------------------------------------------------------------------------
 !PURPOSE:  Returns an array of zeros of specified size from 1 to 7 dimension
 !-------------------------------------------------------------------------------------------
-function zzeros_1(n) result(A)
+pure function zzeros_1(n) result(A)
   integer, intent(in) :: n
   complex(8)          :: A(n)
   A = zero
 end function zzeros_1
 !
-function zzeros_2(n1,n2) result(A)
+pure function zzeros_2(n1,n2) result(A)
   integer, intent(in) :: n1,n2
   complex(8)          :: A(n1,n2)
   A = zero
 end function zzeros_2
 !
-function zzeros_3(n1,n2,n3) result(A)
+pure function zzeros_3(n1,n2,n3) result(A)
   integer, intent(in) :: n1,n2,n3
   complex(8)          :: A(n1,n2,n3)
   A = zero
 end function zzeros_3
 !
-function zzeros_4(n1,n2,n3,n4) result(A)
+pure function zzeros_4(n1,n2,n3,n4) result(A)
   integer, intent(in) :: n1,n2,n3,n4
   complex(8)          :: A(n1,n2,n3,n4)
   A = zero
 end function zzeros_4
 !
-function zzeros_5(n1,n2,n3,n4,n5) result(A)
+pure function zzeros_5(n1,n2,n3,n4,n5) result(A)
   integer, intent(in) :: n1,n2,n3,n4,n5
   complex(8)          :: A(n1,n2,n3,n4,n5)
   A = zero
 end function zzeros_5
 !
-function zzeros_6(n1,n2,n3,n4,n5,n6) result(A)
+pure function zzeros_6(n1,n2,n3,n4,n5,n6) result(A)
   integer, intent(in) :: n1,n2,n3,n4,n5,n6
   complex(8)          :: A(n1,n2,n3,n4,n5,n6)
   A = zero
 end function zzeros_6
 !
-function zzeros_7(n1,n2,n3,n4,n5,n6,n7) result(A)
+pure function zzeros_7(n1,n2,n3,n4,n5,n6,n7) result(A)
   integer, intent(in) :: n1,n2,n3,n4,n5,n6,n7
   complex(8)          :: A(n1,n2,n3,n4,n5,n6,n7)
   A = zero
@@ -233,43 +233,43 @@ end function zzeros_7
 
 
 
-function zones_1(n) result(A)
+pure function zones_1(n) result(A)
   integer, intent(in) :: n
   complex(8)          :: A(n)
   A = one
 end function zones_1
 !
-function zones_2(n1,n2) result(A)
+pure function zones_2(n1,n2) result(A)
   integer, intent(in) :: n1,n2
   complex(8)          :: A(n1,n2)
   A = one
 end function zones_2
 !
-function zones_3(n1,n2,n3) result(A)
+pure function zones_3(n1,n2,n3) result(A)
   integer, intent(in) :: n1,n2,n3
   complex(8)          :: A(n1,n2,n3)
   A = one
 end function zones_3
 !
-function zones_4(n1,n2,n3,n4) result(A)
+pure function zones_4(n1,n2,n3,n4) result(A)
   integer, intent(in) :: n1,n2,n3,n4
   complex(8)          :: A(n1,n2,n3,n4)
   A = one
 end function zones_4
 !
-function zones_5(n1,n2,n3,n4,n5) result(A)
+pure function zones_5(n1,n2,n3,n4,n5) result(A)
   integer, intent(in) :: n1,n2,n3,n4,n5
   complex(8)          :: A(n1,n2,n3,n4,n5)
   A = one
 end function zones_5
 !
-function zones_6(n1,n2,n3,n4,n5,n6) result(A)
+pure function zones_6(n1,n2,n3,n4,n5,n6) result(A)
   integer, intent(in) :: n1,n2,n3,n4,n5,n6
   complex(8)          :: A(n1,n2,n3,n4,n5,n6)
   A = one
 end function zones_6
 !
-function zones_7(n1,n2,n3,n4,n5,n6,n7) result(A)
+pure function zones_7(n1,n2,n3,n4,n5,n6,n7) result(A)
   integer, intent(in) :: n1,n2,n3,n4,n5,n6,n7
   complex(8)          :: A(n1,n2,n3,n4,n5,n6,n7)
   A = one

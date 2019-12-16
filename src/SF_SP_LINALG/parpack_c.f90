@@ -66,7 +66,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,t
      logfil = 6
      mcaupd=1
      mcaup2=1
-     mceupd=1
+     mceupd=3
   endif
   !
   maxn   = Ns
