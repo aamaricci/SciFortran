@@ -201,6 +201,8 @@
       DIMENSION DIAG(N),WORK(IWRSZ),IWORK(IIWSZ)                      
       DIMENSION ISELEC(LIM)                                           
       LOGICAL HIEND                                                   
+      EXTERNAL OP                                                     
+      INTEGER IERR
 *-----------------------------------------------------------------------
 *     
 *     Checking user input errors, and setting up the problem to solve.      
@@ -268,7 +270,7 @@
 *     ..Not enough Basis space. Increase LIM or decrease NUME         
       IF ((NUME.GT.LIM).OR.((NUME.EQ.LIM).AND.(NUME.NE.N)))           
      :     IERR=IERR+128                                                
-*     ..Size of Block out of bounds                                   
+*     .     .Size of Block out of bounds                                   
       IF ( (MBLOCK.LT.1).OR.(MBLOCK.GT.NEIG) ) IERR=IERR+256          
       
 *     ..Check for enough workspace for Dvdson                         
@@ -309,7 +311,7 @@
       
       iSTART=NIV                                                      
       CALL SETUP(OP,N,LIM,NUME,HIEND,DIAG,WORK(iscra1),               
-     :     WORK(iBasis),WORK(iAB),WORK(iS),iSTART)              
+     :     WORK(iBasis),WORK(iAB),WORK(iS),iSTART)
       NLOOPS=1                                                        
       NMV=ISTART                                                      
       
@@ -350,7 +352,10 @@
 *-----------------------------------------------------------------------
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)                              
       DIMENSION DIAG(N),BASIS(N*LIM),AB(N*LIM)                        
-      DIMENSION S(LIM*(LIM+1)/2),MINELEM(LIM)                         
+      DIMENSION S(LIM*(LIM+1)/2),MINELEM(LIM)
+      EXTERNAL OP
+      LOGICAL HIEND
+      DOUBLE PRECISION MINELEM
 *-----------------------------------------------------------------------
 *     on entry                                                            
 *     --------                                                            
@@ -448,7 +453,7 @@
       DIMENSION SCRA1(8*LIM),ISCRA2(5*LIM),INCV(LIM)                  
       DIMENSION ICV(NUME),OLDVAL(NUME)                                
       LOGICAL RESTART,FIRST,DONE,HIEND,TSTSEL                         
-      
+      EXTERNAL OP                                                     
 *-----------------------------------------------------------------------
 *     
 *     on entry                                                            

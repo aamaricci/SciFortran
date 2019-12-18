@@ -160,7 +160,9 @@ contains
     call MPI_Init(ierr)
     call Error_MPI(ierr,"MPI_Start")
     if(present(comm))comm=MPI_COMM_WORLD
-    if(present(msg).AND.(msg.eqv..true.))call StartMsg_MPI(MPI_COMM_WORLD)
+    if(present(msg))then
+       if(msg)call StartMsg_MPI(MPI_COMM_WORLD)
+    endif
   end subroutine Init_MPI
 
   subroutine Finalize_MPI(comm)
