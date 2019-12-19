@@ -1,0 +1,256 @@
+diff -uN src/zgetv0.f src_fixed/zgetv0.f
+--- src/zgetv0.f	2019-12-19 09:35:07.000000000 +0100
++++ src_fixed/zgetv0.f	2019-12-19 09:37:13.000000000 +0100
+@@ -176,9 +176,7 @@
+ c
+       Double precision
+      &           dznrm2, dlapy2
+-      Complex*16
+-     &           zdotc
+-      external   zdotc, dznrm2, dlapy2
++      external   dznrm2, dlapy2
+ c
+ c     %-----------------%
+ c     | Data Statements |
+@@ -293,7 +291,7 @@
+ c
+       first = .FALSE.
+       if (bmat .eq. 'G') then
+-          cnorm  = zdotc (n, resid, 1, workd, 1)
++          call zdotc (cnorm, n, resid, 1, workd, 1)
+           rnorm0 = sqrt(dlapy2(dble(cnorm),dimag(cnorm)))
+       else if (bmat .eq. 'I') then
+            rnorm0 = dznrm2(n, resid, 1)
+@@ -350,7 +348,7 @@
+       end if
+ c
+       if (bmat .eq. 'G') then
+-         cnorm = zdotc (n, resid, 1, workd, 1)
++         call zdotc (cnorm, n, resid, 1, workd, 1)
+          rnorm = sqrt(dlapy2(dble(cnorm),dimag(cnorm)))
+       else if (bmat .eq. 'I') then
+          rnorm = dznrm2(n, resid, 1)
+diff -uN src/znaitr.f src_fixed/znaitr.f
+--- src/znaitr.f	2019-12-19 09:35:07.000000000 +0100
++++ src_fixed/znaitr.f	2019-12-19 09:37:44.000000000 +0100
+@@ -279,11 +279,9 @@
+ c     | External Functions |
+ c     %--------------------%
+ c
+-      Complex*16
+-     &           zdotc
+       Double precision
+      &           dlamch,  dznrm2, zlanhs, dlapy2
+-      external   zdotc, dznrm2, zlanhs, dlamch, dlapy2
++      external   dznrm2, zlanhs, dlamch, dlapy2
+ c
+ c     %---------------------%
+ c     | Intrinsic Functions |
+@@ -550,7 +548,7 @@
+ c        %-------------------------------------%
+ c
+          if (bmat .eq. 'G') then
+-             cnorm = zdotc (n, resid, 1, workd(ipj), 1)
++             call zdotc (cnorm, n, resid, 1, workd(ipj), 1)
+              wnorm = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
+          else if (bmat .eq. 'I') then
+              wnorm = dznrm2(n, resid, 1)
+@@ -622,7 +620,7 @@
+ c        %------------------------------%
+ c
+          if (bmat .eq. 'G') then
+-            cnorm = zdotc (n, resid, 1, workd(ipj), 1)
++            call zdotc (cnorm, n, resid, 1, workd(ipj), 1)
+             rnorm = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
+          else if (bmat .eq. 'I') then
+             rnorm = dznrm2(n, resid, 1)
+@@ -722,7 +720,7 @@
+ c        %-----------------------------------------------------%
+ c
+          if (bmat .eq. 'G') then
+-             cnorm  = zdotc (n, resid, 1, workd(ipj), 1)
++             call zdotc (cnorm, n, resid, 1, workd(ipj), 1)
+              rnorm1 = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
+          else if (bmat .eq. 'I') then
+              rnorm1 = dznrm2(n, resid, 1)
+diff -uN src/znaup2.f src_fixed/znaup2.f
+--- src/znaup2.f	2019-12-19 09:35:07.000000000 +0100
++++ src_fixed/znaup2.f	2019-12-19 09:38:15.000000000 +0100
+@@ -246,11 +246,9 @@
+ c     | External functions |
+ c     %--------------------%
+ c
+-      Complex*16
+-     &           zdotc
+       Double precision
+      &           dznrm2 , dlamch , dlapy2
+-      external   zdotc , dznrm2 , dlamch , dlapy2
++      external   dznrm2 , dlamch , dlapy2
+ c
+ c     %---------------------%
+ c     | Intrinsic Functions |
+@@ -754,7 +752,7 @@
+          end if
+ c
+          if (bmat .eq. 'G') then
+-            cmpnorm = zdotc  (n, resid, 1, workd, 1)
++            call zdotc  (cmpnorm, n, resid, 1, workd, 1)
+             rnorm = sqrt(dlapy2 (dble (cmpnorm),dimag (cmpnorm)))
+          else if (bmat .eq. 'I') then
+             rnorm = dznrm2 (n, resid, 1)
+diff -uN src/zneupd.f src_fixed/zneupd.f
+--- src/zneupd.f	2019-12-19 09:35:07.000000000 +0100
++++ src_fixed/zneupd.f	2019-12-19 09:38:40.000000000 +0100
+@@ -324,9 +324,9 @@
+      &           dznrm2, dlamch, dlapy2
+       external   dznrm2, dlamch, dlapy2
+ c
+-      Complex*16
+-     &           zdotc
+-      external   zdotc
++c
++c
++c
+ c
+ c     %-----------------------%
+ c     | Executable Statements |
+@@ -731,7 +731,7 @@
+ c                 | inner product can be set to j.           |
+ c                 %------------------------------------------%
+ c
+-                  workev(j) = zdotc(j, workl(ihbds), 1,
++                  call zdotc(workev(j), j, workl(ihbds), 1,
+      &                        workl(invsub+(j-1)*ldq), 1)
+  40         continue
+ c
+diff -uN parpack/src/pzgetv0.f parpack/src_fixed/pzgetv0.f
+--- parpack/src/pzgetv0.f	2019-12-19 09:35:07.000000000 +0100
++++ parpack/src_fixed/pzgetv0.f	2019-12-19 09:40:17.000000000 +0100
+@@ -199,9 +199,9 @@
+ c
+       Double precision
+      &           pdznorm2 , dlapy2
+-      Complex*16
+-     &           zdotc
+-      external   zdotc , pdznorm2 , dlapy2
++c
++c
++      external   pdznorm2 , dlapy2
+ c
+ c     %-----------------%
+ c     | Data Statements |
+@@ -331,7 +331,7 @@
+ c
+       first = .FALSE.
+       if (bmat .eq. 'G') then
+-          cnorm_buf = zdotc  (n, resid, 1, workd, 1)
++          call zdotc  (cnorm_buf, n, resid, 1, workd, 1)
+           call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
+      &          MPI_DOUBLE_COMPLEX , MPI_SUM, comm, ierr )
+           rnorm0 = sqrt(dlapy2 (dble (cnorm),dimag (cnorm)))
+@@ -392,7 +392,7 @@
+       end if
+ c
+       if (bmat .eq. 'G') then
+-         cnorm_buf = zdotc  (n, resid, 1, workd, 1)
++         call zdotc  (cnorm_buf, n, resid, 1, workd, 1)
+          call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
+      &            MPI_DOUBLE_COMPLEX , MPI_SUM, comm, ierr )
+          rnorm = sqrt(dlapy2 (dble (cnorm),dimag (cnorm)))
+diff -uN parpack/src/pznaitr.f parpack/src_fixed/pznaitr.f
+--- parpack/src/pznaitr.f	2019-12-19 09:35:07.000000000 +0100
++++ parpack/src_fixed/pznaitr.f	2019-12-19 09:40:48.000000000 +0100
+@@ -306,11 +306,11 @@
+ c     | External Functions |
+ c     %--------------------%
+ c
+-      Complex*16
+-     &           zdotc
++c
++c
+       Double precision
+      &           pdlamch10, pdznorm2, zlanhs, dlapy2
+-      external   zdotc, pdznorm2, zlanhs, pdlamch10, dlapy2
++      external   pdznorm2, zlanhs, pdlamch10, dlapy2
+ c
+ c     %---------------------%
+ c     | Intrinsic Functions |
+@@ -576,7 +576,7 @@
+ c        %-------------------------------------%
+ c
+          if (bmat .eq. 'G') then
+-             cnorm_buf = zdotc (n, resid, 1, workd(ipj), 1)
++             call zdotc (cnorm_buf, n, resid, 1, workd(ipj), 1)
+             call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
+      &           MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
+              wnorm = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
+@@ -652,7 +652,7 @@
+ c        %------------------------------%
+ c
+          if (bmat .eq. 'G') then
+-            cnorm_buf = zdotc (n, resid, 1, workd(ipj), 1)
++            call zdotc (cnorm_buf, n, resid, 1, workd(ipj), 1)
+             call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
+      &           MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
+             rnorm = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
+@@ -756,7 +756,7 @@
+ c        %-----------------------------------------------------%
+ c
+          if (bmat .eq. 'G') then
+-             cnorm_buf = zdotc (n, resid, 1, workd(ipj), 1)
++             call zdotc (cnorm_buf, n, resid, 1, workd(ipj), 1)
+             call MPI_ALLREDUCE( cnorm_buf, cnorm, 1,
+      &           MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
+              rnorm1 = sqrt( dlapy2(dble(cnorm),dimag(cnorm)) )
+diff -uN parpack/src/pznaup2.f parpack/src_fixed/pznaup2.f
+--- parpack/src/pznaup2.f	2019-12-19 09:35:07.000000000 +0100
++++ parpack/src_fixed/pznaup2.f	2019-12-19 09:41:09.000000000 +0100
+@@ -256,11 +256,11 @@
+ c     | External functions |
+ c     %--------------------%
+ c
+-      Complex*16
+-     &           zdotc
++c
++c
+       Double precision
+      &           pdznorm2, pdlamch10, dlapy2
+-      external   zdotc, pdznorm2, pdlamch10, dlapy2
++      external   pdznorm2, pdlamch10, dlapy2
+ c
+ c     %---------------------%
+ c     | Intrinsic Functions |
+@@ -770,7 +770,7 @@
+          end if
+ c
+          if (bmat .eq. 'G') then
+-            cmpnorm_buf = zdotc (n, resid, 1, workd, 1)
++            call zdotc (cnorm_buf, n, resid, 1, workd, 1)
+             call MPI_ALLREDUCE( cmpnorm_buf, cmpnorm, 1,
+      &               MPI_DOUBLE_COMPLEX, MPI_SUM, comm, ierr )
+             rnorm = sqrt(dlapy2(dble(cmpnorm),dimag(cmpnorm)))
+diff -uN parpack/src/pzneupd.f parpack/src_fixed/pzneupd.f
+--- parpack/src/pzneupd.f	2019-12-19 09:35:07.000000000 +0100
++++ parpack/src_fixed/pzneupd.f	2019-12-19 09:41:38.000000000 +0100
+@@ -339,9 +339,9 @@
+      &           dznrm2,pdlamch10,dlapy2
+       external   dznrm2,pdlamch10,dlapy2
+ c
+-      Complex*16
+-     &           zdotc
+-      external   zdotc
++c
++c      
++c
+ c
+ c     %---------------------%
+ c     | Intrinsic Functions |
+@@ -743,7 +743,7 @@
+ c                 | inner product can be set to j.           |
+ c                 %------------------------------------------%
+ c
+-                  workev(j) = zdotc(j, workl(ihbds), 1,
++                  call zdotc(workev(j), j, workl(ihbds), 1,
+      &                        workl(invsub+(j-1)*ldq), 1)
+  40         continue
+ c

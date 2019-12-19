@@ -44,6 +44,15 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,t
   !MPI
   logical                   :: mpi_master
   !
+  integer ::  logfil, ndigit, mgetv0,&
+       msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
+       mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
+       mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
+  common /debug/logfil, ndigit, mgetv0,&
+       msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
+       mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
+       mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
+  !
   if(MpiComm == MPI_COMM_NULL)return
   !
   Ns     = size(evec,1)
@@ -59,6 +68,13 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,t
   tol_   = 0d0       ; if(present(tol))tol_=tol
   verb   = .false.   ; if(present(iverbose))verb=iverbose
   vran   = .true.    ; if(present(vrandom))vran=vrandom
+  if(verb)then
+     ndigit=-4
+     logfil = 6
+     mcaupd=1;mnaupd=1
+     mcaup2=1;mnaup2=1
+     mceupd=4;mneupd=4
+  endif
   if(maxncv>Ns)then
      maxncv=Ns
      print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns

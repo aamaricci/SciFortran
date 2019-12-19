@@ -176,9 +176,7 @@ c     %--------------------%
 c
       Double precision
      &           dznrm2, dlapy2
-      Complex*16
-     &           zdotc
-      external   zdotc, dznrm2, dlapy2
+      external   dznrm2, dlapy2
 c
 c     %-----------------%
 c     | Data Statements |
@@ -293,7 +291,7 @@ c
 c
       first = .FALSE.
       if (bmat .eq. 'G') then
-          cnorm  = zdotc (n, resid, 1, workd, 1)
+          call zdotc (cnorm, n, resid, 1, workd, 1)
           rnorm0 = sqrt(dlapy2(dble(cnorm),dimag(cnorm)))
       else if (bmat .eq. 'I') then
            rnorm0 = dznrm2(n, resid, 1)
@@ -350,7 +348,7 @@ c
       end if
 c
       if (bmat .eq. 'G') then
-         cnorm = zdotc (n, resid, 1, workd, 1)
+         call zdotc (cnorm, n, resid, 1, workd, 1)
          rnorm = sqrt(dlapy2(dble(cnorm),dimag(cnorm)))
       else if (bmat .eq. 'I') then
          rnorm = dznrm2(n, resid, 1)

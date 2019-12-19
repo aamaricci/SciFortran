@@ -40,6 +40,15 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   character(len=2)          :: which_
   real(8),external          :: dnrm2
   !
+  integer ::  logfil, ndigit, mgetv0,&
+       msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
+       mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
+       mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
+  common /debug/logfil, ndigit, mgetv0,&
+       msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
+       mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
+       mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
+  !
   Ns     = size(evec,1)
   Neigen = size(eval)
   call assert_shape(Evec,[Ns,Neigen],"Arpack_d","Evec")
@@ -53,6 +62,13 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   tol_  = 0d0        ; if(present(tol))tol_=tol
   verb  =.false.     ; if(present(iverbose))verb=iverbose
   vran  =.true.      ; if(present(vrandom))vran=vrandom
+  if(verb)then
+     ndigit=-4
+     logfil = 6
+     mcaupd=1;mnaupd=1
+     mcaup2=1;mnaup2=1
+     mceupd=4;mneupd=4
+  endif
   !
   ldv    = Ns        ; if(maxncv>Ns)maxncv=Ns
   n      = maxn
