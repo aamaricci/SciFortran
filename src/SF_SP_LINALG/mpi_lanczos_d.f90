@@ -113,7 +113,7 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshol
      call mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,alanc(iter),blanc(iter))
      vect = vect + vin*Z(iter,1)
   end do
-  norm_tmp=sqrt(dot_product(vect,vect)); norm=0d0
+  norm_tmp=dot_product(vect,vect); norm=0d0
   call Allreduce_MPI(MpiComm,norm_tmp,norm)
   vect=vect/sqrt(norm)
   if(verb)then
