@@ -1,4 +1,4 @@
-subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbose,vrandom)
+subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,bmat,v0,tol,iverbose)
   !Interface to Matrix-Vector routine:
   interface
      subroutine MatVec(Nloc,vin,vout)
@@ -13,10 +13,10 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   integer,optional             :: Nblock
   integer,optional             :: Nitermax
   character(len=2),optional    :: which
+  character(len=1),optional    :: bmat
   complex(8),optional          :: v0(size(evec,1))
   real(8),optional             :: tol
   logical,optional             :: iverbose
-  logical,optional             :: vrandom
   !Dimensions:
   integer                      :: Ns
   integer                      :: Neigen
@@ -33,16 +33,16 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   integer                      :: ipntr(14)
   !Control Vars:
   integer                      :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                      :: rvec,verb,vran
+  logical                      :: rvec,verb
   integer                      :: i
   real(8)                      :: sigma
   real(8)                      :: tol_
-  character                    :: bmat  
+  character                    :: bmat_
   character(len=2)             :: which_
   real(8),external             :: dznrm2,dlapy2
   real(8),allocatable          :: reV(:),imV(:)
   integer,allocatable          :: Eorder(:)
-  
+
   integer ::  logfil, ndigit, mgetv0,&
        msaupd, msaup2, msaitr, mseigt, msapps, msgets, mseupd,&
        mnaupd, mnaup2, mnaitr, mneigh, mnapps, mngets, mneupd,&
@@ -60,10 +60,19 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   maxnev = Neigen
   maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
   maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
+  bmat_  = 'I'       ; if(present(bmat))bmat_=bmat
   which_='SR'        ; if(present(which))which_=which
   tol_  = 0d0        ; if(present(tol))tol_=tol
   verb  =.false.     ; if(present(iverbose))verb=iverbose
-  vran  =.true.      ; if(present(vrandom))vran=vrandom
+  !
+  if(bmat_/='I'.AND.bmat_/='G')stop "ARPACK: selected *bmat* is wrong. can be [I, G]"
+  ! which_/="LM" .OR. &
+  ! which_/="SM" .OR. &       
+  ! which_/="LI" .OR. &
+  ! which_/="SI"
+  if(which_/="LR" .OR. which_/="SR")then
+     stop "ARPACK: selected *which_* is wrong. can be [LM, SM, LR, SR, LI, SI]"
+  endif
   if(verb)then
      ndigit=-4
      logfil = 6
@@ -76,7 +85,6 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   n      = maxn
   nev    = maxnev
   ncv    = maxncv
-  bmat   = 'I'
   ! 
   allocate(ax(n))
   allocate(d(ncv))
@@ -101,37 +109,24 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   info   = 1
   ido    = 0
   ishfts    = 1
-  mode1     = 1
   iparam(1) = ishfts
   iparam(3) = maxitr
+  mode1     = 1
   iparam(7) = mode1
   if(present(v0))then
      resid=v0
   else
-     if(vran)then
-        ! call random_seed(size=nrandom)
-        ! if(allocated(seed_random))deallocate(seed_random)
-        ! allocate(seed_random(nrandom))
-        ! seed_random=1234567
-        ! call random_seed(put=seed_random)
-        ! allocate(reV(size(resid)),imV(size(resid)))
-        ! call random_number(reV)
-        ! call random_number(imV)
-        ! resid=dcmplx(reV,imV)
-        ! deallocate(reV,imV)!,seed_random)
-        call mt_random(resid)
-     else
-        resid = 1d0
-     endif
+     call mt_random(resid)
   endif
   resid=resid/sqrt(dot_product(resid,resid))
   !
   !MAIN LOOP, REVERSE COMMUNICATION
   do
-     call znaupd(ido,bmat,n,which_,nev,tol_,resid,ncv,v,ldv,&
+     call znaupd(ido,bmat_,n,which_,nev,tol_,resid,ncv,v,ldv,&
           iparam,ipntr,workd,workl,lworkl,rwork,info)
      if(ido/=-1.AND.ido/=1)exit
-     !  Perform matrix vector multiplication: y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
+     !  Perform matrix vector multiplication:
+     !  y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
      call MatVec(N,workd(ipntr(1)),workd(ipntr(2)) )
   end do
   !
@@ -141,7 +136,7 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
      include "error_msg_arpack.h90"
   else
      rvec = .true.
-     call zneupd  (rvec,'A',select,d,v,ldv,sigma,workev,bmat,n,which_,&
+     call zneupd  (rvec,'A',select,d,v,ldv,sigma,workev,bmat_,n,which_,&
           nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,rwork,ierr)
      !  Eigenvalues are returned in the first column of the two dimensional 
      !  array D and the corresponding eigenvectors are returned in the first 

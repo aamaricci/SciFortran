@@ -1,3 +1,44 @@
+c$$$     To find the minimum of a function F(x) of n variables x. It is assumed that the function is differentiable, although it is not necessary to supply a formula for the derivatives. The method used is a quasi-Newton method in which derivatives are estimated by differences and is described in R. Fletcher, FORTRAN subroutines for minimization by quasi-Newton methods, AERE Report R7125 (1972). The subroutine complements VA04 but some comparisons (R. Fletcher, loc. cit) indicate that VA04 is less efficient than VA10 and more affected by round off error. VA04 also uses twice as much storage as VA10. It is therefore suggested that VA10 be used in the first instance on any problem. VA10 should not be used when explicit expressions are available for derivatives (use VA09) nor when the function is a sum of squares (use VA05, VA02 or one of the NS routines as appropriate).
+
+c$$$
+c$$$ CALL VA10AD(FUNCT,N,X,F,G,H,W,DFN,XM,HH,EPS, MODE,MAXFN,IPRINT,IEXIT)
+c$$$ FUNCT is the name of the subroutine provided by the user which is considered in section 3. It must be declared in an EXTERNAL statement.
+c$$$ N is an INTEGER to be set to the number of variables (N ≥ 2).
+c$$$ X is a REAL (DOUBLE PRECISION in the D version) array in which the solution is stored. An initial approximation
+c$$$must be set in X on entry to VA10 and the best estimate obtained will be returned on exit.
+c$$$ F is a REAL (DOUBLE PRECISION in the D version) number in which the best value of F(x) corresponding to X
+c$$$above will be returned.
+c$$$ G is a REAL (DOUBLE PRECISION in the D version) array of N elements which is used to store an estimate of the
+c$$$gradient vector ∂F(x)/∂x. This array need not be set on entry.
+c$$$ H is a REAL (DOUBLE PRECISION in the D version) array of dimension N(N+1)/2 elements in which an estimate of the Hessian matrix ∂ 2 F/(∂x i ∂x j ) is stored. The matrix is represented in the product form LDLT where L is a lower triangular matrix with unit diagonals and D is a diagonal matrix. The lower triangle of L is stored by columns in H excepting that the unit diagonal elements are replaced by the corresponding elements of D. The setting of H on entry is controlled by the parameter MODE (q.v.).
+c$$$ A is a REAL (DOUBLE PRECISION in the D version) array of 3N elements used as working space.
+c$$$ DFN isaREAL(DOUBLEPRECISIONintheDversion)numberwhichmustbesetsoastogiveVA10anestimateof the likely reduction to be obtained in F(x). DFN is used only on the first iteration so an order of magnitude estimate will suffice. The information can be provided in different ways depending upon the sign of DFN which should be set in one of the following ways:
+c$$$
+c$$$ if DFN > 0 the setting of DFN itself will be taken as the likely reduction to be obtained in F(x).
+c$$$ if DFN=0 it will be assumed that an estimate of the minimum value of F(x) has been set in argument F, and the
+c$$$likely reduction in F(x) will be computed according to the initial function value.
+c$$$ if DFN < 0 a multiple |DFN| of the modulus of the initial function value will be taken as an estimate of the likely
+c$$$reduction.
+c$$$ XM is a REAL (DOUBLE PRECISION in the D version) array of N elements to be set on entry so that XM(I) > 0 contains an indication of the magnitude of X(I). This quantity need not be set precisely as it is merely used in scaling the problem.
+c$$$ HH is a REAL (DOUBLE PRECISION in the D version) number to be set so that HH XM(I) contains a step length to be usedincalculatingG(I)bydifferences.SetHHequalto2−t/2 wheretisthenumberofsignificantbinarydigits in the calculation of F. If F contains only small errors the setting HH=1.E-3 is appropriate for VA10A and HH=1.0D-6 for VA10AD.
+c$$$ EPS is a REAL (DOUBLE PRECISION in the D version) number to be set on entry so that the accuracy required in X(I) is EPS XM(I) for all I, (EPS > 0).
+c$$$ MODE is an INTEGER which controls the setting of the initial estimate of the Hessian matrix in the parameter H. The following settings of MODE are permitted:
+c$$$ if MODE=1 an estimate corresponding to a unit matrix is set in H by VA10A.
+c$$$ if MODE=2 VA10A/AD assumes that the Hessian matrix itself has been set in H by columns of its lower triangle,
+c$$$ T
+c$$$and the conversion to LDL form is carried out by VA10. The Hessian matrix must be positive definite.
+c$$$i f MODE=3 VA10A/AD assumes that the Hessian matrix has been set in H in product form. This is convenient when using the H matrix from one problem as an initial estimate for another, in which case the contents of H are passed on unchanged.
+c$$$ MAXFN is an INTEGER set to the maximum number of calls of FUNCT permitted. Up to 2N more calls may be taken if the limit is exceeded whilst evaluating a gradient vector by differences.
+c$$$ IPRINT An is an INTEGER controlling printing. Printing occurs every |IPRINT| iterations and also on exit, in the form Iteration No. No of calls of FUNCT,IEXIT (on exit only) Function only X(1),X(2),...,X(N) 8 to a line (5 in VA10AD) G(1),G(2),...,G(N) 8 to a line (5 in VA10AD)
+c$$$The values of X and G can be suppressed on intermediate iterations by setting IPRINT < 0. All intermediate printing can be suppressed by setting IPRINT=MAXFN+1. All printing can be suppressed by setting IPRINT=0.
+c$$$ IEXIT is an INTEGER giving the reason for exit from VA10A/AD. This will be set by VA10A/AD as follows if IEXIT=0 (MODE=2 only) the estimate of the Hessian matrix is not positive definite.
+c$$$ if IEXIT=1 a normal exit has been made in which |DX(I)| < EPS(I) for all I=1,2,...,N, where DX(I) is the change in X on an iteration.
+c$$$ T
+c$$$ if IEXIT=2 G DX > 0. This is an error exit, either due to rounding errors because EPS is set too small for the computer word length, or because the truncation error in the finite difference formula for G is dominant.
+c$$$ if IEXIT=3 FUNCT has been called MAXFN times.
+
+      
+      
 *######DATE 9 February 1994 COPYRIGHT AEA Technology
 C       Toolpack tool decs employed.
 C       Arg dimensions made *.

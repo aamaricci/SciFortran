@@ -1,4 +1,4 @@
-subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbose,vrandom)
+subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,bmat,v0,tol,iverbose)
   !Interface to Matrix-Vector routine:
   interface
      subroutine MatVec(Nloc,vin,vout)
@@ -13,10 +13,10 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   integer,optional          :: Nblock
   integer,optional          :: Nitermax
   character(len=2),optional :: which
+  character(len=1),optional :: bmat
   real(8),optional          :: v0(size(evec,1))!(ns)
   real(8),optional          :: tol
   logical,optional          :: iverbose
-  logical,optional          :: vrandom
   !Dimensions:
   integer                   :: Ns
   integer                   :: Neigen
@@ -32,11 +32,11 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   integer                   :: ipntr(11)
   !Control Vars:
   integer                   :: ido,ierr,info,ishfts,j,lworkl,maxitr,mode1
-  logical                   :: rvec,verb,vran
+  logical                   :: rvec,verb
   integer                   :: i
   real(8)                   :: sigma
   real(8)                   :: tol_
-  character                 :: bmat  
+  character                 :: bmat_
   character(len=2)          :: which_
   real(8),external          :: dnrm2
   !
@@ -58,10 +58,21 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   !
   maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
   maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
+  bmat_  = 'I'       ; if(present(bmat))bmat_=bmat
   which_='SA'        ; if(present(which))which_=which
   tol_  = 0d0        ; if(present(tol))tol_=tol
   verb  =.false.     ; if(present(iverbose))verb=iverbose
-  vran  =.true.      ; if(present(vrandom))vran=vrandom
+  !
+  if(bmat_/='I'.AND.bmat_/='G')stop "ARPACK: selected *bmat* is wrong. can be [I, G]"
+  if(&
+       which_/="LA" .OR. &
+       which_/="SA" .OR. &
+       which_/="LM" .OR. &
+       which_/="SM" .OR. &
+       which_/="BE")then
+     stop "ARPACK: selected *which_* is wrong. can be [LA, SA, LM, SM, BE]"
+  endif
+
   if(verb)then
      ndigit=-4
      logfil = 6
@@ -74,7 +85,6 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   n      = maxn
   nev    = maxnev
   ncv    = maxncv
-  bmat   = 'I'
   ! 
   allocate(ax(n))
   allocate(d(ncv,2))
@@ -93,36 +103,26 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
   info      = 1
   ido       = 0
   ishfts    = 1
-  mode1     = 1
   iparam(1) = ishfts
   iparam(3) = maxitr
+  mode1     = 1
   iparam(7) = mode1
   if(present(v0))then
      resid=v0
   else
-     if(vran)then
-        ! call random_seed(size=nrandom)
-        ! if(allocated(seed_random))deallocate(seed_random)
-        ! allocate(seed_random(nrandom))
-        ! seed_random=1234567
-        ! call random_seed(put=seed_random)
-        ! call random_number(resid)
-        ! deallocate(seed_random)
-        call mt_random(resid)
-     else
-        resid = 1d0             !start with unitary vector 1/sqrt(Ndim)
-     endif
+     call mt_random(resid)
   endif
   resid=resid/sqrt(dot_product(resid,resid))
   !
   !MAIN LOOP, REVERSE COMMUNICATION
   do
-     call dsaupd(ido,bmat,n,which_,nev,tol_,resid,ncv,v,ldv,&
+     call dsaupd(ido,bmat_,n,which_,nev,tol_,resid,ncv,v,ldv,&
           iparam,ipntr,workd,workl,lworkl,info)
      if(ido/=-1.AND.ido/=1)then
         exit
      end if
-     !  Perform matrix vector multiplication: y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
+     !  Perform matrix vector multiplication:
+     !  y <--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output
      call MatVec(N,workd(ipntr(1)),workd(ipntr(2)) )
   end do
   !
@@ -132,7 +132,7 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbo
      include "error_msg_arpack.h90"
   else
      rvec = .true.
-     call dseupd(rvec,'All',select,d,v,ldv,sigma,bmat,n,which_,&
+     call dseupd(rvec,'All',select,d,v,ldv,sigma,bmat_,n,which_,&
           nev,tol_,resid,ncv,v,ldv,iparam,ipntr,workd,workl,lworkl,ierr)
      do j=1,neigen
         eval(j)=d(j,1)

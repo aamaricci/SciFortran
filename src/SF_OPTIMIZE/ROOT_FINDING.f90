@@ -219,16 +219,16 @@ contains
 
 
 
-  subroutine broyden1(ff,x,check,maxits,tolf,tolmin,stpmx,noexit)
+  subroutine broyden1(ff,x,check,maxits,tol,tol1,tolmin,stpmx,noexit)
     procedure(broydn_func)               :: ff
     real(8), dimension(:), intent(inout) :: x
     logical, optional                    :: noexit
     logical, optional                    :: check
     integer, optional                    :: maxits
-    real(8), optional                    :: tolf,tolmin,stpmx
+    real(8), optional                    :: tol,tol1,tolmin,stpmx
     logical                              :: check_
     integer                              :: maxits_=200
-    real(8)                              :: tolf_=1.0e-10,tolmin_=1.0e-7,stpmx_=100.0
+    real(8)                              :: tolf_=1d-8,tolmin_=1d-7,stpmx_=100d0,tol1_
     real(8),parameter                    :: eps=epsilon(x),tolx=eps
     integer                              :: i,its,k,n
     real(8)                              :: f,fold,stpmax
@@ -240,11 +240,14 @@ contains
     !
     if(present(MAXITS))   MAXITS_  = MAXITS  
     !
-    if(present(TOLF))     TOLF_    = TOLF
+    if(present(TOL))     TOLF_    = TOL
     !
     if(present(TOLMIN))   TOLMIN_  = TOLMIN  
     !
-    if(present(STPMX))    STPMX_   = STPMX  
+    if(present(STPMX))    STPMX_   = STPMX
+    !
+    tol1_ = 0.01d0*tolf_
+    if(present(tol1))tol1_ = tol1
     !
     if(associated(funcv))nullify(funcv)
     funcv=>ff
@@ -252,7 +255,8 @@ contains
     !
     n=size(x)
     f=fmin(x)
-    if (maxval(abs(fvec(:))) < 0.01d0*TOLF_) then
+    ! if (maxval(abs(fvec(:))) < 0.01d0*TOLF_) then
+    if (maxval(abs(fvec(:))) < Tol1_ ) then
        check_=.false.
        if(present(check))check=check_
        RETURN

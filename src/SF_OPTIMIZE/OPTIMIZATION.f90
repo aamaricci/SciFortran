@@ -62,7 +62,7 @@ MODULE OPTIMIZE_MINIMIZE
   public   :: bracket       !Bracket the minimum of the function.
 
 
-  real(8)  :: df_eps=0d0
+  real(8)  :: df_eps=tiny(1d0)
 
 
 contains
@@ -1301,21 +1301,21 @@ contains
   !     with routines contained elsewhere. an easier way would be to include
   !     the routines inside each of the two following fmin_cg routines. 
   !+-------------------------------------------------------------------+
-  subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,eps,istop,type,iverbose)
+  subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
     procedure(cgfit_func)                :: f
     procedure(cgfit_fjac)                :: df
     real(8), dimension(:), intent(inout) :: p
     integer, intent(out)                 :: iter
     real(8), intent(out)                 :: fret
-    real(8),optional                     :: ftol,eps
-    real(8)                              :: ftol_,eps_
-    integer, optional                    :: itmax,type,istop
-    integer                              :: itmax_,type_,istop_
+    real(8),optional                     :: ftol
+    real(8)                              :: ftol_
+    integer, optional                    :: itmax,istop
+    integer                              :: itmax_,istop_
     integer                              :: its
     real(8)                              :: dgg,fp,gam,gg,err_
-    real(8), dimension(size(p))          :: g,h,xi
+    real(8), dimension(size(p))          :: g,h,xi,p_prev
     logical,optional                     :: iverbose
-    logical                              :: iverbose_
+    logical                              :: iverbose_,converged
     !
     if(associated(func))nullify(func) ; func=>f
     if(associated(fjac))nullify(fjac) ; fjac=>df
@@ -1325,11 +1325,6 @@ contains
     if(present(ftol))then
        ftol_=ftol
        if(iverbose_)write(*,"(A,ES9.2)")"CG: ftol updated to:",ftol
-    endif
-    eps_=1.d-4
-    if(present(eps))then
-       eps_=eps
-       if(iverbose_)write(*,"(A,ES9.2)")"CG: eps updated to:",eps
     endif
     itmax_=500
     if(present(itmax))then
@@ -1341,11 +1336,6 @@ contains
        istop_=istop
        if(iverbose_)write(*,"(A,I3)")"CG: istop update to:",istop
     endif
-    type_=0
-    if(present(type))then
-       type_=type
-       if(iverbose_)write(*,"(A,I3)")"CG: type update to:",type
-    endif
     !
     fp=func(p)
     xi=fjac(p)
@@ -1353,26 +1343,26 @@ contains
     h=g
     xi=h
     do its=1,itmax_
-       iter=its
+       iter = its
+       p_prev = p
        call dlinmin(p,xi,fret,ftol_)
        select case(istop_)
        case default
-          err_ = abs(fret-fp)/(abs(fret)+abs(fp)+eps_)
+          converged = &
+               (abs(fret-fp)/(1d0+abs(fp))<ftol_) &
+               .AND. &
+               (dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_)
        case(1)
-          err_ = abs(fret-fp)/(abs(fp)+eps_)
+          converged = abs(fret-fp)/(1d0+abs(fp))<ftol_
        case(2)
-          err_ = abs(fret-fp)
+          converged = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_
        end select
-       if( err_ <= ftol_ )return
+       if( converged )return
        fp = fret
        xi = fjac(p)
        gg=dot_product(g,g)
-       select case(type_)
-       case default             
-          dgg=dot_product(xi+g,xi)  !polak-ribiere
-       case (1)
-          dgg=dot_product(xi,xi)   !fletcher-reeves.
-       end select
+       dgg=dot_product(xi+g,xi)  !polak-ribiere
+       !dgg=dot_product(xi,xi)   !fletcher-reeves.
        if (gg == 0.d0) return
        gam=dgg/gg
        g=-xi
@@ -1387,20 +1377,20 @@ contains
   !
   !
   !NUMERICAL EVALUATION OF THE GRADIENT:
-  subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,eps,istop,type,deps,iverbose)
+  subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,istop,deps,iverbose)
     procedure(cgfit_func)                :: f
     real(8), dimension(:), intent(inout) :: p
     integer, intent(out)                 :: iter
     real(8), intent(out)                 :: fret
-    real(8),optional                     :: ftol,eps,deps
-    real(8)                              :: ftol_,eps_,deps_
-    integer, optional                    :: itmax,type,istop
-    integer                              :: itmax_,type_,istop_
+    real(8),optional                     :: ftol,deps
+    integer, optional                    :: itmax,istop
+    real(8)                              :: ftol_,deps_
+    integer                              :: itmax_,istop_
     integer                              :: its
     real(8)                              :: dgg,fp,gam,gg,err_
-    real(8), dimension(size(p))          :: g,h,xi
+    real(8), dimension(size(p))          :: g,h,xi,p_prev
     logical,optional                     :: iverbose
-    logical                              :: iverbose_
+    logical                              :: iverbose_,converged
     !
     !this is just to ensure that routine needing dfunc allocated
     !and properly definted will continue to work.
@@ -1413,11 +1403,6 @@ contains
        ftol_=ftol
        if(iverbose_)write(*,"(A,ES9.2)")"CG: ftol updated to:",ftol
     endif
-    eps_=1.d-4
-    if(present(eps))then
-       eps_=eps
-       if(iverbose_)write(*,"(A,ES9.2)")"CG: eps updated to:",eps
-    endif
     itmax_=500
     if(present(itmax))then
        itmax_=itmax
@@ -1427,11 +1412,6 @@ contains
     if(present(istop))then
        istop_=istop
        if(iverbose_)write(*,"(A,I3)")"CG: istop update to:",istop
-    endif
-    type_=0
-    if(present(type))then
-       type_=type
-       if(iverbose_)write(*,"(A,I3)")"CG: type update to:",type
     endif
     deps_=0d0
     if(present(deps))then
@@ -1447,33 +1427,23 @@ contains
     xi=h
     do its=1,itmax_
        iter=its
-       ! print*,"iter:",its,"--",p
-       ! print*,"f(p): >>",fp
-       ! print*,"grad: >>",xi
        call dlinmin(p,xi,fret,ftol_)
        select case(istop_)
        case default
-          err_ = abs(fret-fp)/(abs(fret)+abs(fp)+eps_)
+          converged = &
+               (abs(fret-fp)/(1d0+abs(fp))<ftol_) &
+               .AND. &
+               (dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_)
        case(1)
-          err_ = abs(fret-fp)/(abs(fp)+eps_)
+          converged = abs(fret-fp)/(1d0+abs(fp))<ftol_
        case(2)
-          err_ = abs(fret-fp)
+          converged = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_
        end select
-       if( err_ <= ftol_)return
+       if( converged )return
        fp=fret
        xi = fjac(p)
-       ! if(ifix_)then
-       !    if(dot_product(xi,xi)<1d-15)xi=xi+1d-15
-       ! endif
-       !
        gg=dot_product(g,g)
-       !
-       select case(type_)
-       case default             
-          dgg=dot_product(xi+g,xi)  !polak-ribiere
-       case (1)
-          dgg=dot_product(xi,xi)   !fletcher-reeves.
-       end select
+       dgg=dot_product(xi+g,xi)  !polak-ribiere
        if (gg == 0d0) return
        gam=dgg/gg
        g=-xi
@@ -1846,9 +1816,6 @@ contains
   ! Ciyou Zhu , Richard H. Byrd , Peihuang Lu and Jorge Nocedal: "L-BFGS-B: 
   ! FORTRAN SUBROUTINES FOR LARGE-SCALE BOUND CONSTRAINED OPTIMIZATION"
   !--------------------------------------------------------------------
-
-
-
   subroutine bfgs_with_grad(func,grad,x,l,u,nbd,factr,pgtol,iprint,nloop)
     interface
        function func(x)
@@ -1874,7 +1841,7 @@ contains
     integer,dimension(:),allocatable,optional :: nbd
     real(8),dimension(:),allocatable          :: x,l_,u_,g,wa
     real(8),dimension(:),allocatable,optional :: l,u
-!
+    !
     n=size(x)
     factr_  = 1.0d+7
     pgtol_  = 1.0d-5
@@ -1888,31 +1855,31 @@ contains
     if(present(pgtol))pgtol_=pgtol
     if(present(iprint))iprint_=iprint
     if(present(nbd))then
-      nbd_=nbd
-      l_=l
-      u_=u
+       nbd_=nbd
+       l_=l
+       u_=u
     else
-      allocate ( nbd_(n), l_(n), u_(n))
-      nbd_=0
-      l_=0.d0
-      u_=0.d0
+       allocate ( nbd_(n), l_(n), u_(n))
+       nbd_=0
+       l_=0.d0
+       u_=0.d0
     endif
-!     The beginning of the loop
- 
+    !     The beginning of the loop
+
     do while(task(1:2).eq.'FG'.or.task.eq.'NEW_X'.or.task.eq.'START') 
-!    
-!     This is the call to the L-BFGS-B code.
-         
-      call setulb ( n, m, x, l_, u_, nbd_, f, g, factr_, pgtol_, &
-                       wa, iwa, task, iprint_,&
-                       csave, lsave, isave, dsave )
-      if (task(1:2) .eq. 'FG') then  
-        f=func(x)
-        g=grad(x)
-      endif
-      if(present(nloop))then
-        if(isave(30) .ge. nloop)task='STOP: TOTAL NO. OF LOOPS EXCEEDS LIMIT'
-      endif
+       !    
+       !     This is the call to the L-BFGS-B code.
+
+       call setulb ( n, m, x, l_, u_, nbd_, f, g, factr_, pgtol_, &
+            wa, iwa, task, iprint_,&
+            csave, lsave, isave, dsave )
+       if (task(1:2) .eq. 'FG') then  
+          f=func(x)
+          g=grad(x)
+       endif
+       if(present(nloop))then
+          if(isave(30) .ge. nloop)task='STOP: TOTAL NO. OF LOOPS EXCEEDS LIMIT'
+       endif
     end do
     deallocate (nbd_,l_,u_,iwa,wa,g)
   end subroutine bfgs_with_grad
@@ -1938,7 +1905,7 @@ contains
     integer,dimension(:),allocatable,optional :: nbd
     real(8),dimension(:),allocatable          :: x,l_,u_,g,wa
     real(8),dimension(:),allocatable,optional :: l,u
-!
+    !
     n=size(x)
     factr_  = 1.0d+7
     pgtol_  = 1.0d-5
@@ -1952,31 +1919,31 @@ contains
     if(present(pgtol))pgtol_=pgtol
     if(present(iprint))iprint_=iprint
     if(present(nbd))then
-      nbd_=nbd
-      l_=l
-      u_=u
+       nbd_=nbd
+       l_=l
+       u_=u
     else
-      allocate ( nbd_(n), l_(n), u_(n))
-      nbd_=0
-      l_=0.d0
-      u_=0.d0
+       allocate ( nbd_(n), l_(n), u_(n))
+       nbd_=0
+       l_=0.d0
+       u_=0.d0
     endif
-!     The beginning of the loop
- 
+    !     The beginning of the loop
+
     do while(task(1:2).eq.'FG'.or.task.eq.'NEW_X'.or.task.eq.'START') 
-         
-!     This is the call to the L-BFGS-B code.
-         
-      call setulb ( n, m, x, l_, u_, nbd_, f, g, factr_, pgtol_, &
-                       wa, iwa, task, iprint_,&
-                       csave, lsave, isave, dsave )
-      if (task(1:2) .eq. 'FG') then  
-        f=func(x)
-        g=f_jac_1n_func(func,size(x),x)
-      endif
-      if(present(nloop))then
-        if(isave(30) .ge. nloop)task='STOP: TOTAL NO. of f AND g EVALUATIONS EXCEEDS LIMIT'
-      endif
+
+       !     This is the call to the L-BFGS-B code.
+
+       call setulb ( n, m, x, l_, u_, nbd_, f, g, factr_, pgtol_, &
+            wa, iwa, task, iprint_,&
+            csave, lsave, isave, dsave )
+       if (task(1:2) .eq. 'FG') then  
+          f=func(x)
+          g=f_jac_1n_func(func,size(x),x)
+       endif
+       if(present(nloop))then
+          if(isave(30) .ge. nloop)task='STOP: TOTAL NO. of f AND g EVALUATIONS EXCEEDS LIMIT'
+       endif
     end do
     deallocate (nbd_,l_,u_,iwa,wa,g)
   end subroutine bfgs_no_grad
