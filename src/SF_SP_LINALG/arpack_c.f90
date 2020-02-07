@@ -1,4 +1,4 @@
-subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,bmat,v0,tol,iverbose)
+subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,bmat,v0,tol,iverbose)
   !Interface to Matrix-Vector routine:
   interface
      subroutine MatVec(Nloc,vin,vout)
@@ -12,7 +12,7 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,bmat,v0,tol,i
   complex(8)                   :: evec(:,:)![Ns,Neigen]
   integer,optional             :: Nblock
   integer,optional             :: Nitermax
-  character(len=2),optional    :: which
+  ! character(len=2),optional    :: which
   character(len=1),optional    :: bmat
   complex(8),optional          :: v0(size(evec,1))
   real(8),optional             :: tol
@@ -61,7 +61,7 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,bmat,v0,tol,i
   maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
   maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
   bmat_  = 'I'       ; if(present(bmat))bmat_=bmat
-  which_='SR'        ; if(present(which))which_=which
+  which_='SR'       ! ; if(present(which))which_=which
   tol_  = 0d0        ; if(present(tol))tol_=tol
   verb  =.false.     ; if(present(iverbose))verb=iverbose
   !
@@ -70,9 +70,9 @@ subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,which,bmat,v0,tol,i
   ! which_/="SM" .OR. &       
   ! which_/="LI" .OR. &
   ! which_/="SI"
-  if(which_/="LR" .OR. which_/="SR")then
-     stop "ARPACK: selected *which_* is wrong. can be [LM, SM, LR, SR, LI, SI]"
-  endif
+  ! if(which_/="LR" .OR. which_/="SR")then
+  !    stop "ARPACK: selected *which_* is wrong. can be [LM, SM, LR, SR, LI, SI]"
+  ! endif
   if(verb)then
      ndigit=-4
      logfil = 6

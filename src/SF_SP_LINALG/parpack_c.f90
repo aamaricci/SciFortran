@@ -1,4 +1,4 @@
-subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,tol,iverbose,vrandom)
+subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,iverbose,vrandom)
   !Arguments
   integer                    :: MpiComm
   !Interface to Matrix-Vector routine:
@@ -13,7 +13,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,t
   complex(8)                :: evec(:,:) ![Nloc,Neigen]
   integer,optional          :: Nblock
   integer,optional          :: Nitermax
-  character(len=2),optional :: which
+  ! character(len=2),optional :: which
   complex(8),optional       :: v0(size(evec,1))
   real(8),optional          :: tol
   logical,optional          :: iverbose
@@ -66,7 +66,7 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,which,v0,t
   !
   maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
   maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
-  which_ = 'SR'      ; if(present(which))which_=which
+  which_ = 'SR'      !; if(present(which))which_=which
   tol_   = 0d0       ; if(present(tol))tol_=tol
   verb   = .false.   ; if(present(iverbose))verb=iverbose
   vran   = .true.    ; if(present(vrandom))vran=vrandom
