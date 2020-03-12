@@ -5,8 +5,13 @@ This is a unitary collection of fortran modules and procedures for scientific ca
 There are large areas that are still not covered.  
 Anyone is welcome to contribute or to test the software. 
 
-### Installation 
+### Installation
 Installation is now available using CMake.
+
+Requirements:
+gfortran > 4.9x / ifort
+cmake > 2.8.8
+pkg-config
 
 Clone the repo:
 `git clone https://github.com/aamaricci/SciFortran scifor`
