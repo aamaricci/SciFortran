@@ -7,10 +7,10 @@ MODULE SF_FONTS
   public :: highlight
   public :: erased
   !
-  public :: red
-  public :: green
-  public :: yellow
-  public :: blue
+  public :: font_red
+  public :: font_green
+  public :: font_yellow
+  public :: font_blue
   !
   public :: bold_red
   public :: bold_green
@@ -49,29 +49,29 @@ contains
     textout=achar(27)//"[9m"//text//achar(27)//"[0m"
   end function erased
 
-  function red(text) result(textout)
+  function font_red(text) result(textout)
     character(len=*) :: text
     character(len=9+len(text)) :: textout
     textout=achar(27)//"[91m"//text//achar(27)//"[0m"
-  end function red
+  end function font_red
 
-  function green(text) result(textout)
+  function font_green(text) result(textout)
     character(len=*) :: text
     character(len=9+len(text)) :: textout
     textout=achar(27)//"[92m"//text//achar(27)//"[0m"
-  end function green
+  end function font_green
 
-  function yellow(text) result(textout)
+  function font_yellow(text) result(textout)
     character(len=*) :: text
     character(len=9+len(text)) :: textout
     textout=achar(27)//"[93m"//text//achar(27)//"[0m"
-  end function yellow
+  end function font_yellow
 
-  function blue(text) result(textout)
+  function font_blue(text) result(textout)
     character(len=*) :: text
     character(len=9+len(text)) :: textout
     textout=achar(27)//"[94m"//text//achar(27)//"[0m"
-  end function blue
+  end function font_blue
 
   function bold_red(text) result(textout)
     character(len=*) :: text

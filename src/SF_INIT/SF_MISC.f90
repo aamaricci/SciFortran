@@ -15,8 +15,14 @@ module SF_MISC
   end interface unista
 
 
+  interface uniq_array
+     module procedure :: i_uniq
+     module procedure :: d_uniq
+  end interface uniq_array
+
   interface uniq
-     module procedure i_uniq,d_uniq
+     module procedure :: f_i_uniq
+     module procedure :: f_d_uniq
   end interface uniq
 
 
@@ -48,8 +54,18 @@ module SF_MISC
      module procedure z_assert_shape_N7
   end interface assert_shape
 
+  interface reorder_array
+     module procedure :: I_reshuffle
+     module procedure :: D_reshuffle
+     module procedure :: Z_reshuffle
+     module procedure :: L_reshuffle
+  end interface reorder_array
+
   interface reorder
-     module procedure :: reshuffle
+     module procedure :: f_I_reshuffle
+     module procedure :: f_D_reshuffle
+     module procedure :: f_Z_reshuffle
+     module procedure :: f_L_reshuffle
   end interface reorder
 
   interface sort_insertion
@@ -83,11 +99,12 @@ module SF_MISC
   public :: sort_insertion
   public :: sort_qsort
   !
-  public :: reshuffle
+  public :: reorder_array
   public :: reorder
   !
   public :: assert_shape
   !
+  public :: uniq_array
   public :: uniq
   !
   public :: uniinv
@@ -695,20 +712,111 @@ contains
     AOUT(1:NDIM)=AIN(1:NDIM)
   end subroutine d_uniq
 
+  function f_i_uniq(AIN,MASK) result(AOUT)
+    integer,dimension(:),intent(INOUT)                    :: AIN
+    integer,dimension(:),allocatable                      :: AOUT
+    integer                                               :: NDIM
+    logical,dimension(:),allocatable,intent(OUT),optional :: MASK
+    if(present(MASK))then
+       allocate(MASK(size(AIN)))
+       call i_unista(AIN,ndim,MASK)
+    else
+       call i_unista(AIN,ndim)
+    endif
+    allocate(AOUT(NDIM))
+    AOUT(1:NDIM)=AIN(1:NDIM)
+  end function f_i_uniq
+  function f_d_uniq(AIN,MASK) result(AOUT)
+    real(8),dimension(:),intent(INOUT)                    :: AIN
+    real(8),dimension(:),allocatable                      :: AOUT
+    integer                                               :: NDIM
+    logical,dimension(:),allocatable,intent(OUT),optional :: MASK
+    if(present(MASK))then
+       allocate(MASK(size(AIN)))
+       call d_unista(AIN,ndim,MASK)
+    else
+       call d_unista(AIN,ndim)
+    endif
+    allocate(AOUT(NDIM))
+    AOUT(1:NDIM)=AIN(1:NDIM)
+  end function f_d_uniq
+
+
 
 
   !+-----------------------------------------------------------------+
   !PURPOSE  :   
   !+-----------------------------------------------------------------+
-  subroutine reshuffle(array,order) 
-    real(8),dimension(:)                    :: array
-    integer,dimension(size(array))          :: order
-    real(8),dimension(size(array))          :: dummy
-    integer                                 :: i,Lk
-    Lk=size(array)
-    forall(i=1:Lk)dummy(i)=array(order(i))
-    array=dummy
-  end subroutine reshuffle
+  subroutine I_reshuffle(Ain,Index)
+    integer,dimension(:)         :: Ain
+    integer,dimension(size(Ain)) :: Index
+    integer,dimension(size(Ain)) :: Aout
+    integer                        :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+    Ain = Aout
+  end subroutine I_reshuffle
+  subroutine D_reshuffle(Ain,Index)
+    real(8),dimension(:)         :: Ain
+    integer,dimension(size(Ain)) :: Index
+    real(8),dimension(size(Ain)) :: Aout
+    integer                      :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+    Ain = Aout
+  end subroutine D_reshuffle
+  subroutine Z_reshuffle(Ain,Index)
+    complex(8),dimension(:)         :: Ain
+    integer,dimension(size(Ain))    :: Index
+    complex(8),dimension(size(Ain)) :: Aout
+    integer                         :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+    Ain = Aout
+  end subroutine Z_reshuffle
+  subroutine L_reshuffle(Ain,Index)
+    logical,dimension(:)         :: Ain
+    integer,dimension(size(Ain)) :: Index
+    logical,dimension(size(Ain)) :: Aout
+    integer                      :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+    Ain = Aout
+  end subroutine L_reshuffle
+
+  function f_I_reshuffle(Ain,Index) result(Aout)
+    integer,dimension(:)         :: Ain
+    integer,dimension(size(Ain)) :: Index
+    integer,dimension(size(Ain)) :: Aout
+    integer                        :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+  end function f_I_reshuffle
+  function f_D_reshuffle(Ain,Index) result(Aout)
+    real(8),dimension(:)         :: Ain
+    integer,dimension(size(Ain)) :: Index
+    real(8),dimension(size(Ain)) :: Aout
+    integer                      :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+  end function f_D_reshuffle
+  function f_Z_reshuffle(Ain,Index) result(Aout)
+    complex(8),dimension(:)         :: Ain
+    integer,dimension(size(Ain))    :: Index
+    complex(8),dimension(size(Ain)) :: Aout
+    integer                         :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+  end function f_Z_reshuffle
+  function f_L_reshuffle(Ain,Index) result(Aout)
+    logical,dimension(:)         :: Ain
+    integer,dimension(size(Ain)) :: Index
+    logical,dimension(size(Ain)) :: Aout
+    integer                      :: i
+    forall(i=1:size(Ain))Aout(Index(i)) = Ain(i)
+  end function f_L_reshuffle
+
+  ! subroutine reshuffle(array,order) 
+  !   real(8),dimension(:)                    :: array
+  !   integer,dimension(size(array))          :: order
+  !   real(8),dimension(size(array))          :: dummy
+  !   integer                                 :: i,Lk
+  !   forall(i=1:size(array))dummy(i)=array(order(i))
+  !   array=dummy
+  ! end subroutine reshuffle
 
 
 

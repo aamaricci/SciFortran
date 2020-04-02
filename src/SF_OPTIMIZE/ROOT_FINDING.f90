@@ -555,8 +555,8 @@ contains
     implicit none
     interface                                                             
        function f(x)                                                   
-         real(8) :: x
-         real(8) :: f
+         real(8),intent(in) :: x
+         real(8)            :: f
        end function f
     end interface
     real(8),optional :: rguess
