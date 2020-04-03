@@ -6,12 +6,20 @@ There are large areas that are still not covered.
 Anyone is welcome to contribute or to test the software. 
 
 ### Installation
-Installation is now available using CMake.
+Installation is now available using CMake. Experimental support for Intel MKL is provided. 
 
-Requirements:
-gfortran > 4.9x / ifort
-cmake > 2.8.8
-pkg-config
+Requirements [optional but strongly recommended]:
+gfortran > 4.9x **OR** ifort  > 13.0  
+cmake > 2.8.8  
+lapack  (https://github.com/aamaricci/Lapack.git)
+blas  (https://github.com/aamaricci/Blas.git)
+[MPI]  
+[scalapack    (https://github.com/aamaricci/scalapack.git)]   
+
+The linked repositories make it possible to install the required libraries using Cmake. 
+**Hint**: use system libraries where possible.
+
+​    
 
 Clone the repo:
 `git clone https://github.com/aamaricci/SciFortran scifor`
@@ -31,7 +39,7 @@ The library can be loaded using one of the following, automatically generated, f
 * pkg-config file in `~/.pkg-config.d/scifor.pc`  
 * environment module file `~/.modules.d/scifor/<PLAT>`  
 * homebrew `bash` script `<PREFIX>/bin/configvars.sh`
- 
+
 
 The `CMake` compilation can be controlled using the following additional variables:   
 
@@ -50,7 +58,7 @@ adriano DOT amaricci @ gmail DOT com
 --
 
 ***LICENSE***  
-Copyright (C) Adriano Amaricci
+Copyright (C) Adriano Amaricci, Lorenzo Crippa, Giacomo Mazza, Massimo Capone
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
