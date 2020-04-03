@@ -5,33 +5,35 @@ This is a unitary collection of fortran modules and procedures for scientific ca
 There are large areas that are still not covered.  
 Anyone is welcome to contribute or to test the software. 
 
+
+### Dependencies 
+
+* gfortran > 4.9x **OR** ifort  > 13.0
+* cmake > 2.8.8    
+* lapack  ( https://github.com/aamaricci/Lapack )   
+* blas  ( https://github.com/aamaricci/Blas )   
+* [optional, strongly recommended] MPI ( https://github.com/open-mpi/ompi )  
+* [optional, strongly recommended] scalapack  ( https://github.com/aamaricci/scalapack )       
+
+If libraries are not available in your system, please use the provided links to install them. All libraries listed can be installed using `CMake` 
+
+
+
 ### Installation
-Installation is now available using CMake. Experimental support for Intel MKL is provided. 
+Installation is now available using CMake. Experimental support for Intel MKL is provided but this still not universal and may end up in wrong linking directives. 
 
-Requirements [optional but strongly recommended]:
-gfortran > 4.9x **OR** ifort  > 13.0
-cmake > 2.8.8    
-lapack  (available here: https://github.com/aamaricci/Lapack.git)   
-blas  (available here: https://github.com/aamaricci/Blas.git )   
-[MPI (Open-Mpi is recommended: https://github.com/open-mpi/ompi ) ]   
-[scalapack  (available here: https://github.com/aamaricci/scalapack.git )  ]     
+Clone the Scifor repo:
 
-The linked repositories make it possible to install the required libraries using Cmake. 
-**Hint**: use system libraries where possible.
-
-​    
-
-Clone the repo:
 `git clone https://github.com/aamaricci/SciFortran scifor`
 
 And from the repository directory (`cd scifor`) make a standard out-of-source CMake compilation:
 
-`mkdir build`  
-`cd build`  
-`cmake ..`   
-`make`  
-`make install`  
-`make post-install`  
+`mkdir build`
+`cd build`
+`cmake ..`     
+`make`     
+`make install`   
+`make post-install`    
 
 Please follow the instructions on the screen to complete installation on your environment.  
 The library can be loaded using one of the following, automatically generated, files :  
@@ -41,7 +43,7 @@ The library can be loaded using one of the following, automatically generated, f
 * homebrew `bash` script `<PREFIX>/bin/configvars.sh`
 
 
-The `CMake` compilation can be controlled using the following additional variables:   
+The `CMake` compilation can be controlled using the following additional variables, default values between `< >`:   
 
 * `-DPREFIX=prefix directory <~/opt/scifor/VERSION/PLAT>` 
 
