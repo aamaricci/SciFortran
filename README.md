@@ -9,12 +9,12 @@ Anyone is welcome to contribute or to test the software.
 Installation is now available using CMake. Experimental support for Intel MKL is provided. 
 
 Requirements [optional but strongly recommended]:
-gfortran > 4.9x **OR** ifort  > 13.0  
-cmake > 2.8.8  
-lapack  (https://github.com/aamaricci/Lapack.git)
-blas  (https://github.com/aamaricci/Blas.git)
-[MPI]  
-[scalapack    (https://github.com/aamaricci/scalapack.git)]   
+gfortran > 4.9x **OR** ifort  > 13.0
+cmake > 2.8.8    
+lapack  (available here: https://github.com/aamaricci/Lapack.git)   
+blas  (available here: https://github.com/aamaricci/Blas.git )   
+[MPI (Open-Mpi is recommended: https://github.com/open-mpi/ompi ) ]   
+[scalapack  (available here: https://github.com/aamaricci/scalapack.git )  ]     
 
 The linked repositories make it possible to install the required libraries using Cmake. 
 **Hint**: use system libraries where possible.
