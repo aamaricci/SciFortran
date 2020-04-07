@@ -9,8 +9,6 @@ file(GLOB SF_OPTIMIZE_LOCAL_SRC
   timer.f
   linpack.f
   lbfgsb.f
-  ROOT_FINDING.f90
-  OPTIMIZATION.f90
   SF_OPTIMIZE.f90
   )
 SET(SF_OPTIMIZE_src ${SF_OPTIMIZE_LOCAL_SRC})

@@ -1,51 +1,47 @@
 MODULE SF_OPTIMIZE
-  USE OPTIMIZE_ROOT_FINDING
-  USE OPTIMIZE_MINIMIZE
+  USE CGFIT_ROUTINES
+  USE BROYDEN_ROUTINES
   !
   USE SF_CONSTANTS
   USE SF_LINALG, only: inv_sym
   private
 
-  !OPTIMIZATION:
-  !
-  !General purpose
-  public :: fmin                !Nelder-Mead
-  public :: fmin_cg             !Conjugate-Gradient 1
-  public :: fmin_cgplus         !Conjugate-Gradient 2
-  public :: fmin_cgminimize     !Conjugate-Gradient 3 (very old f77)
-  !
-  public :: leastsq             
-  public :: curvefit            
-  !
-  !Constrained (multivariate)
-  public :: fmin_bfgs           !BFGS (constrained and not)
-  !Global
-  ! 
-  !Scalar function minimizers
-  public :: brent
-  public :: dbrent
-  public :: bracket
 
+  interface fmin_cg
+     module procedure fmin_cg_df,fmin_cg_f
+  end interface fmin_cg
 
-  !ROOT FINDING:
-  !Scalar functions
-  public :: brentq
-  public :: bisect
-  public :: newton
-  public :: fzero
+  interface fmin_cgplus
+     module procedure fmin_cgplus_df,fmin_cgplus_f
+  end interface fmin_cgplus
 
-  !Multidimensional
-  !General nonlinear solvers:
-  public :: fsolve              !
-  public :: broyden1
-  !Large-scale nonlinear solvers:
+  interface fmin_cgminimize
+     module procedure fmin_cgminimize_func,fmin_cgminimize_sub
+  end interface fmin_cgminimize
 
+  interface leastsq
+     module procedure :: leastsq_lmdif_func
+     module procedure :: leastsq_lmdif_sub
+     module procedure :: leastsq_lmder_func
+     module procedure :: leastsq_lmder_sub
+  end interface leastsq
 
-  !Fixed points accelerators:
-  public :: linear_mix
-  public :: adaptive_mix
-  public :: broyden_mix
-  
+  interface curvefit
+     module procedure :: curvefit_lmdif_func
+     module procedure :: curvefit_lmdif_sub
+     module procedure :: curvefit_lmder_func
+     module procedure :: curvefit_lmder_sub
+  end interface curvefit
+
+  interface dbrent
+     module procedure :: dbrent_wgrad
+     module procedure :: dbrent_nograd
+  end interface dbrent
+
+  interface fmin_bfgs
+     module procedure :: bfgs_with_grad
+     module procedure :: bfgs_no_grad
+  end interface fmin_bfgs
 
   interface linear_mix
      module procedure :: d_linear_mix_1
@@ -76,107 +72,126 @@ MODULE SF_OPTIMIZE
   end interface broyden_mix
 
 
+  interface fsolve
+     module procedure :: fsolve_hybrd_func
+     module procedure :: fsolve_hybrd_sub
+     !
+     module procedure :: fsolve_hybrj_func
+     module procedure :: fsolve_hybrj_sub
+  end interface fsolve
+
+
+
+
+  !OPTIMIZATION:
+  public   :: brent         !minimize a given a function of one-variable with a possible bracketing interval without using derivative information
+  public   :: dbrent        !minimize a given a function of one-variable with a possible bracketing interval  using derivative information
+  public   :: bracket       !Bracket the minimum of the function.
+  !General purpose
+  public   :: fmin                !Minimize a function using the Nelder-Mead downhill simplex algorithm.
+  public   :: fmin_cg             !Conjugate-Gradient 1
+  public   :: fmin_cgplus         !Conjugate-Gradient 2
+  public   :: fmin_cgminimize     !Conjugate-Gradient 3 (very old f77)
+  !Constrained (multivariate)
+  public   :: fmin_bfgs    !Minimize a function using the BFGS algorithm.
+  public   :: leastsq      !Minimize the sum of squares of a set of equations. Wrap MINPACK: lmdif/lmder
+  public   :: curvefit     !Use non-linear least squares to fit a function, f, to data.
+  !
+  !> TODO:
+  ! public :: fmin_powell  !Minimize a function using modified Powell’s method. This method
+  ! public :: fmin_ncg     !Unconstrained minimization of a function using the Newton-CG method.
+  ! public :: anneal       !Minimize a function using simulated annealing.
+  ! public :: basinhopping ! Find the global minimum of a function using the basin-hopping algorithm ..
+
+
+
+  !ROOT FINDING:
+  public :: brentq
+  public :: bisect
+  public :: newton
+  public :: fzero
+  !Multidimensional
+  !General nonlinear solvers:
+  public :: fsolve              !
+  public :: broyden1
+  !Large-scale nonlinear solvers:
+
+  !Fixed points accelerators:
+  public :: linear_mix
+  public :: adaptive_mix
+  public :: broyden_mix
+  ! public :: broyden2 !Find a root of a function, using Broyden’s second Jacobian approximation.
+  ! public :: newton_krylov !Find a root of a function, using Krylov approximation for inverse Jacobian.
+  ! public :: anderson !Find a root of a function, using (extended) Anderson mixing.
+
+
+  real(8)                         :: df_eps=tiny(1d0)
+  ! procedure(hybrd_func),pointer :: hybrd_funcv
+  real(8), dimension(:),pointer   :: fmin_fvecp
+
 contains
 
-
-  subroutine d_linear_mix_1(x,Fx,alpha)
-    real(8),intent(inout),dimension(:)      :: x
-    real(8),intent(in),dimension(size(x))   :: Fx
-    real(8),intent(in)                      :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_1
-
-  subroutine d_linear_mix_2(x,Fx,alpha)
-    real(8),intent(inout),dimension(:,:)              :: x
-    real(8),intent(in),dimension(size(x,1),size(x,2)) :: Fx
-    real(8),intent(in)                                :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_2
-
-  subroutine d_linear_mix_3(x,Fx,alpha)
-    real(8),intent(inout),dimension(:,:,:)                      :: x
-    real(8),intent(in),dimension(size(x,1),size(x,2),size(x,3)) :: Fx
-    real(8),intent(in)                                          :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_3
-
-  subroutine d_linear_mix_4(x,Fx,alpha)
-    real(8),intent(inout),dimension(:,:,:,:)                              :: x
-    real(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4)) :: Fx
-    real(8),intent(in)                                                    :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_4
-
-  subroutine d_linear_mix_5(x,Fx,alpha)
-    real(8),intent(inout),dimension(:,:,:,:,:)                                      :: x
-    real(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5)) :: Fx
-    real(8),intent(in)                                                              :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_5
-
-  subroutine d_linear_mix_6(x,Fx,alpha)
-    real(8),intent(inout),dimension(:,:,:,:,:,:)                                               :: x
-    real(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6)) :: Fx
-    real(8),intent(in)                                                                         :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_6
-
-  subroutine d_linear_mix_7(x,Fx,alpha)
-    real(8),intent(inout),dimension(:,:,:,:,:,:,:)                                                      :: x
-    real(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6),size(x,7)) :: Fx
-    real(8),intent(in)                                                                                  :: alpha
-    x = x + alpha*Fx
-  end subroutine d_linear_mix_7
+  ! Brent methods, including bracket
+  include "brent.f90"
 
 
-  subroutine c_linear_mix_1(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:)    :: x
-    complex(8),intent(in),dimension(size(x)) :: Fx
-    real(8),intent(in)                       :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_1
+  ! INTERFACES TO MINPACK lmder/lmdif 
+  include "leastsq.f90" 
+  include "curvefit.f90"
 
-  subroutine c_linear_mix_2(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:,:)              :: x
-    complex(8),intent(in),dimension(size(x,1),size(x,2)) :: Fx
-    real(8),intent(in)                                   :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_2
 
-  subroutine c_linear_mix_3(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:,:,:)                      :: x
-    complex(8),intent(in),dimension(size(x,1),size(x,2),size(x,3)) :: Fx
-    real(8),intent(in)                                             :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_3
+  ! Minimizes a function using the Nelder-Mead algorithm.
+  !    This routine seeks the minimum value of a user-specified function.
+  !    Simplex function minimisation procedure due to Nelder and Mead (1965),
+  !    as implemented by O'Neill(1971, Appl.Statist. 20, 338-45), with
+  !    subsequent comments by Chambers+Ertel(1974, 23, 250-1), Benyon(1976,
+  !    25, 97) and Hill(1978, 27, 380-2)
+  include "fmin_Nelder_Mead.f90" 
 
-  subroutine c_linear_mix_4(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:,:,:,:)                              :: x
-    complex(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4)) :: Fx
-    real(8),intent(in)                                                       :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_4
 
-  subroutine c_linear_mix_5(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:,:,:,:,:)                                      :: x
-    complex(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5)) :: Fx
-    real(8),intent(in)                                                                 :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_5
+  ! Minimize the Chi^2 distance using conjugate gradient
+  !     Adapted by FRPRM subroutine from NumRec (10.6),, 
+  !     the Fletcher-Reeves-Polak-Ribiere minimisation is performed 
+  include "fmin_cg.f90"
 
-  subroutine c_linear_mix_6(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:,:,:,:,:,:)                                               :: x
-    complex(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6)) :: Fx
-    real(8),intent(in)                                                                            :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_6
 
-  subroutine c_linear_mix_7(x,Fx,alpha)
-    complex(8),intent(inout),dimension(:,:,:,:,:,:,:)                                                      :: x
-    complex(8),intent(in),dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6),size(x,7)) :: Fx
-    real(8),intent(in)                                                                                     :: alpha
-    x = x + alpha*Fx
-  end subroutine c_linear_mix_7
+  !  Minimize the Chi^2 distance using conjugate gradient
+  !     Adapted from unkown minimize.f routine.
+  include "fmin_cg_minimize.f90"
+
+  ! Conjugate Gradient methods for solving unconstrained nonlinear
+  !  optimization problems:
+  ! Gilbert, J.C. and Nocedal, J. (1992). "Global Convergence Properties 
+  ! of Conjugate Gradient Methods", SIAM Journal on Optimization, Vol. 2,
+  ! pp. 21-42. 
+  include "fmin_cg_cgplus.f90"
+
+
+
+  ! Constrained BFGS (L-BFGS_B) optimization problems:
+  ! Ciyou Zhu , Richard H. Byrd , Peihuang Lu and Jorge Nocedal: "L-BFGS-B: 
+  ! FORTRAN SUBROUTINES FOR LARGE-SCALE BOUND CONSTRAINED OPTIMIZATION"
+  include "fmin_bfgs.f90"
+
+
+
+
+  ! Mixing and Acceleration:
+  include "linear_mix.f90"
+  include "adaptive_mix.f90"
+  include "broyden_mix.f90"
+
+
+  ! Interface to MINPACK hybrd/hybrj: FSOLVE
+  include "fsolve.f90"
+
+
+  ! Broyden root finding method:
+  include "broyden1.f90"
+
+
+  ! Find root of scalar functions
+  include "froot_scalar.f90"
 
 
 
@@ -185,274 +200,122 @@ contains
 
 
 
-  subroutine d_adaptive_mix(x,Fx,alpha,iter)
-    real(8),intent(inout),dimension(:)      :: x
-    real(8),intent(in),dimension(size(x))   :: Fx
-    real(8),intent(in)                      :: alpha
-    integer,intent(in)                      :: iter
-    integer                                 :: N
-    real(8),parameter                       :: alpha_max = 1d0 ! mixing parameter
-    real(8),allocatable,dimension(:),save   :: Fx_prev
-    real(8),allocatable,dimension(:),save   :: Beta
-    integer                                 :: j
-    !
-    N = size(x)
-    !
-    if(iter==1)then
-       if(allocated(Fx_prev))deallocate(Fx_prev)
-       allocate(Fx_prev(N))
-       Fx_prev = 0d0
-       !
-       if(allocated(Beta))deallocate(Beta)
-       allocate(Beta(N))
-       Beta = alpha
-    endif
-    !
-    X = X + beta*Fx             !(Fx-x)
-    !
-    if (iter > 1) then
-       do j=1,N
-          if(Fx_prev(j) * Fx(j) > 0) then
-             beta(j) = beta(j) + alpha
-             if (beta(j) > alpha_max) beta(j) = alpha_max
-          else
-             beta(j) = alpha
-          end if
-       end do
-    end if
-    !
-    Fx_prev = Fx
-    !
-  end subroutine d_adaptive_mix
-
-  subroutine c_adaptive_mix(x,Fx,alpha,iter)
-    complex(8),intent(inout),dimension(:)    :: x
-    complex(8),intent(in),dimension(size(x)) :: Fx
-    real(8),intent(in)                       :: alpha
-    integer,intent(in)                       :: iter
-    integer                                  :: N
-    real(8),parameter                        :: alpha_max = 1d0 ! mixing parameter
-    complex(8),allocatable,dimension(:),save :: Fx_prev
-    real(8),allocatable,dimension(:),save    :: Beta
-    integer                                  :: j
-    !
-    N = size(x)
-    !
-    if(iter==1)then
-       if(allocated(Fx_prev))deallocate(Fx_prev)
-       allocate(Fx_prev(N))
-       Fx_prev = 0d0
-       !
-       if(allocated(Beta))deallocate(Beta)
-       allocate(Beta(N))
-       Beta = alpha
-    endif
-    !
-    X = X + beta*Fx             !(Fx-x)
-    !
-    if (iter > 1) then
-       do j=1,N
-          if(abs(Fx_prev(j) * Fx(j)) > 0) then
-             beta(j) = beta(j) + alpha
-             if (beta(j) > alpha_max) beta(j) = alpha_max
-          else
-             beta(j) = alpha
-          end if
-       end do
-    end if
-    !
-    Fx_prev = Fx
-    !
-  end subroutine c_adaptive_mix
-
-
-  !X =v[n]
-  !Fx=v[n+1]
-  subroutine d_broyden_mix(X,Fx,alpha,M,iter,w0)
-    real(8),intent(inout),dimension(:)      :: x
-    real(8),intent(in),dimension(size(x))   :: Fx
-    real(8),intent(in)                      :: alpha
-    integer,intent(in)                      :: M
-    integer,intent(in)                      :: iter
-    real(8),optional                        :: w0
-    real(8)                                 :: wg0
-    real(8),dimension(M)                    :: wg
-    integer                                 :: N
-    real(8)                                 :: Xsave(size(X))
-    integer                                 :: iter_used,ipos,inext
-    real(8),allocatable,dimension(:,:),save :: Df,Dv
-    real(8),dimension(M,M)                  :: Beta
-    real(8),dimension(M)                    :: Work
-    real(8)                                 :: norm,GammaMix
-    integer                                 :: i,j
-    N   = size(X)
-    wg0 = 0.01d0 ; if(present(w0))wg0=w0
-    wg  = min(M,8)*1d0
-    if(iter==1)then
-       if(allocated(Df))deallocate(Df)
-       if(allocated(Dv))deallocate(Dv)
-       allocate(Df(M,N))
-       allocate(Dv(M,N))
-       Df   = 0d0
-       Dv   = 0d0
-    endif
-    !
-    Xsave = X
-    !
-    !linear mixing if M=0
-    if(M==0)then
-       X=X+alpha*Fx
-       return
-    endif
-    !
-    !Get broyden mixing pointer
-    iter_used = min(iter-1,M)
-    ipos      = iter-1-((iter-2)/M)*M
-    !
-    !DeltaF^(n) = F^(n+1)-F^(n)/|F^(n+1)-F^(n)| 
-    !DeltaV^(n) = V^(n+1)-V^(n)/|F^(n+1)-F^(n)| 
-    if(iter==1)then
-       X=X+alpha*Fx               !(Fx-X)
-       return
-    else
-       Df(ipos,:) = Fx - Df(ipos,:)
-       Dv(ipos,:) = X  - Dv(ipos,:)
-       norm = dot_product(Df(ipos,:),Df(ipos,:))
-       norm = sqrt(norm)
-       Df(ipos,:)=Df(ipos,:)/norm
-       Dv(ipos,:)=Dv(ipos,:)/norm
-    endif
-    !
-    !Build Beta
-    !beta  = [w(0)*w(0)*delta(i,j) + w(i)*w(j)*a(i,j)]^-1
-    beta=0d0
-    do i=1,iter_used
-       do j=i+1,iter_used
-          beta(i,j) = wg(i)*wg(j)*dot_product(Df(j,:),Df(i,:))
-       enddo
-       beta(i,i) = wg0**2 + wg(i)**2
+  !           AUXILIARY JACOBIAN/GRADIENT CALCULATIONS
+  !
+  !          1 x N Jacobian (df_i/dx_j for i=1;j=1,...,N)
+  !-----------------------------------------------------------------------
+  subroutine fdjac_1n_func(funcv,x,fjac,epsfcn)
+    implicit none
+    interface 
+       function funcv(x)
+         implicit none
+         real(8),dimension(:) :: x
+         real(8)              :: funcv
+       end function funcv
+    end interface
+    integer          ::  n
+    real(8)          ::  x(:)
+    real(8)          ::  fvec
+    real(8)          ::  fjac(size(x))
+    real(8),optional ::  epsfcn
+    real(8)          ::  eps,eps_
+    real(8)          ::  epsmch
+    real(8)          ::  h,temp
+    real(8)          ::  wa1
+    real(8)          ::  wa2
+    integer          :: i,j,k
+    n=size(x)
+    eps_= df_eps; if(present(epsfcn))eps_=epsfcn
+    epsmch = epsilon(epsmch)
+    eps  = sqrt(max(eps_,epsmch))
+    !  Evaluate the function
+    fvec = funcv(x)
+    do j=1,n
+       temp = x(j)
+       h    = eps*abs(temp)
+       if(h==0.d0) h = eps
+       x(j) = temp + h
+       wa1  = funcv(x)
+       x(j) = temp
+       fjac(j) = (wa1 - fvec)/h
     enddo
-    !
-    call inv_sym(beta(1:iter_used,1:iter_used))
-    !
-    !Work(i) = Df(i)*f
-    do i=1,iter_used
-       work(i) = dot_product(Df(i,:),Fx)
-    enddo
-    !
-    X=X+alpha*Fx
-    !
-    !v^{i+1} = v^i + alpha*f - sum_i g(i)*w(i)*u(i)
-    !where:
-    ! - g(i) = [sum_j work(j)*b(j,i)*w(j)]
-    ! - u(i) = (alpha*DeltaF(i) + DeltaV(i))
-    do i=1,iter_used
-       GammaMix=0d0
-       do j=1,iter_used
-          GammaMix=GammaMix + beta(j,i)*wg(j)*Work(j)
-       enddo
-       !
-       X = X - wg(i)*GammaMix*(alpha*Df(i,:) + Dv(i,:))
-    enddo
-    !
-    !Store the next entries for DeltaF and DeltaV
-    inext      = iter-((iter-1)/M)*M
-    Df(inext,:)= Fx
-    Dv(inext,:)= Xsave
-  end subroutine d_broyden_mix
+  end subroutine fdjac_1n_func
 
-  subroutine c_broyden_mix(X,Fx,alpha,M,iter,w0)
-    complex(8),intent(inout),dimension(:)      :: x
-    complex(8),intent(in),dimension(size(x))   :: Fx
-    real(8),intent(in)                         :: alpha
-    integer,intent(in)                         :: M
-    integer,intent(in)                         :: iter
-    real(8),optional                           :: w0
-    real(8)                                    :: wg0
-    real(8),dimension(M)                       :: wg
-    integer                                    :: N
-    complex(8)                                 :: Xsave(size(X))
-    integer                                    :: iter_used,ipos,inext
-    complex(8),allocatable,dimension(:,:),save :: Df,Dv
-    complex(8),dimension(M,M)                  :: Beta
-    complex(8),dimension(M)                    :: Work
-    complex(8)                                 :: GammaMix
-    real(8)                                    :: norm
-    integer                                    :: i,j
-    N   = size(X)
-    wg0 = 0.01d0 ; if(present(w0))wg0=w0
-    wg  = min(M,8)*1d0
-    if(iter==1)then
-       if(allocated(Df))deallocate(Df)
-       if(allocated(Dv))deallocate(Dv)
-       allocate(Df(M,N))
-       allocate(Dv(M,N))
-       Df   = 0d0
-       Dv   = 0d0
-    endif
-    !
-    Xsave = X
-    !
-    !linear mixing if M=0
-    if(M==0)then
-       X=X+alpha*Fx
-       return
-    endif
-    !
-    !Get broyden mixing pointer
-    iter_used = min(iter-1,M)
-    ipos      = iter-1-((iter-2)/M)*M
-    !
-    !DeltaF^(n) = F^(n+1)-F^(n)/|F^(n+1)-F^(n)| 
-    !DeltaV^(n) = V^(n+1)-V^(n)/|F^(n+1)-F^(n)| 
-    if(iter==1)then
-       X=X+alpha*Fx               !(Fx-X)
-       return
-    else
-       Df(ipos,:) = Fx - Df(ipos,:)
-       Dv(ipos,:) = X  - Dv(ipos,:)
-       norm = dot_product(Df(ipos,:),Df(ipos,:))
-       norm = sqrt(norm)
-       Df(ipos,:)=Df(ipos,:)/norm
-       Dv(ipos,:)=Dv(ipos,:)/norm
-    endif
-    !
-    !Build Beta
-    !beta  = [w(0)*w(0)*delta(i,j) + w(i)*w(j)*a(i,j)]^-1
-    beta=0d0
-    do i=1,iter_used
-       do j=i+1,iter_used
-          beta(i,j) = wg(i)*wg(j)*dot_product(Df(j,:),Df(i,:))
-       enddo
-       beta(i,i) = wg0**2 + wg(i)**2
+  subroutine fdjac_1n_sub(funcv,x,fjac,epsfcn)
+    implicit none
+    interface 
+       subroutine funcv(n,x,y)
+         implicit none
+         integer              :: n
+         real(8),dimension(n) :: x
+         real(8)              :: y
+       end subroutine funcv
+    end interface
+    integer          ::  n
+    real(8)          ::  x(:)
+    real(8)          ::  fvec
+    real(8)          ::  fjac(size(x))
+    real(8),optional ::  epsfcn
+    real(8)          ::  eps,eps_
+    real(8)          ::  epsmch
+    real(8)          ::  h,temp
+    real(8)          ::  wa1
+    real(8)          ::  wa2
+    integer          :: i,j,k
+    n=size(x)
+    eps_= df_eps; if(present(epsfcn))eps_=epsfcn
+    epsmch = epsilon(epsmch)
+    eps  = sqrt(max(eps_,epsmch))
+    !  Evaluate the function
+    call funcv(n,x,fvec)
+    !  Computation of dense approximate jacobian.
+    do j=1,n
+       temp = x(j)
+       h    = eps*abs(temp)
+       if(h==0.d0) h = eps
+       x(j) = temp + h
+       call funcv(n,x,wa1)
+       x(j) = temp
+       fjac(j) = (wa1-fvec)/h
     enddo
-    !
-    call inv_sym(beta(1:iter_used,1:iter_used))
-    !
-    !Work(i) = Df(i)*f
-    do i=1,iter_used
-       work(i) = dot_product(Df(i,:),Fx)
-    enddo
-    !
-    X=X+alpha*Fx
-    !
-    !v^{i+1} = v^i + alpha*f - sum_i g(i)*w(i)*u(i)
-    !where:
-    ! - g(i) = [sum_j work(j)*b(j,i)*w(j)]
-    ! - u(i) = (alpha*DeltaF(i) + DeltaV(i))
-    do i=1,iter_used
-       GammaMix=0d0
-       do j=1,iter_used
-          GammaMix=GammaMix + beta(j,i)*wg(j)*Work(j)
-       enddo
-       !
-       X = X - wg(i)*GammaMix*(alpha*Df(i,:) + Dv(i,:))
-    enddo
-    !
-    !Store the next entries for DeltaF and DeltaV
-    inext      = iter-((iter-1)/M)*M
-    Df(inext,:)= Fx
-    Dv(inext,:)= Xsave
-  end subroutine c_broyden_mix
+    return
+  end subroutine fdjac_1n_sub
+
+  function f_jac_1n_func(funcv,n,x) result(df)
+    interface
+       function funcv(x)
+         implicit none
+         real(8),dimension(:) :: x
+         real(8)              :: funcv
+       end function funcv
+    end interface
+    integer               :: n
+    real(8), dimension(n) :: x
+    real(8), dimension(n) :: df
+    call fdjac_1n_func(funcv,x,df)
+  end function f_jac_1n_func
+
+  function f_jac_1n_sub(funcv,n,x) result(df)
+    interface
+       subroutine funcv(n,x,y)
+         implicit none
+         integer               :: n
+         real(8), dimension(n) :: x
+         real(8)               :: y
+       end subroutine funcv
+    end interface
+    integer               :: n
+    real(8), dimension(n) :: x
+    real(8), dimension(n) :: df
+    call fdjac_1n_sub(funcv,x,df)
+  end function f_jac_1n_sub
+
+
+
+
+
+
+
+
 
 END MODULE SF_OPTIMIZE
