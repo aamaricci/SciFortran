@@ -90,8 +90,8 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
   nullify(fjac)
   return
 end subroutine fmin_cg_df
-!
-!
+
+
 !NUMERICAL EVALUATION OF THE GRADIENT:
 subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,istop,deps,iverbose)
   procedure(cgfit_func)                :: f

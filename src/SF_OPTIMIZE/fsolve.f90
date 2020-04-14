@@ -19,28 +19,13 @@ subroutine fsolve_hybrd_func(func,x,tol,info)
   n=size(x)
   call hybrd1(fsolve_hybrd1_func2sub,n,x,fvec,tol_,info_)
   if(present(info))info=info_
-  select case(info_)
-  case default
-     return
-  case(0)
-     write(*,*)"FSOLVE STOP: improper input parameters."
-  case(1)
-     write(*,*)"FSOLVE STOP: the relative error between X and the solution is at most TOL."
-  case(2)
-     write(*,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
-  case(3)
-     write(*,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible."
-  case(4)
-     write(*,*)"FSOLVE STOP: the iteration is not making good progress."
-  end select
-  stop
+  include "fsolve_error.h90"
 contains
   subroutine fsolve_hybrd1_func2sub(n,x,fvec,iflag)
     integer ::  n
     real(8) ::  x(n)
     real(8) ::  fvec(n)
     integer ::  iflag
-    if(iflag==0)return
     fvec(:) = func(x)
     if(iflag<0)stop "FSOLVE_HYBRD1_func2sub ERROR: iflag < 0 "
   end subroutine fsolve_hybrd1_func2sub
@@ -64,28 +49,13 @@ subroutine fsolve_hybrd_sub(func,x,tol,info)
   n=size(x)
   call hybrd1(fsolve_hybrd1_sub2sub,n,x,fvec,tol_,info_)
   if(present(info))info=info_
-  select case(info_)
-  case default
-     return
-  case(0)
-     write(*,*)"FSOLVE STOP: improper input parameters."
-  case(1)
-     write(*,*)"FSOLVE STOP: the relative error between X and the solution is at most TOL."
-  case(2)
-     write(*,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
-  case(3)
-     write(*,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible."
-  case(4)
-     write(*,*)"FSOLVE STOP: the iteration is not making good progress."
-  end select
-  stop
+  include "fsolve_error.h90"
 contains
   subroutine fsolve_hybrd1_sub2sub(n,x,fvec,iflag)
     integer ::  n
     real(8) ::  x(n)
     real(8) ::  fvec(n)
     integer ::  iflag
-    if(iflag==0)return
     call func(x,fvec)
     if(iflag<0)stop "FSOLVE_HYBRD1_sub2sub ERROR: iflag < 0 "
   end subroutine fsolve_hybrd1_sub2sub
@@ -122,21 +92,7 @@ subroutine fsolve_hybrj_func(func,dfunc,x,tol,info)
   n=size(x)
   call hybrj1(fsolve_hybrj1_func2sub,n,x,fvec,fjac,n,tol_,info_)
   if(present(info))info=info_
-  select case(info_)
-  case default
-     return
-  case(0)
-     write(*,*)"FSOLVE STOP: improper input parameters."
-  case(1)
-     write(*,*)"FSOLVE STOP: the relative error between X and the solution is at most TOL."
-  case(2)
-     write(*,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
-  case(3)
-     write(*,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible."
-  case(4)
-     write(*,*)"FSOLVE STOP: the iteration is not making good progress."
-  end select
-  stop
+  include "fsolve_error.h90"
 contains
   subroutine fsolve_hybrj1_func2sub(n,x,fvec,fjac,ldfjac,iflag)
     integer ::  n
@@ -178,21 +134,7 @@ subroutine fsolve_hybrj_sub(func,dfunc,x,tol,info)
   n=size(x)
   call hybrj1(fsolve_hybrj1_sub2sub,n,x,fvec,fjac,n,tol_,info_)
   if(present(info))info=info_
-  select case(info_)
-  case default
-     return
-  case(0)
-     write(*,*)"FSOLVE STOP: improper input parameters."
-  case(1)
-     write(*,*)"FSOLVE STOP: the relative error between X and the solution is at most TOL."
-  case(2)
-     write(*,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
-  case(3)
-     write(*,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible."
-  case(4)
-     write(*,*)"FSOLVE STOP: the iteration is not making good progress."
-  end select
-  stop
+  include "fsolve_error.h90"
 contains
   subroutine fsolve_hybrj1_sub2sub(n,x,fvec,fjac,ldfjac,iflag)
     integer ::  n

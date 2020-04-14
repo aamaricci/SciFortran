@@ -1,0 +1,21 @@
+  select case(info_)
+  case(0)
+     write(*,*)"LEASTSQ STOP: improper input parameters."
+  case(1)
+     !write(*,*)"LEASTSQ STOP: relative error in the sum of squares is at most TOL."
+     return
+  case(2)
+     write(*,*)"LEASTSQ STOP: relative error between X and the solution is at most TOL"
+  case(3)
+     write(*,*)"LEASTSQ STOP: relative error in sum of squares AND between X and the solution is at most TOL."
+  case(4)
+     write(*,*)"LEASTSQ STOP: FVEC is orthogonal to the columns of the jacobian to machine precision."
+  case(5)
+     write(*,*)"LEASTSQ STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
+  case(6)
+     write(*,*)"LEASTSQ STOP: TOL is too small. No further reduction in the sum of squares is possible."
+  case(7)
+     write(*,*)"LEASTSQ STOP: TOL is too small. No further improvement in the approximate solution X is possible."
+  end select
+  write(*,*)"INFO=",info_
+  stop "LEASTSQ STOP"

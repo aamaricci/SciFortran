@@ -38,7 +38,7 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : start a timer to measure elapsed time between two call
   !+-------------------------------------------------------------------+
-  subroutine start_timer
+  subroutine start_timer()
     timer_index=timer_index+1
     if(timer_index>size(timer_start,1))then
        stop "Error in cronograph: too many timers started"
@@ -49,6 +49,7 @@ contains
     elapsed_time =0.0
     old_time     =0.0
     time         =0.0
+    !
   end subroutine start_timer
   !
   subroutine start_progress(unit)
@@ -62,14 +63,19 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : stop the timer and get the partial time
   !+-------------------------------------------------------------------+
-  subroutine stop_timer(unit)
-    integer,optional :: unit
-    integer :: unit_
-    integer,dimension(8) :: itimer
+  subroutine stop_timer(title,unit)
+    character(len=*),optional :: title
+    integer,optional          :: unit
+    integer                   :: unit_
+    integer,dimension(8)      :: itimer
     unit_=6;if(present(unit))unit_=unit
     call date_and_time(values=timer_stop(timer_index,:))
     itimer=time_difference(timer_stop(timer_index,:),timer_start(timer_index,:))
-    call print_total_time(itimer,unit)
+    if(present(title))then
+       call print_total_time(itimer,unit,title)
+    else
+       call print_total_time(itimer,unit)
+    endif
     timer_start(timer_index,:)=0
     timer_stop(timer_index,:)=0
     if(timer_index>1)then
@@ -85,10 +91,11 @@ contains
   end subroutine stop_progress
 
 
-  subroutine print_total_time(dummy,unit)
-    integer,optional :: unit
-    integer :: unit_
-    integer(4),dimension(8) :: dummy
+  subroutine print_total_time(dummy,unit,title)
+    integer,optional          :: unit
+    character(len=*),optional :: title
+    integer                   :: unit_
+    integer(4),dimension(8)   :: dummy
     unit_=6;if(present(unit))unit_=unit
     year = dummy(1)
     mese = dummy(2)
@@ -97,7 +104,11 @@ contains
     m    = dummy(6)
     s    = dummy(7)
     ms   = dummy(8)
-    write(unit_,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms
+    if(present(title))then
+       write(unit_,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3,A2,A)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms," :",trim(title)
+    else
+       write(unit_,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms
+    endif
     !write(unit_,*)""
   end subroutine print_total_time
 

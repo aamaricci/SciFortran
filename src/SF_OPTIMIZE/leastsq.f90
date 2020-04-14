@@ -1,3 +1,4 @@
+
 !LMDIF INTERFACE:
 !solve M nonlinear equations in N unknowns with M>N
 !so f(x)=0 can NOT be solved.
@@ -23,6 +24,7 @@ subroutine leastsq_lmdif_func(func,a,m,tol,info)
   n=size(a)
   call lmdif1(leastsq_lmdif1_func2sub,m,n,a,fvec,tol_,info_)
   if(present(info))info=info_
+  include "leastsq_error.h90"
 contains
   subroutine leastsq_lmdif1_func2sub(m,n,a,fvec,iflag)
     integer ::  m
@@ -56,6 +58,7 @@ subroutine leastsq_lmdif_sub(func,a,m,tol,info)
   n=size(a)
   call lmdif1(leastsq_lmdif1_sub2sub,m,n,a,fvec,tol_,info_)
   if(present(info))info=info_
+  include "leastsq_error.h90"
 contains
   subroutine leastsq_lmdif1_sub2sub(m,n,a,fvec,iflag)
     integer ::  m
@@ -105,6 +108,8 @@ subroutine leastsq_lmder_func(func,dfunc,a,m,tol,info)
   n=size(a)
   call lmder1(leastsq_lmder1_func2sub,m,n,a,fvec,fjac,m,tol_,info_)
   if(present(info))info=info_
+  include "leastsq_error.h90"
+
 contains
   subroutine leastsq_lmder1_func2sub(m,n,a,fvec,fjac,ldfjac,iflag)
     integer ::  m
@@ -150,6 +155,7 @@ subroutine leastsq_lmder_sub(func,dfunc,a,m,tol,info)
   n=size(a)
   call lmder1(leastsq_lmder1_sub2sub,m,n,a,fvec,fjac,m,tol_,info_)
   if(present(info))info=info_
+  include "leastsq_error.h90"
 contains
   subroutine leastsq_lmder1_sub2sub(m,n,a,fvec,fjac,ldfjac,iflag)
     integer ::  m

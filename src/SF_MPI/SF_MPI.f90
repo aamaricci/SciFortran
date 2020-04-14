@@ -132,6 +132,7 @@ MODULE SF_MPI
   public :: Finalize_MPI
   public :: StartMsg_MPI
   public :: Barrier_MPI
+  public :: Check_MPI
   !
   public :: Get_Size_MPI
   public :: Get_Rank_MPI
@@ -205,6 +206,12 @@ contains
   !****************************************
   !              MPI TOOLS
   !****************************************
+  function check_MPI() result(bool)
+    logical          :: bool    
+    call MPI_Initialized(bool,ierr)
+  end function check_MPI
+
+
   function get_size_MPI(comm) result(size)
     integer,optional :: comm
     integer          :: comm_
@@ -412,6 +419,7 @@ contains
   public :: Finalize_MPI
   public :: StartMsg_MPI
   !
+  public :: Check_MPI
   public :: Get_Size_MPI
   public :: Get_Rank_MPI
   public :: Get_Master_MPI
@@ -446,6 +454,11 @@ contains
   !****************************************
   !              MPI TOOLS
   !****************************************
+  function Check_MPI() result(bool)
+    logical :: bool
+    bool=.false.
+  end function Check_MPI
+  
   function Get_size_MPI(comm) result(size)
     integer :: comm
     integer :: size

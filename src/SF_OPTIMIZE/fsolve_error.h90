@@ -1,0 +1,13 @@
+  select case(info_)
+  case(1)
+     return
+  case(0)
+     write(*,*)"FSOLVE STOP: improper input parameters."
+  case(2)
+     write(*,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
+  case(3)
+     write(*,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible."
+  case(4)
+     write(*,*)"FSOLVE STOP: the iteration is not making good progress."
+  end select
+  stop "FSOLVE STOP"
