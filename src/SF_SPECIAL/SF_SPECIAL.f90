@@ -405,13 +405,13 @@ contains
   ! + Horiguchi, Journal of the Physical Society of Japan, Vol.30,N.5 (1971)
   !+-------------------------------------------------------------------+
   function dens_3dcubic(x,ts) result(dos)
-    real(8),intent(in) :: x
-    real(8),optional   :: ts
-    real(8)            :: ts_
-    real(8)            :: wband,dos
-    real(8)            :: a,b,e0,s
-    real(8),parameter  :: pi=acos(-1d0)
-    real(8)            :: ImG
+    real(8),intent(in)          :: x
+    real(8),intent(in),optional :: ts
+    real(8)                     :: ts_
+    real(8)                     :: wband,dos
+    real(8)                     :: a,b,e0,s
+    real(8),parameter           :: pi=acos(-1d0)
+    real(8)                     :: ImG
     ts_  = 1d0 ;if(present(ts))ts_=ts
     e0   = 2d0*ts_
     wband= 3d0*e0
@@ -447,9 +447,9 @@ contains
   include "special_functions.f90"
 
   function EllipticK(z) result(K)
-    real(8) :: z
-    real(8) :: K
-    real(8),parameter :: pi=acos(-1d0)
+    real(8),intent(in) :: z
+    real(8)            :: K
+    real(8),parameter  :: pi=acos(-1d0)
     K = ellf(pi/2d0,z)
   end function EllipticK
 

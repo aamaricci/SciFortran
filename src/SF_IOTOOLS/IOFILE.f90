@@ -3,7 +3,7 @@ module IOFILE
   private
 
   !file size to be stored automagically (in Kb)
-  integer,save :: store_size=2048
+  integer,save :: store_size=2
 
   interface str
      module procedure str_i_to_ch
@@ -151,9 +151,9 @@ contains
     endif
     open(10,file=reg(file))
     call fstat(10,buff,status)
-    size=nint(dble(buff(8))/dble(1024))
+    size=nint(dble(buff(8))/dble(1024)/dble(1024))
     if(present(printf).AND.printf.eqv..true.)&
-         write(*,"(A,A,A,f9.6,A)")"file: **",reg(file),"** is ",size," Kb"
+         write(*,"(A,A,A,f9.6,A)")"file: **",reg(file),"** is ",size," Mb"
   end function file_size
 
 
@@ -259,7 +259,7 @@ contains
   subroutine set_store_size(size)
     integer :: size
     store_size=size
-    write(*,"(A)")"store size ="//trim(txtfy(size))//"Kb"
+    write(*,"(A)")"store size ="//trim(txtfy(size))//"Mb"
   end subroutine set_store_size
 
 
