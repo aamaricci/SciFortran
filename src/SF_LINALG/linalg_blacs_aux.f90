@@ -135,7 +135,7 @@ subroutine D_Gather_BLACS(Mloc,M,descM,unit)
   endif
   !
   if(rankX==0.AND.rankY==0)call cpu_time(t_start)
-  call Bcast_MPI(MPI_COMM_WORLD,M)
+  call Bcast_MPI(M)
   if(rankX==0.AND.rankY==0)call cpu_time(t_stop)
   if(present(unit))then
      if(rankX==0.AND.rankY==0)write(unit,"(A20,F21.12)")"Time Bcast :",t_stop-t_start
@@ -191,7 +191,7 @@ subroutine Z_Gather_BLACS(Mloc,M,descM,unit)
   endif
   !
   if(rankX==0.AND.rankY==0)call cpu_time(t_start)
-  call Bcast_MPI(MPI_COMM_WORLD,M)
+  call Bcast_MPI(M)
   if(rankX==0.AND.rankY==0)call cpu_time(t_stop)
   if(present(unit))then
      if(rankX==0.AND.rankY==0)write(unit,"(A20,F21.12)")"Time Bcast :",t_stop-t_start

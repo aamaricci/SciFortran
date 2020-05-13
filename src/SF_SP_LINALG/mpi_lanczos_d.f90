@@ -43,7 +43,7 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshol
   if(present(vrandom))vran=vrandom
   !
   norm_tmp=dot_product(vect,vect); norm=0d0
-  call AllReduce_MPI(MpiComm,norm_tmp,norm)
+  call AllReduce_MPI(norm_tmp,norm,MpiComm=MpiComm)
   !
   if(norm==0d0)then
      if(vran)then
@@ -61,7 +61,7 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshol
         if(verb.AND.mpi_master)write(*,*)"MPI_LANCZOS_EIGH: unitary initial vector generated:"
      endif
      norm_tmp=dot_product(vect,vect); norm=0d0
-     call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     call AllReduce_MPI(norm_tmp,norm,MpiComm=MpiComm)
      vect=vect/sqrt(norm)
   endif
   !
@@ -114,7 +114,7 @@ subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshol
      vect = vect + vin*Z(iter,1)
   end do
   norm_tmp=dot_product(vect,vect); norm=0d0
-  call Allreduce_MPI(MpiComm,norm_tmp,norm)
+  call Allreduce_MPI(norm_tmp,norm,MpiComm=MpiComm)
   vect=vect/sqrt(norm)
   if(verb)then
      call MatVec(Nloc,vect,vout)
@@ -215,7 +215,7 @@ subroutine mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,alfa,beta)
   !
   if(iter==1)then
      norm_tmp=dot_product(vin,vin)
-     norm = 0d0 ; call AllReduce_MPI(MpiComm,norm_tmp,norm)
+     norm = 0d0 ; call AllReduce_MPI(norm_tmp,norm,MpiComm=MpiComm)
      if(mpi_master.AND.norm==0d0)stop "MPI_LANCZOS_ITERATION_D: norm = 0!!"
      vin=vin/sqrt(norm)
   else
@@ -225,8 +225,8 @@ subroutine mpi_lanczos_iteration_d(MpiComm,MatVec,iter,vin,vout,alfa,beta)
   endif
   call MatVec(nloc,vin,tmp)
   vout = vout + tmp
-  atmp = dot_product(vin,vout) ; alfa = 0d0; call AllReduce_MPI(MpiComm,atmp,alfa)
+  atmp = dot_product(vin,vout) ; alfa = 0d0; call AllReduce_MPI(atmp,alfa,MpiComm=MpiComm)
   vout = vout - alfa*vin
-  btmp = dot_product(vout,vout); beta = 0d0; call AllReduce_MPI(MpiComm,btmp,beta)
+  btmp = dot_product(vout,vout); beta = 0d0; call AllReduce_MPI(btmp,beta,MpiComm=MpiComm)
   beta = sqrt(beta)
 end subroutine mpi_lanczos_iteration_d

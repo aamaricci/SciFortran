@@ -150,6 +150,18 @@ MODULE SF_MPI
 
 contains
 
+  function check_MPI() result(bool)
+    logical          :: bool
+#ifdef _MPI
+    call MPI_Initialized(bool,ierr)
+    return
+#else
+    bool=.false.
+    return
+#endif
+  end function check_MPI
+
+
 
   !****************************************
   !              MPI START/STOP
@@ -164,22 +176,18 @@ contains
     if(present(msg))then
        if(msg)call StartMsg_MPI(MPI_COMM_WORLD)
     endif
-    return
-#else
-    return
 #endif
+    return
   end subroutine Init_MPI
 
-  subroutine Finalize_MPI(comm)
-    integer,optional :: comm
+  subroutine Finalize_MPI()
 #ifdef _MPI
-    call MPI_Finalize(ierr)
-    call Error_MPI(ierr,"MPI_Stop")
-    if(present(comm))comm=MPI_COMM_NULL
-    return
-#else
-    return
+    if(check_MPI())then
+       call MPI_Finalize(ierr)
+       call Error_MPI(ierr,"MPI_Stop")
+    endif
 #endif
+    return
   end subroutine Finalize_MPI
 
   subroutine StartMsg_MPI(comm)
@@ -187,35 +195,39 @@ contains
     integer          :: comm_,size
     integer          :: i
 #ifdef _MPI
-    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    if(comm_ /= Mpi_Comm_Null)then
-       rank = Get_Rank_MPI(comm_)
-       size = Get_Size_MPI(comm_)
-       if(rank==0)write(*,'(a)')"---------------MPI----------------"
-       do i=0,size-1
+    if(check_MPI())then
+       comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+       if(comm_ /= Mpi_Comm_Null)then
+          rank = Get_Rank_MPI(comm_)
+          size = Get_Size_MPI(comm_)
+          if(rank==0)write(*,'(a)')"---------------MPI----------------"
+          do i=0,size-1
+             call MPI_Barrier(comm_,ierr)
+             if(rank==i)write(*,"(A,I6,A,I6,A)")"rank:",rank," of ",size," alive"          
+          enddo
           call MPI_Barrier(comm_,ierr)
-          if(rank==i)write(*,"(A,I6,A,I6,A)")"rank:",rank," of ",size," alive"          
-       enddo
-       call MPI_Barrier(comm_,ierr)
-       if(rank==0)write(*,'(a)')"----------------------------------"
-       if(rank==0)write(*,'(a)')""
+          if(rank==0)write(*,'(a)')"----------------------------------"
+          if(rank==0)write(*,'(a)')""
+       endif
     endif
-    return
-#else
-    return
 #endif
+    return
   end subroutine StartMsg_MPI
 
   subroutine Barrier_MPI(comm)
     integer,optional :: comm
     integer          :: comm_
 #ifdef _MPI
-    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    if(comm_/=Mpi_Comm_Null)then
-       call MPI_Barrier(comm_,ierr)
-       call Error_MPI(ierr,"Barrier_MPI")
+    if(check_MPI())then
+       comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+       if(comm_/=Mpi_Comm_Null)then
+          call MPI_Barrier(comm_,ierr)
+          call Error_MPI(ierr,"Barrier_MPI")
+       endif
+       return
+    else
+       return
     endif
-    return
 #else
     return
 #endif
@@ -225,52 +237,38 @@ contains
   !****************************************
   !              MPI TOOLS
   !****************************************
-  function check_MPI() result(bool)
-    logical          :: bool
-#ifdef _MPI
-    call MPI_Initialized(bool,ierr)
-    return
-#else
-    bool=.false.
-    return
-#endif
-  end function check_MPI
-
-
   function get_size_MPI(comm) result(size)
     integer,optional :: comm
     integer          :: comm_
     integer          :: size
-#ifdef _MPI
-    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm    
-    if(comm_/=Mpi_Comm_Null)then
-       call MPI_Comm_size(comm_,size,ierr)
-       call Error_MPI(ierr,"Get_Size_MPI")
-    else
-       return
-    endif
-#else
     size=1
-    return
+#ifdef _MPI
+    if(check_MPI())then
+       comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm    
+       if(comm_/=Mpi_Comm_Null)then
+          call MPI_Comm_size(comm_,size,ierr)
+          call Error_MPI(ierr,"Get_Size_MPI")
+       endif
+    endif
 #endif
+    return
   end function get_size_MPI
 
   function Get_rank_MPI(comm) result(rank)
     integer,optional :: comm
     integer          :: comm_
     integer          :: rank
-#ifdef _MPI
-    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    if(comm_/=Mpi_Comm_Null)then
-       call MPI_Comm_rank(comm_,rank,ierr)
-       call Error_MPI(ierr,"Get_Rank_MPI")
-    else
-       return
-    endif
-#else
     rank=0
-    return
+#ifdef _MPI
+    if(check_MPI())then
+       comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+       if(comm_/=Mpi_Comm_Null)then
+          call MPI_Comm_rank(comm_,rank,ierr)
+          call Error_MPI(ierr,"Get_Rank_MPI")
+       endif
+    endif
 #endif
+    return
   end function Get_rank_MPI
 
   function Get_master_MPI(comm) result(master)
@@ -279,19 +277,23 @@ contains
     integer          :: rank
     logical          :: master
 #ifdef _MPI
-    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    if(comm_/=Mpi_Comm_Null)then    
-       call MPI_Comm_rank(comm_,rank,ierr)
-       call Error_MPI(ierr,"Get_Master_MPI")
-       master=.false.
-       if(rank==0)master=.true.
+    if(check_MPI())then
+       comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+       if(comm_/=Mpi_Comm_Null)then    
+          call MPI_Comm_rank(comm_,rank,ierr)
+          call Error_MPI(ierr,"Get_Master_MPI")
+          master=.false.
+          if(rank==0)master=.true.
+       else
+          master=.false.
+       endif
     else
-       master=.false.
+       master=.true.
     endif
 #else
-    master=.false.
-    return
+    master=.true.
 #endif
+    return
   end function Get_master_MPI
 
 
@@ -302,19 +304,23 @@ contains
     integer          :: rank
     logical          :: last
 #ifdef _MPI
-    comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
-    if(comm_/=Mpi_Comm_Null)then
-       call MPI_Comm_rank(comm_,rank,ierr)
-       call MPI_Comm_size(comm_,size,ierr)    
-       last=.false.
-       if(rank==size-1)last=.true.
+    if(check_MPI())then 
+       comm_=MPI_COMM_WORLD;if(present(comm))comm_=comm
+       if(comm_/=Mpi_Comm_Null)then
+          call MPI_Comm_rank(comm_,rank,ierr)
+          call MPI_Comm_size(comm_,size,ierr)    
+          last=.false.
+          if(rank==size-1)last=.true.
+       else
+          last=.false.
+       endif
     else
        last=.false.
     endif
 #else
     last=.false.
-    return
 #endif
+    return
   end function Get_last_MPI
 
 
@@ -322,24 +328,16 @@ contains
   function cpu_time_MPI() result(time)
     real(8) :: time
 #ifdef _MPI
-    time = MPI_WTIME()
+    if(check_MPI())then
+       time = MPI_WTIME()
+    else
+       call cpu_time(time)
+    endif
 #else
     call cpu_time(time)
 #endif
   end function Cpu_Time_MPI
 
-
-  function Get_Processor_MPI() result(workstation)
-    integer                               :: istat
-#ifdef _MPI
-    character(len=MPI_MAX_PROCESSOR_NAME) :: workstation    
-    call MPI_GET_PROCESSOR_NAME(workstation,istat,ierr)
-    call Error_MPI(ierr,"Get_Processor_MPI")
-#else
-    character(len=1) :: workstation
-    workstation='0'
-#endif
-  end function Get_Processor_MPI
 
 
 
@@ -355,13 +353,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,1,MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_0')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,1,MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_0')
+    endif
 #endif
   end subroutine MPI_Bcast_Bool_0
   !
@@ -371,13 +369,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_1')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_1')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_1
   !
@@ -387,13 +385,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_2')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_2')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_2
   !
@@ -403,13 +401,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_3')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_3')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_3
   !
@@ -419,13 +417,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_4')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_4')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_4
   !
@@ -435,13 +433,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_5')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_5')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_5
   !
@@ -451,13 +449,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_6')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_6')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_6
   !
@@ -467,13 +465,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Bool_7')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Bool_7')
+    endif
 #endif
   end subroutine  MPI_Bcast_Bool_7
 
@@ -487,13 +485,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,1,MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_0')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,1,MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_0')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_0
   !
@@ -503,13 +501,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_1')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_1')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_1
   !
@@ -519,13 +517,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_2')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_2')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_2
   !
@@ -535,13 +533,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_3')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_3')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_3
   !
@@ -551,13 +549,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_4')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_4')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_4
   !
@@ -567,13 +565,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_5')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_5')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_5
   !
@@ -583,13 +581,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_6')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_6')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_6
   !
@@ -599,13 +597,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Int_7')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Int_7')
+    endif
 #endif
   end subroutine  MPI_Bcast_Int_7
 
@@ -618,13 +616,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,1,MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_0')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,1,MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_0')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_0
   !
@@ -634,13 +632,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_1')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_1')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_1
   !
@@ -650,13 +648,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_2')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_2')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_2
   !
@@ -666,13 +664,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_3')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_3')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_3
   !
@@ -682,13 +680,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_4')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_4')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_4
   !
@@ -698,13 +696,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_5')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_5')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_5
   !
@@ -714,13 +712,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_6')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_6')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_6
   !
@@ -730,13 +728,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Dble_7')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Dble_7')
+    endif
 #endif
   end subroutine  MPI_Bcast_Dble_7
 
@@ -750,13 +748,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,1,MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_0')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,1,MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_0')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_0
   !
@@ -766,13 +764,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_1')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_1')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_1
   !
@@ -782,13 +780,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_2')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_2')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_2
   !
@@ -798,13 +796,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_3')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_3')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_3
   !
@@ -814,13 +812,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_4')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_4')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_4
   !
@@ -830,13 +828,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_5')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_5')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_5
   !
@@ -846,13 +844,13 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_6')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_6')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_6
   !
@@ -862,15 +860,31 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-    call Error_MPI(sub='MPI_Bcast_Cmplx_7')
-#else
-    return
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+       call Error_MPI(sub='MPI_Bcast_Cmplx_7')
+    endif
 #endif
   end subroutine  MPI_Bcast_Cmplx_7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -886,11 +900,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,1,MPI_LOGICAL,data,1,MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,1,MPI_LOGICAL,data,1,MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -904,11 +923,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -922,11 +946,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -940,11 +969,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -958,11 +992,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -976,11 +1015,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -994,11 +1038,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1012,11 +1061,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Bool_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Bool_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1034,11 +1088,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,1,MPI_INTEGER,data,1,MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,1,MPI_INTEGER,data,1,MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1052,11 +1111,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1070,11 +1134,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1088,11 +1157,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1106,11 +1180,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1124,11 +1203,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1142,11 +1226,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1160,11 +1249,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Int_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Int_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1184,11 +1278,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,1,MPI_DOUBLE_PRECISION,data,1,MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,1,MPI_DOUBLE_PRECISION,data,1,MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1202,11 +1301,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1220,11 +1324,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1238,11 +1347,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1256,11 +1370,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1274,11 +1393,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1292,11 +1416,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1310,11 +1439,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Dble_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Dble_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1332,11 +1466,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,1,MPI_DOUBLE_COMPLEX,data,1,MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,1,MPI_DOUBLE_COMPLEX,data,1,MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1350,11 +1489,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1368,11 +1512,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1386,11 +1535,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1404,11 +1558,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1422,11 +1581,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1440,11 +1604,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1458,11 +1627,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
-    call Error_MPI(sub='MPI_Allgather_Cmplx_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+       call Error_MPI(sub='MPI_Allgather_Cmplx_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1483,11 +1657,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,1,MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,1,MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1501,11 +1680,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1519,11 +1703,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1537,11 +1726,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1555,11 +1749,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1573,11 +1772,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1591,11 +1795,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1609,11 +1818,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Bool_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Bool_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1630,11 +1844,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,1,MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,1,MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1648,11 +1867,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1666,11 +1890,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1684,11 +1913,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1702,11 +1936,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1720,11 +1959,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1738,11 +1982,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1756,11 +2005,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Int_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Int_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1777,11 +2031,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,1,MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,1,MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1795,11 +2054,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1813,11 +2077,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1831,11 +2100,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1849,11 +2123,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1867,11 +2146,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1885,11 +2169,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1903,11 +2192,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Dble_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Dble_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1926,11 +2220,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,1,MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_0')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,1,MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_0')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1944,11 +2243,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_1')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_1')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1962,11 +2266,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_2')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_2')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1980,11 +2289,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_3')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_3')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -1998,11 +2312,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_4')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_4')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -2016,11 +2335,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_5')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_5')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -2034,11 +2358,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_6')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_6')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -2052,11 +2381,16 @@ contains
     integer,intent(in),optional :: MpiComm
     integer                     :: Comm
 #ifdef _MPI
-    comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
-    rank=0;if(present(root))rank=root
-    if(comm==MPI_COMM_NULL)return
-    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    call Error_MPI(sub='MPI_Allreduce_Cmplx_7')
+    if(check_MPI())then
+       comm=MPI_COMM_WORLD;if(present(MpiComm))comm=MpiComm
+       rank=0;if(present(root))rank=root
+       if(comm==MPI_COMM_NULL)return
+       call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+       call Error_MPI(sub='MPI_Allreduce_Cmplx_7')
+    else
+       data = send
+       return
+    endif
 #else
     data = send
     return
@@ -2095,80 +2429,84 @@ contains
     err_=ierr            ; if(present(err))err_=err
     sub_="MPI_Get_Error:"; if(present(sub))sub_=sub
 #ifdef _MPI
-    select case (err_)
-    case (MPI_SUCCESS)
-       return
-       !
-    case (MPI_ERR_COMM)
-       write(*,'(2A)')  trim(sub_),STR_ERR_COMM
-       !
-    case (MPI_ERR_COUNT)
-       write(*,'(2A)')  trim(sub_),STR_ERR_COUNT
-       !
-    case (MPI_ERR_TYPE)
-       write(*,'(2A)')  trim(sub_),STR_ERR_TYPE
-       !
-    case (MPI_ERR_BUFFER)
-       write(*,'(2A)')  trim(sub_),STR_ERR_BUFFER
-       !
-    case (MPI_ERR_ROOT)
-       write(*,'(2A)')  trim(sub_),STR_ERR_ROOT
-       !
-    case (MPI_ERR_ARG)
-       write(*,'(2A)')  trim(sub_),STR_ERR_ARG
-       !
-    case (MPI_ERR_TAG)
-       write(*,'(2A)')  trim(sub_),STR_ERR_TAG
-       !
-    case (MPI_ERR_RANK)
-       write(*,'(2A)')  trim(sub_),STR_ERR_RANK
-       !
-    case (MPI_ERR_GROUP)
-       write(*,'(2A)')  trim(sub_),STR_ERR_GROUP
-       !
-    case (MPI_ERR_OP)
-       write(*,'(2A)')  trim(sub_),STR_ERR_OP
-       !
-    case (MPI_ERR_TOPOLOGY)
-       write(*,'(2A)')  trim(sub_),STR_ERR_TOPOLOGY
-       !
-    case (MPI_ERR_DIMS)
-       write(*,'(2A)')  trim(sub_),STR_ERR_DIMS
-       !
-    case (MPI_ERR_UNKNOWN)
-       write(*,'(2A)')  trim(sub_),STR_ERR_UNKNOWN
-       !
-    case (MPI_ERR_TRUNCATE)
-       write(*,'(2A)')  trim(sub_),STR_ERR_TRUNCATE
-       !
-    case (MPI_ERR_OTHER)
-       write(*,'(2A)')  trim(sub_),STR_ERR_OTHER
-       !
-    case (MPI_ERR_INTERN)
-       write(*,'(2A)')  trim(sub_),STR_ERR_INTERN
-       !
-    case (MPI_ERR_IN_STATUS)
-       write(*,'(2A)')  trim(sub_),STR_ERR_IN_STATUS
-       !
-    case (MPI_ERR_PENDING)
-       write(*,'(2A)')  trim(sub_),STR_ERR_PENDING
-       !
-    case (MPI_ERR_REQUEST)
-       write(*,'(2A)')  trim(sub_),STR_ERR_REQUEST
-       !
-    case (MPI_ERR_LASTCODE)
-       write(*,'(2A)')  trim(sub_),STR_ERR_LASTCODE
-       !
-    case default
-       return
-       !
-    end select
+    if(check_MPI())then
+       select case (err_)
+       case (MPI_SUCCESS)
+          return
+          !
+       case (MPI_ERR_COMM)
+          write(*,'(2A)')  trim(sub_),STR_ERR_COMM
+          !
+       case (MPI_ERR_COUNT)
+          write(*,'(2A)')  trim(sub_),STR_ERR_COUNT
+          !
+       case (MPI_ERR_TYPE)
+          write(*,'(2A)')  trim(sub_),STR_ERR_TYPE
+          !
+       case (MPI_ERR_BUFFER)
+          write(*,'(2A)')  trim(sub_),STR_ERR_BUFFER
+          !
+       case (MPI_ERR_ROOT)
+          write(*,'(2A)')  trim(sub_),STR_ERR_ROOT
+          !
+       case (MPI_ERR_ARG)
+          write(*,'(2A)')  trim(sub_),STR_ERR_ARG
+          !
+       case (MPI_ERR_TAG)
+          write(*,'(2A)')  trim(sub_),STR_ERR_TAG
+          !
+       case (MPI_ERR_RANK)
+          write(*,'(2A)')  trim(sub_),STR_ERR_RANK
+          !
+       case (MPI_ERR_GROUP)
+          write(*,'(2A)')  trim(sub_),STR_ERR_GROUP
+          !
+       case (MPI_ERR_OP)
+          write(*,'(2A)')  trim(sub_),STR_ERR_OP
+          !
+       case (MPI_ERR_TOPOLOGY)
+          write(*,'(2A)')  trim(sub_),STR_ERR_TOPOLOGY
+          !
+       case (MPI_ERR_DIMS)
+          write(*,'(2A)')  trim(sub_),STR_ERR_DIMS
+          !
+       case (MPI_ERR_UNKNOWN)
+          write(*,'(2A)')  trim(sub_),STR_ERR_UNKNOWN
+          !
+       case (MPI_ERR_TRUNCATE)
+          write(*,'(2A)')  trim(sub_),STR_ERR_TRUNCATE
+          !
+       case (MPI_ERR_OTHER)
+          write(*,'(2A)')  trim(sub_),STR_ERR_OTHER
+          !
+       case (MPI_ERR_INTERN)
+          write(*,'(2A)')  trim(sub_),STR_ERR_INTERN
+          !
+       case (MPI_ERR_IN_STATUS)
+          write(*,'(2A)')  trim(sub_),STR_ERR_IN_STATUS
+          !
+       case (MPI_ERR_PENDING)
+          write(*,'(2A)')  trim(sub_),STR_ERR_PENDING
+          !
+       case (MPI_ERR_REQUEST)
+          write(*,'(2A)')  trim(sub_),STR_ERR_REQUEST
+          !
+       case (MPI_ERR_LASTCODE)
+          write(*,'(2A)')  trim(sub_),STR_ERR_LASTCODE
+          !
+       case default
+          return
+          !
+       end select
+    else
+       write(*,'(2A)')  trim(sub_)
+    endif
 #else
     write(*,'(2A)')  trim(sub_)
 #endif
   end subroutine Error_MPI
 
-
+  
 END MODULE SF_MPI
 
 

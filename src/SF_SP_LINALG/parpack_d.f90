@@ -121,24 +121,15 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,ive
   if(present(v0))then
      resid = v0
   else
-     allocate(vec(ldv))
      if(vran)then
-        ! call random_seed(size=nrandom)
-        ! if(allocated(seed_random))deallocate(seed_random)
-        ! allocate(seed_random(nrandom))
-        ! seed_random=1234567
-        ! call random_seed(put=seed_random)
-        ! deallocate(seed_random)
-        ! call random_number(vec)
-        call mt_random(vec)
+        call mt_random(resid)
      else
-        vec = 1d0              !start with unitary vector 1/sqrt(Ndim)
+        resid = 1d0              !start with unitary vector 1/sqrt(Ndim)
      endif
-     norm_tmp = dot_product(vec,vec)
+     norm_tmp = dot_product(resid,resid)
      norm = 0d0
-     call AllReduce_MPI(MpiComm,norm_tmp,norm)
-     resid=vec/sqrt(norm)
-     deallocate(vec)
+     call AllReduce_MPI(norm_tmp,norm,MpiComm=MpiComm)
+     resid=resid/sqrt(norm)
   endif
   !
   ishfts    = 1
