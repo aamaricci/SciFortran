@@ -3,6 +3,15 @@ module SF_SPECIAL
   implicit none
   private
 
+
+  real(8),parameter    :: zero = 0d0, one = 1d0
+  real(8),parameter    :: two  = 2d0, half = 0.5d0, rmin = tiny(one)
+  real(8),parameter    :: eps0 = epsilon(one), sqrt_log_rmin = sqrt(-log(rmin))
+  real(8),parameter    :: pi = 3.14159265358979323846264338327950288419d0
+  real(8),parameter    :: pi2 = pi*pi, one_sqrt_pi = one/sqrt( pi )
+  complex(8),parameter :: cmplxj = dcmplx(zero,one),cmplx0 = dcmplx(zero,zero)
+
+
   !FUNCTIONS:
   public :: heaviside
   interface step
@@ -337,6 +346,7 @@ contains
   !+------------------------------------------------------------------+
   !PURPOSE  : Evaluate the Complex Error Functions (Faddeeva function)
   ! w(x)=exp(-x^2)erfc(-ix)
+  ! ANYWAY USE ZERF
   !+------------------------------------------------------------------+
   function wfun(z)
     complex(8):: z,wfun
