@@ -24,22 +24,25 @@ contains
     logical,optional :: istart,iend
     logical          :: startpoint_,endpoint_
     real(8),optional :: mesh
+    !
     if(num<0)stop "linspace: N<0, abort."
+    !
     startpoint_=.true.;if(present(istart))startpoint_=istart
     endpoint_=.true.;if(present(iend))endpoint_=iend
+    !
     if(startpoint_.AND.endpoint_)then
        if(num<2)stop "linspace: N<2 with both start and end points"
-       step = (stop-start)/real(num-1,8)
-       forall(i=1:num)array(i)=start + real(i-1,8)*step
+       step = (stop-start)/(dble(num)-1d0)
+       forall(i=1:num)array(i)=start + (dble(i)-1d0)*step
     elseif(startpoint_.AND.(.not.endpoint_))then
-       step = (stop-start)/real(num,8)
-       forall(i=1:num)array(i)=start + real(i-1,8)*step
+       step = (stop-start)/dble(num)
+       forall(i=1:num)array(i)=start + (dble(i)-1d0)*step
     elseif(.not.startpoint_.AND.endpoint_)then
-       step = (stop-start)/real(num,8)
-       forall(i=1:num)array(i)=start + real(i,8)*step
+       step = (stop-start)/dble(num)
+       forall(i=1:num)array(i)=start + dble(i)*step
     else
-       step = (stop-start)/real(num+1,8)
-       forall(i=1:num)array(i)=start + real(i,8)*step
+       step = (stop-start)/(dble(num)+1d0)
+       forall(i=1:num)array(i)=start + dble(i)*step
     endif
     if(present(mesh))mesh=step
   end function linspace
@@ -84,6 +87,7 @@ contains
        forall(i=1:num-1)array(i)=start+i-1
     end if
   end function arange
+
 
 
 

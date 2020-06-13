@@ -1,7 +1,7 @@
 !HYBRD INTERFACE:
 !solve N nonlinear equations in N unknowns
 !numerical jacobian 
-subroutine fsolve_hybrd_func(func,x,tol,info)
+subroutine fsolve_hybrd_func(func,x,tol,info,check)
   interface
      function func(x)
        real(8),dimension(:),intent(in) :: x
@@ -13,13 +13,18 @@ subroutine fsolve_hybrd_func(func,x,tol,info)
   integer,optional           :: info
   real(8)                    :: tol_
   integer                    :: info_
+  logical,optional           :: check
+  logical                    :: check_
   integer                    :: n
   real(8),dimension(size(x)) :: fvec
   tol_ = 1.d-15;if(present(tol))tol_=tol
+  check_=.true.;if(present(check))check_=check
   n=size(x)
   call hybrd1(fsolve_hybrd1_func2sub,n,x,fvec,tol_,info_)
   if(present(info))info=info_
-  include "fsolve_error.h90"
+  if(check_)then
+     include "fsolve_error.h90"
+  endif
 contains
   subroutine fsolve_hybrd1_func2sub(n,x,fvec,iflag)
     integer ::  n
@@ -30,8 +35,8 @@ contains
     if(iflag<0)stop "FSOLVE_HYBRD1_func2sub ERROR: iflag < 0 "
   end subroutine fsolve_hybrd1_func2sub
 end subroutine fsolve_hybrd_func
-!
-subroutine fsolve_hybrd_sub(func,x,tol,info)
+
+subroutine fsolve_hybrd_sub(func,x,tol,info,check)
   interface
      subroutine func(x,ff)
        real(8),dimension(:),intent(in) :: x
@@ -43,13 +48,18 @@ subroutine fsolve_hybrd_sub(func,x,tol,info)
   integer,optional           :: info
   real(8)                    :: tol_
   integer                    :: info_
+  logical,optional           :: check
+  logical                    :: check_
   integer                    :: n
   real(8),dimension(size(x)) :: fvec
   tol_ = 1.d-15;if(present(tol))tol_=tol
+  check_=.true.;if(present(check))check_=check
   n=size(x)
   call hybrd1(fsolve_hybrd1_sub2sub,n,x,fvec,tol_,info_)
   if(present(info))info=info_
-  include "fsolve_error.h90"
+  if(check_)then
+     include "fsolve_error.h90"
+  endif
 contains
   subroutine fsolve_hybrd1_sub2sub(n,x,fvec,iflag)
     integer ::  n
@@ -68,7 +78,7 @@ end subroutine fsolve_hybrd_sub
 !HYBRJ INTERFACE:
 !solve N nonlinear equations in N unknowns
 !user supplied analytic jacobian 
-subroutine fsolve_hybrj_func(func,dfunc,x,tol,info)
+subroutine fsolve_hybrj_func(func,dfunc,x,tol,info,check)
   interface
      function func(x)
        real(8),dimension(:),intent(in) :: x
@@ -85,14 +95,19 @@ subroutine fsolve_hybrj_func(func,dfunc,x,tol,info)
   integer,optional                   :: info
   real(8)                            :: tol_
   integer                            :: info_
+  logical,optional                   :: check
+  logical                            :: check_
   integer                            :: n
   real(8),dimension(size(x))         :: fvec
   real(8),dimension(size(x),size(x)) :: fjac
   tol_ = 1.d-15;if(present(tol))tol_=tol
+  check_=.true.;if(present(check))check_=check
   n=size(x)
   call hybrj1(fsolve_hybrj1_func2sub,n,x,fvec,fjac,n,tol_,info_)
   if(present(info))info=info_
-  include "fsolve_error.h90"
+  if(check_)then
+     include "fsolve_error.h90"
+  endif
 contains
   subroutine fsolve_hybrj1_func2sub(n,x,fvec,fjac,ldfjac,iflag)
     integer ::  n
@@ -109,8 +124,8 @@ contains
     if(iflag<0)stop "FSOLVE_HYBRJ1_func2sub ERROR: iflag < 0 "
   end subroutine fsolve_hybrj1_func2sub
 end subroutine fsolve_hybrj_func
-!
-subroutine fsolve_hybrj_sub(func,dfunc,x,tol,info)
+
+subroutine fsolve_hybrj_sub(func,dfunc,x,tol,info,check)
   interface
      subroutine func(x,f)
        real(8),dimension(:),intent(in) :: x
@@ -127,14 +142,19 @@ subroutine fsolve_hybrj_sub(func,dfunc,x,tol,info)
   integer,optional                   :: info
   real(8)                            :: tol_
   integer                            :: info_
+  logical,optional                   :: check
+  logical                            :: check_
   integer                            :: n
   real(8),dimension(size(x))         :: fvec
   real(8),dimension(size(x),size(x)) :: fjac
   tol_ = 1.d-15;if(present(tol))tol_=tol
+  check_=.true.;if(present(check))check_=check
   n=size(x)
   call hybrj1(fsolve_hybrj1_sub2sub,n,x,fvec,fjac,n,tol_,info_)
   if(present(info))info=info_
-  include "fsolve_error.h90"
+  if(check_)then
+     include "fsolve_error.h90"
+  endif
 contains
   subroutine fsolve_hybrj1_sub2sub(n,x,fvec,fjac,ldfjac,iflag)
     integer ::  n

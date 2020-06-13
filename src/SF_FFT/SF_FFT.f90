@@ -1,23 +1,47 @@
 MODULE SF_FFT_FFTPACK
+  USE SF_INTEGRATE, only: simps
+  USE SF_ARRAYS, only:linspace
+  USE SF_CONSTANTS, only: pi2,xi,pi
   implicit none
   private
 
   !- - - - - - - - - - - - - - - - - - - - - - - - - - - - -!
   !Fast Fourier Transforms of time/frequency signal
   !- - - - - - - - - - - - - - - - - - - - - - - - - - - - -!
+  interface FT_direct
+     module procedure :: d_FT_direct
+     module procedure :: c_FT_direct
+  end interface FT_direct
+
+  interface FT_inverse
+     module procedure :: d_FT_inverse
+     module procedure :: c_FT_inverse
+  end interface FT_inverse
+
+  interface FFT_signal
+     module procedure :: d_FFT_signal
+     module procedure :: c_FFT_signal
+  end interface FFT_signal
+
+  interface iFFT_signal
+     module procedure :: d_iFFT_signal
+     module procedure :: c_iFFT_signal
+  end interface iFFT_signal
+
   interface tfft
      module procedure d_tfft,c_tfft
   end interface tfft
-  public :: tfft
-  public :: d_tfft
-  public :: c_tfft
 
   interface itfft
      module procedure d_itfft,c_itfft
   end interface itfft
+
+  public :: FT_direct
+  public :: FT_inverse
+  public :: FFT_signal
+  public :: iFFT_signal
+  public :: tfft
   public :: itfft
-  public :: d_itfft
-  public :: c_itfft
 
 
   !- - - - - - - - - - - - - - - - - - - - - - - - - - - - -!
@@ -154,16 +178,120 @@ MODULE SF_FFT_FFTPACK
   public :: fftex
   public :: rfft_1d_ex
   public :: cfft_1d_ex
+
+  public :: fft_tmax
+  public :: fft_fmax
+  public :: fft_tarray
+  public :: fft_farray
   !- - - - - - - - - - - - - - - - - - - - - - - - - - - - -!
 
-
+  
 
 contains
 
 
+
+
+
+
+
   !*********************************************************************
   !               TIME <==> FREQUENCY DOMAIN FFT:
-  !*********************************************************************  
+  !*********************************************************************
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : Evaluate the simple FT of a function from time to frequency. 
+  !+-------------------------------------------------------------------+
+  function d_FT_direct(ft,t,w) result(fw)
+    real(8),dimension(:),intent(in)        :: ft
+    real(8),dimension(size(ft)),intent(in) :: t
+    real(8),dimension(:),intent(in)        :: w
+    real(8),dimension(size(w))             :: fw
+    real(8)                                :: a,b
+    integer                                :: i
+    a = t(1);b = t(size(t))
+    do i=1,size(w)
+       fw(i)= simps(ft*exp(-xi*pi2*w(i)*t),a,b)
+    enddo
+  end function D_FT_Direct
+  function c_FT_direct(ft,t,w) result(fw)
+    complex(8),dimension(:),intent(in)     :: ft
+    real(8),dimension(size(ft)),intent(in) :: t
+    real(8),dimension(:),intent(in)        :: w
+    complex(8),dimension(size(w))          :: fw
+    real(8)                                :: a,b
+    integer                                :: i
+    a = t(1);b = t(size(t))
+    do i=1,size(w)
+       fw(i)= simps(ft*exp(-xi*pi2*w(i)*t),a,b)
+    enddo
+  end function C_FT_Direct
+
+
+  function d_FT_inverse(fw,t,w) result(ft)
+    real(8),dimension(:),intent(in)        :: fw
+    real(8),dimension(:),intent(in)        :: t
+    real(8),dimension(size(fw)),intent(in) :: w
+    real(8),dimension(size(t))             :: ft
+    real(8)                                :: a,b
+    integer                                :: i
+    a = w(1) ; b = w(size(w))
+    do i=1,size(t)
+       ft(i)= simps(fw*exp(xi*pi2*w*t(i)),a,b)
+    enddo
+  end function D_FT_Inverse
+  function c_FT_inverse(fw,t,w) result(ft)
+    complex(8),dimension(:),intent(in)     :: fw
+    real(8),dimension(:),intent(in)        :: t
+    real(8),dimension(size(fw)),intent(in) :: w
+    complex(8),dimension(size(t))          :: ft
+    real(8)                                :: a,b
+    integer                                :: i
+    a = w(1) ; b = w(size(w))
+    do i=1,size(t)
+       ft(i)= simps(fw*exp(xi*pi2*w*t(i)),a,b)
+    enddo
+  end function C_FT_Inverse
+
+
+
+  !+-------------------------------------------------------------------+
+  !PURPOSE  : Evaluate the FFT of a function from time to frequency. 
+  !+-------------------------------------------------------------------+
+  function d_FFT_signal(ft,dt) result(fw)
+    real(8),dimension(:)        :: ft
+    real(8)                     :: dt
+    real(8),dimension(size(ft)) :: fw
+    call tfft(ft)
+    fw = ft*dt
+  end function d_FFT_signal
+  function c_FFT_signal(ft,dt) result(fw)
+    complex(8),dimension(:)        :: ft
+    real(8)                        :: dt
+    complex(8),dimension(size(ft)) :: fw
+    call tfft(ft)
+    fw = ft*dt
+  end function c_FFT_signal
+
+
+  function d_iFFT_signal(fw,dt) result(ft)
+    real(8),dimension(:)        :: fw
+    real(8)                     :: dt
+    real(8),dimension(size(fw)) :: ft
+    call itfft(fw)
+    ft=fw/dt
+  end function d_iFFT_signal
+  function c_iFFT_signal(fw,dt) result(ft)
+    complex(8),dimension(:)        :: fw
+    real(8)                        :: dt
+    complex(8),dimension(size(fw)) :: ft
+    call itfft(fw)
+    ft=fw/dt
+  end function c_iFFT_signal
+
+
+
+
+
   !+-------------------------------------------------------------------+
   !PURPOSE  : Evaluate the FFT of a function from time to frequency. 
   !+-------------------------------------------------------------------+
@@ -1042,6 +1170,49 @@ contains
        func(i)=ex*func(i)
     enddo
   end subroutine cfft_1d_ex
+
+
+
+
+
+
+  ! TIME-FREQUENCY SIGNALS
+  function fft_tmax(L,dt)
+    integer :: L
+    real(8) :: dt
+    real(8) :: fft_tmax
+    fft_tmax = L*dt/2
+  end function fft_tmax
+
+  function fft_fmax(L,dt)
+    integer :: L
+    real(8) :: dt
+    real(8) :: fft_fmax
+    fft_fmax = pi/dt
+  end function fft_fmax
+
+
+
+
+  function fft_tarray(L,dt) result(time)
+    real(8)              :: dt
+    integer              :: L
+    real(8)              :: tmax
+    real(8),dimension(L) :: time
+    tmax = fft_tmax(L,dt)
+    time = linspace(-tmax,tmax,L)
+  end function fft_tarray
+
+  function fft_farray(L,dt,df) result(freq)
+    integer              :: L
+    real(8)              :: dt
+    real(8),optional     :: df
+    real(8)              :: wmax,dw
+    real(8),dimension(L) :: freq
+    wmax = fft_fmax(L,dt)
+    freq = linspace(-wmax,wmax,L,iend=.false.,mesh=dw)
+    if(present(df))df=dw
+  end function fft_farray
 
 
 END MODULE SF_FFT_FFTPACK
