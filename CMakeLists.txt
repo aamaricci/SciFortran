@@ -14,6 +14,7 @@ SET(CMAKE_BUILD_TYPE ${BUILD_TYPE} CACHE INTERNAL "Build type" FORCE)
 
 # Add our local CMAKE modules to the module path
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
+
 INCLUDE(${CMAKE_MODULE_PATH}/ColorsMsg.cmake)
 
 # Check that Fortran 90 is supported
@@ -21,13 +22,14 @@ IF(NOT CMAKE_Fortran_COMPILER_SUPPORTS_F90)
    MESSAGE(FATAL_ERROR "Fortran compiler does not support F90")
 ENDIF(NOT CMAKE_Fortran_COMPILER_SUPPORTS_F90)
 
+
 IF( (${CMAKE_Fortran_COMPILER_ID} MATCHES Intel) OR (${CMAKE_Fortran_COMPILER_ID} MATCHES GNU))
   MESSAGE(STATUS "Fortran Compiler id = ${CMAKE_Fortran_COMPILER_ID}")
 ELSEIF()
   MESSAGE(FATAL_ERROR "Unsupported Fortran compiler (use Intel or GNU). Try export FC=<your FC compiler> ")
 ENDIF()  
 
- 
+
 # Set some options the user may choose
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
@@ -67,7 +69,11 @@ ENDIF(USE_MPI)
 ############################################################
 # Check for .git and extract the current SHA1 revision.
 ############################################################
+SET(GIT_SHA1 0)
+SET(GIT_BRANCH "master")
+SET(GIT_TAG ${VERSION})
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
+  SET(GIT_REPO TRUE)
   FIND_PACKAGE(Git)
   IF(GIT_FOUND)
     EXECUTE_PROCESS(
@@ -93,11 +99,9 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
     MESSAGE(STATUS "${Yellow}Git tag: ${ColourReset}${GIT_TAG}")
-  ELSE(GIT_FOUND)
-    SET(GIT_SHA1 0)
-    SET(GIT_BRANCH "master")
-    SET(GIT_TAG 0.0.0)
-  ENDIF(GIT_FOUND)
+  ENDIF()
+ELSE()
+  SET(GIT_REPO FALSE)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
 SET(VERSION ${GIT_TAG})    	#Update version
 
@@ -146,8 +150,7 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
   SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none") 
   SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
   SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
-  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3  -funroll-loops") 
-  
+  SET(CMAKE_Fortran_FLAGS_RELEASE "-O3   -funroll-loops")   
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
   SET(CMAKE_Fortran_MODDIR_FLAG   "-module ") #remember the ending white space here 
   SET(CMAKE_Fortran_FLAGS         "-fpp")
@@ -183,6 +186,10 @@ IF(SCALAPACK_FOUND)
 ENDIF()
 
 
+IF( "${BUILD_TYPE}" MATCHES "DEBUG")
+  ADD_DEFINITIONS(-D_DEBUG)
+ENDIF()
+
 
 ############################################################
 # Define the actual files and folders that make up the build
@@ -190,22 +197,28 @@ ENDIF()
 SET(USER_HOME $ENV{HOME})
 SET(USER $ENV{USER})
 
-#make sure FC_PLAT is lower case
-SET(LABEL "" CACHE STRING "Installation label")
+STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_ID)
+
+SET(LIB_PATH  "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_ID}")
+SET(FULL_VER "${FC_ID}")
+
 IF("${CMAKE_BUILD_TYPE}" MATCHES "DEBUG")
-  SET(LABEL "_${CMAKE_BUILD_TYPE}" CACHE PATH "Installation label" FORCE)
+  STRING(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
+  SET(LIB_PATH  "${LIB_PATH}/${BUILD_TYPE}")
+  SET(FULL_VER  "${FULL_VER}/${BUILD_TYPE}")
 ENDIF()
 
-IF(GIT_BRANCH MATCHES "master")
-  STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}${LABEL}" FC_PLAT)
-ELSE()
-  SET(FC_PLAT "${CMAKE_Fortran_COMPILER_ID}${LABEL}_${GIT_BRANCH}" FORCE)
+IF(GIT_REPO)
+  IF(NOT GIT_BRANCH MATCHES "master")
+    SET(LIB_PATH  "${LIB_PATH}/${GIT_BRANCH}")
+    SET(FULL_VER  "${FULL_VER}/${GIT_BRANCH}")
+  ENDIF()
 ENDIF()
 
 
-SET(PREFIX "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_PLAT}" CACHE PATH "Prefix of the main installation directory")
-SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix of the main installation directory" FORCE)
-
+SET(FULL_VER  "${FULL_VER}/${VERSION}")
+SET(PREFIX  "${LIB_PATH}/${VERSION}" CACHE PATH "Prefix prepended to install directories")
+SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
 
 
 
@@ -400,7 +413,6 @@ SET(PERMISSION_777
   WORLD_WRITE WORLD_READ WORLD_EXECUTE)
 
 
-
 #Contains the functions used in the following:
 #BUILD_ENV_MODULE
 #BUILD_CONFIGVARS
@@ -409,7 +421,7 @@ INCLUDE(${CMAKE_MODULE_PATH}/PostBuildScifor.cmake)
 
 #Build the scifor module for environment modules
 FILE(REMOVE_RECURSE ${SF_TMP_ETC}/modules/)
-SET(TMP_MODULE_NAME "${FC_PLAT}" CACHE PATH "Prefix prepended to install directories")
+SET(TMP_MODULE_NAME "${FULL_VER}" CACHE PATH "Prefix prepended to install directories")
 SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${TMP_MODULE_NAME})
 BUILD_ENV_MODULE(${TMP_ENV_MODULE_FILE})
 
@@ -425,7 +437,6 @@ SET(TMP_PKCONFIG_FILE ${SF_TMP_ETC}/${PROJECT_NAME}.pc)
 BUILD_PKCONFIG(${TMP_PKCONFIG_FILE})
 
 FILE(WRITE  ${SF_TMP_VER}  "${VERSION}\n")
-  
 INSTALL(DIRECTORY ${CMAKE_Fortran_MODULE_DIRECTORY}/ DESTINATION ${SF_TARGET_INC})
 
 INSTALL(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E remove ${SF_VERSION_FILE})")
@@ -459,12 +470,9 @@ $ make post-install
 
 ADD_CUSTOM_TARGET(
   post-install
-  COMMAND "${CMAKE_COMMAND}" -P ${CMAKE_MODULE_PATH}/HomeInstall.cmake ${CMAKE_SOURCE_DIR} ${CMAKE_INSTALL_PREFIX} ${PROJECT_NAME} ${FC_PLAT} 
+  COMMAND "${CMAKE_COMMAND}" -P ${CMAKE_MODULE_PATH}/HomeInstall.cmake ${CMAKE_SOURCE_DIR} ${CMAKE_INSTALL_PREFIX} ${PROJECT_NAME} ${FULL_VER}
   WORKING_DIRECTORY
   "${CMAKE_BINARY_DIR}"
 )
-
-
-
 
 

@@ -5,21 +5,21 @@ This is a unitary collection of fortran modules and procedures for scientific ca
 There are large areas that are still not covered.  
 Anyone is welcome to contribute or to test the software. 
 
-
-### Dependencies 
+### Dependencies
 
 * gfortran > 4.9x **OR** ifort  > 13.0
 * cmake > 2.8.8    
 * lapack  ( https://github.com/aamaricci/Lapack )   
 * blas  ( https://github.com/aamaricci/Blas )   
-* [optional, strongly recommended] MPI ( https://github.com/open-mpi/ompi )  
-* [optional, strongly recommended] scalapack  ( https://github.com/aamaricci/scalapack )       
+* MPI ( https://github.com/open-mpi/ompi )  [optional, recommended]
+* scalapack  ( https://github.com/aamaricci/scalapack )  [optional]
 
 If libraries are not available in your system, please use the provided links to install them. All libraries listed can be installed using `CMake` 
 
 
 
 ### Installation
+
 Installation is now available using CMake. Experimental support for Intel MKL is provided but this still not universal and may end up in wrong linking directives. 
 
 Clone the Scifor repo:
