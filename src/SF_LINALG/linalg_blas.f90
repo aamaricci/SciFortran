@@ -27,9 +27,9 @@ subroutine z_matmul(A,B,C,alfa,beta)
   complex(8),dimension(:,:),intent(inout) :: A ![N,K]
   complex(8),dimension(:,:),intent(inout) :: B ![K,M]
   complex(8),dimension(:,:),intent(inout) :: C ![N,M]
-  real(8),optional                     :: alfa,beta
-  real(8)                              :: alfa_,beta_
-  integer                              :: N,K,M
+  complex(8),optional                     :: alfa,beta
+  complex(8)                              :: alfa_,beta_
+  integer                                 :: N,K,M
   !
   ! C = alfa*A*B + beta*C
   !
