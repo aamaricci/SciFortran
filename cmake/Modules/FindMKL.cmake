@@ -243,7 +243,7 @@ ELSE()
   FOREACH(LIB IN ITEMS ${PTHREAD_LIB} ${MATH_LIB} ${DL_LIB})
     FIND_LIBRARY(OS_ACTUAL_LIBRARY
       NAMES ${LIB} 
-      PATHS /usr/lib /usr/lib64 /usr/lib/*/lib64 )
+      PATHS /usr/lib /usr/lib64 /usr/lib/*/lib64 /usr/lib/x86_64-linux-gnu/ )
     IF(NOT OS_ACTUAL_LIBRARY)
       MESSAGE(FATAL_ERROR "Can not find any lib${LIB}.*  in the /usr/lib /usr/lib64 /usr/lib/*/lib64 ")
     ENDIF()
@@ -256,7 +256,7 @@ ELSE()
   #FIND OS LIBRARIES PATH
   FIND_PATH(OS_LIBS_PATH
     NAMES ${OS_LIST_LIBS}
-    PATHS /usr/lib /usr/lib64 /usr/lib/*/lib64)
+    PATHS /usr/lib /usr/lib64 /usr/lib/*/lib64 /usr/lib/x86_64-linux-gnu/ )
   IF(NOT OS_LIBS_PATH)
     MESSAGE(FATAL_ERROR "Can not find path for any library in ${OS_LIST_LIBS}")
   ENDIF()
