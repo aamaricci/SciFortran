@@ -28,8 +28,8 @@ Clone the Scifor repo:
 
 And from the repository directory (`cd scifor`) make a standard out-of-source CMake compilation:
 
-`mkdir build`
-`cd build`
+`mkdir build`  
+`cd build`  
 `cmake ..`     
 `make`     
 `make install`   
