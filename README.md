@@ -8,7 +8,7 @@ Anyone is welcome to contribute or to test the software.
 ### Dependencies
 
 * gfortran > 4.9x **OR** ifort  > 13.0
-* cmake > 2.8.8    
+* cmake > 3.0.0    
 * lapack  ( https://github.com/aamaricci/Lapack )   
 * blas  ( https://github.com/aamaricci/Blas )   
 * MPI ( https://github.com/open-mpi/ompi )  [optional, recommended]
