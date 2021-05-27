@@ -8,7 +8,7 @@ Anyone is welcome to contribute or to test the software.
 ### Dependencies
 
 * gfortran > 4.9x **OR** ifort  > 13.0
-* cmake > 2.8.8    
+* cmake > 3.0.0    
 * lapack  ( https://github.com/aamaricci/Lapack )   
 * blas  ( https://github.com/aamaricci/Blas )   
 * MPI ( https://github.com/open-mpi/ompi )  [optional, recommended]
@@ -28,24 +28,23 @@ Clone the Scifor repo:
 
 And from the repository directory (`cd scifor`) make a standard out-of-source CMake compilation:
 
-`mkdir build`
-`cd build`
+`mkdir build`  
+`cd build`  
 `cmake ..`     
 `make`     
 `make install`   
-`make post-install`    
 
 Please follow the instructions on the screen to complete installation on your environment.  
 The library can be loaded using one of the following, automatically generated, files :  
 
 * pkg-config file in `~/.pkg-config.d/scifor.pc`  
-* environment module file `~/.modules.d/scifor/<PLAT>`  
+* environment module file `~/.modules.d/scifor/<PLAT>/<VERSION>`  
 * homebrew `bash` script `<PREFIX>/bin/configvars.sh`
 
 
 The `CMake` compilation can be controlled using the following additional variables, default values between `< >`:   
 
-* `-DPREFIX=prefix directory <~/opt/scifor/VERSION/PLAT>` 
+* `-DPREFIX=prefix directory <~/opt/scifor/PLAT/VERSION>` 
 
 * `-DUSE_MPI=<yes>/no`  
 
@@ -53,7 +52,13 @@ The `CMake` compilation can be controlled using the following additional variabl
 
 * `-DBUILD_TYPE=<RELEASE>/TESTING/DEBUG`  
 
+### UNINSTALL
 
+`Cmake` does not officially provide uninstall procedure in the generate Makefile. Yet, it is possible to construct one such uninstall mode in a simple way. SCIFOR provides a way to uninstall the files generated inside any out-of-source compilation calling: 
+`make uninstall`  
+
+
+### CONTACT
 For any information contact the author as:  
 adriano DOT amaricci @ gmail DOT com
 
