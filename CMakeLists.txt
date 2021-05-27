@@ -1,7 +1,7 @@
 ##################################################
 # SCIFOR PROJECT
 ##################################################
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
+#CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(scifor Fortran)
 SET(VERSION 4.6.12)
 
@@ -147,7 +147,7 @@ ENDIF()
 # -mcmodel=large  this is to remove the 2Gb limit of virtual memory allocation
 if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
   SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
-  SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none")# -w -fallow-argument-mismatch") 
+  SET(CMAKE_Fortran_FLAGS         "-std=f2008 -cpp -ffree-line-length-none -w -fallow-argument-mismatch") 
   SET(CMAKE_Fortran_FLAGS_TESTING "-O2 -funroll-loops")
   SET(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -pedantic -fbacktrace -fbounds-check")
   SET(CMAKE_Fortran_FLAGS_RELEASE "-O3   -funroll-loops")   
