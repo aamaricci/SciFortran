@@ -1,7 +1,7 @@
 ##################################################
 # SCIFOR PROJECT
 ##################################################
-#CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
 PROJECT(scifor Fortran)
 SET(VERSION 4.6.12)
 
