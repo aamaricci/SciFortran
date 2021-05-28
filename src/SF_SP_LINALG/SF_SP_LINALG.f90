@@ -4,9 +4,11 @@ module SF_SP_LINALG
   USE SF_LINALG, only: eye,eigh
 #ifdef _MPI
   USE SF_MPI
-  USE MPI
 #endif
   implicit none
+#ifdef _MPI
+  include 'mpif.h'
+#endif
   private 
 
   interface sp_eigh

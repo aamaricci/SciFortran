@@ -1,9 +1,11 @@
 MODULE SF_MPI
+  implicit none
 #ifdef _MPI
-  USE MPI
+  ! USE MPI
+  include 'mpif.h'
 #endif
 
-  implicit none
+
   private
 
 

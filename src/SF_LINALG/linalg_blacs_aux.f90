@@ -1,6 +1,6 @@
 subroutine d_distribute_BLACS(M,Mloc,descMloc,unit)
   USE SF_MPI
-  USE MPI
+  include 'mpif.h'
   real(8),dimension(:,:),intent(in)    :: M
   real(8),dimension(:,:),intent(inout) :: Mloc
   integer,dimension(9),intent(in)      :: descMloc
@@ -40,7 +40,7 @@ end subroutine D_Distribute_BLACS
 
 subroutine Z_distribute_BLACS(M,Mloc,descMloc,unit)
   USE SF_MPI
-  USE MPI
+  include 'mpif.h'
   complex(8),dimension(:,:),intent(in)    :: M
   complex(8),dimension(:,:),intent(out)   :: Mloc
   integer,dimension(9),intent(in)         :: descMloc
@@ -90,7 +90,7 @@ end subroutine Z_Distribute_BLACS
 
 subroutine D_Gather_BLACS(Mloc,M,descM,unit)
   USE SF_MPI
-  USE MPI
+  include 'mpif.h'
   real(8),dimension(:,:),intent(in)    :: Mloc
   real(8),dimension(:,:),intent(inout) :: M
   integer,dimension(9),intent(in)      :: descM
@@ -146,7 +146,7 @@ end subroutine D_Gather_BLACS
 
 subroutine Z_Gather_BLACS(Mloc,M,descM,unit)
   USE SF_MPI
-  USE MPI
+  include 'mpif.h'
   complex(8),dimension(:,:),intent(in)    :: Mloc
   complex(8),dimension(:,:),intent(inout) :: M
   integer,dimension(9),intent(in)         :: descM
