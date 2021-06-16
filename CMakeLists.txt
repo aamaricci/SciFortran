@@ -425,7 +425,7 @@ SET(PERMISSION_777
 
 
 
-#Build the Edipack module for environment modules
+#Build the SCIFOR module for environment modules
 FILE(REMOVE_RECURSE ${SF_TMP_ETC}/modules/)
 SET(TMP_MODULE_NAME "${FULL_VER}" CACHE PATH "Prefix prepended to install directories")
 SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${TMP_MODULE_NAME})
@@ -515,7 +515,7 @@ ${Yellow}Method ADMIN: Add this line to the system shell configuration file, e.g
 
 # Add a distclean target to the Makefile
 ADD_CUSTOM_TARGET(distclean 
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_MODULE_PATH}/distclean.cmake
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_MODULE_PATH}/DistClean.cmake
 )
 
 
