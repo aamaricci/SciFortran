@@ -3,7 +3,7 @@
 ##################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
 PROJECT(scifor Fortran)
-SET(VERSION 4.6.12)
+SET(VERSION 4.6.39)
 
 
 MESSAGE(STATUS "OS: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
@@ -13,7 +13,7 @@ MESSAGE(STATUS "BUILD_TYPE=${BUILD_TYPE}")
 SET(CMAKE_BUILD_TYPE ${BUILD_TYPE} CACHE INTERNAL "Build type" FORCE)
 
 # Add our local CMAKE modules to the module path
-SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 INCLUDE(${CMAKE_MODULE_PATH}/ColorsMsg.cmake)
 
@@ -416,12 +416,6 @@ ADD_DEPENDENCIES(SCIFORLIB
   )
 
 
-# Add a distclean target to the Makefile
-ADD_CUSTOM_TARGET(distclean 
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/distclean.cmake
-)
-
-
 
 
 SET(PERMISSION_777
@@ -430,32 +424,34 @@ SET(PERMISSION_777
   WORLD_WRITE WORLD_READ WORLD_EXECUTE)
 
 
-#Contains the functions used in the following:
-#BUILD_ENV_MODULE
-#BUILD_CONFIGVARS
-#BUILD_PKCONFIG
-INCLUDE(${CMAKE_MODULE_PATH}/PostBuildScifor.cmake)
 
-#Build the scifor module for environment modules
+#Build the Edipack module for environment modules
 FILE(REMOVE_RECURSE ${SF_TMP_ETC}/modules/)
 SET(TMP_MODULE_NAME "${FULL_VER}" CACHE PATH "Prefix prepended to install directories")
 SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${TMP_MODULE_NAME})
 SET(TMP_VER_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${FC_ID}/.version)
-BUILD_ENV_MODULE(${TMP_ENV_MODULE_FILE})
-BUILD_VERSION_MODULE(${TMP_VER_MODULE_FILE})
+CONFIGURE_FILE(${SF_ENV}/module.in ${TMP_ENV_MODULE_FILE} @ONLY)
+CONFIGURE_FILE(${SF_ENV}/version.in ${TMP_VER_MODULE_FILE} @ONLY)
 
-#Build the user config script (sourced in user shell config file, i.e. .bashrc)
-SET(TMP_CONFIGVARS_USER_FILE ${SF_TMP_BIN}/scifor_config_user.sh)
-BUILD_CONFIGVARS_USER(${TMP_CONFIGVARS_USER_FILE})
-
-#Build the global config script (sourced in system shell config file, i.e. /etc/bash.bashrc)
-SET(TMP_CONFIGVARS_GLOBAL_FILE ${SF_TMP_BIN}/scifor_config_global.sh)
-BUILD_CONFIGVARS_GLOBAL(${TMP_CONFIGVARS_GLOBAL_FILE})
-
+#Build the PKG-CONFIG file
+INCLUDE(${CMAKE_MODULE_PATH}/BuildPkgConfigFile.cmake)
 SET(TMP_PKCONFIG_FILE ${SF_TMP_ETC}/${PROJECT_NAME}.pc)
 BUILD_PKCONFIG(${TMP_PKCONFIG_FILE})
 
+
+#Build the user CONFIG scripts (sourced in user shell config file, i.e. .bashrc)
+SET(CONFIG_SCRIPT scifor_config_user.sh)
+SET(TMP_CONFIGVARS_USER_FILE ${SF_TMP_ETC}/${CONFIG_SCRIPT})
+CONFIGURE_FILE(${SF_ETC}/scifor_config_user.sh.in ${TMP_CONFIGVARS_USER_FILE} @ONLY)
+
+SET(CONFIG_SCRIPT scifor_config_global.sh)
+SET(TMP_CONFIGVARS_GLOBAL_FILE ${SF_TMP_ETC}/${CONFIG_SCRIPT})
+CONFIGURE_FILE(${SF_ETC}/scifor_config_global.sh.in ${TMP_CONFIGVARS_GLOBAL_FILE} @ONLY)
+
+
+
 FILE(WRITE  ${SF_TMP_VER}  "${VERSION}\n")
+
 INSTALL(DIRECTORY ${CMAKE_Fortran_MODULE_DIRECTORY}/ DESTINATION ${SF_TARGET_INC})
 
 INSTALL(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E remove ${SF_VERSION_FILE})")
@@ -484,20 +480,21 @@ INSTALL(DIRECTORY ${SF_TARGET_ETC}/modules/ DESTINATION $ENV{HOME}/.modules.d)
 
 MESSAGE( STATUS "${Red}Library version:${ColourReset} ${VERSION}")
 MESSAGE( STATUS "${Red}Library will be installed in:${ColourReset} ${CMAKE_INSTALL_PREFIX}")
-
 MESSAGE( STATUS "
 >> ${Red}TO CONCLUDE INSTALLATION${ColourReset} <<
 Compile with:
 $ make
-
 Install with:
 $ make install
 
 Uninstall with:
 $ make uninstall
+")
 
-Add library to your OS: 
-pick ONE method below  [add it in your bash profile to make it permanent (e.g. ~/.bashrc)]:
+INSTALL(CODE "MESSAGE(
+\"
+ADD LIBRARY TO YOUR SYSTEM: 
+Pick ONE method below [or add it in your bash profile, e.g. ~/.bashrc]:
 ${Yellow}Method 1: use the provided ${PROJECT_NAME} environment module${ColourReset}:
    $ module use $HOME/.modules.d
    $ module load ${PROJECT_NAME}/${FC_PLAT}
@@ -507,22 +504,19 @@ ${Yellow}Method 2: source the config script${ColourReset}:
 
 ${Yellow}Method 3: use pkg-config with the provided ${PROJECT_NAME}.pc${ColourReset}:
    $ export PKG_CONFIG_PATH=${SF_TARGET_ETC}/:$PKG_CONFIG_PATH
-   $ pkg-config --cflags --libs ${PROJECT_NAME} (to get lib info)
+   $ pkg-config --cflags --libs ${PROJECT_NAME}
 
-${Yellow}Method ADMIN: Add this line to the system shell configuration file (e.g. /etc/bash.bashrc)${ColourReset}
+${Yellow}Method ADMIN: Add this line to the system shell configuration file, e.g. /etc/bash.bashrc${ColourReset}
    $ source ${SF_TARGET_BIN}/scifor_config_global.sh
+\")
 ")
 
 
 
-# ADD_CUSTOM_TARGET(
-#   post-install
-#   COMMAND "${CMAKE_COMMAND}" -P ${CMAKE_MODULE_PATH}/HomeInstall.cmake ${CMAKE_SOURCE_DIR} ${CMAKE_INSTALL_PREFIX} ${PROJECT_NAME} ${FULL_VER}
-#   WORKING_DIRECTORY
-#   "${CMAKE_BINARY_DIR}"
-# )
-
-
+# Add a distclean target to the Makefile
+ADD_CUSTOM_TARGET(distclean 
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_MODULE_PATH}/distclean.cmake
+)
 
 
 # Uninstall target
@@ -537,3 +531,5 @@ if(NOT TARGET uninstall)
     "${PROJECT_NAME}/${TMP_MODULE_NAME}" "${PROJECT_NAME}.pc" )
   
 ENDIF()
+
+
