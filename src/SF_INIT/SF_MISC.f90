@@ -38,7 +38,6 @@ module SF_MISC
      module procedure i_assert_shape_N5
      module procedure i_assert_shape_N6
      module procedure i_assert_shape_N7
-     module procedure i_assert_shape_N8
      module procedure d_assert_shape_N1
      module procedure d_assert_shape_N2
      module procedure d_assert_shape_N3
@@ -46,7 +45,6 @@ module SF_MISC
      module procedure d_assert_shape_N5
      module procedure d_assert_shape_N6
      module procedure d_assert_shape_N7
-     module procedure d_assert_shape_N8
      module procedure z_assert_shape_N1
      module procedure z_assert_shape_N2
      module procedure z_assert_shape_N3
@@ -54,7 +52,6 @@ module SF_MISC
      module procedure z_assert_shape_N5
      module procedure z_assert_shape_N6
      module procedure z_assert_shape_N7
-     module procedure z_assert_shape_N8
   end interface assert_shape
 
   interface reorder_array
@@ -190,16 +187,6 @@ contains
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine i_assert_shape_N7
-  subroutine i_assert_shape_N8(A,Ndim,routine,matname)
-    integer,dimension(:,:,:,:,:,:,:,:),intent(in)    :: A
-    integer,dimension(:),intent(in)            :: Ndim
-    character(len=*),optional                  :: routine, matname
-    if(any(shape(A) /= Ndim)) then
-       if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
-       stop "assert_shape error: wrong matrix shape"
-    end if
-  end subroutine i_assert_shape_N8
   !
   !
   !
@@ -273,16 +260,6 @@ contains
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine d_assert_shape_N7
-  subroutine d_assert_shape_N8(A,Ndim,routine,matname)
-    real(8),dimension(:,:,:,:,:,:,:,:),intent(in)    :: A
-    integer,dimension(:),intent(in)            :: Ndim
-    character(len=*),optional                  :: routine, matname
-    if(any(shape(A) /= Ndim)) then
-       if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
-       stop "assert_shape error: wrong matrix shape"
-    end if
-  end subroutine d_assert_shape_N8
   !
   !
   !
@@ -356,16 +333,6 @@ contains
        stop "assert_shape error: wrong matrix shape"
     end if
   end subroutine z_assert_shape_N7
-  subroutine z_assert_shape_N8(A,Ndim,routine,matname)
-    complex(8),dimension(:,:,:,:,:,:,:,:),intent(in)    :: A
-    integer,dimension(:),intent(in)            :: Ndim
-    character(len=*),optional                  :: routine, matname
-    if(any(shape(A) /= Ndim)) then
-       if(present(routine).AND.present(matname))&
-            write(*,"(A,10I2)")trim(routine)//" error: "//trim(matname)//" has illegal shape"
-       stop "assert_shape error: wrong matrix shape"
-    end if
-  end subroutine z_assert_shape_N8
 
 
 
