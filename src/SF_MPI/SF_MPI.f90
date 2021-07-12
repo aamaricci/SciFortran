@@ -19,7 +19,6 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Bool_5
      module procedure :: MPI_Bcast_Bool_6
      module procedure :: MPI_Bcast_Bool_7
-     module procedure :: MPI_Bcast_Bool_8
      !
      module procedure :: MPI_Bcast_Int_0
      module procedure :: MPI_Bcast_Int_1
@@ -29,7 +28,6 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Int_5
      module procedure :: MPI_Bcast_Int_6
      module procedure :: MPI_Bcast_Int_7
-     module procedure :: MPI_Bcast_Int_8
      !
      module procedure :: MPI_Bcast_Dble_0
      module procedure :: MPI_Bcast_Dble_1
@@ -39,7 +37,6 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Dble_5
      module procedure :: MPI_Bcast_Dble_6
      module procedure :: MPI_Bcast_Dble_7
-     module procedure :: MPI_Bcast_Dble_8     
      !
      module procedure :: MPI_Bcast_Cmplx_0
      module procedure :: MPI_Bcast_Cmplx_1
@@ -48,8 +45,7 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Cmplx_4
      module procedure :: MPI_Bcast_Cmplx_5
      module procedure :: MPI_Bcast_Cmplx_6
-     module procedure :: MPI_Bcast_Cmplx_7
-     module procedure :: MPI_Bcast_Cmplx_8    
+     module procedure :: MPI_Bcast_Cmplx_7     
   end interface Bcast_MPI
 
 

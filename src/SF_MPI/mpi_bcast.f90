@@ -78,16 +78,6 @@ subroutine MPI_Bcast_Bool_7(comm,data,root)
   call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
   call Error_MPI(sub='MPI_Bcast_Bool_7')
 end subroutine MPI_Bcast_Bool_7
-!
-subroutine MPI_Bcast_Bool_8(comm,data,root)
-  integer,intent(in)          :: comm
-  logical,intent(in)          :: data(:,:,:,:,:,:,:,:)
-  integer,intent(in),optional :: root
-  rank=0;if(present(root))rank=root
-  if(comm==MPI_COMM_NULL)return
-  call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
-  call Error_MPI(sub='MPI_Bcast_Bool_8')
-end subroutine MPI_Bcast_Bool_8
 
 
 
@@ -173,16 +163,7 @@ subroutine MPI_Bcast_Int_7(comm,data,root)
   call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
   call Error_MPI(sub='MPI_Bcast_Int_7')
 end subroutine MPI_Bcast_Int_7
-!
-subroutine MPI_Bcast_Int_8(comm,data,root)
-  integer,intent(in)          :: comm
-  integer,intent(in)          :: data(:,:,:,:,:,:,:,:)
-  integer,intent(in),optional :: root
-  rank=0;if(present(root))rank=root
-  if(comm==MPI_COMM_NULL)return
-  call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
-  call Error_MPI(sub='MPI_Bcast_Int_7')
-end subroutine MPI_Bcast_Int_8
+
 
 
 
@@ -267,16 +248,6 @@ subroutine MPI_Bcast_Dble_7(comm,data,root)
   call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
   call Error_MPI(sub='MPI_Bcast_Dble_7')
 end subroutine MPI_Bcast_Dble_7
-!
-subroutine MPI_Bcast_Dble_8(comm,data,root)
-  integer,intent(in)          :: comm
-  real(8),intent(in)          :: data(:,:,:,:,:,:,:,:)
-  integer,intent(in),optional :: root
-  rank=0;if(present(root))rank=root
-  if(comm==MPI_COMM_NULL)return
-  call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
-  call Error_MPI(sub='MPI_Bcast_Dble_8')
-end subroutine MPI_Bcast_Dble_8
 
 
 
@@ -362,13 +333,3 @@ subroutine MPI_Bcast_Cmplx_7(comm,data,root)
   call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
   call Error_MPI(sub='MPI_Bcast_Cmplx_7')
 end subroutine MPI_Bcast_Cmplx_7
-!
-subroutine MPI_Bcast_Cmplx_8(comm,data,root)
-  integer,intent(in)          :: comm
-  complex(8),intent(in)       :: data(:,:,:,:,:,:,:,:)
-  integer,intent(in),optional :: root
-  rank=0;if(present(root))rank=root
-  if(comm==MPI_COMM_NULL)return
-  call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
-  call Error_MPI(sub='MPI_Bcast_Cmplx_8')
-end subroutine MPI_Bcast_Cmplx_8
