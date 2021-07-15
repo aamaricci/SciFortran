@@ -19,6 +19,9 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Bool_5
      module procedure :: MPI_Bcast_Bool_6
      module procedure :: MPI_Bcast_Bool_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_Bcast_Bool_8
+#endif
      !
      module procedure :: MPI_Bcast_Int_0
      module procedure :: MPI_Bcast_Int_1
@@ -28,6 +31,9 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Int_5
      module procedure :: MPI_Bcast_Int_6
      module procedure :: MPI_Bcast_Int_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_Bcast_Int_8
+#endif
      !
      module procedure :: MPI_Bcast_Dble_0
      module procedure :: MPI_Bcast_Dble_1
@@ -37,6 +43,9 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Dble_5
      module procedure :: MPI_Bcast_Dble_6
      module procedure :: MPI_Bcast_Dble_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_Bcast_Dble_8
+#endif
      !
      module procedure :: MPI_Bcast_Cmplx_0
      module procedure :: MPI_Bcast_Cmplx_1
@@ -46,6 +55,9 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Cmplx_5
      module procedure :: MPI_Bcast_Cmplx_6
      module procedure :: MPI_Bcast_Cmplx_7     
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_Bcast_Cmplx_8
+#endif
   end interface Bcast_MPI
 
 
@@ -59,6 +71,9 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Bool_5
      module procedure :: MPI_AllGather_Bool_6
      module procedure :: MPI_AllGather_Bool_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllGather_Bool_8
+#endif
      !
      module procedure :: MPI_AllGather_Int_0
      module procedure :: MPI_AllGather_Int_1
@@ -68,6 +83,9 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Int_5
      module procedure :: MPI_AllGather_Int_6
      module procedure :: MPI_AllGather_Int_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllGather_Int_8
+#endif
      !
      module procedure :: MPI_AllGather_Dble_0
      module procedure :: MPI_AllGather_Dble_1
@@ -77,6 +95,9 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Dble_5
      module procedure :: MPI_AllGather_Dble_6
      module procedure :: MPI_AllGather_Dble_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllGather_Dble_8
+#endif
      !
      module procedure :: MPI_AllGather_Cmplx_0
      module procedure :: MPI_AllGather_Cmplx_1
@@ -85,7 +106,10 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Cmplx_4
      module procedure :: MPI_AllGather_Cmplx_5
      module procedure :: MPI_AllGather_Cmplx_6
-     module procedure :: MPI_AllGather_Cmplx_7     
+     module procedure :: MPI_AllGather_Cmplx_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllGather_Cmplx_8
+#endif
   end interface AllGather_MPI
 
 
@@ -100,6 +124,9 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Bool_5
      module procedure :: MPI_AllReduce_Bool_6
      module procedure :: MPI_AllReduce_Bool_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllReduce_Bool_8
+#endif
      !
      module procedure :: MPI_AllReduce_Int_0
      module procedure :: MPI_AllReduce_Int_1
@@ -109,6 +136,9 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Int_5
      module procedure :: MPI_AllReduce_Int_6
      module procedure :: MPI_AllReduce_Int_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllReduce_Int_8
+#endif
      !
      module procedure :: MPI_AllReduce_Dble_0
      module procedure :: MPI_AllReduce_Dble_1
@@ -118,6 +148,9 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Dble_5
      module procedure :: MPI_AllReduce_Dble_6
      module procedure :: MPI_AllReduce_Dble_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllReduce_Dble_8
+#endif
      !
      module procedure :: MPI_AllReduce_Cmplx_0
      module procedure :: MPI_AllReduce_Cmplx_1
@@ -126,7 +159,10 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Cmplx_4
      module procedure :: MPI_AllReduce_Cmplx_5
      module procedure :: MPI_AllReduce_Cmplx_6
-     module procedure :: MPI_AllReduce_Cmplx_7     
+     module procedure :: MPI_AllReduce_Cmplx_7
+#if __GFORTRAN__ &&  __GNUC__ > 8
+     module procedure :: MPI_AllReduce_Cmplx_8
+#endif
   end interface AllReduce_MPI
 
 
@@ -295,21 +331,1298 @@ contains
   !****************************************
   !              MPI BROADCAST
   !****************************************
-  include "mpi_bcast.f90"
+  !!Bool
+  subroutine MPI_Bcast_Bool_0(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data
+    integer,intent(in),optional :: root
+    logical,dimension(1)        :: data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    data_(1) = data
+    call MPI_BCAST(data_,1,MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_0')
+  end subroutine MPI_Bcast_Bool_0
+  !
+  subroutine MPI_Bcast_Bool_1(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_1')
+  end subroutine MPI_Bcast_Bool_1
+  !
+  subroutine MPI_Bcast_Bool_2(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_2')
+  end subroutine MPI_Bcast_Bool_2
+  !
+  subroutine MPI_Bcast_Bool_3(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_3')
+  end subroutine MPI_Bcast_Bool_3
+  !
+  subroutine MPI_Bcast_Bool_4(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_4')
+  end subroutine MPI_Bcast_Bool_4
+  !
+  subroutine MPI_Bcast_Bool_5(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_5')
+  end subroutine MPI_Bcast_Bool_5
+  !
+  subroutine MPI_Bcast_Bool_6(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_6')
+  end subroutine MPI_Bcast_Bool_6
+  !
+  subroutine MPI_Bcast_Bool_7(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_7')
+  end subroutine MPI_Bcast_Bool_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Bcast_Bool_8(comm,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(in)          :: data(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_LOGICAL,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Bool_8')
+  end subroutine MPI_Bcast_Bool_8
+#endif
+
+
+
+
+  !! INTEGER
+  subroutine MPI_Bcast_Int_0(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data
+    integer,intent(in),optional :: root
+    integer,dimension(1)        :: data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    data_(1) = data
+    call MPI_BCAST(data_,1,MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_0')
+  end subroutine MPI_Bcast_Int_0
+  !
+  subroutine MPI_Bcast_Int_1(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_1')
+  end subroutine MPI_Bcast_Int_1
+  !
+  subroutine MPI_Bcast_Int_2(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_2')
+  end subroutine MPI_Bcast_Int_2
+  !
+  subroutine MPI_Bcast_Int_3(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_3')
+  end subroutine MPI_Bcast_Int_3
+  !
+  subroutine MPI_Bcast_Int_4(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_4')
+  end subroutine MPI_Bcast_Int_4
+  !
+  subroutine MPI_Bcast_Int_5(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_5')
+  end subroutine MPI_Bcast_Int_5
+  !
+  subroutine MPI_Bcast_Int_6(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_6')
+  end subroutine MPI_Bcast_Int_6
+  !
+  subroutine MPI_Bcast_Int_7(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_7')
+  end subroutine MPI_Bcast_Int_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Bcast_Int_8(comm,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(in)          :: data(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_INTEGER,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Int_7')
+  end subroutine MPI_Bcast_Int_8
+#endif
+
+
+
+  !! REAL8
+  subroutine MPI_Bcast_Dble_0(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data
+    integer,intent(in),optional :: root
+    real(8),dimension(1)        :: data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    data_(1) = data
+    call MPI_BCAST(data_,1,MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_0')
+  end subroutine MPI_Bcast_Dble_0
+  !
+  subroutine MPI_Bcast_Dble_1(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_1')
+  end subroutine MPI_Bcast_Dble_1
+  !
+  subroutine MPI_Bcast_Dble_2(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_2')
+  end subroutine MPI_Bcast_Dble_2
+  !
+  subroutine MPI_Bcast_Dble_3(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_3')
+  end subroutine MPI_Bcast_Dble_3
+  !
+  subroutine MPI_Bcast_Dble_4(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_4')
+  end subroutine MPI_Bcast_Dble_4
+  !
+  subroutine MPI_Bcast_Dble_5(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_5')
+  end subroutine MPI_Bcast_Dble_5
+  !
+  subroutine MPI_Bcast_Dble_6(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_6')
+  end subroutine MPI_Bcast_Dble_6
+  !
+  subroutine MPI_Bcast_Dble_7(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_7')
+  end subroutine MPI_Bcast_Dble_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Bcast_Dble_8(comm,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(in)          :: data(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Dble_8')
+  end subroutine MPI_Bcast_Dble_8
+#endif
+
+
+
+
+  !!CMPLX8
+  subroutine MPI_Bcast_Cmplx_0(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data
+    integer,intent(in),optional :: root
+    complex(8),dimension(1)        :: data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    data_(1) = data
+    call MPI_BCAST(data_,1,MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_0')
+  end subroutine MPI_Bcast_Cmplx_0
+  !
+  subroutine MPI_Bcast_Cmplx_1(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_1')
+  end subroutine MPI_Bcast_Cmplx_1
+  !
+  subroutine MPI_Bcast_Cmplx_2(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_2')
+  end subroutine MPI_Bcast_Cmplx_2
+  !
+  subroutine MPI_Bcast_Cmplx_3(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_3')
+  end subroutine MPI_Bcast_Cmplx_3
+  !
+  subroutine MPI_Bcast_Cmplx_4(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_4')
+  end subroutine MPI_Bcast_Cmplx_4
+  !
+  subroutine MPI_Bcast_Cmplx_5(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_5')
+  end subroutine MPI_Bcast_Cmplx_5
+  !
+  subroutine MPI_Bcast_Cmplx_6(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_6')
+  end subroutine MPI_Bcast_Cmplx_6
+  !
+  subroutine MPI_Bcast_Cmplx_7(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_7')
+  end subroutine MPI_Bcast_Cmplx_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Bcast_Cmplx_8(comm,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(in)       :: data(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_BCAST(data,size(data),MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call Error_MPI(sub='MPI_Bcast_Cmplx_8')
+  end subroutine MPI_Bcast_Cmplx_8
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
   !****************************************
   !              MPI ALLGATHER
   !****************************************
-  include "mpi_allgather.f90"
+  !!BOOL
+  subroutine MPI_Allgather_Bool_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data
+    logical,intent(in)          :: send
+    integer,intent(in),optional :: root
+    logical,dimension(1)        :: send_,data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLGATHER(send_,1,MPI_LOGICAL,data_,1,MPI_LOGICAL,comm,ierr)
+    data = data_(1)
+    call Error_MPI(sub='MPI_Allgather_Bool_0')
+  end subroutine MPI_Allgather_Bool_0
+  !
+  subroutine MPI_Allgather_Bool_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:)
+    logical,intent(in)          :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_1')
+  end subroutine MPI_Allgather_Bool_1
+  !
+  subroutine MPI_Allgather_Bool_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:)
+    logical,intent(in)          :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_2')
+  end subroutine MPI_Allgather_Bool_2
+  !
+  subroutine MPI_Allgather_Bool_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:)
+    logical,intent(in)          :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_3')
+  end subroutine MPI_Allgather_Bool_3
+  !
+  subroutine MPI_Allgather_Bool_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_4')
+  end subroutine MPI_Allgather_Bool_4
+  !
+  subroutine MPI_Allgather_Bool_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_5')
+  end subroutine MPI_Allgather_Bool_5
+  !
+  subroutine MPI_Allgather_Bool_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_6')
+  end subroutine MPI_Allgather_Bool_6
+  !
+  subroutine MPI_Allgather_Bool_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_7')
+  end subroutine MPI_Allgather_Bool_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allgather_Bool_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_LOGICAL,data,size(data),MPI_LOGICAL,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Bool_8')
+  end subroutine MPI_Allgather_Bool_8
+#endif
+
+
+
+  !!INTEGER
+  subroutine MPI_Allgather_Int_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data
+    integer,intent(in)          :: send
+    integer,intent(in),optional :: root
+    integer,dimension(1)        :: send_,data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLGATHER(send_,1,MPI_INTEGER,data_,1,MPI_INTEGER,comm,ierr)
+    data  = data_(1)
+    call Error_MPI(sub='MPI_Allgather_Int_0')
+  end subroutine MPI_Allgather_Int_0
+  !
+  subroutine MPI_Allgather_Int_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:)
+    integer,intent(in)          :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_1')
+  end subroutine MPI_Allgather_Int_1
+  !
+  subroutine MPI_Allgather_Int_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:)
+    integer,intent(in)          :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_2')
+  end subroutine MPI_Allgather_Int_2
+  !
+  subroutine MPI_Allgather_Int_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:)
+    integer,intent(in)          :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_3')
+  end subroutine MPI_Allgather_Int_3
+  !
+  subroutine MPI_Allgather_Int_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_4')
+  end subroutine MPI_Allgather_Int_4
+  !
+  subroutine MPI_Allgather_Int_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_5')
+  end subroutine MPI_Allgather_Int_5
+  !
+  subroutine MPI_Allgather_Int_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_6')
+  end subroutine MPI_Allgather_Int_6
+  !
+  subroutine MPI_Allgather_Int_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_7')
+  end subroutine MPI_Allgather_Int_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allgather_Int_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_INTEGER,data,size(data),MPI_INTEGER,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Int_8')
+  end subroutine MPI_Allgather_Int_8
+#endif
+
+
+
+
+
+  !!REAL8
+  subroutine MPI_Allgather_Dble_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data
+    real(8),intent(in)          :: send
+    integer,intent(in),optional :: root
+    real(8),dimension(1)        :: send_,data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLGATHER(send_,1,MPI_DOUBLE_PRECISION,data_,1,MPI_DOUBLE_PRECISION,comm,ierr)
+    data = data_(1)
+    call Error_MPI(sub='MPI_Allgather_Dble_0')
+  end subroutine MPI_Allgather_Dble_0
+  !
+  subroutine MPI_Allgather_Dble_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:)
+    real(8),intent(in)          :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_1')
+  end subroutine MPI_Allgather_Dble_1
+  !
+  subroutine MPI_Allgather_Dble_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:)
+    real(8),intent(in)          :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_2')
+  end subroutine MPI_Allgather_Dble_2
+  !
+  subroutine MPI_Allgather_Dble_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:)
+    real(8),intent(in)          :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_3')
+  end subroutine MPI_Allgather_Dble_3
+  !
+  subroutine MPI_Allgather_Dble_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_4')
+  end subroutine MPI_Allgather_Dble_4
+  !
+  subroutine MPI_Allgather_Dble_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_5')
+  end subroutine MPI_Allgather_Dble_5
+  !
+  subroutine MPI_Allgather_Dble_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_6')
+  end subroutine MPI_Allgather_Dble_6
+  !
+  subroutine MPI_Allgather_Dble_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_7')
+  end subroutine MPI_Allgather_Dble_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allgather_Dble_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_PRECISION,data,size(data),MPI_DOUBLE_PRECISION,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Dble_8')
+  end subroutine MPI_Allgather_Dble_8
+#endif
+
+
+
+  !!CMPLX8
+  subroutine MPI_Allgather_Cmplx_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data
+    complex(8),intent(in)       :: send
+    integer,intent(in),optional :: root
+    complex,dimension(1)        :: send_,data_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLGATHER(send_,1,MPI_DOUBLE_COMPLEX,data_,1,MPI_DOUBLE_COMPLEX,comm,ierr)
+    data = data_(1)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_0')
+  end subroutine MPI_Allgather_Cmplx_0
+  !
+  subroutine MPI_Allgather_Cmplx_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:)
+    complex(8),intent(in)       :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_1')
+  end subroutine MPI_Allgather_Cmplx_1
+  !
+  subroutine MPI_Allgather_Cmplx_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:)
+    complex(8),intent(in)       :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_2')
+  end subroutine MPI_Allgather_Cmplx_2
+  !
+  subroutine MPI_Allgather_Cmplx_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:)
+    complex(8),intent(in)       :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_3')
+  end subroutine MPI_Allgather_Cmplx_3
+  !
+  subroutine MPI_Allgather_Cmplx_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_4')
+  end subroutine MPI_Allgather_Cmplx_4
+  !
+  subroutine MPI_Allgather_Cmplx_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_5')
+  end subroutine MPI_Allgather_Cmplx_5
+  !
+  subroutine MPI_Allgather_Cmplx_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_6')
+  end subroutine MPI_Allgather_Cmplx_6
+  !
+  subroutine MPI_Allgather_Cmplx_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_7')
+  end subroutine MPI_Allgather_Cmplx_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allgather_Cmplx_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLGATHER(send,size(send),MPI_DOUBLE_COMPLEX,data,size(data),MPI_DOUBLE_COMPLEX,comm,ierr)
+    call Error_MPI(sub='MPI_Allgather_Cmplx_8')
+  end subroutine MPI_Allgather_Cmplx_8
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
   !****************************************
   !              MPI ALLREDUCE
   !****************************************
-  include "mpi_allreduce.f90"
+  !!BOOL
+  subroutine MPI_Allreduce_Bool_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data
+    logical,intent(in)          :: send
+    integer,intent(in),optional :: root
+    logical,dimension(1)       :: data_,send_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLREDUCE(send_,data_,1,MPI_LOGICAL,MPI_SUM,comm,ierr)
+    data     = data_(1)
+    call Error_MPI(sub='MPI_Allreduce_Bool_0')
+  end subroutine MPI_Allreduce_Bool_0
+  !
+  subroutine MPI_Allreduce_Bool_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:)
+    logical,intent(in)          :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_1')
+  end subroutine MPI_Allreduce_Bool_1
+  !
+  subroutine MPI_Allreduce_Bool_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:)
+    logical,intent(in)          :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_2')
+  end subroutine MPI_Allreduce_Bool_2
+  !
+  subroutine MPI_Allreduce_Bool_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:)
+    logical,intent(in)          :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_3')
+  end subroutine MPI_Allreduce_Bool_3
+  !
+  subroutine MPI_Allreduce_Bool_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_4')
+  end subroutine MPI_Allreduce_Bool_4
+  !
+  subroutine MPI_Allreduce_Bool_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_5')
+  end subroutine MPI_Allreduce_Bool_5
+  !
+  subroutine MPI_Allreduce_Bool_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_6')
+  end subroutine MPI_Allreduce_Bool_6
+  !
+  subroutine MPI_Allreduce_Bool_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_7')
+  end subroutine MPI_Allreduce_Bool_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allreduce_Bool_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    logical,intent(inout)       :: data(:,:,:,:,:,:,:,:)
+    logical,intent(in)          :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_LOGICAL,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Bool_8')
+  end subroutine MPI_Allreduce_Bool_8
+#endif
+
+
+
+
+
+
+  !!INTEGER
+  subroutine MPI_Allreduce_Int_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data
+    integer,intent(in)          :: send
+    integer,intent(in),optional :: root
+    integer,dimension(1)       :: data_,send_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLREDUCE(send_,data_,1,MPI_INTEGER,MPI_SUM,comm,ierr)
+    data     = data_(1)
+    call Error_MPI(sub='MPI_Allreduce_Int_0')
+  end subroutine MPI_Allreduce_Int_0
+  !
+  subroutine MPI_Allreduce_Int_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:)
+    integer,intent(in)          :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_1')
+  end subroutine MPI_Allreduce_Int_1
+  !
+  subroutine MPI_Allreduce_Int_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:)
+    integer,intent(in)          :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_2')
+  end subroutine MPI_Allreduce_Int_2
+  !
+  subroutine MPI_Allreduce_Int_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:)
+    integer,intent(in)          :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_3')
+  end subroutine MPI_Allreduce_Int_3
+  !
+  subroutine MPI_Allreduce_Int_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_4')
+  end subroutine MPI_Allreduce_Int_4
+  !
+  subroutine MPI_Allreduce_Int_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_5')
+  end subroutine MPI_Allreduce_Int_5
+  !
+  subroutine MPI_Allreduce_Int_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_6')
+  end subroutine MPI_Allreduce_Int_6
+  !
+  subroutine MPI_Allreduce_Int_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_7')
+  end subroutine MPI_Allreduce_Int_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allreduce_Int_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    integer,intent(inout)       :: data(:,:,:,:,:,:,:,:)
+    integer,intent(in)          :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_INTEGER,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Int_8')
+  end subroutine MPI_Allreduce_Int_8
+#endif
+
+
+
+
+  !!REAL8
+  subroutine MPI_Allreduce_Dble_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data
+    real(8),intent(in)          :: send
+    integer,intent(in),optional :: root
+    real(8),dimension(1)        :: data_,send_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLREDUCE(send_,data_,1,MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    data     = data_(1)
+    call Error_MPI(sub='MPI_Allreduce_Dble_0')
+  end subroutine MPI_Allreduce_Dble_0
+  !
+  subroutine MPI_Allreduce_Dble_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:)
+    real(8),intent(in)          :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_1')
+  end subroutine MPI_Allreduce_Dble_1
+  !
+  subroutine MPI_Allreduce_Dble_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:)
+    real(8),intent(in)          :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_2')
+  end subroutine MPI_Allreduce_Dble_2
+  !
+  subroutine MPI_Allreduce_Dble_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:)
+    real(8),intent(in)          :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_3')
+  end subroutine MPI_Allreduce_Dble_3
+  !
+  subroutine MPI_Allreduce_Dble_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_4')
+  end subroutine MPI_Allreduce_Dble_4
+  !
+  subroutine MPI_Allreduce_Dble_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_5')
+  end subroutine MPI_Allreduce_Dble_5
+  !
+  subroutine MPI_Allreduce_Dble_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_6')
+  end subroutine MPI_Allreduce_Dble_6
+  !
+  subroutine MPI_Allreduce_Dble_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_7')
+  end subroutine MPI_Allreduce_Dble_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allreduce_Dble_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    real(8),intent(inout)       :: data(:,:,:,:,:,:,:,:)
+    real(8),intent(in)          :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Dble_8')
+  end subroutine MPI_Allreduce_Dble_8
+#endif
+
+
+
+  !!CMPLX8
+  subroutine MPI_Allreduce_Cmplx_0(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data
+    complex(8),intent(in)       :: send
+    integer,intent(in),optional :: root
+    complex(8),dimension(1)     :: data_,send_
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    send_(1) = send
+    call MPI_ALLREDUCE(send_,data_,1,MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    data     = data_(1)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_0')
+  end subroutine MPI_Allreduce_Cmplx_0
+  !
+  subroutine MPI_Allreduce_Cmplx_1(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:)
+    complex(8),intent(in)       :: send(:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_1')
+  end subroutine MPI_Allreduce_Cmplx_1
+  !
+  subroutine MPI_Allreduce_Cmplx_2(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:)
+    complex(8),intent(in)       :: send(:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_2')
+  end subroutine MPI_Allreduce_Cmplx_2
+  !
+  subroutine MPI_Allreduce_Cmplx_3(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:)
+    complex(8),intent(in)       :: send(:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_3')
+  end subroutine MPI_Allreduce_Cmplx_3
+  !
+  subroutine MPI_Allreduce_Cmplx_4(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_4')
+  end subroutine MPI_Allreduce_Cmplx_4
+  !
+  subroutine MPI_Allreduce_Cmplx_5(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_5')
+  end subroutine MPI_Allreduce_Cmplx_5
+  !
+  subroutine MPI_Allreduce_Cmplx_6(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_6')
+  end subroutine MPI_Allreduce_Cmplx_6
+  !
+  subroutine MPI_Allreduce_Cmplx_7(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_7')
+  end subroutine MPI_Allreduce_Cmplx_7
+  !
+#if __GFORTRAN__ &&  __GNUC__ > 8
+  subroutine MPI_Allreduce_Cmplx_8(comm,send,data,root)
+    integer,intent(in)          :: comm
+    complex(8),intent(inout)    :: data(:,:,:,:,:,:,:,:)
+    complex(8),intent(in)       :: send(:,:,:,:,:,:,:,:)
+    integer,intent(in),optional :: root
+    rank=0;if(present(root))rank=root
+    if(comm==MPI_COMM_NULL)return
+    call MPI_ALLREDUCE(send,data,size(data),MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    call Error_MPI(sub='MPI_Allreduce_Cmplx_8')
+  end subroutine MPI_Allreduce_Cmplx_8
+#endif
 
 
 
@@ -460,7 +1773,7 @@ contains
     logical :: bool
     bool=.false.
   end function Check_MPI
-  
+
   function Get_size_MPI(comm) result(size)
     integer :: comm
     integer :: size
