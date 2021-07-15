@@ -57,6 +57,10 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,ive
        mcaupd, mcaup2, mcaitr, mceigh, mcapps, mcgets, mceupd
   !
   if(MpiComm == MPI_COMM_NULL)return
+  !
+  !MPI setup:
+  mpi_master= Get_master_MPI(MpiComm)
+  !  
   Ns     = size(evec,1)
   Neigen = size(eval)
   call assert_shape(Evec,[Ns,Neigen],"P_arpack_d","Evec")
@@ -78,13 +82,15 @@ subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,ive
      mceupd=4;mneupd=4
   endif
   !
+  !
   if(maxncv>Ns)then
      maxncv=Ns
      print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
   endif
+  !BUG FIX FOR THE BLOCK RESIZE STUCK BEHAVIOR, from Xuanyu Long
+  call MPI_ALLREDUCE(MPI_IN_PLACE,maxncv,1,MPI_INTEGER,MPI_MIN,MpiComm,ierr)
   !
-  !MPI setup:
-  mpi_master= Get_master_MPI(MpiComm)
+
   !
   n      = maxn
   nev    = maxnev
