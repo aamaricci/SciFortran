@@ -30,9 +30,11 @@ And from the repository directory (`cd scifor`) make a standard out-of-source CM
 
 `mkdir build`  
 `cd build`  
-`cmake ..`     
+`cmake ..`      (*)  
 `make`     
 `make install`   
+
+(*) *In some cases CMake fails to find the MPI Fortran compiler, even if it is effectively installed and loaded into the system. An easy fix is to setup and export the `FC=mpif90` environment variable before invoking `cmake`.* 
 
 Please follow the instructions on the screen to complete installation on your environment.  
 The library can be loaded using one of the following, automatically generated, files :  

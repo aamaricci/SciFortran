@@ -2,7 +2,7 @@ subroutine data_saveA1_R(pname,Y1)
   integer                              :: i,Np
   character(len=*)                     :: pname
   real(8),dimension(:)                 :: Y1
-  Np=size(Y1)  
+  Np=size(Y1)
   open(free_unit(unit),file=reg(pname))
   do i=1,Np
      write(unit,*)Y1(i)

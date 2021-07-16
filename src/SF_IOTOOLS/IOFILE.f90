@@ -143,7 +143,8 @@ contains
     character(len=*)      :: file
     integer,dimension(13) :: buff
     logical,optional      :: printf
-    logical               :: control
+    logical               :: control,printf_
+    printf_=.false.;if(present(printf))printf_=printf
     inquire(file=reg(file),exist=control)
     if(.not.control)then
        write(*,*) 'Cannot read '//reg(file)//'. Skip file_size'
@@ -152,8 +153,7 @@ contains
     open(10,file=reg(file))
     call fstat(10,buff,status)
     size=nint(dble(buff(8))/dble(1024))
-    if(present(printf).AND.printf.eqv..true.)&
-         write(*,"(A,A,A,f9.6,A)")"file: **",reg(file),"** is ",size," Kb"
+    if(printf_)write(*,"(A,A,A,f9.6,A)")"file: **",reg(file),"** is ",size," Kb"
   end function file_size
 
 
@@ -273,11 +273,14 @@ contains
     integer,optional  :: size
     logical           :: control
     character(len=9)  :: csize 
-    integer           :: cstatus,fsize,unit
+    integer           :: cstatus,fsize,unit,len
     fsize=store_size;if(present(size))fsize=size
     write(*,"(A)") "Storing "//file
     inquire(file=reg(file),exist=control)
-    if(control.AND.file_size(reg(file))>fsize)call system("gzip -fv "//reg(file))
+    if(control)then
+       len=file_size(reg(file))
+       if(len>fsize)call system("gzip -fv "//reg(file))
+    endif
     inquire(file=reg(file),opened=control,number=unit)
     if(control)close(unit)
   end subroutine file_gzip
