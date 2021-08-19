@@ -125,6 +125,7 @@ subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,bmat,v0,tol,iverbos
      call MatVec(N,workd(ipntr(1)),workd(ipntr(2)) )
   end do
   !
+  !
   !POST PROCESSING:
   if(info/=0)then
      write(*,'(a,i6)')'Warning/Error in DSAUPD, info = ', info

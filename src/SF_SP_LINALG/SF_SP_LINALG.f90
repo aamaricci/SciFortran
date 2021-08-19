@@ -9,7 +9,8 @@ module SF_SP_LINALG
 #ifdef _MPI
   include 'mpif.h'
 #endif
-  private 
+  private
+  
 
   interface sp_eigh
      module procedure :: lanczos_arpack_d

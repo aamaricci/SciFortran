@@ -1,11 +1,12 @@
 subroutine splotA1_RR(pname,X,Y1,append)
-  integer                             :: i,Np
-  character(len=*)                    :: pname
-  real(8),dimension(:)                :: X
-  real(8),dimension(size(X))          :: Y1
-  logical,optional                    :: append
-  logical                             :: check
-  if(present(append).AND. append.eqv..true.)then
+  integer                       :: i,Np
+  character(len=*)              :: pname
+  real(8),dimension(:)          :: X
+  real(8),dimension(size(X))    :: Y1
+  logical,optional              :: append
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -19,13 +20,14 @@ subroutine splotA1_RR(pname,X,Y1,append)
   close(unit)
 end subroutine splotA1_RR
 subroutine splotA1_RC(pname,X,Y1,append)
-  integer                                :: i,j,Np
-  character(len=*)                       :: pname
-  real(8),dimension(:)                   :: X
-  complex(8),dimension(size(X))          :: Y1
-  logical,optional                       :: append
-  logical                                :: check
-  if(present(append).AND. append.eqv..true.)then
+  integer                       :: i,j,Np
+  character(len=*)              :: pname
+  real(8),dimension(:)          :: X
+  complex(8),dimension(size(X)) :: Y1
+  logical,optional              :: append
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -47,14 +49,14 @@ end subroutine splotA1_RC
 
 
 subroutine splotA2_RR(pname,X,Y1,append)
-  integer                                           :: i,j,Ny1,Ny2
-  character(len=*)                                  :: pname
-  real(8),dimension(:,:)                            :: Y1
-  real(8),dimension(size(Y1,2))                     :: X
-  logical,optional                                  :: append
-  logical                                           :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  integer                       :: i,j,Ny1,Ny2
+  character(len=*)              :: pname
+  real(8),dimension(:,:)        :: Y1
+  real(8),dimension(size(Y1,2)) :: X
+  logical,optional              :: append
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -80,9 +82,9 @@ subroutine splotA2_RC(pname,X,Y1,append)
   complex(8),dimension(:,:)     :: Y1
   real(8),dimension(size(Y1,2)) :: X
   logical,optional              :: append
-  logical                       :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -112,9 +114,9 @@ subroutine splotA3_RR(pname,X,Y1,append)
   real(8),dimension(:,:,:)      :: Y1
   real(8),dimension(size(Y1,3)) :: X
   logical,optional              :: append
-  logical                       :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -143,8 +145,9 @@ subroutine splotA3_RC(pname,X,Y1,append)
   complex(8),dimension(:,:,:)   :: Y1
   real(8),dimension(size(Y1,3)) :: X
   logical,optional              :: append
-  logical                       :: check
-  if(present(append).AND. append.eqv..true.)then
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -178,9 +181,9 @@ subroutine splotA4_RR(pname,X,Y1,append)
   real(8),dimension(:,:,:,:)    :: Y1
   real(8),dimension(size(Y1,4)) :: X
   logical,optional              :: append
-  logical                       :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -213,8 +216,9 @@ subroutine splotA4_RC(pname,X,Y1,append)
   complex(8),dimension(:,:,:,:) :: Y1
   real(8),dimension(size(Y1,4)) :: X
   logical,optional              :: append
-  logical                       :: check
-  if(present(append).AND. append.eqv..true.)then
+  logical                       :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -248,15 +252,15 @@ end subroutine splotA4_RC
 
 
 subroutine splotA5_RR(pname,X,Y1,append)
-  integer                       :: Ny1,Ny2,Ny3,Ny4,Ny5
-  integer                       :: i1,i2,i3,i4,i5
-  character(len=*)              :: pname
+  integer                         :: Ny1,Ny2,Ny3,Ny4,Ny5
+  integer                         :: i1,i2,i3,i4,i5
+  character(len=*)                :: pname
   real(8),dimension(:,:,:,:,:)    :: Y1
-  real(8),dimension(size(Y1,5)) :: X
-  logical,optional              :: append
-  logical                       :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  real(8),dimension(size(Y1,5))   :: X
+  logical,optional                :: append
+  logical                         :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -286,14 +290,15 @@ subroutine splotA5_RR(pname,X,Y1,append)
 end subroutine splotA5_RR
 !
 subroutine splotA5_RC(pname,X,Y1,append)
-  integer                       :: Ny1,Ny2,Ny3,Ny4,Ny5
-  integer                       :: i1,i2,i3,i4,i5
-  character(len=*)              :: pname
+  integer                         :: Ny1,Ny2,Ny3,Ny4,Ny5
+  integer                         :: i1,i2,i3,i4,i5
+  character(len=*)                :: pname
   complex(8),dimension(:,:,:,:,:) :: Y1
-  real(8),dimension(size(Y1,5)) :: X
-  logical,optional              :: append
-  logical                       :: check
-  if(present(append).AND. append.eqv..true.)then
+  real(8),dimension(size(Y1,5))   :: X
+  logical,optional                :: append
+  logical                         :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -330,15 +335,15 @@ end subroutine splotA5_RC
 
 
 subroutine splotA6_RR(pname,X,Y1,append)
-  integer                       :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6
-  integer                       :: i1,i2,i3,i4,i5,i6
-  character(len=*)              :: pname
+  integer                           :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6
+  integer                           :: i1,i2,i3,i4,i5,i6
+  character(len=*)                  :: pname
   real(8),dimension(:,:,:,:,:,:)    :: Y1
-  real(8),dimension(size(Y1,6)) :: X
-  logical,optional              :: append
-  logical                       :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  real(8),dimension(size(Y1,6))     :: X
+  logical,optional                  :: append
+  logical                           :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -371,14 +376,15 @@ subroutine splotA6_RR(pname,X,Y1,append)
 end subroutine splotA6_RR
 !
 subroutine splotA6_RC(pname,X,Y1,append)
-  integer                       :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6
-  integer                       :: i1,i2,i3,i4,i5,i6
-  character(len=*)              :: pname
+  integer                           :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6
+  integer                           :: i1,i2,i3,i4,i5,i6
+  character(len=*)                  :: pname
   complex(8),dimension(:,:,:,:,:,:) :: Y1
-  real(8),dimension(size(Y1,6)) :: X
-  logical,optional              :: append
-  logical                       :: check
-  if(present(append).AND. append.eqv..true.)then
+  real(8),dimension(size(Y1,6))     :: X
+  logical,optional                  :: append
+  logical                           :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -418,15 +424,15 @@ end subroutine splotA6_RC
 
 
 subroutine splotA7_RR(pname,X,Y1,append)
-  integer                       :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6,Ny7
-  integer                       :: i1,i2,i3,i4,i5,i6,i7
-  character(len=*)              :: pname
+  integer                             :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6,Ny7
+  integer                             :: i1,i2,i3,i4,i5,i6,i7
+  character(len=*)                    :: pname
   real(8),dimension(:,:,:,:,:,:,:)    :: Y1
-  real(8),dimension(size(Y1,7)) :: X
-  logical,optional              :: append
-  logical                       :: check
-  !
-  if(present(append).AND. append.eqv..true.)then
+  real(8),dimension(size(Y1,7))       :: X
+  logical,optional                    :: append
+  logical                             :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)
@@ -462,14 +468,15 @@ subroutine splotA7_RR(pname,X,Y1,append)
 end subroutine splotA7_RR
 !
 subroutine splotA7_RC(pname,X,Y1,append)
-  integer                       :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6,Ny7
-  integer                       :: i1,i2,i3,i4,i5,i6,i7
-  character(len=*)              :: pname
+  integer                             :: Ny1,Ny2,Ny3,Ny4,Ny5,Ny6,Ny7
+  integer                             :: i1,i2,i3,i4,i5,i6,i7
+  character(len=*)                    :: pname
   complex(8),dimension(:,:,:,:,:,:,:) :: Y1
-  real(8),dimension(size(Y1,7)) :: X
-  logical,optional              :: append
-  logical                       :: check
-  if(present(append).AND. append.eqv..true.)then
+  real(8),dimension(size(Y1,7))       :: X
+  logical,optional                    :: append
+  logical                             :: check,append_
+  append_=.false.;if(present(append))append_=append
+  if(append_)then
      inquire(file=reg(pname),exist=check)
      open(free_unit(unit),file=reg(pname),position="append")
      if(check)write(unit,*)

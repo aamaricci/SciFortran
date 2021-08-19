@@ -82,6 +82,7 @@ ENDIF()
 OPTION(USE_MPI "Use the MPI library for parallelization" ON)
 OPTION(VERBOSE "Build a verbose Makefile" OFF)
 OPTION(WITH_BLAS_LAPACK "Build using internal Blas/Lapack" OFF)
+OPTION(WITH_SCALAPACK "Build ScaLapack support" ON)
 IF(VERBOSE)
   SET(CMAKE_VERBOSE_MAKEFILE ON)
 ELSE(VERBOSE)
@@ -108,21 +109,6 @@ ELSE(USE_MPI)
 ENDIF(USE_MPI)
 
 
-#set MPI preprocessing defition:
-IF(USE_MPI)
-  ADD_DEFINITIONS(-D_MPI)
-ELSE(USE_MPI)
-  ADD_DEFINITIONS(-D_)
-ENDIF(USE_MPI)
-
-IF(SCALAPACK_FOUND)
-  ADD_DEFINITIONS(-D_SCALAPACK)
-ENDIF()
-
-
-IF( "${BUILD_TYPE}" MATCHES "DEBUG")
-  ADD_DEFINITIONS(-D_DEBUG)
-ENDIF()
 
 
 
@@ -191,19 +177,36 @@ IF(NOT WITH_BLAS_LAPACK)
   ENDIF()
 ENDIF()
 
-IF(MKL_SCALAPACK_FOUND)
-  MESSAGE(STATUS "MKL supports Scalapack+Blacs")
-  SET(SCALAPACK_FOUND TRUE)
-ELSE()
-  FIND_PACKAGE(SCALAPACK QUIET)	#TRY TO FIND SCALAPACK IN THE SYSTEM
-  IF(SCALAPACK_FOUND)
-    MESSAGE(STATUS "Scalapack found: ${SCALAPACK_LIBRARIES}")
+SET(SCALAPACK_FOUND FALSE)
+IF(WITH_SCALAPACK)
+  IF(MKL_SCALAPACK_FOUND)
+    MESSAGE(STATUS "MKL supports Scalapack+Blacs")
+    SET(SCALAPACK_FOUND TRUE)
   ELSE()
-    SET(SCALAPACK_FOUND FALSE)
-  ENDIF()
+    FIND_PACKAGE(SCALAPACK QUIET)	#TRY TO FIND SCALAPACK IN THE SYSTEM
+    IF(SCALAPACK_FOUND)
+      MESSAGE(STATUS "Scalapack found: ${SCALAPACK_LIBRARIES}")
+    ENDIF()
+  ENDIF()  
 ENDIF()
 
 
+
+#set MPI preprocessing defition:
+IF(USE_MPI)
+  ADD_DEFINITIONS(-D_MPI)
+ELSE(USE_MPI)
+  ADD_DEFINITIONS(-D_)
+ENDIF(USE_MPI)
+
+IF((WITH_SCALAPACK) AND (SCALAPACK_FOUND))
+  ADD_DEFINITIONS(-D_SCALAPACK)
+ENDIF()
+
+
+IF( "${BUILD_TYPE}" MATCHES "DEBUG")
+  ADD_DEFINITIONS(-D_DEBUG)
+ENDIF()
 
 
 
@@ -215,29 +218,37 @@ SET(USER_HOME $ENV{HOME})
 SET(USER $ENV{USER})
 
 STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_ID)
+STRING(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
 
+#default prefix is $HOME/opt/<dmft_tools>/<fc_id>/[<git_branch>[/<debug>]]/<version>
+SET(PREFIX_DEF_LOC "$ENV{HOME}/opt")
+SET(PREFIX_PROJ "${PROJECT_NAME}")
+SET(PREFIX_PATH "${FC_ID}")
+#if not master branch, include simplified branch name
+IF( (NOT GIT_BRANCH MATCHES "master") )
+    SET(PREFIX_PATH  "${PREFIX_PATH}/${GIT_BRANCH}")
+ENDIF()
 
-SET(LIB_PATH  "$ENV{HOME}/opt/${PROJECT_NAME}/${FC_ID}")
-SET(FULL_VER "${FC_ID}")
-
+#If DEBUG, add /debug to 
 IF("${CMAKE_BUILD_TYPE}" MATCHES "DEBUG")
-  STRING(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
-  SET(LIB_PATH  "${LIB_PATH}/${BUILD_TYPE}")
-  SET(FULL_VER  "${FULL_VER}/${BUILD_TYPE}")
+  SET(PREFIX_PATH  "${PREFIX_PATH}/${BUILD_TYPE}")
 ENDIF()
 
-IF(GIT_REPO)
-  IF(NOT GIT_BRANCH MATCHES "master")
-    SET(LIB_PATH  "${LIB_PATH}/${GIT_BRANCH}")
-    SET(FULL_VER  "${FULL_VER}/${GIT_BRANCH}")
-  ENDIF()
-ENDIF()
-
-
-SET(FULL_VER  "${FULL_VER}/${VERSION}")
-SET(PREFIX  "${LIB_PATH}/${VERSION}" CACHE PATH "Prefix prepended to install directories")
+#set default prefix:
+SET(FULL_VER "${PREFIX_PATH}/${VERSION}")
+SET(VERSION_PATH "${PREFIX_PROJ}/${PREFIX_PATH}")
+SET(DEFAULT_PREFIX "${PREFIX_DEF_LOC}/${PREFIX_PROJ}/${PREFIX_PATH}/${VERSION}")
+SET(PREFIX  "${DEFAULT_PREFIX}" CACHE PATH "Prefix prepended to install directories")
 SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
 
+#Now set module name corresponding to given prefix:
+#if prefix is default nothing to be done.
+#if user defined prefix prepend
+IF(PREFIX STREQUAL "${DEFAULT_PREFIX}")
+  SET(MODULE_NAME "${PREFIX_PROJ}/${PREFIX_PATH}/${VERSION}")
+ELSE()
+  SET(MODULE_NAME "${PREFIX_PROJ}/user_prefix/${PREFIX_PATH}/${VERSION}")
+ENDIF()
 
 
 # Define the library name
@@ -428,18 +439,24 @@ SET(PERMISSION_777
 
 #Build the SCIFOR module for environment modules
 FILE(REMOVE_RECURSE ${SF_TMP_ETC}/modules/)
-SET(TMP_MODULE_NAME "${FULL_VER}" CACHE PATH "Prefix prepended to install directories")
-SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${TMP_MODULE_NAME})
-
-
-CONFIGURE_FILE(${SF_ENV}/module.in ${TMP_ENV_MODULE_FILE} @ONLY)
-
-
-IF((NOT "${CMAKE_BUILD_TYPE}" MATCHES "DEBUG") AND (GIT_BRANCH MATCHES "master"))
-  SET(TMP_VER_MODULE_FILE ${SF_TMP_ETC}/modules/${PROJECT_NAME}/${FC_ID}/.version)
-  CONFIGURE_FILE(${SF_ENV}/version.in ${TMP_VER_MODULE_FILE} @ONLY)
+#Create default .version file if following conditions are verified:
+#1. master branch
+#2. no debug
+#3. default prefix
+IF( (GIT_BRANCH MATCHES "master")
+    AND (NOT "${CMAKE_BUILD_TYPE}" MATCHES "DEBUG")
+    AND (PREFIX STREQUAL "${DEFAULT_PREFIX}")
+    ) 
+  SET(TMP_VER_MODULE_FILE ${SF_TMP_ETC}/modules/${VERSION_PATH}/.version)
+  CONFIGURE_FILE(${SF_ENV}/version.in ${TMP_VER_MODULE_FILE}  @ONLY)
+  MESSAGE(STATUS "${Red}Version file${ColourReset}: ${TMP_VER_MODULE_FILE}")
 ENDIF()
 
+#Build the DMFT_TOOLS module for environment modules
+SET(TMP_MODULE_NAME "${MODULE_NAME}" CACHE PATH "Prefix prepended to install directories")
+SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${TMP_MODULE_NAME})
+CONFIGURE_FILE(${SF_ENV}/module.in ${TMP_ENV_MODULE_FILE} @ONLY)
+MESSAGE(STATUS "${Red}Module file${ColourReset}: ${MODULE_NAME}")
 
 #Build the PKG-CONFIG file
 INCLUDE(${CMAKE_MODULE_PATH}/BuildPkgConfigFile.cmake)
