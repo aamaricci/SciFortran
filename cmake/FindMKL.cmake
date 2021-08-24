@@ -35,7 +35,12 @@
 SET(CMAKE_FIND_DEBUG_MODE 0)
 
 # Find MKL ROOT
-FIND_PATH(MKL_ROOT_DIR NAMES include/mkl.h include/mkl.fi  PATHS $ENV{MKLROOT})
+FIND_PATH(MKL_ROOT_DIR NAMES
+  include/mkl.h
+  include/mkl.fi
+  include/mkl/mkl.h
+  include/mkl/mkl.fi
+  PATHS $ENV{MKLROOT})
 
 # Convert symlinks to real paths
 GET_FILENAME_COMPONENT(MKL_ROOT_DIR ${MKL_ROOT_DIR} REALPATH)
@@ -76,6 +81,7 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     NAMES mkl_scalapack_lp64 mkl_scalapack_core mkl_scalapack
     PATHS ${MKL_ROOT_DIR}/lib
     ${MKL_ROOT_DIR}/lib/intel64
+    ${MKL_ROOT_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
   
@@ -83,6 +89,7 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     NAMES mkl_blacs mkl_blacs_lp64 mkl_blacs_mpich_lp64 mkl_blacs_intelmpi_lp64 mkl_blacs_openmpi_lp64
     PATHS ${MKL_ROOT_DIR}/lib
     ${MKL_ROOT_DIR}/lib/intel64
+    ${MKL_ROOT_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
 
@@ -101,7 +108,7 @@ IF(EXISTS "${MKL_LINK_TOOL}")
   IF(APPLE)			#do something specific for Apple
     IF(${CMAKE_Fortran_COMPILER_ID} MATCHES GNU)
       set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
-      set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -opts )
+      set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -opts)
     ELSE()
       set(MKL_LINK_TOOL_LIBS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -libs ${MKL_PARALLEL} ${MKL_LINKING} ${MKL_SCALAPACK})
       set(MKL_LINK_TOOL_INCS ${MKL_LINK_TOOL} -check_mkl_presence -c intel_f -opts)
@@ -116,23 +123,25 @@ IF(EXISTS "${MKL_LINK_TOOL}")
     ENDIF()    
   ENDIF()
 
-
+  
   EXECUTE_PROCESS(COMMAND  ${MKL_LINK_TOOL_LIBS}
     OUTPUT_VARIABLE MKL_LIBRARIES
     RESULT_VARIABLE COMMAND_WORKED
     TIMEOUT 2 ERROR_QUIET)
   
-  if ( MKL_FIND_REQUIRED AND (NOT ${COMMAND_WORKED} EQUAL 0))
+  IF( MKL_FIND_REQUIRED AND (NOT ${COMMAND_WORKED} EQUAL 0) )
     MESSAGE(FATAL_ERROR "Cannot find MKL libraries. The mkl_link_tool command executed was:\n ${MKL_LINK_TOOL_LIBS}.")
   endif()
+
+
   
   EXECUTE_PROCESS(COMMAND ${MKL_LINK_TOOL_INCS}
     OUTPUT_VARIABLE MKL_INCLUDE
     RESULT_VARIABLE COMMAND_WORKED
     TIMEOUT 2 ERROR_QUIET)
   
-  if ( MKL_FIND_REQUIRED AND (NOT ${COMMAND_WORKED} EQUAL 0))
-    MESSAGE(FATAL_ERROR "Cannot find MKL libraries. The mkl_link_tool command executed was:\n ${MKL_LINK_TOOL_INCS}.")
+  IF( MKL_FIND_REQUIRED AND (NOT ${COMMAND_WORKED} EQUAL 0) )
+    MESSAGE(FATAL_ERROR "Cannot find MKL include. The mkl_link_tool command executed was:\n ${MKL_LINK_TOOL_INCS}.")
   endif()
 
   #Take care of the way mkl_link_tool handles the variable $(MKLROOT) in the linking flag. Replace it with actual
@@ -175,8 +184,10 @@ ELSE()
   FOREACH(LIB IN ITEMS ${LP64_LIB} ${SEQUENTIAL_LIB} ${CORE_LIB})
     FIND_LIBRARY(MKL_ACTUAL_LIBRARY
       NAMES ${LIB} 
-      PATHS ${MKL_ROOT_DIR}/lib
+      PATHS
+      ${MKL_ROOT_DIR}/lib
       ${MKL_ROOT_DIR}/lib/intel64
+      ${MKL_ROOT_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}
       $ENV{INTEL}/mkl/lib/intel64
       NO_DEFAULT_PATH)
     IF(NOT MKL_ACTUAL_LIBRARY)
@@ -195,6 +206,7 @@ ELSE()
     PATHS 
     ${MKL_ROOT_DIR}/lib 
     ${MKL_ROOT_DIR}/lib/intel64
+    ${MKL_ROOT_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
   IF(NOT MKL_LIBS_PATH)
@@ -205,15 +217,19 @@ ELSE()
   #TRY TO FIND SCALAPACK SUPPORT
   FIND_LIBRARY(MKL_SCALAPACK_LIB
     NAMES  mkl_scalapack_lp64 mkl_scalapack_core mkl_scalapack
-    PATHS ${MKL_ROOT_DIR}/lib
+    PATHS
+    ${MKL_ROOT_DIR}/lib
     ${MKL_ROOT_DIR}/lib/intel64
+    ${MKL_ROOT_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
   
   FIND_LIBRARY(MKL_BLACS_LIB
     NAMES mkl_blacs mkl_blacs_lp64 mkl_blacs_mpich_lp64 mkl_blacs_intelmpi_lp64 mkl_blacs_openmpi_lp64
-    PATHS ${MKL_ROOT_DIR}/lib
+    PATHS
+    ${MKL_ROOT_DIR}/lib
     ${MKL_ROOT_DIR}/lib/intel64
+    ${MKL_ROOT_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}
     $ENV{INTEL}/mkl/lib/intel64
     NO_DEFAULT_PATH)
 

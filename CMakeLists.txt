@@ -465,12 +465,12 @@ BUILD_PKCONFIG(${TMP_PKCONFIG_FILE})
 
 
 #Build the user CONFIG scripts (sourced in user shell config file, i.e. .bashrc)
-SET(CONFIG_SCRIPT scifor_config_user.sh)
-SET(TMP_CONFIGVARS_USER_FILE ${SF_TMP_ETC}/${CONFIG_SCRIPT})
+SET(USER_CONFIG_SCRIPT scifor_config_user.sh)
+SET(TMP_CONFIGVARS_USER_FILE ${SF_TMP_ETC}/${USER_CONFIG_SCRIPT})
 CONFIGURE_FILE(${SF_ETC}/scifor_config_user.sh.in ${TMP_CONFIGVARS_USER_FILE} @ONLY)
 
-SET(CONFIG_SCRIPT scifor_config_global.sh)
-SET(TMP_CONFIGVARS_GLOBAL_FILE ${SF_TMP_ETC}/${CONFIG_SCRIPT})
+SET(GLOBAL_CONFIG_SCRIPT scifor_config_global.sh)
+SET(TMP_CONFIGVARS_GLOBAL_FILE ${SF_TMP_ETC}/${GLOBAL_CONFIG_SCRIPT})
 CONFIGURE_FILE(${SF_ETC}/scifor_config_global.sh.in ${TMP_CONFIGVARS_GLOBAL_FILE} @ONLY)
 
 
@@ -525,14 +525,14 @@ ${Yellow}Method 1: use the provided ${PROJECT_NAME} environment module${ColourRe
    $ module load ${PROJECT_NAME}/${FC_PLAT}
 
 ${Yellow}Method 2: source the config script${ColourReset}:
-   $ source ${SF_TARGET_BIN}/scifor_config_user.sh
+   $ source ${SF_TARGET_BIN}/${USER_CONFIG_FILE}
 
 ${Yellow}Method 3: use pkg-config with the provided ${PROJECT_NAME}.pc${ColourReset}:
    $ export PKG_CONFIG_PATH=${SF_TARGET_ETC}/:$PKG_CONFIG_PATH
    $ pkg-config --cflags --libs ${PROJECT_NAME}
 
 ${Yellow}Method ADMIN: Add this line to the system shell configuration file, e.g. /etc/bash.bashrc${ColourReset}
-   $ source ${SF_TARGET_BIN}/scifor_config_global.sh
+   $ source ${SF_TARGET_BIN}/${GLOBAL_CONFIG_FILE}
 \")
 ")
 
