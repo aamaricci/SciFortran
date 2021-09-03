@@ -340,7 +340,7 @@ contains
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
     data_(1) = data
-    call MPI_BCAST(data_,1,MPI_LOGICAL,rank,comm,ierr)
+    call MPI_BCAST(data,1,MPI_LOGICAL,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Bool_0')
   end subroutine MPI_Bcast_Bool_0
   !
@@ -438,7 +438,7 @@ contains
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
     data_(1) = data
-    call MPI_BCAST(data_,1,MPI_INTEGER,rank,comm,ierr)
+    call MPI_BCAST(data,1,MPI_INTEGER,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Int_0')
   end subroutine MPI_Bcast_Int_0
   !
@@ -535,7 +535,7 @@ contains
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
     data_(1) = data
-    call MPI_BCAST(data_,1,MPI_DOUBLE_PRECISION,rank,comm,ierr)
+    call MPI_BCAST(data,1,MPI_DOUBLE_PRECISION,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Dble_0')
   end subroutine MPI_Bcast_Dble_0
   !
@@ -633,7 +633,7 @@ contains
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
     data_(1) = data
-    call MPI_BCAST(data_,1,MPI_DOUBLE_COMPLEX,rank,comm,ierr)
+    call MPI_BCAST(data,1,MPI_DOUBLE_COMPLEX,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Cmplx_0')
   end subroutine MPI_Bcast_Cmplx_0
   !
