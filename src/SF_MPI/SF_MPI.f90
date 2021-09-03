@@ -339,7 +339,7 @@ contains
     logical,dimension(1)        :: data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    data_(1) = data
+    !data_(1) = data
     call MPI_BCAST(data,1,MPI_LOGICAL,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Bool_0')
   end subroutine MPI_Bcast_Bool_0
@@ -437,7 +437,7 @@ contains
     integer,dimension(1)        :: data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    data_(1) = data
+    !data_(1) = data
     call MPI_BCAST(data,1,MPI_INTEGER,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Int_0')
   end subroutine MPI_Bcast_Int_0
@@ -534,7 +534,7 @@ contains
     real(8),dimension(1)        :: data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    data_(1) = data
+    !data_(1) = data
     call MPI_BCAST(data,1,MPI_DOUBLE_PRECISION,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Dble_0')
   end subroutine MPI_Bcast_Dble_0
@@ -632,7 +632,7 @@ contains
     complex(8),dimension(1)        :: data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    data_(1) = data
+    !data_(1) = data
     call MPI_BCAST(data,1,MPI_DOUBLE_COMPLEX,rank,comm,ierr)
     call Error_MPI(sub='MPI_Bcast_Cmplx_0')
   end subroutine MPI_Bcast_Cmplx_0
@@ -745,9 +745,9 @@ contains
     logical,dimension(1)        :: send_,data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLGATHER(send_,1,MPI_LOGICAL,data_,1,MPI_LOGICAL,comm,ierr)
-    data = data_(1)
+    !send_(1) = send
+    call MPI_ALLGATHER(send,1,MPI_LOGICAL,data,1,MPI_LOGICAL,comm,ierr)
+    !data = data_(1)
     call Error_MPI(sub='MPI_Allgather_Bool_0')
   end subroutine MPI_Allgather_Bool_0
   !
@@ -852,9 +852,9 @@ contains
     integer,dimension(1)        :: send_,data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLGATHER(send_,1,MPI_INTEGER,data_,1,MPI_INTEGER,comm,ierr)
-    data  = data_(1)
+    !send_(1) = send
+    call MPI_ALLGATHER(send,1,MPI_INTEGER,data,1,MPI_INTEGER,comm,ierr)
+    !data  = data_(1)
     call Error_MPI(sub='MPI_Allgather_Int_0')
   end subroutine MPI_Allgather_Int_0
   !
@@ -961,9 +961,9 @@ contains
     real(8),dimension(1)        :: send_,data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLGATHER(send_,1,MPI_DOUBLE_PRECISION,data_,1,MPI_DOUBLE_PRECISION,comm,ierr)
-    data = data_(1)
+    !send_(1) = send
+    call MPI_ALLGATHER(send,1,MPI_DOUBLE_PRECISION,data,1,MPI_DOUBLE_PRECISION,comm,ierr)
+    !data = data_(1)
     call Error_MPI(sub='MPI_Allgather_Dble_0')
   end subroutine MPI_Allgather_Dble_0
   !
@@ -1068,9 +1068,9 @@ contains
     complex,dimension(1)        :: send_,data_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLGATHER(send_,1,MPI_DOUBLE_COMPLEX,data_,1,MPI_DOUBLE_COMPLEX,comm,ierr)
-    data = data_(1)
+    !send_(1) = send
+    call MPI_ALLGATHER(send,1,MPI_DOUBLE_COMPLEX,data,1,MPI_DOUBLE_COMPLEX,comm,ierr)
+    !data = data_(1)
     call Error_MPI(sub='MPI_Allgather_Cmplx_0')
   end subroutine MPI_Allgather_Cmplx_0
   !
@@ -1203,9 +1203,9 @@ contains
     logical,dimension(1)       :: data_,send_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLREDUCE(send_,data_,1,MPI_LOGICAL,MPI_SUM,comm,ierr)
-    data     = data_(1)
+    !send_(1) = send
+    call MPI_ALLREDUCE(send,data,1,MPI_LOGICAL,MPI_SUM,comm,ierr)
+    !data     = data_(1)
     call Error_MPI(sub='MPI_Allreduce_Bool_0')
   end subroutine MPI_Allreduce_Bool_0
   !
@@ -1313,9 +1313,9 @@ contains
     integer,dimension(1)       :: data_,send_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLREDUCE(send_,data_,1,MPI_INTEGER,MPI_SUM,comm,ierr)
-    data     = data_(1)
+    !send_(1) = send
+    call MPI_ALLREDUCE(send,data,1,MPI_INTEGER,MPI_SUM,comm,ierr)
+    !data     = data_(1)
     call Error_MPI(sub='MPI_Allreduce_Int_0')
   end subroutine MPI_Allreduce_Int_0
   !
@@ -1421,9 +1421,9 @@ contains
     real(8),dimension(1)        :: data_,send_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLREDUCE(send_,data_,1,MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
-    data     = data_(1)
+    !send_(1) = send
+    call MPI_ALLREDUCE(send,data,1,MPI_DOUBLE_PRECISION,MPI_SUM,comm,ierr)
+    !data     = data_(1)
     call Error_MPI(sub='MPI_Allreduce_Dble_0')
   end subroutine MPI_Allreduce_Dble_0
   !
@@ -1528,9 +1528,9 @@ contains
     complex(8),dimension(1)     :: data_,send_
     rank=0;if(present(root))rank=root
     if(comm==MPI_COMM_NULL)return
-    send_(1) = send
-    call MPI_ALLREDUCE(send_,data_,1,MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
-    data     = data_(1)
+    !send_(1) = send
+    call MPI_ALLREDUCE(send,data,1,MPI_DOUBLE_COMPLEX,MPI_SUM,comm,ierr)
+    !data     = data_(1)
     call Error_MPI(sub='MPI_Allreduce_Cmplx_0')
   end subroutine MPI_Allreduce_Cmplx_0
   !
