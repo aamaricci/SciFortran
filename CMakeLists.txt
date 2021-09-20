@@ -38,7 +38,7 @@ ENDIF()
 if(CMAKE_Fortran_COMPILER_ID MATCHES GNU) # this is gfortran
   SET(CMAKE_Fortran_MODDIR_FLAG   "-J")
   SET(CMAKE_Fortran_FLAGS         "-cpp -ffree-line-length-none -fPIC -w ")
-  IF(CMAKE_Fortran_COMPILER_VERSION LESS 10.0.0)
+  IF(CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 10.0.0)
     SET(CMAKE_Fortran_FLAGS         "${CMAKE_Fortran_FLAGS} -Wno-argument-mismatch")
   ELSE()
     SET(CMAKE_Fortran_FLAGS         "${CMAKE_Fortran_FLAGS} -fallow-argument-mismatch")
@@ -169,7 +169,8 @@ IF(NOT WITH_BLAS_LAPACK)
     FIND_PACKAGE(BLAS QUIET)
     FIND_PACKAGE(LAPACK QUIET)
     IF(BLAS_FOUND AND LAPACK_FOUND)
-      MESSAGE(STATUS "BLAS/LAPACK found at: ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES}")
+      MESSAGE(STATUS "BLAS found as: ${BLAS_LIBRARIES}")
+      MESSAGE(STATUS "LAPACK found as: ${LAPACK_LIBRARIES}")
       SET(BLA_LIBRARIES ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
     ELSE()
       SET(WITH_BLAS_LAPACK "ON")
@@ -220,10 +221,19 @@ SET(USER $ENV{USER})
 STRING(TOLOWER "${CMAKE_Fortran_COMPILER_ID}" FC_ID)
 STRING(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
 
-#default prefix is $HOME/opt/<dmft_tools>/<fc_id>/[<git_branch>[/<debug>]]/<version>
+#default prefix is $HOME/opt/<libname>/<fc_id>/[<git_branch>[/<debug>]]/<version>
 SET(PREFIX_DEF_LOC "$ENV{HOME}/opt")
 SET(PREFIX_PROJ "${PROJECT_NAME}")
 SET(PREFIX_PATH "${FC_ID}")
+
+#user can change the default location of the library but not the remaining naming conventions 
+SET(PREFIX  "${PREFIX_DEF_LOC}" CACHE PATH "Prefix prepended to install directories")
+
+#if prefix has not be changed use default module name conventions
+IF(PREFIX STREQUAL "${PREFIX_DEF_LOC}")
+  SET(USE_DEFAULT_MODULE_NAME TRUE)
+ENDIF()
+
 #if not master branch, include simplified branch name
 IF( (NOT GIT_BRANCH MATCHES "master") )
     SET(PREFIX_PATH  "${PREFIX_PATH}/${GIT_BRANCH}")
@@ -237,14 +247,13 @@ ENDIF()
 #set default prefix:
 SET(FULL_VER "${PREFIX_PATH}/${VERSION}")
 SET(VERSION_PATH "${PREFIX_PROJ}/${PREFIX_PATH}")
-SET(DEFAULT_PREFIX "${PREFIX_DEF_LOC}/${PREFIX_PROJ}/${PREFIX_PATH}/${VERSION}")
-SET(PREFIX  "${DEFAULT_PREFIX}" CACHE PATH "Prefix prepended to install directories")
-SET(CMAKE_INSTALL_PREFIX "${PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
+SET(DEFAULT_PREFIX "${PREFIX}/${PREFIX_PROJ}/${PREFIX_PATH}/${VERSION}")
+SET(CMAKE_INSTALL_PREFIX "${DEFAULT_PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
 
 #Now set module name corresponding to given prefix:
 #if prefix is default nothing to be done.
 #if user defined prefix prepend
-IF(PREFIX STREQUAL "${DEFAULT_PREFIX}")
+IF(USE_DEFAULT_MODULE_NAME)
   SET(MODULE_NAME "${PREFIX_PROJ}/${PREFIX_PATH}/${VERSION}")
 ELSE()
   SET(MODULE_NAME "${PREFIX_PROJ}/user_prefix/${PREFIX_PATH}/${VERSION}")
@@ -452,7 +461,7 @@ IF( (GIT_BRANCH MATCHES "master")
   MESSAGE(STATUS "${Red}Version file${ColourReset}: ${TMP_VER_MODULE_FILE}")
 ENDIF()
 
-#Build the DMFT_TOOLS module for environment modules
+#Build the SCIFOR module for environment modules
 SET(TMP_MODULE_NAME "${MODULE_NAME}" CACHE PATH "Prefix prepended to install directories")
 SET(TMP_ENV_MODULE_FILE ${SF_TMP_ETC}/modules/${TMP_MODULE_NAME})
 CONFIGURE_FILE(${SF_ENV}/module.in ${TMP_ENV_MODULE_FILE} @ONLY)
