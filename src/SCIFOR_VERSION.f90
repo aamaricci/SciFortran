@@ -2,7 +2,7 @@ MODULE SF_VERSION
   implicit none
 
   !GIT VERSION
-  character(len=41),parameter,public :: scifor_version_sha1 = "c7263fd03086e59085e0cbc328a24c9b911a3c88"
+  character(len=41),parameter,public :: scifor_version_sha1 = "43c3cd1887d05d75657711945b4359c133c904cd"
 
 contains
 
