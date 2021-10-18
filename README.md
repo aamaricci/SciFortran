@@ -14,7 +14,7 @@ Anyone is welcome to contribute or to test the software.
 * MPI ( https://github.com/open-mpi/ompi )  [optional, recommended]
 * scalapack  ( https://github.com/aamaricci/scalapack )  [optional]
 
-If libraries are not available in your system, please use the provided links to install them. All libraries listed can be installed using `CMake` 
+If libraries are not available in your system, please use the provided links to install them. All libraries listed can be installed using `CMake`. Should Lapack/Blas not be available in your system, `scifor` will compile internal copies of such libraries. This option, however, in most cases cause a slight degradation of the performances with respect to optimized versions of the same libraries. Intel MKL support is offered using a custom `CMake` macro, contained in `cmake/FindMKL.cmake`, which however should be considered in a beta development.       
 
 
 
@@ -46,7 +46,7 @@ The library can be loaded using one of the following, automatically generated, f
 
 The `CMake` compilation can be controlled using the following additional variables, default values between `< >`:   
 
-* `-DPREFIX=prefix directory <~/opt/scifor/PLAT/VERSION>` 
+* `-DPREFIX=prefix directory <~/opt/scifor>` 
 
 * `-DUSE_MPI=<yes>/no`  
 
@@ -60,7 +60,19 @@ The `CMake` compilation can be controlled using the following additional variabl
 `make uninstall`  
 
 
+
+### PROBLEMS
+
+`SciFortran` has been tested with success on several Unix/Linux platoforms. Support for Windows using Linux Bash Shell is experimental, although few people reported successful installation with minimal efforts. 
+
+Some issues has reported concerning the wrong setup for the library `pkg-config` file, contained in  `$PREFIX/<PLAT>/<VERSION>/etc/scifor.pc`. The variable `Libs=-L${libdir} -lscifor <blas/lapack/scalapack>` produced by `cmake` during the configuration and installation process can be not properly defined for the part corresponding to third parties libraries such as Blas/Lapack/Scalapack. This breaks compilation against `scifor` using `pkg-config` produced linking options. 
+
+FIX: edit the `scifor.pc` file manually, fixing the definition of the variable `Libs`. 
+
+ 
+
 ### CONTACT
+
 For any information contact the author as:  
 adriano DOT amaricci @ gmail DOT com
 
@@ -76,7 +88,7 @@ the Free Software Foundation, either version 3 of the License, or any later vers
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU LGPL for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU LGPL along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
