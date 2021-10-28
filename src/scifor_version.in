@@ -43,8 +43,10 @@ contains
   end subroutine scifor_version
 
 
-  subroutine code_version(revision)
+  subroutine code_version(revision,name)
     character(len=*)                         :: revision
+    character(len=*),optional                :: name
+    character(len=100)                       :: name_
     integer(4),dimension(8)                  :: dummy
     integer(4)                               :: year
     integer(4)                               :: mese
@@ -57,7 +59,8 @@ contains
          'January  ', 'February ', 'March    ', 'April    ', &
          'May      ', 'June     ', 'July     ', 'August   ', &
          'September', 'October  ', 'November ', 'December ' /)
-    write(*,"(A)")("CODE VERSION: "//trim(adjustl(trim(revision))))
+    name_="code";if(present(name))name_=(trim(adjustl(trim(name))))
+    write(*,"(A)")(trim(name_)//" VERSION: "//trim(adjustl(trim(revision))))
     call date_and_time(values=dummy)
     year = dummy(1)
     mese = dummy(2)
@@ -69,8 +72,8 @@ contains
     write(*,"(A,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3)")&
          "Timestamp: +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
     write(*,*)""
-    open(10,file="code_version.inc")
-    write(10,"(A)")"CODE VERSION: "//trim(adjustl(trim(revision)))
+    open(10,file=trim(name_)//"_version.inc")
+    write(10,"(A)")trim(name_)//" VERSION: "//trim(adjustl(trim(revision)))
     write(10,"(A,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3)")&
          "Timestamp: +",day,trim(month(mese)),year, h,':',m,':',s,'.',ms
     write(10,*)""
