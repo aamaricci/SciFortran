@@ -1,5 +1,5 @@
 !-------------------------------------------------------------------------------------------
-!PURPOSE: compute the determinant of a real matrix using an LU factorization
+!PURPOSE: compute the determinant of a matrix using an LU factorization
 !-------------------------------------------------------------------------------------------
 function ddet(A) result(x)
   ! compute the determinant of a real matrix using an LU factorization
@@ -41,7 +41,7 @@ function ddet(A) result(x)
 end function ddet
 !
 function zdet(A) result(x)
-  ! compute the determinant of a real matrix using an LU factorization
+  ! compute the determinant of a complex matrix using an LU factorization
   complex(8), intent(in)  :: A(:, :)
   complex(8)              :: x
   integer                 :: i
@@ -92,7 +92,9 @@ pure function ddiag(x) result(A)
   A(:,:) = 0d0
   forall(i=1:n) A(i,i) = x(i)
 end function ddiag
-!
+!-------------------------------------------------------------------------------------------
+!PURPOSE:  construct complex matrix from diagonal elements
+!-------------------------------------------------------------------------------------------!
 pure function zdiag(x) result(A)
   complex(8), intent(in)  :: x(:)
   complex(8), allocatable :: A(:,:)
@@ -108,7 +110,7 @@ end function zdiag
 
 
 !-------------------------------------------------------------------------------------------
-!PURPOSE:  return the diagonal of a matrix
+!PURPOSE:  return the diagonal of a matrix [real]
 !-------------------------------------------------------------------------------------------
 pure function d_diagonal(A) result(dd)
   real(8),intent(in)           :: A(:,:)
@@ -118,7 +120,9 @@ pure function d_diagonal(A) result(dd)
      dd(i) = A(i,i)
   end do
 end function d_diagonal
-
+!-------------------------------------------------------------------------------------------
+!PURPOSE:  return the diagonal of a matrix [complex]
+!-------------------------------------------------------------------------------------------
 pure function z_diagonal(A) result(dd)
   complex(8),intent(in)           :: A(:,:)
   complex(8),dimension(size(A,1)) :: dd
@@ -132,7 +136,7 @@ end function z_diagonal
 
 
 !-------------------------------------------------------------------------------------------
-!PURPOSE:  return trace along the main diagonal
+!PURPOSE:  return trace along the main diagonal [real]
 !-------------------------------------------------------------------------------------------
 pure function dtrace(A) result(t)
   real(8), intent(in) :: A(:,:)
@@ -143,7 +147,9 @@ pure function dtrace(A) result(t)
      t = t + A(i,i)
   end do
 end function dtrace
-
+!-------------------------------------------------------------------------------------------
+!PURPOSE:  return trace along the main diagonal [complex]
+!-------------------------------------------------------------------------------------------
 pure function ztrace(A) result(t)
   complex(8), intent(in) :: A(:,:)
   complex(8)             :: t
@@ -170,7 +176,9 @@ pure function deye(n) result(A)
      A(i,i) = 1d0
   end do
 end function deye
-
+!-------------------------------------------------------------------------------------------
+!PURPOSE:  Returns the identity matrix of size n x n and type complex.
+!-------------------------------------------------------------------------------------------
 pure function zeye(n) result(A)
   integer, intent(in) :: n
   complex(8)          :: A(n, n)
