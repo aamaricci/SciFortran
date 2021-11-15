@@ -23,7 +23,7 @@ IF( (NOT GIT_BRANCH MATCHES "master") )
 ENDIF()
 
 #If DEBUG, add /debug to 
-IF("${BUILD_TYPE}" MATCHES "DEBUG")
+IF("${BUILD_TYPE}" MATCHES "debug")
   SET(PREFIX_PATH  "${PREFIX_PATH}/${BUILD_TYPE}")
 ENDIF()
 
