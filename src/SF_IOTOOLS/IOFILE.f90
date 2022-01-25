@@ -452,37 +452,39 @@ contains
     string=trim(adjustl(trim(string_pad)))
   end function str_i_to_ch_pad
 
-  function str_r_to_ch(r8,d) result(string)
+  function str_r_to_ch(r8,d,lead) result(string)
     real(8)                      :: r8
-    integer,optional             :: d
-    integer                      :: w_,d_
+    integer,optional             :: d,lead
+    integer                      :: w_,d_,lead_
     character(len=:),allocatable :: string
     character(len=:),allocatable :: string_
-    d_=6 ;if(present(d))d_=d
-    w_ = get_w_(r8,d_)
+    d_    =6 ;if(present(d))d_=d
+    lead_ =1 ;if(present(lead))lead_=lead
+    w_ = get_w_(r8,d_,lead_)
     allocate(character(len=w_) :: string_)
-    call r8_to_s_left(r8,string_,d_)
+    call r8_to_s_left(r8,string_,d_,lead_)
     string=trim(adjustl(trim(string_)))
   end function str_r_to_ch
 
 
-  function str_c_to_ch(c,d) result(string)
+  function str_c_to_ch(c,d,lead) result(string)
     complex(8)                   :: c
-    integer,optional             :: d
-    integer                      :: w_,d_
+    integer,optional             :: d,lead
+    integer                      :: w_,d_,lead_
     character(len=:),allocatable :: string
     character(len=:),allocatable :: sre,sim
     real(8)                      :: re,im
-    d_=6 ;if(present(d))d_=d
+    d_    =6 ;if(present(d))d_=d
+    lead_ =1 ;if(present(lead))lead_=lead
     re=dreal(c)
-    w_ = get_w_(re,d_)
+    w_ = get_w_(re,d_,lead_)
     allocate(character(len=w_) :: sre)
-    call r8_to_s_left(re,sre,d_)
+    call r8_to_s_left(re,sre,d_,lead_)
     !
     im=dimag(c)
-    w_ = get_w_(im,d_)
+    w_ = get_w_(im,d_,lead_)
     allocate(character(len=w_) :: sim)
-    call r8_to_s_left(im,sim,d_)
+    call r8_to_s_left(im,sim,d_,lead_)
     string="("//trim(adjustl(trim(sre)))//","//trim(adjustl(trim(sim)))//")"
   end function str_c_to_ch
 
@@ -501,18 +503,18 @@ contains
   end function str_ch_to_ch
 
 
-  function get_w_(r8,d) result(w)
+  function get_w_(r8,d,lead) result(w)
     real(8) :: r8
-    integer :: d
+    integer :: d,lead
     integer :: w
     if(r8==0d0)then
        w=d+4
     else
        w=floor(log10(abs(r8)))
-       if(w < -1)then
+       if(w < -lead)then
           w = d + 4 + 4
        else
-          w = w + d + 4
+          w = abs(w) + d + 4 + lead
        endif
     endif
   end function get_w_
@@ -592,7 +594,7 @@ contains
   end subroutine i4_to_s_left
 
 
-  subroutine r8_to_s_left( r8, s, digits)
+  subroutine r8_to_s_left( r8, s, digits, lead)
     !! R8_TO_S_LEFT writes an R8 into a left justified string.
     !    An R8 is a real ( kind = 8 ) value.
     !    A 'F<len(s)>.DIGITS' format is used with a WRITE statement.
@@ -601,12 +603,16 @@ contains
     real(8)             :: r8
     character(len=*)    :: s
     integer             :: s_length,w_
-    integer             :: digits
+    integer             :: digits,lead
     s_length = len ( s )
     write(fmt,"(A2,I0,A1,I0,A1)")"(F",s_length,".",digits,")"
     if(r8/=0d0)then
        w_=floor(log10(abs(r8)))
-       if(w_<-1)write(fmt,"(A3,I0,A1,I0,A1)")"(ES",s_length,".",digits,")"
+       if(w_<-lead)then
+          write(fmt,"(A3,I0,A1,I0,A1)")"(ES",s_length,".",digits,")"
+       else
+          write(fmt,"(A2,I0,A1,I0,A1)")"(F",s_length,".",digits+lead,")"
+       endif
     endif
     write ( s, fmt ) r8
     s = trim(adjustl(trim( s )))
