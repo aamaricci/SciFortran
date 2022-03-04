@@ -1,21 +1,41 @@
   select case(info_)
   case(0)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: improper input parameters."
+     write(534,*)"LEASTSQ STOP: improper input parameters. INFO=",info_
+     close(534)
   case(1)
-     !write(*,*)"LEASTSQ STOP: relative error in the sum of squares is at most TOL."
      return
   case(2)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: relative error between X and the solution is at most TOL"
+     write(534,*)"LEASTSQ STOP: relative error between X and the solution is at most TOL. INFO=",info_
+     close(534)
   case(3)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: relative error in sum of squares AND between X and the solution is at most TOL."
+     write(534,*)"LEASTSQ STOP: relative error in sum of squares AND between X and the solution is at most TOL. INFO=",info_
+     close(534)
   case(4)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: FVEC is orthogonal to the columns of the jacobian to machine precision."
+     write(534,*)"LEASTSQ STOP: FVEC is orthogonal to the columns of the jacobian to machine precision. INFO=",info_
+     close(534)
   case(5)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
+     write(534,*)"LEASTSQ STOP: number of calls to FCN has reached or exceeded 200*(N+1). INFO=",info_
+     close(534)
   case(6)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: TOL is too small. No further reduction in the sum of squares is possible."
+     write(534,*)"LEASTSQ STOP: TOL is too small. No further reduction in the sum of squares is possible. INFO=",info_
+     close(534)
   case(7)
+     open(534,file="LEASTSQ_ERROR.err")
      write(*,*)"LEASTSQ STOP: TOL is too small. No further improvement in the approximate solution X is possible."
+     write(534,*)"LEASTSQ STOP: TOL is too small. No further improvement in the approximate solution X is possible. INFO=",info_
+     close(534)
   end select
   write(*,*)"INFO=",info_
   stop "LEASTSQ STOP"

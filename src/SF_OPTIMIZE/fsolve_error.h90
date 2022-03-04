@@ -1,13 +1,27 @@
+  
   select case(info_)
   case(1)
      return
   case(0)
+     open(534,file="FSOLVE_ERROR.err")
      write(*,*)"FSOLVE STOP: improper input parameters."
+     write(534,*)"FSOLVE STOP: improper input parameters. INFO=",info_
+     close(534)
   case(2)
+     open(534,file="FSOLVE_ERROR.err")
      write(*,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1)."
+     write(534,*)"FSOLVE STOP: number of calls to FCN has reached or exceeded 200*(N+1). INFO=",info_
+     close(534)
   case(3)
+     open(534,file="FSOLVE_ERROR.err")
      write(*,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible."
+     write(534,*)"FSOLVE STOP: TOL is too small. No further improvement to X is possible. INFO=",info_
+     close(534)
   case(4)
+     open(534,file="FSOLVE_ERROR.err")
      write(*,*)"FSOLVE STOP: the iteration is not making good progress."
+     write(534,*)"FSOLVE STOP: the iteration is not making good progress. INFO=",info_
+     close(534)
   end select
+  write(*,*)"INFO=",info_
   stop "FSOLVE STOP"

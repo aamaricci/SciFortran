@@ -52,6 +52,7 @@ subroutine broyden1(ff,x,check,maxits,tol,tol1,tolmin,stpmx,noexit)
               noexit=.false.
               return
            else
+              open(534,file="BROYDEN1_ERROR.err");write(534,*)"";close(534)
               stop
            endif
         endif
@@ -83,6 +84,7 @@ subroutine broyden1(ff,x,check,maxits,tol,tol1,tolmin,stpmx,noexit)
                  noexit=.false.
                  return
               else
+                 open(534,file="BROYDEN1_ERROR.err");write(534,*)"";close(534)
                  stop
               endif
            endif
@@ -119,6 +121,7 @@ subroutine broyden1(ff,x,check,maxits,tol,tol1,tolmin,stpmx,noexit)
      return
   else
      if(present(check))check=check_
+     open(534,file="BROYDEN1_ERROR.err");write(534,*)"";close(534)
      stop
   endif
 end subroutine broyden1
