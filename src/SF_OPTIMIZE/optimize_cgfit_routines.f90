@@ -51,20 +51,23 @@ contains
     return
   end subroutine linmin
 
-  SUBROUTINE dlinmin(p,xi,fret,ftol)
+  SUBROUTINE dlinmin(p,xi,fret,ftol,itmax)
     real(8), intent(out)                         :: fret
     real(8), dimension(:), target, intent(inout) :: p,xi
     real(8),optional                             :: ftol
+    integer,optional                             :: itmax
     real(8)                                      :: tol
+    integer                                      :: itmax_
     real(8)                                      :: ax,bx,fa,fb,fx,xmin,xx
     tol=1.d-6;if(present(ftol))tol=ftol
+    itmax_=100;if(present(itmax))itmax_=itmax
     ncom=size(p) ; if(ncom /= size(xi))stop "Error in DLinMin"
     pcom=>p
     xicom=>xi
     ax=0.d0
     xx=1.d0
     call mnbrak(ax,xx,bx,fa,fx,fb,f1dim)
-    fret=dbrent_(ax,xx,bx,f1dim,df1dim,tol,xmin)
+    fret=dbrent_(ax,xx,bx,f1dim,df1dim,tol,xmin,itmax_)
     xi=xmin*xi
     p=p+xi
     return
@@ -295,11 +298,12 @@ contains
 
 
 
-  function dbrent_(ax,bx,cx,func,fjac,tol,xmin) result(dbrent)
+  function dbrent_(ax,bx,cx,func,fjac,tol,xmin,itmax) result(dbrent)
     real(8),intent(in)  :: ax,bx,cx,tol
     real(8),intent(out) :: xmin
     real(8)             :: dbrent
-    integer, parameter  :: itmax=100
+    integer,optional    :: itmax
+    integer             :: itmax_=100
     real(8), parameter  :: zeps=1.d-3*epsilon(ax)
     integer             :: iter
     real(8)             :: a,b,d,d1,d2,du,dv,dw,dx,e,fu,fv,fw,fx,olde,tol1,tol2
@@ -315,6 +319,7 @@ contains
          real(8)             :: fjac
        end function fjac
     end interface
+    itmax_=100;if(present(itmax))itmax_=itmax    
     a=min(ax,cx)
     b=max(ax,cx)
     v=bx

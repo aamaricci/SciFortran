@@ -61,7 +61,7 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
   do its=1,itmax_
      iter = its
      p_prev = p
-     call dlinmin(p,xi,fret,ftol_)
+     call dlinmin(p,xi,fret,ftol_,itmax_)
      select case(istop_)
      case default
         converged = &
