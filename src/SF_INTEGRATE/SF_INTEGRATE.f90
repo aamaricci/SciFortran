@@ -21,6 +21,7 @@
 ! Otherwise, truncation of the interval, or application of a suitable transformation for reducing the problem to a finite range may be possible. And you may also call QAGI.
 
 module SF_INTEGRATE
+  USE GAUSS_QUADRATURE
   implicit none
   private
 
@@ -95,13 +96,19 @@ module SF_INTEGRATE
 
 
 
-  !1D
+  !1D Adaptive QUADPACK
   public :: quad
+  !nD Adapative GAUSS RULE 6-14
+  public :: gauss_quad
+  public :: integrate
+
+  !1D simple
   public :: trapz
   public :: simps
-  !2D
+  !2D simple
   public :: trapz2d
   public :: simps2d
+
   !KRAMERS-KRONIG:
   public :: kronig
 
@@ -111,13 +118,14 @@ module SF_INTEGRATE
 
 
   !<TODO
-  ! add routines for the 3d case
+  ! add cubature methods for arbitrary domains
   ! add Montecarlo base 1d/2d/3d integrals
   !>TODO
 
 
 
 contains
+
 
 
   !+-----------------------------------------------------------------------------+!
@@ -204,6 +212,24 @@ contains
 
 
 
+
+
+
+
+
+
+
+
+
+  !*******************************************************************
+  !*******************************************************************
+  !*******************************************************************
+  !*******************************************************************
+  !*******************************************************************
+  !*******************************************************************
+
+
+
   !+-----------------------------------------------------------------+
   !PURPOSE: obtain quadrature weights for higher order integration (2,4)
   !+-----------------------------------------------------------------+
@@ -271,9 +297,7 @@ contains
 
 
 
-  !-----------------------------------------------------------------------------
-  ! Purpose:
-  !-----------------------------------------------------------------------------
+
   function linspace(start,stop,num,istart,iend,mesh) result(array)
     integer          :: num,i
     real(8)          :: start,stop,step,array(num)
