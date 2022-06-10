@@ -1,6 +1,14 @@
 !ENTIRELY BASED ON THE WORK OF 
 ! Jacob Williams https://github.com/jacobwilliams/quadrature-fortran
 !SEE There for a more object-oriented approach and further information.
+!LICENSE CAN BE FOUND HERE:
+!https://github.com/jacobwilliams/quadrature-fortran/blob/master/LICENSE
+!
+!LIBRARY EXTENDED TO DEAL WITH:
+! 1D, 2D sampled functions (dble arrays)
+! vectorial functions of vectorial variables F:R^n-->R^m
+! this required to slightly change *dgauss_generic routine and gX=6,8,10,12,14
+! to handle multiple functions simultaneously.
 MODULE GAUSS_QUADRATURE
   implicit none
   private
@@ -16,49 +24,57 @@ MODULE GAUSS_QUADRATURE
      real(8)                                         :: tol
      real(8)                                         :: a
      real(8)                                         :: b
-     procedure(gauss_func_method),pointer            :: g  => null()
-     procedure(func_x),pointer,nopass                :: fx => null()
-     procedure(func_xvec),pointer,nopass             :: fxvec => null()
      integer                                         :: dim=1
+     !
+     procedure(gauss_func_method),pointer            :: g  => null()
+     procedure(f_x),pointer,nopass                   :: fx => null()
+     procedure(f_xvec),pointer,nopass                :: fxvec => null()
+     !
      type(integration_type),dimension(:),allocatable :: ivec
   end type integration_type
 
 
   abstract interface
-     !1D function F(x) to be integrated
-     function func_x(x) result(f)
+     !Fvec(x): R-->R^m integrand
+     function f_x(x,m) result(f)
        real(8) :: x
-       real(8) :: f
-     end function func_x
+       integer :: m
+       real(8) :: f(m)
+     end function f_x
 
-     !1D function F(x) to be integrated
-     function func_xvec(x) result(f)
-       real(8) :: x(:)
-       real(8) :: f
-     end function func_xvec
+     !F(xvec): R^n-->R^m integrand  
+     function f_xvec(x,m) result(f)
+       real(8) :: x(:)          !n
+       integer :: m
+       real(8) :: f(m)
+     end function f_xvec
 
      !Gaussian quadrature method to be used in integration
-     function gauss_func_method(self, x, h) result(f)
+     function gauss_func_method(self, x, h, m) result(f)
        import :: integration_type
        class(integration_type),intent(inout) :: self
        real(8), intent(in)                   :: x
        real(8), intent(in)                   :: h
-       real(8)                               :: f
+       integer                               :: m
+       real(8)                               :: f(m)
      end function gauss_func_method
   end interface
 
-
   interface gauss_quad
-     module procedure :: integrate_1d_func
+     module procedure :: integrate_1d_func_main
+     module procedure :: integrate_nd_func_main
+     module procedure :: integrate_1d_func_1
+     module procedure :: integrate_nd_func_1
      module procedure :: integrate_1d_sample
-     module procedure :: integrate_nd_func
      module procedure :: integrate_2d_sample
   end interface gauss_quad
 
   interface integrate
-     module procedure :: integrate_1d_func
+     module procedure :: integrate_1d_func_main
+     module procedure :: integrate_nd_func_main
+     module procedure :: integrate_1d_func_1
+     module procedure :: integrate_nd_func_1
      module procedure :: integrate_1d_sample
-     module procedure :: integrate_nd_func
      module procedure :: integrate_2d_sample
   end interface integrate
 
@@ -117,31 +133,39 @@ contains
 
 
 
-  !   Perform the 1D integration.
-  subroutine integrate_1d_func(fx,xl,xu,ans,tol,method,ierr,err)
-    procedure(func_x)            :: fx       !! 1d function: f(x)
-    real(8),intent(in)           :: xl       !! x integration lower bound
-    real(8),intent(in)           :: xu       !! x integration upper bound
-    real(8),intent(inout)        :: ans
+
+  !##################################################################
+  !##################################################################
+  !               FUNCTIONS: nD R^n --> R^m
+  !              m=1 is available as a simplified interface
+  !##################################################################
+  !##################################################################
+
+  subroutine integrate_1d_func_main(m,fx,xl,xu,ans,tol,method,ierr,err)
+    integer                            :: m
+    procedure(f_x)                     :: fx       !! 1d function: f(x)
+    real(8),intent(in)                 :: xl       !! x integration lower bound
+    real(8),intent(in)                 :: xu       !! x integration upper bound
+    real(8),intent(inout),dimension(m) :: ans
     !
-    real(8),intent(in),optional  :: tol     !! error tolerance for dx integration
-    integer,intent(in),optional  :: method  !! quadrature method to use for x
-    integer,intent(out),optional :: ierr
-    real(8),intent(out),optional :: err
+    real(8),intent(in),optional        :: tol     !! error tolerance for dx integration
+    integer,intent(in),optional        :: method  !! quadrature method to use for x
+    integer,intent(out),optional       :: ierr
+    real(8),intent(out),optional       :: err
     !
-    type(integration_type)       :: self     !! for the 1d integration
+    type(integration_type)             :: self     !! for the 1d integration
     !
-    real(8)                      :: tol_
-    integer                      :: method_
-    integer                      :: ierr_
-    real(8)                      :: err_
+    real(8)                            :: tol_
+    integer                            :: method_
+    integer                            :: ierr_
+    real(8)                            :: err_
     !
     tol_   = 1d-9 ; if(present(tol))tol_ = tol
     method_= 10   ; if(present(method))method_=method
     !
     self%fx => fx
-    call init_type(self,xl,xu,tol_,method_)
-    call dgauss_generic(self,ans, ierr_,err_)
+    call init_type(self,xl,xu,tol_,method)
+    call dgauss_generic(self,ans, ierr_,err_,m)
     select case(ierr_)
     case(-1)
        stop "Lower Bound ~ Upper Bound => Ans set to zero"
@@ -152,81 +176,51 @@ contains
     end select
     if(present(ierr))ierr=ierr_
     if(present(err))err=err_
-  end subroutine integrate_1d_func
-  !
-  subroutine integrate_1d_sample(fsample,xl,xu,ans,tol,method,ierr,err)
-    real(8),dimension(:)             :: fsample       !! 1d array: f(x)
-    real(8),intent(in)               :: xl       !! x integration lower bound
-    real(8),intent(in)               :: xu       !! x integration upper bound
-    real(8),intent(inout)            :: ans
+  end subroutine integrate_1d_func_main
+
+
+  subroutine integrate_1d_func_1(func,xl,xu,ans,tol,method,ierr,err)
+    interface
+       function func(x)
+         real(8) :: x
+         real(8) :: func
+       end function func
+    end interface
+    real(8),intent(in)                 :: xl       !! x integration lower bound
+    real(8),intent(in)                 :: xu       !! x integration upper bound
+    real(8),intent(inout)              :: ans
     !
-    real(8),intent(in),optional      :: tol     !! error tolerance for dx integration
-    integer,intent(in),optional      :: method  !! quadrature method to use for x
-    integer,intent(out),optional     :: ierr
-    real(8),intent(out),optional     :: err
+    real(8),intent(in),optional        :: tol     !! error tolerance for dx integration
+    integer,intent(in),optional        :: method  !! quadrature method to use for x
+    integer,intent(out),optional       :: ierr
+    real(8),intent(out),optional       :: err
     !
-    type(integration_type)           :: self     !! for the 1d integration
-    !
-    real(8)                          :: tol_
-    integer                          :: method_
-    integer                          :: ierr_
-    real(8)                          :: err_
-    !
-    type(finter1d_type)              :: Finterp
-    real(8),dimension(size(fsample)) :: Xsample
-    integer                          :: Lsample
-    integer                          :: Ninterp
-    !
+    real(8)                            :: tol_,ans_(1)
+    integer                            :: method_
+    integer                            :: ierr_
+    real(8)                            :: err_
     tol_   = 1d-9 ; if(present(tol))tol_ = tol
     method_= 10   ; if(present(method))method_=method
-    !
-    Lsample = size(fsample)
-    Xsample = linspace(xl,xu,Lsample)
-    call init_finter_1d(Finterp,Xsample,fsample,method_)
-    !
-    self%fx => fx
-    call init_type(self,xl,xu,tol_,method_)
-    call dgauss_generic(self,ans, ierr_,err_)
-    select case(ierr_)
-    case(-1)
-       stop "Lower Bound ~ Upper Bound => Ans set to zero"
-    case(2)
-       stop "Dgauss_Generic ABNORMAL EXIT CODE: ANS does not meet requested tolerance"
-    case default
-       continue
-    end select
+    call integrate_1d_func_main(1,fx,xl,xu,ans_,tol_,method_,ierr_,err_)
+    ans = ans_(1)
     if(present(ierr))ierr=ierr_
     if(present(err))err=err_
   contains
-    function fx(x)
+    function fx(x,m)
       real(8) :: x
-      real(8) :: fx
-      real(8) :: dy
-      integer :: j,k,k0,k1
-      integer :: n
-      fx= 0d0
-      !
-      N = Finterp%N    !order of polynomial interpolation
-      j = locate(finterp%X(finterp%Imin:finterp%Imax),x)
-      !
-      k=max(j-(N-1)/2,1)
-      k0=k
-      if(k0 < finterp%Imin)k0=finterp%Imin
-      k1=k+N+1
-      if(k1 > finterp%Imax)then
-         k1=finterp%Imax
-         k0=k1-N-1
-      endif
-      call polint(finterp%X(k0:k1),finterp%F(k0:k1),x,fx,dy)
+      integer :: m
+      real(8) :: fx(m)
+      fx(1) = func(x)
     end function fx
-  end subroutine integrate_1d_sample
+  end subroutine integrate_1d_func_1
 
 
-  subroutine integrate_nd_func(fxvec,xl,xu,ans,methods,method,tols,tol,ierr,err)
-    procedure(func_xvec)                            :: fxvec    !! 2d function: f(x,y)
+  subroutine integrate_nd_func_main(m,fxvec,xl,xu,ans,methods,method,tols,tol,ierr,err)
+    integer                                         :: m
+    procedure(f_xvec)                               :: fxvec    !! 2d function: f(x,y)
     real(8),dimension(:),intent(in)                 :: xl       !! integration lower bounds
     real(8),dimension(size(xl)),intent(in)          :: xu       !! integration upper bounds
-    real(8),intent(inout)                           :: ans
+    real(8),intent(inout),dimension(m)              :: ans
     !
     integer,dimension(size(xl)),intent(in),optional :: methods  !! quadrature methods nD-->nD to use
     integer,intent(in),optional                     :: method   !! quadrature method   1-->nD to use
@@ -247,7 +241,7 @@ contains
     method_= 10   ; if(present(method))method_=method; if(present(methods))method_=methods
     !
     self%fxvec => fxvec  !the user-defined f(x,y) function to integrate
-    self%dim   = size(xl) 
+    self%dim   = size(xl)
     allocate(self%ivec(self%dim))
     select case (self%dim)
     case default
@@ -285,7 +279,7 @@ contains
        call init_type(self%ivec(i),xl(i),xu(i),tol_(i),method_(i))
     enddo
     !
-    call dgauss_generic(self%ivec(self%dim),ans,ierr_,err_)
+    call dgauss_generic(self%ivec(self%dim),ans,ierr_,err_,m)
     select case(ierr_)
     case(-1)
        stop "Lower Bound ~ Upper Bound => Ans set to zero"
@@ -299,52 +293,167 @@ contains
     !
   contains
     !
-    function f_of_x1(x1) result(f)
+    function f_of_x1(x1,m) result(f)
       real(8)                       :: x1
-      real(8)                       :: f
+      integer                       :: m
+      real(8)                       :: f(m)
       real(8),dimension(size(xl)-1) :: xvec
       integer                       :: i
       xvec = (/( self%ivec(i)%val, i=2,size(xl) )/)
-      f = self%fxvec([x1,xvec])
+      f = self%fxvec([x1,xvec],m)
     end function f_of_x1
     !
-    function f_of_x2(x2) result(f)
+    function f_of_x2(x2,m) result(f)
       real(8) :: x2
-      real(8) :: f
+      integer :: m
+      real(8) :: f(m)
       self%ivec(2)%val = x2
-      call dgauss_generic(self%ivec(1),f, ierr_, err_)
+      call dgauss_generic(self%ivec(1),f, ierr_, err_,m)
     end function f_of_x2
     !
-    function f_of_x3(x3) result(f)
+    function f_of_x3(x3,m) result(f)
       real(8) :: x3
-      real(8) :: f
+      integer :: m
+      real(8) :: f(m)
       self%ivec(3)%val = x3
-      call dgauss_generic(self%ivec(2),f, ierr_, err_)
+      call dgauss_generic(self%ivec(2),f, ierr_, err_,m)
     end function f_of_x3
     !
-    function f_of_x4(x4) result(f)
+    function f_of_x4(x4,m) result(f)
       real(8) :: x4
-      real(8) :: f
+      integer :: m
+      real(8) :: f(m)
       self%ivec(4)%val = x4
-      call dgauss_generic(self%ivec(3),f, ierr_, err_)
+      call dgauss_generic(self%ivec(3),f, ierr_, err_,m)
     end function f_of_x4
     !
-    function f_of_x5(x5) result(f)
+    function f_of_x5(x5,m) result(f)
       real(8) :: x5
-      real(8) :: f
+      integer :: m
+      real(8) :: f(m)
       self%ivec(5)%val = x5
-      call dgauss_generic(self%ivec(4),f, ierr_, err_)
+      call dgauss_generic(self%ivec(4),f, ierr_, err_,m)
     end function f_of_x5
     !
-    function f_of_x6(x6) result(f)
+    function f_of_x6(x6,m) result(f)
       real(8) :: x6
-      real(8) :: f
+      integer :: m
+      real(8) :: f(m)
       self%ivec(6)%val = x6
-      call dgauss_generic(self%ivec(5),f, ierr_, err_)
+      call dgauss_generic(self%ivec(5),f, ierr_, err_,m)
     end function f_of_x6
     !
+  end subroutine integrate_nd_func_main
+
+
+
+  subroutine integrate_nd_func_1(func,xl,xu,ans,methods,method,tols,tol,ierr,err)
+    interface
+       function func(x)
+         real(8),dimension(:) :: x
+         real(8)              :: func
+       end function func
+    end interface
+    real(8),dimension(:),intent(in)                 :: xl       !! integration lower bounds
+    real(8),dimension(size(xl)),intent(in)          :: xu       !! integration upper bounds
+    real(8),intent(inout)                           :: ans
+    integer,dimension(size(xl)),intent(in),optional :: methods  !! quadrature methods nD-->nD to use
+    integer,intent(in),optional                     :: method   !! quadrature method   1-->nD to use
+    real(8),dimension(size(xl)),intent(in),optional :: tols     !! error tolerances nD-->nD for dx integration
+    real(8),intent(in),optional                     :: tol     !! error tolerance   1-->nD for dx integration
+    integer,intent(out),optional                    :: ierr
+    real(8),intent(out),optional                    :: err
+    real(8),dimension(size(xl))                     :: tol_,ans_(1)
+    integer,dimension(size(xl))                     :: method_
+    integer                                         :: ierr_
+    real(8)                                         :: err_
     !
-  end subroutine integrate_nd_func
+    tol_   = 1d-9 ; if(present(tol))tol_ = tol; if(present(tols))tol_ = tols
+    method_= 10   ; if(present(method))method_=method; if(present(methods))method_=methods
+    call integrate_nd_func_main(1,fxvec,xl,xu,ans_,methods=method_,tols=tol_,ierr=ierr_,err=err_)
+    ans = ans_(1)
+    if(present(ierr))ierr=ierr_
+    if(present(err))err=err_
+    !
+  contains
+    !
+    function fxvec(x,m)
+      real(8),dimension(:) :: x
+      integer              :: m
+      real(8),dimension(m) :: fxvec
+      fxvec(1) = func(x)
+    end function fxvec
+    !
+  end subroutine integrate_nd_func_1
+
+
+
+
+
+
+  !##################################################################
+  !##################################################################
+  !               SAMPLED FUNCTIONS: 1D + 2D R^n --> R
+  !##################################################################
+  !##################################################################
+  subroutine integrate_1d_sample(fsample,xl,xu,ans,tol,method,ierr,err)
+    real(8),dimension(:)             :: fsample       !! 1d array: f(x)
+    real(8),intent(in)               :: xl       !! x integration lower bound
+    real(8),intent(in)               :: xu       !! x integration upper bound
+    real(8),intent(inout)            :: ans
+    !
+    real(8),intent(in),optional      :: tol     !! error tolerance for dx integration
+    integer,intent(in),optional      :: method  !! quadrature method to use for x
+    integer,intent(out),optional     :: ierr
+    real(8),intent(out),optional     :: err
+    !
+    real(8)                          :: tol_,ans_(1)
+    integer                          :: method_
+    integer                          :: ierr_
+    real(8)                          :: err_
+    !
+    type(finter1d_type)              :: Finterp
+    real(8),dimension(size(fsample)) :: Xsample
+    integer                          :: Lsample
+    integer                          :: Ninterp
+    !
+    tol_   = 1d-9 ; if(present(tol))tol_ = tol
+    method_= 10   ; if(present(method))method_=method
+    !
+    Lsample = size(fsample)
+    Xsample = linspace(xl,xu,Lsample)
+    call init_finter_1d(Finterp,Xsample,fsample,method_)
+    call integrate_1d_func_main(1,fx,xl,xu,ans_,tol_,method_,ierr_,err_)
+    ans = ans_(1)
+    if(present(ierr))ierr=ierr_
+    if(present(err))err=err_
+    !
+  contains
+    !
+    function fx(x,m)
+      real(8) :: x
+      integer :: m
+      real(8) :: fx(m)
+      real(8) :: dy
+      integer :: j,k,k0,k1
+      integer :: n
+      fx(1) = 0d0
+      !
+      N = Finterp%N    !order of polynomial interpolation
+      j = locate(finterp%X(finterp%Imin:finterp%Imax),x)
+      !
+      k=max(j-(N-1)/2,1)
+      k0=k
+      if(k0 < finterp%Imin)k0=finterp%Imin
+      k1=k+N+1
+      if(k1 > finterp%Imax)then
+         k1=finterp%Imax
+         k0=k1-N-1
+      endif
+      call polint(finterp%X(k0:k1),finterp%F(k0:k1),x,fx(1),dy)
+    end function fx
+  end subroutine integrate_1d_sample
+
 
   subroutine integrate_2d_sample(fsample,xl,xu,ans,methods,method,tols,tol,ierr,err)
     real(8),dimension(:,:),intent(in)               :: fsample  !! 2d function: f(x,y)
@@ -359,19 +468,16 @@ contains
     integer,intent(out),optional                    :: ierr
     real(8),intent(out),optional                    :: err
     !
-    real(8),dimension(size(xl))                     :: tol_
+    real(8),dimension(size(xl))                     :: tol_,ans_(1)
     integer,dimension(size(xl))                     :: method_
     integer                                         :: ierr_
     real(8)                                         :: err_
     !
-    integer                                         :: i
-    type(integration_type)                          :: self     !! for the 1d integration
-    !
-    type(finter2d_type)                :: Finterp
-    real(8),dimension(size(fsample,1)) :: Xsample
-    real(8),dimension(size(fsample,2)) :: Ysample
-    integer                            :: Lsample1,Lsample2
-    integer                            :: Ninterp
+    type(finter2d_type)                             :: Finterp
+    real(8),dimension(size(fsample,1))              :: Xsample
+    real(8),dimension(size(fsample,2))              :: Ysample
+    integer                                         :: Lsample1,Lsample2
+    integer                                         :: Ninterp
     !
     tol_   = 1d-9 ; if(present(tol))tol_ = tol; if(present(tols))tol_ = tols
     method_= 10   ; if(present(method))method_=method; if(present(methods))method_=methods
@@ -381,40 +487,18 @@ contains
     Xsample  = linspace(xl(1),xu(1),Lsample1)
     Ysample  = linspace(xl(2),xu(2),Lsample2)
     call init_finter_2d(Finterp,Xsample,Ysample,Fsample,method_(1))
-    !
-    self%fxvec => fxvec  !the user-defined f(x,y) function to integrate
-    self%dim   = size(xl) 
-    allocate(self%ivec(self%dim))
-    select case (self%dim)
-    case default
-       stop "INTEGRATE_ND ERROR: calling multi-dimensional quadrature for dimension N>2. Ask developer or DIY."
-    case (2)
-       self%ivec(1)%fx => f_of_x1
-       self%ivec(2)%fx => f_of_x2
-    end select
-    !
-    do i=1,self%dim
-       call init_type(self%ivec(i),xl(i),xu(i),tol_(i),method_(i))
-    enddo
-    !
-    call dgauss_generic(self%ivec(self%dim),ans,ierr_,err_)
-    select case(ierr_)
-    case(-1)
-       stop "Lower Bound ~ Upper Bound => Ans set to zero"
-    case(2)
-       stop "Dgauss_Generic ABNORMAL EXIT CODE: ANS does not meet requested tolerance"
-    case default
-       continue
-    end select
+    call integrate_nd_func_main(1,fxvec,xl,xu,ans_,methods=method_,tols=tol_,ierr=ierr_,err=err_)
+    ans = ans_(1)
     if(present(ierr))ierr=ierr_
     if(present(err))err=err_
     !
   contains
     !
-    function fxvec(xvec)
+    function fxvec(xvec,m)
       real(8),dimension(:) :: xvec
+      integer              :: m
       real(8)              :: x,y
-      real(8)              :: fxvec
+      real(8)              :: fxvec(m)
       real(8)              :: df
       integer              :: itmp,jtmp,kx,ky,k0x,k0y,k1x,k1y
       integer              :: n
@@ -439,55 +523,21 @@ contains
          k1y=Finterp%Jmax
          k0y=k1y-N-1
       endif
-      call polin2(Finterp%X(k0x:k1x),Finterp%Y(k0y:k1y),Finterp%F(k0x:k1x,k0y:k1y),x,y,fxvec,df)
+      call polin2(Finterp%X(k0x:k1x),Finterp%Y(k0y:k1y),Finterp%F(k0x:k1x,k0y:k1y),x,y,fxvec(1),df)
     end function fxvec
     !
-    function f_of_x1(x1) result(f)
-      real(8)                       :: x1
-      real(8)                       :: f
-      real(8),dimension(size(xl)-1) :: xvec
-      integer                       :: i
-      xvec = (/( self%ivec(i)%val, i=2,size(xl) )/)
-      f = self%fxvec([x1,xvec])
-    end function f_of_x1
-    !
-    function f_of_x2(x2) result(f)
-      real(8) :: x2
-      real(8) :: f
-      self%ivec(2)%val = x2
-      call dgauss_generic(self%ivec(1),f, ierr_, err_)
-    end function f_of_x2
-    !
-    function f_of_x3(x3) result(f)
-      real(8) :: x3
-      real(8) :: f
-      self%ivec(3)%val = x3
-      call dgauss_generic(self%ivec(2),f, ierr_, err_)
-    end function f_of_x3
-    !
-    function f_of_x4(x4) result(f)
-      real(8) :: x4
-      real(8) :: f
-      self%ivec(4)%val = x4
-      call dgauss_generic(self%ivec(3),f, ierr_, err_)
-    end function f_of_x4
-    !
-    function f_of_x5(x5) result(f)
-      real(8) :: x5
-      real(8) :: f
-      self%ivec(5)%val = x5
-      call dgauss_generic(self%ivec(4),f, ierr_, err_)
-    end function f_of_x5
-    !
-    function f_of_x6(x6) result(f)
-      real(8) :: x6
-      real(8) :: f
-      self%ivec(6)%val = x6
-      call dgauss_generic(self%ivec(5),f, ierr_, err_)
-    end function f_of_x6
-    !
-    !
   end subroutine integrate_2d_sample
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -513,15 +563,16 @@ contains
   !! times the integral of the absolute value of fun(x).  usually,
   !! smaller values of error_tol yield more accuracy and require
   !! more function evaluations.
-  recursive subroutine dgauss_generic (self, ans, ierr, err)
+  recursive subroutine dgauss_generic(self, ans, ierr, err, m)
     type(integration_type),intent(inout) :: self
     real(8)                              :: lb         !! lower bound of the integration
     real(8)                              :: ub         !! upper bound of the integration
     real(8)                              :: error_tol  !! is a requested pseudorelative error tolerance.
-    procedure(gauss_func_method),pointer :: g
-    real(8),intent(out)                  :: ans        !! computed value of integral
+    integer                              :: m
+    real(8),intent(out),dimension(m)     :: ans        !! computed value of integral
     integer,intent(out)                  :: ierr       !! status code:
     real(8),intent(out)                  :: err        !! an estimate of the absolute error in `ans`.
+    !
     real(8),parameter                    :: sq2      = sqrt(two)
     real(8),parameter                    :: ln2      = log(two)
     integer,parameter                    :: nlmn     = 1                   !! ??
@@ -533,8 +584,9 @@ contains
     real(8),parameter                    :: d1mach4  = bb**(1-digits(one)) !! machine constant
     real(8),parameter                    :: d1mach5  = log10(bb)           !! machine constant
     integer                              :: k,l,lmn,lmx,mxl,nbits,nib,nlmx
-    real(8)                              :: ae,anib,area,c,ee,ef,eps,est,gl,glr,tol
-    real(8),dimension(iwork)             :: aa,hh,vl,gr
+    real(8)                              :: ae(m),anib,area(m),c,ee(m),ef,eps,est(m),gl(m),glr(m),tol,merr(m)
+    real(8),dimension(iwork)             :: aa,hh
+    real(8),dimension(iwork,m)           :: gr,vl
     integer,dimension(iwork)             :: lr
     !
     lb = self%a
@@ -550,6 +602,7 @@ contains
     vl = zero
     gr = zero
     lr = 0
+    merr = zero
     k = digits(one)
     anib = d1mach5*k/magic
     nbits = anib
@@ -581,21 +634,21 @@ contains
     aa(1) = lb
     lr(1) = 1
     l = 1
-    est = self%g(aa(l)+two*hh(l),two*hh(l))
+    est = self%g(aa(l)+two*hh(l),two*hh(l),m)
     k = 8
     area = abs(est)
     ef = one_half
     mxl = 0
     !compute refined estimates, estimate the error, etc.
     main : do
-       gl = self%g(aa(l)+hh(l),hh(l))
-       gr(l) = self%g(aa(l)+three*hh(l),hh(l))
+       gl = self%g(aa(l)+hh(l),hh(l),m)
+       gr(l,:) = self%g(aa(l)+three*hh(l),hh(l),m)
        k = k + 16
-       area = area + (abs(gl)+abs(gr(l))-abs(est))
-       glr = gl + gr(l)
+       area = area + (abs(gl)+abs(gr(l,:))-abs(est))
+       glr = gl + gr(l,:)
        ee = abs(est-glr)*ef
        ae = max(eps*area,tol*abs(glr))
-       if (ee-ae > zero) then
+       if(any(ee-ae > zero)) then
           !consider the left half of this level
           if (k > kmx) lmx = kml
           if (l >= lmx) then
@@ -611,7 +664,7 @@ contains
              cycle main
           end if
        end if
-       err = err + (est-glr)
+       merr = merr + (est-glr)
        if (lr(l) > 0) then
           !return one level
           ans = glr
@@ -621,24 +674,25 @@ contains
              eps = eps*two
              ef = ef*sq2
              if (lr(l) <= 0) then
-                vl(l) = vl(l+1) + ans
-                est = gr(l-1)
+                vl(l,:) = vl(l+1,:) + ans
+                est = gr(l-1,:)
                 lr(l) = 1
                 aa(l) = aa(l) + four*hh(l)
                 cycle main
              end if
-             ans = vl(l+1) + ans
+             ans = vl(l+1,:) + ans
           end do
        else
           !proceed to right half at this level
-          vl(l) = glr
-          est = gr(l-1)
+          vl(l,:) = glr
+          est = gr(l-1,:)
           lr(l) = 1
           aa(l) = aa(l) + four*hh(l)
           cycle main
        end if
     end do main
-    if ((mxl/=0) .and. (abs(err)>two*tol*area)) ierr = 2 ! ans is probably insufficiently accurate
+    err = maxval(abs(merr))
+    if ((mxl/=0) .and. any(abs(merr)-two*tol*area > 0)) ierr = 2 ! ans is probably insufficiently accurate
   end subroutine dgauss_generic
 
 
@@ -648,11 +702,12 @@ contains
   !  * Coefficients from:
   !    http://processingjs.nihongoresources.com/bezierinfo/legendre-gauss-values.php
   !  6-point method.
-  function g6(self, x, h) result(f)
+  recursive function g6(self, x, h, m) result(f)
     class(integration_type),intent(inout) :: self
     real(8), intent(in)                   :: x
     real(8), intent(in)                   :: h
-    real(8)                               :: f
+    integer                               :: m
+    real(8)                               :: f(m)
     !> abscissae:
     real(8),dimension(3),parameter ::  a = [   0.6612093864662645136613995950199053470064485643&
          &951700708145267058521834966071431009442864037464&
@@ -697,18 +752,19 @@ contains
          &721266924855699404815942932735702498405343382418&
          &236324411837461039120523911904421970357029774978&
          &12150514997832d0 ]
-    f = h * ( w(1)*( self%fx(x-a(1)*h) + self%fx(x+a(1)*h) ) + &
-         w(2)*( self%fx(x-a(2)*h) + self%fx(x+a(2)*h) ) + &
-         w(3)*( self%fx(x-a(3)*h) + self%fx(x+a(3)*h) ) )
+    f = h * ( w(1)*( self%fx(x-a(1)*h,m) + self%fx(x+a(1)*h,m) ) + &
+         w(2)*( self%fx(x-a(2)*h,m) + self%fx(x+a(2)*h,m) ) + &
+         w(3)*( self%fx(x-a(3)*h,m) + self%fx(x+a(3)*h,m) ) )
   end function g6
 
 
   !  This is the 8-point formula from the original SLATEC routine
-  function g8(self, x, h) result(f)
+  recursive function g8(self, x, h,m ) result(f)
     class(integration_type),intent(inout) :: self
     real(8), intent(in)                   :: x
     real(8), intent(in)                   :: h
-    real(8)                               :: f
+    integer                               :: m
+    real(8)                               :: f(m)
     !> abscissae:
     real(8),parameter ::   x1 = 0.18343464249564980493947614236018398066675781291297378231718847&
          &369920447422154211411606822371112335374526765876&
@@ -759,21 +815,22 @@ contains
          &905332088240507319763065757292054679614357794675&
          &524923287300550259929540899466768105108107294683&
          &66466585774650346143712142008566866150514997832d0
-    f = h * ( w1*( self%fx(x-x1*h) + self%fx(x+x1*h)) + &
-         w2*( self%fx(x-x2*h) + self%fx(x+x2*h)) + &
-         w3*( self%fx(x-x3*h) + self%fx(x+x3*h)) + &
-         w4*( self%fx(x-x4*h) + self%fx(x+x4*h)) )
+    f = h * ( w1*( self%fx(x-x1*h,m) + self%fx(x+x1*h,m)) + &
+         w2*( self%fx(x-x2*h,m) + self%fx(x+x2*h,m)) + &
+         w3*( self%fx(x-x3*h,m) + self%fx(x+x3*h,m)) + &
+         w4*( self%fx(x-x4*h,m) + self%fx(x+x4*h,m)) )
   end function g8
 
 
 
 
   !  10-point method.
-  function g10(self, x, h) result(f)
+  recursive function g10(self, x, h, m) result(f)
     class(integration_type),intent(inout) :: self
     real(8), intent(in)                   :: x
     real(8), intent(in)                   :: h
-    real(8)                               :: f
+    integer                               :: m
+    real(8)                               :: f(m)
     !> abscissae:
     real(8),dimension(5),parameter ::  a = [   0.14887433898163121088482600112971998461756485942&
          &069169570798925351590361735566852137117762979946&
@@ -837,20 +894,21 @@ contains
          &498731699404163449536370640018701124231550439352&
          &624245062983271819871864748056604411786208647844&
          &9236378557180717569208295026105115288152794421677d0 ]
-    f = h * ( w(1)*(  self%fx(x-a(1)*h)   +  self%fx(x+a(1)*h) ) + &
-         w(2)*(  self%fx(x-a(2)*h)   +  self%fx(x+a(2)*h) ) + &
-         w(3)*(  self%fx(x-a(3)*h)   +  self%fx(x+a(3)*h) ) + &
-         w(4)*(  self%fx(x-a(4)*h)   +  self%fx(x+a(4)*h) ) + &
-         w(5)*(  self%fx(x-a(5)*h)   +  self%fx(x+a(5)*h) )   )
+    f = h * ( w(1)*(  self%fx(x-a(1)*h,m)   +  self%fx(x+a(1)*h,m) ) + &
+         w(2)*(  self%fx(x-a(2)*h,m)   +  self%fx(x+a(2)*h,m) ) + &
+         w(3)*(  self%fx(x-a(3)*h,m)   +  self%fx(x+a(3)*h,m) ) + &
+         w(4)*(  self%fx(x-a(4)*h,m)   +  self%fx(x+a(4)*h,m) ) + &
+         w(5)*(  self%fx(x-a(5)*h,m)   +  self%fx(x+a(5)*h,m) )   )
   end function g10
 
 
   !  12-point method.
-  function g12(self, x, h) result(f)
+  recursive function g12(self, x, h, m) result(f)
     class(integration_type),intent(inout) :: self
     real(8), intent(in)                   :: x
     real(8), intent(in)                   :: h
-    real(8)                               :: f
+    integer                               :: m
+    real(8)                               :: f(m)
     !> abscissae:
     real(8),dimension(6),parameter ::  a = [   0.12523340851146891547244136946385312998339691630&
          &544427321292175474846205624138968874286829846949&
@@ -925,23 +983,24 @@ contains
          &365109909808575797967885849598965975687054894525&
          &799700269519193179311245399071070942125321236826&
          &63180160342232703368882666374567833050364187887189d0]
-    f = h * ( w(1)*(  self%fx(x-a(1)*h)   +  self%fx(x+a(1)*h) ) + &
-         w(2)*(  self%fx(x-a(2)*h)   +  self%fx(x+a(2)*h) ) + &
-         w(3)*(  self%fx(x-a(3)*h)   +  self%fx(x+a(3)*h) ) + &
-         w(4)*(  self%fx(x-a(4)*h)   +  self%fx(x+a(4)*h) ) + &
-         w(5)*(  self%fx(x-a(5)*h)   +  self%fx(x+a(5)*h) ) + &
-         w(6)*(  self%fx(x-a(6)*h)   +  self%fx(x+a(6)*h) ) )
+    f = h * ( w(1)*(  self%fx(x-a(1)*h,m)   +  self%fx(x+a(1)*h,m) ) + &
+         w(2)*(  self%fx(x-a(2)*h,m)   +  self%fx(x+a(2)*h,m) ) + &
+         w(3)*(  self%fx(x-a(3)*h,m)   +  self%fx(x+a(3)*h,m) ) + &
+         w(4)*(  self%fx(x-a(4)*h,m)   +  self%fx(x+a(4)*h,m) ) + &
+         w(5)*(  self%fx(x-a(5)*h,m)   +  self%fx(x+a(5)*h,m) ) + &
+         w(6)*(  self%fx(x-a(6)*h,m)   +  self%fx(x+a(6)*h,m) ) )
   end function g12
 
 
 
   !>
   !  14-point method.
-  function g14(self, x, h) result(f)
+  recursive function g14(self, x, h, m) result(f)
     class(integration_type),intent(inout) :: self
     real(8), intent(in)                   :: x
     real(8), intent(in)                   :: h
-    real(8)                               :: f
+    integer                               :: m
+    real(8)                               :: f(m)
     !> abscissae:
     real(8),dimension(7),parameter ::  a = [  0.10805494870734366206624465021983474761195160547&
          &4237557040821061308013529011730007130100688176689&
@@ -1028,14 +1087,16 @@ contains
          &0884595716394793248808744456729064741484147706750&
          &3186014306010893702617623540676052379390445897465&
          &9810087587180865408885105556219147609526200925d0 ]
-    f = h * ( w(1)*(  self%fx(x-a(1)*h)   +  self%fx(x+a(1)*h) ) + &
-         w(2)*(  self%fx(x-a(2)*h)   +  self%fx(x+a(2)*h) ) + &
-         w(3)*(  self%fx(x-a(3)*h)   +  self%fx(x+a(3)*h) ) + &
-         w(4)*(  self%fx(x-a(4)*h)   +  self%fx(x+a(4)*h) ) + &
-         w(5)*(  self%fx(x-a(5)*h)   +  self%fx(x+a(5)*h) ) + &
-         w(6)*(  self%fx(x-a(6)*h)   +  self%fx(x+a(6)*h) ) + &
-         w(7)*(  self%fx(x-a(7)*h)   +  self%fx(x+a(7)*h) ) )
+    f = h * ( w(1)*(  self%fx(x-a(1)*h,m)   +  self%fx(x+a(1)*h,m) ) + &
+         w(2)*(  self%fx(x-a(2)*h,m)   +  self%fx(x+a(2)*h,m) ) + &
+         w(3)*(  self%fx(x-a(3)*h,m)   +  self%fx(x+a(3)*h,m) ) + &
+         w(4)*(  self%fx(x-a(4)*h,m)   +  self%fx(x+a(4)*h,m) ) + &
+         w(5)*(  self%fx(x-a(5)*h,m)   +  self%fx(x+a(5)*h,m) ) + &
+         w(6)*(  self%fx(x-a(6)*h,m)   +  self%fx(x+a(6)*h,m) ) + &
+         w(7)*(  self%fx(x-a(7)*h,m)   +  self%fx(x+a(7)*h,m) ) )
   end function g14
+
+
 
 
 
