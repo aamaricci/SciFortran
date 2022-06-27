@@ -1,5 +1,7 @@
 # SciFortran
 
+Daily test:  ![example workflow](https://github.com/QcmPlab/SciFortran/blob/master/.github/workflows/Scheduled.yml/badge.svg)   
+
 This is a unitary collection of fortran modules and procedures for scientific calculations. The library aims to provide a simple and generic environment for any scientific or mathematic computations. The project is largely inspired by *SciPy* for Python and tries to closely follow its guidelines and naming convention. 
 
 There are large areas that are still not covered.  
