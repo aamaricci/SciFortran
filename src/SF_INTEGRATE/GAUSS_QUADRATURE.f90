@@ -1117,7 +1117,7 @@ contains
     real(8)           :: xin(:)
     real(8)           :: fin(size(xin))
     integer           :: N,Lin
-    if(self%status)call delete_finter(self)
+    if(self%status)call delete_finter_1d(self)
     Lin=size(xin)
     allocate(self%x(Lin),self%f(Lin))
     self%X    = Xin
@@ -1133,7 +1133,7 @@ contains
     real(8)       :: xin(:),yin(:)
     real(8)       :: fin(size(xin),size(yin))
     integer       :: N,Lx,Ly
-    if(self%status)deallocate(self%x,self%y,self%f)
+    if(self%status)call delete_finter_2d(self)
     Lx=size(xin) ; Ly=size(yin)
     allocate(self%x(Lx),self%y(Ly),self%f(Lx,Ly))
     self%X    = Xin
