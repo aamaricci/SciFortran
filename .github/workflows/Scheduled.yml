@@ -1,0 +1,56 @@
+name: Scheduled CI SciFortran workflow
+
+on:
+  schedule:
+#             min - hour - day of month - month - day of week
+    - cron:  '0 9 1,15 * *' #Mon and Thu of May at 9:00 and 17:00
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  test-QcmP:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, macos-11]
+
+    steps:
+
+#********* SETUP PART **********
+
+# Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+# QcmPlab setup
+      - uses: QcmPlab/actions/setup@main
+        with:
+          pack-type: open
+
+
+
+#********* BUILD PART **********
+
+# Build SciFortran
+      - name: Cloning SciFortran
+        run: git clone https://github.com/QcmPlab/SciFortran.git scifor
+      - name: Install SciFortran
+        run: bin/ci_setup_scifor.sh
+
+
+
+#******** TESTING PART ********
+
+# Testing
+      - name: Building tests
+        run:  |
+          source ~/.scifor_config_user
+          export PKG_CONFIG_PATH=~/.pkgconfig.d
+          export GLOB_INC=$( pkg-config --cflags scifor)
+          export GLOB_LIB=$( pkg-config --libs   scifor | sed  "s/;/ /g"  | sed 's/\\/  /g' )
+          make all
+
+      - name: Testing...
+        run: make test
