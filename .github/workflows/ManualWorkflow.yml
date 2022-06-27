@@ -47,7 +47,10 @@ jobs:
           export PKG_CONFIG_PATH=~/.pkgconfig.d
           export GLOB_INC=$( pkg-config --cflags scifor)
           export GLOB_LIB=$( pkg-config --libs   scifor | sed  "s/;/ /g"  | sed 's/\\/  /g' )
+          cd test
           make all
 
       - name: Testing...
-        run: make test
+        run: |
+          cd test
+          make test

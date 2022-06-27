@@ -3,7 +3,7 @@ name: Scheduled CI SciFortran workflow
 on:
   schedule:
 #             min - hour - day of month - month - day of week
-    - cron:  '0 9 1,15 * *' #Mon and Thu of May at 9:00 and 17:00
+    - cron:  '0 3 * * *' #Mon and Thu of May at 9:00 and 17:00
 
 defaults:
   run:
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
 
 # QcmPlab setup
-      - uses: QcmPlab/actions/setup@main
+      - uses: QcmPlab/actions@master
         with:
           pack-type: open
 
@@ -50,7 +50,10 @@ jobs:
           export PKG_CONFIG_PATH=~/.pkgconfig.d
           export GLOB_INC=$( pkg-config --cflags scifor)
           export GLOB_LIB=$( pkg-config --libs   scifor | sed  "s/;/ /g"  | sed 's/\\/  /g' )
+          cd test
           make all
 
       - name: Testing...
-        run: make test
+        run: |
+          cd test
+          make test
