@@ -1,5 +1,7 @@
 # SciFortran
 
+Daily test:  ![example workflow](https://github.com/QcmPlab/SciFortran/blob/master/.github/workflows/Scheduled.yml/badge.svg)   
+
 This is a unitary collection of fortran modules and procedures for scientific calculations. The library aims to provide a simple and generic environment for any scientific or mathematic computations. The project is largely inspired by *SciPy* for Python and tries to closely follow its guidelines and naming convention. 
 
 There are large areas that are still not covered.  
@@ -79,7 +81,7 @@ adriano DOT amaricci @ gmail DOT com
 --
 
 ***LICENSE***  
-Copyright (C) Adriano Amaricci, Lorenzo Crippa, Giacomo Mazza, Massimo Capone
+Copyright (C) Adriano Amaricci, Lorenzo Crippa, Giacomo Mazza, Samuele Giuli, Massimo Capone
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License (LGPL) as published by
