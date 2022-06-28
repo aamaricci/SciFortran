@@ -24,10 +24,10 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
   integer, intent(out)                 :: iter
   real(8), intent(out)                 :: fret
   real(8),optional                     :: ftol
-  real(8)                              :: ftol_
+  real(8)                              :: ftol_,a,b
   integer, optional                    :: itmax,istop
   integer                              :: itmax_,istop_
-  integer                              :: its
+  integer                              :: i,its
   real(8)                              :: dgg,fp,gam,gg,err_
   real(8), dimension(size(p))          :: g,h,xi,p_prev
   logical,optional                     :: iverbose
@@ -62,18 +62,29 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
      iter = its
      p_prev = p
      call dlinmin(p,xi,fret,ftol_,itmax_)
+     a = abs(fret-fp)/(1d0+abs(fp))
+     b = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))
+     if(iverbose_)then
+        write(*,*)"Iter,F_n =",iter,fp
+        write(*,"(A10)")"    gradF:"
+        do i=1,size(xi)
+           write(*,*)xi(i)
+        enddo
+        write(*,*)"A,B,ftol =",a,b,ftol_          
+     endif
      select case(istop_)
      case default
-        converged = &
-             (abs(fret-fp)/(1d0+abs(fp))<ftol_) &
-             .AND. &
-             (dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_)
+        converged = (a<ftol_) .AND. (b<ftol_)
+        if( converged )print*,"Converged with (|F_n-F_n-1|/1+|F_n|), ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",a,b
      case(1)
-        converged = abs(fret-fp)/(1d0+abs(fp))<ftol_
+        converged = a<ftol_
+        if( converged )print*,"Converged with (|F_n-F_n-1|/1+|F_n|)< ftol_:",a
      case(2)
-        converged = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_
+        converged = b<ftol_
+        if( converged )print*,"Converged with ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",b
      end select
      if( converged )return
+     if( iverbose_)write(*,*)""
      fp = fret
      xi = fjac(p)
      gg=dot_product(g,g)
@@ -92,6 +103,14 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
 end subroutine fmin_cg_df
 
 
+
+
+
+
+
+
+
+
 !NUMERICAL EVALUATION OF THE GRADIENT:
 subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,istop,deps,iverbose)
   procedure(cgfit_func)                :: f
@@ -100,9 +119,9 @@ subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,istop,deps,iverbose)
   real(8), intent(out)                 :: fret
   real(8),optional                     :: ftol,deps
   integer, optional                    :: itmax,istop
-  real(8)                              :: ftol_,deps_
+  real(8)                              :: ftol_,deps_,a,b
   integer                              :: itmax_,istop_
-  integer                              :: its
+  integer                              :: i,its
   real(8)                              :: dgg,fp,gam,gg,err_
   real(8), dimension(size(p))          :: g,h,xi,p_prev
   logical,optional                     :: iverbose
@@ -143,19 +162,31 @@ subroutine fmin_cg_f(p,f,iter,fret,ftol,itmax,istop,deps,iverbose)
   xi=h
   do its=1,itmax_
      iter=its
+     p_prev = p
      call dlinmin(p,xi,fret,ftol_)
+     a = abs(fret-fp)/(1d0+abs(fp))
+     b = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))
+     if(iverbose_)then
+        write(*,*)"Iter,F_n =",iter,fp
+        write(*,"(A10)")"    gradF:"
+        do i=1,size(xi)
+           write(*,*)xi(i)
+        enddo
+        write(*,*)"A,B,ftol =",a,b,ftol_
+     endif
      select case(istop_)
      case default
-        converged = &
-             (abs(fret-fp)/(1d0+abs(fp))<ftol_) &
-             .AND. &
-             (dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_)
+        converged = (a<ftol_) .AND. (b<ftol_)
+        if( converged )print*,"Converged with (|F_n-F_n-1|/1+|F_n|), ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",a,b
      case(1)
-        converged = abs(fret-fp)/(1d0+abs(fp))<ftol_
+        converged = a<ftol_
+        if( converged )print*,"Converged with (|F_n-F_n-1|/1+|F_n|)< ftol_:",a
      case(2)
-        converged = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))<ftol_
+        converged = b<ftol_
+        if( converged )print*,"Converged with ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",b
      end select
      if( converged )return
+     if( iverbose_)write(*,*)""
      fp=fret
      xi = fjac(p)
      gg=dot_product(g,g)
