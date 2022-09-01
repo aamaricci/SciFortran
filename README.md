@@ -9,26 +9,29 @@ Anyone is welcome to contribute or to test the software.
 
 ### Dependencies
 
-* gfortran > 4.9x **OR** ifort  > 13.0
+* gfortran > 5.0 **OR** ifort  > 13.0
 * cmake > 3.0.0    
 * lapack  ( https://github.com/aamaricci/Lapack )   
 * blas  ( https://github.com/aamaricci/Blas )   
 * MPI ( https://github.com/open-mpi/ompi )  [optional, recommended]
 * scalapack  ( https://github.com/aamaricci/scalapack )  [optional]
 
-If libraries are not available in your system, please use the provided links to install them. All libraries listed can be installed using `CMake`. Should Lapack/Blas not be available in your system, `scifor` will compile internal copies of such libraries. This option, however, in most cases cause a slight degradation of the performances with respect to optimized versions of the same libraries. Intel MKL support is offered using a custom `CMake` macro, contained in `cmake/FindMKL.cmake`, which however should be considered in a beta development.       
+If libraries are not available in your system, please use the provided links to install them. All libraries listed can be installed using `CMake`. Should Lapack/Blas not be available in your system, `scifor` will compile internal copies of such libraries. This option, however, in most cases causes a slight degradation of the performances with respect to optimized versions of the same libraries, e.g. Intel MKL, Apple VecLib, etc.   
+Support for the Intel MKL build is offered using a custom `CMake` macro, contained in `cmake/FindMKL.cmake`. Note however that such macro should be considered in a beta development.       
+Apple VecLib are automatically recognized by `CMake` in a standard OSX system.  
 
 
 
-### Installation
+## BUILD
 
-Installation is now available using CMake. Experimental support for Intel MKL is provided but this still not universal and may end up in wrong linking directives. 
+Installation is available using CMake. Support for Intel MKL is provided but this still not universal and may end up in wrong linking directives. 
 
 Clone the Scifor repo:
 
 `git clone https://github.com/aamaricci/SciFortran scifor`
 
-And from the repository directory (`cd scifor`) make a standard out-of-source CMake compilation:
+### Make
+From the repository directory (`cd scifor`) make a standard out-of-source CMake-Make compilation:
 
 `mkdir build`  
 `cd build`  
@@ -36,14 +39,40 @@ And from the repository directory (`cd scifor`) make a standard out-of-source CM
 `make`     
 `make install`   
 
+
+### Ninja
+
+If `ninja` ( https://ninja-build.org ) be available in your system, you can use it to build and install the library. 
+
+From the repository directory (`cd scifor`) make a standard out-of-source CMake-Ninja compilation:
+
+`mkdir build`  
+`cd build`  
+`cmake -GNinja ..`      (*)  
+`ninja`     
+`ninja install`   
+
+
+
 (*) *In some cases CMake fails to find the MPI Fortran compiler, even if it is effectively installed and loaded into the system. An easy fix is to setup and export the `FC=mpif90` environment variable before invoking `cmake`.* 
 
-Please follow the instructions on the screen to complete installation on your environment.  
-The library can be loaded using one of the following, automatically generated, files :  
 
-* pkg-config file in `~/.pkg-config.d/scifor.pc`  
-* environment module file `~/.modules.d/scifor/<PLAT>/<VERSION>`  
-* homebrew `bash` script `<PREFIX>/bin/configvars.sh`
+
+## INSTALL
+
+Installation is completed after the build step using either: 
+
+`make install`  
+
+or   
+
+`ninja install`  
+ 
+To complete the installation you should follow the instructions printed on the screen, which suggest different ways to load the library in your system.  
+
+* Using the pkg-config file `~/.pkg-config.d/scifor.pc`  
+* Using environment module file `~/.modules.d/scifor/<PLAT>/<VERSION>`  
+* Using `bash` script `<PREFIX>/bin/configvars.sh`
 
 
 The `CMake` compilation can be controlled using the following additional variables, default values between `< >`:   
@@ -56,14 +85,15 @@ The `CMake` compilation can be controlled using the following additional variabl
 
 * `-DBUILD_TYPE=<RELEASE>/TESTING/DEBUG`  
 
-### UNINSTALL
+
+## UNINSTALL
 
 `Cmake` does not officially provide uninstall procedure in the generate Makefile. Yet, it is possible to construct one such uninstall mode in a simple way. SCIFOR provides a way to uninstall the files generated inside any out-of-source compilation calling: 
 `make uninstall`  
 
 
 
-### PROBLEMS
+## KNOWN PROBLEMS
 
 `SciFortran` has been tested with success on several Unix/Linux platoforms. Support for Windows using Linux Bash Shell is experimental, although few people reported successful installation with minimal efforts. 
 
