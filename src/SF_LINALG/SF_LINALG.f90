@@ -355,17 +355,18 @@ module SF_LINALG
      end function ilaenv
   end interface
 
+#ifdef _MPI
+#  ifdef _SCALAPACK
+      interface Distribute_BLACS
+         module procedure :: D_Distribute_BLACS
+         module procedure :: Z_Distribute_BLACS
+      end interface Distribute_BLACS
 
-#ifdef _SCALAPACK
-  interface Distribute_BLACS
-     module procedure :: D_Distribute_BLACS
-     module procedure :: Z_Distribute_BLACS
-  end interface Distribute_BLACS
-
-  interface Gather_BLACS
-     module procedure :: D_Gather_BLACS
-     module procedure :: Z_Gather_BLACS
-  end interface Gather_BLACS
+      interface Gather_BLACS
+         module procedure :: D_Gather_BLACS
+         module procedure :: Z_Gather_BLACS
+      end interface Gather_BLACS
+#  endif
 #endif
 
 
@@ -503,8 +504,10 @@ contains
   !##################################################################
   !                  OTHER COMPUTATIONAL ROUTINES
   !##################################################################
-#ifdef _SCALAPACK
-  include "linalg_blacs_aux.f90"
+#ifdef _MPI
+#  ifdef _SCALAPACK
+      include "linalg_blacs_aux.f90"
+#  endif
 #endif
 
 
