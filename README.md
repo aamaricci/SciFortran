@@ -16,17 +16,17 @@ Anyone is welcome to contribute or to test the software.
 * [MPI](https://github.com/open-mpi/ompi)  [optional, recommended]
 * [ScaLAPACK](https://github.com/Reference-ScaLAPACK/scalapack)  [optional, recommended]
 
-If any of the required libraries is not available in your system, or the version requirement is not satisfied, please find a way to install them. We generally advice to prefer pre-packaged versions, as provided by [`apt`](https://en.wikipedia.org/wiki/APT_(software)), [`pip`](https://pypi.org/project/pip/), [`brew`](https://formulae.brew.sh/), [`conda`](https://docs.conda.io/en/latest/) or [`spack`](https://spack.io/). The latter may provide the best options for HPC environments (trivial installation without sudo, easy management of interdependent multiple versions, automatic generation of environment modules, etc.), but choose freely according to your needs.
+If any of the required libraries is not available in your system, or the version requirement is not satisfied, please install/upgrade them. We generally advice for pre-packaged versions, as provided by either [`apt`](https://en.wikipedia.org/wiki/APT_(software)), [`pip`](https://pypi.org/project/pip/), [`brew`](https://formulae.brew.sh/), [`conda`](https://docs.conda.io/en/latest/) or [`spack`](https://spack.io/). The latter may provide the best options for HPC environments (trivial installation without sudo, easy management of interdependent multiple versions, automatic generation of environment modules, etc.), but choose freely according to your needs.
 
-[^1]: Should Lapack/Blas not be available in your system, `scifor` will compile internal copies of such libraries. This option, however, in most cases leads to noticeable performance degradation, with respect to optimized versions of the same libraries, such as [Intel's MKL](https://en.wikipedia.org/wiki/Math_Kernel_Library), [Apple's vecLib](https://developer.apple.com/documentation/accelerate/veclib), [OpenBLAS](https://www.openblas.net/), etc. Support for the MKL linking is offered using a custom CMake macro, contained in `cmake/FindMKL.cmake`. Note however that such macro should be considered in a beta development. Apple's vecLib are instead automatically recognized by CMake, in any standard macOS system.
+[^1]: Should Lapack/Blas not be available in your system, SciFortran will compile internal copies of such libraries. This option, however, in most cases leads to noticeable performance degradation, with respect to optimized versions of the same libraries, such as [Intel's MKL](https://en.wikipedia.org/wiki/Math_Kernel_Library), [Apple's vecLib](https://developer.apple.com/documentation/accelerate/veclib), [OpenBLAS](https://www.openblas.net/), etc. Support for linking MKL is offered via a [custom CMake macro](./cmake/FindMKL.cmake), which should however be considered in beta development, as it is not universal and may end up in wrong linking directives. Apple's vecLib is instead automatically recognized by CMake, in any standard macOS system.
 
 
 
 ## BUILD
 
-Our build system relies on CMake. Support for linking Intel's MKL is provided, but still at beta stage, as it is not universal and may end up in wrong linking directives.
+Our build system relies on CMake. Experimental support for linking Intel's MKL is provided, although it may fail on some systems.
 
-Clone the Scifor repo:
+Clone the SciFortran repo:
 
 ```
 git clone https://github.com/aamaricci/SciFortran scifor
@@ -77,7 +77,7 @@ In both cases you can pass additional options to the `cmake` command, to customi
 
 * `-DBUILD_TYPE=<RELEASE>/TESTING/DEBUG`, to select predefined compiler options
 
-* `-DWITH_BLAS_LAPACK=yes/<no>`, to skip search of installed linear algebra libraries and enforce compilation from source
+* `-DWITH_BLAS_LAPACK=yes/<no>`, to skip search of preinstalled linear algebra libraries and enforce compilation from source
 
 * `-DWITH_SCALAPACK=<yes>/no`, to link with preinstalled ScaLAPACK library, for parallel algebra support.
 
@@ -85,7 +85,7 @@ In both cases you can pass additional options to the `cmake` command, to customi
 
 [^3]: Ninja did not support fortran before version 1.10, although Kitware has long mantained a fortran-capable fork, which might be obtained easily as a [Spack package](https://packages.spack.io/package.html?name=ninja-fortran). Nevertheless we note that as of fall 2022 `pip install ninja --user` [ships Ninja v1.10.2](https://pypi.org/project/ninja/), hence obtaining a suitable official Ninja release should be trivial.
 
-[^4]: This depends on your CMake version. Comparing [this](https://cmake.org/cmake/help/v3.16/generator/Ninja.html#fortran-support) to [this](https://cmake.org/cmake/help/v3.17/generator/Ninja.html#fortran-support) it appears that CMake started supporting Ninja's fortran features after v3.17, but we have verified that at least v3.16.3 does indeed work. For more information you can read through a [related issue](https://github.com/QcmPlab/SciFortran/issues/16). 
+[^4]: This depends on your CMake version. Comparing [this](https://cmake.org/cmake/help/v3.16/generator/Ninja.html#fortran-support) to [this](https://cmake.org/cmake/help/v3.17/generator/Ninja.html#fortran-support) would suggest that CMake started supporting Ninja's fortran features only after v3.17 but we have verified that at least v3.16.3 (current version shipped by `apt` on Ubuntu 20.04 LTS) does indeed work. For more information you can take a look to the [related issue](https://github.com/QcmPlab/SciFortran/issues/16). 
 
 ## INSTALL
 
@@ -101,17 +101,17 @@ or
 ninja install
 ```  
  
-To actually use the library we give you some alternatives:
+To actually link the library we provide some alternatives:
 
-* A generated pkg-config file to, installed to `~/.pkgconfig.d/scifor.pc`  
-* A generated environment module, installed to `~/.modules.d/scifor/<PLAT>/<VERSION>`  
+* A generated [pkg-config](https://github.com/freedesktop/pkg-config) file to, installed to `~/.pkgconfig.d/scifor.pc`  
+* A generated [environment module](https://github.com/cea-hpc/modules), installed to `~/.modules.d/scifor/<PLAT>/<VERSION>`  
 * A generated `bash` script at `<PREFIX>/bin/configvars.sh`, to be sourced for permanent loading.
 
-which you can choose among by following the instructions printed on screen
+which you can choose among by following the instructions printed on screen.
 
 ## UNINSTALL
 
-CMake does not officially provide uninstall procedures in the generated Make/Ninja files. SciFortran attempts to provide a homebrew method to uninstall the generated files by calling (from the relevant build folder): `make uninstall` / `ninja uninstall`.
+CMake does not officially provide uninstall procedures in the generated Make/Ninja files. Hence SciFortran supplies a homebrew method to remove the generated files by calling (from the relevant build folder): `make uninstall` / `ninja uninstall`.
 
 
 
@@ -127,7 +127,8 @@ Some have reported issues concerning the wrong setup for the library `pkg-config
 
 ### CONTACT
 
-If you encounter bugs or difficulties, please [file an issue](https://github.com/QcmPlab/SciFortran/issues/new/choose). For any other communication, please reach out to `adriano DOT amaricci @ gmail DOT com`.
+If you encounter bugs or difficulties, please [file an issue](https://github.com/QcmPlab/SciFortran/issues/new/choose). For any other communication, please reach out to:    
+adriano DOT amaricci @ gmail DOT com
 
 --
 
