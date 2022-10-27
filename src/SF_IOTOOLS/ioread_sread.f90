@@ -3,7 +3,7 @@ subroutine sreadA1_RR(pname,X,Y1)
   character(len=*)                    :: pname
   real(8),dimension(:)                :: X
   real(8),dimension(size(X))          :: Y1
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   Np=size(X)
   do i=1,Np
@@ -18,7 +18,7 @@ subroutine sreadA1_RC(pname,X,Y1)
   real(8),dimension(:)          :: X
   complex(8),dimension(size(X)) :: Y1
   real(8),dimension(size(X))    :: reY,imY
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   Np=size(X)
   do i=1,Np
@@ -41,7 +41,7 @@ subroutine sreadA2_RR(pname,X,Y1)
   character(len=*)              :: pname
   real(8),dimension(:,:)        :: Y1
   real(8),dimension(size(Y1,2)) :: X
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -62,7 +62,7 @@ subroutine sreadA2_RC(pname,X,Y1)
   complex(8),dimension(:,:)                :: Y1
   real(8),dimension(size(Y1,2))            :: X
   real(8),dimension(size(Y1,1),size(Y1,2)) :: reY,imY
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -89,7 +89,7 @@ subroutine sreadA3_RR(pname,X,Y1)
   character(len=*)              :: pname
   real(8),dimension(:,:,:)      :: Y1
   real(8),dimension(size(Y1,3)) :: X
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -112,7 +112,7 @@ subroutine sreadA3_RC(pname,X,Y1)
   complex(8),dimension(:,:,:)                         :: Y1
   real(8),dimension(size(Y1,3))                       :: X
   real(8),dimension(size(Y1,1),size(Y1,2),size(Y1,3)) :: reY,imY
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -142,7 +142,7 @@ subroutine sreadA4_RR(pname,X,Y1)
   character(len=*)              :: pname
   real(8),dimension(:,:,:,:)    :: Y1
   real(8),dimension(size(Y1,4)) :: X
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -174,7 +174,7 @@ subroutine sreadA4_RC(pname,X,Y1)
        size(Y1,3),&
        size(Y1,4))              :: reY,imY
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   !
@@ -210,7 +210,7 @@ subroutine sreadA5_RR(pname,X,Y1)
   real(8),dimension(:,:,:,:,:)    :: Y1
   real(8),dimension(size(Y1,5))   :: X
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -246,7 +246,7 @@ subroutine sreadA5_RC(pname,X,Y1)
        size(Y1,4),&
        size(Y1,5))                :: reY,imY
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   !
@@ -284,7 +284,7 @@ subroutine sreadA6_RR(pname,X,Y1)
   real(8),dimension(:,:,:,:,:,:)    :: Y1
   real(8),dimension(size(Y1,6))     :: X
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -324,7 +324,7 @@ subroutine sreadA6_RC(pname,X,Y1)
        size(Y1,5),&
        size(Y1,6))                  :: reY,imY
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -365,7 +365,7 @@ subroutine sreadA7_RR(pname,X,Y1)
   real(8),dimension(:,:,:,:,:,:,:)    :: Y1
   real(8),dimension(size(Y1,7))       :: X
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   Ny1=size(Y1,1)
@@ -409,7 +409,7 @@ subroutine sreadA7_RC(pname,X,Y1)
        size(Y1,6),&
        size(Y1,7))                    :: reY,imY
   !
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   open(free_unit(unit),file=reg(pname))
   !
   !

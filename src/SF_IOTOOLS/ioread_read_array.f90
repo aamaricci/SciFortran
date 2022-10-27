@@ -4,7 +4,7 @@ subroutine data_readA1_R(pname,Y1)
   real(8),dimension(:)  :: Y1
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -23,7 +23,7 @@ subroutine data_readA1_C(pname,Y1)
   complex(8),dimension(:):: Y1
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -56,7 +56,7 @@ subroutine data_readA2_R(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -94,7 +94,7 @@ subroutine data_readA2_C(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -137,7 +137,7 @@ subroutine data_readA3_R(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -182,7 +182,7 @@ subroutine data_readA3_C(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -236,7 +236,7 @@ subroutine data_readA4_R(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -286,7 +286,7 @@ subroutine data_readA4_C(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -345,7 +345,7 @@ subroutine data_readA5_R(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -401,7 +401,7 @@ subroutine data_readA5_C(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -467,7 +467,7 @@ subroutine data_readA6_R(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -527,7 +527,7 @@ subroutine data_readA6_C(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -598,7 +598,7 @@ subroutine data_readA7_R(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !
@@ -663,7 +663,7 @@ subroutine data_readA7_C(pname,Y1,order,wspace)
   wspace_= .true.; if(present(wspace))wspace_=wspace
   !
   call file_gunzip(reg(pname))
-  include "ioread_control.f90"
+  call ioread_control(pname,control)
   !
   open(free_unit(unit),file=reg(pname))
   !

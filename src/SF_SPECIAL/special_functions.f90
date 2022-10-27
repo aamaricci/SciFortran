@@ -2328,7 +2328,7 @@ subroutine cgama ( x, y, kf, gr, gi )
   !
   !  Discussion:
   !
-  !    This procedcure computes the gamma function ג(z) or ln[ג(z)]
+  !    This procedcure computes the gamma function ־“(z) or ln[־“(z)]
   !    for a complex argument
   !
   !  Licensing:
@@ -2359,8 +2359,8 @@ subroutine cgama ( x, y, kf, gr, gi )
   !    the argument Z.
   !
   !    Input, integer ( kind = 4 ) KF, the function code.
-  !    0 for ln[ג(z)]
-  !    1 for ג(z)
+  !    0 for ln[־“(z)]
+  !    1 for ־“(z)
   !
   !    Output, real ( kind = 8 ) GR, GI, the real and imaginary parts of
   !    the selected function.
@@ -2907,7 +2907,7 @@ subroutine chgubi ( a, b, x, hu, id )
   !  Discussion:
   !
   !    This procedure computes the confluent hypergeometric function
-  !    U(a,b,x) with integer ( kind = 4 ) b ( b = ס1,ס2,... )
+  !    U(a,b,x) with integer ( kind = 4 ) b ( b = ֲ±1,ֲ±2,... )
   !
   !  Licensing:
   !
@@ -8387,10 +8387,10 @@ subroutine cva1 ( kd, m, q, cv )
   !  Parameters:
   !
   !    Input, integer ( kind = 4 ) KD, the case code.
-  !    1, for cem(x,q)  ( m = 0,2,4,תתת )
-  !    2, for cem(x,q)  ( m = 1,3,5,תתת )
-  !    3, for sem(x,q)  ( m = 1,3,5,תתת )
-  !    4, for sem(x,q)  ( m = 2,4,6,תתת )
+  !    1, for cem(x,q)  ( m = 0,2,4,... )
+  !    2, for cem(x,q)  ( m = 1,3,5,... )
+  !    3, for sem(x,q)  ( m = 1,3,5,... )
+  !    4, for sem(x,q)  ( m = 2,4,6,... )
   !
   !    Input, integer ( kind = 4 ) M, the maximum order of the Mathieu functions.
   !
@@ -13858,7 +13858,7 @@ subroutine incog ( a, x, gin, gim, gip )
 
   !*****************************************************************************80
   !
-  !! INCOG computes the incomplete gamma function r(a,x), ,(a,x), P(a,x).
+  !! INCOG computes the incomplete gamma function r(a,x), ־“(a,x), P(a,x).
   !
   !  Licensing:
   !
@@ -13889,7 +13889,7 @@ subroutine incog ( a, x, gin, gim, gip )
   !    Input, real ( kind = 8 ) X, the argument.
   !
   !    Output, real ( kind = 8 ) GIN, GIM, GIP, the values of
-  !    r(a,x), ג(a,x), P(a,x).
+  !    r(a,x), ־“(a,x), P(a,x).
   !
   implicit none
 
@@ -18231,7 +18231,7 @@ subroutine lagzo ( n, x, w )
   !  Discussion:
   !
   !    This procedure computes the zeros of Laguerre polynomial Ln(x) in the 
-  !    interval [0,ל], and the corresponding weighting coefficients for 
+  !    interval [0,גˆ], and the corresponding weighting coefficients for 
   !    Gauss-Laguerre integration.
   !
   !  Licensing:
