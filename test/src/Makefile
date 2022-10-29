@@ -10,7 +10,7 @@ GLOB_INC:=$(shell pkg-config --cflags scifor)
 
 OBJS=ASSERTING.o
 
-all: $(OBJS) init integrate parse_input
+all: $(OBJS) init integrate parse_input iotools
 
 init:
 	make -C ./SF_INIT
@@ -20,6 +20,9 @@ integrate:
 
 parse_input:
 	make -C ./SF_PARSE_INPUT
+
+iotools:
+	make -C ./SF_IOTOOLS
 
 .f90.o:	
 	$(FC) $(FFLAGS) -c $< ${GLOB_INC}

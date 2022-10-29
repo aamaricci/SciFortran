@@ -46,16 +46,18 @@ module IOREAD
   public :: sread
   public :: read_array
 
+  
 contains
 
 
-
-  ! SPLOT ararys (1--7)
+  ! SPLOT arrays (1--7)
   include "ioread_sread.f90"
-
 
   ! READ_ARRAY arrays (1--7)
   include "ioread_read_array.f90"
+
+  ! READ safety utility
+  include "ioread_control.f90"
 
 
 end module IOREAD

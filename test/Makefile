@@ -9,13 +9,14 @@ bin:
 	mkdir $(TSTBIN)/SF_INIT
 	mkdir $(TSTBIN)/SF_INTEGRATE
 	mkdir $(TSTBIN)/SF_PARSE_INPUT
+	mkdir $(TSTBIN)/SF_IOTOOLS
 	echo SF_INIT > $(TSTBIN)/list_dir
 	echo SF_INTEGRATE >> $(TSTBIN)/list_dir
 	echo SF_PARSE_INPUT >> $(TSTBIN)/list_dir
+	echo SF_IOTOOLS >> $(TSTBIN)/list_dir
 # mkdir $(TSTBIN)/SF_DERIVATE
 # mkdir $(TSTBIN)/SF_FFT
 # mkdir $(TSTBIN)/SF_INTERPOLATE
-# mkdir $(TSTBIN)/SF_IOTOOLS
 # mkdir $(TSTBIN)/SF_LINALG
 # mkdir $(TSTBIN)/SF_MPI
 # mkdir $(TSTBIN)/SF_OPTIMIZE
@@ -25,7 +26,6 @@ bin:
 # echo SF_DERIVATE >> $(TSTBIN)/list_dir
 # echo SF_FFT >> $(TSTBIN)/list_dir
 # echo SF_INTERPOLATE >> $(TSTBIN)/list_dir
-# echo SF_IOTOOLS >> $(TSTBIN)/list_dir
 # echo SF_LINALG >> $(TSTBIN)/list_dir
 # echo SF_MPI >> $(TSTBIN)/list_dir
 # echo SF_OPTIMIZE >> $(TSTBIN)/list_dir
