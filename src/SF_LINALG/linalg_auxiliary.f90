@@ -167,7 +167,7 @@ end function ztrace
 !-------------------------------------------------------------------------------------------
 !PURPOSE:  Returns the identity matrix of size n x n and type real.
 !-------------------------------------------------------------------------------------------
-pure function deye(n) result(A)
+pure function deye_matrix(n) result(A)
   integer, intent(in) :: n
   real(8)             :: A(n, n)
   integer             :: i
@@ -175,11 +175,9 @@ pure function deye(n) result(A)
   do i = 1, n
      A(i,i) = 1d0
   end do
-end function deye
-!-------------------------------------------------------------------------------------------
-!PURPOSE:  Returns the identity matrix of size n x n and type complex.
-!-------------------------------------------------------------------------------------------
-pure function zeye(n) result(A)
+end function deye_matrix
+
+pure function zeye_matrix(n) result(A)
   integer, intent(in) :: n
   complex(8)          :: A(n, n)
   integer             :: i
@@ -187,9 +185,21 @@ pure function zeye(n) result(A)
   do i = 1, n
      A(i,i) = one
   end do
-end function zeye
+end function zeye_matrix
 
+pure function deye_indices(i,j) result(a)
+  integer, intent(in) :: i,j
+  real(8)             :: a
+  a = 0d0
+  if(i==j)a=1d0
+end function deye_indices
 
+pure function zeye_indices(i,j) result(a)
+  integer, intent(in) :: i,j
+  complex(8)          :: a
+  a = zero
+  if(i==j)a=one
+end function zeye_indices
 
 
 
