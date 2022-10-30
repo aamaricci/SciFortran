@@ -11,11 +11,11 @@ bin:
 	mkdir $(TSTBIN)/SF_PARSE_INPUT
 	mkdir $(TSTBIN)/SF_IOTOOLS
 	mkdir $(TSTBIN)/SF_DERIVATE
-# mkdir $(TSTBIN)/SF_FFT
-# mkdir $(TSTBIN)/SF_INTERPOLATE
+	mkdir $(TSTBIN)/SF_FFT
+	mkdir $(TSTBIN)/SF_INTERPOLATE
 # mkdir $(TSTBIN)/SF_LINALG
 # mkdir $(TSTBIN)/SF_MPI
-# mkdir $(TSTBIN)/SF_OPTIMIZE
+	mkdir $(TSTBIN)/SF_OPTIMIZE
 # mkdir $(TSTBIN)/SF_RANDOM
 # mkdir $(TSTBIN)/SF_SPECIAL
 # mkdir $(TSTBIN)/SF_SP_LINALG
@@ -24,11 +24,11 @@ bin:
 	echo SF_PARSE_INPUT >> $(TSTBIN)/list_dir
 	echo SF_IOTOOLS >> $(TSTBIN)/list_dir
 	echo SF_DERIVATE >> $(TSTBIN)/list_dir
-# echo SF_FFT >> $(TSTBIN)/list_dir
-# echo SF_INTERPOLATE >> $(TSTBIN)/list_dir
+	echo SF_FFT >> $(TSTBIN)/list_dir
+	echo SF_INTERPOLATE >> $(TSTBIN)/list_dir
 # echo SF_LINALG >> $(TSTBIN)/list_dir
 # echo SF_MPI >> $(TSTBIN)/list_dir
-# echo SF_OPTIMIZE >> $(TSTBIN)/list_dir
+	echo SF_OPTIMIZE >> $(TSTBIN)/list_dir
 # echo SF_RANDOM >> $(TSTBIN)/list_dir
 # echo SF_SPECIAL >> $(TSTBIN)/list_dir
 # echo SF_SP_LINALG >> $(TSTBIN)/list_dir
