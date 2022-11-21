@@ -69,6 +69,8 @@ module IOFILE
 contains
 
 
+
+  
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -80,24 +82,26 @@ contains
 
   function get_filename(string) result(fname)
     character(len=*) :: string
-    character(len=len_trim(string)) :: fname
+    ! character(len=len_trim(string)) :: fname
+    character(len=:),allocatable :: fname
     integer :: i,slen
     slen=len_trim(string)
     do i=slen,1,-1
        if(string(i:i)== '/')exit
     enddo
-    fname=string(i+1:slen)
+    fname=trim(adjustl(trim(string(i+1:slen))))
   end function get_filename
 
   function get_filepath(string) result(pname)
     character(len=*) :: string
-    character(len=len_trim(string)) :: pname
+    ! character(len=len_trim(string)) :: pname
+    character(len=:),allocatable :: pname
     integer :: i,slen
     slen=len_trim(string)
     do i=slen,1,-1
        if(string(i:i)== '/')exit
     enddo
-    pname=string(1:i)
+    pname=trim(adjustl(trim(string(1:i))))
   end function get_filepath
 
 
