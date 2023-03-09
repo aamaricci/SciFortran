@@ -1,6 +1,9 @@
-name: Manually triggered CI workflow to execute unit tests
+name: Scheduled CI SciFortran workflow for Ubuntu
 
-on: workflow_dispatch
+on:
+  schedule:
+#             min - hour - day of month - month - day of week
+    - cron:  '0 3 * * *' #Everyday at 3:00 A.M.
 
 defaults:
   run:
@@ -8,11 +11,9 @@ defaults:
 
 jobs:
   test-QcmP:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
-      matrix:
-        os: [ubuntu-20.04, macos-11]
 
     steps:
 

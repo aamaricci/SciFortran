@@ -1,6 +1,7 @@
 # SciFortran
 
-[![daily test](https://img.shields.io/github/workflow/status/QcmPlab/SciFortran/Scheduled%20CI%20SciFortran%20workflow?label=daily%20test&logo=github&style=flat-square)](https://github.com/QcmPlab/SciFortran/actions/workflows/Scheduled.yml) 
+[![Ubuntu](https://img.shields.io/github/actions/workflow/status/QcmPlab/SciFortran/Ubuntu_Scheduled.yml?label=Ubuntu&logo=ubuntu&style=flat-square)](https://github.com/QcmPlab/SciFortran/actions/workflows/Scheduled.yml) 
+[![MacOS](https://img.shields.io/github/actions/workflow/status/QcmPlab/SciFortran/MacOS_Scheduled.yml?label=macOS&logo=apple&style=flat-square)](https://github.com/QcmPlab/SciFortran/actions/workflows/Scheduled.yml) 
 [![api docs](https://img.shields.io/static/v1?label=API&message=documentation&color=734f96&logo=read-the-docs&logoColor=white&style=flat-square)](https://qcmplab.github.io/SciFortran)
 
 This is a unitary collection of fortran modules and procedures for scientific calculations. The library aims to provide a simple and generic environment for any scientific or mathematic computations. The project is largely inspired by *SciPy* for Python and tries to closely follow its guidelines and naming convention. 
