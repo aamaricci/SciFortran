@@ -19,7 +19,7 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Bool_5
      module procedure :: MPI_Bcast_Bool_6
      module procedure :: MPI_Bcast_Bool_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_Bcast_Bool_8
 #endif
      !
@@ -31,7 +31,7 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Int_5
      module procedure :: MPI_Bcast_Int_6
      module procedure :: MPI_Bcast_Int_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_Bcast_Int_8
 #endif
      !
@@ -43,7 +43,7 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Dble_5
      module procedure :: MPI_Bcast_Dble_6
      module procedure :: MPI_Bcast_Dble_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_Bcast_Dble_8
 #endif
      !
@@ -55,7 +55,7 @@ MODULE SF_MPI
      module procedure :: MPI_Bcast_Cmplx_5
      module procedure :: MPI_Bcast_Cmplx_6
      module procedure :: MPI_Bcast_Cmplx_7     
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_Bcast_Cmplx_8
 #endif
   end interface Bcast_MPI
@@ -71,7 +71,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Bool_5
      module procedure :: MPI_AllGather_Bool_6
      module procedure :: MPI_AllGather_Bool_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllGather_Bool_8
 #endif
      !
@@ -83,7 +83,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Int_5
      module procedure :: MPI_AllGather_Int_6
      module procedure :: MPI_AllGather_Int_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllGather_Int_8
 #endif
      !
@@ -95,7 +95,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Dble_5
      module procedure :: MPI_AllGather_Dble_6
      module procedure :: MPI_AllGather_Dble_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllGather_Dble_8
 #endif
      !
@@ -107,7 +107,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllGather_Cmplx_5
      module procedure :: MPI_AllGather_Cmplx_6
      module procedure :: MPI_AllGather_Cmplx_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllGather_Cmplx_8
 #endif
   end interface AllGather_MPI
@@ -124,7 +124,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Bool_5
      module procedure :: MPI_AllReduce_Bool_6
      module procedure :: MPI_AllReduce_Bool_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllReduce_Bool_8
 #endif
      !
@@ -136,7 +136,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Int_5
      module procedure :: MPI_AllReduce_Int_6
      module procedure :: MPI_AllReduce_Int_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllReduce_Int_8
 #endif
      !
@@ -148,7 +148,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Dble_5
      module procedure :: MPI_AllReduce_Dble_6
      module procedure :: MPI_AllReduce_Dble_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllReduce_Dble_8
 #endif
      !
@@ -160,7 +160,7 @@ MODULE SF_MPI
      module procedure :: MPI_AllReduce_Cmplx_5
      module procedure :: MPI_AllReduce_Cmplx_6
      module procedure :: MPI_AllReduce_Cmplx_7
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
      module procedure :: MPI_AllReduce_Cmplx_8
 #endif
   end interface AllReduce_MPI
@@ -414,7 +414,7 @@ contains
     call Error_MPI(sub='MPI_Bcast_Bool_7')
   end subroutine MPI_Bcast_Bool_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Bcast_Bool_8(comm,data,root)
     integer,intent(in)          :: comm
     logical,intent(in)          :: data(:,:,:,:,:,:,:,:)
@@ -512,7 +512,7 @@ contains
     call Error_MPI(sub='MPI_Bcast_Int_7')
   end subroutine MPI_Bcast_Int_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Bcast_Int_8(comm,data,root)
     integer,intent(in)          :: comm
     integer,intent(in)          :: data(:,:,:,:,:,:,:,:)
@@ -609,7 +609,7 @@ contains
     call Error_MPI(sub='MPI_Bcast_Dble_7')
   end subroutine MPI_Bcast_Dble_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Bcast_Dble_8(comm,data,root)
     integer,intent(in)          :: comm
     real(8),intent(in)          :: data(:,:,:,:,:,:,:,:)
@@ -707,7 +707,7 @@ contains
     call Error_MPI(sub='MPI_Bcast_Cmplx_7')
   end subroutine MPI_Bcast_Cmplx_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Bcast_Cmplx_8(comm,data,root)
     integer,intent(in)          :: comm
     complex(8),intent(in)       :: data(:,:,:,:,:,:,:,:)
@@ -828,7 +828,7 @@ contains
     call Error_MPI(sub='MPI_Allgather_Bool_7')
   end subroutine MPI_Allgather_Bool_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allgather_Bool_8(comm,send,data,root)
     integer,intent(in)          :: comm
     logical,intent(inout)       :: data(:,:,:,:,:,:,:,:)
@@ -935,7 +935,7 @@ contains
     call Error_MPI(sub='MPI_Allgather_Int_7')
   end subroutine MPI_Allgather_Int_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allgather_Int_8(comm,send,data,root)
     integer,intent(in)          :: comm
     integer,intent(inout)       :: data(:,:,:,:,:,:,:,:)
@@ -1044,7 +1044,7 @@ contains
     call Error_MPI(sub='MPI_Allgather_Dble_7')
   end subroutine MPI_Allgather_Dble_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allgather_Dble_8(comm,send,data,root)
     integer,intent(in)          :: comm
     real(8),intent(inout)       :: data(:,:,:,:,:,:,:,:)
@@ -1151,7 +1151,7 @@ contains
     call Error_MPI(sub='MPI_Allgather_Cmplx_7')
   end subroutine MPI_Allgather_Cmplx_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allgather_Cmplx_8(comm,send,data,root)
     integer,intent(in)          :: comm
     complex(8),intent(inout)    :: data(:,:,:,:,:,:,:,:)
@@ -1286,7 +1286,7 @@ contains
     call Error_MPI(sub='MPI_Allreduce_Bool_7')
   end subroutine MPI_Allreduce_Bool_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allreduce_Bool_8(comm,send,data,root)
     integer,intent(in)          :: comm
     logical,intent(inout)       :: data(:,:,:,:,:,:,:,:)
@@ -1396,7 +1396,7 @@ contains
     call Error_MPI(sub='MPI_Allreduce_Int_7')
   end subroutine MPI_Allreduce_Int_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allreduce_Int_8(comm,send,data,root)
     integer,intent(in)          :: comm
     integer,intent(inout)       :: data(:,:,:,:,:,:,:,:)
@@ -1504,7 +1504,7 @@ contains
     call Error_MPI(sub='MPI_Allreduce_Dble_7')
   end subroutine MPI_Allreduce_Dble_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allreduce_Dble_8(comm,send,data,root)
     integer,intent(in)          :: comm
     real(8),intent(inout)       :: data(:,:,:,:,:,:,:,:)
@@ -1611,7 +1611,7 @@ contains
     call Error_MPI(sub='MPI_Allreduce_Cmplx_7')
   end subroutine MPI_Allreduce_Cmplx_7
   !
-#if __GFORTRAN__ &&  __GNUC__ > 8
+#if defined __GFORTRAN__ &&  __GNUC__ > 8
   subroutine MPI_Allreduce_Cmplx_8(comm,send,data,root)
     integer,intent(in)          :: comm
     complex(8),intent(inout)    :: data(:,:,:,:,:,:,:,:)
