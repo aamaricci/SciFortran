@@ -1,0 +1,28 @@
+name = "SciFortran"
+license = "LGPL-3.0-or-later"
+
+[library]
+source-dir="src"
+include-dir = ["src/SF_SP_LINALG/include"]
+
+[preprocess]
+[preprocess.cpp]
+suffixes = ["F90", "f90"]
+macros = ["MPI"]
+
+[build]
+link = ["blas", "lapack"]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+
+[dependencies]
+mpi="*"
+
+[fortran]
+source-form = "default"   # default: "free" ("default" stands for auto-recognized)
+implicit-typing = true    # default: false
+implicit-external = true  # default: false
+
+[install]
+library = true

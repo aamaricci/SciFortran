@@ -1,0 +1,8 @@
+@release
+option build --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -fallow-argument-mismatch -O3 -funroll-loops"
+
+@testing
+option build --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -fallow-argument-mismatch -O2 -funroll-loops"
+
+@debug
+option build --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -Wsurprising -pedantic -Waliasing -fallow-argument-mismatch -O0 -p -g -Wsurprising -Waliasing -fwhole-file -fcheck=all -fbacktrace -fbounds-check"

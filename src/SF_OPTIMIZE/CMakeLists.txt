@@ -11,5 +11,8 @@ file(GLOB SF_OPTIMIZE_LOCAL_SRC
   lbfgsb.f
   SF_OPTIMIZE.f90
   )
+  
+include_directories(include)
+
 SET(SF_OPTIMIZE_src ${SF_OPTIMIZE_LOCAL_SRC})
 ADD_LIBRARY(SF_OPTIMIZELIB OBJECT ${SF_OPTIMIZE_src})

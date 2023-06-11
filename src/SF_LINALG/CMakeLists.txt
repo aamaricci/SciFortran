@@ -2,5 +2,8 @@
 file(GLOB SF_LINALG_LOCAL_SRC
   "SF_LINALG.f90"
   )
+
+include_directories(include)
+
 SET(SF_LINALG_src ${SF_LINALG_LOCAL_SRC})
 ADD_LIBRARY(SF_LINALGLIB OBJECT ${SF_LINALG_src})
