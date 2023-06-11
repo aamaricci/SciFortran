@@ -185,7 +185,7 @@ module SF_SP_LINALG
          !
          ! IMPLEMENTATION INTO SUBMODULE MPI_LANCZOS_D
          !
-      end subroutine mpi_lanczos_d
+      end subroutine mpi_lanczos_eigh_d
       !
       module subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
          integer                              :: MpiComm
