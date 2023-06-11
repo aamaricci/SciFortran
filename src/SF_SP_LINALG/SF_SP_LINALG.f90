@@ -1,112 +1,403 @@
 module SF_SP_LINALG
-  USE SF_MISC,   only: assert_shape
-  USE SF_RANDOM, only: mt_random
-  USE SF_LINALG, only: eye,eigh
+   USE SF_MISC,   only: assert_shape
+   USE SF_RANDOM, only: mt_random
+   USE SF_LINALG, only: eye,eigh
 #ifdef _MPI
-  USE SF_MPI
+   USE SF_MPI
 #endif
-  implicit none
+   implicit none
 #ifdef _MPI
-  include 'mpif.h'
+   include 'mpif.h'
 #endif
-  private
-  
+   private
 
-  interface sp_eigh
-     module procedure :: lanczos_arpack_d
-     module procedure :: lanczos_arpack_c
+
+   interface sp_eigh
+
+      module subroutine lanczos_arpack_d(MatVec,eval,evec,Nblock,Nitermax,bmat,v0,tol,iverbose)
+         !Interface to Matrix-Vector routine:
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                 :: Nloc
+               real(8),dimension(Nloc) :: vin
+               real(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         !Arguments
+         real(8)                   :: eval(:)![Neigen]
+         real(8)                   :: evec(:,:)![Ns,Neigen]
+         integer,optional          :: Nblock
+         integer,optional          :: Nitermax
+         ! character(len=2),optional :: which
+         character(len=1),optional :: bmat
+         real(8),optional          :: v0(size(evec,1))!(ns)
+         real(8),optional          :: tol
+         logical,optional          :: iverbose
+         !
+         ! IMPLEMENTATION INTO SUBMODULE ARPACK_D
+         !
+      end subroutine lanczos_arpack_d
+      !
+      module subroutine lanczos_arpack_c(MatVec,eval,evec,Nblock,Nitermax,bmat,v0,tol,iverbose)
+         !Interface to Matrix-Vector routine:
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                    :: Nloc
+               complex(8),dimension(Nloc) :: vin
+               complex(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         !Arguments
+         real(8)                      :: eval(:)![Neigen]
+         complex(8)                   :: evec(:,:)![Ns,Neigen]
+         integer,optional             :: Nblock
+         integer,optional             :: Nitermax
+         ! character(len=2),optional    :: which
+         character(len=1),optional    :: bmat
+         complex(8),optional          :: v0(size(evec,1))
+         real(8),optional             :: tol
+         logical,optional             :: iverbose
+         !
+         ! IMPLEMENTATION INTO SUBMODULE ARPACK_C
+         !
+      end subroutine lanczos_arpack_c
+
 #ifdef _MPI
-     module procedure :: lanczos_parpack_d
-     module procedure :: lanczos_parpack_c
+      !
+      module subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,iverbose,vrandom)
+         !Arguments
+         integer                   :: MpiComm
+         !Interface to Matrix-Vector routine:
+         interface
+            subroutine MatVec(nchunk,vin,vout)
+               integer                   :: nchunk
+               real(8),dimension(nchunk) :: vin,vout
+            end subroutine MatVec
+         end interface
+         !Arguments
+         real(8)                   :: eval(:)![Neigen]
+         real(8)                   :: evec(:,:)![Ns,Neigen]
+         integer,optional          :: Nblock
+         integer,optional          :: Nitermax
+         ! character(len=2),optional :: which
+         real(8),optional          :: v0(size(evec,1))
+         real(8),optional          :: tol
+         logical,optional          :: iverbose
+         logical,optional          :: vrandom
+         !
+         ! IMPLEMENTATION INTO SUBMODULE PARPACK_D
+         !
+      end subroutine lanczos_parpack_d
+      !
+      module subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,iverbose,vrandom)
+         !Arguments
+         integer                    :: MpiComm
+         !Interface to Matrix-Vector routine:
+         interface
+            subroutine MatVec(nchunk,vin,vout)
+               integer                      :: nchunk
+               complex(8),dimension(nchunk) :: vin,vout
+            end subroutine MatVec
+         end interface
+         !Arguments
+         real(8)                   :: eval(:)   ![Neigen]
+         complex(8)                :: evec(:,:) ![Nloc,Neigen]
+         integer,optional          :: Nblock
+         integer,optional          :: Nitermax
+         ! character(len=2),optional :: which
+         complex(8),optional       :: v0(size(evec,1))
+         real(8),optional          :: tol
+         logical,optional          :: iverbose
+         logical,optional          :: vrandom
+         !
+         ! IMPLEMENTATION INTO SUBMODULE PARPACK_C
+         !
+      end subroutine lanczos_parpack_c
+      !
 #endif
-  end interface sp_eigh
+
+   end interface sp_eigh
 
 
-  interface sp_lanc_eigh
-     module procedure :: lanczos_eigh_d
-     module procedure :: lanczos_eigh_c
+   interface sp_lanc_eigh
+
+      module subroutine lanczos_eigh_d(MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                 :: Nloc
+               real(8),dimension(Nloc) :: vin
+               real(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         real(8)                              :: egs
+         real(8),dimension(:)                 :: vect
+         integer                              :: Nitermax
+         real(8),optional                     :: threshold
+         integer,optional                     :: ncheck
+         logical,optional                     :: iverbose
+         logical,optional                     :: vrandom
+         !
+         ! IMPLEMENTATION INTO SUBMODULE LANCZOS_D
+         !
+      end subroutine lanczos_eigh_d
+      !
+      module subroutine lanczos_eigh_c(MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                    :: Nloc
+               complex(8),dimension(Nloc) :: vin
+               complex(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         real(8)                              :: egs
+         complex(8),dimension(:)              :: vect
+         integer                              :: Nitermax
+         !
+         real(8),optional                     :: threshold
+         integer,optional                     :: ncheck
+         logical,optional                     :: iverbose
+         logical,optional                     :: vrandom
+         !
+         ! IMPLEMENTATION INTO SUBMODULE LANCZOS_C
+         !
+      end subroutine lanczos_eigh_c
+
 #ifdef _MPI
-     module procedure :: mpi_lanczos_eigh_d
-     module procedure :: mpi_lanczos_eigh_c
+      !
+      module subroutine mpi_lanczos_eigh_d(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
+         integer                              :: MpiComm
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer :: Nloc
+               real(8) :: vin(Nloc)
+               real(8) :: vout(Nloc)
+            end subroutine MatVec
+         end interface
+         real(8)                              :: egs
+         real(8),dimension(:)                 :: vect !Nloc
+         integer                              :: Nitermax
+         !
+         integer                              :: Nloc
+         real(8),optional                     :: threshold
+         integer,optional                     :: ncheck
+         logical,optional                     :: iverbose
+         logical,optional                     :: vrandom
+         !
+         ! IMPLEMENTATION INTO SUBMODULE MPI_LANCZOS_D
+         !
+      end subroutine mpi_lanczos_d
+      !
+      module subroutine mpi_lanczos_eigh_c(MpiComm,MatVec,Egs,Vect,Nitermax,iverbose,threshold,ncheck,vrandom)
+         integer                              :: MpiComm
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer    :: Nloc
+               complex(8) :: vin(Nloc)
+               complex(8) :: vout(Nloc)
+            end subroutine MatVec
+         end interface
+         real(8)                              :: egs
+         complex(8),dimension(:)              :: vect
+         integer                              :: Nitermax
+         !
+         integer                              :: Nloc
+         real(8),optional                     :: threshold
+         integer,optional                     :: ncheck
+         logical,optional                     :: iverbose
+         logical,optional                     :: vrandom
+         !
+         ! IMPLEMENTATION INTO SUBMODULE MPI_LANCZOS_C
+         !
+      end subroutine mpi_lanczos_eigh_c
+      !
 #endif
-  end interface sp_lanc_eigh
+   end interface sp_lanc_eigh
 
 
-  interface sp_lanc_tridiag
-     module procedure :: lanczos_tridiag_d
-     module procedure :: lanczos_tridiag_c
+   interface sp_lanc_tridiag
+
+      module subroutine lanczos_tridiag_d(MatVec,vin,alanc,blanc,threshold)
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                 :: Nloc
+               real(8),dimension(Nloc) :: vin
+               real(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         real(8),dimension(:),intent(inout)           :: vin
+         real(8),dimension(size(vin))                 :: vout
+         real(8),dimension(:),intent(inout)           :: alanc
+         real(8),dimension(size(alanc)),intent(inout) :: blanc
+         integer                                      :: Nitermax
+         integer                                      :: iter
+         real(8)                                      :: a_,b_
+         real(8),optional                             :: threshold
+         !
+         ! IMPLEMENTATION INTO SUBMODULE LANCZOS_D
+         !
+      end subroutine
+      !
+      module subroutine lanczos_tridiag_c(MatVec,vin,alanc,blanc,threshold)
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                    :: Nloc
+               complex(8),dimension(Nloc) :: vin
+               complex(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         complex(8),dimension(:),intent(inout)        :: vin
+         complex(8),dimension(size(vin))              :: vout
+         real(8),dimension(:),intent(inout)           :: alanc
+         real(8),dimension(size(alanc)),intent(inout) :: blanc
+         integer                                      :: Nitermax
+         integer                                      :: iter
+         real(8)                                      :: a_,b_
+         real(8),optional                             :: threshold
+         !
+         ! IMPLEMENTATION INTO SUBMODULE LANCZOS_C
+         !
+      end subroutine lanczos_tridiag_c
+
+
 #ifdef _MPI
-     module procedure :: mpi_lanczos_tridiag_d
-     module procedure :: mpi_lanczos_tridiag_c
-#endif
-  end interface sp_lanc_tridiag
-
-
-  interface sp_dvdson_eigh
-     module procedure :: dvdson_eigh_d
-  end interface sp_dvdson_eigh
-
-
-  complex(8),parameter              :: zero=(0d0,0d0)
-  complex(8),parameter              :: one=(1d0,0d0)
-  complex(8),parameter              :: xi=(0d0,1d0)
-  integer,allocatable               :: seed_random(:)
-  integer                           :: nrandom
-  logical                           :: verb=.false.
-  real(8)                           :: threshold_=1.d-12
-  integer                           :: ncheck_=10
-
-
-
-  !****************************************************************************************
-  !                                      PUBLIC 
-  !****************************************************************************************
-  public :: sp_eigh
-  public :: sp_lanc_eigh
-  public :: sp_lanc_tridiag
-  public :: sp_dvdson_eigh
-  !****************************************************************************************
-
-
-
-
-contains
-
-
-  !##################################################################
-  ! ARPACK METHOD for LOWEST part of the spectrum of a of a SPARSE
-  !   MATRIX (defined via H*v)
-  ! - DBLE and CMPLX versions included
-  ! - SERIAL and PARALLEL-MPI versions included
-  !        [COMM    MPI  Communicator for the processor grid.  (INPUT)]
-  include "arpack_d.f90"
-  include "arpack_c.f90"
-#ifdef _MPI
-  include "parpack_d.f90"
-  include "parpack_c.f90"
+      !
+      module subroutine mpi_lanczos_tridiag_d(MpiComm,MatVec,vin,alanc,blanc,threshold)
+         integer                                      :: MpiComm
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                 :: Nloc
+               real(8),dimension(Nloc) :: vin
+               real(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         real(8),dimension(:),intent(inout)           :: vin !Nloc
+         real(8),dimension(size(vin))                 :: vout,vtmp
+         real(8),dimension(:),intent(inout)           :: alanc
+         real(8),dimension(size(alanc)),intent(inout) :: blanc
+         integer                                      :: Nitermax,Nloc,i
+         integer                                      :: iter
+         real(8)                                      :: a_,b_
+         real(8),optional                             :: threshold
+         !
+         ! IMPLEMENTATION INTO SUBMODULE LANCZOS_D
+         !
+      end subroutine mpi_lanczos_tridiag_d
+      !
+      module subroutine mpi_lanczos_tridiag_c(MpiComm,MatVec,vin,alanc,blanc,threshold)
+         integer                                      :: MpiComm
+         interface
+            subroutine MatVec(Nloc,vin,vout)
+               integer                    :: Nloc
+               complex(8),dimension(Nloc) :: vin
+               complex(8),dimension(Nloc) :: vout
+            end subroutine MatVec
+         end interface
+         complex(8),dimension(:),intent(inout)        :: vin !Nloc
+         complex(8),dimension(size(vin))              :: vout,vtmp
+         real(8),dimension(:),intent(inout)           :: alanc
+         real(8),dimension(size(alanc)),intent(inout) :: blanc
+         integer                                      :: Nitermax,Nloc,i
+         integer                                      :: iter
+         real(8)                                      :: a_,b_
+         real(8),optional                             :: threshold
+         !
+         ! IMPLEMENTATION INTO SUBMODULE LANCZOS_C
+         !
+      end subroutine mpi_lanczos_tridiag_c
+      !
 #endif
 
-
-  !##################################################################
-  ! LANCZOS METHOD for LOWEST EigenSolution OR tri-diagonalization
-  !    of a SPARSE MATRIX (defined via H*v)
-  ! - DBLE and CMPLX versions included
-  ! - SERIAL and PARALLEL-MPI versions included
-  include "lanczos_d.f90"
-  include "lanczos_c.f90"
-#ifdef _MPI
-  include "mpi_lanczos_d.f90"
-  include "mpi_lanczos_c.f90"
-#endif
+   end interface sp_lanc_tridiag
 
 
-  !##################################################################
-  ! DAVIDSON METHOD for LOWEST EigenSolution of a SPARSE MATRIX (defined via H*v)
-  include "dvdson_serial.f90"
+   interface sp_dvdson_eigh
+
+      module subroutine dvdson_eigh_d(MatVec,eval,evec,Nblock,Nitermax,Tol)
+        !Interface to Matrix-Vector routine:
+        interface
+           subroutine MatVec(Nloc,vin,vout)
+              integer                 :: Nloc
+              real(8),dimension(Nloc) :: vin
+              real(8),dimension(Nloc) :: vout
+           end subroutine MatVec
+        end interface
+        !Arguments
+        real(8),intent(inout)            :: eval(:)![Neigen]
+        real(8),intent(inout)            :: evec(:,:)![Ns,Neigen]
+        integer,optional                 :: Nblock
+        integer,optional                 :: Nitermax
+        real(8),optional                 :: Tol
+        !
+        ! IMPLEMENTATION INTO SUBMODULE DVDSON_SERIAL
+        !
+        end subroutine dvdson_eigh_d
+
+   end interface sp_dvdson_eigh
+
+
+   complex(8),parameter              :: zero=(0d0,0d0)
+   complex(8),parameter              :: one=(1d0,0d0)
+   complex(8),parameter              :: xi=(0d0,1d0)
+   integer,allocatable               :: seed_random(:)
+   integer                           :: nrandom
+   logical                           :: verb=.false.
+   real(8)                           :: threshold_=1.d-12
+   integer                           :: ncheck_=10
+
+
+
+   !****************************************************************************************
+   !                                      PUBLIC
+   !****************************************************************************************
+   public :: sp_eigh
+   public :: sp_lanc_eigh
+   public :: sp_lanc_tridiag
+   public :: sp_dvdson_eigh
+   !****************************************************************************************
+
 
 
 
 end module SF_SP_LINALG
+
+
+
+
+!! ALL IMPLEMENTATIONS MOVED TO SUBMODULES
+
+ !##################################################################
+ ! ARPACK METHOD for LOWEST part of the spectrum of a of a SPARSE
+ !   MATRIX (defined via H*v)
+ ! - DBLE and CMPLX versions included
+ ! - SERIAL and PARALLEL-MPI versions included
+ !        [COMM    MPI  Communicator for the processor grid.  (INPUT)]
+include "arpack_d.f90"
+include "arpack_c.f90"
+#ifdef _MPI
+include "parpack_d.f90"
+include "parpack_c.f90"
+#endif
+
+
+ !##################################################################
+ ! LANCZOS METHOD for LOWEST EigenSolution OR tri-diagonalization
+ !    of a SPARSE MATRIX (defined via H*v)
+ ! - DBLE and CMPLX versions included
+ ! - SERIAL and PARALLEL-MPI versions included
+include "lanczos_d.f90"
+include "lanczos_c.f90"
+#ifdef _MPI
+include "mpi_lanczos_d.f90"
+include "mpi_lanczos_c.f90"
+#endif
+
+
+ !##################################################################
+ ! DAVIDSON METHOD for LOWEST EigenSolution of a SPARSE MATRIX (defined via H*v)
+include "dvdson_serial.f90"
+
+
+
 
 
 
@@ -132,7 +423,7 @@ end module SF_SP_LINALG
 
 
 ! !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-! !++++++++++++++++++COMPUTATIONAL ROUTINE: TQL2++++++++++++++++++++++++ 
+! !++++++++++++++++++COMPUTATIONAL ROUTINE: TQL2++++++++++++++++++++++++
 ! !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! !---------------------------------------------------------------------
 ! ! PURPOSE computes all eigenvalues/vectors, real symmetric tridiagonal matrix.
