@@ -76,7 +76,7 @@ contains
     real(8), intent(in)           :: a,b
     character(len=*),intent(in)   :: fname
     real(8), intent(in), optional :: tol
-    tol_=1d-5 ; if(present(tol)) tol_=tol
+    tol_=1d-12 ; if(present(tol)) tol_=tol
     test=.false.
     if(abs(a-b)<tol_)test=.true.
     call assert_msg(fname,test)
@@ -86,7 +86,7 @@ contains
     complex(8), intent(in)        :: a,b
     character(len=*),intent(in)   :: fname
     real(8), intent(in), optional :: tol
-    tol_=1d-5 ; if(present(tol)) tol_=tol
+    tol_=1d-12 ; if(present(tol)) tol_=tol
     test=.false.
     if(abs(a-b)<tol_)test=.true.
     call assert_msg(fname,test)

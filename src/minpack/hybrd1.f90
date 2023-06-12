@@ -1,4 +1,4 @@
-subroutine hybrd1 ( fcn, n, x, fvec, tol, info )
+subroutine hybrd1 ( fcn, n, x, fvec, tol, info, maxfev )
 
 !*****************************************************************************80
 !
@@ -106,7 +106,7 @@ subroutine hybrd1 ( fcn, n, x, fvec, tol, info )
     return
   end if
 
-  maxfev = 200 * ( n + 1 )
+  maxfev = maxfev * ( n + 1 )!200 * ( n + 1 )
   xtol = tol
   ml = n - 1
   mu = n - 1

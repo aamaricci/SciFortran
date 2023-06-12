@@ -90,11 +90,6 @@ module SF_MISC
      module procedure :: sort_quicksort_d
   end interface sort_quicksort
 
-  interface sort_qsort
-     module procedure :: sort_array_i
-     module procedure :: sort_array_d
-  end interface sort_qsort
-
   interface sort
      module procedure :: sort_quicksort_i
      module procedure :: sort_quicksort_d
@@ -104,6 +99,12 @@ module SF_MISC
      module procedure :: sort_quicksort_i
      module procedure :: sort_quicksort_d
   end interface sort_array
+
+
+  interface sort_qsort
+     module procedure :: sort_array_i
+     module procedure :: sort_array_d
+  end interface sort_qsort
 
   public :: sort
   public :: sort_array
@@ -382,7 +383,7 @@ contains
   end subroutine z_assert_shape_N8
 #endif
 
-  
+
 
 
   ! SORTING 1D:
@@ -447,16 +448,19 @@ contains
   end subroutine sort_insertion_d
 
 
+
   !> subroutine to sort using the quicksort algorithm
-  subroutine sort_quicksort_i(a,indx_a)
-    integer, dimension(:),intent(inout)      :: a
-    integer,dimension(size(a)),intent(inout) :: indx_a
-    integer                                  :: i
+  subroutine sort_quicksort_i(a,indx)
+    integer,dimension(:),intent(inout)                :: a
+    integer,dimension(size(a)),intent(inout),optional :: indx
+    integer,dimension(size(a))                        :: indx_a
+    integer                                           :: i
     do i=1,size(a)
        indx_a(i)=i
     enddo
     !
     call quicksort_i(a,indx_a,size(a))
+    if(present(indx))indx=indx_a
     !
   contains
     !
@@ -521,15 +525,17 @@ contains
   end subroutine sort_quicksort_i
 
   !
-  subroutine sort_quicksort_d(a,indx_a)
-    real(8), dimension(:),intent(inout)      :: a
-    integer,dimension(size(a)),intent(inout) :: indx_a
-    integer                                  :: i
+  subroutine sort_quicksort_d(a,indx)
+    real(8), dimension(:),intent(inout)               :: a
+    integer,dimension(size(a)),intent(inout),optional :: indx
+    integer,dimension(size(a))                        :: indx_a
+    integer                                           :: i
     do i=1,size(a)
        indx_a(i)=i
     enddo
     !
     call quicksort_d(a,indx_a,size(a))
+    if(present(indx))indx=indx_a
     !
   contains
     !

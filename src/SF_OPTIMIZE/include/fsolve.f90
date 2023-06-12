@@ -1,7 +1,7 @@
 !HYBRD INTERFACE:
 !solve N nonlinear equations in N unknowns
 !numerical jacobian 
-subroutine fsolve_hybrd_func(func,x,tol,info,check)
+subroutine fsolve_hybrd_func(func,x,tol,info,check,maxfev)
   interface
      function func(x)
        real(8),dimension(:),intent(in) :: x
@@ -11,6 +11,8 @@ subroutine fsolve_hybrd_func(func,x,tol,info,check)
   real(8),dimension(:)       :: x      
   real(8),optional           :: tol
   integer,optional           :: info
+  integer,optional           :: maxfev
+  integer                    :: maxfev_
   real(8)                    :: tol_
   integer                    :: info_
   logical,optional           :: check
@@ -19,8 +21,9 @@ subroutine fsolve_hybrd_func(func,x,tol,info,check)
   real(8),dimension(size(x)) :: fvec
   tol_ = 1.d-15;if(present(tol))tol_=tol
   check_=.true.;if(present(check))check_=check
+  maxfev_=200;if(present(maxfev))maxfev_=maxfev
   n=size(x)
-  call hybrd1(fsolve_hybrd1_func2sub,n,x,fvec,tol_,info_)
+  call hybrd1(fsolve_hybrd1_func2sub,n,x,fvec,tol_,info_,maxfev_)
   if(present(info))info=info_
   if(check_)then
      include "fsolve_error.h90"
@@ -36,7 +39,7 @@ contains
   end subroutine fsolve_hybrd1_func2sub
 end subroutine fsolve_hybrd_func
 
-subroutine fsolve_hybrd_sub(func,x,tol,info,check)
+subroutine fsolve_hybrd_sub(func,x,tol,info,check,maxfev)
   interface
      subroutine func(x,ff)
        real(8),dimension(:),intent(in) :: x
@@ -48,14 +51,17 @@ subroutine fsolve_hybrd_sub(func,x,tol,info,check)
   integer,optional           :: info
   real(8)                    :: tol_
   integer                    :: info_
+  integer,optional           :: maxfev
+  integer                    :: maxfev_
   logical,optional           :: check
   logical                    :: check_
   integer                    :: n
   real(8),dimension(size(x)) :: fvec
   tol_ = 1.d-15;if(present(tol))tol_=tol
   check_=.true.;if(present(check))check_=check
+  maxfev_=200;if(present(maxfev))maxfev_=maxfev
   n=size(x)
-  call hybrd1(fsolve_hybrd1_sub2sub,n,x,fvec,tol_,info_)
+  call hybrd1(fsolve_hybrd1_sub2sub,n,x,fvec,tol_,info_,maxfev_)
   if(present(info))info=info_
   if(check_)then
      include "fsolve_error.h90"

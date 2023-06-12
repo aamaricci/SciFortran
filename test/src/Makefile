@@ -19,6 +19,21 @@ integrate:
 parse_input:
 	make -C ./SF_PARSE_INPUT
 
+iotools:
+	make -C ./SF_IOTOOLS
+
+derivate:
+	make -C ./SF_DERIVATE
+
+fft:
+	make -C ./SF_FFT
+
+interpolate:
+	make -C ./SF_INTERPOLATE
+
+optimize:
+	make -C ./SF_OPTIMIZE
+
 .f90.o:	
 	$(FC) $(FFLAGS) -c $< ${GLOB_INC}
 

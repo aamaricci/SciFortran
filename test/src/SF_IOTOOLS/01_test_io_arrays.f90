@@ -1,7 +1,6 @@
-program testSLPLOTeREAD
-  USE IOFILE
-  USE IOPLOT
-  USE IOREAD
+program testIOTOOLS
+  USE SF_IOTOOLS
+  USE ASSERTING
   implicit none
 
   integer,parameter :: L=5
@@ -27,157 +26,157 @@ program testSLPLOTeREAD
 
   real(8) :: const
 
-  logical :: bool
-
-  ! inquire(file="kk.dat",opened=bool,number=unit)
-  ! print*,bool,unit
-  ! open(100,file="kk.dat")
-  ! inquire(file="kk.dat",opened=bool,number=unit)
-  ! print*,bool,unit
-  ! if(bool)close(100)
-  ! inquire(file="kk.dat",opened=bool,number=unit)
-  ! print*,bool,unit
-
-
-  ! !>DEBUG
-  ! stop
-  ! !<DEBUG
-
   const=acos(-1.d0)
 
   x=const
 
-  A1=drand()
-  A2=drand()
-  A3=drand()
-  A4=drand()
-  A5=drand()
-  A6=drand()
-  A7=drand()
+  call fill_with_drand(A1)
+  call fill_with_drand(A2)
+  call fill_with_drand(A3)
+  call fill_with_drand(A4)
+  call fill_with_drand(A5)
+  call fill_with_drand(A6)
+  call fill_with_drand(A7)
 
-  B1=crand()
-  B2=crand()
-  B3=crand()
-  B4=crand()
-  B5=crand()
-  B6=crand()
-  B7=crand()
+  call fill_with_crand(B1)
+  call fill_with_crand(B2)
+  call fill_with_crand(B3)
+  call fill_with_crand(B4)
+  call fill_with_crand(B5)
+  call fill_with_crand(B6)
+  call fill_with_crand(B7)
 
 
-  print*,"             SPLOT <--> SREAD                   "
-  print*,"         Sum(x-x_)   ","               Sum(A-A_)"
+
   print*,""
-
+  print*,"             SPLOT <--> SREAD                   "
+  print*,""
 
   call splot("A1.dat",x,A1)
   call sread("A1.dat",x_,A1_)
-  print*,"A1:",sum(x-x_),sum(A1-A1_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A1,A1_,"1D REAL ARRAY")
   call splot("B1.dat",x,B1)
   call sread("B1.dat",x_,B1_)
-  print*,"B1:",sum(x-x_),sum(B1-B1_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B1,B1_,"1D COMPLEX ARRAY")
 
   call splot("A2.dat",x,A2)
   call sread("A2.dat",x_,A2_)
-  print*,"A2:",sum(x-x_),sum(A2-A2_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A2,A2_,"2D REAL ARRAY")
   call splot("B2.dat",x,B2)
   call sread("B2.dat",x_,B2_)
-  print*,"B2:",sum(x-x_),sum(B2-B2_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B2,B2_,"2D COMPLEX ARRAY")
 
   call splot("A3.dat",x,A3)
   call sread("A3.dat",x_,A3_)
-  print*,"A3:",sum(x-x_),sum(A3-A3_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A3,A3_,"3D REAL ARRAY")
   call splot("B3.dat",x,B3)
   call sread("B3.dat",x_,B3_)
-  print*,"B3:",sum(x-x_),sum(B3-B3_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B3,B3_,"3D COMPLEX ARRAY")
 
   call splot("A4.dat",x,A4)
   call sread("A4.dat",x_,A4_)
-  print*,"A4:",sum(x-x_),sum(A4-A4_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A4,A4_,"4D REAL ARRAY")
   call splot("B4.dat",x,B4)
   call sread("B4.dat",x_,B4_)
-  print*,"B4:",sum(x-x_),sum(B4-B4_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B4,B4_,"4D COMPLEX ARRAY")
 
   call splot("A5.dat",x,A5)
   call sread("A5.dat",x_,A5_)
-  print*,"A5:",sum(x-x_),sum(A5-A5_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A5,A5_,"5D REAL ARRAY")
   call splot("B5.dat",x,B5)
   call sread("B5.dat",x_,B5_)
-  print*,"B5:",sum(x-x_),sum(B5-B5_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B5,B5_,"5D COMPLEX ARRAY")
 
   call splot("A6.dat",x,A6)
   call sread("A6.dat",x_,A6_)
-  print*,"A6:",sum(x-x_),sum(A6-A6_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A6,A6_,"6D REAL ARRAY")
   call splot("B6.dat",x,B6)
   call sread("B6.dat",x_,B6_)
-  print*,"B6:",sum(x-x_),sum(B6-B6_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B6,B6_,"6D COMPLEX ARRAY")
 
   call splot("A7.dat",x,A7)
   call sread("A7.dat",x_,A7_)
-  print*,"A7:",sum(x-x_),sum(A7-A7_)
+  call assert(x,x_,"COORDINATES")
+  call assert(A7,A7_,"7D REAL ARRAY")
   call splot("B7.dat",x,B7)
   call sread("B7.dat",x_,B7_)
-  print*,"B7:",sum(x-x_),sum(B7-B7_)
+  call assert(x,x_,"COORDINATES")
+  call assert(B7,B7_,"7D COMPLEX ARRAY")
 
+  
 
-
-  call set_store_size(10)
-
-  print*,""
   print*,""
   print*,"             SAVE <--> READ                   "
   print*,""
+
+  call set_store_size(10)
+
   call save_array("A1.dat",A1)
   call read_array("A1.dat",A1_)
-  print*,"A1:",sum(A1-A1_)
+  call assert(A1,A1_,"1D REAL ARRAY")
   call save_array("B1.dat",B1)
   call read_array("B1.dat",B1_)
-  print*,"B1:",sum(B1-B1_)
+  call assert(B1,B1_,"1D COMPLEX ARRAY")
 
   call save_array("A2.dat",A2)
   call read_array("A2.dat",A2_)
-  print*,"A2:",sum(A2-A2_)
+  call assert(A2,A2_,"2D REAL ARRAY")
   call save_array("B2.dat",B2)
   call read_array("B2.dat",B2_)
-  print*,"B2:",sum(B2-B2_)
+  call assert(B2,B2_,"2D COMPLEX ARRAY")
 
   call save_array("A3.dat",A3)
   call read_array("A3.dat",A3_)
-  print*,"A3:",sum(A3-A3_)
+  call assert(A3,A3_,"3D REAL ARRAY")
   call save_array("B3.dat",B3)
   call read_array("B3.dat",B3_)
-  print*,"B3:",sum(B3-B3_)
+  call assert(B3,B3_,"3D COMPLEX ARRAY")
 
   call save_array("A4.dat",A4)
   call read_array("A4.dat",A4_)
-  print*,"A4:",sum(A4-A4_)
+  call assert(A4,A4_,"4D REAL ARRAY")
   call save_array("B4.dat",B4)
   call read_array("B4.dat",B4_)
-  print*,"B4:",sum(B4-B4_)
+  call assert(B4,B4_,"4D COMPLEX ARRAY")
 
   call save_array("A5.dat",A5)
   call read_array("A5.dat",A5_)
-  print*,"A5:",sum(A5-A5_)
+  call assert(A5,A5_,"5D REAL ARRAY")
   call save_array("B5.dat",B5)
   call read_array("B5.dat",B5_)
-  print*,"B5:",sum(B5-B5_)
+  call assert(B5,B5_,"5D COMPLEX ARRAY")
 
   call save_array("A6.dat",A6)
   call read_array("A6.dat",A6_)
-  print*,"A6:",sum(A6-A6_)
+  call assert(A6,A6_,"6D REAL ARRAY")
   call save_array("B6.dat",B6)
   call read_array("B6.dat",B6_)
-  print*,"B6:",sum(B6-B6_)
+  call assert(B6,B6_,"6D COMPLEX ARRAY")
 
   call save_array("A7.dat",A7)
   call read_array("A7.dat",A7_)
-  print*,"A7:",sum(A7-A7_)
+  call assert(A7,A7_,"7D REAL ARRAY")
   call save_array("B7.dat",B7)
   call read_array("B7.dat",B7_)
-  print*,"B7:",sum(B7-B7_)
+  call assert(B7,B7_,"7D COMPLEX ARRAY")
 
 
 
 contains
+
+
 
   function drand() result(r)
     real(8) :: r
@@ -192,4 +191,14 @@ contains
     r=dcmplx(re,im)
   end function crand
 
-end program testSLPLOTeREAD
+  impure elemental subroutine fill_with_drand(A)
+    real(8),intent(inout) :: A
+    A = drand()
+  end subroutine
+
+  impure elemental subroutine fill_with_crand(B)
+    complex(8),intent(inout) :: B
+    B = crand()
+  end subroutine
+  
+end program testIOTOOLS

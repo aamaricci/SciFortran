@@ -1,4 +1,5 @@
 module IOREAD
+
    USE IOFILE
    implicit none
    private
@@ -49,7 +50,6 @@ module IOREAD
    public :: read_array
 
 contains
-
 
 
    ! SPLOT arrays (1--7)
