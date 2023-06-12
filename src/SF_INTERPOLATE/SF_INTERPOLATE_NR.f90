@@ -1,4 +1,4 @@
-module INTERPOLATE_NR
+module SF_INTERPOLATE_NR
   implicit none
   private
 
@@ -112,4 +112,4 @@ contains
     end if
   end function assert_eq
 
-END MODULE INTERPOLATE_NR
+END MODULE SF_INTERPOLATE_NR

@@ -381,13 +381,13 @@ contains
   ! - Jacobi method
   ! - N-by-N real/complex nonsymmetric matrix A eigenvalues and, optionally,the left/right eigenvectors.
   !-------------------------------------------------------------------------------------------
-  include "linalg_eig.f90"
-  include "linalg_eigh.f90"
-  include "linalg_eigh_jacobi.f90"
-  include "linalg_eigvals.f90"
-  include "linalg_eigvalsh.f90"
+  include "linalg_eig.f95"
+  include "linalg_eigh.f95"
+  include "linalg_eigh_jacobi.f95"
+  include "linalg_eigvals.f95"
+  include "linalg_eigvalsh.f95"
 #ifdef _SCALAPACK
-  include "linalg_p_eigh.f90"
+  include "linalg_p_eigh.f95"
 #endif
 
   !-------------------------------------------------------------------------------------------
@@ -395,8 +395,8 @@ contains
   !PURPOSE: compute the singular value decomposition A = U sigma Vtransp / U sigma V^H of 
   ! real/complex matrix A
   !-------------------------------------------------------------------------------------------
-  include "linalg_svdvals.f90"
-  include "linalg_svd.f90"
+  include "linalg_svdvals.f95"
+  include "linalg_svd.f95"
 
 
   !-------------------------------------------------------------------------------------------
@@ -408,13 +408,13 @@ contains
   ! - Gauss-Jordan
   ! note: M is destroyed and replaces by its inverse M^-1
   !-------------------------------------------------------------------------------------------
-  include "linalg_inv.f90"
-  include "linalg_inv_sym.f90"
-  include "linalg_inv_her.f90"
-  include "linalg_inv_triang.f90"
-  include "linalg_inv_gj.f90"
+  include "linalg_inv.f95"
+  include "linalg_inv_sym.f95"
+  include "linalg_inv_her.f95"
+  include "linalg_inv_triang.f95"
+  include "linalg_inv_gj.f95"
 #ifdef _SCALAPACK
-  include "linalg_p_inv.f90"
+  include "linalg_p_inv.f95"
 #endif
 
   !+-----------------------------------------------------------------+
@@ -422,26 +422,26 @@ contains
   ! - direct solution of A*x=b
   ! -least square solution to A x = b for real A, b
   !+-----------------------------------------------------------------+
-  include "linalg_solve.f90"
-  include "linalg_lstsq.f90"
+  include "linalg_solve.f95"
+  include "linalg_lstsq.f95"
 
 
 
   !-------------------------------------------------------------------------------------------
   !PURPOSE: wrap BLAS 1,2,3 operations
   !-------------------------------------------------------------------------------------------
-  include "linalg_blas.f90"
+  include "linalg_blas.f95"
 #ifdef _SCALAPACK
-  include "linalg_p_blas.f90"
+  include "linalg_p_blas.f95"
 #endif
 
   !+-----------------------------------------------------------------+
   !PROGRAM  : BUILD,CHECK & INVERT TRIDIAGONAL MATRICES
   !+-----------------------------------------------------------------+
-  include "linalg_inv_tridiag.f90"
-  include "linalg_check_tridiag.f90"
-  include "linalg_get_tridiag.f90"
-  include "linalg_build_tridiag.f90"
+  include "linalg_inv_tridiag.f95"
+  include "linalg_check_tridiag.f95"
+  include "linalg_get_tridiag.f95"
+  include "linalg_build_tridiag.f95"
   function deye_tridiag(Nblock,N) result(eye_block)
     integer                       :: Nblock
     integer                       :: N
@@ -474,7 +474,7 @@ contains
   ! - trace: return trace along the main diagonal
   ! - Xeye: returns the identity matrix of size n x n
   !+-----------------------------------------------------------------+
-  include "linalg_auxiliary.f90"
+  include "linalg_auxiliary.f95"
 
 
 
@@ -489,7 +489,7 @@ contains
   ! - cross: cross or vector product for 2d and 3d vectors.
   ! - s3_product: evaluate the S3 product A.(BxC) for 3d vectors
   !+-----------------------------------------------------------------+
-  include "linalg_external_products.f90"
+  include "linalg_external_products.f95"
 
 
 
@@ -506,7 +506,7 @@ contains
   !##################################################################
 #ifdef _MPI
 #  ifdef _SCALAPACK
-      include "linalg_blacs_aux.f90"
+      include "linalg_blacs_aux.f95"
 #  endif
 #endif
 
