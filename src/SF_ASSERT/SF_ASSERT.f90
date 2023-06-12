@@ -1,5 +1,5 @@
 MODULE SF_ASSERT
-  USE SF_INIT, only: bold_red, bold_green
+  USE SF_FONTS, only: bold_red,bold_green
   USE SF_IOTOOLS, only: str
   implicit none
   private

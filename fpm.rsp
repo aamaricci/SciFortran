@@ -1,7 +1,13 @@
 @release
 option build --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -fallow-argument-mismatch -O3 -funroll-loops"
 
+@install
+option install --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -fallow-argument-mismatch -O3 -funroll-loops"
+
 @testing
+option build --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -fallow-argument-mismatch -O2 -funroll-loops"
+
+@test
 option test --compiler gfortran --flag "-ffree-line-length-none -fPIC -w -fallow-argument-mismatch -O2 -funroll-loops"
 
 @debug
