@@ -1,5 +1,6 @@
-MODULE ASSERTING
-  USE SCIFOR, only: bold_red,bold_green,str
+MODULE SF_ASSERT
+  USE SF_INIT, only: bold_red, bold_green
+  USE SF_IOTOOLS, only: str
   implicit none
   private
 
@@ -458,4 +459,4 @@ contains
   end subroutine assert_msg
 
 
-end module asserting
+end module SF_ASSERT
