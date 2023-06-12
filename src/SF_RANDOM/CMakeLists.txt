@@ -1,10 +1,8 @@
 # SF_RANDOM library
 file(GLOB SF_RANDOM_LOCAL_SRC
+  RNG_LEGACY.f90
   SF_RANDOM.f90
   SF_STAT.f90
   )
-
-include_directories(include)
-
 SET(SF_RANDOM_src ${SF_RANDOM_LOCAL_SRC})
 ADD_LIBRARY(SF_RANDOMLIB OBJECT ${SF_RANDOM_src})
