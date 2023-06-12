@@ -1,6 +1,6 @@
 program test_SF_CONSTANTS
   USE SF_CONSTANTS
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   real(8) :: my_pi,my_e,my_sqrt6,my_c

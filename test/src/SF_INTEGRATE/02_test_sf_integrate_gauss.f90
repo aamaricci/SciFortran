@@ -1,6 +1,6 @@
 program testSF_GAUSS
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer             :: L,Lf,N

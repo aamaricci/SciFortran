@@ -1,6 +1,6 @@
 program test_SF_COLORS
   USE SF_COLORS
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
   type(rgb_color) :: color1,color2,color3,my_yellow,mix_color
   integer :: rgb_yellow=16776960

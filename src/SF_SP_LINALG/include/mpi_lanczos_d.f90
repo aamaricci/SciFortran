@@ -1,5 +1,7 @@
 submodule (SF_SP_LINALG) mpi_lanczos_d
 
+   USE SF_MPI
+
 contains
 
 !---------------------------------------------------------------------

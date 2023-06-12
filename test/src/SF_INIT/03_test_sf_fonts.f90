@@ -1,6 +1,6 @@
 program test_SF_FONTS
   USE SF_FONTS
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   character(len=27) :: text="Lorem ipsum dolor sit amet."

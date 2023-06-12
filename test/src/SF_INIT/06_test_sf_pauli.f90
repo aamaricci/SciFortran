@@ -1,7 +1,7 @@
 program test_SF_PAULI
   USE SF_PAULI
   USE SF_LINALG, only:diag
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   complex(8),dimension(4,4) :: gamma03_,gamma00_

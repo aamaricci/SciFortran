@@ -1,6 +1,6 @@
 program test_parsing
   USE SCIFOR, only: parse_cmd_variable,parse_input_variable
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer                  :: L, L_r=1000

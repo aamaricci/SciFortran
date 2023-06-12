@@ -8,9 +8,7 @@ FFLAGS= ${FFLAG} ${FPPMPI}
 
 GLOB_INC:=$(shell pkg-config --cflags scifor)
 
-OBJS=ASSERTING.o
-
-all: $(OBJS) init integrate parse_input
+all: init integrate parse_input
 
 init:
 	make -C ./SF_INIT

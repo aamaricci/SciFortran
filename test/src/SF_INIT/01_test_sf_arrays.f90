@@ -1,6 +1,6 @@
 program test_SF_ARRAY
   USE SF_ARRAYS
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer,parameter :: L=10,P=3,Q=10,N=P*Q+1

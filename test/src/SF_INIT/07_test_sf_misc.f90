@@ -1,6 +1,6 @@
 program test_SF_MISC
   USE SF_MISC
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
 

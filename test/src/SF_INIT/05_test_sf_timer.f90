@@ -1,7 +1,7 @@
 program test_SF_TIMER
   USE SF_CONSTANTS
   USE SF_TIMER
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer :: i

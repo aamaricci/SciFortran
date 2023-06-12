@@ -357,7 +357,7 @@ contains
     call wofz(x,y,u,v,flag)
     wfun=cmplx(u,v)
   contains
-    include "functions_wofz.f90"
+    include "functions_wofz.f95"
   end function wfun
 
 
@@ -366,13 +366,13 @@ contains
   !*******************************************************************
 
   !Double precision complex argument Error function
-  include "functions_zerf.f90"
+  include "functions_zerf.f95"
 
 
   !###################################################################
   ! BETHE:
   !###################################################################
-  include "functions_bethe.f90"
+  include "functions_bethe.f95"
 
 
 
@@ -454,7 +454,7 @@ contains
 
 
 
-  include "special_functions.f90"
+  include "special_functions.f95"
 
   function EllipticK(z) result(K)
     real(8) :: z

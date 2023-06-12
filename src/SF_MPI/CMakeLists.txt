@@ -3,8 +3,5 @@ file(GLOB SF_MPI_LOCAL_SRC
   SF_MPI.f90
   SF_BLACS.f90
   )
-
-include_directories(include)
-
 SET(SF_MPI_src ${SF_MPI_LOCAL_SRC})
 ADD_LIBRARY(SF_MPILIB OBJECT ${SF_MPI_src})

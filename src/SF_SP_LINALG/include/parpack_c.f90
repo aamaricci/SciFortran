@@ -1,5 +1,7 @@
 submodule (SF_SP_LINALG) parpack_c
 
+   USE SF_MPI
+
 contains
 
 subroutine lanczos_parpack_c(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,iverbose,vrandom)

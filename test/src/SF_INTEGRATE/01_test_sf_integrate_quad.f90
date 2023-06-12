@@ -1,6 +1,6 @@
 program test_SF_QUAD
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
 
