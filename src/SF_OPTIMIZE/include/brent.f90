@@ -1,3 +1,6 @@
+submodule (SF_OPTIMIZE) brent_implementation
+
+contains
 
 !+-------------------------------------------------------------------+
 !PURPOSE  : 
@@ -495,3 +498,6 @@ contains
     c=d
   end subroutine shft
 end subroutine bracket
+
+
+end submodule brent_implementation
