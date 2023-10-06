@@ -281,23 +281,35 @@ module SF_LINALG
   !Kroenecker product of matrices
   public :: kron
   public :: kronecker_product
-  public :: kroenecker_product
+  public :: operator(.kx.)
   !outer product of two 1d arrays to form a matrix
   public :: outerprod
   public :: cross_product
   public :: s3_product
   !
   interface kron
-     module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
+     module procedure :: i_kronecker_product
+     module procedure :: d_kronecker_product
+     module procedure :: dc_kronecker_product
+     module procedure :: cd_kronecker_product
+     module procedure :: c_kronecker_product
   end interface kron
   !
   interface kronecker_product
-     module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
+     module procedure :: i_kronecker_product
+     module procedure :: d_kronecker_product
+     module procedure :: dc_kronecker_product
+     module procedure :: cd_kronecker_product
+     module procedure :: c_kronecker_product
   end interface kronecker_product
   !
-  interface kroenecker_product
-     module procedure i_kronecker_product,d_kronecker_product,c_kronecker_product
-  end interface kroenecker_product
+  interface operator(.kx.)
+     module procedure :: i_kronecker_product
+     module procedure :: d_kronecker_product
+     module procedure :: dc_kronecker_product
+     module procedure :: cd_kronecker_product
+     module procedure :: c_kronecker_product
+  end interface operator(.kx.)
   !
   interface outerprod
      module procedure outerprod_d,outerprod_c

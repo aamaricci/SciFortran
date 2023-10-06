@@ -46,6 +46,8 @@ module IOFILE
   public :: str
   public :: txtfy !obsolete
   public :: reg
+  public :: to_lower
+  public :: to_upper
   !
   public :: file_size
   public :: file_length
@@ -70,7 +72,7 @@ contains
 
 
 
-  
+
   !+-----------------------------------------------------------------+
   !PURPOSE  : 
   !+-----------------------------------------------------------------+
@@ -394,6 +396,37 @@ contains
   !******************************************************************
   !******************************************************************
   !******************************************************************
+
+
+
+  function to_upper(StrIn) result(StrOut)
+    character(len=*), intent(in) :: strIn
+    character(len=len(strIn))    :: strOut
+    integer :: i
+    do i = 1,len(StrIn)
+       select case(StrIn(i:i))
+       case("a":"z")
+          StrOut(i:i) = achar(iachar(StrIn(i:i))-32)
+       case default
+          StrOut(i:i) = StrIn(i:i)
+       end select
+    end do
+  end function to_upper
+
+  function to_lower(StrIn) result(StrOut)
+    character(len=*), intent(in) :: strIn
+    character(len=len(strIn))    :: strOut
+    integer :: i
+    do i = 1,len(StrIn)
+       select case(StrIn(i:i))
+       case("A":"Z")
+          StrOut(i:i) = achar(iachar(StrIn(i:i))+32)
+       case default
+          StrOut(i:i) = StrIn(i:i)
+       end select
+    end do
+  end function to_lower
+
 
 
 
