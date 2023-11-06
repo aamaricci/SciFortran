@@ -23,7 +23,7 @@ function d_kronecker_product(A,B) result(AxB)
   integer            :: rowA,colA
   integer            :: rowB,colB
   real(8)            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
-  AxB = 0
+  AxB = 0d0
   rowA=size(A,1) ; colA=size(A,2)
   rowB=size(B,1) ; colB=size(B,2)
   forall(i=1:rowA,j=1:colA)
@@ -31,13 +31,43 @@ function d_kronecker_product(A,B) result(AxB)
   end forall
 end function d_kronecker_product
 !
+function dc_kronecker_product(A,B) result(AxB)
+  real(8),intent(in) :: A(:,:)
+  complex(8),intent(in) :: B(:,:)
+  integer            :: i,j
+  integer            :: rowA,colA
+  integer            :: rowB,colB
+  complex(8)            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
+  AxB = zero
+  rowA=size(A,1) ; colA=size(A,2)
+  rowB=size(B,1) ; colB=size(B,2)
+  forall(i=1:rowA,j=1:colA)
+     AxB(1+rowB*(i-1):rowB*i,1+colB*(j-1):colB*j)  =  A(i,j)*B(:,:)
+  end forall
+end function dc_kronecker_product
+!
+function cd_kronecker_product(A,B) result(AxB)
+  complex(8),intent(in) :: A(:,:)
+  real(8),intent(in)    :: B(:,:)
+  integer               :: i,j
+  integer               :: rowA,colA
+  integer               :: rowB,colB
+  complex(8)            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
+  AxB = zero
+  rowA=size(A,1) ; colA=size(A,2)
+  rowB=size(B,1) ; colB=size(B,2)
+  forall(i=1:rowA,j=1:colA)
+     AxB(1+rowB*(i-1):rowB*i,1+colB*(j-1):colB*j)  =  A(i,j)*B(:,:)
+  end forall
+end function cd_kronecker_product
+!
 function c_kronecker_product(A,B) result(AxB)
   complex(8),intent(in) :: A(:,:), B(:,:)
   integer               :: i,j
   integer               :: rowA,colA
   integer               :: rowB,colB
   complex(8)            :: AxB(size(A,1)*size(B,1),size(A,2)*size(B,2))
-  AxB = 0
+  AxB = zero
   rowA=size(A,1) ; colA=size(A,2)
   rowB=size(B,1) ; colB=size(B,2)
   forall(i=1:rowA,j=1:colA)

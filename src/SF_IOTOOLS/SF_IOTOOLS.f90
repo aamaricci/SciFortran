@@ -16,6 +16,8 @@ MODULE SF_IOTOOLS
   public :: str
   public :: txtfy !obsolete
   public :: reg
+  public :: to_lower
+  public :: to_upper
   !
   public :: file_size
   public :: file_length
