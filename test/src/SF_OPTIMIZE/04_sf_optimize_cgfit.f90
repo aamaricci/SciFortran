@@ -1,6 +1,6 @@
 program testCGFIT
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer,parameter    :: npar=2

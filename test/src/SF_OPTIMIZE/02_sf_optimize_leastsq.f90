@@ -1,6 +1,6 @@
 program testMINPACK
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
   integer, parameter   :: n = 2, npar=3, m=50
   integer              :: iflag

@@ -1,6 +1,6 @@
 program testDERIVE
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer,parameter    :: L=20

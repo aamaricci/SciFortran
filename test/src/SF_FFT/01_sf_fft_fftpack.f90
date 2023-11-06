@@ -1,6 +1,6 @@
 program testFFT
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
 

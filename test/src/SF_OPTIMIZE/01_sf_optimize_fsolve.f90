@@ -1,6 +1,6 @@
 program test_fsolve
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
   integer, parameter :: n = 2
   integer            :: iflag

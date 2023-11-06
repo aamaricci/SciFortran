@@ -1,6 +1,6 @@
 program testIOTOOLS
   USE SF_IOTOOLS
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer,parameter :: L=5

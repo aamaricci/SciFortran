@@ -9,7 +9,7 @@ GLOB_INC:=$(shell pkg-config --cflags scifor)
 GLOB_LIB:=$(shell pkg-config --libs scifor | sed  "s/;/ /g"  | sed 's/\\/  /g' )
 
 
-OBJS=../ASSERTING.o
+OBJS=../SF_ASSERT.o
 SF_INIT_SOURCES=$(wildcard *.f90)
 
 SF_INIT_EXES=$(SF_INIT_SOURCES:.f90=)

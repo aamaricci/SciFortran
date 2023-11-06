@@ -1,6 +1,6 @@
 program testFDJAC
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
   integer,parameter            :: Ndim=2,Mdim=3
   real(8),dimension(Ndim)      :: xc,fc

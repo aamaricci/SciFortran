@@ -1,6 +1,6 @@
 program interpALL
   USE SCIFOR
-  USE ASSERTING
+  USE SF_ASSERT
   implicit none
 
   integer,parameter               :: Lin=50, Lout=2*Lin-1, Np=10
