@@ -10,81 +10,55 @@
 
     <title>SF_COLORS &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,50 +66,53 @@
       <small>Module</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 1.9% of total for modules and submodules.">761 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 1.9% of total for modules and submodules.">761 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/SF_COLORS.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_colors.f90.html'>SF_COLORS.f90</a></li>
-          <li class="active">SF_COLORS</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_colors.f90.html'>SF_COLORS.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">SF_COLORS</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
 
   <div class="row">
-    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    <div class="col-md-3">
         <div id="sidebar">
       <h3>Contents</h3>
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#vars-0">Variables</a>
-        </h3>
-      </div>
-      <div id="vars-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_colors.html#variable-black">black</a>
             <a class="list-group-item" href="../module/sf_colors.html#variable-red">red</a>
             <a class="list-group-item" href="../module/sf_colors.html#variable-green">green</a>
@@ -803,14 +780,13 @@
   
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#inters-0">Interfaces</a>
-        </h3>
-      </div>
-      <div id="inters-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#inters-0"
+         aria-expanded="false" aria-controls="inters-0">
+         <h4 class="card-header bg-primary text-white">Interfaces</h4>
+      </a>
+      <div id="inters-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_colors.html#interface-operator%28%2B%29">operator(+)</a>
             <a class="list-group-item" href="../module/sf_colors.html#interface-assignment%28%3D%29">assignment(=)</a>
             <a class="list-group-item" href="../module/sf_colors.html#interface-operator%28-%29">operator(-)</a>
@@ -821,27 +797,25 @@
     </div>
 
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#types-0">Derived Types</a>
-        </h3>
-      </div>
-      <div id="types-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_colors.html#type-rgb_color">rgb_color</a>
         </div>
       </div>
     </div>
 
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#funcs-0">Functions</a>
-        </h3>
-      </div>
-      <div id="funcs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_colors.html#proc-rgb">rgb</a>
             <a class="list-group-item" href="../module/sf_colors.html#proc-add_colors">add_colors</a>
             <a class="list-group-item" href="../module/sf_colors.html#proc-subtract_colors">subtract_colors</a>
@@ -853,19 +827,19 @@
       </div>
     </div>
 
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#subs-0">Subroutines</a>
-        </h3>
-      </div>
-      <div id="subs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_colors.html#proc-equal_colors">equal_colors</a>
         </div>
       </div>
     </div>
 
+  
   
   
   
@@ -881,13 +855,12 @@
     <div class="col-md-9" id='text'>
       
 <br>      
-          <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Used by</h3>
-      </div>
-      <ul class="list-group">
-          <li class="list-group-item">
-            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
@@ -921,8 +894,8 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -991,763 +964,12 @@ modules which it uses.
             </div>
           </div>
         </div>
-          </li>
-      </ul>
+            </li>
+        </ul>
+      </div>
     </div>
 
       <br>
-
-      <section class="visible-xs visible-sm hidden-md">
-          <h3>Contents</h3>
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#vars-1">Variables</a>
-        </h3>
-      </div>
-      <div id="vars-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_colors.html#variable-black">black</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-red">red</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-green">green</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orange">orange</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blue">blue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-yellow">yellow</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cyan">cyan</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-magenta">magenta</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-snow">snow</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-ghostwhite">ghostwhite</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-whitesmoke">whitesmoke</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gainsboro">gainsboro</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-floralwhite">floralwhite</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-oldlace">oldlace</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-linen">linen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-antiquewhite">antiquewhite</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-papayawhip">papayawhip</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blanchedalmond">blanchedalmond</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-bisque">bisque</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-peachpuff">peachpuff</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navajowhite">navajowhite</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-moccasin">moccasin</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cornsilk">cornsilk</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-ivory">ivory</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lemonchiffon">lemonchiffon</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seashell">seashell</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-honeydew">honeydew</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mintcream">mintcream</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-azure">azure</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-aliceblue">aliceblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lavender">lavender</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lavenderblush">lavenderblush</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mistyrose">mistyrose</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-white">white</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslategray">darkslategray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslategrey">darkslategrey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dimgray">dimgray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dimgrey">dimgrey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slategray">slategray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slategrey">slategrey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightslategray">lightslategray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightslategrey">lightslategrey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray">gray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey">grey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgrey">lightgrey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgray">lightgray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-midnightblue">midnightblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navy">navy</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navyblue">navyblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cornflowerblue">cornflowerblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslateblue">darkslateblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slateblue">slateblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumslateblue">mediumslateblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightslateblue">lightslateblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumblue">mediumblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-royalblue">royalblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dodgerblue">dodgerblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deepskyblue">deepskyblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-skyblue">skyblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightskyblue">lightskyblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-steelblue">steelblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsteelblue">lightsteelblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightblue">lightblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-powderblue">powderblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-paleturquoise">paleturquoise</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkturquoise">darkturquoise</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumturquoise">mediumturquoise</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-turquoise">turquoise</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightcyan">lightcyan</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cadetblue">cadetblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumaquamarine">mediumaquamarine</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-aquamarine">aquamarine</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgreen">darkgreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkolivegreen">darkolivegreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkseagreen">darkseagreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seagreen">seagreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumseagreen">mediumseagreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightseagreen">lightseagreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palegreen">palegreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-springgreen">springgreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lawngreen">lawngreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chartreuse">chartreuse</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumspringgreen">mediumspringgreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-greenyellow">greenyellow</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-limegreen">limegreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-yellowgreen">yellowgreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-forestgreen">forestgreen</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-olivedrab">olivedrab</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkkhaki">darkkhaki</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-khaki">khaki</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palegoldenrod">palegoldenrod</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgoldenrodyellow">lightgoldenrodyellow</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightyellow">lightyellow</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gold">gold</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgoldenrod">lightgoldenrod</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-goldenrod">goldenrod</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgoldenrod">darkgoldenrod</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-rosybrown">rosybrown</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-indianred">indianred</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-saddlebrown">saddlebrown</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-sienna">sienna</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-peru">peru</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-burlywood">burlywood</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-beige">beige</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-wheat">wheat</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-sandybrown">sandybrown</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chocolate">chocolate</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-firebrick">firebrick</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-brown">brown</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darksalmon">darksalmon</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-salmon">salmon</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsalmon">lightsalmon</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorange">darkorange</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-coral">coral</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightcoral">lightcoral</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tomato">tomato</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orangered">orangered</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-hotpink">hotpink</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deeppink">deeppink</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-pink">pink</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightpink">lightpink</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palevioletred">palevioletred</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-maroon">maroon</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumvioletred">mediumvioletred</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-violetred">violetred</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-violet">violet</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-plum">plum</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orchid">orchid</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumorchid">mediumorchid</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorchid">darkorchid</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkviolet">darkviolet</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blueviolet">blueviolet</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-purple">purple</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumpurple">mediumpurple</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-thistle">thistle</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-snow1">snow1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-snow2">snow2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-snow3">snow3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-snow4">snow4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seashell1">seashell1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seashell2">seashell2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seashell3">seashell3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seashell4">seashell4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-antiquewhite1">antiquewhite1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-antiquewhite2">antiquewhite2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-antiquewhite3">antiquewhite3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-antiquewhite4">antiquewhite4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-bisque1">bisque1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-bisque2">bisque2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-bisque3">bisque3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-bisque4">bisque4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-peachpuff1">peachpuff1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-peachpuff2">peachpuff2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-peachpuff3">peachpuff3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-peachpuff4">peachpuff4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navajowhite1">navajowhite1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navajowhite2">navajowhite2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navajowhite3">navajowhite3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-navajowhite4">navajowhite4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lemonchiffon1">lemonchiffon1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lemonchiffon2">lemonchiffon2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lemonchiffon3">lemonchiffon3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lemonchiffon4">lemonchiffon4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cornsilk1">cornsilk1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cornsilk2">cornsilk2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cornsilk3">cornsilk3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cornsilk4">cornsilk4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-ivory1">ivory1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-ivory2">ivory2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-ivory3">ivory3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-ivory4">ivory4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-honeydew1">honeydew1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-honeydew2">honeydew2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-honeydew3">honeydew3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-honeydew4">honeydew4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lavenderblush1">lavenderblush1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lavenderblush2">lavenderblush2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lavenderblush3">lavenderblush3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lavenderblush4">lavenderblush4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mistyrose1">mistyrose1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mistyrose2">mistyrose2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mistyrose3">mistyrose3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mistyrose4">mistyrose4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-azure1">azure1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-azure2">azure2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-azure3">azure3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-azure4">azure4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slateblue1">slateblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slateblue2">slateblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slateblue3">slateblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slateblue4">slateblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-royalblue1">royalblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-royalblue2">royalblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-royalblue3">royalblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-royalblue4">royalblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blue1">blue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blue2">blue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blue3">blue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-blue4">blue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dodgerblue1">dodgerblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dodgerblue2">dodgerblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dodgerblue3">dodgerblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-dodgerblue4">dodgerblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-steelblue1">steelblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-steelblue2">steelblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-steelblue3">steelblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-steelblue4">steelblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deepskyblue1">deepskyblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deepskyblue2">deepskyblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deepskyblue3">deepskyblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deepskyblue4">deepskyblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-skyblue1">skyblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-skyblue2">skyblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-skyblue3">skyblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-skyblue4">skyblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightskyblue1">lightskyblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightskyblue2">lightskyblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightskyblue3">lightskyblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightskyblue4">lightskyblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slategray1">slategray1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slategray2">slategray2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slategray3">slategray3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-slategray4">slategray4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsteelblue1">lightsteelblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsteelblue2">lightsteelblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsteelblue3">lightsteelblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsteelblue4">lightsteelblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightblue1">lightblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightblue2">lightblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightblue3">lightblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightblue4">lightblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightcyan1">lightcyan1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightcyan2">lightcyan2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightcyan3">lightcyan3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightcyan4">lightcyan4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-paleturquoise1">paleturquoise1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-paleturquoise2">paleturquoise2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-paleturquoise3">paleturquoise3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-paleturquoise4">paleturquoise4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cadetblue1">cadetblue1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cadetblue2">cadetblue2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cadetblue3">cadetblue3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cadetblue4">cadetblue4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-turquoise1">turquoise1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-turquoise2">turquoise2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-turquoise3">turquoise3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-turquoise4">turquoise4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cyan1">cyan1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cyan2">cyan2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cyan3">cyan3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-cyan4">cyan4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslategray1">darkslategray1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslategray2">darkslategray2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslategray3">darkslategray3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkslategray4">darkslategray4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-aquamarine1">aquamarine1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-aquamarine2">aquamarine2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-aquamarine3">aquamarine3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-aquamarine4">aquamarine4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkseagreen1">darkseagreen1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkseagreen2">darkseagreen2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkseagreen3">darkseagreen3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkseagreen4">darkseagreen4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seagreen1">seagreen1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seagreen2">seagreen2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seagreen3">seagreen3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-seagreen4">seagreen4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palegreen1">palegreen1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palegreen2">palegreen2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palegreen3">palegreen3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palegreen4">palegreen4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-springgreen1">springgreen1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-springgreen2">springgreen2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-springgreen3">springgreen3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-springgreen4">springgreen4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-green1">green1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-green2">green2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-green3">green3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-green4">green4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chartreuse1">chartreuse1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chartreuse2">chartreuse2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chartreuse3">chartreuse3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chartreuse4">chartreuse4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-olivedrab1">olivedrab1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-olivedrab2">olivedrab2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-olivedrab3">olivedrab3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-olivedrab4">olivedrab4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkolivegreen1">darkolivegreen1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkolivegreen2">darkolivegreen2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkolivegreen3">darkolivegreen3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkolivegreen4">darkolivegreen4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-khaki1">khaki1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-khaki2">khaki2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-khaki3">khaki3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-khaki4">khaki4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgoldenrod1">lightgoldenrod1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgoldenrod2">lightgoldenrod2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgoldenrod3">lightgoldenrod3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgoldenrod4">lightgoldenrod4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightyellow1">lightyellow1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightyellow2">lightyellow2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightyellow3">lightyellow3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightyellow4">lightyellow4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-yellow1">yellow1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-yellow2">yellow2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-yellow3">yellow3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-yellow4">yellow4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gold1">gold1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gold2">gold2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gold3">gold3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gold4">gold4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-goldenrod1">goldenrod1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-goldenrod2">goldenrod2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-goldenrod3">goldenrod3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-goldenrod4">goldenrod4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgoldenrod1">darkgoldenrod1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgoldenrod2">darkgoldenrod2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgoldenrod3">darkgoldenrod3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgoldenrod4">darkgoldenrod4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-rosybrown1">rosybrown1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-rosybrown2">rosybrown2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-rosybrown3">rosybrown3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-rosybrown4">rosybrown4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-indianred1">indianred1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-indianred2">indianred2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-indianred3">indianred3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-indianred4">indianred4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-sienna1">sienna1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-sienna2">sienna2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-sienna3">sienna3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-sienna4">sienna4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-burlywood1">burlywood1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-burlywood2">burlywood2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-burlywood3">burlywood3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-burlywood4">burlywood4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-wheat1">wheat1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-wheat2">wheat2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-wheat3">wheat3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-wheat4">wheat4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tan1">tan1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tan2">tan2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tan3">tan3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tan4">tan4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chocolate1">chocolate1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chocolate2">chocolate2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chocolate3">chocolate3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-chocolate4">chocolate4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-firebrick1">firebrick1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-firebrick2">firebrick2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-firebrick3">firebrick3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-firebrick4">firebrick4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-brown1">brown1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-brown2">brown2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-brown3">brown3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-brown4">brown4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-salmon1">salmon1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-salmon2">salmon2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-salmon3">salmon3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-salmon4">salmon4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsalmon1">lightsalmon1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsalmon2">lightsalmon2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsalmon3">lightsalmon3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightsalmon4">lightsalmon4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orange1">orange1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orange2">orange2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orange3">orange3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orange4">orange4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorange1">darkorange1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorange2">darkorange2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorange3">darkorange3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorange4">darkorange4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-coral1">coral1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-coral2">coral2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-coral3">coral3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-coral4">coral4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tomato1">tomato1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tomato2">tomato2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tomato3">tomato3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-tomato4">tomato4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orangered1">orangered1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orangered2">orangered2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orangered3">orangered3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orangered4">orangered4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-red1">red1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-red2">red2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-red3">red3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-red4">red4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-debianred">debianred</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deeppink1">deeppink1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deeppink2">deeppink2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deeppink3">deeppink3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-deeppink4">deeppink4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-hotpink1">hotpink1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-hotpink2">hotpink2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-hotpink3">hotpink3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-hotpink4">hotpink4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-pink1">pink1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-pink2">pink2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-pink3">pink3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-pink4">pink4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightpink1">lightpink1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightpink2">lightpink2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightpink3">lightpink3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightpink4">lightpink4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palevioletred1">palevioletred1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palevioletred2">palevioletred2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palevioletred3">palevioletred3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-palevioletred4">palevioletred4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-maroon1">maroon1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-maroon2">maroon2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-maroon3">maroon3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-maroon4">maroon4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-violetred1">violetred1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-violetred2">violetred2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-violetred3">violetred3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-violetred4">violetred4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-magenta1">magenta1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-magenta2">magenta2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-magenta3">magenta3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-magenta4">magenta4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orchid1">orchid1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orchid2">orchid2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orchid3">orchid3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-orchid4">orchid4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-plum1">plum1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-plum2">plum2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-plum3">plum3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-plum4">plum4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumorchid1">mediumorchid1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumorchid2">mediumorchid2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumorchid3">mediumorchid3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumorchid4">mediumorchid4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorchid1">darkorchid1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorchid2">darkorchid2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorchid3">darkorchid3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkorchid4">darkorchid4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-purple1">purple1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-purple2">purple2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-purple3">purple3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-purple4">purple4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumpurple1">mediumpurple1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumpurple2">mediumpurple2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumpurple3">mediumpurple3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-mediumpurple4">mediumpurple4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-thistle1">thistle1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-thistle2">thistle2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-thistle3">thistle3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-thistle4">thistle4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray0">gray0</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey0">grey0</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray1">gray1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey1">grey1</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray2">gray2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey2">grey2</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray3">gray3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey3">grey3</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray4">gray4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey4">grey4</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray5">gray5</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey5">grey5</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray6">gray6</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey6">grey6</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray7">gray7</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey7">grey7</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray8">gray8</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey8">grey8</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray9">gray9</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey9">grey9</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray10">gray10</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey10">grey10</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray11">gray11</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey11">grey11</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray12">gray12</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey12">grey12</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray13">gray13</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey13">grey13</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray14">gray14</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey14">grey14</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray15">gray15</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey15">grey15</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray16">gray16</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey16">grey16</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray17">gray17</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey17">grey17</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray18">gray18</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey18">grey18</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray19">gray19</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey19">grey19</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray20">gray20</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey20">grey20</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray21">gray21</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey21">grey21</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray22">gray22</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey22">grey22</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray23">gray23</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey23">grey23</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray24">gray24</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey24">grey24</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray25">gray25</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey25">grey25</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray26">gray26</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey26">grey26</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray27">gray27</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey27">grey27</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray28">gray28</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey28">grey28</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray29">gray29</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey29">grey29</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray30">gray30</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey30">grey30</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray31">gray31</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey31">grey31</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray32">gray32</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey32">grey32</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray33">gray33</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey33">grey33</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray34">gray34</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey34">grey34</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray35">gray35</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey35">grey35</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray36">gray36</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey36">grey36</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray37">gray37</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey37">grey37</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray38">gray38</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey38">grey38</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray39">gray39</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey39">grey39</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray40">gray40</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey40">grey40</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray41">gray41</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey41">grey41</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray42">gray42</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey42">grey42</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray43">gray43</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey43">grey43</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray44">gray44</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey44">grey44</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray45">gray45</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey45">grey45</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray46">gray46</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey46">grey46</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray47">gray47</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey47">grey47</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray48">gray48</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey48">grey48</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray49">gray49</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey49">grey49</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray50">gray50</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey50">grey50</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray51">gray51</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey51">grey51</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray52">gray52</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey52">grey52</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray53">gray53</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey53">grey53</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray54">gray54</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey54">grey54</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray55">gray55</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey55">grey55</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray56">gray56</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey56">grey56</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray57">gray57</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey57">grey57</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray58">gray58</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey58">grey58</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray59">gray59</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey59">grey59</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray60">gray60</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey60">grey60</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray61">gray61</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey61">grey61</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray62">gray62</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey62">grey62</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray63">gray63</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey63">grey63</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray64">gray64</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey64">grey64</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray65">gray65</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey65">grey65</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray66">gray66</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey66">grey66</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray67">gray67</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey67">grey67</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray68">gray68</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey68">grey68</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray69">gray69</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey69">grey69</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray70">gray70</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey70">grey70</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray71">gray71</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey71">grey71</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray72">gray72</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey72">grey72</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray73">gray73</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey73">grey73</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray74">gray74</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey74">grey74</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray75">gray75</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey75">grey75</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray76">gray76</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey76">grey76</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray77">gray77</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey77">grey77</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray78">gray78</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey78">grey78</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray79">gray79</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey79">grey79</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray80">gray80</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey80">grey80</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray81">gray81</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey81">grey81</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray82">gray82</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey82">grey82</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray83">gray83</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey83">grey83</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray84">gray84</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey84">grey84</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray85">gray85</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey85">grey85</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray86">gray86</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey86">grey86</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray87">gray87</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey87">grey87</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray88">gray88</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey88">grey88</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray89">gray89</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey89">grey89</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray90">gray90</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey90">grey90</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray91">gray91</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey91">grey91</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray92">gray92</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey92">grey92</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray93">gray93</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey93">grey93</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray94">gray94</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey94">grey94</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray95">gray95</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey95">grey95</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray96">gray96</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey96">grey96</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray97">gray97</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey97">grey97</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray98">gray98</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey98">grey98</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray99">gray99</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey99">grey99</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-gray100">gray100</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-grey100">grey100</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgrey">darkgrey</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkgray">darkgray</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkblue">darkblue</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkcyan">darkcyan</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkmagenta">darkmagenta</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-darkred">darkred</a>
-            <a class="list-group-item" href="../module/sf_colors.html#variable-lightgreen">lightgreen</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#inters-1">Interfaces</a>
-        </h3>
-      </div>
-      <div id="inters-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_colors.html#interface-operator%28%2B%29">operator(+)</a>
-            <a class="list-group-item" href="../module/sf_colors.html#interface-assignment%28%3D%29">assignment(=)</a>
-            <a class="list-group-item" href="../module/sf_colors.html#interface-operator%28-%29">operator(-)</a>
-            <a class="list-group-item" href="../module/sf_colors.html#interface-operator%28ASTERISK%29">operator(*)</a>
-            <a class="list-group-item" href="../module/sf_colors.html#interface-operator%28.dot.%29">operator(.dot.)</a>
-        </div>
-      </div>
-    </div>
-
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#types-1">Derived Types</a>
-        </h3>
-      </div>
-      <div id="types-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_colors.html#type-rgb_color">rgb_color</a>
-        </div>
-      </div>
-    </div>
-
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#funcs-1">Functions</a>
-        </h3>
-      </div>
-      <div id="funcs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_colors.html#proc-rgb">rgb</a>
-            <a class="list-group-item" href="../module/sf_colors.html#proc-add_colors">add_colors</a>
-            <a class="list-group-item" href="../module/sf_colors.html#proc-subtract_colors">subtract_colors</a>
-            <a class="list-group-item" href="../module/sf_colors.html#proc-scalar_left_color">scalar_left_color</a>
-            <a class="list-group-item" href="../module/sf_colors.html#proc-scalar_right_color">scalar_right_color</a>
-            <a class="list-group-item" href="../module/sf_colors.html#proc-dot_scalar_colors">dot_scalar_colors</a>
-            <a class="list-group-item" href="../module/sf_colors.html#proc-pick_color">pick_color</a>
-        </div>
-      </div>
-    </div>
-
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#subs-1">Subroutines</a>
-        </h3>
-      </div>
-      <div id="subs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_colors.html#proc-equal_colors">equal_colors</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-
-
-      </section>
-      <br class="visible-xs visible-sm hidden-md">
 
 
         <section>
@@ -1755,11 +977,11 @@ modules which it uses.
             <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Visibility</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -12940,10 +12162,10 @@ parameter
 
         <section>
           <h2>Interfaces</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-operator%28%2B%29"></span>
-      <h3>public        interface <a href='../interface/operator%28%2B%29.html'>operator(+)</a> 
+      <h3>public        interface <a href='../interface/operator(+).html'>operator(+)</a> 
       </h3>
     </div>
     <ul class="list-group">
@@ -12959,16 +12181,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c1"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -12983,7 +12205,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13009,10 +12231,10 @@ parameter
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-assignment%28%3D%29"></span>
-      <h3>public        interface <a href='../interface/assignment%28%3D%29.html'>assignment(=)</a> 
+      <h3>public        interface <a href='../interface/assignment(=).html'>assignment(=)</a> 
       </h3>
     </div>
     <ul class="list-group">
@@ -13028,16 +12250,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c1"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(inout)</td>
@@ -13052,7 +12274,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13073,10 +12295,10 @@ parameter
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-operator%28-%29"></span>
-      <h3>public        interface <a href='../interface/operator%28-%29.html'>operator(-)</a> 
+      <h3>public        interface <a href='../interface/operator(-).html'>operator(-)</a> 
       </h3>
     </div>
     <ul class="list-group">
@@ -13092,16 +12314,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c1~2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13116,7 +12338,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c2~2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13142,10 +12364,10 @@ parameter
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-operator%28ASTERISK%29"></span>
-      <h3>public        interface <a href='../interface/operator%28ASTERISK%29.html'>operator(*)</a> 
+      <h3>public        interface <a href='../interface/operator(ASTERISK).html'>operator(*)</a> 
       </h3>
     </div>
     <ul class="list-group">
@@ -13161,16 +12383,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-k~44"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -13185,7 +12407,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-cin"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13211,10 +12433,10 @@ parameter
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-operator%28.dot.%29"></span>
-      <h3>public        interface <a href='../interface/operator%28.dot.%29.html'>operator(.dot.)</a> 
+      <h3>public        interface <a href='../interface/operator(.dot.).html'>operator(.dot.)</a> 
       </h3>
     </div>
     <ul class="list-group">
@@ -13230,16 +12452,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-v~27"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -13254,7 +12476,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-cin~3"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in),</td>
@@ -13286,8 +12508,8 @@ parameter
 
         <section>
           <h2>Derived Types</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header codesum">
       <span class="anchor" id="type-rgb_color"></span>
       <h3>
         type, public&nbsp;::&nbsp;
@@ -13295,18 +12517,18 @@ parameter
         
       </h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       
 
         <h4>Components</h4>
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Visibility</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -13374,10 +12596,10 @@ parameter
 
         <section>
           <h2>Functions</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-rgb"></span><h3>public  function <a href='../proc/rgb.html'>rgb</a>(c) result(num)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-rgb"></span><h3>public  function <a href='../proc/rgb.html'>rgb</a>(c) result(num)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13385,16 +12607,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c~40"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13419,10 +12641,10 @@ parameter
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-add_colors"></span><h3>public elemental function <a href='../proc/add_colors.html'>add_colors</a>(c1, c2) result(c)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-add_colors"></span><h3>public elemental function <a href='../proc/add_colors.html'>add_colors</a>(c1, c2) result(c)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13430,16 +12652,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c1"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13454,7 +12676,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13479,10 +12701,10 @@ parameter
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-subtract_colors"></span><h3>public elemental function <a href='../proc/subtract_colors.html'>subtract_colors</a>(c1, c2) result(c)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-subtract_colors"></span><h3>public elemental function <a href='../proc/subtract_colors.html'>subtract_colors</a>(c1, c2) result(c)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13490,16 +12712,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c1~2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13514,7 +12736,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c2~2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13539,10 +12761,10 @@ parameter
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-scalar_left_color"></span><h3>public elemental function <a href='../proc/scalar_left_color.html'>scalar_left_color</a>(k, cin) result(cout)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-scalar_left_color"></span><h3>public elemental function <a href='../proc/scalar_left_color.html'>scalar_left_color</a>(k, cin) result(cout)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13550,16 +12772,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-k~44"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -13574,7 +12796,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-cin"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13599,10 +12821,10 @@ parameter
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-scalar_right_color"></span><h3>public elemental function <a href='../proc/scalar_right_color.html'>scalar_right_color</a>(k, cin) result(cout)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-scalar_right_color"></span><h3>public elemental function <a href='../proc/scalar_right_color.html'>scalar_right_color</a>(k, cin) result(cout)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13610,16 +12832,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-k~45"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -13634,7 +12856,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-cin~2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13659,10 +12881,10 @@ parameter
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-dot_scalar_colors"></span><h3>public  function <a href='../proc/dot_scalar_colors.html'>dot_scalar_colors</a>(v, cin) result(cout)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-dot_scalar_colors"></span><h3>public  function <a href='../proc/dot_scalar_colors.html'>dot_scalar_colors</a>(v, cin) result(cout)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13670,16 +12892,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-v~27"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -13694,7 +12916,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-cin~3"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in),</td>
@@ -13719,10 +12941,10 @@ parameter
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-pick_color"></span><h3>public  function <a href='../proc/pick_color.html'>pick_color</a>(string) result(crgb)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-pick_color"></span><h3>public  function <a href='../proc/pick_color.html'>pick_color</a>(string) result(crgb)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13730,16 +12952,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-string~3"></span>
               character(len=*)
             </td>
 <td></td>
@@ -13769,10 +12991,10 @@ parameter
 
         <section>
           <h2>Subroutines</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-equal_colors"></span><h3>public elemental subroutine <a href='../proc/equal_colors.html'>equal_colors</a>(C1, C2)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-equal_colors"></span><h3>public elemental subroutine <a href='../proc/equal_colors.html'>equal_colors</a>(C1, C2)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -13780,16 +13002,16 @@ parameter
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c1"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(inout)</td>
@@ -13804,7 +13026,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c2"></span>
               type(<a href='../type/rgb_color.html'>rgb_color</a>),
             </td>
 <td>intent(in)</td>
@@ -13836,12 +13058,12 @@ parameter
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -13851,17 +13073,12 @@ parameter
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

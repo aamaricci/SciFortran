@@ -10,81 +10,55 @@
 
     <title>cc_abscissas &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.0% of total for procedures.">23 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.0% of total for procedures.">23 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pack.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
-          <li class="active">cc_abscissas</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pack.f90.html'>interpolate_pack.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">cc_abscissas</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,6 +124,13 @@
   
   
   
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/cc_abscissas~2.html#src">cc_abscissas</a>
+      </div>
+    </div>
 
 
   </div>
@@ -160,23 +145,23 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! CC_ABSCISSAS computes the Clenshaw Curtis abscissas.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">interval</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="w"> </span><span class="p">].</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nx">The</span><span class="w"> </span><span class="nx">interval</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">].</span>
 
-<span class="n">The</span><span class="w"> </span><span class="n">abscissas</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">cosines</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">equally</span><span class="w"> </span><span class="n">spaced</span><span class="w"> </span><span class="n">angles</span><span class="w"> </span><span class="n">between</span><span class="w"> </span>
-<span class="mh">180</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mh">0</span><span class="w"> </span><span class="n">degrees</span><span class="p">,</span><span class="w"> </span><span class="n">including</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">endpoints</span><span class="p">.</span><span class="w"></span>
+<span class="nx">The</span><span class="w"> </span><span class="nx">abscissas</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">cosines</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">equally</span><span class="w"> </span><span class="nx">spaced</span><span class="w"> </span><span class="nx">angles</span><span class="w"> </span><span class="nx">between</span>
+<span class="mi">180</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nx">degrees</span><span class="p">,</span><span class="w"> </span><span class="nx">including</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">endpoints</span><span class="p">.</span>
 
-<span class="w">  </span><span class="n">X</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ORDER</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ORDER</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="nx">X</span><span class="p">(</span><span class="nx">I</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nx">ORDER</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">I</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nx">ORDER</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
 
-<span class="n">except</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="n">ORDER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="n">when</span><span class="w"></span>
+<span class="nx">except</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">basic</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="nx">ORDER</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">when</span>
 
-<span class="w">  </span><span class="n">X</span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">  </span><span class="nx">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>
 
-<span class="n">If</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">ORDER</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">increased</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">sensible</span><span class="w"> </span><span class="n">way</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"></span>
-<span class="n">the</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">abscissas</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">include</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">old</span><span class="w"> </span><span class="n">ones</span><span class="p">.</span><span class="w">  </span><span class="n">One</span><span class="w"> </span><span class="n">such</span><span class="w"></span>
-<span class="n">sequence</span><span class="w"> </span><span class="n">would</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">ORDER</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">2</span><span class="o">*</span><span class="n">K</span><span class="o">+</span><span class="mh">1</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">2</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="nx">If</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">ORDER</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">increased</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">sensible</span><span class="w"> </span><span class="nx">way</span><span class="p">,</span><span class="w"> </span><span class="k">then</span>
+<span class="nx">the</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">abscissas</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="nx">include</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">old</span><span class="w"> </span><span class="nx">ones</span><span class="p">.</span><span class="w">  </span><span class="nx">One</span><span class="w"> </span><span class="nx">such</span>
+<span class="nx">sequence</span><span class="w"> </span><span class="nx">would</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">ORDER</span><span class="p">(</span><span class="nx">K</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="nx">K</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">K</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">...</span>
 
-<span class="n">When</span><span class="w"> </span><span class="n">doing</span><span class="w"> </span><span class="n">interpolation</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">Lagrange</span><span class="w"> </span><span class="n">polynomials</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Clenshaw</span><span class="w"> </span><span class="n">Curtis</span><span class="w"></span>
-<span class="n">abscissas</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">better</span><span class="w"> </span><span class="n">choice</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">regularly</span><span class="w"> </span><span class="n">spaced</span><span class="w"> </span><span class="n">abscissas</span><span class="p">.</span><span class="w"></span>
+<span class="nx">When</span><span class="w"> </span><span class="nx">doing</span><span class="w"> </span><span class="nx">interpolation</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">Lagrange</span><span class="w"> </span><span class="nx">polynomials</span><span class="p">,</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Clenshaw</span><span class="w"> </span><span class="nx">Curtis</span>
+<span class="nx">abscissas</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">better</span><span class="w"> </span><span class="kd">choice</span><span class="w"> </span><span class="nx">than</span><span class="w"> </span><span class="nx">regularly</span><span class="w"> </span><span class="nx">spaced</span><span class="w"> </span><span class="nx">abscissas</span><span class="p">.</span>
 </code></pre></div>
 
 <p>Licensing:</p>
@@ -184,7 +169,7 @@
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">04</span><span class="w"> </span><span class="n">December</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">04</span><span class="w"> </span><span class="n">December</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -192,22 +177,22 @@
 </code></pre></div>
 
 <p>Reference:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Charles</span> <span class="nv">Clenshaw</span>, <span class="nv">Alan</span> <span class="nv">Curtis</span>,
-<span class="nv">A</span> <span class="nv">Method</span> <span class="k">for</span> <span class="nv">Numerical</span> <span class="nv">Integration</span> <span class="nv">on</span> <span class="nv">an</span> <span class="nv">Automatic</span> <span class="nv">Computer</span>,
-<span class="nv">Numerische</span> <span class="nv">Mathematik</span>,
-<span class="nv">Volume</span> <span class="mi">2</span>, <span class="nv">Number</span> <span class="mi">1</span>, <span class="nv">December</span> <span class="mi">1960</span>, <span class="nv">pages</span> <span class="mi">197</span><span class="o">-</span><span class="mi">205</span>.
+<div class="codehilite"><pre><span></span><code><span class="nv">Charles</span><span class="w"> </span><span class="nv">Clenshaw</span>,<span class="w"> </span><span class="nv">Alan</span><span class="w"> </span><span class="nv">Curtis</span>,
+<span class="nv">A</span><span class="w"> </span><span class="nv">Method</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">Numerical</span><span class="w"> </span><span class="nv">Integration</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">Automatic</span><span class="w"> </span><span class="nv">Computer</span>,
+<span class="nv">Numerische</span><span class="w"> </span><span class="nv">Mathematik</span>,
+<span class="nv">Volume</span><span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="nv">Number</span><span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="nv">December</span><span class="w"> </span><span class="mi">1960</span>,<span class="w"> </span><span class="nv">pages</span><span class="w"> </span><span class="mi">197</span><span class="o">-</span><span class="mi">205</span>.
 
-<span class="nv">Philip</span> <span class="nv">Davis</span>, <span class="nv">Philip</span> <span class="nv">Rabinowitz</span>,
-<span class="nv">Methods</span> <span class="nv">of</span> <span class="nv">Numerical</span> <span class="nv">Integration</span>,
-<span class="nv">Second</span> <span class="nv">Edition</span>,
-<span class="nv">Dover</span>, <span class="mi">2007</span>,
-<span class="nv">ISBN</span>: <span class="mi">0486453391</span>,
-<span class="nv">LC</span>: <span class="nv">QA299</span>.<span class="mi">3</span>.<span class="nv">D28</span>.
+<span class="nv">Philip</span><span class="w"> </span><span class="nv">Davis</span>,<span class="w"> </span><span class="nv">Philip</span><span class="w"> </span><span class="nv">Rabinowitz</span>,
+<span class="nv">Methods</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">Numerical</span><span class="w"> </span><span class="nv">Integration</span>,
+<span class="nv">Second</span><span class="w"> </span><span class="nv">Edition</span>,
+<span class="nv">Dover</span>,<span class="w"> </span><span class="mi">2007</span>,
+<span class="nv">ISBN</span>:<span class="w"> </span><span class="mi">0486453391</span>,
+<span class="nv">LC</span>:<span class="w"> </span><span class="nv">QA299</span>.<span class="mi">3</span>.<span class="nv">D28</span>.
 
-<span class="nv">Joerg</span> <span class="nv">Waldvogel</span>,
-<span class="nv">Fast</span> <span class="nv">Construction</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">Fejer</span> <span class="nv">and</span> <span class="nv">Clenshaw</span><span class="o">-</span><span class="nv">Curtis</span> <span class="nv">Quadrature</span> <span class="nv">Rules</span>,
-<span class="nv">BIT</span> <span class="nv">Numerical</span> <span class="nv">Mathematics</span>,
-<span class="nv">Volume</span> <span class="mi">43</span>, <span class="nv">Number</span> <span class="mi">1</span>, <span class="mi">2003</span>, <span class="nv">pages</span> <span class="mi">1</span><span class="o">-</span><span class="mi">18</span>.
+<span class="nv">Joerg</span><span class="w"> </span><span class="nv">Waldvogel</span>,
+<span class="nv">Fast</span><span class="w"> </span><span class="nv">Construction</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">Fejer</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">Clenshaw</span><span class="o">-</span><span class="nv">Curtis</span><span class="w"> </span><span class="nv">Quadrature</span><span class="w"> </span><span class="nv">Rules</span>,
+<span class="nv">BIT</span><span class="w"> </span><span class="nv">Numerical</span><span class="w"> </span><span class="nv">Mathematics</span>,
+<span class="nv">Volume</span><span class="w"> </span><span class="mi">43</span>,<span class="w"> </span><span class="nv">Number</span><span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="mi">2003</span>,<span class="w"> </span><span class="nv">pages</span><span class="w"> </span><span class="mi">1</span><span class="o">-</span><span class="mi">18</span>.
 </code></pre></div>
 
 <p>Parameters:</p>
@@ -221,16 +206,16 @@ Output, real ( kind = 8 ) X(N), the abscissas.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~39"></span>
+              <span class="anchor" id="variable-n~34"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -245,7 +230,7 @@ Output, real ( kind = 8 ) X(N), the abscissas.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~55"></span>
+              <span class="anchor" id="variable-x~60"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -263,41 +248,114 @@ Output, real ( kind = 8 ) X(N), the abscissas.
 
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">cc_abscissas</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! CC_ABSCISSAS computes the Clenshaw Curtis abscissas.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The interval is [ -1, 1 ].</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The abscissas are the cosines of equally spaced angles between </span>
+<span class="w">  </span><span class="c">!    180 and 0 degrees, including the endpoints.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      X(I) = cos ( ( ORDER - I ) * PI / ( ORDER - 1 ) )</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    except for the basic case ORDER = 1, when</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      X(1) = 0.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    If the value of ORDER is increased in a sensible way, then</span>
+<span class="w">  </span><span class="c">!    the new set of abscissas will include the old ones.  One such</span>
+<span class="w">  </span><span class="c">!    sequence would be ORDER(K) = 2*K+1 for K = 0, 1, 2, ...</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    When doing interpolation with Lagrange polynomials, the Clenshaw Curtis</span>
+<span class="w">  </span><span class="c">!    abscissas can be a better choice than regularly spaced abscissas.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This code is distributed under the GNU LGPL license. </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    04 December 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    John Burkardt</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Charles Clenshaw, Alan Curtis,</span>
+<span class="w">  </span><span class="c">!    A Method for Numerical Integration on an Automatic Computer,</span>
+<span class="w">  </span><span class="c">!    Numerische Mathematik,</span>
+<span class="w">  </span><span class="c">!    Volume 2, Number 1, December 1960, pages 197-205.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Philip Davis, Philip Rabinowitz,</span>
+<span class="w">  </span><span class="c">!    Methods of Numerical Integration,</span>
+<span class="w">  </span><span class="c">!    Second Edition,</span>
+<span class="w">  </span><span class="c">!    Dover, 2007,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0486453391,</span>
+<span class="w">  </span><span class="c">!    LC: QA299.3.D28.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Joerg Waldvogel,</span>
+<span class="w">  </span><span class="c">!    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,</span>
+<span class="w">  </span><span class="c">!    BIT Numerical Mathematics,</span>
+<span class="w">  </span><span class="c">!    Volume 43, Number 1, 2003, pages 1-18.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the order of the rule.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) X(N), the abscissas.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.141592653589793D+00</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;CC_ABSCISSA - Fatal error!&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  N &lt; 1.&#39;</span>
+<span class="w">     </span><span class="k">stop</span>
+<span class="k">  end if</span>
+
+<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="k">return</span>
+<span class="k">  end if</span>
+
+<span class="k">  do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">     </span><span class="n">theta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end subroutine </span><span class="n">cc_abscissas</span>
+</pre></div>
 
     </section>
-    <br class="visible-xs visible-sm hidden-md">
-
-
-    
-    
-
-    
-    
-
-
-    
+    <br>
     
     </div>
   </div>
@@ -306,12 +364,12 @@ Output, real ( kind = 8 ) X(N), the abscissas.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -321,17 +379,12 @@ Output, real ( kind = 8 ) X(N), the abscissas.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

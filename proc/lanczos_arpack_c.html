@@ -10,81 +10,55 @@
 
     <title>lanczos_arpack_c &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.4% of total for procedures.">275 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.4% of total for procedures.">275 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/arpack_c.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/arpack_c.f90.html'>arpack_c.f90</a></li>
-          <li class="active">lanczos_arpack_c</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/arpack_c.f90.html'>arpack_c.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">lanczos_arpack_c</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -127,15 +105,14 @@
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
       <div id="sidebar">
       <h3>Contents</h3>
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#common-0">Common Blocks</a>
-        </h3>
-      </div>
-      <div id="common-0" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../proc/lanczos_arpack_c.html#common-debug~8">debug</a>
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#common-0"
+         aria-expanded="false" aria-controls="common-0">
+         <h4 class="card-header bg-primary text-white">Common Blocks</h4>
+      </a>
+      <div id="common-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../proc/lanczos_arpack_c.html#common-debug">debug</a>
         </div>
       </div>
     </div>
@@ -158,8 +135,9 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
         <a class="list-group-item" href="../proc/lanczos_arpack_c.html#src">lanczos_arpack_c</a>
       </div>
@@ -181,11 +159,11 @@
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -200,16 +178,16 @@
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-nloc~5"></span>
               integer
             </td>
 <td></td>
@@ -224,7 +202,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vin~7"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -239,7 +217,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vout~6"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -260,7 +238,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-eval~5"></span>
+              <span class="anchor" id="variable-eval~2"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -275,7 +253,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-evec~5"></span>
+              <span class="anchor" id="variable-evec~2"></span>
               complex(kind=8)
             </td>
 <td></td>
@@ -290,7 +268,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nblock~17"></span>
+              <span class="anchor" id="variable-nblock~2"></span>
               integer,
             </td>
 <td></td>
@@ -305,7 +283,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nitermax~9"></span>
+              <span class="anchor" id="variable-nitermax~3"></span>
               integer,
             </td>
 <td></td>
@@ -320,7 +298,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bmat~2"></span>
+              <span class="anchor" id="variable-bmat"></span>
               character(len=1),
             </td>
 <td></td>
@@ -335,7 +313,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-v0~4"></span>
+              <span class="anchor" id="variable-v0"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -350,7 +328,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-tol~29"></span>
+              <span class="anchor" id="variable-tol~7"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -365,7 +343,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iverbose~12"></span>
+              <span class="anchor" id="variable-iverbose~2"></span>
               logical,
             </td>
 <td></td>
@@ -382,11 +360,11 @@
   </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -454,8 +432,8 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -472,11 +450,11 @@
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -495,23 +473,29 @@
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -529,74 +513,44 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#common-1">Common Blocks</a>
-        </h3>
-      </div>
-      <div id="common-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../proc/lanczos_arpack_c.html#common-debug~8">debug</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/lanczos_arpack_c.html#src">lanczos_arpack_c</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
     <section>
       <h2>Common Blocks</h2>
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-debug~8"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/lanczos_arpack_d~2.html#common-debug~2'>lanczos_arpack_d</a> (subroutine)<br><a href='../proc/lanczos_arpack_c~2.html#common-debug~3'>lanczos_arpack_c</a> (subroutine)<br><a href='../proc/lanczos_parpack_d~2.html#common-debug~4'>lanczos_parpack_d</a> (subroutine)<br><a href='../proc/lanczos_parpack_c~2.html#common-debug~5'>lanczos_parpack_c</a> (subroutine)<br><a href='../proc/lanczos_parpack_c.html#common-debug'>lanczos_parpack_c</a> (subroutine)<br><a href='../proc/lanczos_parpack_d.html#common-debug~6'>lanczos_parpack_d</a> (subroutine)<br><a href='../proc/lanczos_arpack_d.html#common-debug~7'>lanczos_arpack_d</a> (subroutine)<br>">common /debug/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-debug"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/lanczos_arpack_d~2.html#common-debug~2'>lanczos_arpack_d</a>
+      (subroutine)<br><a href='../proc/lanczos_arpack_c~2.html#common-debug~3'>lanczos_arpack_c</a>
+      (subroutine)<br><a href='../proc/lanczos_parpack_d~2.html#common-debug~4'>lanczos_parpack_d</a>
+      (subroutine)<br><a href='../proc/lanczos_parpack_c~2.html#common-debug~5'>lanczos_parpack_c</a>
+      (subroutine)<br><a href='../proc/lanczos_parpack_d.html#common-debug~6'>lanczos_parpack_d</a>
+      (subroutine)<br><a href='../proc/lanczos_parpack_c.html#common-debug~7'>lanczos_parpack_c</a>
+      (subroutine)<br><a href='../proc/lanczos_arpack_d.html#common-debug~8'>lanczos_arpack_d</a>
+      (subroutine)<br>">
+           common /debug/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-logfil~4"></span>
+              <span class="anchor" id="variable-logfil"></span>
               integer
             </td>
             <td>
@@ -612,7 +566,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ndigit~4"></span>
+              <span class="anchor" id="variable-ndigit"></span>
               integer
             </td>
             <td>
@@ -628,7 +582,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mgetv0~4"></span>
+              <span class="anchor" id="variable-mgetv0"></span>
               integer
             </td>
             <td>
@@ -644,7 +598,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msaupd~4"></span>
+              <span class="anchor" id="variable-msaupd"></span>
               integer
             </td>
             <td>
@@ -660,7 +614,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msaup2~4"></span>
+              <span class="anchor" id="variable-msaup2"></span>
               integer
             </td>
             <td>
@@ -676,7 +630,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msaitr~4"></span>
+              <span class="anchor" id="variable-msaitr"></span>
               integer
             </td>
             <td>
@@ -692,7 +646,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mseigt~4"></span>
+              <span class="anchor" id="variable-mseigt"></span>
               integer
             </td>
             <td>
@@ -708,7 +662,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msapps~4"></span>
+              <span class="anchor" id="variable-msapps"></span>
               integer
             </td>
             <td>
@@ -724,7 +678,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-msgets~4"></span>
+              <span class="anchor" id="variable-msgets"></span>
               integer
             </td>
             <td>
@@ -740,7 +694,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mseupd~4"></span>
+              <span class="anchor" id="variable-mseupd"></span>
               integer
             </td>
             <td>
@@ -756,7 +710,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mnaupd~4"></span>
+              <span class="anchor" id="variable-mnaupd"></span>
               integer
             </td>
             <td>
@@ -772,7 +726,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mnaup2~4"></span>
+              <span class="anchor" id="variable-mnaup2"></span>
               integer
             </td>
             <td>
@@ -788,7 +742,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mnaitr~4"></span>
+              <span class="anchor" id="variable-mnaitr"></span>
               integer
             </td>
             <td>
@@ -804,7 +758,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mneigh~4"></span>
+              <span class="anchor" id="variable-mneigh"></span>
               integer
             </td>
             <td>
@@ -820,7 +774,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mnapps~4"></span>
+              <span class="anchor" id="variable-mnapps"></span>
               integer
             </td>
             <td>
@@ -836,7 +790,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mngets~4"></span>
+              <span class="anchor" id="variable-mngets"></span>
               integer
             </td>
             <td>
@@ -852,7 +806,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mneupd~4"></span>
+              <span class="anchor" id="variable-mneupd"></span>
               integer
             </td>
             <td>
@@ -868,7 +822,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mcaupd~4"></span>
+              <span class="anchor" id="variable-mcaupd"></span>
               integer
             </td>
             <td>
@@ -884,7 +838,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mcaup2~4"></span>
+              <span class="anchor" id="variable-mcaup2"></span>
               integer
             </td>
             <td>
@@ -900,7 +854,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mcaitr~4"></span>
+              <span class="anchor" id="variable-mcaitr"></span>
               integer
             </td>
             <td>
@@ -916,7 +870,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mceigh~4"></span>
+              <span class="anchor" id="variable-mceigh"></span>
               integer
             </td>
             <td>
@@ -932,7 +886,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mcapps~4"></span>
+              <span class="anchor" id="variable-mcapps"></span>
               integer
             </td>
             <td>
@@ -948,7 +902,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mcgets~4"></span>
+              <span class="anchor" id="variable-mcgets"></span>
               integer
             </td>
             <td>
@@ -964,7 +918,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-mceupd~4"></span>
+              <span class="anchor" id="variable-mceupd"></span>
               integer
             </td>
             <td>
@@ -988,7 +942,7 @@ implementation in a submodule of an interface in a parent module.
     <br>
     <script>
       $(function () {
-      $('[data-toggle="popover"]').popover()
+      $('[data-bs-toggle="popover"]').popover()
       })
     </script>
 
@@ -999,77 +953,78 @@ implementation in a submodule of an interface in a parent module.
     
 
 
+
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">lanczos_arpack_c</span><span class="p">(</span><span class="n">MatVec</span><span class="p">,</span><span class="n">eval</span><span class="p">,</span><span class="n">evec</span><span class="p">,</span><span class="n">Nblock</span><span class="p">,</span><span class="n">Nitermax</span><span class="p">,</span><span class="n">bmat</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">iverbose</span><span class="p">)</span><span class="w"></span>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">lanczos_arpack_c</span><span class="p">(</span><span class="n">MatVec</span><span class="p">,</span><span class="n">eval</span><span class="p">,</span><span class="n">evec</span><span class="p">,</span><span class="n">Nblock</span><span class="p">,</span><span class="n">Nitermax</span><span class="p">,</span><span class="n">bmat</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">iverbose</span><span class="p">)</span>
 <span class="w">  </span><span class="c">!Interface to Matrix-Vector routine:</span>
 <span class="w">  </span><span class="k">interface</span>
-<span class="k">     subroutine </span><span class="n">MatVec</span><span class="p">(</span><span class="n">Nloc</span><span class="p">,</span><span class="n">vin</span><span class="p">,</span><span class="n">vout</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="kt">integer</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Nloc</span><span class="w"></span>
-<span class="w">       </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">Nloc</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vin</span><span class="w"></span>
-<span class="w">       </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">Nloc</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vout</span><span class="w"></span>
-<span class="w">     </span><span class="k">end subroutine </span><span class="n">MatVec</span><span class="w"></span>
-<span class="w">  </span><span class="k">end interface</span><span class="w"></span>
+<span class="k">     subroutine </span><span class="n">MatVec</span><span class="p">(</span><span class="n">Nloc</span><span class="p">,</span><span class="n">vin</span><span class="p">,</span><span class="n">vout</span><span class="p">)</span>
+<span class="w">       </span><span class="kt">integer</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Nloc</span>
+<span class="w">       </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">Nloc</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vin</span>
+<span class="w">       </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">Nloc</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vout</span>
+<span class="w">     </span><span class="k">end subroutine </span><span class="n">MatVec</span>
+<span class="w">  </span><span class="k">end interface</span>
 <span class="w">  </span><span class="c">!Arguments</span>
 <span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">eval</span><span class="p">(:)</span><span class="c">![Neigen]</span>
 <span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">evec</span><span class="p">(:,:)</span><span class="c">![Ns,Neigen]</span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">Nblock</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">Nitermax</span><span class="w"></span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">Nblock</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">Nitermax</span>
 <span class="w">  </span><span class="c">! character(len=2),optional    :: which</span>
-<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">optional</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">bmat</span><span class="w"></span>
-<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">v0</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">evec</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">tol</span><span class="w"></span>
-<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">iverbose</span><span class="w"></span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">optional</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">bmat</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">v0</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">evec</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">tol</span>
+<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">iverbose</span>
 <span class="w">  </span><span class="c">!Dimensions:</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">Ns</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">Neigen</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">maxn</span><span class="p">,</span><span class="n">maxnev</span><span class="p">,</span><span class="n">maxncv</span><span class="p">,</span><span class="n">ldv</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="n">nconv</span><span class="p">,</span><span class="n">ncv</span><span class="p">,</span><span class="n">nev</span><span class="w"></span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">Ns</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">Neigen</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">maxn</span><span class="p">,</span><span class="n">maxnev</span><span class="p">,</span><span class="n">maxncv</span><span class="p">,</span><span class="n">ldv</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="n">nconv</span><span class="p">,</span><span class="n">ncv</span><span class="p">,</span><span class="n">nev</span>
 <span class="w">  </span><span class="c">!Arrays:</span>
-<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">ax</span><span class="p">(:),</span><span class="n">d</span><span class="p">(:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="p">(:,:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">workl</span><span class="p">(:),</span><span class="n">workd</span><span class="p">(:),</span><span class="n">workev</span><span class="p">(:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">resid</span><span class="p">(:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">rwork</span><span class="p">(:),</span><span class="n">rd</span><span class="p">(:,:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="k">select</span><span class="p">(:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">iparam</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">ipntr</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">ax</span><span class="p">(:),</span><span class="n">d</span><span class="p">(:)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="p">(:,:)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">workl</span><span class="p">(:),</span><span class="n">workd</span><span class="p">(:),</span><span class="n">workev</span><span class="p">(:)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">resid</span><span class="p">(:)</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">rwork</span><span class="p">(:),</span><span class="n">rd</span><span class="p">(:,:)</span>
+<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="k">select</span><span class="p">(:)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">iparam</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">ipntr</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
 <span class="w">  </span><span class="c">!Control Vars:</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">ido</span><span class="p">,</span><span class="n">ierr</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">ishfts</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">lworkl</span><span class="p">,</span><span class="n">maxitr</span><span class="p">,</span><span class="n">mode1</span><span class="w"></span>
-<span class="w">  </span><span class="kt">logical</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">rvec</span><span class="p">,</span><span class="n">verb</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">sigma</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">tol_</span><span class="w"></span>
-<span class="w">  </span><span class="kt">character</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">bmat_</span><span class="w"></span>
-<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">which_</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">external</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">dznrm2</span><span class="p">,</span><span class="n">dlapy2</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">reV</span><span class="p">(:),</span><span class="n">imV</span><span class="p">(:)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">Eorder</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">ido</span><span class="p">,</span><span class="n">ierr</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">ishfts</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">lworkl</span><span class="p">,</span><span class="n">maxitr</span><span class="p">,</span><span class="n">mode1</span>
+<span class="w">  </span><span class="kt">logical</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">rvec</span><span class="p">,</span><span class="n">verb</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">sigma</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">tol_</span>
+<span class="w">  </span><span class="kt">character</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">bmat_</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">which_</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">external</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">dznrm2</span><span class="p">,</span><span class="n">dlapy2</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">reV</span><span class="p">(:),</span><span class="n">imV</span><span class="p">(:)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">Eorder</span><span class="p">(:)</span>
 
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">logfil</span><span class="p">,</span><span class="w"> </span><span class="n">ndigit</span><span class="p">,</span><span class="w"> </span><span class="n">mgetv0</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="n">msaupd</span><span class="p">,</span><span class="w"> </span><span class="n">msaup2</span><span class="p">,</span><span class="w"> </span><span class="n">msaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mseigt</span><span class="p">,</span><span class="w"> </span><span class="n">msapps</span><span class="p">,</span><span class="w"> </span><span class="n">msgets</span><span class="p">,</span><span class="w"> </span><span class="n">mseupd</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="n">mnaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mnaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mnaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mneigh</span><span class="p">,</span><span class="w"> </span><span class="n">mnapps</span><span class="p">,</span><span class="w"> </span><span class="n">mngets</span><span class="p">,</span><span class="w"> </span><span class="n">mneupd</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="n">mcaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mcaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mcaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mceigh</span><span class="p">,</span><span class="w"> </span><span class="n">mcapps</span><span class="p">,</span><span class="w"> </span><span class="n">mcgets</span><span class="p">,</span><span class="w"> </span><span class="n">mceupd</span><span class="w"></span>
-<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">logfil</span><span class="p">,</span><span class="w"> </span><span class="n">ndigit</span><span class="p">,</span><span class="w"> </span><span class="n">mgetv0</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="n">msaupd</span><span class="p">,</span><span class="w"> </span><span class="n">msaup2</span><span class="p">,</span><span class="w"> </span><span class="n">msaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mseigt</span><span class="p">,</span><span class="w"> </span><span class="n">msapps</span><span class="p">,</span><span class="w"> </span><span class="n">msgets</span><span class="p">,</span><span class="w"> </span><span class="n">mseupd</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="n">mnaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mnaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mnaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mneigh</span><span class="p">,</span><span class="w"> </span><span class="n">mnapps</span><span class="p">,</span><span class="w"> </span><span class="n">mngets</span><span class="p">,</span><span class="w"> </span><span class="n">mneupd</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="n">mcaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mcaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mcaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mceigh</span><span class="p">,</span><span class="w"> </span><span class="n">mcapps</span><span class="p">,</span><span class="w"> </span><span class="n">mcgets</span><span class="p">,</span><span class="w"> </span><span class="n">mceupd</span><span class="w"></span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">logfil</span><span class="p">,</span><span class="w"> </span><span class="n">ndigit</span><span class="p">,</span><span class="w"> </span><span class="n">mgetv0</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">msaupd</span><span class="p">,</span><span class="w"> </span><span class="n">msaup2</span><span class="p">,</span><span class="w"> </span><span class="n">msaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mseigt</span><span class="p">,</span><span class="w"> </span><span class="n">msapps</span><span class="p">,</span><span class="w"> </span><span class="n">msgets</span><span class="p">,</span><span class="w"> </span><span class="n">mseupd</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">mnaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mnaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mnaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mneigh</span><span class="p">,</span><span class="w"> </span><span class="n">mnapps</span><span class="p">,</span><span class="w"> </span><span class="n">mngets</span><span class="p">,</span><span class="w"> </span><span class="n">mneupd</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">mcaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mcaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mcaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mceigh</span><span class="p">,</span><span class="w"> </span><span class="n">mcapps</span><span class="p">,</span><span class="w"> </span><span class="n">mcgets</span><span class="p">,</span><span class="w"> </span><span class="n">mceupd</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">logfil</span><span class="p">,</span><span class="w"> </span><span class="n">ndigit</span><span class="p">,</span><span class="w"> </span><span class="n">mgetv0</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">msaupd</span><span class="p">,</span><span class="w"> </span><span class="n">msaup2</span><span class="p">,</span><span class="w"> </span><span class="n">msaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mseigt</span><span class="p">,</span><span class="w"> </span><span class="n">msapps</span><span class="p">,</span><span class="w"> </span><span class="n">msgets</span><span class="p">,</span><span class="w"> </span><span class="n">mseupd</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">mnaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mnaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mnaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mneigh</span><span class="p">,</span><span class="w"> </span><span class="n">mnapps</span><span class="p">,</span><span class="w"> </span><span class="n">mngets</span><span class="p">,</span><span class="w"> </span><span class="n">mneupd</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">mcaupd</span><span class="p">,</span><span class="w"> </span><span class="n">mcaup2</span><span class="p">,</span><span class="w"> </span><span class="n">mcaitr</span><span class="p">,</span><span class="w"> </span><span class="n">mceigh</span><span class="p">,</span><span class="w"> </span><span class="n">mcapps</span><span class="p">,</span><span class="w"> </span><span class="n">mcgets</span><span class="p">,</span><span class="w"> </span><span class="n">mceupd</span>
 <span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">Ns</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">evec</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">Neigen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">eval</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="k">call </span><span class="n">assert_shape</span><span class="p">(</span><span class="n">Evec</span><span class="p">,[</span><span class="n">Ns</span><span class="p">,</span><span class="n">Neigen</span><span class="p">],</span><span class="s2">&quot;Arpack_c&quot;</span><span class="p">,</span><span class="s2">&quot;Evec&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">Ns</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">evec</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="n">Neigen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">eval</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">assert_shape</span><span class="p">(</span><span class="n">Evec</span><span class="p">,[</span><span class="n">Ns</span><span class="p">,</span><span class="n">Neigen</span><span class="p">],</span><span class="s2">&quot;Arpack_c&quot;</span><span class="p">,</span><span class="s2">&quot;Evec&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">maxn</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">Ns</span><span class="w"></span>
-<span class="w">  </span><span class="n">maxnev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Neigen</span><span class="w"></span>
-<span class="w">  </span><span class="n">maxncv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="o">*</span><span class="n">Neigen</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Nblock</span><span class="p">))</span><span class="n">maxncv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nblock</span><span class="w"></span>
-<span class="w">  </span><span class="n">maxitr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">512</span><span class="w">       </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Nitermax</span><span class="p">))</span><span class="n">maxitr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nitermax</span><span class="w"></span>
-<span class="w">  </span><span class="n">bmat_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;I&#39;</span><span class="w">       </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">bmat</span><span class="p">))</span><span class="n">bmat_</span><span class="o">=</span><span class="n">bmat</span><span class="w"></span>
+<span class="w">  </span><span class="n">maxn</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">Ns</span>
+<span class="w">  </span><span class="n">maxnev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Neigen</span>
+<span class="w">  </span><span class="n">maxncv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="o">*</span><span class="n">Neigen</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Nblock</span><span class="p">))</span><span class="n">maxncv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nblock</span>
+<span class="w">  </span><span class="n">maxitr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">512</span><span class="w">       </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Nitermax</span><span class="p">))</span><span class="n">maxitr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nitermax</span>
+<span class="w">  </span><span class="n">bmat_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;I&#39;</span><span class="w">       </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">bmat</span><span class="p">))</span><span class="n">bmat_</span><span class="o">=</span><span class="n">bmat</span>
 <span class="w">  </span><span class="n">which_</span><span class="o">=</span><span class="s1">&#39;SR&#39;</span><span class="w">       </span><span class="c">! ; if(present(which))which_=which</span>
-<span class="w">  </span><span class="n">tol_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span><span class="n">tol_</span><span class="o">=</span><span class="n">tol</span><span class="w"></span>
-<span class="w">  </span><span class="n">verb</span><span class="w">  </span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">     </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iverbose</span><span class="p">))</span><span class="n">verb</span><span class="o">=</span><span class="n">iverbose</span><span class="w"></span>
+<span class="w">  </span><span class="n">tol_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span><span class="n">tol_</span><span class="o">=</span><span class="n">tol</span>
+<span class="w">  </span><span class="n">verb</span><span class="w">  </span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">     </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iverbose</span><span class="p">))</span><span class="n">verb</span><span class="o">=</span><span class="n">iverbose</span>
 <span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">bmat_</span><span class="o">/=</span><span class="s1">&#39;I&#39;</span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="n">bmat_</span><span class="o">/=</span><span class="s1">&#39;G&#39;</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ARPACK: selected *bmat* is wrong. can be [I, G]&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">bmat_</span><span class="o">/=</span><span class="s1">&#39;I&#39;</span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="n">bmat_</span><span class="o">/=</span><span class="s1">&#39;G&#39;</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ARPACK: selected *bmat* is wrong. can be [I, G]&quot;</span>
 <span class="w">  </span><span class="c">! which_/=&quot;LM&quot; .OR. &amp;</span>
 <span class="w">  </span><span class="c">! which_/=&quot;SM&quot; .OR. &amp;       </span>
 <span class="w">  </span><span class="c">! which_/=&quot;LI&quot; .OR. &amp;</span>
@@ -1078,186 +1033,186 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">  </span><span class="c">!    stop &quot;ARPACK: selected *which_* is wrong. can be [LM, SM, LR, SR, LI, SI]&quot;</span>
 <span class="w">  </span><span class="c">! endif</span>
 <span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">verb</span><span class="p">)</span><span class="k">then</span>
-<span class="k">     </span><span class="n">ndigit</span><span class="o">=-</span><span class="mi">4</span><span class="w"></span>
-<span class="w">     </span><span class="n">logfil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"></span>
-<span class="w">     </span><span class="n">mcaupd</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">mnaupd</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
-<span class="w">     </span><span class="n">mcaup2</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">mnaup2</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
-<span class="w">     </span><span class="n">mceupd</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span><span class="n">mneupd</span><span class="o">=</span><span class="mi">4</span><span class="w"></span>
-<span class="w">  </span><span class="k">endif</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">ldv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">Ns</span><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">maxncv</span><span class="o">&gt;</span><span class="n">Ns</span><span class="p">)</span><span class="n">maxncv</span><span class="o">=</span><span class="n">Ns</span><span class="w"></span>
-<span class="w">  </span><span class="n">n</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">maxn</span><span class="w"></span>
-<span class="w">  </span><span class="n">nev</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">maxnev</span><span class="w"></span>
-<span class="w">  </span><span class="n">ncv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">maxncv</span><span class="w"></span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">ax</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="n">ncv</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">resid</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">ldv</span><span class="p">,</span><span class="n">ncv</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">workd</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">workev</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ncv</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">workl</span><span class="p">(</span><span class="n">ncv</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ncv</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">rwork</span><span class="p">(</span><span class="n">ncv</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">rd</span><span class="p">(</span><span class="n">ncv</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="k">select</span><span class="p">(</span><span class="n">ncv</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="n">ax</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">d</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">v</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">workl</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">workd</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">resid</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">workev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="w">  </span><span class="n">rwork</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="w"></span>
-<span class="w">  </span><span class="n">rd</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="w"></span>
-<span class="w">  </span><span class="n">lworkl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncv</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ncv</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="w">  </span><span class="n">info</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="n">ido</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">  </span><span class="n">ishfts</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ishfts</span><span class="w"></span>
-<span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxitr</span><span class="w"></span>
-<span class="w">  </span><span class="n">mode1</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode1</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">v0</span><span class="p">))</span><span class="k">then</span>
-<span class="k">     </span><span class="n">resid</span><span class="o">=</span><span class="n">v0</span><span class="w"></span>
-<span class="w">  </span><span class="k">else</span>
-<span class="k">     call </span><span class="n">mt_random</span><span class="p">(</span><span class="n">resid</span><span class="p">)</span><span class="w"></span>
+<span class="k">     </span><span class="n">ndigit</span><span class="o">=-</span><span class="mi">4</span>
+<span class="w">     </span><span class="n">logfil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span>
+<span class="w">     </span><span class="n">mcaupd</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">mnaupd</span><span class="o">=</span><span class="mi">1</span>
+<span class="w">     </span><span class="n">mcaup2</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">mnaup2</span><span class="o">=</span><span class="mi">1</span>
+<span class="w">     </span><span class="n">mceupd</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span><span class="n">mneupd</span><span class="o">=</span><span class="mi">4</span>
 <span class="w">  </span><span class="k">endif</span>
-<span class="k">  </span><span class="n">resid</span><span class="o">=</span><span class="n">resid</span><span class="o">/</span><span class="nb">sqrt</span><span class="p">(</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span><span class="n">resid</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">ldv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">Ns</span><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">maxncv</span><span class="o">&gt;</span><span class="n">Ns</span><span class="p">)</span><span class="n">maxncv</span><span class="o">=</span><span class="n">Ns</span>
+<span class="w">  </span><span class="n">n</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">maxn</span>
+<span class="w">  </span><span class="n">nev</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">maxnev</span>
+<span class="w">  </span><span class="n">ncv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">maxncv</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">ax</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="n">ncv</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">resid</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">ldv</span><span class="p">,</span><span class="n">ncv</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">workd</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">workev</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ncv</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">workl</span><span class="p">(</span><span class="n">ncv</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ncv</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">rwork</span><span class="p">(</span><span class="n">ncv</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">rd</span><span class="p">(</span><span class="n">ncv</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="k">select</span><span class="p">(</span><span class="n">ncv</span><span class="p">))</span>
+<span class="w">  </span><span class="n">ax</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">d</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">v</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">workl</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">workd</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">resid</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">workev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span>
+<span class="w">  </span><span class="n">rwork</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span>
+<span class="w">  </span><span class="n">rd</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span>
+<span class="w">  </span><span class="n">lworkl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncv</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">ncv</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">  </span><span class="n">info</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">ido</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="n">ishfts</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ishfts</span>
+<span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxitr</span>
+<span class="w">  </span><span class="n">mode1</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode1</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">v0</span><span class="p">))</span><span class="k">then</span>
+<span class="k">     </span><span class="n">resid</span><span class="o">=</span><span class="n">v0</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="k">     call </span><span class="n">mt_random</span><span class="p">(</span><span class="n">resid</span><span class="p">)</span>
+<span class="w">  </span><span class="k">endif</span>
+<span class="k">  </span><span class="n">resid</span><span class="o">=</span><span class="n">resid</span><span class="o">/</span><span class="nb">sqrt</span><span class="p">(</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span><span class="n">resid</span><span class="p">))</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!MAIN LOOP, REVERSE COMMUNICATION</span>
 <span class="w">  </span><span class="k">do</span>
-<span class="k">     call </span><span class="n">znaupd</span><span class="p">(</span><span class="n">ido</span><span class="p">,</span><span class="n">bmat_</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">which_</span><span class="p">,</span><span class="n">nev</span><span class="p">,</span><span class="n">tol_</span><span class="p">,</span><span class="n">resid</span><span class="p">,</span><span class="n">ncv</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">ldv</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">          </span><span class="n">iparam</span><span class="p">,</span><span class="n">ipntr</span><span class="p">,</span><span class="n">workd</span><span class="p">,</span><span class="n">workl</span><span class="p">,</span><span class="n">lworkl</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">info</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">ido</span><span class="o">/=-</span><span class="mf">1.</span><span class="nb">AND</span><span class="p">.</span><span class="n">ido</span><span class="o">/=</span><span class="mi">1</span><span class="p">)</span><span class="k">exit</span><span class="w"></span>
+<span class="k">     call </span><span class="n">znaupd</span><span class="p">(</span><span class="n">ido</span><span class="p">,</span><span class="n">bmat_</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">which_</span><span class="p">,</span><span class="n">nev</span><span class="p">,</span><span class="n">tol_</span><span class="p">,</span><span class="n">resid</span><span class="p">,</span><span class="n">ncv</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">ldv</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">iparam</span><span class="p">,</span><span class="n">ipntr</span><span class="p">,</span><span class="n">workd</span><span class="p">,</span><span class="n">workl</span><span class="p">,</span><span class="n">lworkl</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">ido</span><span class="o">/=-</span><span class="mf">1.</span><span class="nb">AND</span><span class="p">.</span><span class="n">ido</span><span class="o">/=</span><span class="mi">1</span><span class="p">)</span><span class="k">exit</span>
 <span class="w">     </span><span class="c">!  Perform matrix vector multiplication:</span>
 <span class="w">     </span><span class="c">!  y &lt;--- OP*x ; workd(ipntr(1))=input, workd(ipntr(2))=output</span>
-<span class="w">     </span><span class="k">call </span><span class="n">MatVec</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">workd</span><span class="p">(</span><span class="n">ipntr</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span><span class="n">workd</span><span class="p">(</span><span class="n">ipntr</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="k">end do</span><span class="w"></span>
+<span class="w">     </span><span class="k">call </span><span class="n">MatVec</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">workd</span><span class="p">(</span><span class="n">ipntr</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span><span class="n">workd</span><span class="p">(</span><span class="n">ipntr</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">end do</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!POST PROCESSING:</span>
 <span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">info</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
-<span class="k">     write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,i6)&#39;</span><span class="p">)</span><span class="s1">&#39;Warning/Error in ZNAUPD, info = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"></span>
-<span class="w">     </span><span class="k">include</span><span class="w"> </span><span class="s2">&quot;error_msg_arpack.h90&quot;</span><span class="w"></span>
+<span class="k">     write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,i6)&#39;</span><span class="p">)</span><span class="s1">&#39;Warning/Error in ZNAUPD, info = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">info</span>
+<span class="w">     </span><span class="k">include</span><span class="w"> </span><span class="s2">&quot;error_msg_arpack.h90&quot;</span>
 <span class="w">  </span><span class="k">else</span>
-<span class="k">     </span><span class="n">rvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
-<span class="w">     </span><span class="k">call </span><span class="n">zneupd</span><span class="w">  </span><span class="p">(</span><span class="n">rvec</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="k">select</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">ldv</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">workev</span><span class="p">,</span><span class="n">bmat_</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">which_</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">          </span><span class="n">nev</span><span class="p">,</span><span class="n">tol_</span><span class="p">,</span><span class="n">resid</span><span class="p">,</span><span class="n">ncv</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">ldv</span><span class="p">,</span><span class="n">iparam</span><span class="p">,</span><span class="n">ipntr</span><span class="p">,</span><span class="n">workd</span><span class="p">,</span><span class="n">workl</span><span class="p">,</span><span class="n">lworkl</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span><span class="w"></span>
+<span class="k">     </span><span class="n">rvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">     </span><span class="k">call </span><span class="n">zneupd</span><span class="w">  </span><span class="p">(</span><span class="n">rvec</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="k">select</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">ldv</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">workev</span><span class="p">,</span><span class="n">bmat_</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">which_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">nev</span><span class="p">,</span><span class="n">tol_</span><span class="p">,</span><span class="n">resid</span><span class="p">,</span><span class="n">ncv</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">ldv</span><span class="p">,</span><span class="n">iparam</span><span class="p">,</span><span class="n">ipntr</span><span class="p">,</span><span class="n">workd</span><span class="p">,</span><span class="n">workl</span><span class="p">,</span><span class="n">lworkl</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span>
 <span class="w">     </span><span class="c">!  Eigenvalues are returned in the first column of the two dimensional </span>
 <span class="w">     </span><span class="c">!  array D and the corresponding eigenvectors are returned in the first </span>
 <span class="w">     </span><span class="c">!  NCONV (=IPARAM(5)) columns of the two dimensional array V if requested.</span>
 <span class="w">     </span><span class="c">!  Otherwise, an orthogonal basis for the invariant subspace corresponding </span>
 <span class="w">     </span><span class="c">!  to the eigenvalues in D is returned in V.</span>
-<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">neigen</span><span class="w"></span>
-<span class="w">        </span><span class="n">eval</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">dreal</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"></span>
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">neigen</span>
+<span class="w">        </span><span class="n">eval</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">dreal</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
 <span class="w">     </span><span class="k">end do</span>
-<span class="k">     allocate</span><span class="p">(</span><span class="n">Eorder</span><span class="p">(</span><span class="n">Neigen</span><span class="p">))</span><span class="w"></span>
-<span class="w">     </span><span class="k">call </span><span class="n">sort_array</span><span class="p">(</span><span class="n">Eval</span><span class="p">,</span><span class="n">Eorder</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">neigen</span><span class="w"></span>
-<span class="w">        </span><span class="n">evec</span><span class="p">(:,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">v</span><span class="p">(:,</span><span class="n">Eorder</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"></span>
-<span class="w">     </span><span class="k">enddo</span><span class="w"></span>
+<span class="k">     allocate</span><span class="p">(</span><span class="n">Eorder</span><span class="p">(</span><span class="n">Neigen</span><span class="p">))</span>
+<span class="w">     </span><span class="k">call </span><span class="n">sort_array</span><span class="p">(</span><span class="n">Eval</span><span class="p">,</span><span class="n">Eorder</span><span class="p">)</span>
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">neigen</span>
+<span class="w">        </span><span class="n">evec</span><span class="p">(:,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">v</span><span class="p">(:,</span><span class="n">Eorder</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="w">     </span><span class="k">enddo</span>
 <span class="w">     </span><span class="c">!</span>
 <span class="w">     </span><span class="c">!  Compute the residual norm ||  A*x - lambda*x ||</span>
 <span class="w">     </span><span class="c">!  for the NCONV accurately computed eigenvalues and eigenvectors.</span>
 <span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">ierr</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
-<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,i6)&#39;</span><span class="p">)</span><span class="s1">&#39;Error with ZNEUPD, IERR = &#39;</span><span class="p">,</span><span class="n">ierr</span><span class="w"></span>
-<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a)&#39;</span><span class="p">)</span><span class="s1">&#39;Check the documentation of ZNEUPD.&#39;</span><span class="w"></span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,i6)&#39;</span><span class="p">)</span><span class="s1">&#39;Error with ZNEUPD, IERR = &#39;</span><span class="p">,</span><span class="n">ierr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a)&#39;</span><span class="p">)</span><span class="s1">&#39;Check the documentation of ZNEUPD.&#39;</span>
 <span class="w">        </span><span class="k">stop</span>
 <span class="k">     else</span>
-<span class="k">        </span><span class="n">nconv</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">end if</span><span class="w"></span>
+<span class="k">        </span><span class="n">nconv</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">iparam</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end if</span>
 <span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">include</span><span class="w"> </span><span class="s2">&quot;info_msg_arpack.h90&quot;</span><span class="w"></span>
+<span class="w">     </span><span class="k">include</span><span class="w"> </span><span class="s2">&quot;info_msg_arpack.h90&quot;</span>
 <span class="w">     </span><span class="c">!</span>
 <span class="w">     </span><span class="c">!if(nconv == 0) stop &quot;ARPACK:: no converged eigenvalues have been found.&quot;</span>
 <span class="w">     </span><span class="c">!</span>
 <span class="w">  </span><span class="k">endif</span>
-<span class="k">  deallocate</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">resid</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">workd</span><span class="p">,</span><span class="n">workev</span><span class="p">,</span><span class="n">workl</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">rd</span><span class="p">,</span><span class="k">select</span><span class="p">)</span><span class="w"></span>
+<span class="k">  deallocate</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">resid</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">workd</span><span class="p">,</span><span class="n">workev</span><span class="p">,</span><span class="n">workl</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">rd</span><span class="p">,</span><span class="k">select</span><span class="p">)</span>
 <span class="w">  </span><span class="c">!</span>
-<span class="k">contains</span><span class="w"></span>
+<span class="k">contains</span>
 
 <span class="w">  </span><span class="c">!+------------------------------------------------------------------+</span>
 <span class="w">  </span><span class="c">!PURPOSE  : Sort an array, gives the new ordering of the label.</span>
 <span class="w">  </span><span class="c">!+------------------------------------------------------------------+</span>
-<span class="w">  </span><span class="k">subroutine </span><span class="n">sort_array</span><span class="p">(</span><span class="k">array</span><span class="p">,</span><span class="n">order2</span><span class="p">,</span><span class="n">no_touch_array</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">subroutine </span><span class="n">sort_array</span><span class="p">(</span><span class="k">array</span><span class="p">,</span><span class="n">order2</span><span class="p">,</span><span class="n">no_touch_array</span><span class="p">)</span>
 <span class="w">    </span><span class="k">implicit none</span>
 <span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="k">array</span>
-<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">))</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">backup</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">))</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">)),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">order2</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="w">                                 </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">no_touch_array</span><span class="w"></span>
-<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="n">order</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">i</span><span class="w"></span>
+<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">))</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">backup</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">))</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">)),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">order2</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                                 </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">no_touch_array</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+<span class="w">       </span><span class="n">order</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">i</span>
 <span class="w">    </span><span class="k">enddo</span>
-<span class="k">    call </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="k">    call </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="k">array</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
 <span class="w">    </span><span class="k">if</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">no_touch_array</span><span class="p">))</span><span class="k">then</span>
-<span class="k">       do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="n">backup</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="n">order</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"></span>
+<span class="k">       do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+<span class="w">          </span><span class="n">backup</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="n">order</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 <span class="w">       </span><span class="k">enddo</span>
-<span class="k">       array</span><span class="o">=</span><span class="n">backup</span><span class="w"></span>
+<span class="k">       array</span><span class="o">=</span><span class="n">backup</span>
 <span class="w">    </span><span class="k">endif</span>
-<span class="k">    if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">order2</span><span class="p">))</span><span class="w"> </span><span class="n">order2</span><span class="o">=</span><span class="n">order</span><span class="w"></span>
-<span class="w">  </span><span class="k">end subroutine </span><span class="n">sort_array</span><span class="w"></span>
+<span class="k">    if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">order2</span><span class="p">))</span><span class="w"> </span><span class="n">order2</span><span class="o">=</span><span class="n">order</span>
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">sort_array</span>
 <span class="w">  </span><span class="c">!---------------------------------------------!  </span>
-<span class="w">  </span><span class="k">recursive subroutine </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">recursive subroutine </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">)</span>
 <span class="w">    </span><span class="k">implicit none</span>
 <span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="k">array</span>
-<span class="k">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">left</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">right</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">last</span><span class="w"></span>
+<span class="k">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">left</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">right</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">last</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">.</span><span class="n">ge</span><span class="p">.</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
-<span class="k">    call </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">qsort_rand</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="w"></span>
-<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"></span>
+<span class="k">    call </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">qsort_rand</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">right</span>
 <span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">compare</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="n">order</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="w"> </span><span class="k">array</span><span class="p">(</span><span class="n">order</span><span class="p">(</span><span class="n">left</span><span class="p">))</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">          </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">          </span><span class="k">call </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="k">          </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">          </span><span class="k">call </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span>
 <span class="w">       </span><span class="k">endif</span>
 <span class="k">    enddo</span>
-<span class="k">    call </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">call </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">call </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="k">end subroutine </span><span class="n">qsort_sort</span><span class="w"></span>
+<span class="k">    call </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">qsort_sort</span><span class="p">(</span><span class="w"> </span><span class="k">array</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">qsort_sort</span>
 <span class="w">  </span><span class="c">!---------------------------------------------!</span>
-<span class="w">  </span><span class="k">subroutine </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="nb">second</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">subroutine </span><span class="n">qsort_swap</span><span class="p">(</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="nb">second</span><span class="w"> </span><span class="p">)</span>
 <span class="w">    </span><span class="k">implicit none</span>
-<span class="k">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span><span class="w"></span>
+<span class="k">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">order</span>
 <span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="nb">second</span>
-<span class="nb">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">tmp</span><span class="w"></span>
-<span class="w">    </span><span class="n">tmp</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">order</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">(</span><span class="nb">second</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">order</span><span class="p">(</span><span class="nb">second</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span><span class="w"></span>
-<span class="w">  </span><span class="k">end subroutine </span><span class="n">qsort_swap</span><span class="w"></span>
+<span class="nb">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">tmp</span>
+<span class="w">    </span><span class="n">tmp</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="w">    </span><span class="n">order</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">(</span><span class="nb">second</span><span class="p">)</span>
+<span class="w">    </span><span class="n">order</span><span class="p">(</span><span class="nb">second</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span>
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">qsort_swap</span>
 <span class="w">  </span><span class="c">!---------------------------------------------!</span>
-<span class="w">  </span><span class="kt">integer </span><span class="k">function </span><span class="n">qsort_rand</span><span class="p">(</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">integer </span><span class="k">function </span><span class="n">qsort_rand</span><span class="p">(</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="p">)</span>
 <span class="w">    </span><span class="k">implicit none</span>
-<span class="k">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span><span class="w"></span>
-<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
-<span class="w">    </span><span class="n">r</span><span class="o">=</span><span class="n">drand</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="n">qsort_rand</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">lower</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">nint</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">upper</span><span class="o">-</span><span class="n">lower</span><span class="p">))</span><span class="w"></span>
-<span class="w">  </span><span class="k">end function </span><span class="n">qsort_rand</span><span class="w"></span>
+<span class="k">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span>
+<span class="w">    </span><span class="n">r</span><span class="o">=</span><span class="n">drand</span><span class="p">()</span>
+<span class="w">    </span><span class="n">qsort_rand</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">lower</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">nint</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">upper</span><span class="o">-</span><span class="n">lower</span><span class="p">))</span>
+<span class="w">  </span><span class="k">end function </span><span class="n">qsort_rand</span>
 <span class="w">  </span><span class="c">!---------------------------------------------!</span>
-<span class="w">  </span><span class="k">function </span><span class="n">drand</span><span class="p">()</span><span class="w"></span>
+<span class="w">  </span><span class="k">function </span><span class="n">drand</span><span class="p">()</span>
 <span class="w">    </span><span class="k">implicit none</span>
-<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">drand</span><span class="w"></span>
-<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
-<span class="w">    </span><span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">drand</span><span class="o">=</span><span class="nb">dble</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="k">end function </span><span class="n">drand</span><span class="w"></span>
+<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">drand</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span>
+<span class="w">    </span><span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="w">    </span><span class="n">drand</span><span class="o">=</span><span class="nb">dble</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end function </span><span class="n">drand</span>
 <span class="w">  </span><span class="c">!---------------------------------------------!</span>
-<span class="w">  </span><span class="k">function </span><span class="n">compare</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">function </span><span class="n">compare</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
 <span class="w">    </span><span class="k">implicit none</span>
-<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="w"></span>
-<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">compare</span><span class="w"></span>
+<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="n">g</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">compare</span>
 <span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;</span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">       </span><span class="n">compare</span><span class="o">=-</span><span class="mi">1</span><span class="w"></span>
+<span class="k">       </span><span class="n">compare</span><span class="o">=-</span><span class="mi">1</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="k">       </span><span class="n">compare</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="k">       </span><span class="n">compare</span><span class="o">=</span><span class="mi">1</span>
 <span class="w">    </span><span class="k">endif</span>
-<span class="k">  end function </span><span class="n">compare</span><span class="w"></span>
-<span class="k">end subroutine </span><span class="n">lanczos_arpack_c</span><span class="w"></span>
+<span class="k">  end function </span><span class="n">compare</span>
+<span class="k">end subroutine </span><span class="n">lanczos_arpack_c</span>
 </pre></div>
 
     </section>
@@ -1270,12 +1225,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -1285,17 +1240,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

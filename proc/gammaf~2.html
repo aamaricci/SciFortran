@@ -10,81 +10,55 @@
 
     <title>gammaf &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,37 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.1% of total for procedures.">48 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for procedures.">48 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/special_functions.f90"> Source File</a>
+              <a href="../src/SF_SPECIAL.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
-          <li class="active">gammaf</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+            <li class="breadcrumb-item active" aria-current="page">gammaf</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,12 +125,7 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/gammaf~2.html#src">gammaf</a>
-      </div>
-    </div>
+  
 
 
   </div>
@@ -159,7 +133,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2> subroutine gammaf(x, ga)  
+    <h2>public  subroutine gammaf(x, ga)  
 </h2>
     
 
@@ -173,7 +147,7 @@ is acknowledged.
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">08</span><span class="w"> </span><span class="n">September</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">08</span><span class="w"> </span><span class="n">September</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -201,16 +175,16 @@ Output, real ( kind = 8 ) GA, the value of the Gamma function.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~137"></span>
+              <span class="anchor" id="variable-x~508"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -225,7 +199,7 @@ Output, real ( kind = 8 ) GA, the value of the Gamma function.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ga~4"></span>
+              <span class="anchor" id="variable-ga~8"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -242,447 +216,443 @@ Output, real ( kind = 8 ) GA, the value of the Gamma function.
   </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Called by</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~gammaf~2~~CalledByGraph Pages: 1 -->
-<svg id="procgammaf2CalledByGraph" width="641pt" height="710pt"
- viewBox="0.00 0.00 641.00 710.03" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~gammaf~2~~CalledByGraph" class="graph" transform="scale(1.22 1.22) rotate(0) translate(4 860)">
+<svg id="procgammaf2CalledByGraph" width="580pt" height="864pt"
+ viewBox="0.00 0.00 580.00 864.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~gammaf~2~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 860)">
 <title>proc~~gammaf~2~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-860 776,-860 776,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-860 576,-860 576,4 -4,4"/>
 <!-- proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node1" class="node">
 <title>proc~gammaf~2</title>
-<polygon fill="none" stroke="black" points="772,-436 595,-436 595,-412 772,-412 772,-436"/>
-<text text-anchor="middle" x="683.5" y="-421.6" font-family="Helvetica,sans-Serif" font-size="10.50">special_functions.f90::gammaf</text>
+<polygon fill="none" stroke="black" points="572,-436 445,-436 445,-412 572,-412 572,-436"/>
+<text text-anchor="middle" x="508.5" y="-421.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_SPECIAL::gammaf</text>
 </g>
 <!-- proc~betaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node2" class="node">
 <title>proc~betaf~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node2"><a xlink:href=".././proc/betaf~2.html" xlink:title="special_functions.f90::betaf">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-856 395,-856 395,-832 555,-832 555,-856"/>
-<text text-anchor="middle" x="475" y="-841.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::betaf</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node2"><a xlink:href=".././proc/betaf~2.html" xlink:title="SF_SPECIAL::betaf">
+<polygon fill="#d9534f" stroke="#d9534f" points="404.5,-856 295.5,-856 295.5,-832 404.5,-832 404.5,-856"/>
+<text text-anchor="middle" x="350" y="-841.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::betaf</text>
 </a>
 </g>
 </g>
 <!-- proc~betaf~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge1" class="edge">
 <title>proc~betaf~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M546.73,-831.86C551.18,-829.4 555.33,-826.48 559,-823 670.13,-717.54 681.95,-514.38 682.68,-446.62"/>
-<polygon fill="#000000" stroke="#000000" points="686.19,-446.28 682.72,-436.27 679.19,-446.25 686.19,-446.28"/>
+<path fill="none" stroke="#000000" d="M397.96,-831.85C402.07,-829.42 405.85,-826.5 409,-823 460.41,-765.87 495.05,-522.31 504.74,-446.57"/>
+<polygon fill="#000000" stroke="#000000" points="508.26,-446.64 506.03,-436.28 501.31,-445.77 508.26,-446.64"/>
 </g>
 <!-- proc~cchg~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node3" class="node">
 <title>proc~cchg~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node3"><a xlink:href=".././proc/cchg~2.html" xlink:title="special_functions.f90::cchg">
-<polygon fill="#d9534f" stroke="#d9534f" points="553.5,-814 396.5,-814 396.5,-790 553.5,-790 553.5,-814"/>
-<text text-anchor="middle" x="475" y="-799.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::cchg</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node3"><a xlink:href=".././proc/cchg~2.html" xlink:title="SF_SPECIAL::cchg">
+<polygon fill="#d9534f" stroke="#d9534f" points="403.5,-814 296.5,-814 296.5,-790 403.5,-790 403.5,-814"/>
+<text text-anchor="middle" x="350" y="-799.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::cchg</text>
 </a>
 </g>
 </g>
 <!-- proc~cchg~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge2" class="edge">
 <title>proc~cchg~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M546.2,-789.94C550.83,-787.47 555.17,-784.52 559,-781 659.96,-688.3 678.39,-509.03 681.75,-446.31"/>
-<polygon fill="#000000" stroke="#000000" points="685.26,-446.16 682.22,-436.01 678.27,-445.84 685.26,-446.16"/>
+<path fill="none" stroke="#000000" d="M397.59,-789.93C401.81,-787.48 405.73,-784.54 409,-781 500.02,-682.57 508.12,-507.63 507.99,-446.13"/>
+<polygon fill="#000000" stroke="#000000" points="511.48,-445.97 507.88,-436.01 504.48,-446.04 511.48,-445.97"/>
 </g>
 <!-- proc~chgm~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node4" class="node">
 <title>proc~chgm~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node4"><a xlink:href=".././proc/chgm~2.html" xlink:title="special_functions.f90::chgm">
-<polygon fill="#d9534f" stroke="#d9534f" points="556,-772 394,-772 394,-748 556,-748 556,-772"/>
-<text text-anchor="middle" x="475" y="-757.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::chgm</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node4"><a xlink:href=".././proc/chgm~2.html" xlink:title="SF_SPECIAL::chgm">
+<polygon fill="#d9534f" stroke="#d9534f" points="406,-772 294,-772 294,-748 406,-748 406,-772"/>
+<text text-anchor="middle" x="350" y="-757.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::chgm</text>
 </a>
 </g>
 </g>
 <!-- proc~chgm~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge3" class="edge">
 <title>proc~chgm~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M545.64,-747.97C550.46,-745.5 554.99,-742.54 559,-739 649.68,-659.07 674.38,-504.1 680.58,-446.38"/>
-<polygon fill="#000000" stroke="#000000" points="684.08,-446.48 681.58,-436.18 677.12,-445.79 684.08,-446.48"/>
+<path fill="none" stroke="#000000" d="M397.18,-747.98C401.54,-745.52 405.59,-742.56 409,-739 490.32,-653.99 504.56,-502.73 507.01,-446.16"/>
+<polygon fill="#000000" stroke="#000000" points="510.51,-446.27 507.36,-436.16 503.51,-446.03 510.51,-446.27"/>
 </g>
 <!-- proc~chgubi~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node5" class="node">
 <title>proc~chgubi~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node5"><a xlink:href=".././proc/chgubi~2.html" xlink:title="special_functions.f90::chgubi">
-<polygon fill="#d9534f" stroke="#d9534f" points="559,-730 391,-730 391,-706 559,-706 559,-730"/>
-<text text-anchor="middle" x="475" y="-715.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::chgubi</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node5"><a xlink:href=".././proc/chgubi~2.html" xlink:title="SF_SPECIAL::chgubi">
+<polygon fill="#d9534f" stroke="#d9534f" points="409,-730 291,-730 291,-706 409,-706 409,-730"/>
+<text text-anchor="middle" x="350" y="-715.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::chgubi</text>
 </a>
 </g>
 </g>
 <!-- proc~chgubi~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge4" class="edge">
 <title>proc~chgubi~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M545.04,-705.94C550.05,-703.48 554.78,-700.53 559,-697 639.65,-629.5 669.94,-498.36 679.11,-446.19"/>
-<polygon fill="#000000" stroke="#000000" points="682.61,-446.47 680.8,-436.03 675.71,-445.32 682.61,-446.47"/>
+<path fill="none" stroke="#000000" d="M396.74,-705.98C401.24,-703.52 405.44,-700.56 409,-697 480.66,-625.26 500.52,-497.62 505.74,-446.29"/>
+<polygon fill="#000000" stroke="#000000" points="509.23,-446.55 506.67,-436.27 502.26,-445.91 509.23,-446.55"/>
 </g>
 <!-- proc~chguit~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node6" class="node">
 <title>proc~chguit~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node6"><a xlink:href=".././proc/chguit~2.html" xlink:title="special_functions.f90::chguit">
-<polygon fill="#d9534f" stroke="#d9534f" points="557.5,-688 392.5,-688 392.5,-664 557.5,-664 557.5,-688"/>
-<text text-anchor="middle" x="475" y="-673.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::chguit</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node6"><a xlink:href=".././proc/chguit~2.html" xlink:title="SF_SPECIAL::chguit">
+<polygon fill="#d9534f" stroke="#d9534f" points="407.5,-688 292.5,-688 292.5,-664 407.5,-664 407.5,-688"/>
+<text text-anchor="middle" x="350" y="-673.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::chguit</text>
 </a>
 </g>
 </g>
 <!-- proc~chguit~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge5" class="edge">
 <title>proc~chguit~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M544.38,-663.82C549.59,-661.39 554.55,-658.48 559,-655 629.8,-599.62 664.89,-492.05 677.21,-445.9"/>
-<polygon fill="#000000" stroke="#000000" points="680.65,-446.6 679.74,-436.04 673.87,-444.86 680.65,-446.6"/>
+<path fill="none" stroke="#000000" d="M396.25,-663.93C400.89,-661.48 405.27,-658.53 409,-655 471.18,-596.19 495.92,-491.73 504.07,-446.22"/>
+<polygon fill="#000000" stroke="#000000" points="507.55,-446.67 505.76,-436.23 500.65,-445.5 507.55,-446.67"/>
 </g>
 <!-- proc~chgus~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node7" class="node">
 <title>proc~chgus~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node7"><a xlink:href=".././proc/chgus~2.html" xlink:title="special_functions.f90::chgus">
-<polygon fill="#d9534f" stroke="#d9534f" points="556.5,-646 393.5,-646 393.5,-622 556.5,-622 556.5,-646"/>
-<text text-anchor="middle" x="475" y="-631.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::chgus</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node7"><a xlink:href=".././proc/chgus~2.html" xlink:title="SF_SPECIAL::chgus">
+<polygon fill="#d9534f" stroke="#d9534f" points="406.5,-646 293.5,-646 293.5,-622 406.5,-622 406.5,-646"/>
+<text text-anchor="middle" x="350" y="-631.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::chgus</text>
 </a>
 </g>
 </g>
 <!-- proc~chgus~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge6" class="edge">
 <title>proc~chgus~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M542.8,-621.94C548.54,-619.49 554.04,-616.54 559,-613 619.92,-569.52 658.67,-485.76 674.43,-445.99"/>
-<polygon fill="#000000" stroke="#000000" points="677.78,-447.04 678.1,-436.45 671.24,-444.52 677.78,-447.04"/>
+<path fill="none" stroke="#000000" d="M395.4,-621.94C400.3,-619.48 404.97,-616.53 409,-613 461.94,-566.67 490.58,-484.91 501.81,-445.9"/>
+<polygon fill="#000000" stroke="#000000" points="505.23,-446.67 504.52,-436.1 498.48,-444.8 505.23,-446.67"/>
 </g>
 <!-- proc~cikva~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node8" class="node">
 <title>proc~cikva~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node8"><a xlink:href=".././proc/cikva~2.html" xlink:title="special_functions.f90::cikva">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-604 395,-604 395,-580 555,-580 555,-604"/>
-<text text-anchor="middle" x="475" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::cikva</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node8"><a xlink:href=".././proc/cikva~2.html" xlink:title="SF_SPECIAL::cikva">
+<polygon fill="#d9534f" stroke="#d9534f" points="404.5,-604 295.5,-604 295.5,-580 404.5,-580 404.5,-604"/>
+<text text-anchor="middle" x="350" y="-589.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::cikva</text>
 </a>
 </g>
 </g>
 <!-- proc~cikva~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge7" class="edge">
 <title>proc~cikva~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M540.66,-579.96C547.09,-577.51 553.33,-574.55 559,-571 610.7,-538.59 651.61,-477.36 670.73,-445.11"/>
-<polygon fill="#000000" stroke="#000000" points="673.97,-446.5 675.95,-436.09 667.91,-442.99 673.97,-446.5"/>
+<path fill="none" stroke="#000000" d="M394.14,-579.93C399.42,-577.45 404.53,-574.5 409,-571 452.88,-536.67 484.03,-477.2 498.46,-445.44"/>
+<polygon fill="#000000" stroke="#000000" points="501.71,-446.73 502.55,-436.17 495.31,-443.91 501.71,-446.73"/>
 </g>
 <!-- proc~cikvb~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node9" class="node">
 <title>proc~cikvb~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node9"><a xlink:href=".././proc/cikvb~2.html" xlink:title="special_functions.f90::cikvb">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-562 395,-562 395,-538 555,-538 555,-562"/>
-<text text-anchor="middle" x="475" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::cikvb</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node9"><a xlink:href=".././proc/cikvb~2.html" xlink:title="SF_SPECIAL::cikvb">
+<polygon fill="#d9534f" stroke="#d9534f" points="404.5,-562 295.5,-562 295.5,-538 404.5,-538 404.5,-562"/>
+<text text-anchor="middle" x="350" y="-547.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::cikvb</text>
 </a>
 </g>
 </g>
 <!-- proc~cikvb~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge8" class="edge">
 <title>proc~cikvb~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M537.03,-538C544.63,-535.51 552.13,-532.54 559,-529 601.92,-506.86 642.79,-467.22 665.08,-443.49"/>
-<polygon fill="#000000" stroke="#000000" points="667.69,-445.83 671.9,-436.1 662.54,-441.08 667.69,-445.83"/>
+<path fill="none" stroke="#000000" d="M392.11,-537.88C398,-535.36 403.81,-532.42 409,-529 444.17,-505.84 475.71,-467.69 493.16,-444.31"/>
+<polygon fill="#000000" stroke="#000000" points="496.07,-446.27 499.14,-436.13 490.42,-442.14 496.07,-446.27"/>
 </g>
 <!-- proc~cjyva~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node10" class="node">
 <title>proc~cjyva~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node10"><a xlink:href=".././proc/cjyva~2.html" xlink:title="special_functions.f90::cjyva">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-520 395,-520 395,-496 555,-496 555,-520"/>
-<text text-anchor="middle" x="475" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::cjyva</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node10"><a xlink:href=".././proc/cjyva~2.html" xlink:title="SF_SPECIAL::cjyva">
+<polygon fill="#d9534f" stroke="#d9534f" points="404.5,-520 295.5,-520 295.5,-496 404.5,-496 404.5,-520"/>
+<text text-anchor="middle" x="350" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::cjyva</text>
 </a>
 </g>
 </g>
 <!-- proc~cjyva~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge9" class="edge">
 <title>proc~cjyva~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M531.01,-495.93C540.46,-493.34 550.1,-490.35 559,-487 592.56,-474.38 628.88,-455.11 653.39,-441.21"/>
-<polygon fill="#000000" stroke="#000000" points="655.24,-444.18 662.17,-436.17 651.75,-438.11 655.24,-444.18"/>
+<path fill="none" stroke="#000000" d="M388.02,-495.99C395.1,-493.3 402.37,-490.27 409,-487 435.37,-474 463.42,-455.54 482.82,-441.97"/>
+<polygon fill="#000000" stroke="#000000" points="484.95,-444.75 491.09,-436.11 480.9,-439.04 484.95,-444.75"/>
 </g>
 <!-- proc~cjyvb~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node11" class="node">
 <title>proc~cjyvb~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node11"><a xlink:href=".././proc/cjyvb~2.html" xlink:title="special_functions.f90::cjyvb">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-478 395,-478 395,-454 555,-454 555,-478"/>
-<text text-anchor="middle" x="475" y="-463.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::cjyvb</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node11"><a xlink:href=".././proc/cjyvb~2.html" xlink:title="SF_SPECIAL::cjyvb">
+<polygon fill="#d9534f" stroke="#d9534f" points="404.5,-478 295.5,-478 295.5,-454 404.5,-454 404.5,-478"/>
+<text text-anchor="middle" x="350" y="-463.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::cjyvb</text>
 </a>
 </g>
 </g>
 <!-- proc~cjyvb~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge10" class="edge">
 <title>proc~cjyvb~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M535.17,-453.96C559.58,-449 588.04,-443.21 613.4,-438.05"/>
-<polygon fill="#000000" stroke="#000000" points="614.21,-441.46 623.32,-436.04 612.82,-434.6 614.21,-441.46"/>
+<path fill="none" stroke="#000000" d="M395.85,-453.96C413.61,-449.2 434.2,-443.67 452.82,-438.67"/>
+<polygon fill="#000000" stroke="#000000" points="453.9,-442.01 462.65,-436.04 452.08,-435.25 453.9,-442.01"/>
 </g>
 <!-- proc~dvla~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node12" class="node">
 <title>proc~dvla~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node12"><a xlink:href=".././proc/dvla~2.html" xlink:title="special_functions.f90::dvla">
-<polygon fill="#d9534f" stroke="#d9534f" points="351.5,-372 197.5,-372 197.5,-348 351.5,-348 351.5,-372"/>
-<text text-anchor="middle" x="274.5" y="-357.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::dvla</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node12"><a xlink:href=".././proc/dvla~2.html" xlink:title="SF_SPECIAL::dvla">
+<polygon fill="#d9534f" stroke="#d9534f" points="251.5,-372 147.5,-372 147.5,-348 251.5,-348 251.5,-372"/>
+<text text-anchor="middle" x="199.5" y="-357.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::dvla</text>
 </a>
 </g>
 </g>
 <!-- proc~dvla~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge11" class="edge">
 <title>proc~dvla~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M351.56,-350.8C409.31,-346.08 490.24,-344.35 559,-361 595.09,-369.74 632.54,-390.83 656.6,-406.21"/>
-<polygon fill="#000000" stroke="#000000" points="654.85,-409.24 665.13,-411.78 658.68,-403.38 654.85,-409.24"/>
+<path fill="none" stroke="#000000" d="M251.78,-352.42C294.71,-347.92 357.1,-345.69 409,-361 438.38,-369.67 467.34,-390 486.18,-405.24"/>
+<polygon fill="#000000" stroke="#000000" points="484.16,-408.12 494.08,-411.83 488.64,-402.74 484.16,-408.12"/>
 </g>
 <!-- proc~vvla~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node21" class="node">
 <title>proc~vvla~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node21"><a xlink:href=".././proc/vvla~2.html" xlink:title="special_functions.f90::vvla">
-<polygon fill="#d9534f" stroke="#d9534f" points="552,-394 398,-394 398,-370 552,-370 552,-394"/>
-<text text-anchor="middle" x="475" y="-379.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::vvla</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node21"><a xlink:href=".././proc/vvla~2.html" xlink:title="SF_SPECIAL::vvla">
+<polygon fill="#d9534f" stroke="#d9534f" points="401.5,-394 298.5,-394 298.5,-370 401.5,-370 401.5,-394"/>
+<text text-anchor="middle" x="350" y="-379.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::vvla</text>
 </a>
 </g>
 </g>
 <!-- proc~dvla~2&#45;&gt;proc~vvla~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge29" class="edge">
 <title>proc~dvla~2&#45;&gt;proc~vvla~2</title>
-<path fill="none" stroke="#000000" d="M351.68,-361.86C370.96,-363.71 391.47,-366.06 410.07,-368.56"/>
-<polygon fill="#000000" stroke="#000000" points="409.81,-372.06 420.19,-369.96 410.77,-365.12 409.81,-372.06"/>
+<path fill="none" stroke="#000000" d="M251.61,-361.12C266.74,-362.96 283.3,-365.42 298.4,-368.07"/>
+<polygon fill="#000000" stroke="#000000" points="298.12,-371.57 308.58,-369.93 299.38,-364.69 298.12,-371.57"/>
 </g>
 <!-- proc~dvsa~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node13" class="node">
 <title>proc~dvsa~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node13"><a xlink:href=".././proc/dvsa~2.html" xlink:title="special_functions.f90::dvsa">
-<polygon fill="#d9534f" stroke="#d9534f" points="353,-321 196,-321 196,-297 353,-297 353,-321"/>
-<text text-anchor="middle" x="274.5" y="-306.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::dvsa</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node13"><a xlink:href=".././proc/dvsa~2.html" xlink:title="SF_SPECIAL::dvsa">
+<polygon fill="#d9534f" stroke="#d9534f" points="252.5,-321 146.5,-321 146.5,-297 252.5,-297 252.5,-321"/>
+<text text-anchor="middle" x="199.5" y="-306.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::dvsa</text>
 </a>
 </g>
 </g>
 <!-- proc~dvsa~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge12" class="edge">
 <title>proc~dvsa~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M353.22,-308.81C411.47,-310.91 492.29,-318.66 559,-343 598.26,-357.33 637.59,-386.24 660.98,-405.36"/>
-<polygon fill="#000000" stroke="#000000" points="658.93,-408.21 668.85,-411.92 663.41,-402.83 658.93,-408.21"/>
+<path fill="none" stroke="#000000" d="M252.74,-310.79C296.24,-313.95 358.93,-322.43 409,-345 440.65,-359.27 470.84,-386.12 489.26,-404.52"/>
+<polygon fill="#000000" stroke="#000000" points="486.91,-407.12 496.4,-411.83 491.92,-402.23 486.91,-407.12"/>
 </g>
 <!-- proc~hygfx~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node14" class="node">
 <title>proc~hygfx~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node14"><a xlink:href=".././proc/hygfx~2.html" xlink:title="special_functions.f90::hygfx">
-<polygon fill="#d9534f" stroke="#d9534f" points="555.5,-276 394.5,-276 394.5,-252 555.5,-252 555.5,-276"/>
-<text text-anchor="middle" x="475" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::hygfx</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node14"><a xlink:href=".././proc/hygfx~2.html" xlink:title="SF_SPECIAL::hygfx">
+<polygon fill="#d9534f" stroke="#d9534f" points="405.5,-276 294.5,-276 294.5,-252 405.5,-252 405.5,-276"/>
+<text text-anchor="middle" x="350" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::hygfx</text>
 </a>
 </g>
 </g>
 <!-- proc~hygfx~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge13" class="edge">
 <title>proc~hygfx~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M529.2,-276.12C539.53,-279.71 549.94,-284.26 559,-290 606.95,-320.39 648.36,-374.01 668.84,-403.37"/>
-<polygon fill="#000000" stroke="#000000" points="665.97,-405.37 674.5,-411.65 671.74,-401.42 665.97,-405.37"/>
+<path fill="none" stroke="#000000" d="M385.81,-276.11C393.89,-279.84 402.13,-284.45 409,-290 448.76,-322.1 480.63,-373.87 496.51,-402.76"/>
+<polygon fill="#000000" stroke="#000000" points="493.45,-404.47 501.27,-411.62 499.62,-401.16 493.45,-404.47"/>
 </g>
 <!-- proc~hygfz~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node15" class="node">
 <title>proc~hygfz~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node15"><a xlink:href=".././proc/hygfz~2.html" xlink:title="special_functions.f90::hygfz">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-234 395,-234 395,-210 555,-210 555,-234"/>
-<text text-anchor="middle" x="475" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::hygfz</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node15"><a xlink:href=".././proc/hygfz~2.html" xlink:title="SF_SPECIAL::hygfz">
+<polygon fill="#d9534f" stroke="#d9534f" points="405,-234 295,-234 295,-210 405,-210 405,-234"/>
+<text text-anchor="middle" x="350" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::hygfz</text>
 </a>
 </g>
 </g>
 <!-- proc~hygfz~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge14" class="edge">
 <title>proc~hygfz~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M542.72,-234.17C548.48,-236.6 554,-239.51 559,-243 618,-284.23 657.25,-363.39 673.72,-401.89"/>
-<polygon fill="#000000" stroke="#000000" points="670.68,-403.71 677.75,-411.6 677.15,-401.02 670.68,-403.71"/>
+<path fill="none" stroke="#000000" d="M395.34,-234.13C400.25,-236.58 404.94,-239.51 409,-243 460.12,-286.93 489.35,-364.23 501.22,-401.99"/>
+<polygon fill="#000000" stroke="#000000" points="497.98,-403.39 504.23,-411.95 504.68,-401.36 497.98,-403.39"/>
 </g>
 <!-- proc~ikv~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node16" class="node">
 <title>proc~ikv~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node16"><a xlink:href=".././proc/ikv~2.html" xlink:title="special_functions.f90::ikv">
-<polygon fill="#d9534f" stroke="#d9534f" points="548.5,-192 401.5,-192 401.5,-168 548.5,-168 548.5,-192"/>
-<text text-anchor="middle" x="475" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::ikv</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node16"><a xlink:href=".././proc/ikv~2.html" xlink:title="SF_SPECIAL::ikv">
+<polygon fill="#d9534f" stroke="#d9534f" points="398.5,-192 301.5,-192 301.5,-168 398.5,-168 398.5,-192"/>
+<text text-anchor="middle" x="350" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::ikv</text>
 </a>
 </g>
 </g>
 <!-- proc~ikv~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge15" class="edge">
 <title>proc~ikv~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M543.91,-192.06C549.29,-194.52 554.41,-197.46 559,-201 627.82,-254.02 663.72,-356.86 676.71,-401.93"/>
-<polygon fill="#000000" stroke="#000000" points="673.42,-403.15 679.47,-411.84 680.16,-401.27 673.42,-403.15"/>
+<path fill="none" stroke="#000000" d="M396.21,-192.11C400.86,-194.56 405.24,-197.49 409,-201 469.46,-257.45 495.01,-357.68 503.72,-401.94"/>
+<polygon fill="#000000" stroke="#000000" points="500.31,-402.74 505.58,-411.93 507.19,-401.46 500.31,-402.74"/>
 </g>
 <!-- proc~incog~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node17" class="node">
 <title>proc~incog~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node17"><a xlink:href=".././proc/incog~2.html" xlink:title="special_functions.f90::incog">
-<polygon fill="#d9534f" stroke="#d9534f" points="555.5,-150 394.5,-150 394.5,-126 555.5,-126 555.5,-150"/>
-<text text-anchor="middle" x="475" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::incog</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node17"><a xlink:href=".././proc/incog~2.html" xlink:title="SF_SPECIAL::incog">
+<polygon fill="#d9534f" stroke="#d9534f" points="405.5,-150 294.5,-150 294.5,-126 405.5,-126 405.5,-150"/>
+<text text-anchor="middle" x="350" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::incog</text>
 </a>
 </g>
 </g>
 <!-- proc~incog~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge16" class="edge">
 <title>proc~incog~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M545,-150.11C550.02,-152.56 554.76,-155.49 559,-159 637.7,-224.12 668.98,-350.61 678.77,-401.75"/>
-<polygon fill="#000000" stroke="#000000" points="675.35,-402.52 680.58,-411.73 682.24,-401.27 675.35,-402.52"/>
+<path fill="none" stroke="#000000" d="M396.71,-150.05C401.21,-152.51 405.43,-155.46 409,-159 478.83,-228.24 499.69,-351.41 505.46,-401.69"/>
+<polygon fill="#000000" stroke="#000000" points="501.99,-402.21 506.52,-411.79 508.96,-401.48 501.99,-402.21"/>
 </g>
 <!-- proc~jyv~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node18" class="node">
 <title>proc~jyv~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node18"><a xlink:href=".././proc/jyv~2.html" xlink:title="special_functions.f90::jyv">
-<polygon fill="#d9534f" stroke="#d9534f" points="548.5,-108 401.5,-108 401.5,-84 548.5,-84 548.5,-108"/>
-<text text-anchor="middle" x="475" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::jyv</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node18"><a xlink:href=".././proc/jyv~2.html" xlink:title="SF_SPECIAL::jyv">
+<polygon fill="#d9534f" stroke="#d9534f" points="398.5,-108 301.5,-108 301.5,-84 398.5,-84 398.5,-108"/>
+<text text-anchor="middle" x="350" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::jyv</text>
 </a>
 </g>
 </g>
 <!-- proc~jyv~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge17" class="edge">
 <title>proc~jyv~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M545.61,-108.07C550.43,-110.53 554.97,-113.48 559,-117 647.83,-194.6 673.61,-345.2 680.34,-401.79"/>
-<polygon fill="#000000" stroke="#000000" points="676.87,-402.25 681.44,-411.8 683.83,-401.48 676.87,-402.25"/>
+<path fill="none" stroke="#000000" d="M397.15,-108.05C401.52,-110.5 405.58,-113.45 409,-117 488.4,-199.39 503.8,-345.95 506.79,-401.66"/>
+<polygon fill="#000000" stroke="#000000" points="503.3,-402 507.24,-411.84 510.29,-401.69 503.3,-402"/>
 </g>
 <!-- proc~stvhv~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node19" class="node">
 <title>proc~stvhv~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node19"><a xlink:href=".././proc/stvhv~2.html" xlink:title="special_functions.f90::stvhv">
-<polygon fill="#d9534f" stroke="#d9534f" points="555,-66 395,-66 395,-42 555,-42 555,-66"/>
-<text text-anchor="middle" x="475" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::stvhv</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node19"><a xlink:href=".././proc/stvhv~2.html" xlink:title="SF_SPECIAL::stvhv">
+<polygon fill="#d9534f" stroke="#d9534f" points="404.5,-66 295.5,-66 295.5,-42 404.5,-42 404.5,-66"/>
+<text text-anchor="middle" x="350" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::stvhv</text>
 </a>
 </g>
 </g>
 <!-- proc~stvhv~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge18" class="edge">
 <title>proc~stvhv~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M546.17,-66.09C550.81,-68.56 555.16,-71.5 559,-75 658.04,-165.29 677.67,-340.04 681.55,-401.76"/>
-<polygon fill="#000000" stroke="#000000" points="678.07,-402.13 682.11,-411.92 685.06,-401.74 678.07,-402.13"/>
+<path fill="none" stroke="#000000" d="M397.56,-66.09C401.8,-68.53 405.72,-71.47 409,-75 498.03,-170.71 507.44,-340.73 507.81,-401.57"/>
+<polygon fill="#000000" stroke="#000000" points="504.31,-401.92 507.79,-411.93 511.31,-401.93 504.31,-401.92"/>
 </g>
 <!-- proc~stvlv~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node20" class="node">
 <title>proc~stvlv~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node20"><a xlink:href=".././proc/stvlv~2.html" xlink:title="special_functions.f90::stvlv">
-<polygon fill="#d9534f" stroke="#d9534f" points="553,-24 397,-24 397,0 553,0 553,-24"/>
-<text text-anchor="middle" x="475" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::stvlv</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node20"><a xlink:href=".././proc/stvlv~2.html" xlink:title="SF_SPECIAL::stvlv">
+<polygon fill="#d9534f" stroke="#d9534f" points="403,-24 297,-24 297,0 403,0 403,-24"/>
+<text text-anchor="middle" x="350" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::stvlv</text>
 </a>
 </g>
 </g>
 <!-- proc~stvlv~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge19" class="edge">
 <title>proc~stvlv~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M546.7,-24.16C551.16,-26.61 555.32,-29.53 559,-33 668.4,-136.22 681.34,-335.38 682.53,-401.82"/>
-<polygon fill="#000000" stroke="#000000" points="679.03,-402.01 682.63,-411.97 686.03,-401.94 679.03,-402.01"/>
+<path fill="none" stroke="#000000" d="M397.95,-24.16C402.05,-26.59 405.84,-29.5 409,-33 459.57,-88.93 494.79,-327.64 504.67,-401.88"/>
+<polygon fill="#000000" stroke="#000000" points="501.23,-402.5 506,-411.96 508.17,-401.59 501.23,-402.5"/>
 </g>
 <!-- proc~vvla~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge20" class="edge">
 <title>proc~vvla~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M535.17,-394.04C559.58,-399 588.04,-404.79 613.4,-409.95"/>
-<polygon fill="#000000" stroke="#000000" points="612.82,-413.4 623.32,-411.96 614.21,-406.54 612.82,-413.4"/>
+<path fill="none" stroke="#000000" d="M395.85,-394.04C413.61,-398.8 434.2,-404.33 452.82,-409.33"/>
+<polygon fill="#000000" stroke="#000000" points="452.08,-412.75 462.65,-411.96 453.9,-405.99 452.08,-412.75"/>
 </g>
 <!-- proc~vvla~2&#45;&gt;proc~dvla~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge27" class="edge">
 <title>proc~vvla~2&#45;&gt;proc~dvla~2</title>
-<path fill="none" stroke="#000000" d="M397.88,-380.15C378.56,-378.29 358,-375.93 339.36,-373.43"/>
-<polygon fill="#000000" stroke="#000000" points="339.6,-369.93 329.22,-372.03 338.64,-376.87 339.6,-369.93"/>
+<path fill="none" stroke="#000000" d="M298.41,-380.94C282.96,-379.08 265.98,-376.56 250.56,-373.84"/>
+<polygon fill="#000000" stroke="#000000" points="251.15,-370.39 240.69,-372.03 249.89,-377.27 251.15,-370.39"/>
 </g>
 <!-- proc~vvsa~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node22" class="node">
 <title>proc~vvsa~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node22"><a xlink:href=".././proc/vvsa~2.html" xlink:title="special_functions.f90::vvsa">
-<polygon fill="#d9534f" stroke="#d9534f" points="553,-436 397,-436 397,-412 553,-412 553,-436"/>
-<text text-anchor="middle" x="475" y="-421.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::vvsa</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node22"><a xlink:href=".././proc/vvsa~2.html" xlink:title="SF_SPECIAL::vvsa">
+<polygon fill="#d9534f" stroke="#d9534f" points="403,-436 297,-436 297,-412 403,-412 403,-436"/>
+<text text-anchor="middle" x="350" y="-421.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::vvsa</text>
 </a>
 </g>
 </g>
 <!-- proc~vvsa~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge21" class="edge">
 <title>proc~vvsa~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M553.19,-424C563.52,-424 574.22,-424 584.84,-424"/>
-<polygon fill="#000000" stroke="#000000" points="584.99,-427.5 594.99,-424 584.99,-420.5 584.99,-427.5"/>
+<path fill="none" stroke="#000000" d="M403.11,-424C413.22,-424 423.98,-424 434.62,-424"/>
+<polygon fill="#000000" stroke="#000000" points="434.74,-427.5 444.74,-424 434.74,-420.5 434.74,-427.5"/>
 </g>
 <!-- proc~chgu~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node23" class="node">
 <title>proc~chgu~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node23"><a xlink:href=".././proc/chgu~2.html" xlink:title="special_functions.f90::chgu">
-<polygon fill="#d9534f" stroke="#d9534f" points="353.5,-688 195.5,-688 195.5,-664 353.5,-664 353.5,-688"/>
-<text text-anchor="middle" x="274.5" y="-673.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::chgu</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node23"><a xlink:href=".././proc/chgu~2.html" xlink:title="SF_SPECIAL::chgu">
+<polygon fill="#d9534f" stroke="#d9534f" points="253.5,-688 145.5,-688 145.5,-664 253.5,-664 253.5,-688"/>
+<text text-anchor="middle" x="199.5" y="-673.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::chgu</text>
 </a>
 </g>
 </g>
 <!-- proc~chgu~2&#45;&gt;proc~chgubi~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge23" class="edge">
 <title>proc~chgu~2&#45;&gt;proc~chgubi~2</title>
-<path fill="none" stroke="#000000" d="M332.38,-688.04C355.74,-692.98 382.96,-698.74 407.25,-703.88"/>
-<polygon fill="#000000" stroke="#000000" points="406.6,-707.32 417.11,-705.96 408.05,-700.47 406.6,-707.32"/>
+<path fill="none" stroke="#000000" d="M243.05,-688.04C259.68,-692.74 278.91,-698.18 296.38,-703.12"/>
+<polygon fill="#000000" stroke="#000000" points="295.86,-706.61 306.44,-705.96 297.77,-699.87 295.86,-706.61"/>
 </g>
 <!-- proc~chgu~2&#45;&gt;proc~chguit~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge24" class="edge">
 <title>proc~chgu~2&#45;&gt;proc~chguit~2</title>
-<path fill="none" stroke="#000000" d="M353.67,-676C362.99,-676 372.57,-676 382.06,-676"/>
-<polygon fill="#000000" stroke="#000000" points="382.31,-679.5 392.31,-676 382.31,-672.5 382.31,-679.5"/>
+<path fill="none" stroke="#000000" d="M253.69,-676C262.92,-676 272.62,-676 282.16,-676"/>
+<polygon fill="#000000" stroke="#000000" points="282.41,-679.5 292.41,-676 282.41,-672.5 282.41,-679.5"/>
 </g>
 <!-- proc~chgu~2&#45;&gt;proc~chgus~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge25" class="edge">
 <title>proc~chgu~2&#45;&gt;proc~chgus~2</title>
-<path fill="none" stroke="#000000" d="M332.38,-663.96C355.74,-659.02 382.96,-653.26 407.25,-648.12"/>
-<polygon fill="#000000" stroke="#000000" points="408.05,-651.53 417.11,-646.04 406.6,-644.68 408.05,-651.53"/>
+<path fill="none" stroke="#000000" d="M243.05,-663.96C259.68,-659.26 278.91,-653.82 296.38,-648.88"/>
+<polygon fill="#000000" stroke="#000000" points="297.77,-652.13 306.44,-646.04 295.86,-645.39 297.77,-652.13"/>
 </g>
 <!-- proc~incob~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node24" class="node">
 <title>proc~incob~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node24"><a xlink:href=".././proc/incob~2.html" xlink:title="special_functions.f90::incob">
-<polygon fill="#d9534f" stroke="#d9534f" points="355,-856 194,-856 194,-832 355,-832 355,-856"/>
-<text text-anchor="middle" x="274.5" y="-841.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::incob</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node24"><a xlink:href=".././proc/incob~2.html" xlink:title="SF_SPECIAL::incob">
+<polygon fill="#d9534f" stroke="#d9534f" points="255,-856 144,-856 144,-832 255,-832 255,-856"/>
+<text text-anchor="middle" x="199.5" y="-841.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::incob</text>
 </a>
 </g>
 </g>
 <!-- proc~incob~2&#45;&gt;proc~betaf~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge22" class="edge">
 <title>proc~incob~2&#45;&gt;proc~betaf~2</title>
-<path fill="none" stroke="#000000" d="M355.09,-844C364.78,-844 374.73,-844 384.54,-844"/>
-<polygon fill="#000000" stroke="#000000" points="384.71,-847.5 394.71,-844 384.71,-840.5 384.71,-847.5"/>
+<path fill="none" stroke="#000000" d="M255.37,-844C265.06,-844 275.22,-844 285.13,-844"/>
+<polygon fill="#000000" stroke="#000000" points="285.34,-847.5 295.34,-844 285.34,-840.5 285.34,-847.5"/>
 </g>
 <!-- proc~pbdv~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node25" class="node">
 <title>proc~pbdv~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node25"><a xlink:href=".././proc/pbdv~2.html" xlink:title="special_functions.f90::pbdv">
-<polygon fill="#d9534f" stroke="#d9534f" points="158,-342 0,-342 0,-318 158,-318 158,-342"/>
-<text text-anchor="middle" x="79" y="-327.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::pbdv</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node25"><a xlink:href=".././proc/pbdv~2.html" xlink:title="SF_SPECIAL::pbdv">
+<polygon fill="#d9534f" stroke="#d9534f" points="108,-342 0,-342 0,-318 108,-318 108,-342"/>
+<text text-anchor="middle" x="54" y="-327.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::pbdv</text>
 </a>
 </g>
 </g>
 <!-- proc~pbdv~2&#45;&gt;proc~dvla~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge26" class="edge">
 <title>proc~pbdv~2&#45;&gt;proc~dvla~2</title>
-<path fill="none" stroke="#000000" d="M157.59,-342.03C167.45,-343.56 177.58,-345.13 187.56,-346.68"/>
-<polygon fill="#000000" stroke="#000000" points="187.05,-350.14 197.47,-348.21 188.12,-343.22 187.05,-350.14"/>
+<path fill="none" stroke="#000000" d="M108.03,-341.09C117.51,-343.07 127.46,-345.15 137.15,-347.17"/>
+<polygon fill="#000000" stroke="#000000" points="136.62,-350.64 147.12,-349.26 138.05,-343.79 136.62,-350.64"/>
 </g>
 <!-- proc~pbdv~2&#45;&gt;proc~dvsa~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge28" class="edge">
 <title>proc~pbdv~2&#45;&gt;proc~dvsa~2</title>
-<path fill="none" stroke="#000000" d="M158.15,-321.52C167.14,-320.54 176.35,-319.54 185.47,-318.55"/>
-<polygon fill="#000000" stroke="#000000" points="186.13,-322 195.69,-317.44 185.37,-315.04 186.13,-322"/>
+<path fill="none" stroke="#000000" d="M108.03,-322.24C117.17,-320.9 126.76,-319.5 136.12,-318.13"/>
+<polygon fill="#000000" stroke="#000000" points="136.78,-321.57 146.17,-316.66 135.77,-314.64 136.78,-321.57"/>
 </g>
 <!-- proc~pbvv~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_node26" class="node">
 <title>proc~pbvv~2</title>
-<g id="a_proc~~gammaf~2~~CalledByGraph_node26"><a xlink:href=".././proc/pbvv~2.html" xlink:title="special_functions.f90::pbvv">
-<polygon fill="#d9534f" stroke="#d9534f" points="353,-418 196,-418 196,-394 353,-394 353,-418"/>
-<text text-anchor="middle" x="274.5" y="-403.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::pbvv</text>
+<g id="a_proc~~gammaf~2~~CalledByGraph_node26"><a xlink:href=".././proc/pbvv~2.html" xlink:title="SF_SPECIAL::pbvv">
+<polygon fill="#d9534f" stroke="#d9534f" points="253,-418 146,-418 146,-394 253,-394 253,-418"/>
+<text text-anchor="middle" x="199.5" y="-403.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::pbvv</text>
 </a>
 </g>
 </g>
 <!-- proc~pbvv~2&#45;&gt;proc~vvla~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge30" class="edge">
 <title>proc~pbvv~2&#45;&gt;proc~vvla~2</title>
-<path fill="none" stroke="#000000" d="M353.1,-396.62C364.45,-395.25 376.2,-393.82 387.72,-392.43"/>
-<polygon fill="#000000" stroke="#000000" points="388.25,-395.89 397.76,-391.22 387.41,-388.94 388.25,-395.89"/>
+<path fill="none" stroke="#000000" d="M253.27,-397.47C264.62,-395.64 276.7,-393.68 288.32,-391.81"/>
+<polygon fill="#000000" stroke="#000000" points="289.07,-395.23 298.39,-390.18 287.96,-388.32 289.07,-395.23"/>
 </g>
 <!-- proc~pbvv~2&#45;&gt;proc~vvsa~2 -->
 <g id="proc~~gammaf~2~~CalledByGraph_edge31" class="edge">
 <title>proc~pbvv~2&#45;&gt;proc~vvsa~2</title>
-<path fill="none" stroke="#000000" d="M353.1,-413.04C364.09,-414.03 375.45,-415.06 386.61,-416.08"/>
-<polygon fill="#000000" stroke="#000000" points="386.51,-419.58 396.78,-417 387.14,-412.61 386.51,-419.58"/>
+<path fill="none" stroke="#000000" d="M253.27,-412.4C264.12,-413.71 275.64,-415.11 286.79,-416.46"/>
+<polygon fill="#000000" stroke="#000000" points="286.55,-419.96 296.9,-417.68 287.39,-413.01 286.55,-419.96"/>
 </g>
 </g>
 </svg>
-</div>                <script>
-                  var panprocgammaf2CalledByGraph = svgPanZoom('#procgammaf2CalledByGraph',
-                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
-                  );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -699,11 +669,11 @@ Output, real ( kind = 8 ) GA, the value of the Gamma function.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -722,23 +692,29 @@ Output, real ( kind = 8 ) GA, the value of the Gamma function.
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -756,38 +732,6 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/gammaf~2.html#src">gammaf</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
@@ -796,133 +740,8 @@ implementation in a submodule of an interface in a parent module.
     
 
 
+
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">gammaf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! GAMMA evaluates the Gamma function.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Licensing:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The original FORTRAN77 version of this routine is copyrighted by </span>
-<span class="w">  </span><span class="c">!    Shanjie Zhang and Jianming Jin.  However, they give permission to </span>
-<span class="w">  </span><span class="c">!    incorporate this routine into a user program that the copyright </span>
-<span class="w">  </span><span class="c">!    is acknowledged.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    08 September 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Original FORTRAN77 version by Shanjie Zhang, Jianming Jin.</span>
-<span class="w">  </span><span class="c">!    FORTRAN90 version by John Burkardt.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
-<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
-<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
-<span class="w">  </span><span class="c">!    LC: QA351.C45</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the argument.</span>
-<span class="w">  </span><span class="c">!    X must not be 0, or any negative integer.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) GA, the value of the Gamma function.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">26</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">1.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.5772156649015329D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.6558780715202538D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.420026350340952D-01</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.1665386113822915D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.421977345555443D-01</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.96219715278770D-02</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.72189432466630D-02</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.11651675918591D-02</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.2152416741149D-03</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.1280502823882D-03</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.201348547807D-04</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.12504934821D-05</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.11330272320D-05</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.2056338417D-06</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>
-<span class="w">       </span><span class="mf">0.61160950D-08</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.50020075D-08</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.11812746D-08</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.1043427D-09</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>
-<span class="w">       </span><span class="mf">0.77823D-11</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.36968D-11</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.51D-12</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.206D-13</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">-</span><span class="mf">0.54D-14</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.14D-14</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="mf">0.1D-15</span><span class="w"> </span><span class="o">/</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ga</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gr</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m1</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.141592653589793D+00</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">z</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">aint</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">ga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">        </span><span class="n">m1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">m1</span><span class="w"></span>
-<span class="w">           </span><span class="n">ga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">        </span><span class="k">end do</span>
-<span class="k">     else</span>
-<span class="k">        </span><span class="n">ga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+300</span><span class="w"></span>
-<span class="w">     </span><span class="k">end if</span>
-
-<span class="k">  else</span>
-
-<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">        </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"></span>
-<span class="w">           </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end do</span>
-<span class="k">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">else</span>
-<span class="k">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
-<span class="w">     </span><span class="k">end if</span>
-
-<span class="k">     </span><span class="n">gr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="n">gr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gr</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">     </span><span class="n">ga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">gr</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">ga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">ga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end if</span>
-<span class="k">     end if</span>
-
-<span class="k">  end if</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">gammaf</span><span class="w"></span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
@@ -931,12 +750,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -946,17 +765,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

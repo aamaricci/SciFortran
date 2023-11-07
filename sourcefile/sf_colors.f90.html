@@ -10,81 +10,55 @@
 
     <title>SF_COLORS.f90 &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,52 +66,55 @@
       <small>Source File</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.9% of total for source files.">761 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.9% of total for source files.">761 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/SF_COLORS.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-          <li class="active">SF_COLORS.f90</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">SF_COLORS.f90</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-      <div id="sidebar">
+        <div id="sidebar">
       <h3>Contents</h3>
   
   
   
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#mods-0">Modules</a>
-        </h3>
-      </div>
-      <div id="mods-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_colors.html">SF_COLORS</a>
         </div>
       </div>
@@ -156,8 +133,9 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
         <a class="list-group-item" href="../sourcefile/sf_colors.f90.html#src">SF_COLORS.f90</a>
       </div>
@@ -170,12 +148,12 @@
     <div class="col-md-9" id='text'>
       
       <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Files dependent on this one</h3>
-      </div>
-      <div class="panel-body">
-  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
@@ -209,8 +187,8 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#AfferentGraph-help-text">Help</a></div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -255,73 +233,29 @@ can be.
             </div>
           </div>
         </div>
-      </div>
-    </div>
-<br>
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#mods-1">Modules</a>
-        </h3>
-      </div>
-      <div id="mods-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_colors.html">SF_COLORS</a>
+          </div>
         </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../sourcefile/sf_colors.f90.html#src">SF_COLORS.f90</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
-    <section>
-      <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">MODULE </span><span class="n">SF_COLORS</span><span class="w"></span>
-<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">  </span><span class="k">implicit none</span><span class="w"></span>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">MODULE </span><span class="n">SF_COLORS</span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">  </span><span class="k">implicit none</span>
 <a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">  </span><span class="c">!</span>
 <a id="ln-4" name="ln-4" href="#ln-4"></a><span class="w">  </span><span class="c">!RGB color type:</span>
-<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="w">  </span><span class="k">type </span><span class="n">rgb_color</span><span class="w"></span>
-<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="w">     </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span><span class="w"></span>
-<a id="ln-7" name="ln-7" href="#ln-7"></a><span class="w">  </span><span class="k">end type </span><span class="n">rgb_color</span><span class="w"></span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="w">  </span><span class="k">type </span><span class="n">rgb_color</span>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="w">     </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a><span class="w">  </span><span class="k">end type </span><span class="n">rgb_color</span>
 <a id="ln-8" name="ln-8" href="#ln-8"></a><span class="w">  </span><span class="c">!</span>
 <a id="ln-9" name="ln-9" href="#ln-9"></a><span class="w">  </span><span class="c">!DEFAULT RGB COLORS:</span>
 <a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">  </span><span class="c">!main</span>
-<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">black</span><span class="w">               </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<a id="ln-12" name="ln-12" href="#ln-12"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">red</span><span class="w">                 </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">green</span><span class="w">               </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">orange</span><span class="w">              </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">193</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">blue</span><span class="w">                </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">)</span><span class="w"></span>
-<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">yellow</span><span class="w">              </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<a id="ln-17" name="ln-17" href="#ln-17"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">cyan</span><span class="w">                </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span><span class="w"></span>
-<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">magenta</span><span class="w">             </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">159</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">159</span><span class="p">)</span><span class="w"></span>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">black</span><span class="w">               </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">red</span><span class="w">                 </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">green</span><span class="w">               </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">orange</span><span class="w">              </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">193</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">blue</span><span class="w">                </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">)</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">yellow</span><span class="w">              </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-17" name="ln-17" href="#ln-17"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">cyan</span><span class="w">                </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span>
+<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">magenta</span><span class="w">             </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">159</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">159</span><span class="p">)</span>
 <a id="ln-19" name="ln-19" href="#ln-19"></a><span class="w">  </span><span class="c">!X11/rgb.txt color codes:</span>
 <a id="ln-20" name="ln-20" href="#ln-20"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">snow</span><span class="w">                 </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span><span class="w"> </span>
 <a id="ln-21" name="ln-21" href="#ln-21"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ghostwhite</span><span class="w">           </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">248</span><span class="p">,</span><span class="mi">248</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span>
@@ -973,122 +907,122 @@ can be.
 <a id="ln-667" name="ln-667" href="#ln-667"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">darkred</span><span class="w">              </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">139</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
 <a id="ln-668" name="ln-668" href="#ln-668"></a><span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lightgreen</span><span class="w">           </span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">144</span><span class="p">,</span><span class="mi">238</span><span class="p">,</span><span class="mi">144</span><span class="p">)</span><span class="w"> </span>
 <a id="ln-669" name="ln-669" href="#ln-669"></a>
-<a id="ln-670" name="ln-670" href="#ln-670"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"></span>
-<a id="ln-671" name="ln-671" href="#ln-671"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">add_colors</span><span class="w"></span>
-<a id="ln-672" name="ln-672" href="#ln-672"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"></span>
+<a id="ln-670" name="ln-670" href="#ln-670"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(</span><span class="o">+</span><span class="p">)</span>
+<a id="ln-671" name="ln-671" href="#ln-671"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">add_colors</span>
+<a id="ln-672" name="ln-672" href="#ln-672"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(</span><span class="o">+</span><span class="p">)</span>
 <a id="ln-673" name="ln-673" href="#ln-673"></a>
-<a id="ln-674" name="ln-674" href="#ln-674"></a><span class="w">  </span><span class="k">interface </span><span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span><span class="w"></span>
-<a id="ln-675" name="ln-675" href="#ln-675"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">equal_colors</span><span class="w"></span>
-<a id="ln-676" name="ln-676" href="#ln-676"></a><span class="w">  </span><span class="k">end interface </span><span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span><span class="w"></span>
+<a id="ln-674" name="ln-674" href="#ln-674"></a><span class="w">  </span><span class="k">interface </span><span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span>
+<a id="ln-675" name="ln-675" href="#ln-675"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">equal_colors</span>
+<a id="ln-676" name="ln-676" href="#ln-676"></a><span class="w">  </span><span class="k">end interface </span><span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span>
 <a id="ln-677" name="ln-677" href="#ln-677"></a>
-<a id="ln-678" name="ln-678" href="#ln-678"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(</span><span class="o">-</span><span class="p">)</span><span class="w"></span>
-<a id="ln-679" name="ln-679" href="#ln-679"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">subtract_colors</span><span class="w"></span>
-<a id="ln-680" name="ln-680" href="#ln-680"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(</span><span class="o">-</span><span class="p">)</span><span class="w"></span>
+<a id="ln-678" name="ln-678" href="#ln-678"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(</span><span class="o">-</span><span class="p">)</span>
+<a id="ln-679" name="ln-679" href="#ln-679"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">subtract_colors</span>
+<a id="ln-680" name="ln-680" href="#ln-680"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(</span><span class="o">-</span><span class="p">)</span>
 <a id="ln-681" name="ln-681" href="#ln-681"></a>
-<a id="ln-682" name="ln-682" href="#ln-682"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
-<a id="ln-683" name="ln-683" href="#ln-683"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">scalar_left_color</span><span class="w"></span>
-<a id="ln-684" name="ln-684" href="#ln-684"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
+<a id="ln-682" name="ln-682" href="#ln-682"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<a id="ln-683" name="ln-683" href="#ln-683"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">scalar_left_color</span>
+<a id="ln-684" name="ln-684" href="#ln-684"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
 <a id="ln-685" name="ln-685" href="#ln-685"></a>
-<a id="ln-686" name="ln-686" href="#ln-686"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(.</span><span class="n">dot</span><span class="p">.)</span><span class="w"></span>
-<a id="ln-687" name="ln-687" href="#ln-687"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">dot_scalar_colors</span><span class="w"></span>
-<a id="ln-688" name="ln-688" href="#ln-688"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(.</span><span class="n">dot</span><span class="p">.)</span><span class="w"></span>
+<a id="ln-686" name="ln-686" href="#ln-686"></a><span class="w">  </span><span class="k">interface </span><span class="n">operator</span><span class="p">(.</span><span class="n">dot</span><span class="p">.)</span>
+<a id="ln-687" name="ln-687" href="#ln-687"></a><span class="w">     </span><span class="k">module procedure </span><span class="n">dot_scalar_colors</span>
+<a id="ln-688" name="ln-688" href="#ln-688"></a><span class="w">  </span><span class="k">end interface </span><span class="n">operator</span><span class="p">(.</span><span class="n">dot</span><span class="p">.)</span>
 <a id="ln-689" name="ln-689" href="#ln-689"></a>
 <a id="ln-690" name="ln-690" href="#ln-690"></a><span class="k">contains</span>
 <a id="ln-691" name="ln-691" href="#ln-691"></a>
-<a id="ln-692" name="ln-692" href="#ln-692"></a><span class="k">  function </span><span class="n">rgb</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="w"></span>
-<a id="ln-693" name="ln-693" href="#ln-693"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
-<a id="ln-694" name="ln-694" href="#ln-694"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">num</span><span class="w"></span>
-<a id="ln-695" name="ln-695" href="#ln-695"></a><span class="w">    </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">%</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="mi">65536</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">%</span><span class="n">g</span><span class="p">)</span><span class="o">*</span><span class="mi">256</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">%</span><span class="n">b</span><span class="p">)</span><span class="w"></span>
-<a id="ln-696" name="ln-696" href="#ln-696"></a><span class="w">  </span><span class="k">end function </span><span class="n">rgb</span><span class="w"></span>
+<a id="ln-692" name="ln-692" href="#ln-692"></a><span class="k">  function </span><span class="n">rgb</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<a id="ln-693" name="ln-693" href="#ln-693"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span>
+<a id="ln-694" name="ln-694" href="#ln-694"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">num</span>
+<a id="ln-695" name="ln-695" href="#ln-695"></a><span class="w">    </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">%</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="mi">65536</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">%</span><span class="n">g</span><span class="p">)</span><span class="o">*</span><span class="mi">256</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">%</span><span class="n">b</span><span class="p">)</span>
+<a id="ln-696" name="ln-696" href="#ln-696"></a><span class="w">  </span><span class="k">end function </span><span class="n">rgb</span>
 <a id="ln-697" name="ln-697" href="#ln-697"></a>
-<a id="ln-698" name="ln-698" href="#ln-698"></a><span class="w">  </span><span class="k">elemental subroutine </span><span class="n">equal_colors</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span><span class="n">C2</span><span class="p">)</span><span class="w"></span>
-<a id="ln-699" name="ln-699" href="#ln-699"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">C2</span><span class="w"></span>
-<a id="ln-700" name="ln-700" href="#ln-700"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">C1</span><span class="w"></span>
-<a id="ln-701" name="ln-701" href="#ln-701"></a><span class="w">    </span><span class="n">C1</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C2</span><span class="p">%</span><span class="n">r</span><span class="w"></span>
-<a id="ln-702" name="ln-702" href="#ln-702"></a><span class="w">    </span><span class="n">C1</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C2</span><span class="p">%</span><span class="n">g</span><span class="w"></span>
-<a id="ln-703" name="ln-703" href="#ln-703"></a><span class="w">    </span><span class="n">C1</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C2</span><span class="p">%</span><span class="n">b</span><span class="w"></span>
-<a id="ln-704" name="ln-704" href="#ln-704"></a><span class="w">  </span><span class="k">end subroutine </span><span class="n">equal_colors</span><span class="w"></span>
+<a id="ln-698" name="ln-698" href="#ln-698"></a><span class="w">  </span><span class="k">elemental subroutine </span><span class="n">equal_colors</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span><span class="n">C2</span><span class="p">)</span>
+<a id="ln-699" name="ln-699" href="#ln-699"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">C2</span>
+<a id="ln-700" name="ln-700" href="#ln-700"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">C1</span>
+<a id="ln-701" name="ln-701" href="#ln-701"></a><span class="w">    </span><span class="n">C1</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C2</span><span class="p">%</span><span class="n">r</span>
+<a id="ln-702" name="ln-702" href="#ln-702"></a><span class="w">    </span><span class="n">C1</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C2</span><span class="p">%</span><span class="n">g</span>
+<a id="ln-703" name="ln-703" href="#ln-703"></a><span class="w">    </span><span class="n">C1</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C2</span><span class="p">%</span><span class="n">b</span>
+<a id="ln-704" name="ln-704" href="#ln-704"></a><span class="w">  </span><span class="k">end subroutine </span><span class="n">equal_colors</span>
 <a id="ln-705" name="ln-705" href="#ln-705"></a>
-<a id="ln-706" name="ln-706" href="#ln-706"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">add_colors</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"></span>
-<a id="ln-707" name="ln-707" href="#ln-707"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="w"></span>
-<a id="ln-708" name="ln-708" href="#ln-708"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
-<a id="ln-709" name="ln-709" href="#ln-709"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">r</span><span class="w"></span>
-<a id="ln-710" name="ln-710" href="#ln-710"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">g</span><span class="w"></span>
-<a id="ln-711" name="ln-711" href="#ln-711"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">b</span><span class="w"></span>
-<a id="ln-712" name="ln-712" href="#ln-712"></a><span class="w">  </span><span class="k">end function </span><span class="n">add_colors</span><span class="w"></span>
+<a id="ln-706" name="ln-706" href="#ln-706"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">add_colors</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<a id="ln-707" name="ln-707" href="#ln-707"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span>
+<a id="ln-708" name="ln-708" href="#ln-708"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span>
+<a id="ln-709" name="ln-709" href="#ln-709"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">r</span>
+<a id="ln-710" name="ln-710" href="#ln-710"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">g</span>
+<a id="ln-711" name="ln-711" href="#ln-711"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">b</span>
+<a id="ln-712" name="ln-712" href="#ln-712"></a><span class="w">  </span><span class="k">end function </span><span class="n">add_colors</span>
 <a id="ln-713" name="ln-713" href="#ln-713"></a>
-<a id="ln-714" name="ln-714" href="#ln-714"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">subtract_colors</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"></span>
-<a id="ln-715" name="ln-715" href="#ln-715"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="w"></span>
-<a id="ln-716" name="ln-716" href="#ln-716"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
-<a id="ln-717" name="ln-717" href="#ln-717"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">r</span><span class="w"></span>
-<a id="ln-718" name="ln-718" href="#ln-718"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">g</span><span class="w"></span>
-<a id="ln-719" name="ln-719" href="#ln-719"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">b</span><span class="w"></span>
-<a id="ln-720" name="ln-720" href="#ln-720"></a><span class="w">  </span><span class="k">end function </span><span class="n">subtract_colors</span><span class="w"></span>
+<a id="ln-714" name="ln-714" href="#ln-714"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">subtract_colors</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<a id="ln-715" name="ln-715" href="#ln-715"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span>
+<a id="ln-716" name="ln-716" href="#ln-716"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span>
+<a id="ln-717" name="ln-717" href="#ln-717"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">r</span>
+<a id="ln-718" name="ln-718" href="#ln-718"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">g</span>
+<a id="ln-719" name="ln-719" href="#ln-719"></a><span class="w">    </span><span class="n">c</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c1</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c2</span><span class="p">%</span><span class="n">b</span>
+<a id="ln-720" name="ln-720" href="#ln-720"></a><span class="w">  </span><span class="k">end function </span><span class="n">subtract_colors</span>
 <a id="ln-721" name="ln-721" href="#ln-721"></a>
-<a id="ln-722" name="ln-722" href="#ln-722"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">scalar_left_color</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">cin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span><span class="w"></span>
-<a id="ln-723" name="ln-723" href="#ln-723"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<a id="ln-724" name="ln-724" href="#ln-724"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cin</span><span class="w"></span>
-<a id="ln-725" name="ln-725" href="#ln-725"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">cout</span><span class="w"></span>
-<a id="ln-726" name="ln-726" href="#ln-726"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cin</span><span class="p">%</span><span class="n">r</span><span class="w"></span>
-<a id="ln-727" name="ln-727" href="#ln-727"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cin</span><span class="p">%</span><span class="n">g</span><span class="w"></span>
-<a id="ln-728" name="ln-728" href="#ln-728"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cin</span><span class="p">%</span><span class="n">b</span><span class="w"></span>
-<a id="ln-729" name="ln-729" href="#ln-729"></a><span class="w">  </span><span class="k">end function </span><span class="n">scalar_left_color</span><span class="w"></span>
+<a id="ln-722" name="ln-722" href="#ln-722"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">scalar_left_color</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">cin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span>
+<a id="ln-723" name="ln-723" href="#ln-723"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span>
+<a id="ln-724" name="ln-724" href="#ln-724"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cin</span>
+<a id="ln-725" name="ln-725" href="#ln-725"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">cout</span>
+<a id="ln-726" name="ln-726" href="#ln-726"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cin</span><span class="p">%</span><span class="n">r</span>
+<a id="ln-727" name="ln-727" href="#ln-727"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cin</span><span class="p">%</span><span class="n">g</span>
+<a id="ln-728" name="ln-728" href="#ln-728"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cin</span><span class="p">%</span><span class="n">b</span>
+<a id="ln-729" name="ln-729" href="#ln-729"></a><span class="w">  </span><span class="k">end function </span><span class="n">scalar_left_color</span>
 <a id="ln-730" name="ln-730" href="#ln-730"></a>
-<a id="ln-731" name="ln-731" href="#ln-731"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">scalar_right_color</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">cin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span><span class="w"></span>
-<a id="ln-732" name="ln-732" href="#ln-732"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<a id="ln-733" name="ln-733" href="#ln-733"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cin</span><span class="w"></span>
-<a id="ln-734" name="ln-734" href="#ln-734"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">cout</span><span class="w"></span>
-<a id="ln-735" name="ln-735" href="#ln-735"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cin</span><span class="p">%</span><span class="n">r</span><span class="o">*</span><span class="n">k</span><span class="w"></span>
-<a id="ln-736" name="ln-736" href="#ln-736"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cin</span><span class="p">%</span><span class="n">g</span><span class="o">*</span><span class="n">k</span><span class="w"></span>
-<a id="ln-737" name="ln-737" href="#ln-737"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cin</span><span class="p">%</span><span class="n">b</span><span class="o">*</span><span class="n">k</span><span class="w"></span>
-<a id="ln-738" name="ln-738" href="#ln-738"></a><span class="w">  </span><span class="k">end function </span><span class="n">scalar_right_color</span><span class="w"></span>
+<a id="ln-731" name="ln-731" href="#ln-731"></a><span class="w">  </span><span class="k">elemental function </span><span class="n">scalar_right_color</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">cin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span>
+<a id="ln-732" name="ln-732" href="#ln-732"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span>
+<a id="ln-733" name="ln-733" href="#ln-733"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cin</span>
+<a id="ln-734" name="ln-734" href="#ln-734"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">cout</span>
+<a id="ln-735" name="ln-735" href="#ln-735"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cin</span><span class="p">%</span><span class="n">r</span><span class="o">*</span><span class="n">k</span>
+<a id="ln-736" name="ln-736" href="#ln-736"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cin</span><span class="p">%</span><span class="n">g</span><span class="o">*</span><span class="n">k</span>
+<a id="ln-737" name="ln-737" href="#ln-737"></a><span class="w">    </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cin</span><span class="p">%</span><span class="n">b</span><span class="o">*</span><span class="n">k</span>
+<a id="ln-738" name="ln-738" href="#ln-738"></a><span class="w">  </span><span class="k">end function </span><span class="n">scalar_right_color</span>
 <a id="ln-739" name="ln-739" href="#ln-739"></a>
-<a id="ln-740" name="ln-740" href="#ln-740"></a><span class="w">  </span><span class="k">function </span><span class="n">dot_scalar_colors</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">cin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span><span class="w"></span>
-<a id="ln-741" name="ln-741" href="#ln-741"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w"></span>
-<a id="ln-742" name="ln-742" href="#ln-742"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">v</span><span class="p">)),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cin</span><span class="w"></span>
-<a id="ln-743" name="ln-743" href="#ln-743"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">cout</span><span class="w"></span>
-<a id="ln-744" name="ln-744" href="#ln-744"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<a id="ln-745" name="ln-745" href="#ln-745"></a><span class="w">    </span><span class="n">cout</span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<a id="ln-746" name="ln-746" href="#ln-746"></a><span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"></span>
-<a id="ln-747" name="ln-747" href="#ln-747"></a><span class="w">       </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cin</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">r</span><span class="w"></span>
-<a id="ln-748" name="ln-748" href="#ln-748"></a><span class="w">       </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cin</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">g</span><span class="w"></span>
-<a id="ln-749" name="ln-749" href="#ln-749"></a><span class="w">       </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cin</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">b</span><span class="w"></span>
+<a id="ln-740" name="ln-740" href="#ln-740"></a><span class="w">  </span><span class="k">function </span><span class="n">dot_scalar_colors</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">cin</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span>
+<a id="ln-741" name="ln-741" href="#ln-741"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span>
+<a id="ln-742" name="ln-742" href="#ln-742"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">v</span><span class="p">)),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cin</span>
+<a id="ln-743" name="ln-743" href="#ln-743"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">                               </span><span class="kd">::</span><span class="w"> </span><span class="n">cout</span>
+<a id="ln-744" name="ln-744" href="#ln-744"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+<a id="ln-745" name="ln-745" href="#ln-745"></a><span class="w">    </span><span class="n">cout</span><span class="o">=</span><span class="n">rgb_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-746" name="ln-746" href="#ln-746"></a><span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<a id="ln-747" name="ln-747" href="#ln-747"></a><span class="w">       </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cout</span><span class="p">%</span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cin</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">r</span>
+<a id="ln-748" name="ln-748" href="#ln-748"></a><span class="w">       </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cout</span><span class="p">%</span><span class="n">g</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cin</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">g</span>
+<a id="ln-749" name="ln-749" href="#ln-749"></a><span class="w">       </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cout</span><span class="p">%</span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cin</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">b</span>
 <a id="ln-750" name="ln-750" href="#ln-750"></a><span class="w">    </span><span class="k">enddo</span>
-<a id="ln-751" name="ln-751" href="#ln-751"></a><span class="k">  end function </span><span class="n">dot_scalar_colors</span><span class="w"></span>
+<a id="ln-751" name="ln-751" href="#ln-751"></a><span class="k">  end function </span><span class="n">dot_scalar_colors</span>
 <a id="ln-752" name="ln-752" href="#ln-752"></a>
-<a id="ln-753" name="ln-753" href="#ln-753"></a><span class="w">  </span><span class="k">function </span><span class="n">pick_color</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">crgb</span><span class="p">)</span><span class="w"></span>
-<a id="ln-754" name="ln-754" href="#ln-754"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w">                                     </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span><span class="w"></span>
-<a id="ln-755" name="ln-755" href="#ln-755"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">                                      </span><span class="kd">::</span><span class="w"> </span><span class="n">crgb</span><span class="w"></span>
-<a id="ln-756" name="ln-756" href="#ln-756"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)))))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">color_name</span><span class="w"></span>
-<a id="ln-757" name="ln-757" href="#ln-757"></a><span class="w">    </span><span class="n">color_name</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)))</span><span class="w"></span>
-<a id="ln-758" name="ln-758" href="#ln-758"></a><span class="w">    </span><span class="k">select case</span><span class="p">(</span><span class="n">color_name</span><span class="p">)</span><span class="w"></span>
-<a id="ln-759" name="ln-759" href="#ln-759"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-760" name="ln-760" href="#ln-760"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">black</span><span class="w"></span>
-<a id="ln-761" name="ln-761" href="#ln-761"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-762" name="ln-762" href="#ln-762"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">red</span><span class="w"></span>
-<a id="ln-763" name="ln-763" href="#ln-763"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-764" name="ln-764" href="#ln-764"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">green</span><span class="w"></span>
-<a id="ln-765" name="ln-765" href="#ln-765"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-766" name="ln-766" href="#ln-766"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">orange</span><span class="w"></span>
-<a id="ln-767" name="ln-767" href="#ln-767"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-768" name="ln-768" href="#ln-768"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">blue</span><span class="w"></span>
-<a id="ln-769" name="ln-769" href="#ln-769"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-770" name="ln-770" href="#ln-770"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">yellow</span><span class="w"></span>
-<a id="ln-771" name="ln-771" href="#ln-771"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;cyan&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-772" name="ln-772" href="#ln-772"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">cyan</span><span class="w"></span>
-<a id="ln-773" name="ln-773" href="#ln-773"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span><span class="w"></span>
-<a id="ln-774" name="ln-774" href="#ln-774"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">magenta</span><span class="w"></span>
-<a id="ln-775" name="ln-775" href="#ln-775"></a><span class="w">    </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
-<a id="ln-776" name="ln-776" href="#ln-776"></a><span class="w">       </span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;pick_color: color name &quot;</span><span class="p">,</span><span class="n">color_name</span><span class="p">,</span><span class="s2">&quot; does not exist&quot;</span><span class="w"></span>
-<a id="ln-777" name="ln-777" href="#ln-777"></a><span class="w">       </span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;set color to black&quot;</span><span class="w"></span>
-<a id="ln-778" name="ln-778" href="#ln-778"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">black</span><span class="w"></span>
+<a id="ln-753" name="ln-753" href="#ln-753"></a><span class="w">  </span><span class="k">function </span><span class="n">pick_color</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">crgb</span><span class="p">)</span>
+<a id="ln-754" name="ln-754" href="#ln-754"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w">                                     </span><span class="kd">::</span><span class="w"> </span><span class="n">string</span>
+<a id="ln-755" name="ln-755" href="#ln-755"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">rgb_color</span><span class="p">)</span><span class="w">                                      </span><span class="kd">::</span><span class="w"> </span><span class="n">crgb</span>
+<a id="ln-756" name="ln-756" href="#ln-756"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len_trim</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)))))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">color_name</span>
+<a id="ln-757" name="ln-757" href="#ln-757"></a><span class="w">    </span><span class="n">color_name</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)))</span>
+<a id="ln-758" name="ln-758" href="#ln-758"></a><span class="w">    </span><span class="k">select case</span><span class="p">(</span><span class="n">color_name</span><span class="p">)</span>
+<a id="ln-759" name="ln-759" href="#ln-759"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<a id="ln-760" name="ln-760" href="#ln-760"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">black</span>
+<a id="ln-761" name="ln-761" href="#ln-761"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<a id="ln-762" name="ln-762" href="#ln-762"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">red</span>
+<a id="ln-763" name="ln-763" href="#ln-763"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<a id="ln-764" name="ln-764" href="#ln-764"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">green</span>
+<a id="ln-765" name="ln-765" href="#ln-765"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<a id="ln-766" name="ln-766" href="#ln-766"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">orange</span>
+<a id="ln-767" name="ln-767" href="#ln-767"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<a id="ln-768" name="ln-768" href="#ln-768"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">blue</span>
+<a id="ln-769" name="ln-769" href="#ln-769"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
+<a id="ln-770" name="ln-770" href="#ln-770"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">yellow</span>
+<a id="ln-771" name="ln-771" href="#ln-771"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;cyan&quot;</span><span class="p">)</span>
+<a id="ln-772" name="ln-772" href="#ln-772"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">cyan</span>
+<a id="ln-773" name="ln-773" href="#ln-773"></a><span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+<a id="ln-774" name="ln-774" href="#ln-774"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">magenta</span>
+<a id="ln-775" name="ln-775" href="#ln-775"></a><span class="w">    </span><span class="k">case </span><span class="n">default</span>
+<a id="ln-776" name="ln-776" href="#ln-776"></a><span class="w">       </span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;pick_color: color name &quot;</span><span class="p">,</span><span class="n">color_name</span><span class="p">,</span><span class="s2">&quot; does not exist&quot;</span>
+<a id="ln-777" name="ln-777" href="#ln-777"></a><span class="w">       </span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;set color to black&quot;</span>
+<a id="ln-778" name="ln-778" href="#ln-778"></a><span class="w">       </span><span class="n">crgb</span><span class="o">=</span><span class="n">black</span>
 <a id="ln-779" name="ln-779" href="#ln-779"></a><span class="w">    </span><span class="k">end select</span>
-<a id="ln-780" name="ln-780" href="#ln-780"></a><span class="k">  end function </span><span class="n">pick_color</span><span class="w"></span>
+<a id="ln-780" name="ln-780" href="#ln-780"></a><span class="k">  end function </span><span class="n">pick_color</span>
 <a id="ln-781" name="ln-781" href="#ln-781"></a>
-<a id="ln-782" name="ln-782" href="#ln-782"></a><span class="k">END MODULE </span><span class="n">SF_COLORS</span><span class="w"></span>
+<a id="ln-782" name="ln-782" href="#ln-782"></a><span class="k">END MODULE </span><span class="n">SF_COLORS</span>
 </pre></div>
 
-    </section>
+      </section>
     </div>
   </div>
 
@@ -1096,12 +1030,12 @@ can be.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -1111,17 +1045,12 @@ can be.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

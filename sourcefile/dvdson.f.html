@@ -10,81 +10,55 @@
 
     <title>DVDSON.f &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,38 +66,42 @@
       <small>Source File</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.5% of total for source files.">390 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.5% of total for source files.">390 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/DVDSON.f"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-          <li class="active">DVDSON.f</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">DVDSON.f</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-      <div id="sidebar">
+        <div id="sidebar">
       <h3>Contents</h3>
   
   
@@ -136,27 +114,25 @@
   
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#funcs-0">Functions</a>
-        </h3>
-      </div>
-      <div id="funcs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../proc/tstsel.html">TSTSEL</a>
         </div>
       </div>
     </div>
 
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#subs-0">Subroutines</a>
-        </h3>
-      </div>
-      <div id="subs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../proc/dvdson.html">DVDSON</a>
             <a class="list-group-item" href="../proc/setup.html">SETUP</a>
             <a class="list-group-item" href="../proc/dvdrvr.html">DVDRVR</a>
@@ -176,8 +152,9 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
         <a class="list-group-item" href="../sourcefile/dvdson.f.html#src">DVDSON.f</a>
       </div>
@@ -191,73 +168,9 @@
       
       <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#funcs-1">Functions</a>
-        </h3>
-      </div>
-      <div id="funcs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../proc/tstsel.html">TSTSEL</a>
-        </div>
-      </div>
-    </div>
-
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#subs-1">Subroutines</a>
-        </h3>
-      </div>
-      <div id="subs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../proc/dvdson.html">DVDSON</a>
-            <a class="list-group-item" href="../proc/setup.html">SETUP</a>
-            <a class="list-group-item" href="../proc/dvdrvr.html">DVDRVR</a>
-            <a class="list-group-item" href="../proc/addabs.html">ADDABS</a>
-            <a class="list-group-item" href="../proc/multbc.html">MULTBC</a>
-            <a class="list-group-item" href="../proc/ovflow.html">OVFLOW</a>
-            <a class="list-group-item" href="../proc/newvec.html">NEWVEC</a>
-            <a class="list-group-item" href="../proc/orthnrm.html">ORTHNRM</a>
-            <a class="list-group-item" href="../proc/dinit.html">DINIT</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../sourcefile/dvdson.f.html#src">DVDSON.f</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
-    <section>
-      <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="c">*=======================================================================</span>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="c">*=======================================================================</span>
 <a id="ln-2" name="ln-2" href="#ln-2"></a><span class="c">*                                                                       </span>
 <a id="ln-3" name="ln-3" href="#ln-3"></a><span class="c">*       Author: Andreas Stathopoulos, Charlotte F. Fischer              </span>
 <a id="ln-4" name="ln-4" href="#ln-4"></a><span class="c">*                                                                       </span>
@@ -461,7 +374,7 @@
 <a id="ln-202" name="ln-202" href="#ln-202"></a><span class="nl">     </span> <span class="k">DIMENSION </span><span class="n">ISELEC</span><span class="p">(</span><span class="n">LIM</span><span class="p">)</span><span class="w">                                           </span>
 <a id="ln-203" name="ln-203" href="#ln-203"></a><span class="nl">     </span> <span class="kt">LOGICAL </span><span class="n">HIEND</span><span class="w">                                                   </span>
 <a id="ln-204" name="ln-204" href="#ln-204"></a><span class="nl">     </span> <span class="k">EXTERNAL </span><span class="n">OP</span><span class="w">                                                     </span>
-<a id="ln-205" name="ln-205" href="#ln-205"></a><span class="nl">     </span> <span class="kt">INTEGER </span><span class="n">IERR</span><span class="w"></span>
+<a id="ln-205" name="ln-205" href="#ln-205"></a><span class="nl">     </span> <span class="kt">INTEGER </span><span class="n">IERR</span>
 <a id="ln-206" name="ln-206" href="#ln-206"></a><span class="c">*-----------------------------------------------------------------------</span>
 <a id="ln-207" name="ln-207" href="#ln-207"></a><span class="c">*     </span>
 <a id="ln-208" name="ln-208" href="#ln-208"></a><span class="c">*     Checking user input errors, and setting up the problem to solve.      </span>
@@ -469,9 +382,9 @@
 <a id="ln-210" name="ln-210" href="#ln-210"></a><span class="nl">     </span> <span class="n">IERR</span><span class="o">=</span><span class="mi">0</span><span class="w">                                                          </span>
 <a id="ln-211" name="ln-211" href="#ln-211"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">LIM</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">1</span><span class="w">                                       </span>
 <a id="ln-212" name="ln-212" href="#ln-212"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">LIM</span><span class="p">.</span><span class="n">LE</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">2</span><span class="w">                                       </span>
-<a id="ln-213" name="ln-213" href="#ln-213"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-213" name="ln-213" href="#ln-213"></a><span class="nl">     </span> 
 <a id="ln-214" name="ln-214" href="#ln-214"></a><span class="nl">     </span> <span class="n">HIEND</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">                                                   </span>
-<a id="ln-215" name="ln-215" href="#ln-215"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-215" name="ln-215" href="#ln-215"></a><span class="nl">     </span> 
 <a id="ln-216" name="ln-216" href="#ln-216"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">ILOW</span><span class="p">.</span><span class="n">LE</span><span class="p">.</span><span class="mi">0</span><span class="p">).</span><span class="nb">OR</span><span class="p">.(</span><span class="n">ILOW</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">N</span><span class="p">))</span><span class="w"> </span><span class="k">THEN</span><span class="w">                            </span>
 <a id="ln-217" name="ln-217" href="#ln-217"></a><span class="c">*     ..Look for user choice of eigenpairs in ISELEC               </span>
 <a id="ln-218" name="ln-218" href="#ln-218"></a><span class="nl">     </span> <span class="w">   </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">ISELEC</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">LE</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                     </span>
@@ -488,7 +401,7 @@
 <a id="ln-229" name="ln-229" href="#ln-229"></a><span class="nl">     </span> <span class="w">         </span><span class="n">ILOW</span><span class="o">=</span><span class="nb">MIN</span><span class="p">(</span><span class="n">ILOW</span><span class="p">,</span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">))</span><span class="w">                               </span>
 <a id="ln-230" name="ln-230" href="#ln-230"></a><span class="nl">     </span> <span class="w">         </span><span class="n">IHIGH</span><span class="o">=</span><span class="nb">MAX</span><span class="p">(</span><span class="n">IHIGH</span><span class="p">,</span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">))</span><span class="w">                             </span>
 <a id="ln-231" name="ln-231" href="#ln-231"></a><span class="nl">     </span> <span class="w">         </span><span class="n">NEIG</span><span class="o">=</span><span class="n">NEIG</span><span class="o">+</span><span class="mi">1</span><span class="w">                                            </span>
-<a id="ln-232" name="ln-232" href="#ln-232"></a><span class="nl">     </span> <span class="w">      </span><span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-232" name="ln-232" href="#ln-232"></a><span class="nl">     </span> <span class="w">      </span><span class="k">ENDDO</span>
 <a id="ln-233" name="ln-233" href="#ln-233"></a><span class="c">*     ..Check if a very large index is asked for                </span>
 <a id="ln-234" name="ln-234" href="#ln-234"></a><span class="nl"> 20  </span> <span class="w">      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">IHIGH</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">8</span><span class="w">                               </span>
 <a id="ln-235" name="ln-235" href="#ln-235"></a><span class="nl">     </span> <span class="w">   </span><span class="k">ENDIF</span><span class="w">                                                        </span>
@@ -506,12 +419,12 @@
 <a id="ln-247" name="ln-247" href="#ln-247"></a><span class="c">*     ..Fill in the ISELEC with the required indices            </span>
 <a id="ln-248" name="ln-248" href="#ln-248"></a><span class="nl">     </span> <span class="w">      </span><span class="k">DO </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NEIG</span><span class="w">                                               </span>
 <a id="ln-249" name="ln-249" href="#ln-249"></a><span class="nl">     </span> <span class="w">         </span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="n">ILOW</span><span class="o">+</span><span class="n">I</span><span class="o">-</span><span class="mi">1</span><span class="w">                                     </span>
-<a id="ln-250" name="ln-250" href="#ln-250"></a><span class="nl">     </span> <span class="w">      </span><span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-250" name="ln-250" href="#ln-250"></a><span class="nl">     </span> <span class="w">      </span><span class="k">ENDDO</span>
 <a id="ln-251" name="ln-251" href="#ln-251"></a><span class="nl">     </span> <span class="w">   </span><span class="k">ENDIF</span><span class="w">                                                        </span>
 <a id="ln-252" name="ln-252" href="#ln-252"></a><span class="nl">     </span> <span class="k">ENDIF</span><span class="w">                                                           </span>
-<a id="ln-253" name="ln-253" href="#ln-253"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-253" name="ln-253" href="#ln-253"></a><span class="nl">     </span> 
 <a id="ln-254" name="ln-254" href="#ln-254"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">IERR</span><span class="p">.</span><span class="n">NE</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w">                                           </span>
-<a id="ln-255" name="ln-255" href="#ln-255"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-255" name="ln-255" href="#ln-255"></a><span class="nl">     </span> 
 <a id="ln-256" name="ln-256" href="#ln-256"></a><span class="nl">     </span> <span class="n">NUME</span><span class="o">=</span><span class="n">IHIGH</span><span class="w">                                                      </span>
 <a id="ln-257" name="ln-257" href="#ln-257"></a><span class="c">*     ..Identify if few of the highest eigenpairs are wanted.         </span>
 <a id="ln-258" name="ln-258" href="#ln-258"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">ILOW</span><span class="o">+</span><span class="n">IHIGH</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">GT</span><span class="p">.</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                   </span>
@@ -521,8 +434,8 @@
 <a id="ln-262" name="ln-262" href="#ln-262"></a><span class="c">*     ..by picking the corresponding eigenpairs on the             </span>
 <a id="ln-263" name="ln-263" href="#ln-263"></a><span class="c">*     ..opposite side of the spectrum.                             </span>
 <a id="ln-264" name="ln-264" href="#ln-264"></a><span class="nl">     </span> <span class="w">   </span><span class="k">DO </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NEIG</span><span class="w">                                                  </span>
-<a id="ln-265" name="ln-265" href="#ln-265"></a><span class="nl">     </span> <span class="w">      </span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
-<a id="ln-266" name="ln-266" href="#ln-266"></a><span class="nl">     </span> <span class="w">   </span><span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-265" name="ln-265" href="#ln-265"></a><span class="nl">     </span> <span class="w">      </span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="n">ISELEC</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+<a id="ln-266" name="ln-266" href="#ln-266"></a><span class="nl">     </span> <span class="w">   </span><span class="k">ENDDO</span>
 <a id="ln-267" name="ln-267" href="#ln-267"></a><span class="nl">     </span> <span class="k">ENDIF</span><span class="w">                                                           </span>
 <a id="ln-268" name="ln-268" href="#ln-268"></a><span class="c">*     ..duplications in ISELEC                                        </span>
 <a id="ln-269" name="ln-269" href="#ln-269"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">NEIG</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">NUME</span><span class="p">)</span><span class="w"> </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">64</span><span class="w">                                  </span>
@@ -531,13 +444,13 @@
 <a id="ln-272" name="ln-272" href="#ln-272"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">128</span><span class="w">                                                </span>
 <a id="ln-273" name="ln-273" href="#ln-273"></a><span class="c">*     .     .Size of Block out of bounds                                   </span>
 <a id="ln-274" name="ln-274" href="#ln-274"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">MBLOCK</span><span class="p">.</span><span class="n">LT</span><span class="p">.</span><span class="mi">1</span><span class="p">).</span><span class="nb">OR</span><span class="p">.(</span><span class="n">MBLOCK</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">NEIG</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">256</span><span class="w">          </span>
-<a id="ln-275" name="ln-275" href="#ln-275"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-275" name="ln-275" href="#ln-275"></a><span class="nl">     </span> 
 <a id="ln-276" name="ln-276" href="#ln-276"></a><span class="c">*     ..Check for enough workspace for Dvdson                         </span>
 <a id="ln-277" name="ln-277" href="#ln-277"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">IWRSZ</span><span class="p">.</span><span class="n">LT</span><span class="p">.(</span><span class="n">LIM</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="n">LIM</span><span class="o">+</span><span class="p">(</span><span class="n">NUME</span><span class="o">+</span><span class="mi">10</span><span class="p">))</span><span class="o">+</span><span class="n">NUME</span><span class="p">)).</span><span class="nb">OR</span><span class="p">.</span><span class="w">               </span>
 <a id="ln-278" name="ln-278" href="#ln-278"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="p">(</span><span class="n">IIWSZ</span><span class="p">.</span><span class="n">LT</span><span class="p">.(</span><span class="mi">6</span><span class="o">*</span><span class="n">LIM</span><span class="o">+</span><span class="n">NUME</span><span class="p">)))</span><span class="w"> </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">512</span><span class="w">                      </span>
-<a id="ln-279" name="ln-279" href="#ln-279"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-279" name="ln-279" href="#ln-279"></a><span class="nl">     </span> 
 <a id="ln-280" name="ln-280" href="#ln-280"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">IERR</span><span class="p">.</span><span class="n">NE</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w">                                           </span>
-<a id="ln-281" name="ln-281" href="#ln-281"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-281" name="ln-281" href="#ln-281"></a><span class="nl">     </span> 
 <a id="ln-282" name="ln-282" href="#ln-282"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">NIV</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">LIM</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                            </span>
 <a id="ln-283" name="ln-283" href="#ln-283"></a><span class="c">*     ..Check number of initial estimates NIV is lower than LIM.   </span>
 <a id="ln-284" name="ln-284" href="#ln-284"></a><span class="nl">     </span> <span class="w">   </span><span class="k">PRINT</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;WARNING: Too many initial estimates.?&#39;</span><span class="w">               </span>
@@ -565,15 +478,15 @@
 <a id="ln-306" name="ln-306" href="#ln-306"></a><span class="nl">     </span> <span class="n">iscra2</span><span class="w">    </span><span class="o">=</span><span class="mi">1</span><span class="w">                                                    </span>
 <a id="ln-307" name="ln-307" href="#ln-307"></a><span class="nl">     </span> <span class="n">iscra3</span><span class="w">    </span><span class="o">=</span><span class="n">iscra2</span><span class="w">  </span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">LIM</span><span class="w">                                       </span>
 <a id="ln-308" name="ln-308" href="#ln-308"></a><span class="nl">     </span> <span class="n">iIcv</span><span class="w">      </span><span class="o">=</span><span class="n">iscra3</span><span class="w">  </span><span class="o">+</span><span class="n">LIM</span><span class="w">                                         </span>
-<a id="ln-309" name="ln-309" href="#ln-309"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-309" name="ln-309" href="#ln-309"></a><span class="nl">     </span> 
 <a id="ln-310" name="ln-310" href="#ln-310"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">HIEND</span><span class="p">)</span><span class="w"> </span><span class="k">CALL </span><span class="n">DSCAL</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">1.D0</span><span class="p">,</span><span class="n">DIAG</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">                           </span>
-<a id="ln-311" name="ln-311" href="#ln-311"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-311" name="ln-311" href="#ln-311"></a><span class="nl">     </span> 
 <a id="ln-312" name="ln-312" href="#ln-312"></a><span class="nl">     </span> <span class="n">iSTART</span><span class="o">=</span><span class="n">NIV</span><span class="w">                                                      </span>
 <a id="ln-313" name="ln-313" href="#ln-313"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">SETUP</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">DIAG</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">iscra1</span><span class="p">),</span><span class="w">               </span>
-<a id="ln-314" name="ln-314" href="#ln-314"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">WORK</span><span class="p">(</span><span class="n">iBasis</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="n">iAB</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="k">iS</span><span class="p">),</span><span class="n">iSTART</span><span class="p">)</span><span class="w"></span>
+<a id="ln-314" name="ln-314" href="#ln-314"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">WORK</span><span class="p">(</span><span class="n">iBasis</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="n">iAB</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="k">iS</span><span class="p">),</span><span class="n">iSTART</span><span class="p">)</span>
 <a id="ln-315" name="ln-315" href="#ln-315"></a><span class="nl">     </span> <span class="n">NLOOPS</span><span class="o">=</span><span class="mi">1</span><span class="w">                                                        </span>
 <a id="ln-316" name="ln-316" href="#ln-316"></a><span class="nl">     </span> <span class="n">NMV</span><span class="o">=</span><span class="n">ISTART</span><span class="w">                                                      </span>
-<a id="ln-317" name="ln-317" href="#ln-317"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-317" name="ln-317" href="#ln-317"></a><span class="nl">     </span> 
 <a id="ln-318" name="ln-318" href="#ln-318"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">DVDRVR</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">MBLOCK</span><span class="p">,</span><span class="n">DIAG</span><span class="p">,</span><span class="w">                         </span>
 <a id="ln-319" name="ln-319" href="#ln-319"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">NUME</span><span class="p">,</span><span class="n">iSTART</span><span class="p">,</span><span class="n">NEIG</span><span class="p">,</span><span class="n">ISELEC</span><span class="p">,</span><span class="w">                             </span>
 <a id="ln-320" name="ln-320" href="#ln-320"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">CRITE</span><span class="p">,</span><span class="n">CRITC</span><span class="p">,</span><span class="n">CRITR</span><span class="p">,</span><span class="n">ORTHO</span><span class="p">,</span><span class="n">MAXITER</span><span class="p">,</span><span class="w">                     </span>
@@ -582,7 +495,7 @@
 <a id="ln-323" name="ln-323" href="#ln-323"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">WORK</span><span class="p">(</span><span class="n">iscra1</span><span class="p">),</span><span class="n">IWORK</span><span class="p">(</span><span class="n">iscra2</span><span class="p">),</span><span class="n">IWORK</span><span class="p">(</span><span class="n">iscra3</span><span class="p">),</span><span class="w">            </span>
 <a id="ln-324" name="ln-324" href="#ln-324"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">IWORK</span><span class="p">(</span><span class="n">iIcv</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="n">ioldval</span><span class="p">),</span><span class="w">                           </span>
 <a id="ln-325" name="ln-325" href="#ln-325"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">NLOOPS</span><span class="p">,</span><span class="n">NMV</span><span class="p">,</span><span class="n">IERR</span><span class="p">)</span><span class="w">                                     </span>
-<a id="ln-326" name="ln-326" href="#ln-326"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-326" name="ln-326" href="#ln-326"></a><span class="nl">     </span> 
 <a id="ln-327" name="ln-327" href="#ln-327"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">HIEND</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                                 </span>
 <a id="ln-328" name="ln-328" href="#ln-328"></a><span class="nl">     </span> <span class="w">   </span><span class="k">CALL </span><span class="n">DSCAL</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">1.D0</span><span class="p">,</span><span class="n">DIAG</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">                                   </span>
 <a id="ln-329" name="ln-329" href="#ln-329"></a><span class="nl">     </span> <span class="w">   </span><span class="k">CALL </span><span class="n">DSCAL</span><span class="p">(</span><span class="n">NUME</span><span class="p">,</span><span class="o">-</span><span class="mf">1.D0</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">ieigval</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">                       </span>
@@ -595,7 +508,7 @@
 <a id="ln-336" name="ln-336" href="#ln-336"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">DCOPY</span><span class="p">(</span><span class="n">NUME</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">ieigval</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">iBasis</span><span class="o">+</span><span class="n">N</span><span class="o">*</span><span class="n">NUME</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">          </span>
 <a id="ln-337" name="ln-337" href="#ln-337"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">DCOPY</span><span class="p">(</span><span class="n">NUME</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">ioldval</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">iBasis</span><span class="o">+</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">NUME</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">      </span>
 <a id="ln-338" name="ln-338" href="#ln-338"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">DCOPY</span><span class="p">(</span><span class="n">NUME</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">iscra1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">WORK</span><span class="p">(</span><span class="n">iBasis</span><span class="o">+</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">NUME</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">       </span>
-<a id="ln-339" name="ln-339" href="#ln-339"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-339" name="ln-339" href="#ln-339"></a><span class="nl">     </span> 
 <a id="ln-340" name="ln-340" href="#ln-340"></a><span class="nl"> 100 </span> <span class="k">RETURN</span><span class="w">                                                          </span>
 <a id="ln-341" name="ln-341" href="#ln-341"></a><span class="nl">     </span> <span class="k">END</span><span class="w">                                                             </span>
 <a id="ln-342" name="ln-342" href="#ln-342"></a><span class="c">*=======================================================================</span>
@@ -611,10 +524,10 @@
 <a id="ln-352" name="ln-352" href="#ln-352"></a><span class="c">*-----------------------------------------------------------------------</span>
 <a id="ln-353" name="ln-353" href="#ln-353"></a><span class="nl">     </span> <span class="k">IMPLICIT </span><span class="kt">DOUBLE PRECISION</span><span class="p">(</span><span class="n">A</span><span class="o">-</span><span class="n">H</span><span class="p">,</span><span class="n">O</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="w">                              </span>
 <a id="ln-354" name="ln-354" href="#ln-354"></a><span class="nl">     </span> <span class="k">DIMENSION </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">BASIS</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">LIM</span><span class="p">),</span><span class="n">AB</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">LIM</span><span class="p">)</span><span class="w">                        </span>
-<a id="ln-355" name="ln-355" href="#ln-355"></a><span class="nl">     </span> <span class="k">DIMENSION </span><span class="n">S</span><span class="p">(</span><span class="n">LIM</span><span class="o">*</span><span class="p">(</span><span class="n">LIM</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">MINELEM</span><span class="p">(</span><span class="n">LIM</span><span class="p">)</span><span class="w"></span>
-<a id="ln-356" name="ln-356" href="#ln-356"></a><span class="nl">     </span> <span class="k">EXTERNAL </span><span class="n">OP</span><span class="w"></span>
-<a id="ln-357" name="ln-357" href="#ln-357"></a><span class="nl">     </span> <span class="kt">LOGICAL </span><span class="n">HIEND</span><span class="w"></span>
-<a id="ln-358" name="ln-358" href="#ln-358"></a><span class="nl">     </span> <span class="kt">DOUBLE PRECISION </span><span class="n">MINELEM</span><span class="w"></span>
+<a id="ln-355" name="ln-355" href="#ln-355"></a><span class="nl">     </span> <span class="k">DIMENSION </span><span class="n">S</span><span class="p">(</span><span class="n">LIM</span><span class="o">*</span><span class="p">(</span><span class="n">LIM</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">MINELEM</span><span class="p">(</span><span class="n">LIM</span><span class="p">)</span>
+<a id="ln-356" name="ln-356" href="#ln-356"></a><span class="nl">     </span> <span class="k">EXTERNAL </span><span class="n">OP</span>
+<a id="ln-357" name="ln-357" href="#ln-357"></a><span class="nl">     </span> <span class="kt">LOGICAL </span><span class="n">HIEND</span>
+<a id="ln-358" name="ln-358" href="#ln-358"></a><span class="nl">     </span> <span class="kt">DOUBLE PRECISION </span><span class="n">MINELEM</span>
 <a id="ln-359" name="ln-359" href="#ln-359"></a><span class="c">*-----------------------------------------------------------------------</span>
 <a id="ln-360" name="ln-360" href="#ln-360"></a><span class="c">*     on entry                                                            </span>
 <a id="ln-361" name="ln-361" href="#ln-361"></a><span class="c">*     --------                                                            </span>
@@ -632,7 +545,7 @@
 <a id="ln-373" name="ln-373" href="#ln-373"></a><span class="c">*     AB, S       The starting D=AB, and small matrix S=B^TAB             </span>
 <a id="ln-374" name="ln-374" href="#ln-374"></a><span class="c">*     NIV         The starting dimension of BASIS.                        </span>
 <a id="ln-375" name="ln-375" href="#ln-375"></a><span class="c">*-----------------------------------------------------------------------</span>
-<a id="ln-376" name="ln-376" href="#ln-376"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-376" name="ln-376" href="#ln-376"></a><span class="nl">     </span> 
 <a id="ln-377" name="ln-377" href="#ln-377"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">NIV</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="n">LIM</span><span class="p">).</span><span class="nb">OR</span><span class="p">.(</span><span class="n">NIV</span><span class="p">.</span><span class="n">LT</span><span class="p">.</span><span class="n">NUME</span><span class="p">))</span><span class="w"> </span><span class="k">THEN</span><span class="w">                         </span>
 <a id="ln-378" name="ln-378" href="#ln-378"></a><span class="c">*     </span>
 <a id="ln-379" name="ln-379" href="#ln-379"></a><span class="c">*     ..Initial estimates are not available. Give as estimates unit</span>
@@ -645,33 +558,33 @@
 <a id="ln-386" name="ln-386" href="#ln-386"></a><span class="c">*     ..imin= the first not gotten elem( NUME&lt;=N )              </span>
 <a id="ln-387" name="ln-387" href="#ln-387"></a><span class="nl">     </span> <span class="w">      </span><span class="k">DO </span><span class="mi">20</span><span class="w"> </span><span class="n">J</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="w">                                               </span>
 <a id="ln-388" name="ln-388" href="#ln-388"></a><span class="nl"> 20  </span> <span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">AB</span><span class="p">(</span><span class="n">J</span><span class="p">).</span><span class="n">LT</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">30</span><span class="w">                                </span>
-<a id="ln-389" name="ln-389" href="#ln-389"></a><span class="nl"> 30  </span> <span class="w">         </span><span class="n">IMIN</span><span class="o">=</span><span class="n">J</span><span class="w">                                                   </span><span class="c"> </span><span class="w"></span>
-<a id="ln-390" name="ln-390" href="#ln-390"></a><span class="nl">     </span> <span class="w">         </span><span class="k">DO </span><span class="mi">40</span><span class="w"> </span><span class="n">J</span><span class="o">=</span><span class="n">IMIN</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="w">                                         </span><span class="c"> </span><span class="w"></span>
-<a id="ln-391" name="ln-391" href="#ln-391"></a><span class="nl"> 40  </span> <span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">AB</span><span class="p">(</span><span class="n">J</span><span class="p">).</span><span class="n">LT</span><span class="p">.</span><span class="mi">0</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="w">                                 </span><span class="c"> </span><span class="w"></span>
-<a id="ln-392" name="ln-392" href="#ln-392"></a><span class="nl">     </span><span class="gs">:</span><span class="w">                 </span><span class="p">(</span><span class="n">DIAG</span><span class="p">(</span><span class="n">J</span><span class="p">).</span><span class="n">LT</span><span class="p">.</span><span class="n">DIAG</span><span class="p">(</span><span class="n">IMIN</span><span class="p">)))</span><span class="w"> </span><span class="n">IMIN</span><span class="o">=</span><span class="n">J</span><span class="w">                  </span><span class="c">   </span><span class="w"></span>
-<a id="ln-393" name="ln-393" href="#ln-393"></a><span class="nl">     </span> <span class="w">            </span><span class="n">MINELEM</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="n">IMIN</span><span class="w">                                       </span><span class="c">    </span><span class="w"></span>
-<a id="ln-394" name="ln-394" href="#ln-394"></a><span class="nl">     </span> <span class="w">            </span><span class="n">AB</span><span class="p">(</span><span class="n">IMIN</span><span class="p">)</span><span class="o">=</span><span class="mf">1.D0</span><span class="w">                                         </span><span class="c">    </span><span class="w"></span>
-<a id="ln-395" name="ln-395" href="#ln-395"></a><span class="nl">     </span> <span class="w">         </span><span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-389" name="ln-389" href="#ln-389"></a><span class="nl"> 30  </span> <span class="w">         </span><span class="n">IMIN</span><span class="o">=</span><span class="n">J</span><span class="w">                                                   </span><span class="c"> </span>
+<a id="ln-390" name="ln-390" href="#ln-390"></a><span class="nl">     </span> <span class="w">         </span><span class="k">DO </span><span class="mi">40</span><span class="w"> </span><span class="n">J</span><span class="o">=</span><span class="n">IMIN</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="w">                                         </span><span class="c"> </span>
+<a id="ln-391" name="ln-391" href="#ln-391"></a><span class="nl"> 40  </span> <span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">AB</span><span class="p">(</span><span class="n">J</span><span class="p">).</span><span class="n">LT</span><span class="p">.</span><span class="mi">0</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="w">                                 </span><span class="c"> </span>
+<a id="ln-392" name="ln-392" href="#ln-392"></a><span class="nl">     </span><span class="gs">:</span><span class="w">                 </span><span class="p">(</span><span class="n">DIAG</span><span class="p">(</span><span class="n">J</span><span class="p">).</span><span class="n">LT</span><span class="p">.</span><span class="n">DIAG</span><span class="p">(</span><span class="n">IMIN</span><span class="p">)))</span><span class="w"> </span><span class="n">IMIN</span><span class="o">=</span><span class="n">J</span><span class="w">                  </span><span class="c">   </span>
+<a id="ln-393" name="ln-393" href="#ln-393"></a><span class="nl">     </span> <span class="w">            </span><span class="n">MINELEM</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="n">IMIN</span><span class="w">                                       </span><span class="c">    </span>
+<a id="ln-394" name="ln-394" href="#ln-394"></a><span class="nl">     </span> <span class="w">            </span><span class="n">AB</span><span class="p">(</span><span class="n">IMIN</span><span class="p">)</span><span class="o">=</span><span class="mf">1.D0</span><span class="w">                                         </span><span class="c">    </span>
+<a id="ln-395" name="ln-395" href="#ln-395"></a><span class="nl">     </span> <span class="w">         </span><span class="k">ENDDO</span>
 <a id="ln-396" name="ln-396" href="#ln-396"></a><span class="c">*     </span>
 <a id="ln-397" name="ln-397" href="#ln-397"></a><span class="c">*     ..Build the Basis. B_i=e_(MINELEM(i))                        </span>
 <a id="ln-398" name="ln-398" href="#ln-398"></a><span class="c">*     </span>
-<a id="ln-399" name="ln-399" href="#ln-399"></a><span class="nl">     </span> <span class="w">         </span><span class="k">CALL </span><span class="n">DINIT</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">LIM</span><span class="p">,</span><span class="mf">0.D0</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">                           </span><span class="c">    </span><span class="w"></span>
-<a id="ln-400" name="ln-400" href="#ln-400"></a><span class="nl">     </span> <span class="w">         </span><span class="k">DO </span><span class="n">J</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NUME</span><span class="w">                                              </span><span class="c"> </span><span class="w"></span>
-<a id="ln-401" name="ln-401" href="#ln-401"></a><span class="nl">     </span> <span class="w">            </span><span class="n">I</span><span class="o">=</span><span class="p">(</span><span class="n">J</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="n">MINELEM</span><span class="p">(</span><span class="n">J</span><span class="p">)</span><span class="w">                                  </span><span class="c">    </span><span class="w"></span>
-<a id="ln-402" name="ln-402" href="#ln-402"></a><span class="nl">     </span> <span class="w">            </span><span class="n">BASIS</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="w">                                            </span><span class="c">    </span><span class="w"></span>
-<a id="ln-403" name="ln-403" href="#ln-403"></a><span class="nl">     </span> <span class="w">         </span><span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-399" name="ln-399" href="#ln-399"></a><span class="nl">     </span> <span class="w">         </span><span class="k">CALL </span><span class="n">DINIT</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">LIM</span><span class="p">,</span><span class="mf">0.D0</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">                           </span><span class="c">    </span>
+<a id="ln-400" name="ln-400" href="#ln-400"></a><span class="nl">     </span> <span class="w">         </span><span class="k">DO </span><span class="n">J</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NUME</span><span class="w">                                              </span><span class="c"> </span>
+<a id="ln-401" name="ln-401" href="#ln-401"></a><span class="nl">     </span> <span class="w">            </span><span class="n">I</span><span class="o">=</span><span class="p">(</span><span class="n">J</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="n">MINELEM</span><span class="p">(</span><span class="n">J</span><span class="p">)</span><span class="w">                                  </span><span class="c">    </span>
+<a id="ln-402" name="ln-402" href="#ln-402"></a><span class="nl">     </span> <span class="w">            </span><span class="n">BASIS</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="w">                                            </span><span class="c">    </span>
+<a id="ln-403" name="ln-403" href="#ln-403"></a><span class="nl">     </span> <span class="w">         </span><span class="k">ENDDO</span>
 <a id="ln-404" name="ln-404" href="#ln-404"></a><span class="nl">     </span> <span class="w">         </span>
-<a id="ln-405" name="ln-405" href="#ln-405"></a><span class="nl">     </span> <span class="w">         </span><span class="n">NIV</span><span class="o">=</span><span class="n">NUME</span><span class="w">                                                 </span><span class="c">    </span><span class="w"></span>
-<a id="ln-406" name="ln-406" href="#ln-406"></a><span class="nl">     </span> <span class="w">      </span><span class="k">ENDIF</span><span class="w">                                                       </span><span class="c">    </span><span class="w"></span>
+<a id="ln-405" name="ln-405" href="#ln-405"></a><span class="nl">     </span> <span class="w">         </span><span class="n">NIV</span><span class="o">=</span><span class="n">NUME</span><span class="w">                                                 </span><span class="c">    </span>
+<a id="ln-406" name="ln-406" href="#ln-406"></a><span class="nl">     </span> <span class="w">      </span><span class="k">ENDIF</span><span class="w">                                                       </span><span class="c">    </span>
 <a id="ln-407" name="ln-407" href="#ln-407"></a><span class="c">*     </span>
 <a id="ln-408" name="ln-408" href="#ln-408"></a><span class="c">*     Find the matrix AB by matrix-vector multiplies, as well as the        </span>
 <a id="ln-409" name="ln-409" href="#ln-409"></a><span class="c">*     small matrix S = B^TAB.                                               </span>
 <a id="ln-410" name="ln-410" href="#ln-410"></a><span class="c">*     </span>
-<a id="ln-411" name="ln-411" href="#ln-411"></a><span class="nl">     </span> <span class="w">      </span><span class="n">KPASS</span><span class="o">=</span><span class="mi">0</span><span class="w">                                                     </span><span class="c">    </span><span class="w"></span>
-<a id="ln-412" name="ln-412" href="#ln-412"></a><span class="nl">     </span> <span class="w">      </span><span class="k">CALL </span><span class="n">ADDABS</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">NIV</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">S</span><span class="p">)</span><span class="w">            </span><span class="c">    </span><span class="w"></span>
+<a id="ln-411" name="ln-411" href="#ln-411"></a><span class="nl">     </span> <span class="w">      </span><span class="n">KPASS</span><span class="o">=</span><span class="mi">0</span><span class="w">                                                     </span><span class="c">    </span>
+<a id="ln-412" name="ln-412" href="#ln-412"></a><span class="nl">     </span> <span class="w">      </span><span class="k">CALL </span><span class="n">ADDABS</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">NIV</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">S</span><span class="p">)</span><span class="w">            </span><span class="c">    </span>
 <a id="ln-413" name="ln-413" href="#ln-413"></a><span class="nl">     </span> <span class="w">      </span>
-<a id="ln-414" name="ln-414" href="#ln-414"></a><span class="nl">     </span> <span class="w">      </span><span class="k">RETURN</span><span class="w">                                                      </span><span class="c">    </span><span class="w"></span>
-<a id="ln-415" name="ln-415" href="#ln-415"></a><span class="nl">     </span> <span class="w">      </span><span class="k">END</span><span class="w">                                                         </span><span class="c">    </span><span class="w"></span>
+<a id="ln-414" name="ln-414" href="#ln-414"></a><span class="nl">     </span> <span class="w">      </span><span class="k">RETURN</span><span class="w">                                                      </span><span class="c">    </span>
+<a id="ln-415" name="ln-415" href="#ln-415"></a><span class="nl">     </span> <span class="w">      </span><span class="k">END</span><span class="w">                                                         </span><span class="c">    </span>
 <a id="ln-416" name="ln-416" href="#ln-416"></a><span class="c">*=======================================================================</span>
 <a id="ln-417" name="ln-417" href="#ln-417"></a><span class="nl">     </span> <span class="k">SUBROUTINE </span><span class="n">DVDRVR</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">MBLOCK</span><span class="p">,</span><span class="n">DIAG</span><span class="p">,</span><span class="w">                   </span>
 <a id="ln-418" name="ln-418" href="#ln-418"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">NUME</span><span class="p">,</span><span class="n">NIV</span><span class="p">,</span><span class="n">NEIG</span><span class="p">,</span><span class="n">ISELEC</span><span class="p">,</span><span class="w">                         </span>
@@ -702,7 +615,7 @@
 <a id="ln-443" name="ln-443" href="#ln-443"></a><span class="c">*     DSPEVX, MULTBC, TSTSEL, OVFLOW, NEWVEC, ADDABS,                 </span>
 <a id="ln-444" name="ln-444" href="#ln-444"></a><span class="c">*     DCOPY, DDOT, DAXPY                                              </span>
 <a id="ln-445" name="ln-445" href="#ln-445"></a><span class="c">*-----------------------------------------------------------------------</span>
-<a id="ln-446" name="ln-446" href="#ln-446"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-446" name="ln-446" href="#ln-446"></a><span class="nl">     </span> 
 <a id="ln-447" name="ln-447" href="#ln-447"></a><span class="nl">     </span> <span class="k">IMPLICIT </span><span class="kt">DOUBLE PRECISION</span><span class="p">(</span><span class="n">A</span><span class="o">-</span><span class="n">H</span><span class="p">,</span><span class="n">O</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="w">                              </span>
 <a id="ln-448" name="ln-448" href="#ln-448"></a><span class="nl">     </span> <span class="k">DIMENSION </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">                                               </span>
 <a id="ln-449" name="ln-449" href="#ln-449"></a><span class="nl">     </span> <span class="k">DIMENSION </span><span class="n">S</span><span class="p">(</span><span class="n">LIM</span><span class="o">*</span><span class="p">(</span><span class="n">LIM</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">TEMPS</span><span class="p">(</span><span class="n">LIM</span><span class="o">*</span><span class="p">(</span><span class="n">LIM</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w">                 </span>
@@ -756,12 +669,12 @@
 <a id="ln-497" name="ln-497" href="#ln-497"></a><span class="c">*-----------------------------------------------------------------------</span>
 <a id="ln-498" name="ln-498" href="#ln-498"></a><span class="nl">     </span> <span class="k">DO </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NUME</span><span class="w">                                                   </span>
 <a id="ln-499" name="ln-499" href="#ln-499"></a><span class="nl">     </span> <span class="w">   </span><span class="n">EIGVAL</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="mf">1.D30</span><span class="w">                                              </span>
-<a id="ln-500" name="ln-500" href="#ln-500"></a><span class="nl">     </span> <span class="w">   </span><span class="n">ICV</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
-<a id="ln-501" name="ln-501" href="#ln-501"></a><span class="nl">     </span> <span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-500" name="ln-500" href="#ln-500"></a><span class="nl">     </span> <span class="w">   </span><span class="n">ICV</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span>
+<a id="ln-501" name="ln-501" href="#ln-501"></a><span class="nl">     </span> <span class="k">ENDDO</span>
 <a id="ln-502" name="ln-502" href="#ln-502"></a><span class="nl">     </span> <span class="n">FIRST</span><span class="w"> </span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">                                                   </span>
 <a id="ln-503" name="ln-503" href="#ln-503"></a><span class="nl">     </span> <span class="n">KPASS</span><span class="w"> </span><span class="o">=</span><span class="n">NIV</span><span class="w">                                                      </span>
 <a id="ln-504" name="ln-504" href="#ln-504"></a><span class="nl">     </span> <span class="n">NNCV</span><span class="w">  </span><span class="o">=</span><span class="n">KPASS</span><span class="w">                                                    </span>
-<a id="ln-505" name="ln-505" href="#ln-505"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-505" name="ln-505" href="#ln-505"></a><span class="nl">     </span> 
 <a id="ln-506" name="ln-506" href="#ln-506"></a><span class="nl"> 10  </span> <span class="k">CONTINUE</span><span class="w">                                                        </span>
 <a id="ln-507" name="ln-507" href="#ln-507"></a><span class="c">*     (iterations for kpass=NUME,LIM)                                 </span>
 <a id="ln-508" name="ln-508" href="#ln-508"></a><span class="c">*     </span>
@@ -782,7 +695,7 @@
 <a id="ln-523" name="ln-523" href="#ln-523"></a><span class="nl">     </span> <span class="n">DONE</span><span class="o">=</span><span class="n">TSTSEL</span><span class="p">(</span><span class="n">KPASS</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">NEIG</span><span class="p">,</span><span class="n">ISELEC</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">EIGVAL</span><span class="p">,</span><span class="n">ICV</span><span class="p">,</span><span class="w">          </span>
 <a id="ln-524" name="ln-524" href="#ln-524"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">CRITE</span><span class="p">,</span><span class="n">CRITC</span><span class="p">,</span><span class="n">SCRA1</span><span class="p">,</span><span class="n">ISCRA2</span><span class="p">,</span><span class="n">OLDVAL</span><span class="p">,</span><span class="n">NNCV</span><span class="p">,</span><span class="n">INCV</span><span class="p">)</span><span class="w">            </span>
 <a id="ln-525" name="ln-525" href="#ln-525"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">((</span><span class="n">DONE</span><span class="p">).</span><span class="nb">OR</span><span class="p">.(</span><span class="n">KPASS</span><span class="p">.</span><span class="n">GE</span><span class="p">.</span><span class="n">N</span><span class="p">))</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">30</span><span class="w">                          </span>
-<a id="ln-526" name="ln-526" href="#ln-526"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-526" name="ln-526" href="#ln-526"></a><span class="nl">     </span> 
 <a id="ln-527" name="ln-527" href="#ln-527"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">KPASS</span><span class="p">.</span><span class="n">EQ</span><span class="p">.</span><span class="n">LIM</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                       </span>
 <a id="ln-528" name="ln-528" href="#ln-528"></a><span class="c">*     Maximum size for expanding basis. Collapse basis, D, and S, Svec      </span>
 <a id="ln-529" name="ln-529" href="#ln-529"></a><span class="c">*     Consider the basis vectors found in TSTSEL for the newvec.            </span>
@@ -798,7 +711,7 @@
 <a id="ln-539" name="ln-539" href="#ln-539"></a><span class="c">*     </span>
 <a id="ln-540" name="ln-540" href="#ln-540"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">NEWVEC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">MBLOCK</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">CRITR</span><span class="p">,</span><span class="n">ORTHO</span><span class="p">,</span><span class="n">NNCV</span><span class="p">,</span><span class="n">INCV</span><span class="p">,</span><span class="w">   </span>
 <a id="ln-541" name="ln-541" href="#ln-541"></a><span class="nl">     </span><span class="gs">:</span><span class="w">     </span><span class="n">DIAG</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">EIGVAL</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">ICV</span><span class="p">,</span><span class="n">RESTART</span><span class="p">,</span><span class="n">DONE</span><span class="p">)</span><span class="w">      </span>
-<a id="ln-542" name="ln-542" href="#ln-542"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-542" name="ln-542" href="#ln-542"></a><span class="nl">     </span> 
 <a id="ln-543" name="ln-543" href="#ln-543"></a><span class="c">*     ..An infinite loop is avoided since after a collapsing Svec=I</span>
 <a id="ln-544" name="ln-544" href="#ln-544"></a><span class="c">*     ..=&gt; Res=Di-lBi which is just computed and it is orthogonal. </span>
 <a id="ln-545" name="ln-545" href="#ln-545"></a><span class="c">*     ..The following is to prevent an improbable infinite loop.   </span>
@@ -815,17 +728,17 @@
 <a id="ln-556" name="ln-556" href="#ln-556"></a><span class="nl">     </span> <span class="w">   </span><span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">1024</span><span class="w">                                            </span>
 <a id="ln-557" name="ln-557" href="#ln-557"></a><span class="nl">     </span> <span class="w">   </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">30</span><span class="w">                                                   </span>
 <a id="ln-558" name="ln-558" href="#ln-558"></a><span class="nl">     </span> <span class="k">ENDIF</span><span class="w">                                                        </span>
-<a id="ln-559" name="ln-559" href="#ln-559"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-559" name="ln-559" href="#ln-559"></a><span class="nl">     </span> 
 <a id="ln-560" name="ln-560" href="#ln-560"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">DONE</span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">30</span><span class="w">                                            </span>
 <a id="ln-561" name="ln-561" href="#ln-561"></a><span class="c">*     </span>
 <a id="ln-562" name="ln-562" href="#ln-562"></a><span class="c">*     Add new columns in D and S, from the NNCV new vectors.                </span>
 <a id="ln-563" name="ln-563" href="#ln-563"></a><span class="c">*     </span>
 <a id="ln-564" name="ln-564" href="#ln-564"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">ADDABS</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">NNCV</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">S</span><span class="p">)</span><span class="w">            </span>
-<a id="ln-565" name="ln-565" href="#ln-565"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-565" name="ln-565" href="#ln-565"></a><span class="nl">     </span> 
 <a id="ln-566" name="ln-566" href="#ln-566"></a><span class="nl">     </span> <span class="n">NMV</span><span class="o">=</span><span class="n">NMV</span><span class="o">+</span><span class="n">NNCV</span><span class="w">                                                 </span>
 <a id="ln-567" name="ln-567" href="#ln-567"></a><span class="nl">     </span> <span class="n">KPASS</span><span class="o">=</span><span class="n">KPASS</span><span class="o">+</span><span class="n">NNCV</span><span class="w">                                             </span>
 <a id="ln-568" name="ln-568" href="#ln-568"></a><span class="nl">     </span> <span class="n">NLOOPS</span><span class="o">=</span><span class="n">NLOOPS</span><span class="o">+</span><span class="mi">1</span><span class="w">                                              </span>
-<a id="ln-569" name="ln-569" href="#ln-569"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-569" name="ln-569" href="#ln-569"></a><span class="nl">     </span> 
 <a id="ln-570" name="ln-570" href="#ln-570"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">NLOOPS</span><span class="p">.</span><span class="n">LE</span><span class="p">.</span><span class="n">MAXITER</span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">10</span><span class="w">                                  </span>
 <a id="ln-571" name="ln-571" href="#ln-571"></a><span class="nl">     </span> <span class="n">IERR</span><span class="o">=</span><span class="n">IERR</span><span class="o">+</span><span class="mi">2048</span><span class="w">                                                  </span>
 <a id="ln-572" name="ln-572" href="#ln-572"></a><span class="nl">     </span> <span class="n">NLOOPS</span><span class="o">=</span><span class="n">NLOOPS</span><span class="o">-</span><span class="mi">1</span><span class="w">                                                 </span>
@@ -836,9 +749,9 @@
 <a id="ln-577" name="ln-577" href="#ln-577"></a><span class="c">*     eigenvectors, OLDVAL the eigenvalue differences, and SCRA1 residuals. </span>
 <a id="ln-578" name="ln-578" href="#ln-578"></a><span class="c">*     </span>
 <a id="ln-579" name="ln-579" href="#ln-579"></a><span class="nl">     </span> <span class="k">DO </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NUME</span><span class="w">                                                  </span>
-<a id="ln-580" name="ln-580" href="#ln-580"></a><span class="nl">     </span> <span class="w">   </span><span class="n">OLDVAL</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="nb">ABS</span><span class="p">(</span><span class="n">OLDVAL</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">-</span><span class="n">EIGVAL</span><span class="p">(</span><span class="n">I</span><span class="p">))</span><span class="w"></span>
-<a id="ln-581" name="ln-581" href="#ln-581"></a><span class="nl">     </span> <span class="k">ENDDO</span><span class="w"></span>
-<a id="ln-582" name="ln-582" href="#ln-582"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-580" name="ln-580" href="#ln-580"></a><span class="nl">     </span> <span class="w">   </span><span class="n">OLDVAL</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="nb">ABS</span><span class="p">(</span><span class="n">OLDVAL</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">-</span><span class="n">EIGVAL</span><span class="p">(</span><span class="n">I</span><span class="p">))</span>
+<a id="ln-581" name="ln-581" href="#ln-581"></a><span class="nl">     </span> <span class="k">ENDDO</span>
+<a id="ln-582" name="ln-582" href="#ln-582"></a><span class="nl">     </span> 
 <a id="ln-583" name="ln-583" href="#ln-583"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">MULTBC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">SCRA1</span><span class="p">,</span><span class="n">BASIS</span><span class="p">)</span><span class="w">                      </span>
 <a id="ln-584" name="ln-584" href="#ln-584"></a><span class="nl">     </span> <span class="k">CALL </span><span class="n">MULTBC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">SCRA1</span><span class="p">,</span><span class="n">AB</span><span class="p">)</span><span class="w">                         </span>
 <a id="ln-585" name="ln-585" href="#ln-585"></a><span class="c">*     </span>
@@ -850,8 +763,8 @@
 <a id="ln-591" name="ln-591" href="#ln-591"></a><span class="nl">     </span> <span class="w">   </span><span class="k">CALL </span><span class="n">DAXPY</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="n">EIGVAL</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="n">BASIS</span><span class="p">((</span><span class="n">I</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">AB</span><span class="p">(</span><span class="n">NUME</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">   </span>
 <a id="ln-592" name="ln-592" href="#ln-592"></a><span class="nl">     </span> <span class="w">   </span><span class="n">SCRA1</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="n">DDOT</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">AB</span><span class="p">(</span><span class="n">NUME</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">AB</span><span class="p">(</span><span class="n">NUME</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">               </span>
 <a id="ln-593" name="ln-593" href="#ln-593"></a><span class="nl">     </span> <span class="w">   </span><span class="n">SCRA1</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">=</span><span class="nb">SQRT</span><span class="p">(</span><span class="n">SCRA1</span><span class="p">(</span><span class="n">I</span><span class="p">))</span><span class="w">                                      </span>
-<a id="ln-594" name="ln-594" href="#ln-594"></a><span class="nl">     </span> <span class="k">ENDDO</span><span class="w"></span>
-<a id="ln-595" name="ln-595" href="#ln-595"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-594" name="ln-594" href="#ln-594"></a><span class="nl">     </span> <span class="k">ENDDO</span>
+<a id="ln-595" name="ln-595" href="#ln-595"></a><span class="nl">     </span> 
 <a id="ln-596" name="ln-596" href="#ln-596"></a><span class="nl"> 60  </span> <span class="k">RETURN</span><span class="w">                                                          </span>
 <a id="ln-597" name="ln-597" href="#ln-597"></a><span class="nl">     </span> <span class="k">END</span><span class="w">                                                             </span>
 <a id="ln-598" name="ln-598" href="#ln-598"></a><span class="c">*=======================================================================</span>
@@ -1001,7 +914,7 @@
 <a id="ln-742" name="ln-742" href="#ln-742"></a><span class="nl">     </span> <span class="w">           </span><span class="n">ROWLAST</span><span class="p">(</span><span class="n">ICNT</span><span class="p">)</span><span class="o">=</span><span class="n">TMAX</span><span class="w">                                     </span>
 <a id="ln-743" name="ln-743" href="#ln-743"></a><span class="nl">     </span> <span class="w">        </span><span class="k">ENDIF</span><span class="w">                                                     </span>
 <a id="ln-744" name="ln-744" href="#ln-744"></a><span class="nl">     </span> <span class="w">     </span><span class="k">ENDIF</span><span class="w">                                                        </span>
-<a id="ln-745" name="ln-745" href="#ln-745"></a><span class="nl">     </span> <span class="w">  </span><span class="k">ENDDO</span><span class="w"></span>
+<a id="ln-745" name="ln-745" href="#ln-745"></a><span class="nl">     </span> <span class="w">  </span><span class="k">ENDDO</span>
 <a id="ln-746" name="ln-746" href="#ln-746"></a><span class="nl">     </span> <span class="w">  </span>
 <a id="ln-747" name="ln-747" href="#ln-747"></a><span class="nl">     </span> <span class="w">  </span><span class="n">NNCV</span><span class="o">=</span><span class="n">ICNT</span><span class="w">                                                       </span>
 <a id="ln-748" name="ln-748" href="#ln-748"></a><span class="nl">     </span> <span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">NNCV</span><span class="p">.</span><span class="n">EQ</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">DONE</span><span class="o">=</span><span class="p">.</span><span class="n">TRUE</span><span class="p">.</span><span class="w">                                      </span>
@@ -1089,7 +1002,7 @@
 <a id="ln-830" name="ln-830" href="#ln-830"></a><span class="nl">     </span> <span class="w">  </span><span class="k">RETURN</span><span class="w">                                                          </span>
 <a id="ln-831" name="ln-831" href="#ln-831"></a><span class="nl">     </span> <span class="w">  </span><span class="k">END</span><span class="w">                                                             </span>
 <a id="ln-832" name="ln-832" href="#ln-832"></a><span class="c">*=======================================================================</span>
-<a id="ln-833" name="ln-833" href="#ln-833"></a><span class="nl">     </span> <span class="w">  </span><span class="k">SUBROUTINE </span><span class="n">NEWVEC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">MBLOCK</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">CRITR</span><span class="p">,</span><span class="n">ORTHO</span><span class="p">,</span><span class="n">NNCV</span><span class="p">,</span><span class="n">INCV</span><span class="p">,</span><span class="w"></span>
+<a id="ln-833" name="ln-833" href="#ln-833"></a><span class="nl">     </span> <span class="w">  </span><span class="k">SUBROUTINE </span><span class="n">NEWVEC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">LIM</span><span class="p">,</span><span class="n">MBLOCK</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="n">CRITR</span><span class="p">,</span><span class="n">ORTHO</span><span class="p">,</span><span class="n">NNCV</span><span class="p">,</span><span class="n">INCV</span><span class="p">,</span>
 <a id="ln-834" name="ln-834" href="#ln-834"></a><span class="nl">     </span><span class="gs">:</span><span class="w">                    </span><span class="n">DIAG</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">EIGVAL</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">ICV</span><span class="p">,</span><span class="n">RESTART</span><span class="p">,</span><span class="n">DONE</span><span class="p">)</span><span class="w">   </span>
 <a id="ln-835" name="ln-835" href="#ln-835"></a><span class="c">*=======================================================================</span>
 <a id="ln-836" name="ln-836" href="#ln-836"></a><span class="c">*                                                                       </span>
@@ -1159,7 +1072,7 @@
 <a id="ln-900" name="ln-900" href="#ln-900"></a><span class="c">*          ..Compute  Newv=BASIS*Svec_indx , then                       </span>
 <a id="ln-901" name="ln-901" href="#ln-901"></a><span class="c">*          ..Compute  Newv=AB*Svec_indx - eigval*Newv and then          </span>
 <a id="ln-902" name="ln-902" href="#ln-902"></a><span class="c">*          ..compute the norm of the residual of Newv                   </span>
-<a id="ln-903" name="ln-903" href="#ln-903"></a><span class="nl">     </span> <span class="w">     </span><span class="k">CALL </span><span class="n">DGEMV</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="mf">1.D0</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">SVEC</span><span class="p">((</span><span class="n">INDX</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">KPASS</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<a id="ln-903" name="ln-903" href="#ln-903"></a><span class="nl">     </span> <span class="w">     </span><span class="k">CALL </span><span class="n">DGEMV</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="mf">1.D0</span><span class="p">,</span><span class="n">BASIS</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">SVEC</span><span class="p">((</span><span class="n">INDX</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">KPASS</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span>
 <a id="ln-904" name="ln-904" href="#ln-904"></a><span class="nl">     </span><span class="gs">:</span><span class="w">                 </span><span class="mf">0.d0</span><span class="p">,</span><span class="n">BASIS</span><span class="p">(</span><span class="n">ICUR</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">                              </span>
 <a id="ln-905" name="ln-905" href="#ln-905"></a><span class="nl">     </span> <span class="w">     </span><span class="k">CALL </span><span class="n">DGEMV</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="p">,</span><span class="mf">1.D0</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">SVEC</span><span class="p">((</span><span class="n">INDX</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">KPASS</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="w">   </span>
 <a id="ln-906" name="ln-906" href="#ln-906"></a><span class="nl">     </span><span class="gs">:</span><span class="w">                 </span><span class="o">-</span><span class="n">EIGVAL</span><span class="p">(</span><span class="n">INDX</span><span class="p">),</span><span class="n">BASIS</span><span class="p">(</span><span class="n">ICUR</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="w">                     </span>
@@ -1299,8 +1212,8 @@
 <a id="ln-1040" name="ln-1040" href="#ln-1040"></a><span class="nl">     </span> <span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">IV</span><span class="p">.</span><span class="n">LE</span><span class="p">.</span><span class="n">NNCV</span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">30</span><span class="w">                                         </span>
 <a id="ln-1041" name="ln-1041" href="#ln-1041"></a><span class="nl">     </span> <span class="w">                                                                  </span>
 <a id="ln-1042" name="ln-1042" href="#ln-1042"></a><span class="nl">     </span> <span class="w">  </span><span class="k">RETURN</span><span class="w">                                                          </span>
-<a id="ln-1043" name="ln-1043" href="#ln-1043"></a><span class="nl">     </span> <span class="w">  </span><span class="k">END</span><span class="w"></span>
-<a id="ln-1044" name="ln-1044" href="#ln-1044"></a><span class="nl">     </span> <span class="w"></span>
+<a id="ln-1043" name="ln-1043" href="#ln-1043"></a><span class="nl">     </span> <span class="w">  </span><span class="k">END</span>
+<a id="ln-1044" name="ln-1044" href="#ln-1044"></a><span class="nl">     </span> 
 <a id="ln-1045" name="ln-1045" href="#ln-1045"></a><span class="c">c$$$        PROGRAM DRIVER_DAV                                              </span>
 <a id="ln-1046" name="ln-1046" href="#ln-1046"></a><span class="c">c$$$************************************************************************</span>
 <a id="ln-1047" name="ln-1047" href="#ln-1047"></a><span class="c">c$$$* This driver program is to demonstrate several ways on how the routine </span>
@@ -1667,7 +1580,7 @@
 <a id="ln-1408" name="ln-1408" href="#ln-1408"></a><span class="nl">     </span> <span class="w">                                                                  </span>
 </pre></div>
 
-    </section>
+      </section>
     </div>
   </div>
 
@@ -1675,12 +1588,12 @@
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -1690,17 +1603,12 @@
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

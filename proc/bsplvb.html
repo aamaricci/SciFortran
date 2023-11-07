@@ -10,81 +10,55 @@
 
     <title>bsplvb &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.1% of total for procedures.">48 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for procedures.">48 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
-          <li class="active">bsplvb</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">bsplvb</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,12 +124,7 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/bsplvb.html#src">bsplvb</a>
-      </div>
-    </div>
+  
 
 
   </div>
@@ -166,37 +139,37 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! BSPLVB evaluates B-splines at a point X with a given knot sequence.</p>
 <p>Discusion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">BSPLVB</span> <span class="nv">evaluates</span> <span class="nv">all</span> <span class="nv">possibly</span> <span class="nv">nonzero</span> <span class="nv">B</span><span class="o">-</span><span class="nv">splines</span> <span class="nv">at</span> <span class="nv">X</span> <span class="nv">of</span> <span class="nv">order</span>
+<div class="codehilite"><pre><span></span><code>BSPLVB evaluates all possibly nonzero B-splines at X of order
 
-  <span class="nv">JOUT</span> <span class="o">=</span> <span class="nv">MAX</span> <span class="ss">(</span> <span class="nv">JHIGH</span>, <span class="ss">(</span><span class="nv">J</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="o">*</span><span class="ss">(</span><span class="nv">INDEX</span><span class="o">-</span><span class="mi">1</span><span class="ss">)</span> <span class="ss">)</span>
+  JOUT = MAX ( JHIGH, (J+1)*(INDEX-1) )
 
-<span class="nv">with</span> <span class="nv">knot</span> <span class="nv">sequence</span> <span class="nv">T</span>.
+with knot sequence T.
 
-<span class="nv">The</span> <span class="nv">recurrence</span> <span class="nv">relation</span>
+The recurrence relation
 
-                 <span class="nv">X</span> <span class="o">-</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span>               <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="nv">J</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span> <span class="o">-</span> <span class="nv">X</span>
-<span class="nv">B</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="o">+</span><span class="mi">1</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="o">-----------</span> <span class="o">*</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">+</span> <span class="o">---------------</span> <span class="o">*</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="mi">1</span>,<span class="nv">J</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span>
-              <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="nv">J</span><span class="ss">)</span><span class="o">-</span><span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span>               <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="nv">J</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="o">-</span><span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>
+                 X - T(I)               T(I+J+1) - X
+B(I,J+1)(X) = ----------- <span class="gs">* B(I,J)(X) + --------------- *</span> B(I+1,J)(X)
+              T(I+J)-T(I)               T(I+J+1)-T(I+1)
 
-<span class="nv">is</span> <span class="nv">used</span> <span class="nv">to</span> <span class="nv">generate</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">-</span><span class="nv">J</span>:<span class="nv">LEFT</span>,<span class="nv">J</span><span class="o">+</span><span class="mi">1</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span> <span class="nv">from</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">-</span><span class="nv">J</span><span class="o">+</span><span class="mi">1</span>:<span class="nv">LEFT</span>,<span class="nv">J</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span>
-<span class="nv">storing</span> <span class="nv">the</span> <span class="nv">new</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">BIATX</span> <span class="nv">over</span> <span class="nv">the</span> <span class="nv">old</span>.
+is used to generate B(LEFT-J:LEFT,J+1)(X) from B(LEFT-J+1:LEFT,J)(X)
+storing the new values in BIATX over the old.
 
-<span class="nv">The</span> <span class="nv">facts</span> <span class="nv">that</span>
+The facts that
 
-  <span class="nv">B</span><span class="ss">(</span><span class="nv">I</span>,<span class="mi">1</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">1</span>  <span class="k">if</span>  <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="o">&lt;=</span> <span class="nv">X</span> <span class="o">&lt;</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>
+  B(I,1)(X) = 1  if  T(I) &lt;= X &lt; T(I+1)
 
-<span class="nv">and</span> <span class="nv">that</span>
+and that
 
-  <span class="nv">B</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="ss">)(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">0</span>  <span class="nv">unless</span>  <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="o">&lt;=</span> <span class="nv">X</span> <span class="o">&lt;</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="nv">J</span><span class="ss">)</span>
+  B(I,J)(X) = 0  unless  T(I) &lt;= X &lt; T(I+J)
 
-<span class="nv">are</span> <span class="nv">used</span>.
+are used.
 
-<span class="nv">The</span> <span class="nv">particular</span> <span class="nv">organization</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">calculations</span> <span class="nv">follows</span> 
-<span class="nv">algorithm</span> <span class="mi">8</span> <span class="nv">in</span> <span class="nv">chapter</span> <span class="nv">X</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">text</span>.
+The particular organization of the calculations follows 
+algorithm 8 in chapter X of the text.
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -212,40 +185,40 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">+</span><span class="nv">JOUT</span><span class="ss">)</span>, <span class="nv">the</span> <span class="nv">knot</span> <span class="nv">sequence</span>.  <span class="nv">T</span> <span class="nv">is</span> <span class="nv">assumed</span> <span class="nv">to</span> 
-<span class="nv">be</span> <span class="nv">nondecreasing</span>, <span class="nv">and</span> <span class="nv">also</span>, <span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="ss">)</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">strictly</span> <span class="nv">less</span> <span class="nv">than</span> 
-<span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>.
+<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) T(LEFT+JOUT), the knot sequence.  T is assumed to 
+be nondecreasing, and also, T(LEFT) must be strictly less than 
+T(LEFT+1).
 
-<span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">JHIGH</span>, <span class="nv">INDEX</span>, <span class="nv">determine</span> <span class="nv">the</span> <span class="nv">order</span> 
-<span class="nv">JOUT</span> <span class="o">=</span> <span class="nv">max</span> <span class="ss">(</span> <span class="nv">JHIGH</span>, <span class="ss">(</span><span class="nv">J</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="o">*</span><span class="ss">(</span><span class="nv">INDEX</span><span class="o">-</span><span class="mi">1</span><span class="ss">)</span> <span class="ss">)</span>  
-<span class="nv">of</span> <span class="nv">the</span> <span class="nv">B</span><span class="o">-</span><span class="nv">splines</span> <span class="nv">whose</span> <span class="nv">values</span> <span class="nv">at</span> <span class="nv">X</span> <span class="nv">are</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">returned</span>.  
-<span class="nv">INDEX</span> <span class="nv">is</span> <span class="nv">used</span> <span class="nv">to</span> <span class="nv">avoid</span> <span class="nv">recalculations</span> <span class="nv">when</span> <span class="nv">several</span> 
-<span class="nv">columns</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">triangular</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">B</span><span class="o">-</span><span class="nv">spline</span> <span class="nv">values</span> <span class="nv">are</span>
-<span class="nv">needed</span>, <span class="k">for</span> <span class="nv">example</span>, <span class="nv">in</span> <span class="nv">BVALUE</span> <span class="nv">or</span> <span class="nv">in</span> <span class="nv">BSPLVD</span>.
-<span class="k">If</span> <span class="nv">INDEX</span> <span class="o">=</span> <span class="mi">1</span>, <span class="nv">the</span> <span class="nv">calculation</span> <span class="nv">starts</span> <span class="nv">from</span> <span class="nv">scratch</span> <span class="nv">and</span> <span class="nv">the</span> <span class="nv">entire</span> 
-<span class="nv">triangular</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">B</span><span class="o">-</span><span class="nv">spline</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">orders</span>
-<span class="mi">1</span>, <span class="mi">2</span>, ...,<span class="nv">JHIGH</span> <span class="nv">is</span> <span class="nv">generated</span> <span class="nv">order</span> <span class="nv">by</span> <span class="nv">order</span>, <span class="nv">that</span> <span class="nv">is</span>, 
-<span class="nv">column</span> <span class="nv">by</span> <span class="nv">column</span>.
-<span class="k">If</span> <span class="nv">INDEX</span> <span class="o">=</span> <span class="mi">2</span>, <span class="nv">only</span> <span class="nv">the</span> <span class="nv">B</span><span class="o">-</span><span class="nv">spline</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">J</span><span class="o">+</span><span class="mi">1</span>, <span class="nv">J</span><span class="o">+</span><span class="mi">2</span>, ..., <span class="nv">JOUT</span>  
-<span class="nv">are</span> <span class="nv">generated</span>, <span class="nv">the</span> <span class="nv">assumption</span> <span class="nv">being</span> <span class="nv">that</span> <span class="nv">BIATX</span>, <span class="nv">J</span>, 
-<span class="nv">DELTAL</span>, <span class="nv">DELTAR</span> <span class="nv">are</span>, <span class="nv">on</span> <span class="nv">entry</span>, <span class="nv">as</span> <span class="nv">they</span> <span class="nv">were</span> <span class="nv">on</span> <span class="k">exit</span> 
-<span class="nv">at</span> <span class="nv">the</span> <span class="nv">previous</span> <span class="nv">call</span>.  <span class="nv">In</span> <span class="nv">particular</span>, <span class="k">if</span> <span class="nv">JHIGH</span> <span class="o">=</span> <span class="mi">0</span>, 
-<span class="k">then</span> <span class="nv">JOUT</span> <span class="o">=</span> <span class="nv">J</span><span class="o">+</span><span class="mi">1</span>, <span class="nv">that</span> <span class="nv">is</span>, <span class="nv">just</span> <span class="nv">the</span> <span class="k">next</span> <span class="nv">column</span> <span class="nv">of</span> <span class="nv">B</span><span class="o">-</span><span class="nv">spline</span> 
-<span class="nv">values</span> <span class="nv">is</span> <span class="nv">generated</span>.
-<span class="nv">Warning</span>: <span class="nv">the</span> <span class="nv">restriction</span>  <span class="nv">JOUT</span> <span class="o">&lt;=</span> <span class="nv">JMAX</span> <span class="ss">(</span><span class="o">=</span> <span class="mi">20</span><span class="ss">)</span> <span class="nv">is</span>
-<span class="nv">imposed</span> <span class="nv">arbitrarily</span> <span class="nv">by</span> <span class="nv">the</span> <span class="nv">dimension</span> <span class="nv">statement</span> <span class="k">for</span> <span class="nv">DELTAL</span>
-<span class="nv">and</span> <span class="nv">DELTAR</span>, <span class="nv">but</span> <span class="nv">is</span> <span class="nv">nowhere</span> <span class="nv">checked</span> <span class="k">for</span>.
+Input, integer ( kind = 4 ) JHIGH, INDEX, determine the order 
+JOUT = max ( JHIGH, (J+1)*(INDEX-1) )  
+of the B-splines whose values at X are to be returned.  
+INDEX is used to avoid recalculations when several 
+columns of the triangular array of B-spline values are
+needed, for example, in BVALUE or in BSPLVD.
+If INDEX = 1, the calculation starts from scratch and the entire 
+triangular array of B-spline values of orders
+1, 2, ...,JHIGH is generated order by order, that is, 
+column by column.
+If INDEX = 2, only the B-spline values of order J+1, J+2, ..., JOUT  
+are generated, the assumption being that BIATX, J, 
+DELTAL, DELTAR are, on entry, as they were on exit 
+at the previous call.  In particular, if JHIGH = 0, 
+then JOUT = J+1, that is, just the next column of B-spline 
+values is generated.
+Warning: the restriction  JOUT &lt;= JMAX (= 20) is
+imposed arbitrarily by the dimension statement for DELTAL
+and DELTAR, but is nowhere checked for.
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">X</span>, <span class="nv">the</span> <span class="nv">point</span> <span class="nv">at</span> <span class="nv">which</span> <span class="nv">the</span> <span class="nv">B</span><span class="o">-</span><span class="nv">splines</span> 
-<span class="nv">are</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">evaluated</span>.
+Input, real ( kind = 8 ) X, the point at which the B-splines 
+are to be evaluated.
 
-<span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">LEFT</span>, <span class="nv">an</span> <span class="nv">integer</span> <span class="nv">chosen</span> <span class="nv">so</span> <span class="nv">that</span> 
-<span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="ss">)</span> <span class="o">&lt;=</span> <span class="nv">X</span> <span class="o">&lt;=</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>.
+Input, integer ( kind = 4 ) LEFT, an integer chosen so that 
+T(LEFT) &lt;= X &lt;= T(LEFT+1).
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">BIATX</span><span class="ss">(</span><span class="nv">JOUT</span><span class="ss">)</span>, <span class="nv">with</span> <span class="nv">BIATX</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="nv">containing</span> <span class="nv">the</span>
-<span class="nv">value</span> <span class="nv">at</span> <span class="nv">X</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">polynomial</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">JOUT</span> <span class="nv">which</span> <span class="nv">agrees</span> 
-<span class="nv">with</span> <span class="nv">the</span> <span class="nv">B</span><span class="o">-</span><span class="nv">spline</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">-</span><span class="nv">JOUT</span><span class="o">+</span><span class="nv">I</span>,<span class="nv">JOUT</span>,<span class="nv">T</span><span class="ss">)</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">interval</span> 
-<span class="ss">(</span><span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="ss">)</span>,<span class="nv">T</span><span class="ss">(</span><span class="nv">LEFT</span><span class="o">+</span><span class="mi">1</span><span class="ss">))</span>.
+Output, real ( kind = 8 ) BIATX(JOUT), with BIATX(I) containing the
+value at X of the polynomial of order JOUT which agrees 
+with the B-spline B(LEFT-JOUT+I,JOUT,T) on the interval 
+(T(LEFT),T(LEFT+1)).
 </code></pre></div>
 
 
@@ -253,11 +226,11 @@ LC: QA1.A647.v27.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -292,7 +265,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~4"></span>
+              <span class="anchor" id="variable-index"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -307,7 +280,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~26"></span>
+              <span class="anchor" id="variable-x~50"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -355,38 +328,6 @@ LC: QA1.A647.v27.
 
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/bsplvb.html#src">bsplvb</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
@@ -395,161 +336,8 @@ LC: QA1.A647.v27.
     
 
 
+
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">bsplvb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">jhigh</span><span class="p">,</span><span class="w"> </span><span class="nb">index</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">biatx</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! BSPLVB evaluates B-splines at a point X with a given knot sequence.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discusion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    BSPLVB evaluates all possibly nonzero B-splines at X of order</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      JOUT = MAX ( JHIGH, (J+1)*(INDEX-1) ) </span>
-<span class="w">  </span><span class="c">!  </span>
-<span class="w">  </span><span class="c">!    with knot sequence T.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    The recurrence relation</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!                     X - T(I)               T(I+J+1) - X</span>
-<span class="w">  </span><span class="c">!    B(I,J+1)(X) = ----------- * B(I,J)(X) + --------------- * B(I+1,J)(X)</span>
-<span class="w">  </span><span class="c">!                  T(I+J)-T(I)               T(I+J+1)-T(I+1)</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    is used to generate B(LEFT-J:LEFT,J+1)(X) from B(LEFT-J+1:LEFT,J)(X)</span>
-<span class="w">  </span><span class="c">!    storing the new values in BIATX over the old. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The facts that </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      B(I,1)(X) = 1  if  T(I) &lt;= X &lt; T(I+1)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    and that </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      B(I,J)(X) = 0  unless  T(I) &lt;= X &lt; T(I+J)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    are used. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The particular organization of the calculations follows </span>
-<span class="w">  </span><span class="c">!    algorithm 8 in chapter X of the text.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T(LEFT+JOUT), the knot sequence.  T is assumed to </span>
-<span class="w">  </span><span class="c">!    be nondecreasing, and also, T(LEFT) must be strictly less than </span>
-<span class="w">  </span><span class="c">!    T(LEFT+1).</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) JHIGH, INDEX, determine the order </span>
-<span class="w">  </span><span class="c">!    JOUT = max ( JHIGH, (J+1)*(INDEX-1) )  </span>
-<span class="w">  </span><span class="c">!    of the B-splines whose values at X are to be returned.  </span>
-<span class="w">  </span><span class="c">!    INDEX is used to avoid recalculations when several </span>
-<span class="w">  </span><span class="c">!    columns of the triangular array of B-spline values are</span>
-<span class="w">  </span><span class="c">!    needed, for example, in BVALUE or in BSPLVD.</span>
-<span class="w">  </span><span class="c">!    If INDEX = 1, the calculation starts from scratch and the entire </span>
-<span class="w">  </span><span class="c">!    triangular array of B-spline values of orders</span>
-<span class="w">  </span><span class="c">!    1, 2, ...,JHIGH is generated order by order, that is, </span>
-<span class="w">  </span><span class="c">!    column by column.</span>
-<span class="w">  </span><span class="c">!    If INDEX = 2, only the B-spline values of order J+1, J+2, ..., JOUT  </span>
-<span class="w">  </span><span class="c">!    are generated, the assumption being that BIATX, J, </span>
-<span class="w">  </span><span class="c">!    DELTAL, DELTAR are, on entry, as they were on exit </span>
-<span class="w">  </span><span class="c">!    at the previous call.  In particular, if JHIGH = 0, </span>
-<span class="w">  </span><span class="c">!    then JOUT = J+1, that is, just the next column of B-spline </span>
-<span class="w">  </span><span class="c">!    values is generated.</span>
-<span class="w">  </span><span class="c">!    Warning: the restriction  JOUT &lt;= JMAX (= 20) is</span>
-<span class="w">  </span><span class="c">!    imposed arbitrarily by the dimension statement for DELTAL</span>
-<span class="w">  </span><span class="c">!    and DELTAR, but is nowhere checked for.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the point at which the B-splines </span>
-<span class="w">  </span><span class="c">!    are to be evaluated.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) LEFT, an integer chosen so that </span>
-<span class="w">  </span><span class="c">!    T(LEFT) &lt;= X &lt;= T(LEFT+1).</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) BIATX(JOUT), with BIATX(I) containing the</span>
-<span class="w">  </span><span class="c">!    value at X of the polynomial of order JOUT which agrees </span>
-<span class="w">  </span><span class="c">!    with the B-spline B(LEFT-JOUT+I,JOUT,T) on the interval </span>
-<span class="w">  </span><span class="c">!    (T(LEFT),T(LEFT+1)).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">jmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
-
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jhigh</span><span class="w"></span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">biatx</span><span class="p">(</span><span class="n">jhigh</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">save</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">jmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">deltal</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">save</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">jmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">deltar</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">index</span>
-<span class="nb">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">save</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">left</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">saved</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">jhigh</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">term</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then </span>
-<span class="k">     </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">     </span><span class="n">biatx</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">jhigh</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        return</span>
-<span class="k">     end if</span>
-<span class="k">  end if</span>
-
-<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;BSPLVB - Fatal error!&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  It is required that T(LEFT) &lt; T(LEFT+1).&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i8)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  But LEFT = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  T(LEFT) =   &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  T(LEFT+1) = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">stop</span>
-<span class="k">  end if</span>
-
-<span class="k">  do</span>
-
-<span class="k">     </span><span class="n">deltar</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
-<span class="w">     </span><span class="n">deltal</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">     </span><span class="n">saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
-<span class="w">        </span><span class="n">term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">biatx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">deltar</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">deltal</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">biatx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">deltar</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">term</span><span class="w"></span>
-<span class="w">        </span><span class="n">saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deltal</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">term</span><span class="w"></span>
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">     </span><span class="n">biatx</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">saved</span><span class="w"></span>
-<span class="w">     </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">jhigh</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        exit</span>
-<span class="k">     end if</span>
-
-<span class="k">  end do</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">bsplvb</span><span class="w"></span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
@@ -558,12 +346,12 @@ LC: QA1.A647.v27.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -573,17 +361,12 @@ LC: QA1.A647.v27.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

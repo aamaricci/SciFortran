@@ -10,81 +10,55 @@
 
     <title>splopt &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.3% of total for procedures.">159 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.3% of total for procedures.">159 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
-          <li class="active">splopt</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">splopt</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,12 +124,7 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/splopt.html#src">splopt</a>
-      </div>
-    </div>
+  
 
 
   </div>
@@ -166,52 +139,52 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! SPLOPT computes the knots for an optimal recovery scheme. </p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">The</span> <span class="nv">optimal</span> <span class="nv">recovery</span> <span class="nv">scheme</span> <span class="nv">is</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">K</span> <span class="k">for</span> <span class="nv">data</span> <span class="nv">at</span> <span class="nv">TAU</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">N</span><span class="ss">)</span>.
+<div class="codehilite"><pre><span></span><code>The optimal recovery scheme is of order K for data at TAU(1:N).
 
-<span class="nv">The</span> <span class="nv">interior</span> <span class="nv">knots</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">K</span><span class="o">+</span><span class="mi">1</span>:<span class="nv">N</span><span class="ss">)</span> <span class="nv">are</span> <span class="nv">determined</span> <span class="nv">by</span> <span class="nv">Newton</span><span class="s1">&#39;</span><span class="s">s method in </span>
-<span class="nv">such</span> <span class="nv">a</span> <span class="nv">way</span> <span class="nv">that</span> <span class="nv">the</span> <span class="nv">signum</span> <span class="nv">function</span> <span class="nv">which</span> <span class="nv">changes</span> <span class="nv">sign</span> <span class="nv">at</span>
-  <span class="nv">T</span><span class="ss">(</span><span class="nv">K</span><span class="o">+</span><span class="mi">1</span>:<span class="nv">N</span><span class="ss">)</span>  <span class="nv">and</span> <span class="nv">nowhere</span> <span class="k">else</span> <span class="nv">in</span> <span class="ss">(</span> <span class="nv">TAU</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>, <span class="nv">TAU</span><span class="ss">(</span><span class="nv">N</span><span class="ss">)</span> <span class="ss">)</span> <span class="nv">is</span> 
-<span class="nv">orthogonal</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">spline</span> <span class="nv">space</span> <span class="nv">SPLINE</span> <span class="ss">(</span> <span class="nv">K</span>, <span class="nv">TAU</span> <span class="ss">)</span> <span class="nv">on</span> <span class="nv">that</span> <span class="nv">interval</span>.
+The interior knots T(K+1:N) are determined by Newton&#39;s method in 
+such a way that the signum function which changes sign at
+  T(K+1:N)  and nowhere else in ( TAU(1), TAU(N) ) is 
+orthogonal to the spline space SPLINE ( K, TAU ) on that interval.
 
-<span class="nv">Let</span> <span class="nv">XI</span><span class="ss">(</span><span class="nv">J</span><span class="ss">)</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">current</span> <span class="nv">guess</span> <span class="k">for</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">K</span><span class="o">+</span><span class="nv">J</span><span class="ss">)</span>, <span class="nv">J</span><span class="o">=</span><span class="mi">1</span>,...,<span class="nv">N</span><span class="o">-</span><span class="nv">K</span>.  <span class="k">Then</span>
-<span class="nv">the</span> <span class="k">next</span> <span class="nv">Newton</span> <span class="nv">iterate</span> <span class="nv">is</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">form</span>
+Let XI(J) be the current guess for T(K+J), J=1,...,N-K.  Then
+the next Newton iterate is of the form
 
-  <span class="nv">XI</span><span class="ss">(</span><span class="nv">J</span><span class="ss">)</span> <span class="o">+</span> <span class="ss">(</span><span class="o">-</span><span class="ss">)</span><span class="o">**</span><span class="ss">(</span><span class="nv">N</span><span class="o">-</span><span class="nv">K</span><span class="o">-</span><span class="nv">J</span><span class="ss">)</span><span class="o">*</span><span class="nv">X</span><span class="ss">(</span><span class="nv">J</span><span class="ss">)</span>,  <span class="nv">J</span><span class="o">=</span><span class="mi">1</span>,...,<span class="nv">N</span><span class="o">-</span><span class="nv">K</span>,
+  XI(J) + (-)**(N-K-J)*X(J),  J=1,...,N-K,
 
-<span class="nv">with</span> <span class="nv">X</span> <span class="nv">the</span> <span class="nv">solution</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">linear</span> <span class="nv">system</span>
+with X the solution of the linear system
 
-  <span class="nv">C</span> <span class="o">*</span> <span class="nv">X</span> <span class="o">=</span> <span class="nv">D</span>.
+  C <span class="gs">* X = D.</span>
 
-<span class="nv">Here</span>, <span class="k">for</span> <span class="nv">all</span> <span class="nv">J</span>,
+<span class="gs">Here, for all J,</span>
 
-  <span class="nv">C</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)(</span><span class="nv">XI</span><span class="ss">(</span><span class="nv">J</span><span class="ss">))</span>,
+<span class="gs">  C(I,J) = B(I)(XI(J)),</span>
 
-<span class="nv">with</span> <span class="nv">B</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="nv">the</span> <span class="nv">I</span><span class="o">-</span><span class="nv">th</span> <span class="nv">B</span><span class="o">-</span><span class="nv">spline</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">K</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">knot</span> <span class="nv">sequence</span> <span class="nv">TAU</span>, 
-<span class="k">for</span> <span class="nv">all</span> <span class="nv">I</span>, <span class="nv">and</span> <span class="nv">D</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">given</span>, <span class="k">for</span> <span class="nv">each</span> <span class="nv">I</span>, <span class="nv">by</span>
+<span class="gs">with B(I) the I-th B-spline of order K for the knot sequence TAU, </span>
+<span class="gs">for all I, and D is the vector given, for each I, by</span>
 
-  <span class="nv">D</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">sum</span> <span class="ss">(</span> <span class="o">-</span><span class="nv">A</span><span class="ss">(</span><span class="nv">J</span><span class="ss">)</span>, <span class="nv">J</span><span class="o">=</span><span class="nv">I</span>,...,<span class="nv">N</span> <span class="ss">)</span> <span class="o">*</span> <span class="ss">(</span> <span class="nv">TAU</span><span class="ss">(</span><span class="nv">I</span><span class="o">+</span><span class="nv">K</span><span class="ss">)</span> <span class="o">-</span> <span class="nv">TAU</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="ss">)</span> <span class="o">/</span> <span class="nv">K</span>,
+<span class="gs">  D(I) = sum ( -A(J), J=I,...,N ) *</span> ( TAU(I+K) - TAU(I) ) / K,
 
-<span class="nv">with</span>, <span class="k">for</span> <span class="nv">I</span> <span class="o">=</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">N</span><span class="o">-</span><span class="mi">1</span>:
+with, for I = 1 to N-1:
 
-  <span class="nv">A</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">sum</span> <span class="ss">(</span> <span class="ss">(</span><span class="o">-</span><span class="ss">)</span><span class="o">**</span><span class="ss">(</span><span class="nv">N</span><span class="o">-</span><span class="nv">K</span><span class="o">-</span><span class="nv">J</span><span class="ss">)</span><span class="o">*</span><span class="nv">B</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">K</span><span class="o">+</span><span class="mi">1</span>,<span class="nv">TAU</span><span class="ss">)(</span><span class="nv">XI</span><span class="ss">(</span><span class="nv">J</span><span class="ss">))</span>, <span class="nv">J</span><span class="o">=</span><span class="mi">1</span>,...,<span class="nv">N</span><span class="o">-</span><span class="nv">K</span> <span class="ss">)</span>
+  A(I) = sum ( (-)**(N-K-J)*B(I,K+1,TAU)(XI(J)), J=1,...,N-K )
 
-<span class="nv">and</span>
+and
 
-  <span class="nv">A</span><span class="ss">(</span><span class="nv">N</span><span class="ss">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">0</span>.<span class="mi">5</span>.
+  A(N) = -0.5.
 
-<span class="nv">See</span> <span class="nv">Chapter</span> <span class="nv">XIII</span> <span class="nv">of</span> <span class="nv">text</span> <span class="nv">and</span> <span class="nv">references</span> <span class="nv">there</span> <span class="k">for</span> <span class="nv">a</span> <span class="nv">derivation</span>.
+See Chapter XIII of text and references there for a derivation.
 
-<span class="nv">The</span> <span class="nv">first</span> <span class="nv">guess</span> <span class="k">for</span> <span class="nv">T</span><span class="ss">(</span><span class="nv">K</span><span class="o">+</span><span class="nv">J</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">sum</span> <span class="ss">(</span> <span class="nv">TAU</span><span class="ss">(</span><span class="nv">J</span><span class="o">+</span><span class="mi">1</span>:<span class="nv">J</span><span class="o">+</span><span class="nv">K</span><span class="o">-</span><span class="mi">1</span><span class="ss">)</span> <span class="ss">)</span> <span class="o">/</span> <span class="ss">(</span> <span class="nv">K</span> <span class="o">-</span> <span class="mi">1</span> <span class="ss">)</span>.
+The first guess for T(K+J) is sum ( TAU(J+1:J+K-1) ) / ( K - 1 ).
 
-<span class="nv">The</span> <span class="nv">iteration</span> <span class="nv">terminates</span> <span class="k">if</span> <span class="nv">max</span> <span class="ss">(</span> <span class="nv">abs</span> <span class="ss">(</span> <span class="nv">X</span><span class="ss">(</span><span class="nv">J</span><span class="ss">)</span> <span class="ss">)</span> <span class="ss">)</span> <span class="o">&lt;</span> <span class="nv">TOL</span>, <span class="nv">with</span>
+The iteration terminates if max ( abs ( X(J) ) ) &lt; TOL, with
 
-  <span class="nv">TOL</span> <span class="o">=</span> <span class="nv">TOLRTE</span> <span class="o">*</span> <span class="ss">(</span> <span class="nv">TAU</span><span class="ss">(</span><span class="nv">N</span><span class="ss">)</span> <span class="o">-</span> <span class="nv">TAU</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span> <span class="ss">)</span> <span class="o">/</span> <span class="ss">(</span> <span class="nv">N</span> <span class="o">-</span> <span class="nv">K</span> <span class="ss">)</span>,
+  TOL = TOLRTE * ( TAU(N) - TAU(1) ) / ( N - K ),
 
-<span class="nv">or</span> <span class="k">else</span> <span class="nv">after</span> <span class="nv">NEWTMX</span> <span class="nv">iterations</span>.
+or else after NEWTMX iterations.
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -227,25 +200,25 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">interpolation</span><span class="w"> </span><span class="n">points</span><span class="o">.</span><span class="w"></span>
-<span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">nondecreasing</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">I</span><span class="o">.</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">interpolation</span><span class="w"> </span><span class="n">points</span><span class="o">.</span>
+<span class="n">assumed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">nondecreasing</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">I</span><span class="o">.</span>
 
-<span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">points</span><span class="o">.</span><span class="w"></span>
+<span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">points</span><span class="o">.</span>
 
 <span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">recovery</span><span class="w"> </span><span class="n">scheme</span><span class="w"> </span>
-<span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span><span class="o">.</span><span class="w"></span>
+<span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span><span class="o">.</span>
 
-<span class="n">Workspace</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">SCRTCH</span><span class="p">((</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">K</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">various</span><span class="w"></span>
-<span class="n">contents</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="n">below</span><span class="o">.</span><span class="w"></span>
+<span class="n">Workspace</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">SCRTCH</span><span class="p">((</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">K</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">various</span>
+<span class="n">contents</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="n">below</span><span class="o">.</span>
 
-<span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">knots</span><span class="w"> </span><span class="n">ready</span><span class="w"> </span><span class="k">for</span><span class="w"></span>
+<span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">knots</span><span class="w"> </span><span class="n">ready</span><span class="w"> </span><span class="k">for</span>
 <span class="n">use</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">recovery</span><span class="o">.</span><span class="w">  </span><span class="n">Specifically</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">K</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span>
 <span class="n">T</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="n">K</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">interior</span><span class="w"> </span><span class="n">knots</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">)</span><span class="w"> </span>
-<span class="n">are</span><span class="w"> </span><span class="n">calculated</span><span class="o">.</span><span class="w"></span>
+<span class="n">are</span><span class="w"> </span><span class="n">calculated</span><span class="o">.</span>
 
-<span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">IFLAG</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">indicator</span><span class="o">.</span><span class="w"></span>
-<span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">success</span><span class="o">.</span><span class="w">  </span><span class="n">T</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">knots</span><span class="o">.</span><span class="w"></span>
-<span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">failure</span><span class="o">.</span><span class="w">  </span><span class="n">K</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">singular</span><span class="o">.</span><span class="w"></span>
+<span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">IFLAG</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">indicator</span><span class="o">.</span>
+<span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">success</span><span class="o">.</span><span class="w">  </span><span class="n">T</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">knots</span><span class="o">.</span>
+<span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">failure</span><span class="o">.</span><span class="w">  </span><span class="n">K</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">singular</span><span class="o">.</span>
 </code></pre></div>
 
 
@@ -253,16 +226,16 @@ LC: QA1.A647.v27.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-tau~7"></span>
+              <span class="anchor" id="variable-tau~6"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -277,7 +250,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~20"></span>
+              <span class="anchor" id="variable-n~31"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -292,7 +265,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~20"></span>
+              <span class="anchor" id="variable-k~19"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -354,77 +327,68 @@ LC: QA1.A647.v27.
   </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~splopt~~CallsGraph Pages: 1 -->
-<svg id="procsploptCallsGraph" width="385pt" height="116pt"
- viewBox="0.00 0.00 385.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procsploptCallsGraph" width="260pt" height="116pt"
+ viewBox="0.00 0.00 260.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~splopt~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
 <title>proc~~splopt~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 381,-112 381,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 256,-112 256,4 -4,4"/>
 <!-- proc~splopt -->
 <g id="proc~~splopt~~CallsGraph_node1" class="node">
 <title>proc~splopt</title>
-<polygon fill="none" stroke="black" points="175,-66 0,-66 0,-42 175,-42 175,-66"/>
-<text text-anchor="middle" x="87.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50">interpolate_pppack.f90::splopt</text>
+<polygon fill="none" stroke="black" points="162,-66 0,-66 0,-42 162,-42 162,-66"/>
+<text text-anchor="middle" x="81" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_INTERPOLATE.f90::splopt</text>
 </g>
-<!-- proc~banfac~2 -->
+<!-- banfac -->
 <g id="proc~~splopt~~CallsGraph_node2" class="node">
-<title>proc~banfac~2</title>
-<g id="a_proc~~splopt~~CallsGraph_node2"><a xlink:href=".././proc/banfac~2.html" xlink:title="SF_INTERPOLATE.f90::banfac">
-<polygon fill="#d9534f" stroke="#d9534f" points="377,-108 211,-108 211,-84 377,-84 377,-108"/>
-<text text-anchor="middle" x="294" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::banfac</text>
-</a>
+<title>banfac</title>
+<polygon fill="#777777" stroke="#777777" points="252,-108 198,-108 198,-84 252,-84 252,-108"/>
+<text text-anchor="middle" x="225" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">banfac</text>
 </g>
-</g>
-<!-- proc~splopt&#45;&gt;proc~banfac~2 -->
+<!-- proc~splopt&#45;&gt;banfac -->
 <g id="proc~~splopt~~CallsGraph_edge1" class="edge">
-<title>proc~splopt&#45;&gt;proc~banfac~2</title>
-<path fill="none" stroke="#000000" d="M147.1,-66.04C171.27,-71 199.45,-76.79 224.57,-81.95"/>
-<polygon fill="#000000" stroke="#000000" points="223.89,-85.38 234.39,-83.96 225.3,-78.52 223.89,-85.38"/>
+<title>proc~splopt&#45;&gt;banfac</title>
+<path fill="none" stroke="#000000" d="M122.69,-66.04C143.3,-72.13 168.11,-79.47 188.02,-85.36"/>
+<polygon fill="#000000" stroke="#000000" points="187.06,-88.72 197.65,-88.21 189.05,-82.01 187.06,-88.72"/>
 </g>
-<!-- proc~banslv~2 -->
+<!-- banslv -->
 <g id="proc~~splopt~~CallsGraph_node3" class="node">
-<title>proc~banslv~2</title>
-<g id="a_proc~~splopt~~CallsGraph_node3"><a xlink:href=".././proc/banslv~2.html" xlink:title="SF_INTERPOLATE.f90::banslv">
-<polygon fill="#d9534f" stroke="#d9534f" points="376,-66 212,-66 212,-42 376,-42 376,-66"/>
-<text text-anchor="middle" x="294" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::banslv</text>
-</a>
+<title>banslv</title>
+<polygon fill="#777777" stroke="#777777" points="252,-66 198,-66 198,-42 252,-42 252,-66"/>
+<text text-anchor="middle" x="225" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">banslv</text>
 </g>
-</g>
-<!-- proc~splopt&#45;&gt;proc~banslv~2 -->
+<!-- proc~splopt&#45;&gt;banslv -->
 <g id="proc~~splopt~~CallsGraph_edge2" class="edge">
-<title>proc~splopt&#45;&gt;proc~banslv~2</title>
-<path fill="none" stroke="#000000" d="M175.23,-54C183.99,-54 192.91,-54 201.72,-54"/>
-<polygon fill="#000000" stroke="#000000" points="201.99,-57.5 211.99,-54 201.99,-50.5 201.99,-57.5"/>
+<title>proc~splopt&#45;&gt;banslv</title>
+<path fill="none" stroke="#000000" d="M162.13,-54C170.95,-54 179.58,-54 187.47,-54"/>
+<polygon fill="#000000" stroke="#000000" points="187.7,-57.5 197.7,-54 187.7,-50.5 187.7,-57.5"/>
 </g>
-<!-- proc~bsplvb~2 -->
+<!-- bsplvb -->
 <g id="proc~~splopt~~CallsGraph_node4" class="node">
-<title>proc~bsplvb~2</title>
-<g id="a_proc~~splopt~~CallsGraph_node4"><a xlink:href=".././proc/bsplvb~2.html" xlink:title="SF_INTERPOLATE.f90::bsplvb">
-<polygon fill="#d9534f" stroke="#d9534f" points="376,-24 212,-24 212,0 376,0 376,-24"/>
-<text text-anchor="middle" x="294" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::bsplvb</text>
-</a>
+<title>bsplvb</title>
+<polygon fill="#777777" stroke="#777777" points="252,-24 198,-24 198,0 252,0 252,-24"/>
+<text text-anchor="middle" x="225" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bsplvb</text>
 </g>
-</g>
-<!-- proc~splopt&#45;&gt;proc~bsplvb~2 -->
+<!-- proc~splopt&#45;&gt;bsplvb -->
 <g id="proc~~splopt~~CallsGraph_edge3" class="edge">
-<title>proc~splopt&#45;&gt;proc~bsplvb~2</title>
-<path fill="none" stroke="#000000" d="M147.1,-41.96C171.27,-37 199.45,-31.21 224.57,-26.05"/>
-<polygon fill="#000000" stroke="#000000" points="225.3,-29.48 234.39,-24.04 223.89,-22.62 225.3,-29.48"/>
+<title>proc~splopt&#45;&gt;bsplvb</title>
+<path fill="none" stroke="#000000" d="M122.69,-41.96C143.3,-35.87 168.11,-28.53 188.02,-22.64"/>
+<polygon fill="#000000" stroke="#000000" points="189.05,-25.99 197.65,-19.79 187.06,-19.28 189.05,-25.99"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -441,11 +405,11 @@ LC: QA1.A647.v27.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -464,23 +428,29 @@ LC: QA1.A647.v27.
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -498,38 +468,6 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/splopt.html#src">splopt</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
@@ -538,362 +476,8 @@ implementation in a submodule of an interface in a parent module.
     
 
 
+
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">splopt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">scrtch</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! SPLOPT computes the knots for an optimal recovery scheme. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The optimal recovery scheme is of order K for data at TAU(1:N).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The interior knots T(K+1:N) are determined by Newton&#39;s method in </span>
-<span class="w">  </span><span class="c">!    such a way that the signum function which changes sign at</span>
-<span class="w">  </span><span class="c">!      T(K+1:N)  and nowhere else in ( TAU(1), TAU(N) ) is </span>
-<span class="w">  </span><span class="c">!    orthogonal to the spline space SPLINE ( K, TAU ) on that interval.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Let XI(J) be the current guess for T(K+J), J=1,...,N-K.  Then</span>
-<span class="w">  </span><span class="c">!    the next Newton iterate is of the form</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      XI(J) + (-)**(N-K-J)*X(J),  J=1,...,N-K,</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    with X the solution of the linear system</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      C * X = D.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Here, for all J,</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      C(I,J) = B(I)(XI(J)), </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    with B(I) the I-th B-spline of order K for the knot sequence TAU, </span>
-<span class="w">  </span><span class="c">!    for all I, and D is the vector given, for each I, by</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      D(I) = sum ( -A(J), J=I,...,N ) * ( TAU(I+K) - TAU(I) ) / K,</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    with, for I = 1 to N-1:  </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      A(I) = sum ( (-)**(N-K-J)*B(I,K+1,TAU)(XI(J)), J=1,...,N-K )</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    and  </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      A(N) = -0.5.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    See Chapter XIII of text and references there for a derivation.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The first guess for T(K+J) is sum ( TAU(J+1:J+K-1) ) / ( K - 1 ).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The iteration terminates if max ( abs ( X(J) ) ) &lt; TOL, with</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      TOL = TOLRTE * ( TAU(N) - TAU(1) ) / ( N - K ),</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    or else after NEWTMX iterations.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) TAU(N), the interpolation points.</span>
-<span class="w">  </span><span class="c">!    assumed to be nondecreasing, with TAU(I) &lt; TAU(I+K), for all I.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the number of data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) K, the order of the optimal recovery scheme </span>
-<span class="w">  </span><span class="c">!    to be used.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Workspace, real ( kind = 8 ) SCRTCH((N-K)*(2*K+3)+5*K+3).  The various</span>
-<span class="w">  </span><span class="c">!    contents are specified in the text below.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) T(N+K), the optimal knots ready for</span>
-<span class="w">  </span><span class="c">!    use in optimal recovery.  Specifically, T(1:K) = TAU(1), </span>
-<span class="w">  </span><span class="c">!    T(N+1:N+K) = TAU(N), while the N - K interior knots T(K+1:N) </span>
-<span class="w">  </span><span class="c">!    are calculated.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) IFLAG, error indicator.</span>
-<span class="w">  </span><span class="c">!    = 1, success.  T contains the optimal knots.</span>
-<span class="w">  </span><span class="c">!    = 2, failure.  K &lt; 3 or N &lt; K or the linear system was singular.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">del</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">delmax</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">floatk</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">id</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">index</span>
-<span class="nb">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kp1</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kpkm1</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kpn</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">left</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">leftmk</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lenw</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ll</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">llmax</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">llmin</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">na</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nb</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nc</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nd</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">newtmx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">newton</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nmk</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nx</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">scrtch</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">sign</span>
-<span class="nb">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">signst</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">sum1</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">tol</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tolrte</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.000001D+00</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xij</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">nmk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLOPT - Fatal error!&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  N &lt; K.&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">     </span><span class="k">return</span>
-<span class="k">  end if</span>
-
-<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     </span><span class="n">t</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">return</span>
-<span class="k">  end if</span>
-
-<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLOPT - Fatal error!&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  K &lt; 2.&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">     </span><span class="k">stop</span>
-<span class="k">  end if</span>
-
-<span class="k">  </span><span class="n">floatk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">  </span><span class="n">kp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="n">kpkm1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="n">kpn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">signst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nmk</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nmk</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     </span><span class="n">signst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">  </span><span class="k">end if</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  SCRTCH(I) = TAU-EXTENDED(I), I=1,...,N+K+K</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  SCRTCH(I+NX) = XI(I), I=0,...,N-K+1</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nmk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  SCRTCH(I+NA) = - A(I), I=1,...,N</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">nd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  SCRTCH(I+ND) = X(I) or D(I), I=1,...,N-K</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nd</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nmk</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  SCRTCH(I+NB) = BIATX(I), I=1,...,K+1</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">nc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">kp1</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  SCRTCH(I+(J-1)*(2K-1)+NC) = W(I,J) = C(I-K+J,J), I=J-K,...,J+K,</span>
-<span class="w">  </span><span class="c">!                                                     J=1,...,N-K.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">lenw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kpkm1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nmk</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Extend TAU to a knot sequence and store in SCRTCH.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">scrtch</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">scrtch</span><span class="p">(</span><span class="n">kpn</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">kpn</span><span class="o">+</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  First guess for SCRTCH (.+NX) = XI.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">scrtch</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">scrtch</span><span class="p">(</span><span class="n">nmk</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nmk</span><span class="w"> </span>
-<span class="w">     </span><span class="n">scrtch</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="k">end do</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Last entry of SCRTCH (.+NA) = -A  is always ...</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">scrtch</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Start the Newton iteration.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">newton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tolrte</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nmk</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Start the Newton step.</span>
-<span class="w">  </span><span class="c">!  Compute the 2*K-1 bands of the matrix C and store in SCRTCH(.+NC),</span>
-<span class="w">  </span><span class="c">!  and compute the vector SCRTCH(.+NA) = -A.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">do </span><span class="n">newton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">newtmx</span><span class="w"></span>
-
-<span class="w">     </span><span class="n">scrtch</span><span class="p">(</span><span class="n">nc</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">nc</span><span class="o">+</span><span class="n">lenw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-<span class="w">     </span><span class="n">scrtch</span><span class="p">(</span><span class="n">na</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">na</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-
-<span class="w">     </span><span class="nb">sign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signst</span><span class="w"></span>
-<span class="w">     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nmk</span><span class="w"></span>
-
-<span class="w">        </span><span class="n">xij</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">do</span>
-
-<span class="k">           if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xij</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              exit</span>
-<span class="k">           end if</span>
-
-<span class="k">           </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-
-<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kpn</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">              </span><span class="k">exit</span>
-<span class="k">           end if</span>
-
-<span class="k">        end do</span>
-
-<span class="k">        call </span><span class="n">bsplvb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">xij</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">nb</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  The TAU sequence in SCRTCH is preceded by K additional knots.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Therefore, SCRTCH(LL+NB) now contains B(LEFT-2K+LL)(XIJ)</span>
-<span class="w">        </span><span class="c">!  which is destined for C(LEFT-2K+LL,J), and therefore for</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!    W(LEFT-K-J+LL,J)= SCRTCH(LEFT-K-J+LL+(J-1)*KPKM1 + NC)</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  since we store the 2*K-1 bands of C in the 2*K-1 rows of</span>
-<span class="w">        </span><span class="c">!  the work array W, and W in turn is stored in SCRTCH,</span>
-<span class="w">        </span><span class="c">!  with W(1,1) = SCRTCH(1+NC).</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Also, C being of order N - K, we would want  </span>
-<span class="w">        </span><span class="c">!    1 &lt;= LEFT-2K+LL &lt;= N - K or</span>
-<span class="w">        </span><span class="c">!    LLMIN=2K-LEFT  &lt;=  LL &lt;= N-LEFT+K = LLMAX.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="n">leftmk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">        </span><span class="nb">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftmk</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpkm1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nc</span><span class="w"></span>
-<span class="w">        </span><span class="n">llmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">leftmk</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">llmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">leftmk</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">do </span><span class="n">ll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">llmin</span><span class="p">,</span><span class="w"> </span><span class="n">llmax</span><span class="w"></span>
-<span class="w">           </span><span class="n">scrtch</span><span class="p">(</span><span class="n">ll</span><span class="o">+</span><span class="nb">index</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">ll</span><span class="o">+</span><span class="n">nb</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end do</span>
-
-<span class="k">        call </span><span class="n">bsplvb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">,</span><span class="w"> </span><span class="n">kp1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">xij</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">nb</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">leftmk</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kp1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">llmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">leftmk</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kp1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">do </span><span class="n">ll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">llmin</span><span class="p">,</span><span class="w"> </span><span class="n">kp1</span><span class="w"></span>
-<span class="w">           </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">           </span><span class="n">scrtch</span><span class="p">(</span><span class="n">id</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">id</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">sign</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">ll</span><span class="o">+</span><span class="n">nb</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end do</span>
-
-<span class="k">        </span><span class="nb">sign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">sign</span>
-
-<span class="nb">     </span><span class="k">end do</span>
-
-<span class="k">     call </span><span class="n">banfac</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">nc</span><span class="p">),</span><span class="w"> </span><span class="n">kpkm1</span><span class="p">,</span><span class="w"> </span><span class="n">nmk</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"></span>
-<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLOPT - Fatal error!&#39;</span><span class="w"></span>
-<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Matrix C is not invertible.&#39;</span><span class="w"></span>
-<span class="w">        </span><span class="k">stop</span>
-<span class="k">     end if</span><span class="w"></span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Compute SCRTCH(.+ND) = D from SCRTCH(.+NA) = -A.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">     do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nmk</span><span class="w"></span>
-<span class="w">        </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">nd</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">na</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">floatk</span><span class="w"></span>
-<span class="w">     </span><span class="k">end do</span><span class="w"></span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Compute SCRTCH(.+ND)= X.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">call </span><span class="n">banslv</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">nc</span><span class="p">),</span><span class="w"> </span><span class="n">kpkm1</span><span class="p">,</span><span class="w"> </span><span class="n">nmk</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">nd</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Compute SCRTCH(.+ND) = change in XI.  Modify, if necessary, to</span>
-<span class="w">     </span><span class="c">!  prevent new XI from moving more than 1/3 of the way to its</span>
-<span class="w">     </span><span class="c">!  neighbors.  Then add to XI to obtain new XI in SCRTCH(.+NX).</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="n">delmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-<span class="w">     </span><span class="nb">sign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signst</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nmk</span><span class="w"></span>
-
-<span class="w">        </span><span class="n">del</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">nd</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">delmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">delmax</span><span class="p">,</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">del</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">del</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">del</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">del</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">else</span>
-<span class="k">           </span><span class="n">del</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">del</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end if</span>
-
-<span class="k">        </span><span class="nb">sign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">sign</span>
-<span class="nb">        </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">nx</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">del</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">end do</span><span class="w"></span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Call it a day in case change in XI was small enough or too many</span>
-<span class="w">     </span><span class="c">!  steps were taken.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">delmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        exit</span>
-<span class="k">     end if</span>
-
-<span class="k">  end do</span>
-
-<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">delmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLOPT - Warning!&#39;</span><span class="w"></span>
-<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The Newton iteration did not converge.&#39;</span><span class="w"></span>
-<span class="w">  </span><span class="k">end if</span>
-
-<span class="k">  </span><span class="n">t</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">t</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">nx</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">nx</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="w">  </span>
-<span class="w">  </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">return</span>
-<span class="k">end subroutine </span><span class="n">splopt</span><span class="w"></span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
@@ -902,12 +486,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -917,17 +501,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

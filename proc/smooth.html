@@ -10,81 +10,55 @@
 
     <title>smooth &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Function</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.1% of total for procedures.">63 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for procedures.">63 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
-          <li class="active">smooth</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">smooth</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,12 +124,7 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/smooth.html#src">smooth</a>
-      </div>
-    </div>
+  
 
 
   </div>
@@ -166,76 +139,76 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! SMOOTH constructs the cubic smoothing spline to given data.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">The</span> <span class="nv">data</span> <span class="nv">is</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">form</span>
+<div class="codehilite"><pre><span></span><code>The data is of the form
 
-  <span class="ss">(</span> <span class="nv">X</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NPOINT</span><span class="ss">)</span>, <span class="nv">Y</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NPOINT</span><span class="ss">)</span> <span class="ss">)</span>
+  ( X(1:NPOINT), Y(1:NPOINT) )
 
-<span class="nv">The</span> <span class="nv">cubic</span> <span class="nv">smoothing</span> <span class="nv">spline</span> <span class="nv">has</span> <span class="nv">as</span> <span class="nv">small</span> <span class="nv">a</span> <span class="nv">second</span> <span class="nv">derivative</span> <span class="nv">as</span>
-<span class="nv">possible</span>, <span class="k">while</span>
+The cubic smoothing spline has as small a second derivative as
+possible, while
 
-  <span class="nv">S</span><span class="ss">(</span><span class="nv">F</span><span class="ss">)</span> <span class="o">&lt;=</span> <span class="nv">S</span>,
+  S(F) &lt;= S,
 
-<span class="nv">where</span>
+where
 
-  <span class="nv">S</span><span class="ss">(</span><span class="nv">F</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">sum</span> <span class="ss">(</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="nv">I</span> <span class="o">&lt;=</span> <span class="nv">NPOINT</span> <span class="ss">)</span> <span class="ss">(</span> <span class="ss">(</span> <span class="ss">(</span> <span class="nv">Y</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="o">-</span> <span class="nv">F</span><span class="ss">(</span><span class="nv">X</span><span class="ss">(</span><span class="nv">I</span><span class="ss">))</span> <span class="ss">)</span> <span class="o">/</span> <span class="nv">DY</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="ss">)</span><span class="o">**</span><span class="mi">2</span>.
+  S(F) = sum ( 1 &lt;= I &lt;= NPOINT ) ( ( ( Y(I) - F(X(I)) ) / DY(I) )**2.
 </code></pre></div>
 
 <p>Method:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">matrices</span><span class="w"> </span><span class="n">Q</span><span class="s1">&#39; * D and Q&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">SETUPQ</span><span class="w"> </span><span class="n">from</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">matrices</span><span class="w"> </span><span class="n">Q</span><span class="s1">&#39; * D and Q&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">SETUPQ</span><span class="w"> </span><span class="n">from</span>
 <span class="n">X</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">DY</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">QTY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Q</span><span class="s1">&#39; * Y.</span>
 
-<span class="n">Then</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">determined</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">CHOL1D</span><span class="w"> </span><span class="k">as</span><span class="w"></span>
-<span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="w"></span>
+<span class="n">Then</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">determined</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">CHOL1D</span><span class="w"> </span><span class="k">as</span>
+<span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span>
 
 <span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="s1">&#39; * D**2 * Q + P * R ) * U = QTY.</span>
 
-<span class="n">From</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">choice</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="n">F</span><span class="w"></span>
-<span class="k">is</span><span class="w"> </span><span class="n">obtained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">sense</span><span class="w"> </span><span class="n">that</span><span class="p">:</span><span class="w"></span>
+<span class="n">From</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">choice</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="n">F</span>
+<span class="k">is</span><span class="w"> </span><span class="n">obtained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">sense</span><span class="w"> </span><span class="n">that</span><span class="p">:</span>
 
-<span class="w">         </span><span class="n">F</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="o">.</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">d</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">F</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="o">.</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="o">.</span><span class="w"></span>
+<span class="w">         </span><span class="n">F</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="o">.</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="p">,</span>
+<span class="w">  </span><span class="p">(</span><span class="n">d</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">F</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="o">.</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="o">.</span>
 
-<span class="n">The</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">possible</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"></span>
+<span class="n">The</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">possible</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span>
 
-<span class="w">  </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">,</span>
 
-<span class="n">with</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">(</span><span class="n">F</span><span class="p">),</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">depends</span><span class="w"></span>
-<span class="n">on</span><span class="w"> </span><span class="n">P</span><span class="o">.</span><span class="w">  </span><span class="n">If</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="w">  </span><span class="n">If</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
-<span class="n">Otherwise</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">secant</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">locate</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">appropriate</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="ow">in</span><span class="w"></span>
-<span class="n">the</span><span class="w"> </span><span class="n">open</span><span class="w"> </span><span class="n">interval</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="w"></span>
+<span class="n">with</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">(</span><span class="n">F</span><span class="p">),</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">smoothing</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">depends</span>
+<span class="n">on</span><span class="w"> </span><span class="n">P</span><span class="o">.</span><span class="w">  </span><span class="n">If</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="w">  </span><span class="n">If</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span>
+<span class="n">Otherwise</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">secant</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">locate</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">appropriate</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="ow">in</span>
+<span class="n">the</span><span class="w"> </span><span class="n">open</span><span class="w"> </span><span class="n">interval</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span>
 
-<span class="n">Specifically</span><span class="p">,</span><span class="w"></span>
+<span class="n">Specifically</span><span class="p">,</span>
 
-<span class="w">  </span><span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="n">P</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">DSF</span><span class="w"></span>
+<span class="w">  </span><span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="n">P</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">DSF</span>
 
-<span class="n">with</span><span class="w"></span>
+<span class="n">with</span>
 
 <span class="w">  </span><span class="n">DSF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">24</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="sa">U</span><span class="s1">&#39; * R * U</span>
 
-<span class="n">a</span><span class="w"> </span><span class="n">good</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">to</span><span class="w"></span>
+<span class="n">a</span><span class="w"> </span><span class="n">good</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">to</span>
 
 <span class="w">  </span><span class="n">D</span><span class="p">(</span><span class="n">SF</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DSF</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">D</span><span class="o">*</span><span class="n">Q</span><span class="o">*</span><span class="n">U</span><span class="p">)</span><span class="s1">&#39; * (D*Q*U),</span>
 
-<span class="ow">and</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">obtained</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="ow">and</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">obtained</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span>
 
-<span class="n">After</span><span class="w"> </span><span class="n">that</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="w">  </span><span class="n">until</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1.01</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">do</span><span class="p">:</span><span class="w"></span>
-<span class="n">determine</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">secant</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">SF</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="n">points</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">S</span><span class="o">.</span><span class="w"></span>
+<span class="n">After</span><span class="w"> </span><span class="n">that</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="w">  </span><span class="n">until</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1.01</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">do</span><span class="p">:</span>
+<span class="n">determine</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">secant</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">SF</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span>
+<span class="n">points</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">S</span><span class="o">.</span>
 
-<span class="n">If</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">which</span><span class="w"></span>
-<span class="n">the</span><span class="w"> </span><span class="n">parabola</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">S</span><span class="o">.</span><span class="w"></span>
+<span class="n">If</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">which</span>
+<span class="n">the</span><span class="w"> </span><span class="n">parabola</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-.</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">S</span><span class="o">.</span>
 
-<span class="n">Note</span><span class="w"> </span><span class="n">that</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">exact</span><span class="w"> </span><span class="n">arithmetic</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">always</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">case</span><span class="w"> </span><span class="n">that</span><span class="w"></span>
-<span class="w">  </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"></span>
-<span class="n">hence</span><span class="w"></span>
-<span class="w">  </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">.</span><span class="w"></span>
+<span class="n">Note</span><span class="w"> </span><span class="n">that</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">exact</span><span class="w"> </span><span class="n">arithmetic</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">always</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">case</span><span class="w"> </span><span class="n">that</span>
+<span class="w">  </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+<span class="n">hence</span>
+<span class="w">  </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">.</span>
 
-<span class="n">Therefore</span><span class="p">,</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">iteration</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">case</span><span class="w"></span>
-<span class="w">  </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="w"></span>
+<span class="n">Therefore</span><span class="p">,</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">iteration</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">case</span>
+<span class="w">  </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">SF</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span>
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">16</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">16</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -251,31 +224,31 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">X</span><span class="ss">(</span><span class="nv">NPOINT</span><span class="ss">)</span>, <span class="nv">the</span> <span class="nv">abscissas</span>, <span class="nv">assumed</span> <span class="nv">to</span> <span class="nv">be</span>
-<span class="nv">strictly</span> <span class="nv">increasing</span>.
+<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) X(NPOINT), the abscissas, assumed to be
+strictly increasing.
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">Y</span><span class="ss">(</span><span class="nv">NPOINT</span><span class="ss">)</span>, <span class="nv">the</span> <span class="nv">corresponding</span> <span class="nv">ordinates</span>.
+Input, real ( kind = 8 ) Y(NPOINT), the corresponding ordinates.
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">DY</span><span class="ss">(</span><span class="nv">NPOINT</span><span class="ss">)</span>, <span class="nv">the</span> <span class="nv">data</span> <span class="nv">uncertainty</span> <span class="nv">estimates</span>,
-<span class="nv">which</span> <span class="nv">are</span> <span class="nv">assumed</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">positive</span>.
+Input, real ( kind = 8 ) DY(NPOINT), the data uncertainty estimates,
+which are assumed to be positive.
 
-<span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">NPOINT</span>, <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">data</span> <span class="nv">points</span>.
+Input, integer ( kind = 4 ) NPOINT, the number of data points.
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">S</span>, <span class="nv">an</span> <span class="nv">upper</span> <span class="nv">bound</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">discrete</span> <span class="nv">weighted</span> <span class="nv">mean</span>
-<span class="nv">square</span> <span class="nv">distance</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">approximation</span> <span class="nv">F</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">data</span>.
+Input, real ( kind = 8 ) S, an upper bound on the discrete weighted mean
+square distance of the approximation F from the data.
 
-<span class="nv">Workspace</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">V</span><span class="ss">(</span><span class="nv">NPOINT</span>,<span class="mi">7</span><span class="ss">)</span>.
+Workspace, real ( kind = 8 ) V(NPOINT,7).
 
-<span class="nv">Workspace</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">A</span><span class="ss">(</span><span class="nv">NPOINT</span>,<span class="mi">4</span><span class="ss">)</span>.
+Workspace, real ( kind = 8 ) A(NPOINT,4).
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">A</span><span class="ss">(</span><span class="nv">NPOINT</span>,<span class="mi">4</span><span class="ss">)</span>.
-<span class="nv">A</span><span class="ss">(</span><span class="o">*</span>,<span class="mi">1</span><span class="ss">)</span>.....<span class="nv">contains</span> <span class="nv">the</span> <span class="nv">sequence</span> <span class="nv">of</span> <span class="nv">smoothed</span> <span class="nv">ordinates</span>.
-<span class="nv">A</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">d</span><span class="o">**</span><span class="ss">(</span><span class="nv">J</span><span class="o">-</span><span class="mi">1</span><span class="ss">)</span> <span class="nv">F</span><span class="ss">(</span><span class="nv">X</span><span class="ss">(</span><span class="nv">I</span><span class="ss">))</span>, <span class="k">for</span> <span class="nv">J</span> <span class="o">=</span> <span class="mi">2</span>:<span class="mi">4</span>, <span class="nv">I</span> <span class="o">=</span> <span class="mi">1</span>:<span class="nv">NPOINT</span><span class="o">-</span><span class="mi">1</span>.
-<span class="nv">That</span> <span class="nv">is</span>, <span class="nv">the</span> <span class="nv">first</span> <span class="nv">three</span> <span class="nv">derivatives</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">smoothing</span> <span class="nv">spline</span> <span class="nv">F</span> <span class="nv">at</span> <span class="nv">the</span>
-<span class="nv">left</span> <span class="k">end</span> <span class="nv">of</span> <span class="nv">each</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">data</span> <span class="nv">intervals</span>.  <span class="nv">Note</span> <span class="nv">that</span> <span class="nv">A</span> <span class="nv">would</span> <span class="nv">have</span> <span class="nv">to</span>
-<span class="nv">be</span> <span class="nv">transposed</span> <span class="nv">before</span> <span class="nv">it</span> <span class="nv">could</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">in</span> <span class="nv">PPVALU</span>.
+Output, real ( kind = 8 ) A(NPOINT,4).
+A(*,1).....contains the sequence of smoothed ordinates.
+A(I,J) = d**(J-1) F(X(I)), for J = 2:4, I = 1:NPOINT-1.
+That is, the first three derivatives of the smoothing spline F at the
+left end of each of the data intervals.  Note that A would have to
+be transposed before it could be used in PPVALU.
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">SMOOTH</span>, <span class="nv">the</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">smoothing</span> <span class="nv">parameter</span>.
+Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
 </code></pre></div>
 
 
@@ -283,16 +256,16 @@ LC: QA1.A647.v27.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~25"></span>
+              <span class="anchor" id="variable-x~36"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -307,7 +280,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~3"></span>
+              <span class="anchor" id="variable-y~2"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -367,7 +340,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-v"></span>
+              <span class="anchor" id="variable-v~2"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -382,7 +355,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~19"></span>
+              <span class="anchor" id="variable-a~9"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -406,62 +379,56 @@ LC: QA1.A647.v27.
       </h3>
       
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~smooth~~CallsGraph Pages: 1 -->
-<svg id="procsmoothCallsGraph" width="393pt" height="74pt"
- viewBox="0.00 0.00 393.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procsmoothCallsGraph" width="267pt" height="74pt"
+ viewBox="0.00 0.00 267.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~smooth~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
 <title>proc~~smooth~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 389,-70 389,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 263,-70 263,4 -4,4"/>
 <!-- proc~smooth -->
 <g id="proc~~smooth~~CallsGraph_node1" class="node">
 <title>proc~smooth</title>
-<polygon fill="none" stroke="black" points="183,-45 0,-45 0,-21 183,-21 183,-45"/>
-<text text-anchor="middle" x="91.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">interpolate_pppack.f90::smooth</text>
+<polygon fill="none" stroke="black" points="169,-45 0,-45 0,-21 169,-21 169,-45"/>
+<text text-anchor="middle" x="84.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_INTERPOLATE.f90::smooth</text>
 </g>
-<!-- proc~chol1d~2 -->
+<!-- chol1d -->
 <g id="proc~~smooth~~CallsGraph_node2" class="node">
-<title>proc~chol1d~2</title>
-<g id="a_proc~~smooth~~CallsGraph_node2"><a xlink:href=".././proc/chol1d~2.html" xlink:title="SF_INTERPOLATE.f90::chol1d">
-<polygon fill="#d9534f" stroke="#d9534f" points="385,-66 219,-66 219,-42 385,-42 385,-66"/>
-<text text-anchor="middle" x="302" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::chol1d</text>
-</a>
+<title>chol1d</title>
+<polygon fill="#777777" stroke="#777777" points="259,-66 205,-66 205,-42 259,-42 259,-66"/>
+<text text-anchor="middle" x="232" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">chol1d</text>
 </g>
-</g>
-<!-- proc~smooth&#45;&gt;proc~chol1d~2 -->
+<!-- proc~smooth&#45;&gt;chol1d -->
 <g id="proc~~smooth~~CallsGraph_edge1" class="edge">
-<title>proc~smooth&#45;&gt;proc~chol1d~2</title>
-<path fill="none" stroke="#000000" d="M183.04,-42.12C191.57,-42.98 200.23,-43.85 208.77,-44.71"/>
-<polygon fill="#000000" stroke="#000000" points="208.44,-48.2 218.74,-45.72 209.14,-41.23 208.44,-48.2"/>
+<title>proc~smooth&#45;&gt;chol1d</title>
+<path fill="none" stroke="#000000" d="M168.87,-45.03C177.97,-46.35 186.84,-47.63 194.89,-48.79"/>
+<polygon fill="#000000" stroke="#000000" points="194.57,-52.28 204.97,-50.24 195.57,-45.35 194.57,-52.28"/>
 </g>
-<!-- proc~setupq~2 -->
+<!-- setupq -->
 <g id="proc~~smooth~~CallsGraph_node3" class="node">
-<title>proc~setupq~2</title>
-<g id="a_proc~~smooth~~CallsGraph_node3"><a xlink:href=".././proc/setupq~2.html" xlink:title="SF_INTERPOLATE.f90::setupq">
-<polygon fill="#d9534f" stroke="#d9534f" points="385,-24 219,-24 219,0 385,0 385,-24"/>
-<text text-anchor="middle" x="302" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::setupq</text>
-</a>
+<title>setupq</title>
+<polygon fill="#777777" stroke="#777777" points="259,-24 205,-24 205,0 259,0 259,-24"/>
+<text text-anchor="middle" x="232" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setupq</text>
 </g>
-</g>
-<!-- proc~smooth&#45;&gt;proc~setupq~2 -->
+<!-- proc~smooth&#45;&gt;setupq -->
 <g id="proc~~smooth~~CallsGraph_edge2" class="edge">
-<title>proc~smooth&#45;&gt;proc~setupq~2</title>
-<path fill="none" stroke="#000000" d="M183.04,-23.88C191.57,-23.02 200.23,-22.15 208.77,-21.29"/>
-<polygon fill="#000000" stroke="#000000" points="209.14,-24.77 218.74,-20.28 208.44,-17.8 209.14,-24.77"/>
+<title>proc~smooth&#45;&gt;setupq</title>
+<path fill="none" stroke="#000000" d="M168.87,-20.97C177.97,-19.65 186.84,-18.37 194.89,-17.21"/>
+<polygon fill="#000000" stroke="#000000" points="195.57,-20.65 204.97,-15.76 194.57,-13.72 195.57,-20.65"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -478,11 +445,11 @@ LC: QA1.A647.v27.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -501,23 +468,29 @@ LC: QA1.A647.v27.
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -535,38 +508,6 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/smooth.html#src">smooth</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
@@ -575,230 +516,8 @@ implementation in a submodule of an interface in a parent module.
     
 
 
+
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">function </span><span class="n">smooth</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! SMOOTH constructs the cubic smoothing spline to given data.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The data is of the form</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      ( X(1:NPOINT), Y(1:NPOINT) )</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The cubic smoothing spline has as small a second derivative as</span>
-<span class="w">  </span><span class="c">!    possible, while</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      S(F) &lt;= S,</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    where</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      S(F) = sum ( 1 &lt;= I &lt;= NPOINT ) ( ( ( Y(I) - F(X(I)) ) / DY(I) )**2.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Method:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The matrices Q&#39; * D and Q&#39; * D**2 * Q are constructed in SETUPQ from</span>
-<span class="w">  </span><span class="c">!    X and DY, as is the vector QTY = Q&#39; * Y.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Then, for given P, the vector U is determined in CHOL1D as</span>
-<span class="w">  </span><span class="c">!    the solution of the linear system</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      ( 6 * (1-P) * Q&#39; * D**2 * Q + P * R ) * U = QTY.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    From U and this choice of smoothing parameter P, the smoothing spline F</span>
-<span class="w">  </span><span class="c">!    is obtained in the sense that:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!             F(X(.)) = Y - 6 (1-P) D**2 * Q * U,</span>
-<span class="w">  </span><span class="c">!      (d**2) F(X(.)) = 6 * P * U.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The smoothing parameter P is found, if possible, so that</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      SF(P) = S,</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    with SF(P) = S(F), where F is the smoothing spline as it depends</span>
-<span class="w">  </span><span class="c">!    on P.  If S = 0, then P = 1.  If SF(0) &lt;= S, then P = 0.</span>
-<span class="w">  </span><span class="c">!    Otherwise, the secant method is used to locate an appropriate P in</span>
-<span class="w">  </span><span class="c">!    the open interval (0,1).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Specifically,</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      P(0) = 0,  P(1) = ( S - SF(0) ) / DSF</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    with</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      DSF = -24 * U&#39; * R * U</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    a good approximation to</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      D(SF(0)) = DSF + 60 * (D*Q*U)&#39; * (D*Q*U),</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    and U as obtained for P = 0.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    After that, for N = 1, 2,...  until SF(P(N)) &lt;= 1.01 * S, do:</span>
-<span class="w">  </span><span class="c">!    determine P(N+1) as the point at which the secant to SF at the</span>
-<span class="w">  </span><span class="c">!    points P(N) and P(N-1) takes on the value S.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    If 1 &lt;= P(N+1), choose instead P(N+1) as the point at which</span>
-<span class="w">  </span><span class="c">!    the parabola SF(P(N))*((1-.)/(1-P(N)))**2 takes on the value S.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Note that, in exact arithmetic, it is always the case that</span>
-<span class="w">  </span><span class="c">!      P(N+1) &lt; P(N),</span>
-<span class="w">  </span><span class="c">!    hence</span>
-<span class="w">  </span><span class="c">!      SF(P(N+1)) &lt; SF(P(N)).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Therefore, also stop the iteration, with final P = 1, in case</span>
-<span class="w">  </span><span class="c">!      SF(P(N)) &lt;= SF(P(N+1)).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    16 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X(NPOINT), the abscissas, assumed to be</span>
-<span class="w">  </span><span class="c">!    strictly increasing.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) Y(NPOINT), the corresponding ordinates.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) DY(NPOINT), the data uncertainty estimates,</span>
-<span class="w">  </span><span class="c">!    which are assumed to be positive.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NPOINT, the number of data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) S, an upper bound on the discrete weighted mean</span>
-<span class="w">  </span><span class="c">!    square distance of the approximation F from the data.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Workspace, real ( kind = 8 ) V(NPOINT,7).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Workspace, real ( kind = 8 ) A(NPOINT,4).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) A(NPOINT,4).</span>
-<span class="w">  </span><span class="c">!    A(*,1).....contains the sequence of smoothed ordinates.</span>
-<span class="w">  </span><span class="c">!    A(I,J) = d**(J-1) F(X(I)), for J = 2:4, I = 1:NPOINT-1.</span>
-<span class="w">  </span><span class="c">!    That is, the first three derivatives of the smoothing spline F at the</span>
-<span class="w">  </span><span class="c">!    left end of each of the data intervals.  Note that A would have to</span>
-<span class="w">  </span><span class="c">!    be transposed before it could be used in PPVALU.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">npoint</span><span class="w"></span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">npoint</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">change</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">npoint</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">oosf</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ooss</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">prevq</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">prevsf</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">sfq</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">smooth</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">utru</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">npoint</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">npoint</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">npoint</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">call </span><span class="n">setupq</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">     </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">     </span><span class="k">call </span><span class="n">chol1d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="n">sfq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">else</span>
-
-<span class="k">     </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-<span class="w">     </span><span class="k">call </span><span class="n">chol1d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">     </span><span class="n">sfq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">        </span><span class="n">utru</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="w"></span>
-<span class="w">           </span><span class="n">utru</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utru</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end do</span>
-
-<span class="k">        </span><span class="n">ooss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">oosf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ooss</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">utru</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Secant iteration for the determination of P starts here.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="n">prevq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"></span>
-<span class="w">        </span><span class="n">prevsf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oosf</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">do</span>
-
-<span class="k">           call </span><span class="n">chol1d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">           </span><span class="n">sfq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
-
-<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.01D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              exit</span>
-<span class="k">           end if</span>
-
-<span class="k">           </span><span class="n">oosf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">           </span><span class="n">change</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prevq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prevsf</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ooss</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">           </span><span class="n">prevq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"></span>
-<span class="w">           </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">change</span><span class="w"></span>
-<span class="w">           </span><span class="n">prevsf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oosf</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">end do</span>
-
-<span class="k">        </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">     </span><span class="k">end if</span>
-
-<span class="k">  end if</span><span class="w"></span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Correct value of P has been found.</span>
-<span class="w">  </span><span class="c">!  Compute polynomial coefficients from Q * U in A(.,1).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">smooth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sfq</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">       </span><span class="o">*</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">     </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="k">end do</span>
-
-<span class="k">  return</span>
-<span class="k">end function </span><span class="n">smooth</span><span class="w"></span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
@@ -807,12 +526,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -822,17 +541,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

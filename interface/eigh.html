@@ -10,81 +10,55 @@
 
     <title>eigh &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,33 +66,37 @@
       <small>Interface</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title="<p> 0.0% of total for procedures.</p>Including implementation: 324 statements,  0.5% of total for procedures.">7 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title="<p> 0.0% of total for procedures.</p>Including implementation: 324 statements,  0.5% of total for procedures.">7 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/SF_LINALG.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_linalg.f90.html'>SF_LINALG.f90</a></li>
-              <li><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
-          <li class="active">eigh</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_linalg.f90.html'>SF_LINALG.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
+            <li class="breadcrumb-item active" aria-current="page">eigh</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,14 +124,13 @@
   
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#modprocs-0">Module Procedures</a>
-        </h3>
-      </div>
-      <div id="modprocs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
+      </a>
+      <div id="modprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-deigh_generalized">deigh_generalized</a>
             <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-zeigh_generalized">zeigh_generalized</a>
             <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-deigh_simple">deigh_simple</a>
@@ -163,6 +140,7 @@
       </div>
     </div>
 
+  
 
 
   </div>
@@ -173,71 +151,29 @@
       <h2>public interface eigh</h2>
       
 
-      <section class="visible-xs visible-sm hidden-md">
-          <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#modprocs-1">Module Procedures</a>
-        </h3>
-      </div>
-      <div id="modprocs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-deigh_generalized">deigh_generalized</a>
-            <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-zeigh_generalized">zeigh_generalized</a>
-            <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-deigh_simple">deigh_simple</a>
-            <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-zeigh_simple">zeigh_simple</a>
-            <a class="list-group-item" href="../interface/eigh.html#moduleprocedure-deigh_tridiag">deigh_tridiag</a>
-        </div>
-      </div>
-    </div>
-
-
-
-      </section>
-      <br class="visible-xs visible-sm hidden-md">
-
 
 
         <h2>Module Procedures</h2>
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-deigh_generalized~2"></span><h3>private  subroutine deigh_generalized(Am, Bm, lam, c)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-deigh_generalized~2"></span><h3>private  subroutine deigh_generalized(Am, Bm, lam, c)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-am~5"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -252,7 +188,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-bm~3"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -267,7 +203,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-lam~7"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -282,7 +218,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c~45"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -302,26 +238,26 @@
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-zeigh_generalized~2"></span><h3>private  subroutine zeigh_generalized(Am, Bm, lam, c)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-zeigh_generalized~2"></span><h3>private  subroutine zeigh_generalized(Am, Bm, lam, c)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-am~6"></span>
               complex(kind=8),
             </td>
 <td>intent(in)</td>
@@ -336,7 +272,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-bm~4"></span>
               complex(kind=8),
             </td>
 <td>intent(in)</td>
@@ -351,7 +287,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-lam~8"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -366,7 +302,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c~46"></span>
               complex(kind=8),
             </td>
 <td>intent(out)</td>
@@ -386,26 +322,26 @@
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-deigh_simple~2"></span><h3>private  subroutine deigh_simple(A, E, method, jobz, uplo, vl, vu, il, iu, tol)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-deigh_simple~2"></span><h3>private  subroutine deigh_simple(A, E, method, jobz, uplo, vl, vu, il, iu, tol)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~123"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -420,7 +356,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-e~3"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -435,7 +371,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-method~5"></span>
               character(len=*),
             </td>
 <td></td>
@@ -450,7 +386,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-jobz~5"></span>
               character(len=1),
             </td>
 <td></td>
@@ -465,7 +401,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-uplo~10"></span>
               character(len=1),
             </td>
 <td></td>
@@ -480,7 +416,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vl~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -495,7 +431,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vu~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -510,7 +446,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-il~5"></span>
               integer,
             </td>
 <td></td>
@@ -525,7 +461,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iu~5"></span>
               integer,
             </td>
 <td></td>
@@ -540,7 +476,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~50"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -560,26 +496,26 @@
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-zeigh_simple~2"></span><h3>private  subroutine zeigh_simple(A, E, method, jobz, uplo, vl, vu, il, iu, tol)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-zeigh_simple~2"></span><h3>private  subroutine zeigh_simple(A, E, method, jobz, uplo, vl, vu, il, iu, tol)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~124"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -594,7 +530,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-e~4"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -609,7 +545,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-method~6"></span>
               character(len=*),
             </td>
 <td></td>
@@ -624,7 +560,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-jobz~6"></span>
               character(len=1),
             </td>
 <td></td>
@@ -639,7 +575,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-uplo~11"></span>
               character(len=1),
             </td>
 <td></td>
@@ -654,7 +590,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vl~7"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -669,7 +605,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vu~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -684,7 +620,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-il~6"></span>
               integer,
             </td>
 <td></td>
@@ -699,7 +635,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iu~6"></span>
               integer,
             </td>
 <td></td>
@@ -714,7 +650,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~51"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -734,26 +670,26 @@
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-deigh_tridiag~2"></span><h3>private  subroutine deigh_tridiag(d, u, Ev, Irange, Vrange)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-deigh_tridiag~2"></span><h3>private  subroutine deigh_tridiag(d, u, Ev, Irange, Vrange)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-d~24"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -768,7 +704,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-u~21"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -783,7 +719,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ev~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -798,7 +734,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-irange~2"></span>
               integer,
             </td>
 <td></td>
@@ -813,7 +749,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-vrange~2"></span>
               integer,
             </td>
 <td></td>
@@ -839,12 +775,12 @@
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -854,17 +790,12 @@
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

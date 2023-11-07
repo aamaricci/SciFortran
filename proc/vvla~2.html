@@ -10,81 +10,55 @@
 
     <title>vvla &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,37 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.1% of total for procedures.">38 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for procedures.">38 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/special_functions.f90"> Source File</a>
+              <a href="../src/SF_SPECIAL.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
-          <li class="active">vvla</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+            <li class="breadcrumb-item active" aria-current="page">vvla</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -146,12 +125,7 @@
   
   
   
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/vvla~2.html#src">vvla</a>
-      </div>
-    </div>
+  
 
 
   </div>
@@ -159,7 +133,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2> subroutine vvla(va, x, pv)  
+    <h2>public  subroutine vvla(va, x, pv)  
 </h2>
     
 
@@ -172,7 +146,7 @@ provided that the copyright is acknowledged.
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">04</span><span class="w"> </span><span class="n">July</span><span class="w"> </span><span class="mf">2012</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">04</span><span class="w"> </span><span class="n">July</span><span class="w"> </span><span class="mf">2012</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -200,16 +174,16 @@ Output, real ( kind = 8 ) PV, the value of V(nu,x).
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-va~3"></span>
+              <span class="anchor" id="variable-va~7"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -224,7 +198,7 @@ Output, real ( kind = 8 ) PV, the value of V(nu,x).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~207"></span>
+              <span class="anchor" id="variable-x~578"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -239,7 +213,7 @@ Output, real ( kind = 8 ) PV, the value of V(nu,x).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-pv"></span>
+              <span class="anchor" id="variable-pv~3"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -256,74 +230,74 @@ Output, real ( kind = 8 ) PV, the value of V(nu,x).
   </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~vvla~2~~CallsGraph Pages: 1 -->
-<svg id="procvvla2CallsGraph" width="565pt" height="52pt"
- viewBox="0.00 0.00 565.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procvvla2CallsGraph" width="414pt" height="52pt"
+ viewBox="0.00 0.00 414.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~vvla~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 48)">
 <title>proc~~vvla~2~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-48 561,-48 561,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-48 410,-48 410,4 -4,4"/>
 <!-- proc~vvla~2 -->
 <g id="proc~~vvla~2~~CallsGraph_node1" class="node">
 <title>proc~vvla~2</title>
-<polygon fill="none" stroke="black" points="154,-44 0,-44 0,-20 154,-20 154,-44"/>
-<text text-anchor="middle" x="77" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50">special_functions.f90::vvla</text>
+<polygon fill="none" stroke="black" points="103,-44 0,-44 0,-20 103,-20 103,-44"/>
+<text text-anchor="middle" x="51.5" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_SPECIAL::vvla</text>
 </g>
 <!-- proc~dvla~2 -->
 <g id="proc~~vvla~2~~CallsGraph_node2" class="node">
 <title>proc~dvla~2</title>
-<g id="a_proc~~vvla~2~~CallsGraph_node2"><a xlink:href=".././proc/dvla~2.html" xlink:title="special_functions.f90::dvla">
-<polygon fill="#d9534f" stroke="#d9534f" points="344,-44 190,-44 190,-20 344,-20 344,-44"/>
-<text text-anchor="middle" x="267" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::dvla</text>
+<g id="a_proc~~vvla~2~~CallsGraph_node2"><a xlink:href=".././proc/dvla~2.html" xlink:title="SF_SPECIAL::dvla">
+<polygon fill="#d9534f" stroke="#d9534f" points="243,-44 139,-44 139,-20 243,-20 243,-44"/>
+<text text-anchor="middle" x="191" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::dvla</text>
 </a>
 </g>
 </g>
 <!-- proc~vvla~2&#45;&gt;proc~dvla~2 -->
 <g id="proc~~vvla~2~~CallsGraph_edge1" class="edge">
 <title>proc~vvla~2&#45;&gt;proc~dvla~2</title>
-<path fill="none" stroke="#000000" d="M154.2,-25.36C162.52,-25.26 171.03,-25.23 179.47,-25.27"/>
-<polygon fill="#000000" stroke="#000000" points="179.67,-28.77 189.7,-25.36 179.73,-21.77 179.67,-28.77"/>
+<path fill="none" stroke="#000000" d="M103.31,-25.46C111.58,-25.26 120.22,-25.2 128.7,-25.29"/>
+<polygon fill="#000000" stroke="#000000" points="128.88,-28.79 138.94,-25.45 129,-21.79 128.88,-28.79"/>
 </g>
 <!-- proc~gammaf~2 -->
 <g id="proc~~vvla~2~~CallsGraph_node3" class="node">
 <title>proc~gammaf~2</title>
-<g id="a_proc~~vvla~2~~CallsGraph_node3"><a xlink:href=".././proc/gammaf~2.html" xlink:title="special_functions.f90::gammaf">
-<polygon fill="#d9534f" stroke="#d9534f" points="557,-24 380,-24 380,0 557,0 557,-24"/>
-<text text-anchor="middle" x="468.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::gammaf</text>
+<g id="a_proc~~vvla~2~~CallsGraph_node3"><a xlink:href=".././proc/gammaf~2.html" xlink:title="SF_SPECIAL::gammaf">
+<polygon fill="#d9534f" stroke="#d9534f" points="406,-24 279,-24 279,0 406,0 406,-24"/>
+<text text-anchor="middle" x="342.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::gammaf</text>
 </a>
 </g>
 </g>
 <!-- proc~vvla~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~vvla~2~~CallsGraph_edge2" class="edge">
 <title>proc~vvla~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M130.98,-19.98C149.54,-16.33 170.6,-12.8 190,-11 249.49,-5.47 316.46,-5.53 369.7,-7.07"/>
-<polygon fill="#000000" stroke="#000000" points="369.72,-10.57 379.82,-7.38 369.93,-3.57 369.72,-10.57"/>
+<path fill="none" stroke="#000000" d="M93.49,-19.93C107.76,-16.3 123.96,-12.8 139,-11 181.78,-5.88 230.01,-5.89 268.66,-7.3"/>
+<polygon fill="#000000" stroke="#000000" points="268.65,-10.8 278.78,-7.7 268.93,-3.8 268.65,-10.8"/>
 </g>
 <!-- proc~dvla~2&#45;&gt;proc~vvla~2 -->
 <g id="proc~~vvla~2~~CallsGraph_edge4" class="edge">
 <title>proc~dvla~2&#45;&gt;proc~vvla~2</title>
-<path fill="none" stroke="#000000" d="M189.7,-38.64C181.37,-38.74 172.86,-38.77 164.42,-38.73"/>
-<polygon fill="#000000" stroke="#000000" points="164.23,-35.23 154.2,-38.64 164.16,-42.23 164.23,-35.23"/>
+<path fill="none" stroke="#000000" d="M138.94,-38.55C130.67,-38.74 122.02,-38.8 113.54,-38.71"/>
+<polygon fill="#000000" stroke="#000000" points="113.37,-35.21 103.31,-38.54 113.25,-42.21 113.37,-35.21"/>
 </g>
 <!-- proc~dvla~2&#45;&gt;proc~gammaf~2 -->
 <g id="proc~~vvla~2~~CallsGraph_edge3" class="edge">
 <title>proc~dvla~2&#45;&gt;proc~gammaf~2</title>
-<path fill="none" stroke="#000000" d="M344.28,-24.35C352.66,-23.51 361.27,-22.65 369.87,-21.79"/>
-<polygon fill="#000000" stroke="#000000" points="370.33,-25.26 379.93,-20.78 369.63,-18.29 370.33,-25.26"/>
+<path fill="none" stroke="#000000" d="M243.03,-25.17C251.3,-24.07 260,-22.9 268.67,-21.74"/>
+<polygon fill="#000000" stroke="#000000" points="269.35,-25.18 278.8,-20.39 268.42,-18.25 269.35,-25.18"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -340,11 +314,11 @@ Output, real ( kind = 8 ) PV, the value of V(nu,x).
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -363,23 +337,29 @@ Output, real ( kind = 8 ) PV, the value of V(nu,x).
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -395,83 +375,83 @@ implementation in a submodule of an interface in a parent module.
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Called by</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~vvla~2~~CalledByGraph Pages: 1 -->
-<svg id="procvvla2CalledByGraph" width="549pt" height="74pt"
- viewBox="0.00 0.00 549.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procvvla2CalledByGraph" width="399pt" height="74pt"
+ viewBox="0.00 0.00 399.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~vvla~2~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
 <title>proc~~vvla~2~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 545,-70 545,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 395,-70 395,4 -4,4"/>
 <!-- proc~vvla~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_node1" class="node">
 <title>proc~vvla~2</title>
-<polygon fill="none" stroke="black" points="349,-24 195,-24 195,0 349,0 349,-24"/>
-<text text-anchor="middle" x="272" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">special_functions.f90::vvla</text>
+<polygon fill="none" stroke="black" points="248.5,-24 145.5,-24 145.5,0 248.5,0 248.5,-24"/>
+<text text-anchor="middle" x="197" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_SPECIAL::vvla</text>
 </g>
 <!-- proc~dvla~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_node2" class="node">
 <title>proc~dvla~2</title>
-<g id="a_proc~~vvla~2~~CalledByGraph_node2"><a xlink:href=".././proc/dvla~2.html" xlink:title="special_functions.f90::dvla">
-<polygon fill="#d9534f" stroke="#d9534f" points="541,-24 387,-24 387,0 541,0 541,-24"/>
-<text text-anchor="middle" x="464" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::dvla</text>
+<g id="a_proc~~vvla~2~~CalledByGraph_node2"><a xlink:href=".././proc/dvla~2.html" xlink:title="SF_SPECIAL::dvla">
+<polygon fill="#d9534f" stroke="#d9534f" points="391,-24 287,-24 287,0 391,0 391,-24"/>
+<text text-anchor="middle" x="339" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::dvla</text>
 </a>
 </g>
 </g>
 <!-- proc~vvla~2&#45;&gt;proc~dvla~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_edge4" class="edge">
 <title>proc~vvla~2&#45;&gt;proc~dvla~2</title>
-<path fill="none" stroke="#000000" d="M349.19,-5.37C358.19,-5.25 367.42,-5.22 376.55,-5.27"/>
-<polygon fill="#000000" stroke="#000000" points="376.77,-8.78 386.8,-5.37 376.83,-1.78 376.77,-8.78"/>
+<path fill="none" stroke="#000000" d="M248.54,-5.49C257.63,-5.26 267.19,-5.2 276.55,-5.29"/>
+<polygon fill="#000000" stroke="#000000" points="276.53,-8.8 286.59,-5.47 276.65,-1.8 276.53,-8.8"/>
 </g>
 <!-- proc~dvla~2&#45;&gt;proc~vvla~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_edge1" class="edge">
 <title>proc~dvla~2&#45;&gt;proc~vvla~2</title>
-<path fill="none" stroke="#000000" d="M386.8,-18.63C377.8,-18.75 368.56,-18.78 359.43,-18.73"/>
-<polygon fill="#000000" stroke="#000000" points="359.22,-15.22 349.19,-18.63 359.15,-22.22 359.22,-15.22"/>
+<path fill="none" stroke="#000000" d="M286.59,-18.53C277.47,-18.75 267.9,-18.8 258.56,-18.7"/>
+<polygon fill="#000000" stroke="#000000" points="258.61,-15.2 248.54,-18.51 258.48,-22.19 258.61,-15.2"/>
 </g>
 <!-- proc~pbvv~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_node3" class="node">
 <title>proc~pbvv~2</title>
-<g id="a_proc~~vvla~2~~CalledByGraph_node3"><a xlink:href=".././proc/pbvv~2.html" xlink:title="special_functions.f90::pbvv">
-<polygon fill="#d9534f" stroke="#d9534f" points="157,-24 0,-24 0,0 157,0 157,-24"/>
-<text text-anchor="middle" x="78.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::pbvv</text>
+<g id="a_proc~~vvla~2~~CalledByGraph_node3"><a xlink:href=".././proc/pbvv~2.html" xlink:title="SF_SPECIAL::pbvv">
+<polygon fill="#d9534f" stroke="#d9534f" points="107,-24 0,-24 0,0 107,0 107,-24"/>
+<text text-anchor="middle" x="53.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::pbvv</text>
 </a>
 </g>
 </g>
 <!-- proc~pbvv~2&#45;&gt;proc~vvla~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_edge2" class="edge">
 <title>proc~pbvv~2&#45;&gt;proc~vvla~2</title>
-<path fill="none" stroke="#000000" d="M157.11,-12C166.15,-12 175.42,-12 184.57,-12"/>
-<polygon fill="#000000" stroke="#000000" points="184.83,-15.5 194.83,-12 184.83,-8.5 184.83,-15.5"/>
+<path fill="none" stroke="#000000" d="M107.19,-12C116.21,-12 125.65,-12 134.87,-12"/>
+<polygon fill="#000000" stroke="#000000" points="135.15,-15.5 145.15,-12 135.15,-8.5 135.15,-15.5"/>
 </g>
 <!-- proc~pbdv~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_node4" class="node">
 <title>proc~pbdv~2</title>
-<g id="a_proc~~vvla~2~~CalledByGraph_node4"><a xlink:href=".././proc/pbdv~2.html" xlink:title="special_functions.f90::pbdv">
-<polygon fill="#d9534f" stroke="#d9534f" points="351,-66 193,-66 193,-42 351,-42 351,-66"/>
-<text text-anchor="middle" x="272" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">special_functions.f90::pbdv</text>
+<g id="a_proc~~vvla~2~~CalledByGraph_node4"><a xlink:href=".././proc/pbdv~2.html" xlink:title="SF_SPECIAL::pbdv">
+<polygon fill="#d9534f" stroke="#d9534f" points="251,-66 143,-66 143,-42 251,-42 251,-66"/>
+<text text-anchor="middle" x="197" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::pbdv</text>
 </a>
 </g>
 </g>
 <!-- proc~pbdv~2&#45;&gt;proc~dvla~2 -->
 <g id="proc~~vvla~2~~CalledByGraph_edge3" class="edge">
 <title>proc~pbdv~2&#45;&gt;proc~dvla~2</title>
-<path fill="none" stroke="#000000" d="M327.45,-41.96C349.61,-37.07 375.39,-31.37 398.49,-26.26"/>
-<polygon fill="#000000" stroke="#000000" points="399.54,-29.61 408.55,-24.04 398.03,-22.78 399.54,-29.61"/>
+<path fill="none" stroke="#000000" d="M238.12,-41.96C253.64,-37.31 271.58,-31.93 287.93,-27.02"/>
+<polygon fill="#000000" stroke="#000000" points="289.3,-30.26 297.88,-24.04 287.29,-23.56 289.3,-30.26"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CalledByGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -488,11 +468,11 @@ implementation in a submodule of an interface in a parent module.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -511,23 +491,29 @@ implementation in a submodule of an interface in a parent module.
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -545,38 +531,6 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    <div class="panel panel-primary">
-      <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/vvla~2.html#src">vvla</a>
-      </div>
-    </div>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
@@ -585,93 +539,8 @@ implementation in a submodule of an interface in a parent module.
     
 
 
+
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">vvla</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">va</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">pv</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! VVLA computes parabolic cylinder function Vv(x) for large arguments.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Licensing:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
-<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
-<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    04 July 2012</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
-<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
-<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
-<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the argument.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) VA, the order nu.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) PV, the value of V(nu,x).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a0</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dsl</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">eps</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gl</span><span class="w"></span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">pdl</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">pi</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">pv</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">qe</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">va</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x1</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.141592653589793D+00</span><span class="w"></span>
-<span class="w">  </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D-12</span><span class="w"></span>
-<span class="w">  </span><span class="n">qe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.25D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">a0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="n">va</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">qe</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">  </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"></span>
-<span class="w">  </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="w"></span>
-<span class="w">     </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">va</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">          </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">va</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pv</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">pv</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        exit</span>
-<span class="k">     end if</span>
-<span class="k">  end do</span>
-
-<span class="k">  </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pv</span><span class="w"></span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">x</span><span class="w"></span>
-<span class="w">     </span><span class="k">call </span><span class="n">dvla</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">va</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">pdl</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="k">call </span><span class="n">gammaf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="n">va</span><span class="p">,</span><span class="w"> </span><span class="n">gl</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="n">dsl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">va</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">va</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dsl</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">gl</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pdl</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">va</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pv</span><span class="w"></span>
-<span class="w">  </span><span class="k">end if</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">vvla</span><span class="w"></span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
@@ -680,12 +549,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -695,17 +564,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

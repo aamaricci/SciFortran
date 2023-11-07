@@ -10,81 +10,55 @@
 
     <title>rswfo &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,33 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.0% of total for procedures.">31 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for procedures.">31 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/special_functions.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-              <li><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
-          <li class="active">rswfo</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">rswfo</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -147,6 +124,13 @@
   
   
   
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/rswfo.html#src">rswfo</a>
+      </div>
+    </div>
 
 
   </div>
@@ -154,7 +138,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine rswfo(m, n, c, x, cv, kf, r1f, r1d, r2f, r2d)  
+    <h2> subroutine rswfo(m, n, c, x, cv, kf, r1f, r1d, r2f, r2d)  
 </h2>
     
 
@@ -166,13 +150,13 @@ and second kinds, and their derivatives.
 </code></pre></div>
 
 <p>Licensing:</p>
-<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
-they give permission to incorporate this routine into a user program 
+<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However,
+they give permission to incorporate this routine into a user program
 provided that the copyright is acknowledged.
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">07</span><span class="w"> </span><span class="n">July</span><span class="w"> </span><span class="mf">2012</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">07</span><span class="w"> </span><span class="n">July</span><span class="w"> </span><span class="mf">2012</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -188,30 +172,30 @@ LC: QA351.C45.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">M</span>, <span class="nv">the</span> <span class="nv">mode</span> <span class="nv">parameter</span><span class="c1">;  M = 0, 1, 2, ...</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">M</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">mode</span><span class="w"> </span><span class="nv">parameter</span><span class="c1">;  M = 0, 1, 2, ...</span>
 
-<span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">N</span>, <span class="nv">mode</span> <span class="nv">parameter</span>, <span class="nv">N</span> <span class="o">=</span> <span class="nv">M</span>, <span class="nv">M</span> <span class="o">+</span> <span class="mi">1</span>, <span class="nv">M</span> <span class="o">+</span> <span class="mi">2</span>, ...
+<span class="nv">Input</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">N</span>,<span class="w"> </span><span class="nv">mode</span><span class="w"> </span><span class="nv">parameter</span>,<span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">M</span>,<span class="w"> </span><span class="nv">M</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="nv">M</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span>,<span class="w"> </span>...
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">C</span>, <span class="nv">spheroidal</span> <span class="nv">parameter</span>.
+<span class="nv">Input</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">C</span>,<span class="w"> </span><span class="nv">spheroidal</span><span class="w"> </span><span class="nv">parameter</span>.
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">X</span>, <span class="nv">the</span> <span class="nv">argument</span>.
+<span class="nv">Input</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">X</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">argument</span>.
 
-<span class="nv">Input</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">CV</span>, <span class="nv">the</span> <span class="nv">characteristic</span> <span class="nv">value</span>.
+<span class="nv">Input</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">CV</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">characteristic</span><span class="w"> </span><span class="nv">value</span>.
 
-<span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">KF</span>, <span class="nv">the</span> <span class="nv">function</span> <span class="nv">code</span>.
-<span class="mi">1</span>, <span class="k">for</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">kind</span>
-<span class="mi">2</span>, <span class="k">for</span> <span class="nv">the</span> <span class="nv">second</span> <span class="nv">kind</span>
-<span class="mi">3</span>, <span class="k">for</span> <span class="nv">both</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">and</span> <span class="nv">second</span> <span class="nv">kinds</span>.
+<span class="nv">Input</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">KF</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="nv">code</span>.
+<span class="mi">1</span>,<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">first</span><span class="w"> </span><span class="nv">kind</span>
+<span class="mi">2</span>,<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">kind</span>
+<span class="mi">3</span>,<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">both</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">first</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">kinds</span>.
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">R1F</span>, <span class="nv">the</span> <span class="nv">radial</span> <span class="nv">function</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">kind</span><span class="c1">;</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">R1F</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">radial</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">first</span><span class="w"> </span><span class="nv">kind</span><span class="c1">;</span>
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">R1D</span>, <span class="nv">the</span> <span class="nv">derivative</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">radial</span> <span class="nv">function</span> <span class="nv">of</span>
-<span class="nv">the</span> <span class="nv">first</span> <span class="nv">kind</span><span class="c1">;</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">R1D</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">derivative</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">radial</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="nv">of</span>
+<span class="nv">the</span><span class="w"> </span><span class="nv">first</span><span class="w"> </span><span class="nv">kind</span><span class="c1">;</span>
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">R2F</span>, <span class="nv">the</span> <span class="nv">radial</span> <span class="nv">function</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">second</span> <span class="nv">kind</span><span class="c1">;</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">R2F</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">radial</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">kind</span><span class="c1">;</span>
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">R2D</span>, <span class="nv">the</span> <span class="nv">derivative</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">radial</span> <span class="nv">function</span> <span class="nv">of</span>
-<span class="nv">the</span> <span class="nv">second</span> <span class="nv">kind</span><span class="c1">;</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">R2D</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">derivative</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">radial</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="nv">of</span>
+<span class="nv">the</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">kind</span><span class="c1">;</span>
 </code></pre></div>
 
 
@@ -219,16 +203,16 @@ LC: QA351.C45.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~112"></span>
+              <span class="anchor" id="variable-m~63"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -243,7 +227,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~240"></span>
+              <span class="anchor" id="variable-n~132"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -258,7 +242,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-c~57"></span>
+              <span class="anchor" id="variable-c~29"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -273,7 +257,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~393"></span>
+              <span class="anchor" id="variable-x~260"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -288,7 +272,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cv~20"></span>
+              <span class="anchor" id="variable-cv~8"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -303,7 +287,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-kf~21"></span>
+              <span class="anchor" id="variable-kf~10"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -318,7 +302,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-r1f~5"></span>
+              <span class="anchor" id="variable-r1f~2"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -333,7 +317,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-r1d~5"></span>
+              <span class="anchor" id="variable-r1d~2"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -348,7 +332,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-r2f~9"></span>
+              <span class="anchor" id="variable-r2f~4"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -363,7 +347,7 @@ LC: QA351.C45.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-r2d~9"></span>
+              <span class="anchor" id="variable-r2d~4"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -380,249 +364,80 @@ LC: QA351.C45.
   </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~rswfo~~CallsGraph Pages: 1 -->
-<svg id="procrswfoCallsGraph" width="641pt" height="178pt"
- viewBox="0.00 0.00 641.00 178.43" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~rswfo~~CallsGraph" class="graph" transform="scale(1.33 1.33) rotate(0) translate(4 234)">
+<svg id="procrswfoCallsGraph" width="258pt" height="158pt"
+ viewBox="0.00 0.00 258.00 158.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~rswfo~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 154)">
 <title>proc~~rswfo~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-234 851,-234 851,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-154 254,-154 254,4 -4,4"/>
 <!-- proc~rswfo -->
 <g id="proc~~rswfo~~CallsGraph_node1" class="node">
 <title>proc~rswfo</title>
-<polygon fill="none" stroke="black" points="110,-166 0,-166 0,-142 110,-142 110,-166"/>
-<text text-anchor="middle" x="55" y="-151.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_SPECIAL::rswfo</text>
+<polygon fill="none" stroke="black" points="160,-87 0,-87 0,-63 160,-63 160,-87"/>
+<text text-anchor="middle" x="80" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50">special_functions.f90::rswfo</text>
 </g>
-<!-- proc~rmn1 -->
+<!-- rmn1 -->
 <g id="proc~~rswfo~~CallsGraph_node2" class="node">
-<title>proc~rmn1</title>
-<g id="a_proc~~rswfo~~CallsGraph_node2"><a xlink:href=".././proc/rmn1.html" xlink:title="SF_SPECIAL::rmn1">
-<polygon fill="#d9534f" stroke="#d9534f" points="414,-188 304,-188 304,-164 414,-164 414,-188"/>
-<text text-anchor="middle" x="359" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::rmn1</text>
-</a>
+<title>rmn1</title>
+<polygon fill="#777777" stroke="#777777" points="250,-150 196,-150 196,-126 250,-126 250,-150"/>
+<text text-anchor="middle" x="223" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rmn1</text>
 </g>
-</g>
-<!-- proc~rswfo&#45;&gt;proc~rmn1 -->
+<!-- proc~rswfo&#45;&gt;rmn1 -->
 <g id="proc~~rswfo~~CallsGraph_edge1" class="edge">
-<title>proc~rswfo&#45;&gt;proc~rmn1</title>
-<path fill="none" stroke="#000000" d="M110.34,-157.96C161.79,-161.71 239.07,-167.34 293.6,-171.31"/>
-<polygon fill="#000000" stroke="#000000" points="293.61,-174.82 303.84,-172.05 294.12,-167.84 293.61,-174.82"/>
+<title>proc~rswfo&#45;&gt;rmn1</title>
+<path fill="none" stroke="#000000" d="M108.19,-87.15C130.51,-97.12 162.3,-111.32 186.6,-122.19"/>
+<polygon fill="#000000" stroke="#000000" points="185.29,-125.43 195.85,-126.32 188.15,-119.04 185.29,-125.43"/>
 </g>
-<!-- proc~rmn2l -->
+<!-- rmn2l -->
 <g id="proc~~rswfo~~CallsGraph_node3" class="node">
-<title>proc~rmn2l</title>
-<g id="a_proc~~rswfo~~CallsGraph_node3"><a xlink:href=".././proc/rmn2l.html" xlink:title="SF_SPECIAL::rmn2l">
-<polygon fill="#d9534f" stroke="#d9534f" points="263.5,-229 150.5,-229 150.5,-205 263.5,-205 263.5,-229"/>
-<text text-anchor="middle" x="207" y="-214.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::rmn2l</text>
-</a>
+<title>rmn2l</title>
+<polygon fill="#777777" stroke="#777777" points="250,-108 196,-108 196,-84 250,-84 250,-108"/>
+<text text-anchor="middle" x="223" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rmn2l</text>
 </g>
-</g>
-<!-- proc~rswfo&#45;&gt;proc~rmn2l -->
+<!-- proc~rswfo&#45;&gt;rmn2l -->
 <g id="proc~~rswfo~~CallsGraph_edge2" class="edge">
-<title>proc~rswfo&#45;&gt;proc~rmn2l</title>
-<path fill="none" stroke="#000000" d="M84.92,-166.15C108.55,-176.07 142.14,-190.18 167.95,-201.02"/>
-<polygon fill="#000000" stroke="#000000" points="166.85,-204.35 177.42,-205 169.56,-197.9 166.85,-204.35"/>
+<title>proc~rswfo&#45;&gt;rmn2l</title>
+<path fill="none" stroke="#000000" d="M160.16,-86.79C169.15,-88.13 177.95,-89.44 185.96,-90.63"/>
+<polygon fill="#000000" stroke="#000000" points="185.58,-94.11 195.99,-92.13 186.62,-87.19 185.58,-94.11"/>
 </g>
-<!-- proc~rmn2so -->
+<!-- rmn2so -->
 <g id="proc~~rswfo~~CallsGraph_node4" class="node">
-<title>proc~rmn2so</title>
-<g id="a_proc~~rswfo~~CallsGraph_node4"><a xlink:href=".././proc/rmn2so.html" xlink:title="SF_SPECIAL::rmn2so">
-<polygon fill="#d9534f" stroke="#d9534f" points="268,-146 146,-146 146,-122 268,-122 268,-146"/>
-<text text-anchor="middle" x="207" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::rmn2so</text>
-</a>
+<title>rmn2so</title>
+<polygon fill="#777777" stroke="#777777" points="250,-66 196,-66 196,-42 250,-42 250,-66"/>
+<text text-anchor="middle" x="223" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rmn2so</text>
 </g>
-</g>
-<!-- proc~rswfo&#45;&gt;proc~rmn2so -->
+<!-- proc~rswfo&#45;&gt;rmn2so -->
 <g id="proc~~rswfo~~CallsGraph_edge3" class="edge">
-<title>proc~rswfo&#45;&gt;proc~rmn2so</title>
-<path fill="none" stroke="#000000" d="M110.15,-146.78C118.48,-145.67 127.17,-144.51 135.78,-143.36"/>
-<polygon fill="#000000" stroke="#000000" points="136.38,-146.81 145.83,-142.02 135.45,-139.88 136.38,-146.81"/>
+<title>proc~rswfo&#45;&gt;rmn2so</title>
+<path fill="none" stroke="#000000" d="M160.16,-63.21C169.15,-61.87 177.95,-60.56 185.96,-59.37"/>
+<polygon fill="#000000" stroke="#000000" points="186.62,-62.81 195.99,-57.87 185.58,-55.89 186.62,-62.81"/>
 </g>
-<!-- proc~sdmn -->
+<!-- sdmn -->
 <g id="proc~~rswfo~~CallsGraph_node5" class="node">
-<title>proc~sdmn</title>
-<g id="a_proc~~rswfo~~CallsGraph_node5"><a xlink:href=".././proc/sdmn.html" xlink:title="SF_SPECIAL::sdmn">
-<polygon fill="#d9534f" stroke="#d9534f" points="262.5,-104 151.5,-104 151.5,-80 262.5,-80 262.5,-104"/>
-<text text-anchor="middle" x="207" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::sdmn</text>
-</a>
+<title>sdmn</title>
+<polygon fill="#777777" stroke="#777777" points="250,-24 196,-24 196,0 250,0 250,-24"/>
+<text text-anchor="middle" x="223" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sdmn</text>
 </g>
-</g>
-<!-- proc~rswfo&#45;&gt;proc~sdmn -->
+<!-- proc~rswfo&#45;&gt;sdmn -->
 <g id="proc~~rswfo~~CallsGraph_edge4" class="edge">
-<title>proc~rswfo&#45;&gt;proc~sdmn</title>
-<path fill="none" stroke="#000000" d="M80.95,-141.89C98.87,-133.38 123.7,-121.96 146,-113 150.68,-111.12 155.6,-109.24 160.53,-107.42"/>
-<polygon fill="#000000" stroke="#000000" points="161.73,-110.71 169.95,-104.02 159.36,-104.13 161.73,-110.71"/>
-</g>
-<!-- proc~sckb -->
-<g id="proc~~rswfo~~CallsGraph_node9" class="node">
-<title>proc~sckb</title>
-<g id="a_proc~~rswfo~~CallsGraph_node9"><a xlink:href=".././proc/sckb.html" xlink:title="SF_SPECIAL::sckb">
-<polygon fill="#d9534f" stroke="#d9534f" points="556,-126 450,-126 450,-102 556,-102 556,-126"/>
-<text text-anchor="middle" x="503" y="-111.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::sckb</text>
-</a>
-</g>
-</g>
-<!-- proc~rmn1&#45;&gt;proc~sckb -->
-<g id="proc~~rswfo~~CallsGraph_edge5" class="edge">
-<title>proc~rmn1&#45;&gt;proc~sckb</title>
-<path fill="none" stroke="#000000" d="M392.12,-163.9C399.35,-161.07 406.97,-158 414,-155 432.01,-147.31 451.8,-138.16 468.05,-130.45"/>
-<polygon fill="#000000" stroke="#000000" points="469.64,-133.57 477.16,-126.1 466.63,-127.25 469.64,-133.57"/>
-</g>
-<!-- proc~sphj -->
-<g id="proc~~rswfo~~CallsGraph_node10" class="node">
-<title>proc~sphj</title>
-<g id="a_proc~~rswfo~~CallsGraph_node10"><a xlink:href=".././proc/sphj.html" xlink:title="SF_SPECIAL::sphj">
-<polygon fill="#d9534f" stroke="#d9534f" points="554.5,-188 451.5,-188 451.5,-164 554.5,-164 554.5,-188"/>
-<text text-anchor="middle" x="503" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::sphj</text>
-</a>
-</g>
-</g>
-<!-- proc~rmn1&#45;&gt;proc~sphj -->
-<g id="proc~~rswfo~~CallsGraph_edge6" class="edge">
-<title>proc~rmn1&#45;&gt;proc~sphj</title>
-<path fill="none" stroke="#000000" d="M414.09,-176C422.97,-176 432.23,-176 441.26,-176"/>
-<polygon fill="#000000" stroke="#000000" points="441.33,-179.5 451.33,-176 441.33,-172.5 441.33,-179.5"/>
-</g>
-<!-- proc~sphy -->
-<g id="proc~~rswfo~~CallsGraph_node11" class="node">
-<title>proc~sphy</title>
-<g id="a_proc~~rswfo~~CallsGraph_node11"><a xlink:href=".././proc/sphy.html" xlink:title="SF_SPECIAL::sphy">
-<polygon fill="#d9534f" stroke="#d9534f" points="412,-230 306,-230 306,-206 412,-206 412,-230"/>
-<text text-anchor="middle" x="359" y="-215.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::sphy</text>
-</a>
-</g>
-</g>
-<!-- proc~rmn2l&#45;&gt;proc~sphy -->
-<g id="proc~~rswfo~~CallsGraph_edge7" class="edge">
-<title>proc~rmn2l&#45;&gt;proc~sphy</title>
-<path fill="none" stroke="#000000" d="M263.85,-217.37C274.1,-217.44 284.86,-217.51 295.29,-217.58"/>
-<polygon fill="#000000" stroke="#000000" points="295.55,-221.08 305.58,-217.65 295.6,-214.08 295.55,-221.08"/>
-</g>
-<!-- proc~rmn2so&#45;&gt;proc~rmn1 -->
-<g id="proc~~rswfo~~CallsGraph_edge11" class="edge">
-<title>proc~rmn2so&#45;&gt;proc~rmn1</title>
-<path fill="none" stroke="#000000" d="M250.98,-146.04C267.93,-150.78 287.56,-156.28 305.35,-161.26"/>
-<polygon fill="#000000" stroke="#000000" points="304.44,-164.64 315.01,-163.96 306.32,-157.9 304.44,-164.64"/>
-</g>
-<!-- proc~gmn -->
-<g id="proc~~rswfo~~CallsGraph_node6" class="node">
-<title>proc~gmn</title>
-<g id="a_proc~~rswfo~~CallsGraph_node6"><a xlink:href=".././proc/gmn.html" xlink:title="SF_SPECIAL::gmn">
-<polygon fill="#d9534f" stroke="#d9534f" points="412,-66 306,-66 306,-42 412,-42 412,-66"/>
-<text text-anchor="middle" x="359" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::gmn</text>
-</a>
-</g>
-</g>
-<!-- proc~rmn2so&#45;&gt;proc~gmn -->
-<g id="proc~~rswfo~~CallsGraph_edge8" class="edge">
-<title>proc~rmn2so&#45;&gt;proc~gmn</title>
-<path fill="none" stroke="#000000" d="M249.67,-121.9C256,-119.36 262.32,-116.4 268,-113 286.62,-101.85 286.03,-92.17 304,-80 308.91,-76.67 314.31,-73.54 319.75,-70.68"/>
-<polygon fill="#000000" stroke="#000000" points="321.46,-73.73 328.83,-66.13 318.32,-67.47 321.46,-73.73"/>
-</g>
-<!-- proc~kmn -->
-<g id="proc~~rswfo~~CallsGraph_node7" class="node">
-<title>proc~kmn</title>
-<g id="a_proc~~rswfo~~CallsGraph_node7"><a xlink:href=".././proc/kmn.html" xlink:title="SF_SPECIAL::kmn">
-<polygon fill="#d9534f" stroke="#d9534f" points="411.5,-24 306.5,-24 306.5,0 411.5,0 411.5,-24"/>
-<text text-anchor="middle" x="359" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::kmn</text>
-</a>
-</g>
-</g>
-<!-- proc~rmn2so&#45;&gt;proc~kmn -->
-<g id="proc~~rswfo~~CallsGraph_edge9" class="edge">
-<title>proc~rmn2so&#45;&gt;proc~kmn</title>
-<path fill="none" stroke="#000000" d="M255.03,-121.87C259.74,-119.43 264.18,-116.51 268,-113 296.73,-86.64 275.72,-59.84 304,-33 305.28,-31.79 306.64,-30.64 308.05,-29.56"/>
-<polygon fill="#000000" stroke="#000000" points="310.17,-32.36 316.73,-24.04 306.42,-26.45 310.17,-32.36"/>
-</g>
-<!-- proc~qstar -->
-<g id="proc~~rswfo~~CallsGraph_node8" class="node">
-<title>proc~qstar</title>
-<g id="a_proc~~rswfo~~CallsGraph_node8"><a xlink:href=".././proc/qstar.html" xlink:title="SF_SPECIAL::qstar">
-<polygon fill="#d9534f" stroke="#d9534f" points="413.5,-146 304.5,-146 304.5,-122 413.5,-122 413.5,-146"/>
-<text text-anchor="middle" x="359" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::qstar</text>
-</a>
-</g>
-</g>
-<!-- proc~rmn2so&#45;&gt;proc~qstar -->
-<g id="proc~~rswfo~~CallsGraph_edge10" class="edge">
-<title>proc~rmn2so&#45;&gt;proc~qstar</title>
-<path fill="none" stroke="#000000" d="M268.15,-134C276.61,-134 285.33,-134 293.86,-134"/>
-<polygon fill="#000000" stroke="#000000" points="294.14,-137.5 304.14,-134 294.14,-130.5 294.14,-137.5"/>
-</g>
-<!-- proc~rmn2so&#45;&gt;proc~sckb -->
-<g id="proc~~rswfo~~CallsGraph_edge12" class="edge">
-<title>proc~rmn2so&#45;&gt;proc~sckb</title>
-<path fill="none" stroke="#000000" d="M253.57,-121.93C269.41,-118.3 287.38,-114.8 304,-113 352.61,-107.75 365.11,-112.72 414,-113 422.35,-113.05 431.14,-113.12 439.8,-113.21"/>
-<polygon fill="#000000" stroke="#000000" points="439.85,-116.71 449.88,-113.31 439.92,-109.71 439.85,-116.71"/>
-</g>
-<!-- proc~msta1 -->
-<g id="proc~~rswfo~~CallsGraph_node12" class="node">
-<title>proc~msta1</title>
-<g id="a_proc~~rswfo~~CallsGraph_node12"><a xlink:href=".././proc/msta1.html" xlink:title="SF_SPECIAL::msta1">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="707,-209 592,-209 592,-185 707,-185 707,-209"/>
-<text text-anchor="middle" x="649.5" y="-194.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::msta1</text>
-</a>
-</g>
-</g>
-<!-- proc~sphj&#45;&gt;proc~msta1 -->
-<g id="proc~~rswfo~~CallsGraph_edge13" class="edge">
-<title>proc~sphj&#45;&gt;proc~msta1</title>
-<path fill="none" stroke="#000000" d="M554.54,-183.34C563.38,-184.63 572.71,-185.99 581.91,-187.32"/>
-<polygon fill="#000000" stroke="#000000" points="581.42,-190.79 591.82,-188.76 582.42,-183.86 581.42,-190.79"/>
-</g>
-<!-- proc~msta2 -->
-<g id="proc~~rswfo~~CallsGraph_node13" class="node">
-<title>proc~msta2</title>
-<g id="a_proc~~rswfo~~CallsGraph_node13"><a xlink:href=".././proc/msta2.html" xlink:title="SF_SPECIAL::msta2">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="707,-167 592,-167 592,-143 707,-143 707,-167"/>
-<text text-anchor="middle" x="649.5" y="-152.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::msta2</text>
-</a>
-</g>
-</g>
-<!-- proc~sphj&#45;&gt;proc~msta2 -->
-<g id="proc~~rswfo~~CallsGraph_edge14" class="edge">
-<title>proc~sphj&#45;&gt;proc~msta2</title>
-<path fill="none" stroke="#000000" d="M554.54,-168.66C563.38,-167.37 572.71,-166.01 581.91,-164.68"/>
-<polygon fill="#000000" stroke="#000000" points="582.42,-168.14 591.82,-163.24 581.42,-161.21 582.42,-168.14"/>
-</g>
-<!-- proc~envj -->
-<g id="proc~~rswfo~~CallsGraph_node14" class="node">
-<title>proc~envj</title>
-<g id="a_proc~~rswfo~~CallsGraph_node14"><a xlink:href=".././proc/envj.html" xlink:title="SF_SPECIAL::envj">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="847,-188 743,-188 743,-164 847,-164 847,-188"/>
-<text text-anchor="middle" x="795" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::envj</text>
-</a>
-</g>
-</g>
-<!-- proc~msta1&#45;&gt;proc~envj -->
-<g id="proc~~rswfo~~CallsGraph_edge15" class="edge">
-<title>proc~msta1&#45;&gt;proc~envj</title>
-<path fill="none" stroke="#000000" d="M707.21,-188.7C715.57,-187.48 724.21,-186.21 732.65,-184.98"/>
-<polygon fill="#000000" stroke="#000000" points="733.43,-188.4 742.82,-183.49 732.42,-181.47 733.43,-188.4"/>
-</g>
-<!-- proc~msta2&#45;&gt;proc~envj -->
-<g id="proc~~rswfo~~CallsGraph_edge16" class="edge">
-<title>proc~msta2&#45;&gt;proc~envj</title>
-<path fill="none" stroke="#000000" d="M707.21,-163.3C715.57,-164.52 724.21,-165.79 732.65,-167.02"/>
-<polygon fill="#000000" stroke="#000000" points="732.42,-170.53 742.82,-168.51 733.43,-163.6 732.42,-170.53"/>
+<title>proc~rswfo&#45;&gt;sdmn</title>
+<path fill="none" stroke="#000000" d="M108.19,-62.85C130.51,-52.88 162.3,-38.68 186.6,-27.81"/>
+<polygon fill="#000000" stroke="#000000" points="188.15,-30.96 195.85,-23.68 185.29,-24.57 188.15,-30.96"/>
 </g>
 </g>
 </svg>
-</div>                <script>
-                  var panprocrswfoCallsGraph = svgPanZoom('#procrswfoCallsGraph',
-                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
-                  );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -639,11 +454,11 @@ LC: QA351.C45.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -662,23 +477,29 @@ LC: QA351.C45.
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -696,41 +517,117 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">rswfo</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="p">,</span><span class="w"> </span><span class="n">kf</span><span class="p">,</span><span class="w"> </span><span class="n">r1f</span><span class="p">,</span><span class="w"> </span><span class="n">r1d</span><span class="p">,</span><span class="w"> </span><span class="n">r2f</span><span class="p">,</span><span class="w"> </span><span class="n">r2d</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! RSWFO computes prolate spheroidal radial function of first and second kinds.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This procedure computes oblate radial functions of the first</span>
+<span class="w">  </span><span class="c">!    and second kinds, and their derivatives.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
+<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
+<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    07 July 2012</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
+<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
+<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
+<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) M, the mode parameter;  M = 0, 1, 2, ...</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, mode parameter, N = M, M + 1, M + 2, ...</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) C, spheroidal parameter.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the argument.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) CV, the characteristic value.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) KF, the function code.</span>
+<span class="w">  </span><span class="c">!    1, for the first kind</span>
+<span class="w">  </span><span class="c">!    2, for the second kind</span>
+<span class="w">  </span><span class="c">!    3, for both the first and second kinds.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) R1F, the radial function of the first kind;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) R1D, the derivative of the radial function of</span>
+<span class="w">  </span><span class="c">!    the first kind;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) R2F, the radial function of the second kind;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) R2D, the derivative of the radial function of</span>
+<span class="w">  </span><span class="c">!    the second kind;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">c</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cv</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">df</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">id</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kd</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kf</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r1d</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r1f</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r2d</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r2f</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span>
+
+<span class="w">  </span><span class="n">kd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+<span class="w">  </span><span class="k">call </span><span class="n">sdmn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kf</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     call </span><span class="n">rmn1</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">,</span><span class="w"> </span><span class="n">r1f</span><span class="p">,</span><span class="w"> </span><span class="n">r1d</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">end if</span>
+
+<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">kf</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D-08</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        call </span><span class="n">rmn2l</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">,</span><span class="w"> </span><span class="n">r2f</span><span class="p">,</span><span class="w"> </span><span class="n">r2d</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="k">end if</span>
+<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        call </span><span class="n">rmn2so</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">cv</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">,</span><span class="w"> </span><span class="n">r2f</span><span class="p">,</span><span class="w"> </span><span class="n">r2d</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="k">end if</span>
+<span class="k">  end if</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">rswfo</span>
+</pre></div>
 
     </section>
-    <br class="visible-xs visible-sm hidden-md">
-
-
-    
-    
-
-    
-    
-
-
-    
+    <br>
     
     </div>
   </div>
@@ -739,12 +636,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -754,17 +651,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

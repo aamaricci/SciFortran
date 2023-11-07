@@ -10,81 +10,55 @@
 
     <title>l2err &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.1% of total for procedures.">73 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for procedures.">73 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
-          <li class="active">l2err</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">l2err</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -127,14 +105,13 @@
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
       <div id="sidebar">
       <h3>Contents</h3>
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#common-0">Common Blocks</a>
-        </h3>
-      </div>
-      <div id="common-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#common-0"
+         aria-expanded="false" aria-controls="common-0">
+         <h4 class="card-header bg-primary text-white">Common Blocks</h4>
+      </a>
+      <div id="common-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../proc/l2err~2.html#common-approx~6">approx</a>
             <a class="list-group-item" href="../proc/l2err~2.html#common-i4data~4">i4data</a>
             <a class="list-group-item" href="../proc/l2err~2.html#common-r8data~4">r8data</a>
@@ -160,6 +137,13 @@
   
   
   
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/l2err~2.html#src">l2err</a>
+      </div>
+    </div>
 
 
   </div>
@@ -174,16 +158,16 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! L2ERR computes the errors of an L2 approximation.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">This</span><span class="w"> </span><span class="n">routine</span><span class="w"> </span><span class="n">computes</span><span class="w"> </span><span class="n">various</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">approximation</span><span class="p">,</span><span class="w"> </span>
-<span class="n">whose</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span><span class="w"> </span>
-<span class="n">block</span><span class="w"> </span><span class="n">APPROX</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">DATA</span><span class="o">.</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">This</span><span class="w"> </span><span class="n">routine</span><span class="w"> </span><span class="n">computes</span><span class="w"> </span><span class="n">various</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">approximation</span><span class="p">,</span>
+<span class="n">whose</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span>
+<span class="n">block</span><span class="w"> </span><span class="n">APPROX</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">DATA</span><span class="o">.</span>
 
-<span class="n">It</span><span class="w"> </span><span class="nb">prints</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">average</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRL1</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRL2</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
-<span class="n">maximum</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRMAX</span><span class="o">.</span><span class="w"></span>
+<span class="n">It</span><span class="w"> </span><span class="nb">prints</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">average</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRL1</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRL2</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span>
+<span class="n">maximum</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRMAX</span><span class="o">.</span>
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">16</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">16</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -198,20 +182,20 @@ ISBN: 0387953663,
 LC: QA1.A647.v27.
 </code></pre></div>
 
-<p>Parameters: </p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>, <span class="nv">integer</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="ss">)</span> <span class="nv">IPRFUN</span>.  <span class="k">If</span> <span class="nv">IPRFUN</span> <span class="o">=</span> <span class="mi">1</span>, <span class="nv">the</span> <span class="nv">routine</span> <span class="nv">prints</span> <span class="nv">out</span>
-<span class="nv">the</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">approximation</span> <span class="nv">as</span> <span class="nv">well</span> <span class="nv">as</span> <span class="nv">its</span> <span class="nv">error</span> <span class="nv">at</span>
-<span class="nv">every</span> <span class="nv">data</span> <span class="nv">point</span>.
+<p>Parameters:</p>
+<div class="codehilite"><pre><span></span><code>Input, integer ( kind = 4 ) IPRFUN.  If IPRFUN = 1, the routine prints out
+the value of the approximation as well as its error at
+every data point.
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">FTAU</span><span class="ss">(</span><span class="nv">NTAU</span><span class="ss">)</span>, <span class="nv">contains</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">computed</span>
-<span class="nv">approximation</span> <span class="nv">at</span> <span class="nv">each</span> <span class="nv">value</span> <span class="nv">TAU</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NTAU</span><span class="ss">)</span>.
+Output, real ( kind = 8 ) FTAU(NTAU), contains the value of the computed
+approximation at each value TAU(1:NTAU).
 
-<span class="nv">Output</span>, <span class="nv">real</span> <span class="ss">(</span> <span class="nv">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="ss">)</span> <span class="nv">ERROR</span><span class="ss">(</span><span class="nv">NTAU</span><span class="ss">)</span>, <span class="nv">with</span> 
-  <span class="nv">ERROR</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">SCALE</span> <span class="o">*</span> <span class="ss">(</span> <span class="nv">G</span> <span class="o">-</span> <span class="nv">F</span> <span class="ss">)(</span><span class="nv">TAU</span><span class="ss">(</span><span class="nv">I</span><span class="ss">))</span>.  <span class="nv">Here</span>, <span class="nv">SCALE</span> <span class="nv">equals</span> <span class="mi">1</span>
-<span class="nv">in</span> <span class="nv">case</span> <span class="nv">IPRFUN</span> <span class="o">/=</span> <span class="mi">1</span>, <span class="nv">or</span> <span class="nv">the</span> <span class="nv">absolute</span> <span class="nv">error</span> <span class="nv">is</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="mi">100</span> 
-<span class="nv">somewhere</span>.  <span class="nv">Otherwise</span>, <span class="nv">SCALE</span> <span class="nv">is</span> <span class="nv">such</span> <span class="nv">that</span> <span class="nv">the</span> <span class="nv">maximum</span> <span class="nv">of</span> <span class="nv">the</span>
-<span class="nv">absolute</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">ERROR</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NTAU</span><span class="ss">)</span> <span class="nv">lies</span> <span class="nv">between</span> <span class="mi">10</span> <span class="nv">and</span> <span class="mi">100</span>.  <span class="nv">This</span>
-<span class="nv">makes</span> <span class="nv">the</span> <span class="nv">printed</span> <span class="nv">output</span> <span class="nv">more</span> <span class="nv">illustrative</span>.
+Output, real ( kind = 8 ) ERROR(NTAU), with
+  ERROR(I) = SCALE * ( G - F )(TAU(I)).  Here, SCALE equals 1
+in case IPRFUN /= 1, or the absolute error is greater than 100
+somewhere.  Otherwise, SCALE is such that the maximum of the
+absolute value of ERROR(1:NTAU) lies between 10 and 100.  This
+makes the printed output more illustrative.
 </code></pre></div>
 
 
@@ -219,11 +203,11 @@ LC: QA1.A647.v27.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -276,70 +260,42 @@ LC: QA1.A647.v27.
 
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#common-1">Common Blocks</a>
-        </h3>
-      </div>
-      <div id="common-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../proc/l2err~2.html#common-approx~6">approx</a>
-            <a class="list-group-item" href="../proc/l2err~2.html#common-i4data~4">i4data</a>
-            <a class="list-group-item" href="../proc/l2err~2.html#common-r8data~4">r8data</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
     <section>
       <h2>Common Blocks</h2>
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-approx~6"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/colloc.html#common-approx'>colloc</a> (subroutine)<br><a href='../proc/difequ.html#common-approx~2'>difequ</a> (subroutine)<br><a href='../proc/l2err.html#common-approx~3'>l2err</a> (subroutine)<br><a href='../proc/colloc~2.html#common-approx~4'>colloc</a> (subroutine)<br><a href='../proc/difequ~2.html#common-approx~5'>difequ</a> (subroutine)<br>">common /approx/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-approx~6"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/colloc.html#common-approx'>colloc</a>
+      (subroutine)<br><a href='../proc/difequ.html#common-approx~2'>difequ</a>
+      (subroutine)<br><a href='../proc/l2err.html#common-approx~3'>l2err</a>
+      (subroutine)<br><a href='../proc/colloc~2.html#common-approx~4'>colloc</a>
+      (subroutine)<br><a href='../proc/difequ~2.html#common-approx~5'>difequ</a>
+      (subroutine)<br>">
+           common /approx/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-break~20"></span>
+              <span class="anchor" id="variable-break~19"></span>
               real
             </td>
             <td>
@@ -355,7 +311,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-coef~17"></span>
+              <span class="anchor" id="variable-coef~16"></span>
               real
             </td>
             <td>
@@ -371,7 +327,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~21"></span>
+              <span class="anchor" id="variable-l~19"></span>
               integer(kind=4)
             </td>
             <td>
@@ -387,7 +343,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~33"></span>
+              <span class="anchor" id="variable-k~32"></span>
               integer(kind=4)
             </td>
             <td>
@@ -407,23 +363,33 @@ LC: QA1.A647.v27.
     </div>
   </div>
 
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-i4data~4"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/l2appr.html#common-i4data'>l2appr</a> (subroutine)<br><a href='../proc/l2err.html#common-i4data~2'>l2err</a> (subroutine)<br><a href='../proc/l2appr~2.html#common-i4data~3'>l2appr</a> (subroutine)<br>">common /i4data/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-i4data~4"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/l2appr.html#common-i4data'>l2appr</a>
+      (subroutine)<br><a href='../proc/l2err.html#common-i4data~2'>l2err</a>
+      (subroutine)<br><a href='../proc/l2appr~2.html#common-i4data~3'>l2appr</a>
+      (subroutine)<br>">
+           common /i4data/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -448,28 +414,38 @@ LC: QA1.A647.v27.
     </div>
   </div>
 
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-r8data~4"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/l2appr.html#common-r8data'>l2appr</a> (subroutine)<br><a href='../proc/l2err.html#common-r8data~2'>l2err</a> (subroutine)<br><a href='../proc/l2appr~2.html#common-r8data~3'>l2appr</a> (subroutine)<br>">common /r8data/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-r8data~4"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/l2appr.html#common-r8data'>l2appr</a>
+      (subroutine)<br><a href='../proc/l2err.html#common-r8data~2'>l2err</a>
+      (subroutine)<br><a href='../proc/l2appr~2.html#common-r8data~3'>l2appr</a>
+      (subroutine)<br>">
+           common /r8data/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-tau~11"></span>
+              <span class="anchor" id="variable-tau~10"></span>
               real
             </td>
             <td>
@@ -541,7 +517,7 @@ LC: QA1.A647.v27.
     <br>
     <script>
       $(function () {
-      $('[data-toggle="popover"]').popover()
+      $('[data-bs-toggle="popover"]').popover()
       })
     </script>
 
@@ -552,7 +528,159 @@ LC: QA1.A647.v27.
     
 
 
+
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">l2err</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iprfun</span><span class="p">,</span><span class="w"> </span><span class="n">ftau</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! L2ERR computes the errors of an L2 approximation.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine computes various errors of the current L2 approximation, </span>
+<span class="w">  </span><span class="c">!    whose piecewise polynomial representation is contained in common </span>
+<span class="w">  </span><span class="c">!    block APPROX, to the given data contained in common block DATA.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    It prints out the average error ERRL1, the L2 error ERRL2, and the</span>
+<span class="w">  </span><span class="c">!    maximum error ERRMAX.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    16 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters: </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) IPRFUN.  If IPRFUN = 1, the routine prints out</span>
+<span class="w">  </span><span class="c">!    the value of the approximation as well as its error at</span>
+<span class="w">  </span><span class="c">!    every data point.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) FTAU(NTAU), contains the value of the computed</span>
+<span class="w">  </span><span class="c">!    approximation at each value TAU(1:NTAU).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) ERROR(NTAU), with </span>
+<span class="w">  </span><span class="c">!      ERROR(I) = SCALE * ( G - F )(TAU(I)).  Here, SCALE equals 1</span>
+<span class="w">  </span><span class="c">!    in case IPRFUN /= 1, or the absolute error is greater than 100 </span>
+<span class="w">  </span><span class="c">!    somewhere.  Otherwise, SCALE is such that the maximum of the</span>
+<span class="w">  </span><span class="c">!    absolute value of ERROR(1:NTAU) lies between 10 and 100.  This</span>
+<span class="w">  </span><span class="c">!    makes the printed output more illustrative.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lpkmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ntmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ltkmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span>
+
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ntau</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coef</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">err</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">errl1</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">errl2</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">errmax</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="n">ntau</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ftau</span><span class="p">(</span><span class="n">ntau</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gtau</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ie</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iprfun</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ll</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ppvalu</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">scale</span>
+<span class="nb">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">tau</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">totalw</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">weight</span>
+
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">i4data</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r8data</span><span class="w"> </span><span class="o">/</span>
+
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">lpkmax</span><span class="p">),</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ltkmax</span><span class="p">),</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">i4data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ntau</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r8data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">ntmax</span><span class="p">),</span><span class="w"> </span><span class="n">gtau</span><span class="p">(</span><span class="n">ntmax</span><span class="p">),</span><span class="w"> </span><span class="n">weight</span><span class="p">(</span><span class="n">ntmax</span><span class="p">),</span><span class="w"> </span><span class="n">totalw</span>
+
+<span class="w">  </span><span class="n">errl1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">  </span><span class="n">errl2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">  </span><span class="n">errmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">ll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ntau</span>
+
+<span class="w">     </span><span class="n">ftau</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ppvalu</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">error</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtau</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ftau</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="w">     </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">(</span><span class="n">ll</span><span class="p">))</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">errmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">errmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">err</span>
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">     </span><span class="n">errl1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errl1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">weight</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="w">     </span><span class="n">errl2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errl2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">err</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">weight</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  </span><span class="n">errl1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errl1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">totalw</span>
+<span class="w">  </span><span class="n">errl2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">errl2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">totalw</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Least square error = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">errl2</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Average error      = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">errl1</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Maximum error      = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">errmax</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iprfun</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Scale error curve and print.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">ie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="nb">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">errmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     do </span><span class="n">ie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span>
+<span class="w">        </span><span class="nb">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">scale</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1</span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">errmax</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">scale</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           exit</span>
+<span class="k">        end if</span>
+<span class="k">     end do</span>
+
+<span class="k">  end if</span>
+
+<span class="k">  </span><span class="n">error</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ntau</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ntau</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">scale</span>
+
+<span class="nb">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Approximation and scaled error curve&#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i1)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">       </span><span class="s1">&#39;       Data point       Approximation   Deviation x 10**&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ie</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(i4,f16.8,f16.8,f17.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="n">ll</span><span class="p">,</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="n">ftau</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="n">ll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ntau</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end subroutine </span><span class="n">l2err</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
@@ -561,12 +689,12 @@ LC: QA1.A647.v27.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -576,17 +704,12 @@ LC: QA1.A647.v27.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

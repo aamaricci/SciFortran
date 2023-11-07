@@ -10,81 +10,55 @@
 
     <title>SCIFOR &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,41 +66,46 @@
       <small>Module</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.1% of total for modules and submodules.">25 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.1% of total for modules and submodules.">25 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/SCIFOR.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/scifor.f90.html'>SCIFOR.f90</a></li>
-          <li class="active">SCIFOR</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/scifor.f90.html'>SCIFOR.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">SCIFOR</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
 
   <div class="row">
-    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    <div class="col-md-3">
         <div id="sidebar">
       <h3>Contents</h3>
+  
   
   
   
@@ -155,368 +134,367 @@
 
     <div class="col-md-9" id='text'>
       
-<br>          <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Uses</h3>
-      </div>
-      <ul class="list-group">
-          <li class="list-group-item">
-            <ul class="list-inline">
-                <li><a href='../module/sf_interpolate.html'>SF_INTERPOLATE</a></li>
-                <li><a href='../module/sf_pauli.html'>SF_PAULI</a></li>
-                <li><a href='../module/sf_mpi.html'>SF_MPI</a></li>
-                <li><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
-                <li><a href='../module/sf_derivate.html'>SF_DERIVATE</a></li>
-                <li><a href='../module/sf_arrays.html'>SF_ARRAYS</a></li>
-                <li><a href='../module/sf_blacs.html'>SF_BLACS</a></li>
-                <li><a href='../module/sf_timer.html'>SF_TIMER</a></li>
-                <li><a href='../module/sf_optimize.html'>SF_OPTIMIZE</a></li>
-                <li><a href='../module/sf_constants.html'>SF_CONSTANTS</a></li>
-                <li><a href='../module/sf_random.html'>SF_RANDOM</a></li>
-                <li><a href='../module/sf_fonts.html'>SF_FONTS</a></li>
-                <li><a href='../module/sf_integrate.html'>SF_INTEGRATE</a></li>
-                <li><a href='../module/sf_fft_fftpack.html'>SF_FFT_FFTPACK</a></li>
-                <li><a href='../module/sf_stat.html'>SF_STAT</a></li>
-                <li><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
-                <li><a href='../module/sf_iotools.html'>SF_IOTOOLS</a></li>
-                <li><a href='../module/sf_misc.html'>SF_MISC</a></li>
-                <li><a href='../module/sf_sp_linalg.html'>SF_SP_LINALG</a></li>
-                <li><a href='../module/sf_colors.html'>SF_COLORS</a></li>
-                <li><a href='../module/sf_parse_input.html'>SF_PARSE_INPUT</a></li>
-                <li>SF_VERSION</li>
-            </ul>
-          </li>
-          <li class="list-group-item">
-            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='../module/sf_parse_input.html'>SF_PARSE_INPUT</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_timer.html'>SF_TIMER</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_random.html'>SF_RANDOM</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_integrate.html'>SF_INTEGRATE</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_fft_fftpack.html'>SF_FFT_FFTPACK</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_interpolate.html'>SF_INTERPOLATE</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_colors.html'>SF_COLORS</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_misc.html'>SF_MISC</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_arrays.html'>SF_ARRAYS</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_constants.html'>SF_CONSTANTS</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_spin.html'>SF_SPIN</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_fonts.html'>SF_FONTS</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_stat.html'>SF_STAT</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_derivate.html'>SF_DERIVATE</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_optimize.html'>SF_OPTIMIZE</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_blacs.html'>SF_BLACS</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_mpi.html'>SF_MPI</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_sp_linalg.html'>SF_SP_LINALG</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_iotools.html'>SF_IOTOOLS</a></li>
+                  <li class="list-inline-item">SF_VERSION</li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: module~~scifor~~UsesGraph Pages: 1 -->
-<svg id="modulesciforUsesGraph" width="641pt" height="795pt"
- viewBox="0.00 0.00 641.00 794.56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="module~~scifor~~UsesGraph" class="graph" transform="scale(1.01 1.01) rotate(0) translate(4 798)">
+<svg id="modulesciforUsesGraph" width="641pt" height="758pt"
+ viewBox="0.00 0.00 641.00 757.91" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~scifor~~UsesGraph" class="graph" transform="scale(1.01 1.01) rotate(0) translate(4 761)">
 <title>module~~scifor~~UsesGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-798 643,-798 643,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-761 643,-761 643,4 -4,4"/>
 <!-- module~scifor -->
 <g id="module~~scifor~~UsesGraph_node1" class="node">
 <title>module~scifor</title>
-<polygon fill="none" stroke="black" points="639,-408 585,-408 585,-384 639,-384 639,-408"/>
-<text text-anchor="middle" x="612" y="-393.6" font-family="Helvetica,sans-Serif" font-size="10.50">SCIFOR</text>
+<polygon fill="none" stroke="black" points="639,-396 585,-396 585,-372 639,-372 639,-396"/>
+<text text-anchor="middle" x="612" y="-381.6" font-family="Helvetica,sans-Serif" font-size="10.50">SCIFOR</text>
 </g>
 <!-- SF_VERSION -->
 <g id="module~~scifor~~UsesGraph_node2" class="node">
 <title>SF_VERSION</title>
-<polygon fill="#337ab7" stroke="#337ab7" points="537,-794 459,-794 459,-770 537,-770 537,-794"/>
-<text text-anchor="middle" x="498" y="-779.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_VERSION</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="537,-757 459,-757 459,-733 537,-733 537,-757"/>
+<text text-anchor="middle" x="498" y="-742.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_VERSION</text>
 </g>
 <!-- module~scifor&#45;&gt;SF_VERSION -->
 <g id="module~~scifor~~UsesGraph_edge1" class="edge">
 <title>module~scifor&#45;&gt;SF_VERSION</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.34,-408.02C607.09,-463.96 591.09,-698.39 549,-756 546.76,-759.06 544.05,-761.8 541.07,-764.23"/>
-<polygon fill="#000000" stroke="#000000" points="538.94,-761.44 532.66,-769.98 542.89,-767.22 538.94,-761.44"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.16,-396.26C606.24,-450.17 588.32,-665.87 549,-719 546.74,-722.05 544.02,-724.77 541.03,-727.2"/>
+<polygon fill="#000000" stroke="#000000" points="538.9,-724.41 532.61,-732.94 542.84,-730.2 538.9,-724.41"/>
 </g>
 <!-- module~sf_arrays -->
 <g id="module~~scifor~~UsesGraph_node3" class="node">
 <title>module~sf_arrays</title>
 <g id="a_module~~scifor~~UsesGraph_node3"><a xlink:href=".././module/sf_arrays.html" xlink:title="SF_ARRAYS">
-<polygon fill="#337ab7" stroke="#337ab7" points="385,-476 313,-476 313,-452 385,-452 385,-476"/>
-<text text-anchor="middle" x="349" y="-461.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_ARRAYS</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="385,-682 313,-682 313,-658 385,-658 385,-682"/>
+<text text-anchor="middle" x="349" y="-667.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_ARRAYS</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_arrays -->
 <g id="module~~scifor~~UsesGraph_edge2" class="edge">
 <title>module~scifor&#45;&gt;module~sf_arrays</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M596.75,-408.15C584.81,-417.63 566.88,-430.28 549,-437 498.61,-455.94 436.6,-461.86 395.33,-463.57"/>
-<polygon fill="#000000" stroke="#000000" points="395.18,-460.07 385.31,-463.92 395.42,-467.07 395.18,-460.07"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.35,-396C611.74,-432.74 607.81,-544.86 549,-606 538.08,-617.36 450.37,-642.76 395.1,-657.93"/>
+<polygon fill="#000000" stroke="#000000" points="393.91,-654.63 385.18,-660.63 395.75,-661.38 393.91,-654.63"/>
 </g>
 <!-- module~sf_blacs -->
 <g id="module~~scifor~~UsesGraph_node4" class="node">
 <title>module~sf_blacs</title>
 <g id="a_module~~scifor~~UsesGraph_node4"><a xlink:href=".././module/sf_blacs.html" xlink:title="SF_BLACS">
-<polygon fill="#337ab7" stroke="#337ab7" points="203,-246 138,-246 138,-222 203,-222 203,-246"/>
-<text text-anchor="middle" x="170.5" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_BLACS</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="203,-474 138,-474 138,-450 203,-450 203,-474"/>
+<text text-anchor="middle" x="170.5" y="-459.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_BLACS</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_blacs -->
 <g id="module~~scifor~~UsesGraph_edge3" class="edge">
 <title>module~scifor&#45;&gt;module~sf_blacs</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M608.02,-383.69C601.48,-359.24 583.64,-304.22 549,-273 531.34,-257.08 519.7,-265.69 499,-254"/>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-254C462.74,-234.66 450.06,-237.7 411,-233 356.28,-226.42 342.11,-232.76 287,-233 262.7,-233.11 235.53,-233.33 213.65,-233.55"/>
-<polygon fill="#000000" stroke="#000000" points="213.33,-230.05 203.37,-233.65 213.4,-237.05 213.33,-230.05"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-464C445.3,-479.95 288.82,-470.92 213.24,-465.36"/>
+<polygon fill="#000000" stroke="#000000" points="213.36,-461.85 203.13,-464.6 212.84,-468.84 213.36,-461.85"/>
 </g>
 <!-- module~sf_colors -->
 <g id="module~~scifor~~UsesGraph_node5" class="node">
 <title>module~sf_colors</title>
 <g id="a_module~~scifor~~UsesGraph_node5"><a xlink:href=".././module/sf_colors.html" xlink:title="SF_COLORS">
-<polygon fill="#337ab7" stroke="#337ab7" points="535,-672 461,-672 461,-648 535,-648 535,-672"/>
-<text text-anchor="middle" x="498" y="-657.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_COLORS</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="535,-276 461,-276 461,-252 535,-252 535,-276"/>
+<text text-anchor="middle" x="498" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_COLORS</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_colors -->
 <g id="module~~scifor~~UsesGraph_edge4" class="edge">
 <title>module~scifor&#45;&gt;module~sf_colors</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.14,-408.13C610.94,-445.9 605.56,-563.05 549,-634 546.5,-637.14 543.51,-639.94 540.27,-642.43"/>
-<polygon fill="#000000" stroke="#000000" points="538.22,-639.58 531.78,-647.99 542.06,-645.44 538.22,-639.58"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605.54,-371.91C596.28,-352.52 575.86,-314.22 549,-290 545.42,-286.77 541.36,-283.82 537.15,-281.17"/>
+<polygon fill="#000000" stroke="#000000" points="538.79,-278.07 528.38,-276.12 535.3,-284.14 538.79,-278.07"/>
 </g>
 <!-- module~sf_constants -->
 <g id="module~~scifor~~UsesGraph_node6" class="node">
 <title>module~sf_constants</title>
 <g id="a_module~~scifor~~UsesGraph_node6"><a xlink:href=".././module/sf_constants.html" xlink:title="SF_CONSTANTS">
-<polygon fill="#337ab7" stroke="#337ab7" points="396,-550 302,-550 302,-526 396,-526 396,-550"/>
-<text text-anchor="middle" x="349" y="-535.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_CONSTANTS</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="396,-724 302,-724 302,-700 396,-700 396,-724"/>
+<text text-anchor="middle" x="349" y="-709.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_CONSTANTS</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_constants -->
 <g id="module~~scifor~~UsesGraph_edge5" class="edge">
 <title>module~scifor&#45;&gt;module~sf_constants</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.21,-408.26C603.01,-448.77 581.1,-577.18 549,-601 493.81,-641.96 411.17,-587.65 372.05,-556.75"/>
-<polygon fill="#000000" stroke="#000000" points="373.92,-553.77 363.95,-550.2 369.52,-559.21 373.92,-553.77"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.33,-396.08C607.25,-447.25 592.6,-645.45 549,-686 511.24,-721.11 450.65,-724.32 406.23,-720.77"/>
+<polygon fill="#000000" stroke="#000000" points="406.45,-717.28 396.16,-719.83 405.8,-724.25 406.45,-717.28"/>
 </g>
 <!-- module~sf_derivate -->
 <g id="module~~scifor~~UsesGraph_node7" class="node">
 <title>module~sf_derivate</title>
 <g id="a_module~~scifor~~UsesGraph_node7"><a xlink:href=".././module/sf_derivate.html" xlink:title="SF_DERIVATE">
-<polygon fill="#337ab7" stroke="#337ab7" points="539,-592 457,-592 457,-568 539,-568 539,-592"/>
-<text text-anchor="middle" x="498" y="-577.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_DERIVATE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="539,-234 457,-234 457,-210 539,-210 539,-234"/>
+<text text-anchor="middle" x="498" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_DERIVATE</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_derivate -->
 <g id="module~~scifor~~UsesGraph_edge6" class="edge">
 <title>module~scifor&#45;&gt;module~sf_derivate</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.62,-408.38C605.67,-438.21 591.71,-514.8 549,-559 547.94,-560.1 546.81,-561.15 545.62,-562.14"/>
-<polygon fill="#000000" stroke="#000000" points="543.42,-559.4 537.17,-567.95 547.39,-565.17 543.42,-559.4"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M608.79,-371.69C603.36,-344.82 586.94,-280.31 549,-243 547.78,-241.8 546.47,-240.66 545.11,-239.58"/>
+<polygon fill="#000000" stroke="#000000" points="547.02,-236.65 536.75,-234.07 543.17,-242.5 547.02,-236.65"/>
 </g>
 <!-- module~sf_fft_fftpack -->
 <g id="module~~scifor~~UsesGraph_node8" class="node">
 <title>module~sf_fft_fftpack</title>
 <g id="a_module~~scifor~~UsesGraph_node8"><a xlink:href=".././module/sf_fft_fftpack.html" xlink:title="SF_FFT_FFTPACK">
-<polygon fill="#337ab7" stroke="#337ab7" points="548,-550 448,-550 448,-526 548,-526 548,-550"/>
-<text text-anchor="middle" x="498" y="-535.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_FFT_FFTPACK</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="548,-677 448,-677 448,-653 548,-653 548,-677"/>
+<text text-anchor="middle" x="498" y="-662.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_FFT_FFTPACK</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_fft_fftpack -->
 <g id="module~~scifor~~UsesGraph_edge7" class="edge">
 <title>module~scifor&#45;&gt;module~sf_fft_fftpack</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M607.87,-408.01C601.06,-431.88 582.76,-485.71 549,-517 547.72,-518.19 546.36,-519.31 544.94,-520.38"/>
-<polygon fill="#000000" stroke="#000000" points="542.87,-517.55 536.3,-525.86 546.62,-523.46 542.87,-517.55"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.4,-396.14C612.06,-435.63 609.15,-562.27 549,-639 546.56,-642.12 543.64,-644.9 540.45,-647.37"/>
+<polygon fill="#000000" stroke="#000000" points="538.51,-644.46 532.11,-652.9 542.38,-650.29 538.51,-644.46"/>
 </g>
 <!-- module~sf_fonts -->
 <g id="module~~scifor~~UsesGraph_node9" class="node">
 <title>module~sf_fonts</title>
 <g id="a_module~~scifor~~UsesGraph_node9"><a xlink:href=".././module/sf_fonts.html" xlink:title="SF_FONTS">
-<polygon fill="#337ab7" stroke="#337ab7" points="531,-508 465,-508 465,-484 531,-484 531,-508"/>
-<text text-anchor="middle" x="498" y="-493.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_FONTS</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="531,-192 465,-192 465,-168 531,-168 531,-192"/>
+<text text-anchor="middle" x="498" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_FONTS</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_fonts -->
 <g id="module~~scifor~~UsesGraph_edge8" class="edge">
 <title>module~scifor&#45;&gt;module~sf_fonts</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M603.18,-408.02C592.45,-423.8 571.87,-451.64 549,-470 544.96,-473.25 540.44,-476.26 535.83,-479.01"/>
-<polygon fill="#000000" stroke="#000000" points="533.98,-476.03 526.92,-483.93 537.37,-482.16 533.98,-476.03"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.22,-371.57C607.54,-339.25 596.1,-251.57 549,-201 546.41,-198.22 543.39,-195.79 540.15,-193.68"/>
+<polygon fill="#000000" stroke="#000000" points="541.62,-190.49 531.16,-188.78 538.27,-196.64 541.62,-190.49"/>
 </g>
 <!-- module~sf_integrate -->
 <g id="module~~scifor~~UsesGraph_node10" class="node">
 <title>module~sf_integrate</title>
 <g id="a_module~~scifor~~UsesGraph_node10"><a xlink:href=".././module/sf_integrate.html" xlink:title="SF_INTEGRATE">
-<polygon fill="#337ab7" stroke="#337ab7" points="393.5,-653 304.5,-653 304.5,-629 393.5,-629 393.5,-653"/>
-<text text-anchor="middle" x="349" y="-638.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTEGRATE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="393.5,-434 304.5,-434 304.5,-410 393.5,-410 393.5,-434"/>
+<text text-anchor="middle" x="349" y="-419.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTEGRATE</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_integrate -->
 <g id="module~~scifor~~UsesGraph_edge9" class="edge">
 <title>module~scifor&#45;&gt;module~sf_integrate</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.67,-408.12C608.93,-462.32 598.84,-681.72 549,-723 514.09,-751.92 489.57,-738.58 447,-723 413.33,-710.68 383.3,-680.93 365.87,-660.86"/>
-<polygon fill="#000000" stroke="#000000" points="368.52,-658.58 359.4,-653.19 363.17,-663.09 368.52,-658.58"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M601.22,-396.3C589.91,-409.84 570.1,-431.47 549,-445 528.99,-457.83 521.72,-456.99 499,-464"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-464C476.63,-470.28 423.94,-452.14 387.51,-437.76"/>
+<polygon fill="#000000" stroke="#000000" points="388.76,-434.48 378.17,-434.01 386.15,-440.98 388.76,-434.48"/>
 </g>
 <!-- module~sf_interpolate -->
 <g id="module~~scifor~~UsesGraph_node11" class="node">
 <title>module~sf_interpolate</title>
 <g id="a_module~~scifor~~UsesGraph_node11"><a xlink:href=".././module/sf_interpolate.html" xlink:title="SF_INTERPOLATE">
-<polygon fill="#337ab7" stroke="#337ab7" points="549,-348 447,-348 447,-324 549,-324 549,-348"/>
-<text text-anchor="middle" x="498" y="-333.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="549,-150 447,-150 447,-126 549,-126 549,-150"/>
+<text text-anchor="middle" x="498" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_interpolate -->
 <g id="module~~scifor~~UsesGraph_edge10" class="edge">
 <title>module~scifor&#45;&gt;module~sf_interpolate</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.26,-383.92C577.39,-377.37 562.43,-369.17 549,-362 543.34,-358.98 537.29,-355.79 531.43,-352.73"/>
-<polygon fill="#000000" stroke="#000000" points="532.94,-349.57 522.46,-348.06 529.71,-355.78 532.94,-349.57"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.16,-371.8C610.99,-334.95 605.57,-223.37 549,-159 548.13,-158.01 547.2,-157.06 546.22,-156.15"/>
+<polygon fill="#000000" stroke="#000000" points="548.1,-153.19 537.99,-150.04 543.93,-158.81 548.1,-153.19"/>
 </g>
 <!-- module~sf_iotools -->
 <g id="module~~scifor~~UsesGraph_node12" class="node">
 <title>module~sf_iotools</title>
 <g id="a_module~~scifor~~UsesGraph_node12"><a xlink:href=".././module/sf_iotools.html" xlink:title="SF_IOTOOLS">
-<polygon fill="#337ab7" stroke="#337ab7" points="388,-434 310,-434 310,-410 388,-410 388,-434"/>
-<text text-anchor="middle" x="349" y="-419.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_IOTOOLS</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="388,-556 310,-556 310,-532 388,-532 388,-556"/>
+<text text-anchor="middle" x="349" y="-541.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_IOTOOLS</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_iotools -->
 <g id="module~~scifor~~UsesGraph_edge11" class="edge">
 <title>module~scifor&#45;&gt;module~sf_iotools</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M584.76,-395.48C573.72,-395.29 560.73,-395.09 549,-395 503.67,-394.63 491.92,-388.87 447,-395 429.5,-397.39 410.71,-402.1 394.36,-406.92"/>
-<polygon fill="#000000" stroke="#000000" points="393.08,-403.66 384.54,-409.92 395.13,-410.35 393.08,-403.66"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.68,-396.37C605.94,-424.55 592.56,-493.51 549,-525 505.38,-556.53 441.59,-556.83 398.07,-552.17"/>
+<polygon fill="#000000" stroke="#000000" points="398.36,-548.68 388.01,-550.97 397.53,-555.63 398.36,-548.68"/>
 </g>
 <!-- module~sf_linalg -->
 <g id="module~~scifor~~UsesGraph_node13" class="node">
 <title>module~sf_linalg</title>
 <g id="a_module~~scifor~~UsesGraph_node13"><a xlink:href=".././module/sf_linalg.html" xlink:title="SF_LINALG">
-<polygon fill="#337ab7" stroke="#337ab7" points="383.5,-266 314.5,-266 314.5,-242 383.5,-242 383.5,-266"/>
-<text text-anchor="middle" x="349" y="-251.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_LINALG</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="383.5,-514 314.5,-514 314.5,-490 383.5,-490 383.5,-514"/>
+<text text-anchor="middle" x="349" y="-499.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_LINALG</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_linalg -->
 <g id="module~~scifor~~UsesGraph_edge12" class="edge">
 <title>module~scifor&#45;&gt;module~sf_linalg</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-254C465.75,-236.36 424.48,-238.1 393.63,-243.25"/>
-<polygon fill="#000000" stroke="#000000" points="392.79,-239.84 383.59,-245.1 394.06,-246.73 392.79,-239.84"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-464C462.53,-474.64 422.9,-484.76 393.48,-491.88"/>
+<polygon fill="#000000" stroke="#000000" points="392.43,-488.53 383.52,-494.27 394.07,-495.34 392.43,-488.53"/>
 </g>
 <!-- module~sf_misc -->
 <g id="module~~scifor~~UsesGraph_node14" class="node">
 <title>module~sf_misc</title>
 <g id="a_module~~scifor~~UsesGraph_node14"><a xlink:href=".././module/sf_misc.html" xlink:title="SF_MISC">
-<polygon fill="#337ab7" stroke="#337ab7" points="377.5,-144 320.5,-144 320.5,-120 377.5,-120 377.5,-144"/>
-<text text-anchor="middle" x="349" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_MISC</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="377.5,-392 320.5,-392 320.5,-368 377.5,-368 377.5,-392"/>
+<text text-anchor="middle" x="349" y="-377.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_MISC</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_misc -->
 <g id="module~~scifor~~UsesGraph_edge13" class="edge">
 <title>module~scifor&#45;&gt;module~sf_misc</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.74,-383.78C604.82,-338.62 585.38,-182.21 549,-151 504.37,-112.72 431.66,-116.78 387.58,-123.91"/>
-<polygon fill="#000000" stroke="#000000" points="386.8,-120.49 377.56,-125.67 388.01,-127.39 386.8,-120.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M584.54,-383.59C538,-382.88 441.39,-381.4 387.82,-380.58"/>
+<polygon fill="#000000" stroke="#000000" points="387.76,-377.08 377.71,-380.42 387.66,-384.08 387.76,-377.08"/>
 </g>
 <!-- module~sf_mpi -->
 <g id="module~~scifor~~UsesGraph_node15" class="node">
 <title>module~sf_mpi</title>
 <g id="a_module~~scifor~~UsesGraph_node15"><a xlink:href=".././module/sf_mpi.html" xlink:title="SF_MPI">
-<polygon fill="#337ab7" stroke="#337ab7" points="376,-102 322,-102 322,-78 376,-78 376,-102"/>
-<text text-anchor="middle" x="349" y="-87.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_MPI</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="376,-350 322,-350 322,-326 376,-326 376,-350"/>
+<text text-anchor="middle" x="349" y="-335.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_MPI</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_mpi -->
 <g id="module~~scifor~~UsesGraph_edge14" class="edge">
 <title>module~scifor&#45;&gt;module~sf_mpi</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-52C487.59,-45.98 426.18,-64.6 385.77,-77.86"/>
-<polygon fill="#000000" stroke="#000000" points="384.63,-74.55 376.24,-81.02 386.83,-81.2 384.63,-74.55"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-304C476.36,-298.46 422.32,-313.79 385.83,-325.64"/>
+<polygon fill="#000000" stroke="#000000" points="384.45,-322.41 376.05,-328.87 386.65,-329.06 384.45,-322.41"/>
 </g>
 <!-- module~sf_optimize -->
 <g id="module~~scifor~~UsesGraph_node16" class="node">
 <title>module~sf_optimize</title>
 <g id="a_module~~scifor~~UsesGraph_node16"><a xlink:href=".././module/sf_optimize.html" xlink:title="SF_OPTIMIZE">
-<polygon fill="#337ab7" stroke="#337ab7" points="538.5,-306 457.5,-306 457.5,-282 538.5,-282 538.5,-306"/>
-<text text-anchor="middle" x="498" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_OPTIMIZE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="538.5,-597 457.5,-597 457.5,-573 538.5,-573 538.5,-597"/>
+<text text-anchor="middle" x="498" y="-582.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_OPTIMIZE</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_optimize -->
 <g id="module~~scifor~~UsesGraph_edge15" class="edge">
 <title>module~scifor&#45;&gt;module~sf_optimize</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M604.52,-383.97C594.63,-366.61 574.23,-334.48 549,-315 547.18,-313.6 545.26,-312.27 543.27,-311.02"/>
-<polygon fill="#000000" stroke="#000000" points="544.63,-307.78 534.18,-306.01 541.25,-313.9 544.63,-307.78"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.69,-396.02C605.81,-426.54 591.8,-508.1 549,-558 545.99,-561.51 542.41,-564.63 538.57,-567.4"/>
+<polygon fill="#000000" stroke="#000000" points="536.45,-564.6 529.86,-572.9 540.18,-570.52 536.45,-564.6"/>
 </g>
 <!-- module~sf_parse_input -->
 <g id="module~~scifor~~UsesGraph_node17" class="node">
 <title>module~sf_parse_input</title>
 <g id="a_module~~scifor~~UsesGraph_node17"><a xlink:href=".././module/sf_parse_input.html" xlink:title="SF_PARSE_INPUT">
-<polygon fill="#337ab7" stroke="#337ab7" points="548.5,-226 447.5,-226 447.5,-202 548.5,-202 548.5,-226"/>
-<text text-anchor="middle" x="498" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_PARSE_INPUT</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="548.5,-108 447.5,-108 447.5,-84 548.5,-84 548.5,-108"/>
+<text text-anchor="middle" x="498" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_PARSE_INPUT</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_parse_input -->
 <g id="module~~scifor~~UsesGraph_edge16" class="edge">
 <title>module~scifor&#45;&gt;module~sf_parse_input</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.16,-383.94C604.25,-355.56 588.47,-283.68 549,-240 546.12,-236.81 542.76,-233.96 539.17,-231.41"/>
-<polygon fill="#000000" stroke="#000000" points="540.82,-228.32 530.48,-226.02 537.13,-234.27 540.82,-228.32"/>
-</g>
-<!-- module~sf_pauli -->
-<g id="module~~scifor~~UsesGraph_node18" class="node">
-<title>module~sf_pauli</title>
-<g id="a_module~~scifor~~UsesGraph_node18"><a xlink:href=".././module/sf_pauli.html" xlink:title="SF_PAULI">
-<polygon fill="#337ab7" stroke="#337ab7" points="528.5,-184 467.5,-184 467.5,-160 528.5,-160 528.5,-184"/>
-<text text-anchor="middle" x="498" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_PAULI</text>
-</a>
-</g>
-</g>
-<!-- module~scifor&#45;&gt;module~sf_pauli -->
-<g id="module~~scifor~~UsesGraph_edge17" class="edge">
-<title>module~scifor&#45;&gt;module~sf_pauli</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.72,-383.76C609.28,-349.29 600.63,-250.14 549,-193 545.86,-189.53 542.06,-186.61 537.96,-184.17"/>
-<polygon fill="#000000" stroke="#000000" points="539.19,-180.87 528.68,-179.53 536.07,-187.13 539.19,-180.87"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.63,-371.7C604.18,-324.68 582.67,-156.92 549,-117 548.27,-116.14 547.5,-115.31 546.7,-114.51"/>
+<polygon fill="#000000" stroke="#000000" points="548.66,-111.6 538.62,-108.22 544.36,-117.13 548.66,-111.6"/>
 </g>
 <!-- module~sf_random -->
-<g id="module~~scifor~~UsesGraph_node19" class="node">
+<g id="module~~scifor~~UsesGraph_node18" class="node">
 <title>module~sf_random</title>
-<g id="a_module~~scifor~~UsesGraph_node19"><a xlink:href=".././module/sf_random.html" xlink:title="SF_RANDOM">
-<polygon fill="#337ab7" stroke="#337ab7" points="388,-60 310,-60 310,-36 388,-36 388,-60"/>
-<text text-anchor="middle" x="349" y="-45.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_RANDOM</text>
+<g id="a_module~~scifor~~UsesGraph_node18"><a xlink:href=".././module/sf_random.html" xlink:title="SF_RANDOM">
+<polygon fill="#337ab7" stroke="#337ab7" points="388,-308 310,-308 310,-284 388,-284 388,-308"/>
+<text text-anchor="middle" x="349" y="-293.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_RANDOM</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_random -->
-<g id="module~~scifor~~UsesGraph_edge18" class="edge">
+<g id="module~~scifor~~UsesGraph_edge17" class="edge">
 <title>module~scifor&#45;&gt;module~sf_random</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.25,-383.99C606.73,-331.2 590.26,-120.18 549,-71 533.72,-52.79 519.03,-64.8 499,-52"/>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-52C468.01,-33.47 428.8,-33.34 398.17,-37.38"/>
-<polygon fill="#000000" stroke="#000000" points="397.51,-33.94 388.14,-38.88 398.55,-40.86 397.51,-33.94"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M601.22,-371.7C589.91,-358.16 570.1,-336.53 549,-323 528.99,-310.17 521.96,-310.17 499,-304"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497,-304C464.9,-295.38 427.49,-293.45 398.44,-293.64"/>
+<polygon fill="#000000" stroke="#000000" points="398.08,-290.15 388.14,-293.8 398.19,-297.15 398.08,-290.15"/>
 </g>
 <!-- module~sf_sp_linalg -->
-<g id="module~~scifor~~UsesGraph_node20" class="node">
+<g id="module~~scifor~~UsesGraph_node19" class="node">
 <title>module~sf_sp_linalg</title>
-<g id="a_module~~scifor~~UsesGraph_node20"><a xlink:href=".././module/sf_sp_linalg.html" xlink:title="SF_SP_LINALG">
-<polygon fill="#337ab7" stroke="#337ab7" points="541.5,-104 454.5,-104 454.5,-80 541.5,-80 541.5,-104"/>
-<text text-anchor="middle" x="498" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SP_LINALG</text>
+<g id="a_module~~scifor~~UsesGraph_node19"><a xlink:href=".././module/sf_sp_linalg.html" xlink:title="SF_SP_LINALG">
+<polygon fill="#337ab7" stroke="#337ab7" points="541.5,-356 454.5,-356 454.5,-332 541.5,-332 541.5,-356"/>
+<text text-anchor="middle" x="498" y="-341.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SP_LINALG</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_sp_linalg -->
-<g id="module~~scifor~~UsesGraph_edge19" class="edge">
+<g id="module~~scifor~~UsesGraph_edge18" class="edge">
 <title>module~scifor&#45;&gt;module~sf_sp_linalg</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.67,-383.94C604.21,-336.23 582.23,-161.22 549,-118 546.59,-114.86 543.69,-112.06 540.52,-109.58"/>
-<polygon fill="#000000" stroke="#000000" points="542.45,-106.67 532.19,-104.03 538.57,-112.49 542.45,-106.67"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M584.74,-374.62C572.13,-370.12 556.69,-364.6 542.4,-359.5"/>
+<polygon fill="#000000" stroke="#000000" points="543.34,-356.12 532.75,-356.05 540.99,-362.71 543.34,-356.12"/>
 </g>
 <!-- module~sf_special -->
-<g id="module~~scifor~~UsesGraph_node21" class="node">
+<g id="module~~scifor~~UsesGraph_node20" class="node">
 <title>module~sf_special</title>
-<g id="a_module~~scifor~~UsesGraph_node21"><a xlink:href=".././module/sf_special.html" xlink:title="SF_SPECIAL">
-<polygon fill="#337ab7" stroke="#337ab7" points="535,-714 461,-714 461,-690 535,-690 535,-714"/>
-<text text-anchor="middle" x="498" y="-699.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL</text>
+<g id="a_module~~scifor~~UsesGraph_node20"><a xlink:href=".././module/sf_special.html" xlink:title="SF_SPECIAL">
+<polygon fill="#337ab7" stroke="#337ab7" points="535,-436 461,-436 461,-412 535,-412 535,-436"/>
+<text text-anchor="middle" x="498" y="-421.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_special -->
-<g id="module~~scifor~~UsesGraph_edge20" class="edge">
+<g id="module~~scifor~~UsesGraph_edge19" class="edge">
 <title>module~scifor&#45;&gt;module~sf_special</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.85,-408.11C604.99,-456.84 584.78,-637.98 549,-681 547.48,-682.82 545.78,-684.49 543.95,-686.02"/>
-<polygon fill="#000000" stroke="#000000" points="541.59,-683.38 535.19,-691.83 545.46,-689.21 541.59,-683.38"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M584.74,-393.38C572.13,-397.88 556.69,-403.4 542.4,-408.5"/>
+<polygon fill="#000000" stroke="#000000" points="540.99,-405.29 532.75,-411.95 543.34,-411.88 540.99,-405.29"/>
+</g>
+<!-- module~sf_spin -->
+<g id="module~~scifor~~UsesGraph_node21" class="node">
+<title>module~sf_spin</title>
+<g id="a_module~~scifor~~UsesGraph_node21"><a xlink:href=".././module/sf_spin.html" xlink:title="SF_SPIN">
+<polygon fill="#337ab7" stroke="#337ab7" points="525,-66 471,-66 471,-42 525,-42 525,-66"/>
+<text text-anchor="middle" x="498" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPIN</text>
+</a>
+</g>
+</g>
+<!-- module~scifor&#45;&gt;module~sf_spin -->
+<g id="module~~scifor~~UsesGraph_edge20" class="edge">
+<title>module~scifor&#45;&gt;module~sf_spin</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.07,-371.93C605.92,-320.75 587.54,-122.12 549,-75 545.14,-70.28 540.04,-66.61 534.57,-63.75"/>
+<polygon fill="#000000" stroke="#000000" points="535.74,-60.45 525.17,-59.68 532.95,-66.87 535.74,-60.45"/>
 </g>
 <!-- module~sf_stat -->
 <g id="module~~scifor~~UsesGraph_node22" class="node">
 <title>module~sf_stat</title>
 <g id="a_module~~scifor~~UsesGraph_node22"><a xlink:href=".././module/sf_stat.html" xlink:title="SF_STAT">
-<polygon fill="#337ab7" stroke="#337ab7" points="525.5,-428 470.5,-428 470.5,-404 525.5,-404 525.5,-428"/>
-<text text-anchor="middle" x="498" y="-413.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_STAT</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="525.5,-516 470.5,-516 470.5,-492 525.5,-492 525.5,-516"/>
+<text text-anchor="middle" x="498" y="-501.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_STAT</text>
 </a>
 </g>
 </g>
 <!-- module~scifor&#45;&gt;module~sf_stat -->
 <g id="module~~scifor~~UsesGraph_edge21" class="edge">
 <title>module~scifor&#45;&gt;module~sf_stat</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M584.74,-400.69C570.21,-403.28 551.91,-406.55 535.96,-409.4"/>
-<polygon fill="#000000" stroke="#000000" points="535.1,-406 525.87,-411.2 536.33,-412.89 535.1,-406"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605.54,-396.09C596.28,-415.48 575.86,-453.78 549,-478 544.62,-481.94 539.54,-485.47 534.32,-488.56"/>
+<polygon fill="#000000" stroke="#000000" points="532.64,-485.49 525.52,-493.34 535.98,-491.64 532.64,-485.49"/>
 </g>
 <!-- module~sf_timer -->
 <g id="module~~scifor~~UsesGraph_node23" class="node">
@@ -530,245 +508,245 @@
 <!-- module~scifor&#45;&gt;module~sf_timer -->
 <g id="module~~scifor~~UsesGraph_edge22" class="edge">
 <title>module~scifor&#45;&gt;module~sf_timer</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.31,-383.67C606.97,-327.38 590.79,-95.15 549,-38 546.15,-34.11 542.55,-30.75 538.59,-27.87"/>
-<polygon fill="#000000" stroke="#000000" points="540.42,-24.88 530.07,-22.59 536.73,-30.83 540.42,-24.88"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.38,-371.83C607.35,-316.29 592.35,-87.27 549,-33 546.29,-29.61 542.93,-26.75 539.25,-24.36"/>
+<polygon fill="#000000" stroke="#000000" points="540.69,-21.16 530.22,-19.56 537.4,-27.34 540.69,-21.16"/>
 </g>
 <!-- module~sf_fft_fftpack&#45;&gt;module~sf_arrays -->
 <g id="module~~scifor~~UsesGraph_edge23" class="edge">
 <title>module~sf_fft_fftpack&#45;&gt;module~sf_arrays</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M466.9,-525.95C460.29,-523.14 453.36,-520.06 447,-517 423.97,-505.91 398.64,-492.01 379.65,-481.23"/>
-<polygon fill="#000000" stroke="#000000" points="381.29,-478.13 370.87,-476.21 377.81,-484.21 381.29,-478.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M447.64,-666.68C430.65,-667.26 411.72,-667.9 395.09,-668.47"/>
+<polygon fill="#000000" stroke="#000000" points="394.94,-664.97 385.07,-668.81 395.18,-671.97 394.94,-664.97"/>
 </g>
 <!-- module~sf_fft_fftpack&#45;&gt;module~sf_constants -->
 <g id="module~~scifor~~UsesGraph_edge24" class="edge">
 <title>module~sf_fft_fftpack&#45;&gt;module~sf_constants</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M447.64,-538C434.35,-538 419.87,-538 406.23,-538"/>
-<polygon fill="#000000" stroke="#000000" points="406,-534.5 396,-538 406,-541.5 406,-534.5"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M459.14,-677.1C440.28,-683.13 417.29,-690.49 397.28,-696.88"/>
+<polygon fill="#000000" stroke="#000000" points="396.19,-693.56 387.73,-699.94 398.32,-700.23 396.19,-693.56"/>
 </g>
 <!-- module~sf_fft_fftpack&#45;&gt;module~sf_integrate -->
 <g id="module~~scifor~~UsesGraph_edge25" class="edge">
 <title>module~sf_fft_fftpack&#45;&gt;module~sf_integrate</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M464.28,-550.05C458.37,-552.7 452.38,-555.7 447,-559 417.55,-577.04 387.83,-603.7 369.19,-621.68"/>
-<polygon fill="#000000" stroke="#000000" points="366.61,-619.31 361.91,-628.8 371.51,-624.31 366.61,-619.31"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M483.72,-652.61C472.46,-641.42 456.64,-623.99 447,-606 419.7,-555.04 440.79,-530.55 411,-481 401.6,-465.36 387.01,-451.04 374.46,-440.43"/>
+<polygon fill="#000000" stroke="#000000" points="376.55,-437.61 366.58,-434.01 372.13,-443.04 376.55,-437.61"/>
 </g>
 <!-- module~gauss_quadrature -->
 <g id="module~~scifor~~UsesGraph_node26" class="node">
 <title>module~gauss_quadrature</title>
 <g id="a_module~~scifor~~UsesGraph_node26"><a xlink:href=".././module/gauss_quadrature.html" xlink:title="GAUSS_QUADRATURE">
-<polygon fill="#337ab7" stroke="#337ab7" points="234,-653 107,-653 107,-629 234,-629 234,-653"/>
-<text text-anchor="middle" x="170.5" y="-638.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GAUSS_QUADRATURE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="234,-432 107,-432 107,-408 234,-408 234,-432"/>
+<text text-anchor="middle" x="170.5" y="-417.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GAUSS_QUADRATURE</text>
 </a>
 </g>
 </g>
 <!-- module~sf_integrate&#45;&gt;module~gauss_quadrature -->
 <g id="module~~scifor~~UsesGraph_edge26" class="edge">
 <title>module~sf_integrate&#45;&gt;module~gauss_quadrature</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M304.37,-641C286.29,-641 264.83,-641 244.48,-641"/>
-<polygon fill="#000000" stroke="#000000" points="244.28,-637.5 234.28,-641 244.28,-644.5 244.28,-637.5"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M304.37,-421.51C286.29,-421.3 264.83,-421.06 244.48,-420.83"/>
+<polygon fill="#000000" stroke="#000000" points="244.32,-417.33 234.28,-420.71 244.24,-424.32 244.32,-417.33"/>
 </g>
-<!-- module~interpolate_nr~2 -->
+<!-- module~interpolate_nr -->
 <g id="module~~scifor~~UsesGraph_node27" class="node">
-<title>module~interpolate_nr~2</title>
-<g id="a_module~~scifor~~UsesGraph_node27"><a xlink:href=".././module/interpolate_nr~2.html" xlink:title="INTERPOLATE_NR">
-<polygon fill="#337ab7" stroke="#337ab7" points="401,-392 297,-392 297,-368 401,-368 401,-392"/>
-<text text-anchor="middle" x="349" y="-377.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">INTERPOLATE_NR</text>
+<title>module~interpolate_nr</title>
+<g id="a_module~~scifor~~UsesGraph_node27"><a xlink:href=".././module/interpolate_nr.html" xlink:title="INTERPOLATE_NR">
+<polygon fill="#337ab7" stroke="#337ab7" points="401,-150 297,-150 297,-126 401,-126 401,-150"/>
+<text text-anchor="middle" x="349" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">INTERPOLATE_NR</text>
 </a>
 </g>
 </g>
-<!-- module~sf_interpolate&#45;&gt;module~interpolate_nr~2 -->
+<!-- module~sf_interpolate&#45;&gt;module~interpolate_nr -->
 <g id="module~~scifor~~UsesGraph_edge27" class="edge">
-<title>module~sf_interpolate&#45;&gt;module~interpolate_nr~2</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M456.83,-348.02C439.25,-353.29 418.44,-359.51 399.88,-365.07"/>
-<polygon fill="#000000" stroke="#000000" points="398.7,-361.77 390.12,-367.99 400.7,-368.48 398.7,-361.77"/>
+<title>module~sf_interpolate&#45;&gt;module~interpolate_nr</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M446.82,-138C435.44,-138 423.22,-138 411.42,-138"/>
+<polygon fill="#000000" stroke="#000000" points="411.2,-134.5 401.2,-138 411.2,-141.5 411.2,-134.5"/>
 </g>
 <!-- module~iofile -->
 <g id="module~~scifor~~UsesGraph_node28" class="node">
 <title>module~iofile</title>
 <g id="a_module~~scifor~~UsesGraph_node28"><a xlink:href=".././module/iofile.html" xlink:title="IOFILE">
-<polygon fill="#337ab7" stroke="#337ab7" points="54,-434 0,-434 0,-410 54,-410 54,-434"/>
-<text text-anchor="middle" x="27" y="-419.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOFILE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-556 0,-556 0,-532 54,-532 54,-556"/>
+<text text-anchor="middle" x="27" y="-541.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOFILE</text>
 </a>
 </g>
 </g>
 <!-- module~sf_iotools&#45;&gt;module~iofile -->
 <g id="module~~scifor~~UsesGraph_edge28" class="edge">
 <title>module~sf_iotools&#45;&gt;module~iofile</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.6,-411.71C291.9,-407.48 270.53,-403.09 251,-401 179.85,-393.39 160.6,-389.37 90,-401 81.3,-402.43 72.17,-404.93 63.68,-407.71"/>
-<polygon fill="#000000" stroke="#000000" points="62.36,-404.46 54.06,-411.06 64.66,-411.07 62.36,-404.46"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.72,-544C247.59,-544 125.62,-544 64.59,-544"/>
+<polygon fill="#000000" stroke="#000000" points="64.29,-540.5 54.29,-544 64.29,-547.5 64.29,-540.5"/>
 </g>
 <!-- module~ioplot -->
 <g id="module~~scifor~~UsesGraph_node29" class="node">
 <title>module~ioplot</title>
 <g id="a_module~~scifor~~UsesGraph_node29"><a xlink:href=".././module/ioplot.html" xlink:title="IOPLOT">
-<polygon fill="#337ab7" stroke="#337ab7" points="197.5,-476 143.5,-476 143.5,-452 197.5,-452 197.5,-476"/>
-<text text-anchor="middle" x="170.5" y="-461.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOPLOT</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="197.5,-516 143.5,-516 143.5,-492 197.5,-492 197.5,-516"/>
+<text text-anchor="middle" x="170.5" y="-501.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOPLOT</text>
 </a>
 </g>
 </g>
 <!-- module~sf_iotools&#45;&gt;module~ioplot -->
 <g id="module~~scifor~~UsesGraph_edge29" class="edge">
 <title>module~sf_iotools&#45;&gt;module~ioplot</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.7,-431.11C279.41,-438.32 237.41,-448.32 207.68,-455.39"/>
-<polygon fill="#000000" stroke="#000000" points="206.64,-452.04 197.72,-457.76 208.26,-458.85 206.64,-452.04"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.7,-535.32C279.41,-528.46 237.41,-518.94 207.68,-512.2"/>
+<polygon fill="#000000" stroke="#000000" points="208.24,-508.74 197.72,-509.94 206.7,-515.57 208.24,-508.74"/>
 </g>
 <!-- module~ioread -->
 <g id="module~~scifor~~UsesGraph_node30" class="node">
 <title>module~ioread</title>
 <g id="a_module~~scifor~~UsesGraph_node30"><a xlink:href=".././module/ioread.html" xlink:title="IOREAD">
-<polygon fill="#337ab7" stroke="#337ab7" points="197.5,-434 143.5,-434 143.5,-410 197.5,-410 197.5,-434"/>
-<text text-anchor="middle" x="170.5" y="-419.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOREAD</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="197.5,-596 143.5,-596 143.5,-572 197.5,-572 197.5,-596"/>
+<text text-anchor="middle" x="170.5" y="-581.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOREAD</text>
 </a>
 </g>
 </g>
 <!-- module~sf_iotools&#45;&gt;module~ioread -->
 <g id="module~~scifor~~UsesGraph_edge30" class="edge">
 <title>module~sf_iotools&#45;&gt;module~ioread</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.7,-422C279.54,-422 237.78,-422 208.07,-422"/>
-<polygon fill="#000000" stroke="#000000" points="207.72,-418.5 197.72,-422 207.72,-425.5 207.72,-418.5"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.7,-552.68C279.41,-559.54 237.41,-569.06 207.68,-575.8"/>
+<polygon fill="#000000" stroke="#000000" points="206.7,-572.43 197.72,-578.06 208.24,-579.26 206.7,-572.43"/>
 </g>
 <!-- module~sf_linalg&#45;&gt;module~sf_blacs -->
 <g id="module~~scifor~~UsesGraph_edge31" class="edge">
 <title>module~sf_linalg&#45;&gt;module~sf_blacs</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M314.39,-250.19C285.63,-246.93 244.12,-242.23 213.24,-238.73"/>
-<polygon fill="#000000" stroke="#000000" points="213.54,-235.24 203.21,-237.59 212.75,-242.2 213.54,-235.24"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M314.39,-494.38C285.63,-487.87 244.12,-478.46 213.24,-471.46"/>
+<polygon fill="#000000" stroke="#000000" points="213.73,-467.98 203.21,-469.19 212.19,-474.81 213.73,-467.98"/>
 </g>
 <!-- module~sf_optimize&#45;&gt;module~sf_constants -->
 <g id="module~~scifor~~UsesGraph_edge34" class="edge">
 <title>module~sf_optimize&#45;&gt;module~sf_constants</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.32,-306.16C453.44,-308.6 449.88,-311.52 447,-315 397.78,-374.52 450.18,-418.45 411,-485 402.92,-498.72 390.03,-510.69 378.16,-519.76"/>
-<polygon fill="#000000" stroke="#000000" points="375.83,-517.13 369.79,-525.84 379.94,-522.8 375.83,-517.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M486.48,-597.06C476.24,-608.88 460.31,-627.48 447,-644 430.49,-664.49 432.35,-675.62 411,-691 408.89,-692.52 406.67,-693.93 404.36,-695.25"/>
+<polygon fill="#000000" stroke="#000000" points="402.52,-692.26 395.15,-699.87 405.66,-698.52 402.52,-692.26"/>
 </g>
 <!-- module~sf_optimize&#45;&gt;module~sf_linalg -->
 <g id="module~~scifor~~UsesGraph_edge35" class="edge">
 <title>module~sf_optimize&#45;&gt;module~sf_linalg</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.22,-283.18C437.58,-277.83 413.84,-271.37 393.7,-265.89"/>
-<polygon fill="#000000" stroke="#000000" points="394.4,-262.45 383.83,-263.21 392.56,-269.21 394.4,-262.45"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M482.94,-572.86C466.57,-559.22 438.29,-537.14 411,-523 405.39,-520.09 399.29,-517.45 393.18,-515.09"/>
+<polygon fill="#000000" stroke="#000000" points="394.25,-511.75 383.66,-511.62 391.86,-518.33 394.25,-511.75"/>
 </g>
 <!-- module~broyden_routines -->
 <g id="module~~scifor~~UsesGraph_node24" class="node">
 <title>module~broyden_routines</title>
 <g id="a_module~~scifor~~UsesGraph_node24"><a xlink:href=".././module/broyden_routines.html" xlink:title="BROYDEN_ROUTINES">
-<polygon fill="#337ab7" stroke="#337ab7" points="411,-350 287,-350 287,-326 411,-326 411,-350"/>
-<text text-anchor="middle" x="349" y="-335.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">BROYDEN_ROUTINES</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="411,-598 287,-598 287,-574 411,-574 411,-598"/>
+<text text-anchor="middle" x="349" y="-583.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">BROYDEN_ROUTINES</text>
 </a>
 </g>
 </g>
 <!-- module~sf_optimize&#45;&gt;module~broyden_routines -->
 <g id="module~~scifor~~UsesGraph_edge32" class="edge">
 <title>module~sf_optimize&#45;&gt;module~broyden_routines</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.22,-305.91C439.63,-311.17 418.76,-317.42 400.12,-323"/>
-<polygon fill="#000000" stroke="#000000" points="398.9,-319.71 390.32,-325.93 400.91,-326.42 398.9,-319.71"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.22,-585.27C446.13,-585.35 433.72,-585.43 421.4,-585.51"/>
+<polygon fill="#000000" stroke="#000000" points="421.07,-582.02 411.1,-585.58 421.12,-589.02 421.07,-582.02"/>
 </g>
 <!-- module~cgfit_routines -->
 <g id="module~~scifor~~UsesGraph_node25" class="node">
 <title>module~cgfit_routines</title>
 <g id="a_module~~scifor~~UsesGraph_node25"><a xlink:href=".././module/cgfit_routines.html" xlink:title="CGFIT_ROUTINES">
-<polygon fill="#337ab7" stroke="#337ab7" points="400.5,-308 297.5,-308 297.5,-284 400.5,-284 400.5,-308"/>
-<text text-anchor="middle" x="349" y="-293.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CGFIT_ROUTINES</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="400.5,-640 297.5,-640 297.5,-616 400.5,-616 400.5,-640"/>
+<text text-anchor="middle" x="349" y="-625.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CGFIT_ROUTINES</text>
 </a>
 </g>
 </g>
 <!-- module~sf_optimize&#45;&gt;module~cgfit_routines -->
 <g id="module~~scifor~~UsesGraph_edge33" class="edge">
 <title>module~sf_optimize&#45;&gt;module~cgfit_routines</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.22,-294.54C442.92,-294.74 426.45,-294.96 410.77,-295.17"/>
-<polygon fill="#000000" stroke="#000000" points="410.57,-291.68 400.62,-295.31 410.66,-298.67 410.57,-291.68"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.22,-596.64C439.85,-601.72 419.27,-607.74 400.81,-613.14"/>
+<polygon fill="#000000" stroke="#000000" points="399.71,-609.81 391.09,-615.98 401.67,-616.53 399.71,-609.81"/>
 </g>
 <!-- module~list_input -->
 <g id="module~~scifor~~UsesGraph_node31" class="node">
 <title>module~list_input</title>
 <g id="a_module~~scifor~~UsesGraph_node31"><a xlink:href=".././module/list_input.html" xlink:title="LIST_INPUT">
-<polygon fill="#337ab7" stroke="#337ab7" points="384.5,-186 313.5,-186 313.5,-162 384.5,-162 384.5,-186"/>
-<text text-anchor="middle" x="349" y="-171.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">LIST_INPUT</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="384.5,-108 313.5,-108 313.5,-84 384.5,-84 384.5,-108"/>
+<text text-anchor="middle" x="349" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">LIST_INPUT</text>
 </a>
 </g>
 </g>
 <!-- module~sf_parse_input&#45;&gt;module~list_input -->
 <g id="module~~scifor~~UsesGraph_edge36" class="edge">
 <title>module~sf_parse_input&#45;&gt;module~list_input</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M452.9,-202C434.4,-196.97 412.93,-191.12 394.4,-186.08"/>
-<polygon fill="#000000" stroke="#000000" points="395.3,-182.7 384.74,-183.45 393.47,-189.45 395.3,-182.7"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M447.23,-96C430.42,-96 411.76,-96 395.32,-96"/>
+<polygon fill="#000000" stroke="#000000" points="394.87,-92.5 384.87,-96 394.87,-99.5 394.87,-92.5"/>
 </g>
 <!-- module~sf_sp_linalg&#45;&gt;module~sf_linalg -->
 <g id="module~~scifor~~UsesGraph_edge37" class="edge">
 <title>module~sf_sp_linalg&#45;&gt;module~sf_linalg</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M486.6,-104.15C476.44,-116.04 460.57,-134.7 447,-151 430.83,-170.42 428.11,-176.41 411,-195 398.23,-208.87 382.99,-223.62 370.93,-234.9"/>
-<polygon fill="#000000" stroke="#000000" points="368.48,-232.4 363.53,-241.77 373.24,-237.53 368.48,-232.4"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M486.68,-356.14C467.32,-378.88 426.11,-427.05 411,-443 398.03,-456.68 382.78,-471.43 370.78,-482.76"/>
+<polygon fill="#000000" stroke="#000000" points="368.32,-480.27 363.41,-489.66 373.1,-485.38 368.32,-480.27"/>
 </g>
 <!-- module~sf_sp_linalg&#45;&gt;module~sf_misc -->
 <g id="module~~scifor~~UsesGraph_edge38" class="edge">
 <title>module~sf_sp_linalg&#45;&gt;module~sf_misc</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454.48,-103.57C433.3,-109.33 407.92,-116.24 387.47,-121.8"/>
-<polygon fill="#000000" stroke="#000000" points="386.31,-118.49 377.58,-124.5 388.15,-125.25 386.31,-118.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454.48,-354.41C433.3,-359.6 407.92,-365.82 387.47,-370.82"/>
+<polygon fill="#000000" stroke="#000000" points="386.46,-367.47 377.58,-373.25 388.13,-374.27 386.46,-367.47"/>
 </g>
 <!-- module~sf_sp_linalg&#45;&gt;module~sf_mpi -->
 <g id="module~~scifor~~UsesGraph_edge39" class="edge">
 <title>module~sf_sp_linalg&#45;&gt;module~sf_mpi</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454.48,-91.42C432.96,-91.13 407.11,-90.78 386.5,-90.5"/>
-<polygon fill="#000000" stroke="#000000" points="386.3,-86.99 376.26,-90.36 386.21,-93.99 386.3,-86.99"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454.48,-342.26C432.96,-341.39 407.11,-340.33 386.5,-339.49"/>
+<polygon fill="#000000" stroke="#000000" points="386.39,-335.98 376.26,-339.07 386.11,-342.98 386.39,-335.98"/>
 </g>
 <!-- module~sf_sp_linalg&#45;&gt;module~sf_random -->
 <g id="module~~scifor~~UsesGraph_edge40" class="edge">
 <title>module~sf_sp_linalg&#45;&gt;module~sf_random</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M456.83,-79.98C438.59,-74.52 416.87,-68.02 397.8,-62.31"/>
-<polygon fill="#000000" stroke="#000000" points="398.68,-58.92 388.1,-59.4 396.67,-65.62 398.68,-58.92"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M459.91,-331.89C440.68,-325.61 417.01,-317.88 396.57,-311.21"/>
+<polygon fill="#000000" stroke="#000000" points="397.42,-307.8 386.83,-308.03 395.25,-314.46 397.42,-307.8"/>
 </g>
 <!-- module~sf_special&#45;&gt;module~sf_integrate -->
 <g id="module~~scifor~~UsesGraph_edge41" class="edge">
 <title>module~sf_special&#45;&gt;module~sf_integrate</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M467.96,-689.95C445.21,-680.51 413.35,-667.29 388.48,-656.97"/>
-<polygon fill="#000000" stroke="#000000" points="389.56,-653.63 378.98,-653.03 386.88,-660.09 389.56,-653.63"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M460.66,-423.51C443.44,-423.27 422.52,-422.99 403.53,-422.73"/>
+<polygon fill="#000000" stroke="#000000" points="403.55,-419.23 393.5,-422.59 403.45,-426.23 403.55,-419.23"/>
 </g>
 <!-- module~sf_stat&#45;&gt;module~sf_arrays -->
 <g id="module~~scifor~~UsesGraph_edge42" class="edge">
 <title>module~sf_stat&#45;&gt;module~sf_arrays</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M470.38,-424.69C449.27,-431.59 419.31,-441.37 394.56,-449.45"/>
-<polygon fill="#000000" stroke="#000000" points="393.43,-446.14 385.01,-452.57 395.6,-452.79 393.43,-446.14"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M485.11,-516.05C474.17,-527.61 458.01,-545.94 447,-564 425.64,-599.03 440.99,-621.01 411,-649 406.27,-653.41 400.57,-656.9 394.58,-659.66"/>
+<polygon fill="#000000" stroke="#000000" points="393.04,-656.51 385.02,-663.43 395.61,-663.02 393.04,-656.51"/>
 </g>
 <!-- module~sf_stat&#45;&gt;module~sf_integrate -->
 <g id="module~~scifor~~UsesGraph_edge43" class="edge">
 <title>module~sf_stat&#45;&gt;module~sf_integrate</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.69,-428.26C473.76,-439.64 457.88,-457.42 447,-475 425.63,-509.54 431.26,-523.8 411,-559 398.16,-581.32 380.27,-604.68 367.19,-620.74"/>
-<polygon fill="#000000" stroke="#000000" points="364.15,-618.92 360.48,-628.85 369.55,-623.38 364.15,-618.92"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M473.23,-491.91C464.9,-487.6 455.49,-482.66 447,-478 424,-465.39 398.3,-450.51 379.13,-439.27"/>
+<polygon fill="#000000" stroke="#000000" points="380.68,-436.12 370.29,-434.06 377.13,-442.15 380.68,-436.12"/>
 </g>
 <!-- module~sf_stat&#45;&gt;module~sf_iotools -->
 <g id="module~~scifor~~UsesGraph_edge44" class="edge">
 <title>module~sf_stat&#45;&gt;module~sf_iotools</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M470.38,-417.09C450.25,-417.91 422.08,-419.06 398.05,-420.04"/>
-<polygon fill="#000000" stroke="#000000" points="397.89,-416.54 388.04,-420.45 398.17,-423.54 397.89,-416.54"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M470.38,-511.24C450.16,-516.74 421.83,-524.46 397.73,-531.01"/>
+<polygon fill="#000000" stroke="#000000" points="396.77,-527.65 388.04,-533.65 398.61,-534.4 396.77,-527.65"/>
 </g>
 <!-- module~sf_stat&#45;&gt;module~sf_linalg -->
 <g id="module~~scifor~~UsesGraph_edge45" class="edge">
 <title>module~sf_stat&#45;&gt;module~sf_linalg</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.73,-403.72C473.82,-392.33 457.95,-374.54 447,-357 425.91,-323.24 440.28,-301.97 411,-275 405.91,-270.31 399.72,-266.66 393.26,-263.82"/>
-<polygon fill="#000000" stroke="#000000" points="394.29,-260.47 383.7,-260.22 391.82,-267.02 394.29,-260.47"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M470.38,-503.64C449.1,-503.35 418.81,-502.94 393.94,-502.6"/>
+<polygon fill="#000000" stroke="#000000" points="393.7,-499.09 383.66,-502.46 393.61,-506.09 393.7,-499.09"/>
 </g>
 <!-- module~broyden_func_interface -->
 <g id="module~~scifor~~UsesGraph_node32" class="node">
 <title>module~broyden_func_interface</title>
 <g id="a_module~~scifor~~UsesGraph_node32"><a xlink:href=".././module/broyden_func_interface.html" xlink:title="BROYDEN_FUNC_INTERFACE">
-<polygon fill="#337ab7" stroke="#337ab7" points="251,-350 90,-350 90,-326 251,-326 251,-350"/>
-<text text-anchor="middle" x="170.5" y="-335.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">BROYDEN_FUNC_INTERFACE</text>
+<polygon fill="#337ab7" stroke="#337ab7" points="251,-638 90,-638 90,-614 251,-614 251,-638"/>
+<text text-anchor="middle" x="170.5" y="-623.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">BROYDEN_FUNC_INTERFACE</text>
 </a>
 </g>
 </g>
 <!-- module~broyden_routines&#45;&gt;module~broyden_func_interface -->
 <g id="module~~scifor~~UsesGraph_edge46" class="edge">
 <title>module~broyden_routines&#45;&gt;module~broyden_func_interface</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M286.76,-338C278.53,-338 269.96,-338 261.36,-338"/>
-<polygon fill="#000000" stroke="#000000" points="261.28,-334.5 251.28,-338 261.28,-341.5 261.28,-334.5"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M295.04,-598C276.02,-602.31 254.38,-607.22 234.58,-611.7"/>
+<polygon fill="#000000" stroke="#000000" points="233.7,-608.31 224.72,-613.94 235.25,-615.14 233.7,-608.31"/>
 </g>
 <!-- module~ioplot&#45;&gt;module~iofile -->
 <g id="module~~scifor~~UsesGraph_edge47" class="edge">
 <title>module~ioplot&#45;&gt;module~iofile</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.24,-457.54C127.68,-453.6 107.63,-448.31 90,-443 81.47,-440.43 72.36,-437.47 63.82,-434.6"/>
-<polygon fill="#000000" stroke="#000000" points="64.71,-431.2 54.12,-431.29 62.45,-437.83 64.71,-431.2"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.22,-511.43C120.88,-517.74 88.6,-526.87 63.88,-533.86"/>
+<polygon fill="#000000" stroke="#000000" points="62.81,-530.52 54.14,-536.61 64.72,-537.26 62.81,-530.52"/>
 </g>
 <!-- module~ioread&#45;&gt;module~iofile -->
 <g id="module~~scifor~~UsesGraph_edge48" class="edge">
 <title>module~ioread&#45;&gt;module~iofile</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.22,-422C120.98,-422 88.88,-422 64.21,-422"/>
-<polygon fill="#000000" stroke="#000000" points="64.14,-418.5 54.14,-422 64.14,-425.5 64.14,-418.5"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.22,-576.57C120.88,-570.26 88.6,-561.13 63.88,-554.14"/>
+<polygon fill="#000000" stroke="#000000" points="64.72,-550.74 54.14,-551.39 62.81,-557.48 64.72,-550.74"/>
 </g>
 </g>
 </svg>
@@ -776,8 +754,8 @@
                   var panmodulesciforUsesGraph = svgPanZoom('#modulesciforUsesGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsesGraph-help-text">Help</a></div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -846,39 +824,13 @@ modules which it uses.
             </div>
           </div>
         </div>
-          </li>
-      </ul>
+            </li>
+        </ul>
+      </div>
     </div>
 
       
       <br>
-
-      <section class="visible-xs visible-sm hidden-md">
-          <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-    <em>None</em>
-
-      </section>
-      <br class="visible-xs visible-sm hidden-md">
 
 
 
@@ -897,12 +849,12 @@ modules which it uses.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -912,17 +864,12 @@ modules which it uses.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

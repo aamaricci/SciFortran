@@ -10,81 +10,55 @@
 
     <title>SF_OPTIMIZE &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,39 +66,43 @@
       <small>Module</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 7.1% of total for modules and submodules.">2919 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 7.2% of total for modules and submodules.">2919 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/SF_OPTIMIZE.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_optimize.f90.html'>SF_OPTIMIZE.f90</a></li>
-          <li class="active">SF_OPTIMIZE</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_optimize.f90.html'>SF_OPTIMIZE.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">SF_OPTIMIZE</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
   </div>
 
   <div class="row">
-    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    <div class="col-md-3">
         <div id="sidebar">
       <h3>Contents</h3>
   
@@ -135,14 +113,13 @@
   
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#inters-0">Interfaces</a>
-        </h3>
-      </div>
-      <div id="inters-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#inters-0"
+         aria-expanded="false" aria-controls="inters-0">
+         <h4 class="card-header bg-primary text-white">Interfaces</h4>
+      </a>
+      <div id="inters-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_cg">fmin_cg</a>
             <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_cgplus">fmin_cgplus</a>
             <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_cgminimize">fmin_cgminimize</a>
@@ -160,27 +137,25 @@
 
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#funcs-0">Functions</a>
-        </h3>
-      </div>
-      <div id="funcs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_optimize.html#proc-brentq~2">brentq</a>
         </div>
       </div>
     </div>
 
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#subs-0">Subroutines</a>
-        </h3>
-      </div>
-      <div id="subs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_optimize.html#proc-brent~2">brent</a>
             <a class="list-group-item" href="../module/sf_optimize.html#proc-bracket~2">bracket</a>
             <a class="list-group-item" href="../module/sf_optimize.html#proc-fmin~2">fmin</a>
@@ -198,6 +173,7 @@
   
   
   
+  
 
 
   </div>
@@ -206,21 +182,20 @@
 
     <div class="col-md-9" id='text'>
       
-<br>          <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Uses</h3>
-      </div>
-      <ul class="list-group">
-          <li class="list-group-item">
-            <ul class="list-inline">
-                <li><a href='../module/cgfit_routines.html'>CGFIT_ROUTINES</a></li>
-                <li><a href='../module/broyden_routines.html'>BROYDEN_ROUTINES</a></li>
-                <li><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
-                <li><a href='../module/sf_constants.html'>SF_CONSTANTS</a></li>
-            </ul>
-          </li>
-          <li class="list-group-item">
-            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='../module/broyden_routines.html'>BROYDEN_ROUTINES</a></li>
+                  <li class="list-inline-item"><a href='../module/cgfit_routines.html'>CGFIT_ROUTINES</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
+                  <li class="list-inline-item"><a href='../module/sf_constants.html'>SF_CONSTANTS</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
@@ -329,8 +304,8 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsesGraph-help-text">Help</a></div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -399,17 +374,17 @@ modules which it uses.
             </div>
           </div>
         </div>
-          </li>
-      </ul>
+            </li>
+        </ul>
+      </div>
     </div>
 
-          <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Used by</h3>
-      </div>
-      <ul class="list-group">
-          <li class="list-group-item">
-            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
@@ -443,8 +418,8 @@ modules which it uses.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -513,97 +488,20 @@ modules which it uses.
             </div>
           </div>
         </div>
-          </li>
-      </ul>
+            </li>
+        </ul>
+      </div>
     </div>
 
       <br>
-
-      <section class="visible-xs visible-sm hidden-md">
-          <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#inters-1">Interfaces</a>
-        </h3>
-      </div>
-      <div id="inters-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_cg">fmin_cg</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_cgplus">fmin_cgplus</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_cgminimize">fmin_cgminimize</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-leastsq">leastsq</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-curvefit">curvefit</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-dbrent">dbrent</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-fmin_bfgs">fmin_bfgs</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-linear_mix">linear_mix</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-adaptive_mix">adaptive_mix</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-broyden_mix">broyden_mix</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#interface-fsolve">fsolve</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#funcs-1">Functions</a>
-        </h3>
-      </div>
-      <div id="funcs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-brentq~2">brentq</a>
-        </div>
-      </div>
-    </div>
-
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#subs-1">Subroutines</a>
-        </h3>
-      </div>
-      <div id="subs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-brent~2">brent</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-bracket~2">bracket</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-fmin~2">fmin</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-broyden1~2">broyden1</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-bisect~2">bisect</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-fzero~2">fzero</a>
-            <a class="list-group-item" href="../module/sf_optimize.html#proc-newton~2">newton</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-
-
-      </section>
-      <br class="visible-xs visible-sm hidden-md">
 
 
 
 
         <section>
           <h2>Interfaces</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-fmin_cg"></span>
       <h3>public        interface <a href='../interface/fmin_cg.html'>fmin_cg</a> 
       </h3>
@@ -620,16 +518,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-p~28"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -644,7 +542,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~51"></span>
               procedure(<a href='../interface/cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
@@ -659,7 +557,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-df~32"></span>
               procedure(<a href='../interface/cgfit_fjac.html'>cgfit_fjac</a>)
             </td>
 <td></td>
@@ -674,7 +572,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~19"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -689,7 +587,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fret~9"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -704,7 +602,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ftol~10"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -719,7 +617,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-itmax~11"></span>
               integer,
             </td>
 <td></td>
@@ -734,7 +632,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-istop~3"></span>
               integer,
             </td>
 <td></td>
@@ -749,7 +647,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverbose~13"></span>
               logical,
             </td>
 <td></td>
@@ -778,16 +676,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-p~29"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -802,7 +700,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~52"></span>
               procedure(<a href='../interface/cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
@@ -817,7 +715,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~20"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -832,7 +730,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fret~10"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -847,7 +745,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ftol~11"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -862,7 +760,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-itmax~12"></span>
               integer,
             </td>
 <td></td>
@@ -877,7 +775,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-istop~4"></span>
               integer,
             </td>
 <td></td>
@@ -892,7 +790,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-deps~3"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -907,7 +805,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverbose~14"></span>
               logical,
             </td>
 <td></td>
@@ -928,8 +826,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-fmin_cgplus"></span>
       <h3>public        interface <a href='../interface/fmin_cgplus.html'>fmin_cgplus</a> 
       </h3>
@@ -946,16 +844,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-p~30"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -980,16 +878,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~114"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1025,16 +923,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~115"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1060,7 +958,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~21"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -1075,7 +973,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fret~11"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -1090,7 +988,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ftol~12"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1105,7 +1003,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-itmax~13"></span>
               integer,
             </td>
 <td></td>
@@ -1120,7 +1018,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-imethod~3"></span>
               integer,
             </td>
 <td></td>
@@ -1135,7 +1033,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverb1~3"></span>
               integer,
             </td>
 <td></td>
@@ -1150,7 +1048,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverb2~3"></span>
               integer,
             </td>
 <td></td>
@@ -1179,16 +1077,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-p~31"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -1203,7 +1101,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fcn~4"></span>
               procedure(<a href='../interface/cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
@@ -1218,7 +1116,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~22"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -1233,7 +1131,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fret~12"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -1248,7 +1146,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ftol~13"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1263,7 +1161,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-itmax~14"></span>
               integer,
             </td>
 <td></td>
@@ -1278,7 +1176,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-imethod~4"></span>
               integer,
             </td>
 <td></td>
@@ -1293,7 +1191,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-deps~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1308,7 +1206,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverb1~4"></span>
               integer,
             </td>
 <td></td>
@@ -1323,7 +1221,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverb2~4"></span>
               integer,
             </td>
 <td></td>
@@ -1344,8 +1242,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-fmin_cgminimize"></span>
       <h3>public        interface <a href='../interface/fmin_cgminimize.html'>fmin_cgminimize</a> 
       </h3>
@@ -1362,16 +1260,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-p~32"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -1386,7 +1284,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fcn~5"></span>
               procedure(<a href='../interface/cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
@@ -1401,7 +1299,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~23"></span>
               integer
             </td>
 <td></td>
@@ -1416,7 +1314,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fret~13"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -1431,7 +1329,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ftol~14"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1446,7 +1344,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-itmax~15"></span>
               integer,
             </td>
 <td></td>
@@ -1461,7 +1359,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverbose~15"></span>
               logical,
             </td>
 <td></td>
@@ -1476,7 +1374,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-mode~6"></span>
               integer,
             </td>
 <td></td>
@@ -1491,7 +1389,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-new_version~3"></span>
               logical,
             </td>
 <td></td>
@@ -1506,7 +1404,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-hh_par~3"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1535,16 +1433,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-p~33"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -1569,16 +1467,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-n~204"></span>
               integer
             </td>
 <td></td>
@@ -1593,7 +1491,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x_~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1608,7 +1506,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f_~2"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -1629,7 +1527,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~24"></span>
               integer
             </td>
 <td></td>
@@ -1644,7 +1542,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fret~14"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -1659,7 +1557,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ftol~15"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1674,7 +1572,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-itmax~16"></span>
               integer,
             </td>
 <td></td>
@@ -1689,7 +1587,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iverbose~16"></span>
               logical,
             </td>
 <td></td>
@@ -1704,7 +1602,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-mode~7"></span>
               integer,
             </td>
 <td></td>
@@ -1719,7 +1617,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-new_version~4"></span>
               logical,
             </td>
 <td></td>
@@ -1734,7 +1632,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-hh_par~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1755,8 +1653,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-leastsq"></span>
       <h3>public        interface <a href='../interface/leastsq.html'>leastsq</a> 
       </h3>
@@ -1773,11 +1671,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -1792,16 +1690,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~117"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1816,7 +1714,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~105"></span>
               integer
             </td>
 <td></td>
@@ -1842,7 +1740,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~116"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1857,7 +1755,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~104"></span>
               integer
             </td>
 <td></td>
@@ -1872,7 +1770,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~36"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1887,7 +1785,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~25"></span>
               integer,
             </td>
 <td></td>
@@ -1916,11 +1814,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -1935,16 +1833,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~119"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1959,7 +1857,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~107"></span>
               integer
             </td>
 <td></td>
@@ -1974,7 +1872,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~53"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -1995,7 +1893,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~118"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2010,7 +1908,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~106"></span>
               integer
             </td>
 <td></td>
@@ -2025,7 +1923,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~37"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2040,7 +1938,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~26"></span>
               integer,
             </td>
 <td></td>
@@ -2069,11 +1967,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -2088,16 +1986,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~121"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2112,7 +2010,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~109"></span>
               integer
             </td>
 <td></td>
@@ -2148,16 +2046,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~122"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2172,7 +2070,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~110"></span>
               integer
             </td>
 <td></td>
@@ -2198,7 +2096,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~120"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2213,7 +2111,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~108"></span>
               integer
             </td>
 <td></td>
@@ -2228,7 +2126,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~38"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2243,7 +2141,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~27"></span>
               integer,
             </td>
 <td></td>
@@ -2272,11 +2170,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -2291,16 +2189,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~124"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2315,7 +2213,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~112"></span>
               integer
             </td>
 <td></td>
@@ -2330,7 +2228,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~54"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2361,16 +2259,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~125"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2385,7 +2283,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~113"></span>
               integer
             </td>
 <td></td>
@@ -2400,7 +2298,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-df~33"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2421,7 +2319,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~123"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2436,7 +2334,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~111"></span>
               integer
             </td>
 <td></td>
@@ -2451,7 +2349,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~39"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2466,7 +2364,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~28"></span>
               integer,
             </td>
 <td></td>
@@ -2487,8 +2385,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-curvefit"></span>
       <h3>public        interface <a href='../interface/curvefit.html'>curvefit</a> 
       </h3>
@@ -2505,11 +2403,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -2524,16 +2422,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~395"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2548,7 +2446,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~127"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2574,7 +2472,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~126"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2589,7 +2487,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xdata~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2604,7 +2502,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ydata~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2619,7 +2517,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~40"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2634,7 +2532,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~29"></span>
               integer,
             </td>
 <td></td>
@@ -2663,11 +2561,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -2682,16 +2580,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~396"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2706,7 +2604,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~129"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2721,7 +2619,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~55"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2742,7 +2640,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~128"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2757,7 +2655,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xdata~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2772,7 +2670,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ydata~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2787,7 +2685,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~41"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2802,7 +2700,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~30"></span>
               integer,
             </td>
 <td></td>
@@ -2831,11 +2729,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -2850,16 +2748,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~397"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2874,7 +2772,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~131"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2910,16 +2808,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~398"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2934,7 +2832,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~132"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2960,7 +2858,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~130"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2975,7 +2873,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xdata~7"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -2990,7 +2888,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ydata~7"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3005,7 +2903,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~42"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3020,7 +2918,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~31"></span>
               integer,
             </td>
 <td></td>
@@ -3049,11 +2947,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -3068,16 +2966,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~399"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3092,7 +2990,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~134"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3107,7 +3005,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~56"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3138,16 +3036,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~400"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3162,7 +3060,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~135"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3177,7 +3075,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-df~34"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3198,7 +3096,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~133"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3213,7 +3111,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xdata~8"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3228,7 +3126,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ydata~8"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3243,7 +3141,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~43"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3258,7 +3156,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~32"></span>
               integer,
             </td>
 <td></td>
@@ -3279,8 +3177,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-dbrent"></span>
       <h3>public        interface <a href='../interface/dbrent.html'>dbrent</a> 
       </h3>
@@ -3297,11 +3195,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -3316,16 +3214,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~401"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -3361,16 +3259,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~402"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -3396,7 +3294,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xmin~25"></span>
               real(kind=8),
             </td>
 <td>intent(inout)</td>
@@ -3411,7 +3309,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-brack~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3426,7 +3324,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~44"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3441,7 +3339,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-niter~5"></span>
               integer,
             </td>
 <td></td>
@@ -3470,11 +3368,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -3489,16 +3387,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~403"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -3524,7 +3422,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xmin~26"></span>
               real(kind=8),
             </td>
 <td>intent(inout)</td>
@@ -3539,7 +3437,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-brack~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3554,7 +3452,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~45"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3569,7 +3467,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-niter~6"></span>
               integer,
             </td>
 <td></td>
@@ -3590,8 +3488,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-fmin_bfgs"></span>
       <h3>public        interface <a href='../interface/fmin_bfgs.html'>fmin_bfgs</a> 
       </h3>
@@ -3608,11 +3506,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -3627,16 +3525,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~405"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3672,16 +3570,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~406"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3707,7 +3605,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~404"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3722,7 +3620,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-l~37"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3737,7 +3635,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-u~19"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3752,7 +3650,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-nbd~11"></span>
               integer,
             </td>
 <td></td>
@@ -3767,7 +3665,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-factr~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3782,7 +3680,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-pgtol~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3797,7 +3695,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iprint~13"></span>
               integer,
             </td>
 <td></td>
@@ -3812,7 +3710,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-nloop~3"></span>
               integer,
             </td>
 <td></td>
@@ -3841,11 +3739,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -3860,16 +3758,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~408"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3895,7 +3793,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~407"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3910,7 +3808,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-l~38"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3925,7 +3823,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-u~20"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3940,7 +3838,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-nbd~12"></span>
               integer,
             </td>
 <td></td>
@@ -3955,7 +3853,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-factr~7"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3970,7 +3868,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-pgtol~6"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -3985,7 +3883,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iprint~14"></span>
               integer,
             </td>
 <td></td>
@@ -4000,7 +3898,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-nloop~4"></span>
               integer,
             </td>
 <td></td>
@@ -4021,8 +3919,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-linear_mix"></span>
       <h3>public        interface <a href='../interface/linear_mix.html'>linear_mix</a> 
       </h3>
@@ -4039,16 +3937,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~409"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4063,7 +3961,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~18"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4078,7 +3976,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~19"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4107,16 +4005,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~410"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4131,7 +4029,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~19"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4146,7 +4044,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~20"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4175,16 +4073,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~411"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4199,7 +4097,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~20"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4214,7 +4112,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~21"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4243,16 +4141,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~412"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4267,7 +4165,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~21"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4282,7 +4180,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~22"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4311,16 +4209,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~413"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4335,7 +4233,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~22"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4350,7 +4248,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~23"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4379,16 +4277,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~414"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4403,7 +4301,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~23"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4418,7 +4316,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~24"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4447,16 +4345,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~415"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4471,7 +4369,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~24"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4486,7 +4384,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~25"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4515,16 +4413,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~416"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4539,7 +4437,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~25"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4554,7 +4452,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~26"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4583,16 +4481,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~417"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4607,7 +4505,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~26"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4622,7 +4520,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~27"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4651,16 +4549,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~418"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4675,7 +4573,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~27"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4690,7 +4588,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~28"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4719,16 +4617,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~419"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4743,7 +4641,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~28"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4758,7 +4656,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~29"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4787,16 +4685,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~420"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4811,7 +4709,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~29"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4826,7 +4724,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~30"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4855,16 +4753,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~421"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4879,7 +4777,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~30"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4894,7 +4792,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~31"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4923,16 +4821,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~422"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -4947,7 +4845,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~31"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -4962,7 +4860,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~32"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -4983,8 +4881,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-adaptive_mix"></span>
       <h3>public        interface <a href='../interface/adaptive_mix.html'>adaptive_mix</a> 
       </h3>
@@ -5001,16 +4899,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~423"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -5025,7 +4923,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~32"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5040,7 +4938,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~33"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -5055,7 +4953,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~25"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5084,16 +4982,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-z~33"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -5108,7 +5006,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fz~2"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5123,7 +5021,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~34"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -5138,7 +5036,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~26"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5159,8 +5057,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-broyden_mix"></span>
       <h3>public        interface <a href='../interface/broyden_mix.html'>broyden_mix</a> 
       </h3>
@@ -5177,16 +5075,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~424"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -5201,7 +5099,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~33"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5216,7 +5114,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~35"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -5231,7 +5129,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~10"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5246,7 +5144,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~27"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5261,7 +5159,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-w0~3"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5290,16 +5188,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~425"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -5314,7 +5212,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fx~34"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5329,7 +5227,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-alpha~36"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -5344,7 +5242,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-m~11"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5359,7 +5257,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iter~28"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -5374,7 +5272,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-w0~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5395,8 +5293,8 @@ modules which it uses.
     </ul>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum">
+              <div class="card">
+    <div class="card-header bg-light codesum">
       <span class="anchor" id="interface-fsolve"></span>
       <h3>public        interface <a href='../interface/fsolve.html'>fsolve</a> 
       </h3>
@@ -5413,11 +5311,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -5432,16 +5330,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~427"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5467,7 +5365,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~426"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5482,7 +5380,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~46"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5497,7 +5395,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~33"></span>
               integer,
             </td>
 <td></td>
@@ -5512,7 +5410,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-check~8"></span>
               logical,
             </td>
 <td></td>
@@ -5527,7 +5425,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-maxfev~3"></span>
               integer,
             </td>
 <td></td>
@@ -5556,11 +5454,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -5575,16 +5473,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~429"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5599,7 +5497,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ff~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5620,7 +5518,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~428"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5635,7 +5533,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~47"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5650,7 +5548,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~34"></span>
               integer,
             </td>
 <td></td>
@@ -5665,7 +5563,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-check~9"></span>
               logical,
             </td>
 <td></td>
@@ -5680,7 +5578,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-maxfev~4"></span>
               integer,
             </td>
 <td></td>
@@ -5709,11 +5607,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -5728,16 +5626,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~431"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5773,16 +5671,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~432"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5808,7 +5706,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~430"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5823,7 +5721,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~48"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5838,7 +5736,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~35"></span>
               integer,
             </td>
 <td></td>
@@ -5853,7 +5751,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-check~10"></span>
               logical,
             </td>
 <td></td>
@@ -5882,11 +5780,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -5901,16 +5799,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~434"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5925,7 +5823,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-f~57"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -5956,16 +5854,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~435"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -5980,7 +5878,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-df~35"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6001,7 +5899,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~433"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6016,7 +5914,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~49"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6031,7 +5929,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-info~36"></span>
               integer,
             </td>
 <td></td>
@@ -6046,7 +5944,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-check~11"></span>
               logical,
             </td>
 <td></td>
@@ -6074,10 +5972,10 @@ modules which it uses.
 
         <section>
           <h2>Functions</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-brentq~2"></span><h3>public  function <a href='../proc/brentq~2.html'>brentq</a>(func, a, b, tol) result(fzero)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-brentq~2"></span><h3>public  function <a href='../proc/brentq~2.html'>brentq</a>(func, a, b, tol) result(fzero)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6085,11 +5983,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -6104,16 +6002,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~387"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -6139,7 +6037,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-a~113"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -6154,7 +6052,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-b~85"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -6169,7 +6067,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~32"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6199,10 +6097,10 @@ modules which it uses.
 
         <section>
           <h2>Subroutines</h2>
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-brent~2"></span><h3>public  subroutine <a href='../proc/brent~2.html'>brent</a>(func, xmin, brack, tol, niter)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-brent~2"></span><h3>public  subroutine <a href='../proc/brent~2.html'>brent</a>(func, xmin, brack, tol, niter)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6210,11 +6108,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -6229,16 +6127,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~388"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -6264,7 +6162,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xmin~24"></span>
               real(kind=8),
             </td>
 <td>intent(inout)</td>
@@ -6279,7 +6177,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-brack~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6294,7 +6192,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~33"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6309,7 +6207,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-niter~4"></span>
               integer,
             </td>
 <td></td>
@@ -6329,10 +6227,10 @@ modules which it uses.
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-bracket~2"></span><h3>public  subroutine <a href='../proc/bracket~2.html'>bracket</a>(ax, bx, cx, fa, fb, fc, func)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-bracket~2"></span><h3>public  subroutine <a href='../proc/bracket~2.html'>bracket</a>(ax, bx, cx, fa, fb, fc, func)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6340,16 +6238,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ax~7"></span>
               real(kind=8),
             </td>
 <td>intent(inout)</td>
@@ -6364,7 +6262,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-bx~7"></span>
               real(kind=8),
             </td>
 <td>intent(inout)</td>
@@ -6379,7 +6277,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-cx~7"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -6394,7 +6292,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fa~4"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -6409,7 +6307,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fb~3"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -6424,7 +6322,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fc~4"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -6449,16 +6347,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~389"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -6489,10 +6387,10 @@ modules which it uses.
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-fmin~2"></span><h3>public  subroutine <a href='../proc/fmin~2.html'>fmin</a>(fn, start, lambda, tol, conv_check, max_fun_calls, fun_calls, num_restart, ierr)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-fmin~2"></span><h3>public  subroutine <a href='../proc/fmin~2.html'>fmin</a>(fn, start, lambda, tol, conv_check, max_fun_calls, fun_calls, num_restart, ierr)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6500,11 +6398,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -6519,16 +6417,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~390"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6554,7 +6452,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-start~8"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -6569,7 +6467,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-lambda~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6584,7 +6482,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~34"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6599,7 +6497,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-conv_check~2"></span>
               integer,
             </td>
 <td></td>
@@ -6614,7 +6512,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-max_fun_calls~2"></span>
               integer,
             </td>
 <td></td>
@@ -6629,7 +6527,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-fun_calls~2"></span>
               integer,
             </td>
 <td></td>
@@ -6644,7 +6542,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-num_restart~2"></span>
               integer,
             </td>
 <td></td>
@@ -6659,7 +6557,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ierr~2"></span>
               integer,
             </td>
 <td></td>
@@ -6679,10 +6577,10 @@ modules which it uses.
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-broyden1~2"></span><h3>public  subroutine <a href='../proc/broyden1~2.html'>broyden1</a>(ff, x, check, maxits, tol, tol1, tolmin, stpmx, noexit)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-broyden1~2"></span><h3>public  subroutine <a href='../proc/broyden1~2.html'>broyden1</a>(ff, x, check, maxits, tol, tol1, tolmin, stpmx, noexit)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6690,16 +6588,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-ff~3"></span>
               procedure(<a href='../interface/broydn_func.html'>broydn_func</a>)
             </td>
 <td></td>
@@ -6714,7 +6612,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~391"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -6729,7 +6627,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-check~7"></span>
               logical,
             </td>
 <td></td>
@@ -6744,7 +6642,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-maxits~2"></span>
               integer,
             </td>
 <td></td>
@@ -6759,7 +6657,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol~35"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6774,7 +6672,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol1~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6789,7 +6687,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tolmin~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6804,7 +6702,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-stpmx~3"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6819,7 +6717,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-noexit~2"></span>
               logical,
             </td>
 <td></td>
@@ -6839,10 +6737,10 @@ modules which it uses.
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-bisect~2"></span><h3>public  subroutine <a href='../proc/bisect~2.html'>bisect</a>(f, x1, x2, eps, Niter, flag)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-bisect~2"></span><h3>public  subroutine <a href='../proc/bisect~2.html'>bisect</a>(f, x1, x2, eps, Niter, flag)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6850,11 +6748,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -6869,16 +6767,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~392"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -6904,7 +6802,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x1~4"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -6919,7 +6817,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x2~4"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -6934,7 +6832,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-eps~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -6949,7 +6847,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-niter~3"></span>
               integer,
             </td>
 <td></td>
@@ -6964,7 +6862,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-flag~2"></span>
               integer,
             </td>
 <td></td>
@@ -6984,10 +6882,10 @@ modules which it uses.
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-fzero~2"></span><h3>public  subroutine <a href='../proc/fzero~2.html'>fzero</a>(f, b, c, iflag, rguess, tol_rel, tol_abs)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-fzero~2"></span><h3>public  subroutine <a href='../proc/fzero~2.html'>fzero</a>(f, b, c, iflag, rguess, tol_rel, tol_abs)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -6995,11 +6893,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -7014,16 +6912,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~393"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -7049,7 +6947,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-b~86"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -7064,7 +6962,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-c~44"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -7079,7 +6977,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-iflag~23"></span>
               integer
             </td>
 <td></td>
@@ -7094,7 +6992,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-rguess~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -7109,7 +7007,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol_rel~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -7124,7 +7022,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-tol_abs~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -7144,10 +7042,10 @@ modules which it uses.
     </div>
   </div>
 
-              <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-newton~2"></span><h3>public  subroutine <a href='../proc/newton~2.html'>newton</a>(f, xinit, eps, Niter)  
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-newton~2"></span><h3>public  subroutine <a href='../proc/newton~2.html'>newton</a>(f, xinit, eps, Niter)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
           
   
 
@@ -7155,11 +7053,11 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -7174,16 +7072,16 @@ modules which it uses.
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-x~394"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -7209,7 +7107,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-xinit~2"></span>
               real(kind=8),
             </td>
 <td>intent(inout)</td>
@@ -7224,7 +7122,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-eps~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -7239,7 +7137,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-niter~4"></span>
               integer,
             </td>
 <td></td>
@@ -7271,12 +7169,12 @@ modules which it uses.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -7286,17 +7184,12 @@ modules which it uses.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

@@ -10,81 +10,55 @@
 
     <title>colloc &ndash; SciFortran</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">SciFortran </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                  <li><a href="../lists/types.html">Derived Types</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/absint.html">Abstract Interfaces</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/types.html">Derived Types</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -92,32 +66,36 @@
       <small>Subroutine</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title=" 0.2% of total for procedures.">119 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.2% of total for procedures.">119 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
-          <li class="active">colloc</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">colloc</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -127,14 +105,13 @@
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
       <div id="sidebar">
       <h3>Contents</h3>
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#common-0">Common Blocks</a>
-        </h3>
-      </div>
-      <div id="common-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#common-0"
+         aria-expanded="false" aria-controls="common-0">
+         <h4 class="card-header bg-primary text-white">Common Blocks</h4>
+      </a>
+      <div id="common-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../proc/colloc~2.html#common-approx~4">approx</a>
             <a class="list-group-item" href="../proc/colloc~2.html#common-other~5">other</a>
             <a class="list-group-item" href="../proc/colloc~2.html#common-side~5">side</a>
@@ -160,6 +137,13 @@
   
   
   
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/colloc~2.html#src">colloc</a>
+      </div>
+    </div>
 
 
   </div>
@@ -174,30 +158,30 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! COLLOC solves an ordinary differential equation by collocation.</p>
 <p>Method:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">ordinary</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span><span class="w"> </span>
-<span class="n">conditions</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">DIFEQU</span><span class="p">,</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span>
-<span class="n">approximately</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">collocation</span><span class="o">.</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">ordinary</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span>
+<span class="n">conditions</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">DIFEQU</span><span class="p">,</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span>
+<span class="n">approximately</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">collocation</span><span class="o">.</span>
 
-<span class="n">The</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">order</span><span class="w"> </span>
-<span class="n">K</span><span class="o">+</span><span class="n">M</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">pieces</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">continuous</span><span class="w"> </span><span class="n">derivatives</span><span class="o">.</span><span class="w">   </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">determined</span><span class="w"> </span><span class="n">by</span><span class="w"> </span>
-<span class="n">the</span><span class="w"> </span><span class="n">requirement</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">satisfy</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">points</span><span class="w"> </span>
-<span class="n">per</span><span class="w"> </span><span class="n">interval</span><span class="w"> </span><span class="p">(</span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">COLPNT</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="n">conditions</span><span class="o">.</span><span class="w"></span>
+<span class="n">The</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">order</span>
+<span class="n">K</span><span class="o">+</span><span class="n">M</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">pieces</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">continuous</span><span class="w"> </span><span class="n">derivatives</span><span class="o">.</span><span class="w">   </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">determined</span><span class="w"> </span><span class="n">by</span>
+<span class="n">the</span><span class="w"> </span><span class="n">requirement</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">satisfy</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">points</span>
+<span class="n">per</span><span class="w"> </span><span class="n">interval</span><span class="w"> </span><span class="p">(</span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">COLPNT</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="n">conditions</span><span class="o">.</span>
 
-<span class="n">This</span><span class="w"> </span><span class="n">usually</span><span class="w"> </span><span class="n">nonlinear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="n">by</span><span class="w"></span>
+<span class="n">This</span><span class="w"> </span><span class="n">usually</span><span class="w"> </span><span class="n">nonlinear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="n">by</span>
 <span class="n">Newton</span><span class="s1">&#39;s method. the resulting linear system for the B-coefficients of an</span>
-<span class="n">iterate</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span><span class="n">appropriately</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">EQBLOK</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">solved</span><span class="w"></span>
-<span class="ow">in</span><span class="w"> </span><span class="n">SLVBLK</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">designed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">solve</span><span class="w"> </span><span class="n">almost</span><span class="w"> </span><span class="n">block</span><span class="w"></span>
-<span class="n">diagonal</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">systems</span><span class="w"> </span><span class="n">efficiently</span><span class="o">.</span><span class="w"></span>
+<span class="n">iterate</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span><span class="n">appropriately</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">EQBLOK</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">solved</span>
+<span class="ow">in</span><span class="w"> </span><span class="n">SLVBLK</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">designed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">solve</span><span class="w"> </span><span class="n">almost</span><span class="w"> </span><span class="n">block</span>
+<span class="n">diagonal</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">systems</span><span class="w"> </span><span class="n">efficiently</span><span class="o">.</span>
 
-<span class="n">There</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">opportunity</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">attempt</span><span class="w"> </span><span class="n">improvement</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">breakpoint</span><span class="w"></span>
-<span class="n">sequence</span><span class="p">,</span><span class="w"> </span><span class="n">both</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">location</span><span class="p">,</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">NEWNOT</span><span class="o">.</span><span class="w"></span>
+<span class="n">There</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">opportunity</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">attempt</span><span class="w"> </span><span class="n">improvement</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">breakpoint</span>
+<span class="n">sequence</span><span class="p">,</span><span class="w"> </span><span class="n">both</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">location</span><span class="p">,</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">NEWNOT</span><span class="o">.</span>
 
-<span class="n">Printed</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">consists</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span>
-<span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">approximate</span><span class="w"> </span><span class="n">solution</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="n">points</span><span class="o">.</span><span class="w"></span>
+<span class="n">Printed</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">consists</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span>
+<span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">approximate</span><span class="w"> </span><span class="n">solution</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="n">points</span><span class="o">.</span>
 </code></pre></div>
 
 <p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span>
 </code></pre></div>
 
 <p>Author:</p>
@@ -212,25 +196,25 @@ ISBN: 0387953663,
 LC: QA1.A647.v27.
 </code></pre></div>
 
-<p>Parameters: </p>
+<p>Parameters:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">ALEFT</span><span class="p">,</span> <span class="n">ARIGHT</span><span class="p">,</span> <span class="n">the</span> <span class="n">endpoints</span> <span class="n">of</span> <span class="n">the</span> <span class="n">interval</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">LBEGIN</span><span class="p">,</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">number</span> <span class="n">of</span> <span class="n">polynomial</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">LBEGIN</span><span class="p">,</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">number</span> <span class="n">of</span> <span class="n">polynomial</span>
 <span class="n">pieces</span> <span class="n">in</span> <span class="n">the</span> <span class="n">approximation</span><span class="p">.</span>  <span class="n">A</span> <span class="n">uniform</span> <span class="n">breakpoint</span> <span class="n">sequence</span> <span class="n">will</span> <span class="n">be</span> <span class="n">chosen</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">IORDER</span><span class="p">,</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">polynomial</span> <span class="n">pieces</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">IORDER</span><span class="p">,</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">polynomial</span> <span class="n">pieces</span>
 <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">the</span> <span class="n">approximation</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">NTIMES</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">passes</span> <span class="n">to</span> <span class="n">be</span> <span class="n">made</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">NTIMES</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">passes</span> <span class="n">to</span> <span class="n">be</span> <span class="n">made</span>
 <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">ADDBRK</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span><span class="p">,</span> <span class="n">possibly</span> <span class="n">fractional</span><span class="p">,</span> <span class="n">of</span> 
-<span class="n">breaks</span> <span class="n">to</span> <span class="n">be</span> <span class="n">added</span> <span class="n">per</span> <span class="n">pass</span> <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>  <span class="n">For</span> <span class="n">instance</span><span class="p">,</span> <span class="n">if</span> 
-<span class="n">ADDBRK</span> <span class="o">=</span> <span class="mf">0.33334</span><span class="p">,</span> <span class="n">then</span> <span class="n">a</span> <span class="n">breakpoint</span> <span class="n">will</span> <span class="n">be</span> <span class="n">added</span> <span class="n">at</span> <span class="n">every</span> <span class="n">third</span> <span class="n">pass</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">ADDBRK</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span><span class="p">,</span> <span class="n">possibly</span> <span class="n">fractional</span><span class="p">,</span> <span class="n">of</span>
+<span class="n">breaks</span> <span class="n">to</span> <span class="n">be</span> <span class="n">added</span> <span class="n">per</span> <span class="n">pass</span> <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>  <span class="n">For</span> <span class="n">instance</span><span class="p">,</span> <span class="n">if</span>
+<span class="n">ADDBRK</span> <span class="o">=</span> <span class="mf">0.33334</span><span class="p">,</span> <span class="n">then</span> <span class="n">a</span> <span class="n">breakpoint</span> <span class="n">will</span> <span class="n">be</span> <span class="n">added</span> <span class="n">at</span> <span class="n">every</span> <span class="n">third</span> <span class="n">pass</span>
 <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">RELERR</span><span class="p">,</span> <span class="n">a</span> <span class="n">tolerance</span><span class="p">.</span>  <span class="n">Newton</span> <span class="n">iteration</span> <span class="n">is</span> 
-<span class="n">stopped</span> <span class="n">if</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">the</span> <span class="n">B</span><span class="o">-</span><span class="n">coefficients</span> <span class="n">of</span> <span class="n">two</span> <span class="n">successive</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">RELERR</span><span class="p">,</span> <span class="n">a</span> <span class="n">tolerance</span><span class="p">.</span>  <span class="n">Newton</span> <span class="n">iteration</span> <span class="n">is</span>
+<span class="n">stopped</span> <span class="n">if</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">the</span> <span class="n">B</span><span class="o">-</span><span class="n">coefficients</span> <span class="n">of</span> <span class="n">two</span> <span class="n">successive</span>
 <span class="n">iterates</span> <span class="n">is</span> <span class="n">no</span> <span class="n">more</span> <span class="n">than</span> <span class="n">RELERR</span><span class="o">*</span><span class="p">(</span><span class="n">absolute</span> <span class="n">largest</span> <span class="n">B</span><span class="o">-</span><span class="n">coefficient</span><span class="p">).</span>
 </code></pre></div>
 
@@ -239,11 +223,11 @@ LC: QA1.A647.v27.
         <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -355,303 +339,116 @@ LC: QA1.A647.v27.
   </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~colloc~2~~CallsGraph Pages: 1 -->
-<svg id="proccolloc2CallsGraph" width="641pt" height="230pt"
- viewBox="0.00 0.00 641.00 229.57" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~colloc~2~~CallsGraph" class="graph" transform="scale(1.53 1.53) rotate(0) translate(4 346.98)">
+<svg id="proccolloc2CallsGraph" width="273pt" height="284pt"
+ viewBox="0.00 0.00 273.00 284.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~colloc~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 280)">
 <title>proc~~colloc~2~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-346.98 976,-346.98 976,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-280 269,-280 269,4 -4,4"/>
 <!-- proc~colloc~2 -->
 <g id="proc~~colloc~2~~CallsGraph_node1" class="node">
 <title>proc~colloc~2</title>
-<polygon fill="none" stroke="black" points="161,-234 0,-234 0,-210 161,-210 161,-234"/>
-<text text-anchor="middle" x="80.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_INTERPOLATE.f90::colloc</text>
+<polygon fill="none" stroke="black" points="175,-150 0,-150 0,-126 175,-126 175,-150"/>
+<text text-anchor="middle" x="87.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50">interpolate_pppack.f90::colloc</text>
 </g>
-<!-- proc~bsplpp~2 -->
+<!-- bsplpp -->
 <g id="proc~~colloc~2~~CallsGraph_node2" class="node">
-<title>proc~bsplpp~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node2"><a xlink:href=".././proc/bsplpp~2.html" xlink:title="SF_INTERPOLATE.f90::bsplpp">
-<polygon fill="#d9534f" stroke="#d9534f" points="567.5,-334 402.5,-334 402.5,-310 567.5,-310 567.5,-334"/>
-<text text-anchor="middle" x="485" y="-319.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::bsplpp</text>
-</a>
+<title>bsplpp</title>
+<polygon fill="#777777" stroke="#777777" points="265,-276 211,-276 211,-252 265,-252 265,-276"/>
+<text text-anchor="middle" x="238" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bsplpp</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~bsplpp~2 -->
+<!-- proc~colloc~2&#45;&gt;bsplpp -->
 <g id="proc~~colloc~2~~CallsGraph_edge1" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~bsplpp~2</title>
-<path fill="none" stroke="#000000" d="M90.3,-234.06C107.66,-256.7 148.87,-304.93 197,-323 267.88,-349.62 355.74,-344.29 415.44,-335.55"/>
-<polygon fill="#000000" stroke="#000000" points="416.16,-338.98 425.51,-334.01 415.1,-332.06 416.16,-338.98"/>
+<title>proc~colloc~2&#45;&gt;bsplpp</title>
+<path fill="none" stroke="#000000" d="M102.35,-150.1C124.93,-169.78 171.17,-209.85 211,-243 211.98,-243.81 212.98,-244.64 213.99,-245.48"/>
+<polygon fill="#000000" stroke="#000000" points="211.85,-248.25 221.82,-251.86 216.28,-242.83 211.85,-248.25"/>
 </g>
-<!-- proc~colpnt~2 -->
+<!-- colpnt -->
 <g id="proc~~colloc~2~~CallsGraph_node3" class="node">
-<title>proc~colpnt~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node3"><a xlink:href=".././proc/colpnt~2.html" xlink:title="SF_INTERPOLATE.f90::colpnt">
-<polygon fill="#d9534f" stroke="#d9534f" points="363,-314 200,-314 200,-290 363,-290 363,-314"/>
-<text text-anchor="middle" x="281.5" y="-299.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::colpnt</text>
-</a>
+<title>colpnt</title>
+<polygon fill="#777777" stroke="#777777" points="265,-234 211,-234 211,-210 265,-210 265,-234"/>
+<text text-anchor="middle" x="238" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">colpnt</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~colpnt~2 -->
+<!-- proc~colloc~2&#45;&gt;colpnt -->
 <g id="proc~~colloc~2~~CallsGraph_edge2" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~colpnt~2</title>
-<path fill="none" stroke="#000000" d="M104.98,-234.13C128.03,-245.76 164.39,-263.37 197,-276 206.87,-279.82 217.56,-283.49 227.89,-286.81"/>
-<polygon fill="#000000" stroke="#000000" points="227.05,-290.21 237.64,-289.87 229.15,-283.54 227.05,-290.21"/>
+<title>proc~colloc~2&#45;&gt;colpnt</title>
+<path fill="none" stroke="#000000" d="M109.78,-150.04C135.25,-164.44 178.08,-188.67 206.93,-204.99"/>
+<polygon fill="#000000" stroke="#000000" points="205.34,-208.11 215.76,-209.99 208.78,-202.02 205.34,-208.11"/>
 </g>
-<!-- proc~difequ~2 -->
+<!-- difequ -->
 <g id="proc~~colloc~2~~CallsGraph_node4" class="node">
-<title>proc~difequ~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node4"><a xlink:href=".././proc/difequ~2.html" xlink:title="SF_INTERPOLATE.f90::difequ">
-<polygon fill="#d9534f" stroke="#d9534f" points="769.5,-275 606.5,-275 606.5,-251 769.5,-251 769.5,-275"/>
-<text text-anchor="middle" x="688" y="-260.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::difequ</text>
-</a>
+<title>difequ</title>
+<polygon fill="#777777" stroke="#777777" points="265,-192 211,-192 211,-168 265,-168 265,-192"/>
+<text text-anchor="middle" x="238" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">difequ</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~difequ~2 -->
+<!-- proc~colloc~2&#45;&gt;difequ -->
 <g id="proc~~colloc~2~~CallsGraph_edge3" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~difequ~2</title>
-<path fill="none" stroke="#000000" d="M138.84,-234.05C157.33,-237.5 177.96,-240.89 197,-243 335.53,-258.35 497.27,-262.24 595.88,-263.06"/>
-<polygon fill="#000000" stroke="#000000" points="596.08,-266.56 606.1,-263.13 596.13,-259.56 596.08,-266.56"/>
+<title>proc~colloc~2&#45;&gt;difequ</title>
+<path fill="none" stroke="#000000" d="M131.05,-150.04C153.15,-156.28 179.86,-163.84 200.93,-169.8"/>
+<polygon fill="#000000" stroke="#000000" points="200.2,-173.23 210.77,-172.58 202.1,-166.49 200.2,-173.23"/>
 </g>
-<!-- proc~eqblok~2 -->
+<!-- eqblok -->
 <g id="proc~~colloc~2~~CallsGraph_node5" class="node">
-<title>proc~eqblok~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node5"><a xlink:href=".././proc/eqblok~2.html" xlink:title="SF_INTERPOLATE.f90::eqblok">
-<polygon fill="#d9534f" stroke="#d9534f" points="364.5,-234 198.5,-234 198.5,-210 364.5,-210 364.5,-234"/>
-<text text-anchor="middle" x="281.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::eqblok</text>
-</a>
+<title>eqblok</title>
+<polygon fill="#777777" stroke="#777777" points="265,-150 211,-150 211,-126 265,-126 265,-150"/>
+<text text-anchor="middle" x="238" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">eqblok</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~eqblok~2 -->
+<!-- proc~colloc~2&#45;&gt;eqblok -->
 <g id="proc~~colloc~2~~CallsGraph_edge4" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~eqblok~2</title>
-<path fill="none" stroke="#000000" d="M161.01,-222C169.9,-222 179.01,-222 188.04,-222"/>
-<polygon fill="#000000" stroke="#000000" points="188.19,-225.5 198.19,-222 188.19,-218.5 188.19,-225.5"/>
+<title>proc~colloc~2&#45;&gt;eqblok</title>
+<path fill="none" stroke="#000000" d="M175.31,-138C184.21,-138 192.87,-138 200.74,-138"/>
+<polygon fill="#000000" stroke="#000000" points="200.94,-141.5 210.94,-138 200.94,-134.5 200.94,-141.5"/>
 </g>
-<!-- proc~knots~2 -->
+<!-- knots -->
 <g id="proc~~colloc~2~~CallsGraph_node6" class="node">
-<title>proc~knots~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node6"><a xlink:href=".././proc/knots~2.html" xlink:title="SF_INTERPOLATE.f90::knots">
-<polygon fill="#d9534f" stroke="#d9534f" points="360.5,-192 202.5,-192 202.5,-168 360.5,-168 360.5,-192"/>
-<text text-anchor="middle" x="281.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::knots</text>
-</a>
+<title>knots</title>
+<polygon fill="#777777" stroke="#777777" points="265,-108 211,-108 211,-84 265,-84 265,-108"/>
+<text text-anchor="middle" x="238" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">knots</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~knots~2 -->
+<!-- proc~colloc~2&#45;&gt;knots -->
 <g id="proc~~colloc~2~~CallsGraph_edge5" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~knots~2</title>
-<path fill="none" stroke="#000000" d="M138.53,-209.96C161.94,-205.02 189.23,-199.26 213.58,-194.12"/>
-<polygon fill="#000000" stroke="#000000" points="214.4,-197.53 223.47,-192.04 212.96,-190.68 214.4,-197.53"/>
+<title>proc~colloc~2&#45;&gt;knots</title>
+<path fill="none" stroke="#000000" d="M131.05,-125.96C153.15,-119.72 179.86,-112.16 200.93,-106.2"/>
+<polygon fill="#000000" stroke="#000000" points="202.1,-109.51 210.77,-103.42 200.2,-102.77 202.1,-109.51"/>
 </g>
-<!-- proc~newnot~2 -->
+<!-- newnot -->
 <g id="proc~~colloc~2~~CallsGraph_node7" class="node">
-<title>proc~newnot~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node7"><a xlink:href=".././proc/newnot~2.html" xlink:title="SF_INTERPOLATE.f90::newnot">
-<polygon fill="#d9534f" stroke="#d9534f" points="366,-150 197,-150 197,-126 366,-126 366,-150"/>
-<text text-anchor="middle" x="281.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::newnot</text>
-</a>
+<title>newnot</title>
+<polygon fill="#777777" stroke="#777777" points="265,-66 211,-66 211,-42 265,-42 265,-66"/>
+<text text-anchor="middle" x="238" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">newnot</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~newnot~2 -->
+<!-- proc~colloc~2&#45;&gt;newnot -->
 <g id="proc~~colloc~2~~CallsGraph_edge6" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~newnot~2</title>
-<path fill="none" stroke="#000000" d="M100,-209.99C122.23,-196.01 161.05,-173.06 197,-159 202.53,-156.84 208.35,-154.84 214.25,-153.01"/>
-<polygon fill="#000000" stroke="#000000" points="215.58,-156.26 224.19,-150.08 213.61,-149.55 215.58,-156.26"/>
+<title>proc~colloc~2&#45;&gt;newnot</title>
+<path fill="none" stroke="#000000" d="M109.78,-125.96C135.25,-111.56 178.08,-87.33 206.93,-71.01"/>
+<polygon fill="#000000" stroke="#000000" points="208.78,-73.98 215.76,-66.01 205.34,-67.89 208.78,-73.98"/>
 </g>
-<!-- proc~slvblk~2 -->
+<!-- slvblk -->
 <g id="proc~~colloc~2~~CallsGraph_node8" class="node">
-<title>proc~slvblk~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node8"><a xlink:href=".././proc/slvblk~2.html" xlink:title="SF_INTERPOLATE.f90::slvblk">
-<polygon fill="#d9534f" stroke="#d9534f" points="361.5,-108 201.5,-108 201.5,-84 361.5,-84 361.5,-108"/>
-<text text-anchor="middle" x="281.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::slvblk</text>
-</a>
+<title>slvblk</title>
+<polygon fill="#777777" stroke="#777777" points="265,-24 211,-24 211,0 265,0 265,-24"/>
+<text text-anchor="middle" x="238" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">slvblk</text>
 </g>
-</g>
-<!-- proc~colloc~2&#45;&gt;proc~slvblk~2 -->
+<!-- proc~colloc~2&#45;&gt;slvblk -->
 <g id="proc~~colloc~2~~CallsGraph_edge7" class="edge">
-<title>proc~colloc~2&#45;&gt;proc~slvblk~2</title>
-<path fill="none" stroke="#000000" d="M91.23,-209.86C109.54,-187.87 151.38,-141.46 197,-117 200.71,-115.01 204.6,-113.21 208.61,-111.57"/>
-<polygon fill="#000000" stroke="#000000" points="209.95,-114.81 218.11,-108.05 207.51,-108.25 209.95,-114.81"/>
-</g>
-<!-- proc~bsplvb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node9" class="node">
-<title>proc~bsplvb~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node9"><a xlink:href=".././proc/bsplvb~2.html" xlink:title="SF_INTERPOLATE.f90::bsplvb">
-<polygon fill="#d9534f" stroke="#d9534f" points="972,-278 808,-278 808,-254 972,-254 972,-278"/>
-<text text-anchor="middle" x="890" y="-263.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::bsplvb</text>
-</a>
-</g>
-</g>
-<!-- proc~bsplpp~2&#45;&gt;proc~bsplvb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge8" class="edge">
-<title>proc~bsplpp~2&#45;&gt;proc~bsplvb~2</title>
-<path fill="none" stroke="#000000" d="M567.73,-311.59C624.97,-304.2 703.2,-293.86 772,-284 781.76,-282.6 791.98,-281.09 802.14,-279.57"/>
-<polygon fill="#000000" stroke="#000000" points="802.89,-282.99 812.25,-278.04 801.84,-276.07 802.89,-282.99"/>
-</g>
-<!-- proc~putit~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node12" class="node">
-<title>proc~putit~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node12"><a xlink:href=".././proc/putit~2.html" xlink:title="SF_INTERPOLATE.f90::putit">
-<polygon fill="#d9534f" stroke="#d9534f" points="562,-234 408,-234 408,-210 562,-210 562,-234"/>
-<text text-anchor="middle" x="485" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::putit</text>
-</a>
-</g>
-</g>
-<!-- proc~eqblok~2&#45;&gt;proc~putit~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge9" class="edge">
-<title>proc~eqblok~2&#45;&gt;proc~putit~2</title>
-<path fill="none" stroke="#000000" d="M364.75,-222C375.66,-222 386.88,-222 397.86,-222"/>
-<polygon fill="#000000" stroke="#000000" points="397.86,-225.5 407.86,-222 397.86,-218.5 397.86,-225.5"/>
-</g>
-<!-- proc~evnnot~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node10" class="node">
-<title>proc~evnnot~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node10"><a xlink:href=".././proc/evnnot~2.html" xlink:title="SF_INTERPOLATE.f90::evnnot">
-<polygon fill="#d9534f" stroke="#d9534f" points="568,-150 402,-150 402,-126 568,-126 568,-150"/>
-<text text-anchor="middle" x="485" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::evnnot</text>
-</a>
-</g>
-</g>
-<!-- proc~newnot~2&#45;&gt;proc~evnnot~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge10" class="edge">
-<title>proc~newnot~2&#45;&gt;proc~evnnot~2</title>
-<path fill="none" stroke="#000000" d="M366.2,-138C374.58,-138 383.12,-138 391.59,-138"/>
-<polygon fill="#000000" stroke="#000000" points="391.85,-141.5 401.85,-138 391.85,-134.5 391.85,-141.5"/>
-</g>
-<!-- proc~fcblok~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node11" class="node">
-<title>proc~fcblok~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node11"><a xlink:href=".././proc/fcblok~2.html" xlink:title="SF_INTERPOLATE.f90::fcblok">
-<polygon fill="#d9534f" stroke="#d9534f" points="566,-108 404,-108 404,-84 566,-84 566,-108"/>
-<text text-anchor="middle" x="485" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::fcblok</text>
-</a>
-</g>
-</g>
-<!-- proc~slvblk~2&#45;&gt;proc~fcblok~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge11" class="edge">
-<title>proc~slvblk~2&#45;&gt;proc~fcblok~2</title>
-<path fill="none" stroke="#000000" d="M361.56,-96C372.09,-96 382.95,-96 393.65,-96"/>
-<polygon fill="#000000" stroke="#000000" points="393.84,-99.5 403.84,-96 393.84,-92.5 393.84,-99.5"/>
-</g>
-<!-- proc~sbblok~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node13" class="node">
-<title>proc~sbblok~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node13"><a xlink:href=".././proc/sbblok~2.html" xlink:title="SF_INTERPOLATE.f90::sbblok">
-<polygon fill="#d9534f" stroke="#d9534f" points="567,-66 403,-66 403,-42 567,-42 567,-66"/>
-<text text-anchor="middle" x="485" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::sbblok</text>
-</a>
-</g>
-</g>
-<!-- proc~slvblk~2&#45;&gt;proc~sbblok~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge12" class="edge">
-<title>proc~slvblk~2&#45;&gt;proc~sbblok~2</title>
-<path fill="none" stroke="#000000" d="M340.24,-83.96C363.96,-79.02 391.58,-73.26 416.24,-68.12"/>
-<polygon fill="#000000" stroke="#000000" points="417.17,-71.5 426.25,-66.04 415.75,-64.65 417.17,-71.5"/>
-</g>
-<!-- proc~factrb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node15" class="node">
-<title>proc~factrb~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node15"><a xlink:href=".././proc/factrb~2.html" xlink:title="SF_INTERPOLATE.f90::factrb">
-<polygon fill="#d9534f" stroke="#d9534f" points="768.5,-150 607.5,-150 607.5,-126 768.5,-126 768.5,-150"/>
-<text text-anchor="middle" x="688" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::factrb</text>
-</a>
-</g>
-</g>
-<!-- proc~fcblok~2&#45;&gt;proc~factrb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge13" class="edge">
-<title>proc~fcblok~2&#45;&gt;proc~factrb~2</title>
-<path fill="none" stroke="#000000" d="M543.6,-108.04C567.25,-112.98 594.81,-118.74 619.41,-123.88"/>
-<polygon fill="#000000" stroke="#000000" points="618.89,-127.34 629.39,-125.96 620.32,-120.49 618.89,-127.34"/>
-</g>
-<!-- proc~shiftb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node16" class="node">
-<title>proc~shiftb~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node16"><a xlink:href=".././proc/shiftb~2.html" xlink:title="SF_INTERPOLATE.f90::shiftb">
-<polygon fill="#d9534f" stroke="#d9534f" points="767.5,-108 608.5,-108 608.5,-84 767.5,-84 767.5,-108"/>
-<text text-anchor="middle" x="688" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::shiftb</text>
-</a>
-</g>
-</g>
-<!-- proc~fcblok~2&#45;&gt;proc~shiftb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge14" class="edge">
-<title>proc~fcblok~2&#45;&gt;proc~shiftb~2</title>
-<path fill="none" stroke="#000000" d="M566.02,-96C576.55,-96 587.4,-96 598.08,-96"/>
-<polygon fill="#000000" stroke="#000000" points="598.24,-99.5 608.24,-96 598.24,-92.5 598.24,-99.5"/>
-</g>
-<!-- proc~putit~2&#45;&gt;proc~difequ~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge16" class="edge">
-<title>proc~putit~2&#45;&gt;proc~difequ~2</title>
-<path fill="none" stroke="#000000" d="M544.95,-234.02C567.86,-238.7 594.26,-244.08 618.04,-248.93"/>
-<polygon fill="#000000" stroke="#000000" points="617.55,-252.41 628.05,-250.98 618.95,-245.55 617.55,-252.41"/>
-</g>
-<!-- proc~bsplvd~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node14" class="node">
-<title>proc~bsplvd~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node14"><a xlink:href=".././proc/bsplvd~2.html" xlink:title="SF_INTERPOLATE.f90::bsplvd">
-<polygon fill="#d9534f" stroke="#d9534f" points="770,-233 606,-233 606,-209 770,-209 770,-233"/>
-<text text-anchor="middle" x="688" y="-218.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::bsplvd</text>
-</a>
-</g>
-</g>
-<!-- proc~putit~2&#45;&gt;proc~bsplvd~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge15" class="edge">
-<title>proc~putit~2&#45;&gt;proc~bsplvd~2</title>
-<path fill="none" stroke="#000000" d="M562.28,-221.62C573.16,-221.57 584.45,-221.51 595.58,-221.45"/>
-<polygon fill="#000000" stroke="#000000" points="595.77,-224.95 605.75,-221.4 595.74,-217.95 595.77,-224.95"/>
-</g>
-<!-- proc~subbak~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node17" class="node">
-<title>proc~subbak~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node17"><a xlink:href=".././proc/subbak~2.html" xlink:title="SF_INTERPOLATE.f90::subbak">
-<polygon fill="#d9534f" stroke="#d9534f" points="772,-66 604,-66 604,-42 772,-42 772,-66"/>
-<text text-anchor="middle" x="688" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::subbak</text>
-</a>
-</g>
-</g>
-<!-- proc~sbblok~2&#45;&gt;proc~subbak~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge17" class="edge">
-<title>proc~sbblok~2&#45;&gt;proc~subbak~2</title>
-<path fill="none" stroke="#000000" d="M567.18,-54C575.96,-54 584.95,-54 593.87,-54"/>
-<polygon fill="#000000" stroke="#000000" points="593.88,-57.5 603.88,-54 593.88,-50.5 593.88,-57.5"/>
-</g>
-<!-- proc~subfor~2 -->
-<g id="proc~~colloc~2~~CallsGraph_node18" class="node">
-<title>proc~subfor~2</title>
-<g id="a_proc~~colloc~2~~CallsGraph_node18"><a xlink:href=".././proc/subfor~2.html" xlink:title="SF_INTERPOLATE.f90::subfor">
-<polygon fill="#d9534f" stroke="#d9534f" points="769.5,-24 606.5,-24 606.5,0 769.5,0 769.5,-24"/>
-<text text-anchor="middle" x="688" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTERPOLATE.f90::subfor</text>
-</a>
-</g>
-</g>
-<!-- proc~sbblok~2&#45;&gt;proc~subfor~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge18" class="edge">
-<title>proc~sbblok~2&#45;&gt;proc~subfor~2</title>
-<path fill="none" stroke="#000000" d="M543.6,-41.96C567.25,-37.02 594.81,-31.26 619.41,-26.12"/>
-<polygon fill="#000000" stroke="#000000" points="620.32,-29.51 629.39,-24.04 618.89,-22.66 620.32,-29.51"/>
-</g>
-<!-- proc~bsplvd~2&#45;&gt;proc~bsplvb~2 -->
-<g id="proc~~colloc~2~~CallsGraph_edge19" class="edge">
-<title>proc~bsplvd~2&#45;&gt;proc~bsplvb~2</title>
-<path fill="none" stroke="#000000" d="M742.33,-233C767.88,-238.75 798.67,-245.68 825.43,-251.7"/>
-<polygon fill="#000000" stroke="#000000" points="824.94,-255.17 835.47,-253.96 826.48,-248.35 824.94,-255.17"/>
+<title>proc~colloc~2&#45;&gt;slvblk</title>
+<path fill="none" stroke="#000000" d="M102.35,-125.9C124.93,-106.22 171.17,-66.15 211,-33 211.98,-32.19 212.98,-31.36 213.99,-30.52"/>
+<polygon fill="#000000" stroke="#000000" points="216.28,-33.17 221.82,-24.14 211.85,-27.75 216.28,-33.17"/>
 </g>
 </g>
 </svg>
-</div>                <script>
-                  var panproccolloc2CallsGraph = svgPanZoom('#proccolloc2CallsGraph',
-                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
-                  );
-                </script>        <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-          <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -668,11 +465,11 @@ LC: QA1.A647.v27.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -691,23 +488,29 @@ LC: QA1.A647.v27.
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -725,70 +528,42 @@ implementation in a submodule of an interface in a parent module.
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-        <h3>Contents</h3>
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#common-1">Common Blocks</a>
-        </h3>
-      </div>
-      <div id="common-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../proc/colloc~2.html#common-approx~4">approx</a>
-            <a class="list-group-item" href="../proc/colloc~2.html#common-other~5">other</a>
-            <a class="list-group-item" href="../proc/colloc~2.html#common-side~5">side</a>
-        </div>
-      </div>
-    </div>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
     <section>
       <h2>Common Blocks</h2>
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-approx~4"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/colloc.html#common-approx'>colloc</a> (subroutine)<br><a href='../proc/difequ.html#common-approx~2'>difequ</a> (subroutine)<br><a href='../proc/l2err.html#common-approx~3'>l2err</a> (subroutine)<br><a href='../proc/difequ~2.html#common-approx~5'>difequ</a> (subroutine)<br><a href='../proc/l2err~2.html#common-approx~6'>l2err</a> (subroutine)<br>">common /approx/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-approx~4"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/colloc.html#common-approx'>colloc</a>
+      (subroutine)<br><a href='../proc/difequ.html#common-approx~2'>difequ</a>
+      (subroutine)<br><a href='../proc/l2err.html#common-approx~3'>l2err</a>
+      (subroutine)<br><a href='../proc/difequ~2.html#common-approx~5'>difequ</a>
+      (subroutine)<br><a href='../proc/l2err~2.html#common-approx~6'>l2err</a>
+      (subroutine)<br>">
+           common /approx/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-break~16"></span>
+              <span class="anchor" id="variable-break~15"></span>
               real
             </td>
             <td>
@@ -804,7 +579,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-coef~14"></span>
+              <span class="anchor" id="variable-coef~13"></span>
               real
             </td>
             <td>
@@ -820,7 +595,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~17"></span>
+              <span class="anchor" id="variable-l~15"></span>
               integer(kind=4)
             </td>
             <td>
@@ -856,23 +631,37 @@ implementation in a submodule of an interface in a parent module.
     </div>
   </div>
 
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-other~5"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/colloc.html#common-other'>colloc</a> (subroutine)<br><a href='../proc/difequ.html#common-other~2'>difequ</a> (subroutine)<br><a href='../proc/eqblok.html#common-other~3'>eqblok</a> (subroutine)<br><a href='../proc/putit.html#common-other~4'>putit</a> (subroutine)<br><a href='../proc/difequ~2.html#common-other~6'>difequ</a> (subroutine)<br><a href='../proc/eqblok~2.html#common-other~7'>eqblok</a> (subroutine)<br><a href='../proc/putit~2.html#common-other~8'>putit</a> (subroutine)<br>">common /other/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-other~5"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/colloc.html#common-other'>colloc</a>
+      (subroutine)<br><a href='../proc/difequ.html#common-other~2'>difequ</a>
+      (subroutine)<br><a href='../proc/eqblok.html#common-other~3'>eqblok</a>
+      (subroutine)<br><a href='../proc/putit.html#common-other~4'>putit</a>
+      (subroutine)<br><a href='../proc/difequ~2.html#common-other~6'>difequ</a>
+      (subroutine)<br><a href='../proc/eqblok~2.html#common-other~7'>eqblok</a>
+      (subroutine)<br><a href='../proc/putit~2.html#common-other~8'>putit</a>
+      (subroutine)<br>">
+           common /other/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -893,7 +682,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~27"></span>
+              <span class="anchor" id="variable-k~26"></span>
               integer(kind=4)
             </td>
             <td>
@@ -929,23 +718,37 @@ implementation in a submodule of an interface in a parent module.
     </div>
   </div>
 
-        <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="common-side~5"></span><h3>
-        <a data-toggle="popover" data-html="true" tabindex="0"
-           data-trigger="focus"
-           data-content="<h4>Used Elsewhere:</h4><a href='../proc/colloc.html#common-side'>colloc</a> (subroutine)<br><a href='../proc/difequ.html#common-side~2'>difequ</a> (subroutine)<br><a href='../proc/eqblok.html#common-side~3'>eqblok</a> (subroutine)<br><a href='../proc/putit.html#common-side~4'>putit</a> (subroutine)<br><a href='../proc/difequ~2.html#common-side~6'>difequ</a> (subroutine)<br><a href='../proc/eqblok~2.html#common-side~7'>eqblok</a> (subroutine)<br><a href='../proc/putit~2.html#common-side~8'>putit</a> (subroutine)<br>">common /side/</a>
-           
-    </h3></div>
-    <div class="panel-body">
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-side~5"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href='../proc/colloc.html#common-side'>colloc</a>
+      (subroutine)<br><a href='../proc/difequ.html#common-side~2'>difequ</a>
+      (subroutine)<br><a href='../proc/eqblok.html#common-side~3'>eqblok</a>
+      (subroutine)<br><a href='../proc/putit.html#common-side~4'>putit</a>
+      (subroutine)<br><a href='../proc/difequ~2.html#common-side~6'>difequ</a>
+      (subroutine)<br><a href='../proc/eqblok~2.html#common-side~7'>eqblok</a>
+      (subroutine)<br><a href='../proc/putit~2.html#common-side~8'>putit</a>
+      (subroutine)<br>">
+           common /side/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
       
           <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-<th></th><th>Initial</th>        <th></th>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
@@ -1006,7 +809,7 @@ implementation in a submodule of an interface in a parent module.
     <br>
     <script>
       $(function () {
-      $('[data-toggle="popover"]').popover()
+      $('[data-bs-toggle="popover"]').popover()
       })
     </script>
 
@@ -1017,7 +820,272 @@ implementation in a submodule of an interface in a parent module.
     
 
 
+
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">colloc</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">aleft</span><span class="p">,</span><span class="w"> </span><span class="n">aright</span><span class="p">,</span><span class="w"> </span><span class="n">lbegin</span><span class="p">,</span><span class="w"> </span><span class="n">iorder</span><span class="p">,</span><span class="w"> </span><span class="n">ntimes</span><span class="p">,</span><span class="w"> </span><span class="n">addbrk</span><span class="p">,</span><span class="w"> </span><span class="n">relerr</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! COLLOC solves an ordinary differential equation by collocation.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Method:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The M-th order ordinary differential equation with M side </span>
+<span class="w">  </span><span class="c">!    conditions, to be specified in subroutine DIFEQU, is solved </span>
+<span class="w">  </span><span class="c">!    approximately by collocation.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The approximation F to the solution G is piecewise polynomial of order </span>
+<span class="w">  </span><span class="c">!    K+M with L pieces and M-1 continuous derivatives.   F is determined by </span>
+<span class="w">  </span><span class="c">!    the requirement that it satisfy the differential equation at K points </span>
+<span class="w">  </span><span class="c">!    per interval (to be specified in COLPNT ) and the M side conditions.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This usually nonlinear system of equations for F is solved by</span>
+<span class="w">  </span><span class="c">!    Newton&#39;s method. the resulting linear system for the B-coefficients of an</span>
+<span class="w">  </span><span class="c">!    iterate is constructed appropriately in EQBLOK and then solved</span>
+<span class="w">  </span><span class="c">!    in SLVBLK, a program designed to solve almost block</span>
+<span class="w">  </span><span class="c">!    diagonal linear systems efficiently.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    There is an opportunity to attempt improvement of the breakpoint</span>
+<span class="w">  </span><span class="c">!    sequence, both in number and location, through the use of NEWNOT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Printed output consists of the piecewise polynomial representation </span>
+<span class="w">  </span><span class="c">!    of the approximate solution, and of the error at selected points.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters: </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) ALEFT, ARIGHT, the endpoints of the interval.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) LBEGIN, the initial number of polynomial </span>
+<span class="w">  </span><span class="c">!    pieces in the approximation.  A uniform breakpoint sequence will be chosen.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) IORDER, the order of the polynomial pieces </span>
+<span class="w">  </span><span class="c">!    to be used in the approximation</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NTIMES, the number of passes to be made </span>
+<span class="w">  </span><span class="c">!    through NEWNOT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) ADDBRK, the number, possibly fractional, of </span>
+<span class="w">  </span><span class="c">!    breaks to be added per pass through NEWNOT.  For instance, if </span>
+<span class="w">  </span><span class="c">!    ADDBRK = 0.33334, then a breakpoint will be added at every third pass </span>
+<span class="w">  </span><span class="c">!    through NEWNOT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) RELERR, a tolerance.  Newton iteration is </span>
+<span class="w">  </span><span class="c">!    stopped if the difference between the B-coefficients of two successive </span>
+<span class="w">  </span><span class="c">!    iterates is no more than RELERR*(absolute largest B-coefficient).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">npiece</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ndim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ncoef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lenblk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">addbrk</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">aleft</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">amax</span>
+<span class="nb">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">aright</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">asave</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bloks</span><span class="p">(</span><span class="n">lenblk</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coef</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dx</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">err</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ii</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">npiece</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iorder</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iside</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">itemps</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iter</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">itermx</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kpm</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lbegin</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lnew</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbloks</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nt</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ntimes</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">relerr</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rho</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">templ</span><span class="p">(</span><span class="n">lenblk</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xside</span>
+
+<span class="w">  </span><span class="k">equivalence</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="o">/</span>
+
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">npiece</span><span class="p">),</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ncoef</span><span class="p">),</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">itermx</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">iside</span><span class="p">,</span><span class="w"> </span><span class="n">xside</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">kpm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iorder</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ncoef</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lbegin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpm</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;COLLOC - Fatal error!&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The assigned dimension for COEF is too small.&#39;</span>
+<span class="w">     </span><span class="k">stop</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Set the various parameters concerning the particular differential</span>
+<span class="w">  </span><span class="c">!  equation, including a first approximation in case the differential</span>
+<span class="w">  </span><span class="c">!  equation is to be solved by iteration ( 0 &lt; ITERMX ).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">difequ</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">temps</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Obtain the K collocation points for the standard interval.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kpm</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="k">call </span><span class="n">colpnt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  The following five statements could be replaced by a read in</span>
+<span class="w">  </span><span class="c">!  order to obtain a nonuniform spacing of the breakpoints.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">aright</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">aleft</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lbegin</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">temps</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aleft</span>
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">lbegin</span>
+<span class="w">     </span><span class="n">temps</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span>
+<span class="w">  </span><span class="k">end do</span>
+<span class="k">  </span><span class="n">temps</span><span class="p">(</span><span class="n">lbegin</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aright</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Generate the required knots T(1:N+KPM).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">knots</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">lbegin</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">nt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Generate the almost block diagonal coefficient matrix BLOKS and</span>
+<span class="w">  </span><span class="c">!  right hand side B from collocation equations and side conditions.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Then solve via SLVBLK, obtaining the B-representation of the </span>
+<span class="w">  </span><span class="c">!  approximation in T, A, N, KPM.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do</span>
+
+<span class="k">     call </span><span class="n">eqblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">lenblk</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">slvblk</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">itemps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Save B-spline coefficients of current approximation in ASAVE, then </span>
+<span class="w">     </span><span class="c">!  get new approximation and compare with old. </span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  If coefficients are more than RELERR apart (relatively) or if number </span>
+<span class="w">     </span><span class="c">!  of iterations is less than ITERMX, continue iterating.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">do </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">itermx</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">bsplpp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="p">,</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">asave</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">eqblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">lenblk</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">slvblk</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">itemps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="nb">amax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">asave</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">relerr</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">amax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           exit</span>
+<span class="k">        end if</span>
+
+<span class="k">     end do</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Iteration (if any) completed.  Print out approximation based on current</span>
+<span class="w">     </span><span class="c">!  breakpoint sequence, then try to improve the sequence.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,i3,a,i3,a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="s1">&#39;  Approximation from a space of splines of order &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="s1">&#39; on &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; intervals&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i4)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  of dimension &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Breakpoints:&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(5g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">l</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">itermx</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i8)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Results on interation &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">iter</span>
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">     call </span><span class="n">bsplpp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="p">,</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="s1">&#39;  The piecewise polynomial representation of the approximation:&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+
+<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">l</span>
+<span class="w">        </span><span class="n">ii</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpm</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(f9.3,2x,e12.4,10e11.3)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">ii</span><span class="o">+</span><span class="n">kpm</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  The following call is provided here for possible further analysis</span>
+<span class="w">     </span><span class="c">!  of the approximation specific to the problem being solved.</span>
+<span class="w">     </span><span class="c">!  It is, of course, easily omitted.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">call </span><span class="n">difequ</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">temps</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ntimes</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        exit</span>
+<span class="k">     end if</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  From the piecewise polynomial representation of the current approximation, </span>
+<span class="w">     </span><span class="c">!  obtain in NEWNOT a new, and possibly better, sequence of breakpoints, </span>
+<span class="w">     </span><span class="c">!  adding, on average, ADDBRK breakpoints per pass through NEWNOT.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="n">lnew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lbegin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nt</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">addbrk</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ncoef</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lnew</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpm</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;COLLOC - Fatal error!&#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The assigned dimension for COEF is too small.&#39;</span>
+<span class="w">        </span><span class="k">stop</span>
+<span class="k">     end if</span>
+
+<span class="k">     call </span><span class="n">newnot</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">lnew</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">knots</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">lnew</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">nt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return  </span>
+<span class="k">end subroutine </span><span class="n">colloc</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
@@ -1026,12 +1094,12 @@ implementation in a submodule of an interface in a parent module.
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
             </p>
@@ -1041,17 +1109,12 @@ implementation in a submodule of an interface in a parent module.
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">
