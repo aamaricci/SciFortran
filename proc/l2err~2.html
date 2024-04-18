@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">l2err</li>
           </ol>
         </nav>
@@ -140,6 +140,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/l2err~2.html#src">l2err</a>
+      </div>
+    </div>
 
 
   </div>
@@ -154,8 +160,8 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! L2ERR computes the errors of an L2 approximation.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">This</span><span class="w"> </span><span class="n">routine</span><span class="w"> </span><span class="n">computes</span><span class="w"> </span><span class="n">various</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">approximation</span><span class="p">,</span><span class="w"> </span>
-<span class="n">whose</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="n">This</span><span class="w"> </span><span class="n">routine</span><span class="w"> </span><span class="n">computes</span><span class="w"> </span><span class="n">various</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">approximation</span><span class="p">,</span>
+<span class="n">whose</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span>
 <span class="n">block</span><span class="w"> </span><span class="n">APPROX</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">contained</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">DATA</span><span class="o">.</span>
 
 <span class="n">It</span><span class="w"> </span><span class="nb">prints</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">average</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRL1</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">L2</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">ERRL2</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span>
@@ -178,7 +184,7 @@ ISBN: 0387953663,
 LC: QA1.A647.v27.
 </code></pre></div>
 
-<p>Parameters: </p>
+<p>Parameters:</p>
 <div class="codehilite"><pre><span></span><code>Input, integer ( kind = 4 ) IPRFUN.  If IPRFUN = 1, the routine prints out
 the value of the approximation as well as its error at
 every data point.
@@ -186,9 +192,9 @@ every data point.
 Output, real ( kind = 8 ) FTAU(NTAU), contains the value of the computed
 approximation at each value TAU(1:NTAU).
 
-Output, real ( kind = 8 ) ERROR(NTAU), with 
+Output, real ( kind = 8 ) ERROR(NTAU), with
   ERROR(I) = SCALE * ( G - F )(TAU(I)).  Here, SCALE equals 1
-in case IPRFUN /= 1, or the absolute error is greater than 100 
+in case IPRFUN /= 1, or the absolute error is greater than 100
 somewhere.  Otherwise, SCALE is such that the maximum of the
 absolute value of ERROR(1:NTAU) lies between 10 and 100.  This
 makes the printed output more illustrative.
@@ -323,7 +329,7 @@ makes the printed output more illustrative.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~99"></span>
+              <span class="anchor" id="variable-l~84"></span>
               integer(kind=4)
             </td>
             <td>
@@ -339,7 +345,7 @@ makes the printed output more illustrative.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~390"></span>
+              <span class="anchor" id="variable-k~372"></span>
               integer(kind=4)
             </td>
             <td>
@@ -526,6 +532,157 @@ makes the printed output more illustrative.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">l2err</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iprfun</span><span class="p">,</span><span class="w"> </span><span class="n">ftau</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! L2ERR computes the errors of an L2 approximation.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine computes various errors of the current L2 approximation, </span>
+<span class="w">  </span><span class="c">!    whose piecewise polynomial representation is contained in common </span>
+<span class="w">  </span><span class="c">!    block APPROX, to the given data contained in common block DATA.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    It prints out the average error ERRL1, the L2 error ERRL2, and the</span>
+<span class="w">  </span><span class="c">!    maximum error ERRMAX.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    16 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters: </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) IPRFUN.  If IPRFUN = 1, the routine prints out</span>
+<span class="w">  </span><span class="c">!    the value of the approximation as well as its error at</span>
+<span class="w">  </span><span class="c">!    every data point.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) FTAU(NTAU), contains the value of the computed</span>
+<span class="w">  </span><span class="c">!    approximation at each value TAU(1:NTAU).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) ERROR(NTAU), with </span>
+<span class="w">  </span><span class="c">!      ERROR(I) = SCALE * ( G - F )(TAU(I)).  Here, SCALE equals 1</span>
+<span class="w">  </span><span class="c">!    in case IPRFUN /= 1, or the absolute error is greater than 100 </span>
+<span class="w">  </span><span class="c">!    somewhere.  Otherwise, SCALE is such that the maximum of the</span>
+<span class="w">  </span><span class="c">!    absolute value of ERROR(1:NTAU) lies between 10 and 100.  This</span>
+<span class="w">  </span><span class="c">!    makes the printed output more illustrative.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lpkmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ntmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ltkmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span>
+
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ntau</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coef</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">err</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">errl1</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">errl2</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">errmax</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="n">ntau</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ftau</span><span class="p">(</span><span class="n">ntau</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gtau</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ie</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iprfun</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ll</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ppvalu</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">scale</span>
+<span class="nb">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">tau</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">totalw</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">weight</span>
+
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">i4data</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r8data</span><span class="w"> </span><span class="o">/</span>
+
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">lpkmax</span><span class="p">),</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ltkmax</span><span class="p">),</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">i4data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ntau</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r8data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">ntmax</span><span class="p">),</span><span class="w"> </span><span class="n">gtau</span><span class="p">(</span><span class="n">ntmax</span><span class="p">),</span><span class="w"> </span><span class="n">weight</span><span class="p">(</span><span class="n">ntmax</span><span class="p">),</span><span class="w"> </span><span class="n">totalw</span>
+
+<span class="w">  </span><span class="n">errl1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">  </span><span class="n">errl2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">  </span><span class="n">errmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">ll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ntau</span>
+
+<span class="w">     </span><span class="n">ftau</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ppvalu</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">error</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtau</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ftau</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="w">     </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">(</span><span class="n">ll</span><span class="p">))</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">errmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">errmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">err</span>
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">     </span><span class="n">errl1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errl1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">weight</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="w">     </span><span class="n">errl2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errl2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">err</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">weight</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  </span><span class="n">errl1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errl1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">totalw</span>
+<span class="w">  </span><span class="n">errl2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">errl2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">totalw</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Least square error = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">errl2</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Average error      = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">errl1</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Maximum error      = &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">errmax</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iprfun</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Scale error curve and print.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">ie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="nb">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">errmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     do </span><span class="n">ie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span>
+<span class="w">        </span><span class="nb">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">scale</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1</span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">errmax</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">scale</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           exit</span>
+<span class="k">        end if</span>
+<span class="k">     end do</span>
+
+<span class="k">  end if</span>
+
+<span class="k">  </span><span class="n">error</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ntau</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ntau</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">scale</span>
+
+<span class="nb">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Approximation and scaled error curve&#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i1)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">       </span><span class="s1">&#39;       Data point       Approximation   Deviation x 10**&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ie</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">  </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(i4,f16.8,f16.8,f17.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="n">ll</span><span class="p">,</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="n">ftau</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="n">ll</span><span class="p">),</span><span class="w"> </span><span class="n">ll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ntau</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end subroutine </span><span class="n">l2err</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

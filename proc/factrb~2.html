@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">factrb</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/factrb~2.html#src">factrb</a>
+      </div>
+    </div>
 
 
   </div>
@@ -141,8 +147,8 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! FACTRB constructs a partial PLU factorization.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">This</span><span class="w"> </span><span class="nv">factorization</span><span class="w"> </span><span class="nv">corresponds</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">steps</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">through</span><span class="w"> </span><span class="nv">LAST</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Gauss</span><span class="w"> </span>
-<span class="nv">elimination</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">matrix</span><span class="w"> </span><span class="nv">W</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">order</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">NROW</span>,<span class="w"> </span><span class="nv">NCOL</span><span class="w"> </span><span class="ss">)</span>,<span class="w"> </span><span class="nv">using</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="nv">This</span><span class="w"> </span><span class="nv">factorization</span><span class="w"> </span><span class="nv">corresponds</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">steps</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">through</span><span class="w"> </span><span class="nv">LAST</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Gauss</span>
+<span class="nv">elimination</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">matrix</span><span class="w"> </span><span class="nv">W</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">order</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">NROW</span>,<span class="w"> </span><span class="nv">NCOL</span><span class="w"> </span><span class="ss">)</span>,<span class="w"> </span><span class="nv">using</span>
 <span class="nv">pivoting</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">scaled</span><span class="w"> </span><span class="nv">rows</span>.
 </code></pre></div>
 
@@ -166,7 +172,7 @@ LC: QA1.A647.v27.
 <div class="codehilite"><pre><span></span><code>Input/output, real ( kind = 8 ) W(NROW,NCOL); on input, contains the
 matrix to be partially factored; on output, the partial factorization.
 
-Output, integer ( kind = 4 ) IPIVOT(NROW), contains a record of the 
+Output, integer ( kind = 4 ) IPIVOT(NROW), contains a record of the
 pivoting strategy used; row IPIVOT(I) is used during the I-th elimination
 step, for I = 1, ..., LAST.
 
@@ -177,11 +183,11 @@ Input, integer ( kind = 4 ) NROW, the number of rows of W.
 
 Input, integer ( kind = 4 ) NCOL, the number of columns of W.
 
-Input, integer ( kind = 4 ) LAST, the number of elimination steps to 
+Input, integer ( kind = 4 ) LAST, the number of elimination steps to
 be carried out.
 
-Input/output, integer ( kind = 4 ) IFLAG.  On output, equals the input 
-value times (-1)**(number of row interchanges during the factorization 
+Input/output, integer ( kind = 4 ) IFLAG.  On output, equals the input
+value times (-1)**(number of row interchanges during the factorization
 process), in case no zero pivot was encountered.
 Otherwise, IFLAG = 0 on output.
 </code></pre></div>
@@ -200,7 +206,7 @@ Otherwise, IFLAG = 0 on output.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-w~84"></span>
+              <span class="anchor" id="variable-w~73"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -230,7 +236,7 @@ Otherwise, IFLAG = 0 on output.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~95"></span>
+              <span class="anchor" id="variable-d~73"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -275,7 +281,7 @@ Otherwise, IFLAG = 0 on output.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-last~16"></span>
+              <span class="anchor" id="variable-last~13"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -290,7 +296,7 @@ Otherwise, IFLAG = 0 on output.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iflag~50"></span>
+              <span class="anchor" id="variable-iflag~41"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -318,6 +324,179 @@ Otherwise, IFLAG = 0 on output.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">factrb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! FACTRB constructs a partial PLU factorization.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This factorization corresponds to steps 1 through LAST in Gauss </span>
+<span class="w">  </span><span class="c">!    elimination for the matrix W of order ( NROW, NCOL ), using </span>
+<span class="w">  </span><span class="c">!    pivoting of scaled rows.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) W(NROW,NCOL); on input, contains the</span>
+<span class="w">  </span><span class="c">!    matrix to be partially factored; on output, the partial factorization.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) IPIVOT(NROW), contains a record of the </span>
+<span class="w">  </span><span class="c">!    pivoting strategy used; row IPIVOT(I) is used during the I-th elimination</span>
+<span class="w">  </span><span class="c">!    step, for I = 1, ..., LAST.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Workspace, real ( kind = 8 ) D(NROW), used to store the maximum entry</span>
+<span class="w">  </span><span class="c">!    in each row.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NROW, the number of rows of W.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NCOL, the number of columns of W.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) LAST, the number of elimination steps to </span>
+<span class="w">  </span><span class="c">!    be carried out.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input/output, integer ( kind = 4 ) IFLAG.  On output, equals the input </span>
+<span class="w">  </span><span class="c">!    value times (-1)**(number of row interchanges during the factorization </span>
+<span class="w">  </span><span class="c">!    process), in case no zero pivot was encountered.</span>
+<span class="w">  </span><span class="c">!    Otherwise, IFLAG = 0 on output.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ncol</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">awikdi</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">colmax</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivi</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivk</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kp1</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">last</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ratio</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rowmax</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nrow</span><span class="p">,</span><span class="n">ncol</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Initialize IPIVOT and D.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+<span class="w">     </span><span class="n">ipivot</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">     </span><span class="n">rowmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ncol</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rowmax</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">     end if</span>
+
+<span class="k">     </span><span class="n">d</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowmax</span>
+
+<span class="w">  </span><span class="k">end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Gauss elimination with pivoting of scaled rows, loop over K = 1,..., LAST.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  As pivot row for K-th step, pick among the rows not yet used,</span>
+<span class="w">  </span><span class="c">!  that is, from rows IPIVOT(K:NROW), the one whose K-th entry, compared </span>
+<span class="w">  </span><span class="c">!  to the row size, is largest. </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  If this row does not turn out to be row IPIVOT(K), redefine IPIVOT(K)</span>
+<span class="w">  </span><span class="c">!  appropriately and record this interchange by changing the sign</span>
+<span class="w">  </span><span class="c">!  of IFLAG.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">ipivk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivk</span><span class="p">,</span><span class="n">nrow</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipivk</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipivk</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">        return</span>
+<span class="k">     end if</span>
+
+<span class="k">     </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span>
+<span class="w">     </span><span class="n">kp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">     </span><span class="n">colmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivk</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipivk</span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Find the largest pivot.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+<span class="w">        </span><span class="n">ipivi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="n">awikdi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivi</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipivi</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">colmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">awikdi</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">colmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">awikdi</span>
+<span class="w">           </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">     end do</span>
+
+<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">ipivk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="w">        </span><span class="n">ipivot</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">        </span><span class="n">ipivot</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivk</span>
+<span class="w">        </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">iflag</span>
+<span class="w">     </span><span class="k">end if</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  If the pivot element is too small in absolute value, declare</span>
+<span class="w">     </span><span class="c">!  the matrix to be noninvertible and quit.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivk</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipivk</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipivk</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">     end if</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Otherwise, subtract the appropriate multiple of the pivot</span>
+<span class="w">     </span><span class="c">!  row from the remaining rows, that is, the rows IPIVOT(K+1:NROW),</span>
+<span class="w">     </span><span class="c">!  to make the K-th entry zero.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Save the multiplier in its place.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">        </span><span class="n">ipivi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="n">w</span><span class="p">(</span><span class="n">ipivi</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivi</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivk</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivi</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="w">        </span><span class="n">w</span><span class="p">(</span><span class="n">ipivi</span><span class="p">,</span><span class="n">kp1</span><span class="p">:</span><span class="n">ncol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivk</span><span class="p">,</span><span class="n">kp1</span><span class="p">:</span><span class="n">ncol</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipivi</span><span class="p">,</span><span class="n">kp1</span><span class="p">:</span><span class="n">ncol</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">     </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">factrb</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

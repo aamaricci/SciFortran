@@ -1,0 +1,634 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A library of fortran modules and routines for scientific calculations (in a way just like scipy for python)">
+    <meta name="author" content="QcmP Lab members" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>dvdson_eigh_d &ndash; SciFortran</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">SciFortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>dvdson_eigh_d
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.2% of total for procedures.">106 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/dvdson_serial.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/dvdson_serial.f90.html'>dvdson_serial.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">dvdson_eigh_d</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/dvdson_eigh_d~2.html#src">dvdson_eigh_d</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2> subroutine dvdson_eigh_d(MatVec, eval, evec, Nblock, Nitermax, Tol)  
+</h2>
+    
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7">
+              <small>    <h5>
+     subroutine MatVec(Nloc, vin, vout)  
+
+    </h5>
+  
+
+  <h6>Arguments</h6>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nloc~37"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Nloc</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-vin~58"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td></td>            <td>
+              dimension(Nloc)
+            </td>
+            <td>::</td>
+            <td><strong>vin</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-vout~58"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td></td>            <td>
+              dimension(Nloc)
+            </td>
+            <td>::</td>
+            <td><strong>vout</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+</small>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-eval~9"></span>
+              real(kind=8),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>eval</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-evec~9"></span>
+              real(kind=8),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>evec</strong>(:,:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nblock~31"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Nblock</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nitermax~25"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Nitermax</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tol~2"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Tol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~dvdson_eigh_d~2~~CallsGraph Pages: 1 -->
+<svg id="procdvdson_eigh_d2CallsGraph" width="189pt" height="32pt"
+ viewBox="0.00 0.00 189.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~dvdson_eigh_d~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~dvdson_eigh_d~2~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 185,-28 185,4 -4,4"/>
+<!-- proc~dvdson_eigh_d~2 -->
+<g id="proc~~dvdson_eigh_d~2~~CallsGraph_node1" class="node">
+<title>proc~dvdson_eigh_d~2</title>
+<polygon fill="none" stroke="black" points="91,-24 0,-24 0,0 91,0 91,-24"/>
+<text text-anchor="middle" x="45.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">dvdson_eigh_d</text>
+</g>
+<!-- dvdson -->
+<g id="proc~~dvdson_eigh_d~2~~CallsGraph_node2" class="node">
+<title>dvdson</title>
+<polygon fill="#777777" stroke="#777777" points="181,-24 127,-24 127,0 181,0 181,-24"/>
+<text text-anchor="middle" x="154" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dvdson</text>
+</g>
+<!-- proc~dvdson_eigh_d~2&#45;&gt;dvdson -->
+<g id="proc~~dvdson_eigh_d~2~~CallsGraph_edge1" class="edge">
+<title>proc~dvdson_eigh_d~2&#45;&gt;dvdson</title>
+<path fill="none" stroke="#000000" d="M91.05,-12C99.63,-12 108.51,-12 116.78,-12"/>
+<polygon fill="#000000" stroke="#000000" points="116.87,-15.5 126.87,-12 116.87,-8.5 116.87,-15.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">dvdson_eigh_d</span><span class="p">(</span><span class="n">MatVec</span><span class="p">,</span><span class="n">eval</span><span class="p">,</span><span class="n">evec</span><span class="p">,</span><span class="n">Nblock</span><span class="p">,</span><span class="n">Nitermax</span><span class="p">,</span><span class="n">Tol</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!Interface to Matrix-Vector routine:</span>
+<span class="w">  </span><span class="k">interface</span>
+<span class="k">     subroutine </span><span class="n">MatVec</span><span class="p">(</span><span class="n">Nloc</span><span class="p">,</span><span class="n">vin</span><span class="p">,</span><span class="n">vout</span><span class="p">)</span>
+<span class="w">       </span><span class="kt">integer</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">Nloc</span>
+<span class="w">       </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">Nloc</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vin</span>
+<span class="w">       </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">Nloc</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vout</span>
+<span class="w">     </span><span class="k">end subroutine </span><span class="n">MatVec</span>
+<span class="w">  </span><span class="k">end interface</span>
+<span class="w">  </span><span class="c">!Arguments</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">eval</span><span class="p">(:)</span><span class="c">![Neigen]</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">evec</span><span class="p">(:,:)</span><span class="c">![Ns,Neigen]</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">Nblock</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">Nitermax</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">Tol</span>
+<span class="w">  </span><span class="c">!Dimensions:</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ns</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Neigen</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Nume</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Lim</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ilow</span><span class="p">,</span><span class="n">Ihigh</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Niv</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ncv</span><span class="p">,</span><span class="n">Mblock</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">MaxIter</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwrsz</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Iiwsz</span>
+<span class="w">  </span><span class="c">!Arrays:</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iselec</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Work</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwork</span>
+<span class="w">  </span><span class="c">!Control Vars:</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">ie</span><span class="p">,</span><span class="n">ival</span><span class="p">,</span><span class="n">ivec</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Crite</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Critc</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Critr</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ortho</span>
+<span class="w">  </span><span class="kt">logical</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Hiend</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Nloops</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Nmv</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ierr</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Adiag</span>
+
+<span class="w">  </span><span class="n">Ncv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Neigen</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Nblock</span><span class="p">))</span><span class="n">Ncv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nblock</span>
+
+<span class="w">  </span><span class="n">Ns</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">evec</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="n">Neigen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">eval</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="nb">shape</span><span class="p">(</span><span class="n">Evec</span><span class="p">)</span><span class="o">/=</span><span class="p">[</span><span class="n">Ns</span><span class="p">,</span><span class="n">Neigen</span><span class="p">]))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;dvdson_eigh_d ERROR: Evec wrong shape&quot;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">Nume</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">Neigen</span><span class="w"> </span><span class="c">!Distance of the eigenpair index ik farthest from the extreme</span>
+<span class="w">  </span><span class="c">!               !we look for the first, i.e. lowest, Neigen Eigenpairs here.</span>
+<span class="w">  </span><span class="n">Lim</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">Nume</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="n">Ns</span><span class="p">)</span>
+<span class="w">  </span><span class="n">Ilow</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">Ihigh</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">Neigen</span>
+<span class="w">  </span><span class="n">Niv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                    </span><span class="c">!to be used for initial vectors</span>
+<span class="w">  </span><span class="n">Mblock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">min</span><span class="p">(</span><span class="n">Ncv</span><span class="p">,</span><span class="n">Neigen</span><span class="p">))</span>
+<span class="w">  </span><span class="n">Crite</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d</span><span class="o">-</span><span class="mi">15</span><span class="w">    </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span><span class="n">Crite</span><span class="o">=</span><span class="n">tol</span>
+<span class="w">  </span><span class="n">Critc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d</span><span class="o">-</span><span class="mi">15</span>
+<span class="w">  </span><span class="n">Critr</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d</span><span class="o">-</span><span class="mi">15</span>
+<span class="w">  </span><span class="n">Ortho</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">Critr</span>
+<span class="w">  </span><span class="n">MaxIter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="n">Nume</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Nitermax</span><span class="p">))</span><span class="n">MaxIter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nitermax</span>
+<span class="w">  </span><span class="n">Iwrsz</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">Ns</span><span class="o">*</span><span class="n">Lim</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Lim</span><span class="o">*</span><span class="n">Lim</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">Nume</span><span class="o">+</span><span class="mi">10</span><span class="p">)</span><span class="o">*</span><span class="n">Lim</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Nume</span>
+<span class="w">  </span><span class="n">Iiwsz</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="o">*</span><span class="n">Lim</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Nume</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">Iselec</span><span class="p">(</span><span class="n">lim</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">Work</span><span class="p">(</span><span class="n">Iwrsz</span><span class="p">))</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">Iwork</span><span class="p">(</span><span class="n">Iiwsz</span><span class="p">))</span>
+<span class="w">  </span><span class="n">Iselec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="n">Work</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span>
+<span class="w">  </span><span class="n">Iwork</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">Adiag</span><span class="p">(</span><span class="n">Ns</span><span class="p">))</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">Evec</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)))</span><span class="o">==</span><span class="mi">0</span><span class="n">d0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">     call </span><span class="n">MatVec_to_diagonal</span><span class="p">(</span><span class="n">Adiag</span><span class="p">)</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="k">     </span><span class="n">Adiag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Evec</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="k">endif</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">DVDSON</span><span class="p">(</span><span class="n">block_MatVec</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Lim</span><span class="p">,</span><span class="w"> </span><span class="n">Adiag</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">Ilow</span><span class="p">,</span><span class="w"> </span><span class="n">Ihigh</span><span class="p">,</span><span class="w"> </span><span class="n">Iselec</span><span class="p">,</span><span class="w"> </span><span class="n">NIV</span><span class="p">,</span><span class="w"> </span><span class="n">Mblock</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">Crite</span><span class="p">,</span><span class="w"> </span><span class="n">Critc</span><span class="p">,</span><span class="w"> </span><span class="n">Critr</span><span class="p">,</span><span class="w"> </span><span class="n">ortho</span><span class="p">,</span><span class="w"> </span><span class="n">Maxiter</span><span class="p">,&amp;</span>
+<span class="w">       </span><span class="n">Work</span><span class="p">,</span><span class="n">Iwrsz</span><span class="p">,</span><span class="n">Iwork</span><span class="p">,</span><span class="n">Iiwsz</span><span class="p">,</span><span class="n">HIEND</span><span class="p">,</span><span class="n">NLOOPS</span><span class="p">,</span><span class="n">NMV</span><span class="p">,</span><span class="n">IERR</span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!POST PROCESSING:</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">ierr</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">     if</span><span class="p">(</span><span class="n">ierr</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;IERR = &quot;</span><span class="p">,</span><span class="n">ierr</span>
+<span class="w">        </span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;sp_dvdson_eigh: IERR denotes error in DSPEVX (k eigenpairs not converged)&quot;</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;IERR = &quot;</span><span class="p">,</span><span class="n">ierr</span>
+<span class="w">        </span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;sp_dvdson_eigh: IERR denotes some error, see documentation&quot;</span>
+<span class="w">        </span><span class="c">! if (INT( MOD(IERR,  2)/1) == 0 )stop &quot;sp_dvdson_eigh: IERR signals N &lt; LIM&quot;</span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,  4)/2) == 0 ) stop &quot;sp_dvdson_eigh: IERR signals LIM &lt; 1&quot;</span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,  8)/4) == 0  ) stop &quot;sp_dvdson_eigh: IERR signals ISELEC(1)&lt;1, and no range specified&quot;</span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR, 16)/8) == 0  ) stop &quot;sp_dvdson_eigh: IERR signals IHIGH &gt; N (in range or ISELEC)&quot;</span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR, 32)/16) == 0 ) stop &quot;sp_dvdson_eigh: IERR signals IHIGH &lt; ILOW (Invalid range)&quot;       </span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR, 64)/32) == 0 ) stop &quot;sp_dvdson_eigh: IERR signals NEIG &gt;= LIM (Too many wanted)&quot;      </span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,128)/64) == 0 ) stop &quot;sp_dvdson_eigh: IERR signals Probable duplication in ISELEC&quot;     </span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,256)/128) == 0) stop &quot;sp_dvdson_eigh: IERR signals NUME &gt;= LIM (max eigen very far)&quot;   </span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,512)/256) == 0) stop &quot;sp_dvdson_eigh: IERR signals MBLOCK is out of bounds&quot;   </span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,1024)/512) == 0) stop &quot;sp_dvdson_eigh: IERR signals IWRSZ or IIWSZ is not enough&quot;</span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,2048)/1024) == 0) stop &quot;sp_dvdson_eigh: IERR signals Orthogonalization Failed&quot;     </span>
+<span class="w">        </span><span class="c">! If (INT( MOD(IERR,4096)/2048) == 0) stop &quot;sp_dvdson_eigh: IERR signals NLOOPS &gt; MAXITER&quot;        </span>
+<span class="w">     </span><span class="k">endif</span>
+<span class="k">  endif</span>
+
+<span class="w">  </span><span class="c">!Retrieve the Evals,Evecs results from Work array</span>
+<span class="w">  </span><span class="k">do </span><span class="n">ie</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Nume</span>
+<span class="w">     </span><span class="n">ivec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">ie</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Ns</span>
+<span class="w">     </span><span class="n">ival</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ie</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Nume</span><span class="o">*</span><span class="n">Ns</span><span class="w"> </span>
+<span class="w">     </span><span class="n">Eval</span><span class="p">(</span><span class="n">ie</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Work</span><span class="p">(</span><span class="n">ival</span><span class="p">)</span>
+<span class="w">     </span><span class="n">Evec</span><span class="p">(:,</span><span class="n">ie</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Work</span><span class="p">(</span><span class="n">ivec</span><span class="p">:</span><span class="n">ivec</span><span class="o">+</span><span class="n">Ns</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="k">enddo</span>
+
+
+<span class="k">contains</span>
+
+<span class="k">  subroutine </span><span class="n">block_MatVec</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">Ne</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="n">Ne</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">Ne</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">Ne</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ie</span>
+<span class="w">    </span><span class="c">!</span>
+<span class="w">    </span><span class="k">do </span><span class="n">ie</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Ne</span>
+<span class="w">       </span><span class="k">call </span><span class="n">MatVec</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">B</span><span class="p">(:,</span><span class="n">ie</span><span class="p">),</span><span class="n">C</span><span class="p">(:,</span><span class="n">ie</span><span class="p">))</span>
+<span class="w">    </span><span class="k">enddo</span>
+<span class="w">    </span><span class="c">!</span>
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">block_MatVec</span>
+
+<span class="w">  </span><span class="k">subroutine </span><span class="n">MatVec_to_diagonal</span><span class="p">(</span><span class="n">diag</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">diag</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vin</span><span class="p">(</span><span class="n">Ns</span><span class="p">),</span><span class="n">vout</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Ns</span>
+<span class="w">       </span><span class="n">vin</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span>
+<span class="w">       </span><span class="n">vin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d0</span>
+<span class="w">       </span><span class="k">call </span><span class="n">MatVec</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">Vin</span><span class="p">,</span><span class="n">Vout</span><span class="p">)</span>
+<span class="w">       </span><span class="n">diag</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="w"> </span><span class="n">Vout</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">    </span><span class="k">enddo</span>
+<span class="k">  end subroutine </span><span class="n">MatVec_to_diagonal</span>
+
+
+<span class="k">end subroutine </span><span class="n">DVDSON_EIGH_D</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

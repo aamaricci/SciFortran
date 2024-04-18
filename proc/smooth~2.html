@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">smooth</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/smooth~2.html#src">smooth</a>
+      </div>
+    </div>
 
 
   </div>
@@ -267,7 +273,7 @@ Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~702"></span>
+              <span class="anchor" id="variable-x~625"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -282,7 +288,7 @@ Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~93"></span>
+              <span class="anchor" id="variable-y~95"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -297,7 +303,7 @@ Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dy~30"></span>
+              <span class="anchor" id="variable-dy~22"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -327,7 +333,7 @@ Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-s~102"></span>
+              <span class="anchor" id="variable-s~88"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -342,7 +348,7 @@ Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-v~90"></span>
+              <span class="anchor" id="variable-v~82"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -357,7 +363,7 @@ Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~323"></span>
+              <span class="anchor" id="variable-a~247"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -520,6 +526,229 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">smooth</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! SMOOTH constructs the cubic smoothing spline to given data.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The data is of the form</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      ( X(1:NPOINT), Y(1:NPOINT) )</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The cubic smoothing spline has as small a second derivative as</span>
+<span class="w">  </span><span class="c">!    possible, while</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      S(F) &lt;= S,</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    where</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      S(F) = sum ( 1 &lt;= I &lt;= NPOINT ) ( ( ( Y(I) - F(X(I)) ) / DY(I) )**2.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Method:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The matrices Q&#39; * D and Q&#39; * D**2 * Q are constructed in SETUPQ from</span>
+<span class="w">  </span><span class="c">!    X and DY, as is the vector QTY = Q&#39; * Y.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Then, for given P, the vector U is determined in CHOL1D as</span>
+<span class="w">  </span><span class="c">!    the solution of the linear system</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      ( 6 * (1-P) * Q&#39; * D**2 * Q + P * R ) * U = QTY.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    From U and this choice of smoothing parameter P, the smoothing spline F</span>
+<span class="w">  </span><span class="c">!    is obtained in the sense that:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!             F(X(.)) = Y - 6 (1-P) D**2 * Q * U,</span>
+<span class="w">  </span><span class="c">!      (d**2) F(X(.)) = 6 * P * U.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The smoothing parameter P is found, if possible, so that</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      SF(P) = S,</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    with SF(P) = S(F), where F is the smoothing spline as it depends</span>
+<span class="w">  </span><span class="c">!    on P.  If S = 0, then P = 1.  If SF(0) &lt;= S, then P = 0.</span>
+<span class="w">  </span><span class="c">!    Otherwise, the secant method is used to locate an appropriate P in</span>
+<span class="w">  </span><span class="c">!    the open interval (0,1).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Specifically,</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      P(0) = 0,  P(1) = ( S - SF(0) ) / DSF</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    with</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      DSF = -24 * U&#39; * R * U</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    a good approximation to</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      D(SF(0)) = DSF + 60 * (D*Q*U)&#39; * (D*Q*U),</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    and U as obtained for P = 0.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    After that, for N = 1, 2,...  until SF(P(N)) &lt;= 1.01 * S, do:</span>
+<span class="w">  </span><span class="c">!    determine P(N+1) as the point at which the secant to SF at the</span>
+<span class="w">  </span><span class="c">!    points P(N) and P(N-1) takes on the value S.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    If 1 &lt;= P(N+1), choose instead P(N+1) as the point at which</span>
+<span class="w">  </span><span class="c">!    the parabola SF(P(N))*((1-.)/(1-P(N)))**2 takes on the value S.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Note that, in exact arithmetic, it is always the case that</span>
+<span class="w">  </span><span class="c">!      P(N+1) &lt; P(N),</span>
+<span class="w">  </span><span class="c">!    hence</span>
+<span class="w">  </span><span class="c">!      SF(P(N+1)) &lt; SF(P(N)).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Therefore, also stop the iteration, with final P = 1, in case</span>
+<span class="w">  </span><span class="c">!      SF(P(N)) &lt;= SF(P(N+1)).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    16 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X(NPOINT), the abscissas, assumed to be</span>
+<span class="w">  </span><span class="c">!    strictly increasing.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) Y(NPOINT), the corresponding ordinates.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) DY(NPOINT), the data uncertainty estimates,</span>
+<span class="w">  </span><span class="c">!    which are assumed to be positive.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NPOINT, the number of data points.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) S, an upper bound on the discrete weighted mean</span>
+<span class="w">  </span><span class="c">!    square distance of the approximation F from the data.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Workspace, real ( kind = 8 ) V(NPOINT,7).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Workspace, real ( kind = 8 ) A(NPOINT,4).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) A(NPOINT,4).</span>
+<span class="w">  </span><span class="c">!    A(*,1).....contains the sequence of smoothed ordinates.</span>
+<span class="w">  </span><span class="c">!    A(I,J) = d**(J-1) F(X(I)), for J = 2:4, I = 1:NPOINT-1.</span>
+<span class="w">  </span><span class="c">!    That is, the first three derivatives of the smoothing spline F at the</span>
+<span class="w">  </span><span class="c">!    left end of each of the data intervals.  Note that A would have to</span>
+<span class="w">  </span><span class="c">!    be transposed before it could be used in PPVALU.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) SMOOTH, the value of the smoothing parameter.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">npoint</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">npoint</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">change</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">npoint</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">oosf</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ooss</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">p</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">prevq</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">prevsf</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">q</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">sfq</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">smooth</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">utru</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">npoint</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">npoint</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">npoint</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">call </span><span class="n">setupq</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
+<span class="w">     </span><span class="k">call </span><span class="n">chol1d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">sfq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+
+<span class="w">  </span><span class="k">else</span>
+
+<span class="k">     </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="k">call </span><span class="n">chol1d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">sfq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">        </span><span class="n">utru</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span>
+<span class="w">           </span><span class="n">utru</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utru</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="k">end do</span>
+
+<span class="k">        </span><span class="n">ooss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">oosf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ooss</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">utru</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="c">!</span>
+<span class="w">        </span><span class="c">!  Secant iteration for the determination of P starts here.</span>
+<span class="w">        </span><span class="c">!</span>
+<span class="w">        </span><span class="n">prevq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="n">prevsf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oosf</span>
+
+<span class="w">        </span><span class="k">do</span>
+
+<span class="k">           call </span><span class="n">chol1d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">npoint</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">           </span><span class="n">sfq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.01D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">              exit</span>
+<span class="k">           end if</span>
+
+<span class="k">           </span><span class="n">oosf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">sfq</span><span class="w"> </span><span class="p">)</span>
+<span class="w">           </span><span class="n">change</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prevq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prevsf</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">oosf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ooss</span><span class="w"> </span><span class="p">)</span>
+<span class="w">           </span><span class="n">prevq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span>
+<span class="w">           </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">change</span>
+<span class="w">           </span><span class="n">prevsf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oosf</span>
+
+<span class="w">        </span><span class="k">end do</span>
+
+<span class="k">        </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Correct value of P has been found.</span>
+<span class="w">  </span><span class="c">!  Compute polynomial coefficients from Q * U in A(.,1).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">smooth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sfq</span>
+
+<span class="w">  </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">       </span><span class="o">*</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">npoint</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">npoint</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">     </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">     </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end function </span><span class="n">smooth</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

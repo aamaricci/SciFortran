@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">subbak</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/subbak~2.html#src">subbak</a>
+      </div>
+    </div>
 
 
   </div>
@@ -161,7 +167,7 @@ LC: QA1.A647.v27.
 <span class="nv">NROW</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="nv">NCOL</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="nv">LAST</span>,<span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">FACTRB</span>.
 
 <span class="nv">Input</span><span class="o">/</span><span class="nv">output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">X</span><span class="ss">(</span><span class="nv">NCOL</span><span class="ss">)</span>.
-<span class="nv">On</span><span class="w"> </span><span class="nv">input</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">equations</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="nv">after</span><span class="w"> </span>
+<span class="nv">On</span><span class="w"> </span><span class="nv">input</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">equations</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="nv">after</span>
 <span class="nv">back</span><span class="w"> </span><span class="nv">substitution</span><span class="w"> </span><span class="nv">has</span><span class="w"> </span><span class="nv">been</span><span class="w"> </span><span class="nv">carried</span><span class="w"> </span><span class="nv">out</span><span class="w"> </span><span class="nv">up</span><span class="w"> </span><span class="nv">to</span>,<span class="w"> </span><span class="nv">but</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">including</span>,
 <span class="nv">equation</span><span class="w"> </span><span class="nv">IPIVOT</span><span class="ss">(</span><span class="nv">LAST</span><span class="ss">)</span>.<span class="w">  </span><span class="nv">This</span><span class="w"> </span><span class="nv">means</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">X</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">LAST</span><span class="ss">)</span><span class="w"> </span><span class="nv">contains</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span>
 <span class="nv">sides</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">IPIVOT</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">LAST</span><span class="ss">)</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">modified</span><span class="w"> </span><span class="nv">during</span><span class="w"> </span><span class="nv">elimination</span>,
@@ -184,7 +190,7 @@ LC: QA1.A647.v27.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-w~85"></span>
+              <span class="anchor" id="variable-w~74"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -244,7 +250,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-last~20"></span>
+              <span class="anchor" id="variable-last~17"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -259,7 +265,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~703"></span>
+              <span class="anchor" id="variable-x~626"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -287,6 +293,70 @@ LC: QA1.A647.v27.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">subbak</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! SUBBAK carries out back substitution for the current block.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) W(NROW,NCOL), integer IPIVOT(NROW), integer</span>
+<span class="w">  </span><span class="c">!    NROW, integer NCOL, integer LAST, are as on return from FACTRB.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) X(NCOL).</span>
+<span class="w">  </span><span class="c">!    On input, the right hand side for the equations in this block after </span>
+<span class="w">  </span><span class="c">!    back substitution has been carried out up to, but not including,</span>
+<span class="w">  </span><span class="c">!    equation IPIVOT(LAST).  This means that X(1:LAST) contains the right hand</span>
+<span class="w">  </span><span class="c">!    sides of equation IPIVOT(1:LAST) as modified during elimination,</span>
+<span class="w">  </span><span class="c">!    while X(LAST+1:NCOL) is already a component of the solution vector.</span>
+<span class="w">  </span><span class="c">!    On output, the components of the solution corresponding to the present</span>
+<span class="w">  </span><span class="c">!    block.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ncol</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ip</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">last</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nrow</span><span class="p">,</span><span class="n">ncol</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">ncol</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+
+<span class="w">     </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">ncol</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">ncol</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">subbak</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

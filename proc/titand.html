@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">titand</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/titand.html#src">titand</a>
-      </div>
-    </div>
 
 
   </div>
@@ -189,7 +183,7 @@ Output, integer ( kind = 4 ) N, the number of data points, which is 49.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~43"></span>
+              <span class="anchor" id="variable-t~21"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -204,7 +198,7 @@ Output, integer ( kind = 4 ) N, the number of data points, which is 49.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~24"></span>
+              <span class="anchor" id="variable-g~21"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -219,7 +213,7 @@ Output, integer ( kind = 4 ) N, the number of data points, which is 49.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~264"></span>
+              <span class="anchor" id="variable-n~110"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -247,81 +241,6 @@ Output, integer ( kind = 4 ) N, the number of data points, which is 49.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">titand</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! TITAND represents a temperature dependent property of titanium.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The data has been used extensively as an example in spline</span>
-<span class="w">  </span><span class="c">!    approximation with variable knots.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) T(N), the location of the data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) G(N), the value associated with the data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) N, the number of data points, which is 49.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">49</span>
-
-<span class="w">  </span><span class="n">t</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">49</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">59</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">60</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">61</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">62</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">63</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">64</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">65</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">66</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">67</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">68</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">69</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">70</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">71</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">72</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">73</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">74</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">75</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">76</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">77</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">78</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">79</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">80</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">81</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">82</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">83</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">84</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">85</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">86</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">87</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">88</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">89</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">90</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">91</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">92</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">93</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">94</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">95</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">96</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">97</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w">  </span><span class="mi">98</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">99</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mi">104</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">105</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">106</span><span class="mf">5.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mi">107</span><span class="mf">5.0D+00</span><span class="w"> </span><span class="o">/</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">g</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">49</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.644D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.622D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.638D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.649D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.652D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.639D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.646D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.657D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.652D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.655D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.644D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.663D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.663D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.668D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.676D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.676D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.686D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.679D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.678D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.683D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.694D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.699D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.710D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.730D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.763D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.812D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.907D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">1.044D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">1.336D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">1.881D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">2.169D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">2.075D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">1.598D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">1.211D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.916D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.746D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.672D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.627D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.615D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.607D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.606D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.609D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.603D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.601D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.603D+00</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="mf">0.601D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.611D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.601D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.608D+00</span><span class="w"> </span><span class="o">/</span><span class="p">)</span>
-
-<span class="w">  </span><span class="k">return</span>
-<span class="k">end subroutine </span><span class="n">titand</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

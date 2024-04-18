@@ -5,8 +5,8 @@ MODULE SF_SPIN
   complex(8),parameter :: zero =(0d0,0d0)
   complex(8),parameter :: xi   =(0d0,1d0)
   complex(8),parameter :: one  =(1d0,0d0)
-  complex(8),parameter :: sqrt2=cmplx(sqrt(2d0),0d0)
-  complex(8),parameter :: sqrt3=cmplx(sqrt(3d0),0d0)
+  real(8),parameter    :: sqrt2=sqrt(2d0)
+  real(8),parameter    :: sqrt3=sqrt(3d0)
 
 
   complex(8),dimension(2,2),parameter,public :: pauli_0=reshape([one,zero,zero,one],[2,2])
