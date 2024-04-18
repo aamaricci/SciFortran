@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.2% of total for modules and submodules.">101 statements</a>
             </li>
 
@@ -185,7 +187,7 @@
 <!-- module~scifor -->
 <g id="module~~sf_fonts~~UsedByGraph_node2" class="node">
 <title>module~scifor</title>
-<g id="a_module~~sf_fonts~~UsedByGraph_node2"><a xlink:href=".././module/scifor.html" xlink:title="SCIFOR">
+<g id="a_module~~sf_fonts~~UsedByGraph_node2"><a xlink:href="../module/scifor.html" xlink:title="SCIFOR">
 <polygon fill="#337ab7" stroke="#337ab7" points="156,-24 102,-24 102,0 156,0 156,-24"/>
 <text text-anchor="middle" x="129" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR</text>
 </a>
@@ -199,17 +201,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -285,7 +287,7 @@ modules which it uses.
         <section>
           <h2>Functions</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bold"></span><h3>public  function <a href='../proc/bold.html'>bold</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bold"></span> <h3>public  function <a href='../proc/bold.html'>bold</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -330,7 +332,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-underline"></span><h3>public  function <a href='../proc/underline.html'>underline</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-underline"></span> <h3>public  function <a href='../proc/underline.html'>underline</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -375,7 +377,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-highlight"></span><h3>public  function <a href='../proc/highlight.html'>highlight</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-highlight"></span> <h3>public  function <a href='../proc/highlight.html'>highlight</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -420,7 +422,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-erased"></span><h3>public  function <a href='../proc/erased.html'>erased</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-erased"></span> <h3>public  function <a href='../proc/erased.html'>erased</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -465,7 +467,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-font_red"></span><h3>public  function <a href='../proc/font_red.html'>font_red</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-font_red"></span> <h3>public  function <a href='../proc/font_red.html'>font_red</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -510,7 +512,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-font_green"></span><h3>public  function <a href='../proc/font_green.html'>font_green</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-font_green"></span> <h3>public  function <a href='../proc/font_green.html'>font_green</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -555,7 +557,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-font_yellow"></span><h3>public  function <a href='../proc/font_yellow.html'>font_yellow</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-font_yellow"></span> <h3>public  function <a href='../proc/font_yellow.html'>font_yellow</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -600,7 +602,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-font_blue"></span><h3>public  function <a href='../proc/font_blue.html'>font_blue</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-font_blue"></span> <h3>public  function <a href='../proc/font_blue.html'>font_blue</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -645,7 +647,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bold_red"></span><h3>public  function <a href='../proc/bold_red.html'>bold_red</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bold_red"></span> <h3>public  function <a href='../proc/bold_red.html'>bold_red</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -690,7 +692,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bold_green"></span><h3>public  function <a href='../proc/bold_green.html'>bold_green</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bold_green"></span> <h3>public  function <a href='../proc/bold_green.html'>bold_green</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -735,7 +737,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bold_yellow"></span><h3>public  function <a href='../proc/bold_yellow.html'>bold_yellow</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bold_yellow"></span> <h3>public  function <a href='../proc/bold_yellow.html'>bold_yellow</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -780,7 +782,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bold_blue"></span><h3>public  function <a href='../proc/bold_blue.html'>bold_blue</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bold_blue"></span> <h3>public  function <a href='../proc/bold_blue.html'>bold_blue</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -825,7 +827,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bg_red"></span><h3>public  function <a href='../proc/bg_red.html'>bg_red</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bg_red"></span> <h3>public  function <a href='../proc/bg_red.html'>bg_red</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -870,7 +872,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bg_green"></span><h3>public  function <a href='../proc/bg_green.html'>bg_green</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bg_green"></span> <h3>public  function <a href='../proc/bg_green.html'>bg_green</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -915,7 +917,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bg_yellow"></span><h3>public  function <a href='../proc/bg_yellow.html'>bg_yellow</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bg_yellow"></span> <h3>public  function <a href='../proc/bg_yellow.html'>bg_yellow</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -960,7 +962,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-bg_blue"></span><h3>public  function <a href='../proc/bg_blue.html'>bg_blue</a>(text) result(textout)  
+    <div class="card-header codesum"><span class="anchor" id="proc-bg_blue"></span> <h3>public  function <a href='../proc/bg_blue.html'>bg_blue</a>(text) result(textout)  
 </h3></div>
     <div class="card-body">
           
@@ -1018,7 +1020,10 @@ modules which it uses.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

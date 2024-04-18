@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for procedures.">36 statements</a>
             </li>
 
@@ -157,7 +159,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-pname~108"></span>
+              <span class="anchor" id="variable-pname~111"></span>
               character(len=*)
             </td>
 <td></td>
@@ -172,7 +174,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~74"></span>
+              <span class="anchor" id="variable-x~80"></span>
               integer,
             </td>
 <td></td>
@@ -187,7 +189,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y1~99"></span>
+              <span class="anchor" id="variable-y1~104"></span>
               integer,
             </td>
 <td></td>
@@ -276,13 +278,13 @@
 <span class="w">           </span><span class="k">write</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s1">&#39;(5(I15))&#39;</span><span class="p">)</span><span class="n">X</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">Y1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">Y2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">Y3</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">Y4</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
 <span class="w">        </span><span class="k">enddo</span>
 <span class="k">     enddo</span>
-<span class="k">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y3</span><span class="p">))</span><span class="k">then</span>
+<span class="k">  elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y3</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Ny1</span>
 <span class="w">        </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Ny2</span>
 <span class="w">           </span><span class="k">write</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s1">&#39;(4(I15))&#39;</span><span class="p">)</span><span class="n">X</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">Y1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">Y2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">Y3</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
 <span class="w">        </span><span class="k">enddo</span>
 <span class="k">     enddo</span>
-<span class="k">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="k">then</span>
+<span class="k">  elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Ny1</span>
 <span class="w">        </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Ny2</span>
 <span class="w">           </span><span class="k">write</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s1">&#39;(3(I15))&#39;</span><span class="p">)</span><span class="n">X</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">Y1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">Y2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
@@ -310,7 +312,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

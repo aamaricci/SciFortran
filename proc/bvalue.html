@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,21 +75,20 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for procedures.">82 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">bvalue</li>
           </ol>
         </nav>
@@ -125,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/bvalue.html#src">bvalue</a>
+      </div>
+    </div>
 
 
   </div>
@@ -137,15 +145,15 @@
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
-<p>! BVALUE evaluates a derivative of a spline from its B-spline representation.  </p>
+<p>! BVALUE evaluates a derivative of a spline from its B-spline representation.</p>
 <p>Discussion:</p>
 <div class="codehilite"><pre><span></span><code>The spline is taken to be continuous from the right.
 
-The nontrivial knot interval (T(I),T(I+1)) containing X is 
-located with the aid of INTERV.  The K B-spline coefficients 
-of F relevant for this interval are then obtained from BCOEF, 
-or are taken to be zero if not explicitly available, and are 
-then differenced JDERIV times to obtain the B-spline 
+The nontrivial knot interval (T(I),T(I+1)) containing X is
+located with the aid of INTERV.  The K B-spline coefficients
+of F relevant for this interval are then obtained from BCOEF,
+or are taken to be zero if not explicitly available, and are
+then differenced JDERIV times to obtain the B-spline
 coefficients of (D**JDERIV)F relevant for that interval.
 
 Precisely, with J = JDERIV, we have from X.(12) of the text that:
@@ -168,8 +176,8 @@ with
   A(.,X) =   ---------------------------------------
                (X - T(.))      + (T(.+M-1) - X)
 
-to write (D**J)F(X) eventually as a linear combination of 
-B-splines of order 1, and the coefficient for B(I,1,T)(X) 
+to write (D**J)F(X) eventually as a linear combination of
+B-splines of order 1, and the coefficient for B(I,1,T)(X)
 must then be the desired number (D**J)F(X).
 See Chapter X, (17)-(19) of text.
 </code></pre></div>
@@ -191,7 +199,7 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) T(N+K), the knot sequence.  T is assumed 
+<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) T(N+K), the knot sequence.  T is assumed
 to be nondecreasing.
 
 Input, real ( kind = 8 ) BCOEF(N), B-spline coefficient sequence.
@@ -202,10 +210,10 @@ Input, integer ( kind = 4 ) K, the order of the spline.
 
 Input, real ( kind = 8 ) X, the point at which to evaluate.
 
-Input, integer ( kind = 4 ) JDERIV, the order of the derivative to 
+Input, integer ( kind = 4 ) JDERIV, the order of the derivative to
 be evaluated.  JDERIV is assumed to be zero or positive.
 
-Output, real ( kind = 8 ) BVALUE, the value of the (JDERIV)-th 
+Output, real ( kind = 8 ) BVALUE, the value of the (JDERIV)-th
 derivative of the spline at X.
 </code></pre></div>
 
@@ -223,7 +231,7 @@ derivative of the spline at X.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t"></span>
+              <span class="anchor" id="variable-t~33"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -238,7 +246,7 @@ derivative of the spline at X.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bcoef"></span>
+              <span class="anchor" id="variable-bcoef~3"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -253,7 +261,7 @@ derivative of the spline at X.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~7"></span>
+              <span class="anchor" id="variable-n~254"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -268,7 +276,7 @@ derivative of the spline at X.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~2"></span>
+              <span class="anchor" id="variable-k~182"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -283,7 +291,7 @@ derivative of the spline at X.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~33"></span>
+              <span class="anchor" id="variable-x~378"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -333,42 +341,42 @@ derivative of the spline at X.
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~bvalue~~CallsGraph Pages: 1 -->
-<svg id="procbvalueCallsGraph" width="264pt" height="32pt"
- viewBox="0.00 0.00 264.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procbvalueCallsGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~bvalue~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>proc~~bvalue~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 260,-28 260,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
 <!-- proc~bvalue -->
 <g id="proc~~bvalue~~CallsGraph_node1" class="node">
 <title>proc~bvalue</title>
-<polygon fill="none" stroke="black" points="166,-24 0,-24 0,0 166,0 166,-24"/>
-<text text-anchor="middle" x="83" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_INTERPOLATE.f90::bvalue</text>
+<polygon fill="none" stroke="black" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">bvalue</text>
 </g>
 <!-- interv -->
 <g id="proc~~bvalue~~CallsGraph_node2" class="node">
 <title>interv</title>
-<polygon fill="#777777" stroke="#777777" points="256,-24 202,-24 202,0 256,0 256,-24"/>
-<text text-anchor="middle" x="229" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interv</text>
+<polygon fill="#777777" stroke="#777777" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interv</text>
 </g>
 <!-- proc~bvalue&#45;&gt;interv -->
 <g id="proc~~bvalue~~CallsGraph_edge1" class="edge">
 <title>proc~bvalue&#45;&gt;interv</title>
-<path fill="none" stroke="#000000" d="M166.1,-12C174.95,-12 183.6,-12 191.5,-12"/>
-<polygon fill="#000000" stroke="#000000" points="191.73,-15.5 201.73,-12 191.73,-8.5 191.73,-15.5"/>
+<path fill="none" stroke="#000000" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -449,6 +457,221 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">bvalue</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">bcoef</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">jderiv</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! BVALUE evaluates a derivative of a spline from its B-spline representation.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The spline is taken to be continuous from the right.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    The nontrivial knot interval (T(I),T(I+1)) containing X is </span>
+<span class="w">  </span><span class="c">!    located with the aid of INTERV.  The K B-spline coefficients </span>
+<span class="w">  </span><span class="c">!    of F relevant for this interval are then obtained from BCOEF, </span>
+<span class="w">  </span><span class="c">!    or are taken to be zero if not explicitly available, and are </span>
+<span class="w">  </span><span class="c">!    then differenced JDERIV times to obtain the B-spline </span>
+<span class="w">  </span><span class="c">!    coefficients of (D**JDERIV)F relevant for that interval.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Precisely, with J = JDERIV, we have from X.(12) of the text that:</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!      (D**J)F = sum ( BCOEF(.,J)*B(.,K-J,T) )</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    where</span>
+<span class="w">  </span><span class="c">!                      / BCOEF(.),                    if J == 0</span>
+<span class="w">  </span><span class="c">!                     /</span>
+<span class="w">  </span><span class="c">!       BCOEF(.,J) = / BCOEF(.,J-1) - BCOEF(.-1,J-1)</span>
+<span class="w">  </span><span class="c">!                   / -----------------------------,  if 0 &lt; J</span>
+<span class="w">  </span><span class="c">!                  /    (T(.+K-J) - T(.))/(K-J)</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Then, we use repeatedly the fact that</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!      sum ( A(.) * B(.,M,T)(X) ) = sum ( A(.,X) * B(.,M-1,T)(X) )</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    with</span>
+<span class="w">  </span><span class="c">!                   (X - T(.))*A(.) + (T(.+M-1) - X)*A(.-1)</span>
+<span class="w">  </span><span class="c">!      A(.,X) =   ---------------------------------------</span>
+<span class="w">  </span><span class="c">!                   (X - T(.))      + (T(.+M-1) - X)</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    to write (D**J)F(X) eventually as a linear combination of </span>
+<span class="w">  </span><span class="c">!    B-splines of order 1, and the coefficient for B(I,1,T)(X) </span>
+<span class="w">  </span><span class="c">!    must then be the desired number (D**J)F(X).</span>
+<span class="w">  </span><span class="c">!    See Chapter X, (17)-(19) of text.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T(N+K), the knot sequence.  T is assumed </span>
+<span class="w">  </span><span class="c">!    to be nondecreasing.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) BCOEF(N), B-spline coefficient sequence.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the length of BCOEF.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) K, the order of the spline.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the point at which to evaluate.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) JDERIV, the order of the derivative to </span>
+<span class="w">  </span><span class="c">!    be evaluated.  JDERIV is assumed to be zero or positive.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) BVALUE, the value of the (JDERIV)-th </span>
+<span class="w">  </span><span class="c">!    derivative of the spline at X.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">aj</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bvalue</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dl</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ilo</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jc</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jcmax</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jcmin</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jderiv</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jj</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">mflag</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span>
+
+<span class="w">  </span><span class="n">bvalue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">jderiv</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Find I so that 1 &lt;= I &lt; N+K and T(I) &lt; T(I+1) and T(I) &lt;= X &lt; T(I+1). </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  If no such I can be found, X lies outside the support of the </span>
+<span class="w">  </span><span class="c">!  spline F and  BVALUE = 0.  The asymmetry in this choice of I makes F </span>
+<span class="w">  </span><span class="c">!  right continuous.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">interv</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">mflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">mflag</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  If K = 1 (and JDERIV = 0), BVALUE = BCOEF(I).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     </span><span class="n">bvalue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="k">return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Store the K B-spline coefficients relevant for the knot interval</span>
+<span class="w">  </span><span class="c">!  ( T(I),T(I+1) ) in AJ(1),...,AJ(K) and compute DL(J) = X - T(I+1-J),</span>
+<span class="w">  </span><span class="c">!  DR(J) = T(I+J)-X, J=1,...,K-1.  Set any of the AJ not obtainable</span>
+<span class="w">  </span><span class="c">!  from input to zero.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Set any T&#39;s not obtainable equal to T(1) or to T(N+K) appropriately.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">jcmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">        </span><span class="n">dl</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  else</span>
+
+<span class="k">     </span><span class="n">jcmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span>
+<span class="w">        </span><span class="n">dl</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">j</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">     do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">        </span><span class="n">aj</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="n">dl</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end if</span>
+
+<span class="k">  </span><span class="n">jcmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">jcmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span>
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span>
+<span class="w">        </span><span class="n">dr</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">     do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">        </span><span class="n">aj</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="n">dr</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dr</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  else</span>
+
+<span class="k">     do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">        </span><span class="n">dr</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end if</span>
+
+<span class="k">  do </span><span class="n">jc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jcmin</span><span class="p">,</span><span class="w"> </span><span class="n">jcmax</span>
+<span class="w">     </span><span class="n">aj</span><span class="p">(</span><span class="n">jc</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="n">jc</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Difference the coefficients JDERIV times.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jderiv</span>
+
+<span class="w">     </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span>
+<span class="w">     </span><span class="k">do </span><span class="n">jj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span>
+<span class="w">        </span><span class="n">aj</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">aj</span><span class="p">(</span><span class="n">jj</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">aj</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dl</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dr</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">             </span><span class="o">*</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Compute value at X in (T(I),T(I+1)) of JDERIV-th derivative,</span>
+<span class="w">  </span><span class="c">!  given its relevant B-spline coefficients in AJ(1),...,AJ(K-JDERIV).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jderiv</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">     </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="n">j</span>
+<span class="w">     </span><span class="k">do </span><span class="n">jj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="n">j</span>
+<span class="w">        </span><span class="n">aj</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">aj</span><span class="p">(</span><span class="n">jj</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dl</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">aj</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dr</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">             </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dl</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dr</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">     </span><span class="k">end do</span>
+<span class="k">  end do</span>
+
+<span class="k">  </span><span class="n">bvalue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aj</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end function </span><span class="n">bvalue</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
@@ -458,7 +681,10 @@ implementation in a submodule of an interface in a parent module.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

@@ -38,7 +38,9 @@ contains
   !+-------------------------------------------------------------------+
   !PURPOSE  : start a timer to measure elapsed time between two call
   !+-------------------------------------------------------------------+
-  subroutine start_timer()
+  subroutine start_timer(title)
+    character(len=*),optional :: title
+    if(present(title))write(*,"(A)")trim(title)//":"
     timer_index=timer_index+1
     if(timer_index>size(timer_start,1))then
        stop "Error in cronograph: too many timers started"

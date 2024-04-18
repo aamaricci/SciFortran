@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title="<p> 0.0% of total for procedures.</p>Including implementation: 159 statements,  0.3% of total for procedures.">3 statements</a>
             </li>
 
@@ -152,7 +154,7 @@
 
         <h2>Module Procedures</h2>
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-fmin_cgplus_df~2"></span><h3>private  subroutine fmin_cgplus_df(p, func, fjac, iter, fret, ftol, itmax, imethod, iverb1, iverb2)  
+    <div class="card-header codesum"><span class="anchor" id="proc-fmin_cgplus_df~2"></span> <h3>private  subroutine fmin_cgplus_df(p, func, fjac, iter, fret, ftol, itmax, imethod, iverb1, iverb2)  
 </h3></div>
     <div class="card-body">
         
@@ -170,7 +172,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-p~30"></span>
+              <span class="anchor" id="variable-p~57"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -204,7 +206,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~114"></span>
+              <span class="anchor" id="variable-a~227"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -249,7 +251,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~115"></span>
+              <span class="anchor" id="variable-a~228"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -275,7 +277,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iter~21"></span>
+              <span class="anchor" id="variable-iter~54"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -290,7 +292,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fret~11"></span>
+              <span class="anchor" id="variable-fret~19"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -305,7 +307,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ftol~12"></span>
+              <span class="anchor" id="variable-ftol~13"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -320,7 +322,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-itmax~13"></span>
+              <span class="anchor" id="variable-itmax~19"></span>
               integer,
             </td>
 <td></td>
@@ -386,7 +388,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-fmin_cgplus_f~2"></span><h3>private  subroutine fmin_cgplus_f(p, fcn, iter, fret, ftol, itmax, imethod, deps, iverb1, iverb2)  
+    <div class="card-header codesum"><span class="anchor" id="proc-fmin_cgplus_f~2"></span> <h3>private  subroutine fmin_cgplus_f(p, fcn, iter, fret, ftol, itmax, imethod, deps, iverb1, iverb2)  
 </h3></div>
     <div class="card-body">
         
@@ -404,7 +406,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-p~31"></span>
+              <span class="anchor" id="variable-p~58"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -419,8 +421,8 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fcn~4"></span>
-              procedure(<a href='../interface/cgfit_func.html'>cgfit_func</a>)
+              <span class="anchor" id="variable-fcn~6"></span>
+              procedure(<a href='cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
               <td></td>            <td>
@@ -434,7 +436,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iter~22"></span>
+              <span class="anchor" id="variable-iter~55"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -449,7 +451,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fret~12"></span>
+              <span class="anchor" id="variable-fret~20"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -464,7 +466,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ftol~13"></span>
+              <span class="anchor" id="variable-ftol~14"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -479,7 +481,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-itmax~14"></span>
+              <span class="anchor" id="variable-itmax~20"></span>
               integer,
             </td>
 <td></td>
@@ -509,7 +511,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-deps~4"></span>
+              <span class="anchor" id="variable-deps~8"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -566,7 +568,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

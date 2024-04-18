@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for source files.">118 statements</a>
             </li>
 
@@ -214,7 +216,7 @@
 <a id="ln-60" name="ln-60" href="#ln-60"></a><span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">n</span>
 <a id="ln-61" name="ln-61" href="#ln-61"></a><span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">wi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">  </span><span class="c">! first of two conjugate eigenvalues</span>
 <a id="ln-62" name="ln-62" href="#ln-62"></a><span class="w">        </span><span class="n">Evec</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vr</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xi</span><span class="o">*</span><span class="n">vr</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="w">     </span><span class="n">elseif</span><span class="p">(</span><span class="n">wi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">  </span><span class="c">! second of two conjugate eigenvalues</span>
+<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="w">     </span><span class="k">elseif</span><span class="p">(</span><span class="n">wi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="n">d0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">  </span><span class="c">! second of two conjugate eigenvalues</span>
 <a id="ln-64" name="ln-64" href="#ln-64"></a><span class="w">        </span><span class="n">Evec</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vr</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">xi</span><span class="o">*</span><span class="n">vr</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
 <a id="ln-65" name="ln-65" href="#ln-65"></a><span class="w">     </span><span class="k">else</span>
 <a id="ln-66" name="ln-66" href="#ln-66"></a><span class="k">        </span><span class="n">Evec</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vr</span><span class="p">(:,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
@@ -290,7 +292,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

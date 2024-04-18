@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.6% of total for source files.">454 statements</a>
             </li>
 
@@ -126,8 +128,8 @@
             <a class="list-group-item" href="../proc/splota1_rc.html">splotA1_RC</a>
             <a class="list-group-item" href="../proc/splota2_rr.html">splotA2_RR</a>
             <a class="list-group-item" href="../proc/splota2_rc.html">splotA2_RC</a>
-            <a class="list-group-item" href="../proc/splota3_rr~2.html">splotA3_RR</a>
-            <a class="list-group-item" href="../proc/splota3_rc~2.html">splotA3_RC</a>
+            <a class="list-group-item" href="../proc/splota3_rr.html">splotA3_RR</a>
+            <a class="list-group-item" href="../proc/splota3_rc.html">splotA3_RC</a>
             <a class="list-group-item" href="../proc/splota4_rr.html">splotA4_RR</a>
             <a class="list-group-item" href="../proc/splota4_rc.html">splotA4_RC</a>
             <a class="list-group-item" href="../proc/splota5_rr.html">splotA5_RR</a>
@@ -688,7 +690,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

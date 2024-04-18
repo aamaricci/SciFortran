@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.2% of total for source files.">166 statements</a>
             </li>
 
@@ -283,7 +285,7 @@
 <a id="ln-127" name="ln-127" href="#ln-127"></a><span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w">  </span><span class="n">iflag</span>
 <a id="ln-128" name="ln-128" href="#ln-128"></a><span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-129" name="ln-129" href="#ln-129"></a><span class="k">         </span><span class="n">fvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model_func</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ydata</span>
-<a id="ln-130" name="ln-130" href="#ln-130"></a><span class="w">      </span><span class="n">elseif</span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-130" name="ln-130" href="#ln-130"></a><span class="w">      </span><span class="k">elseif</span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-131" name="ln-131" href="#ln-131"></a><span class="k">         </span><span class="n">fjac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model_dfunc</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
 <a id="ln-132" name="ln-132" href="#ln-132"></a><span class="w">      </span><span class="k">endif</span>
 <a id="ln-133" name="ln-133" href="#ln-133"></a><span class="k">      if</span><span class="p">(</span><span class="n">iflag</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;CURVEFIT_LMDER1_func2sub ERROR: iflag &lt; 0 &quot;</span>
@@ -332,7 +334,7 @@
 <a id="ln-176" name="ln-176" href="#ln-176"></a><span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-177" name="ln-177" href="#ln-177"></a><span class="k">         call </span><span class="n">model_func</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">fvec_</span><span class="p">)</span>
 <a id="ln-178" name="ln-178" href="#ln-178"></a><span class="w">         </span><span class="n">fvec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fvec_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ydata</span>
-<a id="ln-179" name="ln-179" href="#ln-179"></a><span class="w">      </span><span class="n">elseif</span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-179" name="ln-179" href="#ln-179"></a><span class="w">      </span><span class="k">elseif</span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-180" name="ln-180" href="#ln-180"></a><span class="k">         call </span><span class="n">model_dfunc</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">fjac</span><span class="p">)</span>
 <a id="ln-181" name="ln-181" href="#ln-181"></a><span class="w">      </span><span class="k">endif</span>
 <a id="ln-182" name="ln-182" href="#ln-182"></a><span class="k">      if</span><span class="p">(</span><span class="n">iflag</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;CURVEFIT_LMDER1_sub2sub ERROR: iflag &lt; 0 &quot;</span>
@@ -349,7 +351,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

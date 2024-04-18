@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 1.0% of total for source files.">796 statements</a>
             </li>
 
@@ -173,7 +175,7 @@
 <!-- sourcefile~sf_integrate.f90 -->
 <g id="sourcefile~~gauss_quadrature.f90~~AfferentGraph_node2" class="node">
 <title>sourcefile~sf_integrate.f90</title>
-<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node2"><a xlink:href=".././sourcefile/sf_integrate.f90.html" xlink:title="SF_INTEGRATE.f90">
+<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/sf_integrate.f90.html" xlink:title="SF_INTEGRATE.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="293,-87 184,-87 184,-63 293,-63 293,-87"/>
 <text text-anchor="middle" x="238.5" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTEGRATE.f90</text>
 </a>
@@ -188,7 +190,7 @@
 <!-- sourcefile~scifor.f90 -->
 <g id="sourcefile~~gauss_quadrature.f90~~AfferentGraph_node3" class="node">
 <title>sourcefile~scifor.f90</title>
-<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node3"><a xlink:href=".././sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
+<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="530,-87 459,-87 459,-63 530,-63 530,-87"/>
 <text text-anchor="middle" x="494.5" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR.f90</text>
 </a>
@@ -203,7 +205,7 @@
 <!-- sourcefile~sf_fft.f90 -->
 <g id="sourcefile~~gauss_quadrature.f90~~AfferentGraph_node4" class="node">
 <title>sourcefile~sf_fft.f90</title>
-<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node4"><a xlink:href=".././sourcefile/sf_fft.f90.html" xlink:title="SF_FFT.f90">
+<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/sf_fft.f90.html" xlink:title="SF_FFT.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="410,-108 342,-108 342,-84 410,-84 410,-108"/>
 <text text-anchor="middle" x="376" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_FFT.f90</text>
 </a>
@@ -218,7 +220,7 @@
 <!-- sourcefile~sf_special.f90 -->
 <g id="sourcefile~~gauss_quadrature.f90~~AfferentGraph_node5" class="node">
 <title>sourcefile~sf_special.f90</title>
-<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node5"><a xlink:href=".././sourcefile/sf_special.f90.html" xlink:title="SF_SPECIAL.f90">
+<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/sf_special.f90.html" xlink:title="SF_SPECIAL.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="423,-66 329,-66 329,-42 423,-42 423,-66"/>
 <text text-anchor="middle" x="376" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL.f90</text>
 </a>
@@ -233,7 +235,7 @@
 <!-- sourcefile~sf_stat.f90 -->
 <g id="sourcefile~~gauss_quadrature.f90~~AfferentGraph_node6" class="node">
 <title>sourcefile~sf_stat.f90</title>
-<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node6"><a xlink:href=".././sourcefile/sf_stat.f90.html" xlink:title="SF_STAT.f90">
+<g id="a_sourcefile~~gauss_quadrature.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/sf_stat.f90.html" xlink:title="SF_STAT.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="413,-24 339,-24 339,0 413,0 413,-24"/>
 <text text-anchor="middle" x="376" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_STAT.f90</text>
 </a>
@@ -265,17 +267,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#AfferentGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -1606,10 +1608,10 @@ can be.
 <a id="ln-1288" name="ln-1288" href="#ln-1288"></a><span class="k">       if</span><span class="p">(</span><span class="n">num</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;linspace: N&lt;2 with both start and end points&quot;</span>
 <a id="ln-1289" name="ln-1289" href="#ln-1289"></a><span class="w">       </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="kt">real</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
 <a id="ln-1290" name="ln-1290" href="#ln-1290"></a><span class="w">       </span><span class="k">forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span><span class="p">)</span><span class="k">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">real</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span><span class="o">*</span><span class="n">step</span>
-<a id="ln-1291" name="ln-1291" href="#ln-1291"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.(.</span><span class="nb">not</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">))</span><span class="k">then</span>
+<a id="ln-1291" name="ln-1291" href="#ln-1291"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.(.</span><span class="nb">not</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">))</span><span class="k">then</span>
 <a id="ln-1292" name="ln-1292" href="#ln-1292"></a><span class="k">       </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="kt">real</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
 <a id="ln-1293" name="ln-1293" href="#ln-1293"></a><span class="w">       </span><span class="k">forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span><span class="p">)</span><span class="k">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">real</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span><span class="o">*</span><span class="n">step</span>
-<a id="ln-1294" name="ln-1294" href="#ln-1294"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-1294" name="ln-1294" href="#ln-1294"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-1295" name="ln-1295" href="#ln-1295"></a><span class="k">       </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="kt">real</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
 <a id="ln-1296" name="ln-1296" href="#ln-1296"></a><span class="w">       </span><span class="k">forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span><span class="p">)</span><span class="k">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">real</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span><span class="o">*</span><span class="n">step</span>
 <a id="ln-1297" name="ln-1297" href="#ln-1297"></a><span class="w">    </span><span class="k">else</span>
@@ -1632,7 +1634,10 @@ can be.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

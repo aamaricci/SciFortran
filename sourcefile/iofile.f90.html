@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.7% of total for source files.">535 statements</a>
             </li>
 
@@ -173,7 +175,7 @@
 <!-- sourcefile~ioplot.f90 -->
 <g id="sourcefile~~iofile.f90~~AfferentGraph_node2" class="node">
 <title>sourcefile~ioplot.f90</title>
-<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node2"><a xlink:href=".././sourcefile/ioplot.f90.html" xlink:title="IOPLOT.f90">
+<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/ioplot.f90.html" xlink:title="IOPLOT.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="173.5,-66 104.5,-66 104.5,-42 173.5,-42 173.5,-66"/>
 <text text-anchor="middle" x="139" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOPLOT.f90</text>
 </a>
@@ -188,7 +190,7 @@
 <!-- sourcefile~ioread.f90 -->
 <g id="sourcefile~~iofile.f90~~AfferentGraph_node3" class="node">
 <title>sourcefile~ioread.f90</title>
-<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node3"><a xlink:href=".././sourcefile/ioread.f90.html" xlink:title="IOREAD.f90">
+<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/ioread.f90.html" xlink:title="IOREAD.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="176,-24 102,-24 102,0 176,0 176,-24"/>
 <text text-anchor="middle" x="139" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">IOREAD.f90</text>
 </a>
@@ -203,7 +205,7 @@
 <!-- sourcefile~sf_iotools.f90 -->
 <g id="sourcefile~~iofile.f90~~AfferentGraph_node4" class="node">
 <title>sourcefile~sf_iotools.f90</title>
-<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node4"><a xlink:href=".././sourcefile/sf_iotools.f90.html" xlink:title="SF_IOTOOLS.f90">
+<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/sf_iotools.f90.html" xlink:title="SF_IOTOOLS.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="310,-66 212,-66 212,-42 310,-42 310,-66"/>
 <text text-anchor="middle" x="261" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_IOTOOLS.f90</text>
 </a>
@@ -230,7 +232,7 @@
 <!-- sourcefile~scifor.f90 -->
 <g id="sourcefile~~iofile.f90~~AfferentGraph_node5" class="node">
 <title>sourcefile~scifor.f90</title>
-<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node5"><a xlink:href=".././sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
+<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="527,-66 456,-66 456,-42 527,-42 527,-66"/>
 <text text-anchor="middle" x="491.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR.f90</text>
 </a>
@@ -245,7 +247,7 @@
 <!-- sourcefile~sf_stat.f90 -->
 <g id="sourcefile~~iofile.f90~~AfferentGraph_node6" class="node">
 <title>sourcefile~sf_stat.f90</title>
-<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node6"><a xlink:href=".././sourcefile/sf_stat.f90.html" xlink:title="SF_STAT.f90">
+<g id="a_sourcefile~~iofile.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/sf_stat.f90.html" xlink:title="SF_STAT.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="420,-46 346,-46 346,-22 420,-22 420,-46"/>
 <text text-anchor="middle" x="383" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_STAT.f90</text>
 </a>
@@ -265,17 +267,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#AfferentGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -654,7 +656,7 @@ can be.
 <a id="ln-336" name="ln-336" href="#ln-336"></a><span class="k">    call </span><span class="nb">execute_command_line</span><span class="p">(</span><span class="s2">&quot;tar -czf &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">tarball</span><span class="p">)</span><span class="o">//</span><span class="k">type</span><span class="o">//</span><span class="s2">&quot; &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">pattern</span><span class="p">),</span><span class="n">CMDSTAT</span><span class="o">=</span><span class="n">control</span><span class="p">,</span><span class="n">CMDMSG</span><span class="o">=</span><span class="n">cmsg</span><span class="p">)</span>
 <a id="ln-337" name="ln-337" href="#ln-337"></a><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">control</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-338" name="ln-338" href="#ln-338"></a><span class="k">       write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;Command tar -czf failed with error: &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">cmsg</span><span class="p">)</span>
-<a id="ln-339" name="ln-339" href="#ln-339"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(</span><span class="n">control</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-339" name="ln-339" href="#ln-339"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(</span><span class="n">control</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-340" name="ln-340" href="#ln-340"></a><span class="k">       write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;Command tar -czf not supported&quot;</span>
 <a id="ln-341" name="ln-341" href="#ln-341"></a><span class="w">    </span><span class="k">else</span>
 <a id="ln-342" name="ln-342" href="#ln-342"></a><span class="k">       call </span><span class="nb">execute_command_line</span><span class="p">(</span><span class="s2">&quot;rm -f &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
@@ -681,7 +683,7 @@ can be.
 <a id="ln-363" name="ln-363" href="#ln-363"></a><span class="k">    call </span><span class="nb">execute_command_line</span><span class="p">(</span><span class="s2">&quot;tar -xzf &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">tarball</span><span class="p">)</span><span class="o">//</span><span class="k">type</span><span class="o">//</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">CMDSTAT</span><span class="o">=</span><span class="n">control</span><span class="p">,</span><span class="n">CMDMSG</span><span class="o">=</span><span class="n">cmsg</span><span class="p">)</span>
 <a id="ln-364" name="ln-364" href="#ln-364"></a><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">control</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-365" name="ln-365" href="#ln-365"></a><span class="k">       write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;Command tar -xzf failed with error: &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">cmsg</span><span class="p">)</span>
-<a id="ln-366" name="ln-366" href="#ln-366"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(</span><span class="n">control</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-366" name="ln-366" href="#ln-366"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(</span><span class="n">control</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-367" name="ln-367" href="#ln-367"></a><span class="k">       write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;Command tar -xzf not supported&quot;</span>
 <a id="ln-368" name="ln-368" href="#ln-368"></a><span class="w">    </span><span class="k">else</span>
 <a id="ln-369" name="ln-369" href="#ln-369"></a><span class="k">       call </span><span class="nb">execute_command_line</span><span class="p">(</span><span class="s2">&quot;rm -f &quot;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">tarball</span><span class="p">)</span><span class="o">//</span><span class="k">type</span><span class="p">)</span>
@@ -1129,7 +1131,10 @@ can be.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

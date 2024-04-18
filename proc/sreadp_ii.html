@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.0% of total for procedures.">25 statements</a>
             </li>
 
@@ -157,7 +159,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-pname~120"></span>
+              <span class="anchor" id="variable-pname~105"></span>
               character(len=*)
             </td>
 <td></td>
@@ -172,7 +174,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~86"></span>
+              <span class="anchor" id="variable-x~74"></span>
               integer
             </td>
 <td></td>
@@ -187,7 +189,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y1~111"></span>
+              <span class="anchor" id="variable-y1~98"></span>
               integer
             </td>
 <td></td>
@@ -202,7 +204,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y2~37"></span>
+              <span class="anchor" id="variable-y2~19"></span>
               integer,
             </td>
 <td></td>
@@ -217,7 +219,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y3~21"></span>
+              <span class="anchor" id="variable-y3~11"></span>
               integer,
             </td>
 <td></td>
@@ -232,7 +234,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y4~21"></span>
+              <span class="anchor" id="variable-y4~11"></span>
               integer,
             </td>
 <td></td>
@@ -247,7 +249,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y5~9"></span>
+              <span class="anchor" id="variable-y5~5"></span>
               integer,
             </td>
 <td></td>
@@ -262,7 +264,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y6~9"></span>
+              <span class="anchor" id="variable-y6~5"></span>
               integer,
             </td>
 <td></td>
@@ -277,7 +279,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y7~9"></span>
+              <span class="anchor" id="variable-y7~5"></span>
               integer,
             </td>
 <td></td>
@@ -292,7 +294,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y8~9"></span>
+              <span class="anchor" id="variable-y8~5"></span>
               integer,
             </td>
 <td></td>
@@ -331,17 +333,17 @@
 
 <span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y8</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(9(I15))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span><span class="p">,</span><span class="n">Y3</span><span class="p">,</span><span class="n">Y4</span><span class="p">,</span><span class="n">Y5</span><span class="p">,</span><span class="n">Y6</span><span class="p">,</span><span class="n">Y7</span><span class="p">,</span><span class="n">Y8</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y7</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y7</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(8(I15))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span><span class="p">,</span><span class="n">Y3</span><span class="p">,</span><span class="n">Y4</span><span class="p">,</span><span class="n">Y5</span><span class="p">,</span><span class="n">Y6</span><span class="p">,</span><span class="n">Y7</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y6</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y6</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(7(I15))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span><span class="p">,</span><span class="n">Y3</span><span class="p">,</span><span class="n">Y4</span><span class="p">,</span><span class="n">Y5</span><span class="p">,</span><span class="n">Y6</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y5</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y5</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(6(I15))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span><span class="p">,</span><span class="n">Y3</span><span class="p">,</span><span class="n">Y4</span><span class="p">,</span><span class="n">Y5</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y4</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y4</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(5(I15))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span><span class="p">,</span><span class="n">Y3</span><span class="p">,</span><span class="n">Y4</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y3</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y3</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(4(I15))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span><span class="p">,</span><span class="n">Y3</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span><span class="p">,</span><span class="n">Y2</span>
 <span class="w">  </span><span class="k">else</span>
 <span class="k">     read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">X</span><span class="p">,</span><span class="n">Y1</span>
@@ -362,7 +364,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

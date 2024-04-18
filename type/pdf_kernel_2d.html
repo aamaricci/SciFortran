@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title="<p>24.1% of total for derived types.</p>Including implementation: 13 statements, 24.1% of total for derived types.">13 statements</a>
             </li>
 
@@ -114,16 +116,16 @@
       </a>
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-n~4">N</a>
-            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-xmin~2">xmin</a>
+            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-n~3">N</a>
+            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-xmin~7">xmin</a>
             <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-xmax~2">xmax</a>
-            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-dx~2">dx</a>
+            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-dx~3">dx</a>
             <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-ndata~2">Ndata</a>
-            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-x~2">x</a>
-            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-y">y</a>
+            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-x~16">x</a>
+            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-y~2">y</a>
             <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-pdf~2">pdf</a>
             <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-sigma">Sigma</a>
-            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-status~4">status</a>
+            <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-status~2">status</a>
             <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-variance~2">variance</a>
             <a class="list-group-item" href="../type/pdf_kernel_2d.html#variable-rescale~2">rescale</a>
         </div>
@@ -161,7 +163,8 @@
     </div>
     
     <div class="col-md-9" id='text'>
-      <h2>type, public :: pdf_kernel_2d</h2>
+      <h2 id="type-def-statement">
+        type, public :: pdf_kernel_2d</h2>
     
     <br>
 
@@ -179,7 +182,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~4"></span>
+              <span class="anchor" id="variable-n~3"></span>
               integer,
             </td>
               <td>public,</td>
@@ -196,7 +199,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-xmin~2"></span>
+              <span class="anchor" id="variable-xmin~7"></span>
               real(kind=8),
             </td>
               <td>public,</td>
@@ -230,7 +233,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dx~2"></span>
+              <span class="anchor" id="variable-dx~3"></span>
               real(kind=8),
             </td>
               <td>public,</td>
@@ -264,7 +267,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~2"></span>
+              <span class="anchor" id="variable-x~16"></span>
               real(kind=8),
             </td>
               <td>public,</td>
@@ -281,7 +284,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y"></span>
+              <span class="anchor" id="variable-y~2"></span>
               real(kind=8),
             </td>
               <td>public,</td>
@@ -332,7 +335,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-status~4"></span>
+              <span class="anchor" id="variable-status~2"></span>
               logical,
             </td>
               <td>public</td>
@@ -417,7 +420,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

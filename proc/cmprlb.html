@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for procedures.">33 statements</a>
             </li>
 
@@ -151,7 +153,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~165"></span>
+              <span class="anchor" id="variable-n~371"></span>
               integer
             </td>
 <td></td>
@@ -166,7 +168,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~81"></span>
+              <span class="anchor" id="variable-m~245"></span>
               integer
             </td>
 <td></td>
@@ -181,7 +183,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~316"></span>
+              <span class="anchor" id="variable-x~522"></span>
               double precision
             </td>
 <td></td>
@@ -196,7 +198,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~10"></span>
+              <span class="anchor" id="variable-g~47"></span>
               double precision
             </td>
 <td></td>
@@ -211,7 +213,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ws~3"></span>
+              <span class="anchor" id="variable-ws~5"></span>
               double precision
             </td>
 <td></td>
@@ -241,7 +243,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-sy~5"></span>
+              <span class="anchor" id="variable-sy~9"></span>
               double precision
             </td>
 <td></td>
@@ -256,7 +258,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wt~4"></span>
+              <span class="anchor" id="variable-wt~13"></span>
               double precision
             </td>
 <td></td>
@@ -271,7 +273,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-z~31"></span>
+              <span class="anchor" id="variable-z~57"></span>
               double precision
             </td>
 <td></td>
@@ -286,7 +288,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-r~6"></span>
+              <span class="anchor" id="variable-r~92"></span>
               double precision
             </td>
 <td></td>
@@ -301,7 +303,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-wa~3"></span>
+              <span class="anchor" id="variable-wa~9"></span>
               double precision
             </td>
 <td></td>
@@ -316,7 +318,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-index~7"></span>
+              <span class="anchor" id="variable-index~12"></span>
               integer
             </td>
 <td></td>
@@ -331,7 +333,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-theta~2"></span>
+              <span class="anchor" id="variable-theta~12"></span>
               double precision
             </td>
 <td></td>
@@ -346,7 +348,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-col~3"></span>
+              <span class="anchor" id="variable-col~4"></span>
               integer
             </td>
 <td></td>
@@ -361,7 +363,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-head~2"></span>
+              <span class="anchor" id="variable-head~3"></span>
               integer
             </td>
 <td></td>
@@ -376,7 +378,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nfree"></span>
+              <span class="anchor" id="variable-nfree~3"></span>
               integer
             </td>
 <td></td>
@@ -391,7 +393,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cnstnd~2"></span>
+              <span class="anchor" id="variable-cnstnd~3"></span>
               logical
             </td>
 <td></td>
@@ -406,7 +408,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-info~17"></span>
+              <span class="anchor" id="variable-info~104"></span>
               integer
             </td>
 <td></td>
@@ -434,42 +436,42 @@
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~cmprlb~~CallsGraph Pages: 1 -->
-<svg id="proccmprlbCallsGraph" width="194pt" height="32pt"
- viewBox="0.00 0.00 194.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="proccmprlbCallsGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~cmprlb~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>proc~~cmprlb~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 190,-28 190,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
 <!-- proc~cmprlb -->
 <g id="proc~~cmprlb~~CallsGraph_node1" class="node">
 <title>proc~cmprlb</title>
-<polygon fill="none" stroke="black" points="96,-24 0,-24 0,0 96,0 96,-24"/>
-<text text-anchor="middle" x="48" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">lbfgsb.f::cmprlb</text>
+<polygon fill="none" stroke="black" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">cmprlb</text>
 </g>
 <!-- bmv -->
 <g id="proc~~cmprlb~~CallsGraph_node2" class="node">
 <title>bmv</title>
-<polygon fill="#777777" stroke="#777777" points="186,-24 132,-24 132,0 186,0 186,-24"/>
-<text text-anchor="middle" x="159" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bmv</text>
+<polygon fill="#777777" stroke="#777777" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bmv</text>
 </g>
 <!-- proc~cmprlb&#45;&gt;bmv -->
 <g id="proc~~cmprlb~~CallsGraph_edge1" class="edge">
 <title>proc~cmprlb&#45;&gt;bmv</title>
-<path fill="none" stroke="#000000" d="M96.18,-12C104.66,-12 113.38,-12 121.5,-12"/>
-<polygon fill="#000000" stroke="#000000" points="121.76,-15.5 131.76,-12 121.76,-8.5 121.76,-15.5"/>
+<path fill="none" stroke="#000000" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -559,7 +561,10 @@ implementation in a submodule of an interface in a parent module.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.0% of total for source files.">39 statements</a>
             </li>
 
@@ -122,7 +124,7 @@
       </a>
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../proc/zinv_her.html">zinv_her</a>
+            <a class="list-group-item" href="../proc/zinv_her~2.html">zinv_her</a>
         </div>
       </div>
     </div>
@@ -190,7 +192,7 @@
 <a id="ln-37" name="ln-37" href="#ln-37"></a><span class="w">  </span><span class="k">deallocate</span><span class="p">(</span><span class="n">ipvt</span><span class="p">,</span><span class="n">work</span><span class="p">)</span>
 <a id="ln-38" name="ln-38" href="#ln-38"></a><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;U&quot;</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-39" name="ln-39" href="#ln-39"></a><span class="k">     forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">i</span><span class="o">&gt;</span><span class="n">j</span><span class="p">)</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="nb">conjg</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
-<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-41" name="ln-41" href="#ln-41"></a><span class="k">     forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">)</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="nb">conjg</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
 <a id="ln-42" name="ln-42" href="#ln-42"></a><span class="w">  </span><span class="k">endif</span>
 <a id="ln-43" name="ln-43" href="#ln-43"></a><span class="k">end subroutine </span><span class="n">Zinv_her</span>
@@ -205,7 +207,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

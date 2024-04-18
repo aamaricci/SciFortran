@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.2% of total for source files.">156 statements</a>
             </li>
 
@@ -173,7 +175,7 @@
 <!-- sourcefile~scifor.f90 -->
 <g id="sourcefile~~sf_arrays.f90~~AfferentGraph_node2" class="node">
 <title>sourcefile~scifor.f90</title>
-<g id="a_sourcefile~~sf_arrays.f90~~AfferentGraph_node2"><a xlink:href=".././sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
+<g id="a_sourcefile~~sf_arrays.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="309,-66 238,-66 238,-42 309,-42 309,-66"/>
 <text text-anchor="middle" x="273.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR.f90</text>
 </a>
@@ -188,7 +190,7 @@
 <!-- sourcefile~sf_fft.f90 -->
 <g id="sourcefile~~sf_arrays.f90~~AfferentGraph_node3" class="node">
 <title>sourcefile~sf_fft.f90</title>
-<g id="a_sourcefile~~sf_arrays.f90~~AfferentGraph_node3"><a xlink:href=".././sourcefile/sf_fft.f90.html" xlink:title="SF_FFT.f90">
+<g id="a_sourcefile~~sf_arrays.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/sf_fft.f90.html" xlink:title="SF_FFT.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="199,-66 131,-66 131,-42 199,-42 199,-66"/>
 <text text-anchor="middle" x="165" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_FFT.f90</text>
 </a>
@@ -203,7 +205,7 @@
 <!-- sourcefile~sf_stat.f90 -->
 <g id="sourcefile~~sf_arrays.f90~~AfferentGraph_node4" class="node">
 <title>sourcefile~sf_stat.f90</title>
-<g id="a_sourcefile~~sf_arrays.f90~~AfferentGraph_node4"><a xlink:href=".././sourcefile/sf_stat.f90.html" xlink:title="SF_STAT.f90">
+<g id="a_sourcefile~~sf_arrays.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/sf_stat.f90.html" xlink:title="SF_STAT.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="202,-24 128,-24 128,0 202,0 202,-24"/>
 <text text-anchor="middle" x="165" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_STAT.f90</text>
 </a>
@@ -229,17 +231,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#AfferentGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -316,10 +318,10 @@ can be.
 <a id="ln-34" name="ln-34" href="#ln-34"></a><span class="k">       if</span><span class="p">(</span><span class="n">num</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;linspace: N&lt;2 with both start and end points&quot;</span>
 <a id="ln-35" name="ln-35" href="#ln-35"></a><span class="w">       </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="n">d0</span><span class="p">)</span>
 <a id="ln-36" name="ln-36" href="#ln-36"></a><span class="w">       </span><span class="k">forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span><span class="p">)</span><span class="k">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="n">d0</span><span class="p">)</span><span class="o">*</span><span class="n">step</span>
-<a id="ln-37" name="ln-37" href="#ln-37"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.(.</span><span class="nb">not</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">))</span><span class="k">then</span>
+<a id="ln-37" name="ln-37" href="#ln-37"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.(.</span><span class="nb">not</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">))</span><span class="k">then</span>
 <a id="ln-38" name="ln-38" href="#ln-38"></a><span class="k">       </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="nb">dble</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
 <a id="ln-39" name="ln-39" href="#ln-39"></a><span class="w">       </span><span class="k">forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span><span class="p">)</span><span class="k">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="n">d0</span><span class="p">)</span><span class="o">*</span><span class="n">step</span>
-<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">startpoint_</span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-41" name="ln-41" href="#ln-41"></a><span class="k">       </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="nb">dble</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
 <a id="ln-42" name="ln-42" href="#ln-42"></a><span class="w">       </span><span class="k">forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span><span class="p">)</span><span class="k">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">dble</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">step</span>
 <a id="ln-43" name="ln-43" href="#ln-43"></a><span class="w">    </span><span class="k">else</span>
@@ -442,9 +444,9 @@ can be.
 <a id="ln-160" name="ln-160" href="#ln-160"></a><span class="k">    enddo</span>
 <a id="ln-161" name="ln-161" href="#ln-161"></a><span class="k">    if</span><span class="p">(</span><span class="n">check</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-162" name="ln-162" href="#ln-162"></a><span class="k">       </span><span class="n">aout</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ndim</span><span class="p">)</span><span class="o">=</span><span class="k">array</span>
-<a id="ln-163" name="ln-163" href="#ln-163"></a><span class="k">    </span><span class="n">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-163" name="ln-163" href="#ln-163"></a><span class="k">    elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">endpoint_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-164" name="ln-164" href="#ln-164"></a><span class="k">       </span><span class="n">aout</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ndim</span><span class="p">)</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">p</span><span class="o">*</span><span class="n">u</span><span class="p">)</span>
-<a id="ln-165" name="ln-165" href="#ln-165"></a><span class="w">    </span><span class="n">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">startpoint_</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-165" name="ln-165" href="#ln-165"></a><span class="w">    </span><span class="k">elseif</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">startpoint_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-166" name="ln-166" href="#ln-166"></a><span class="k">       </span><span class="n">aout</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ndim</span><span class="p">)</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="mi">2</span><span class="p">:)</span><span class="w">   </span>
 <a id="ln-167" name="ln-167" href="#ln-167"></a><span class="w">    </span><span class="k">endif</span>
 <a id="ln-168" name="ln-168" href="#ln-168"></a><span class="k">    if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">mesh</span><span class="p">))</span><span class="k">then</span>
@@ -486,7 +488,10 @@ can be.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

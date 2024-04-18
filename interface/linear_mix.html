@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title="<p> 0.0% of total for procedures.</p>Including implementation: 100 statements,  0.2% of total for procedures.">16 statements</a>
             </li>
 
@@ -164,7 +166,7 @@
 
         <h2>Module Procedures</h2>
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_1~2"></span><h3>private  subroutine d_linear_mix_1(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_1~2"></span> <h3>private  subroutine d_linear_mix_1(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -182,7 +184,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~409"></span>
+              <span class="anchor" id="variable-x~471"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -203,75 +205,6 @@
 <td>intent(in),</td>
               <td></td>            <td>
               dimension(size(x))
-            </td>
-            <td>::</td>
-            <td><strong>Fx</strong></td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-alpha~19"></span>
-              real(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>alpha</strong></td>
-            <td>
-                
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-    </div>
-  </div>
-
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_2~2"></span><h3>private  subroutine d_linear_mix_2(x, Fx, alpha)  
-</h3></div>
-    <div class="card-body">
-        
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-x~410"></span>
-              real(kind=8),
-            </td>
-<td>intent(inout),</td>
-              <td></td>            <td>
-              dimension(:,:)
-            </td>
-            <td>::</td>
-            <td><strong>x</strong></td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-fx~19"></span>
-              real(kind=8),
-            </td>
-<td>intent(in),</td>
-              <td></td>            <td>
-              dimension(size(x,1),size(x,2))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -302,7 +235,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_3~2"></span><h3>private  subroutine d_linear_mix_3(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_2~2"></span> <h3>private  subroutine d_linear_mix_2(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -320,12 +253,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~411"></span>
+              <span class="anchor" id="variable-x~472"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:)
+              dimension(:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -335,12 +268,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~20"></span>
+              <span class="anchor" id="variable-fx~19"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3))
+              dimension(size(x,1),size(x,2))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -371,7 +304,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_4~2"></span><h3>private  subroutine d_linear_mix_4(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_3~2"></span> <h3>private  subroutine d_linear_mix_3(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -389,12 +322,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~412"></span>
+              <span class="anchor" id="variable-x~473"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:)
+              dimension(:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -404,12 +337,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~21"></span>
+              <span class="anchor" id="variable-fx~20"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4))
+              dimension(size(x,1),size(x,2),size(x,3))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -440,7 +373,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_5~2"></span><h3>private  subroutine d_linear_mix_5(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_4~2"></span> <h3>private  subroutine d_linear_mix_4(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -458,12 +391,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~413"></span>
+              <span class="anchor" id="variable-x~474"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:,:)
+              dimension(:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -473,12 +406,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~22"></span>
+              <span class="anchor" id="variable-fx~21"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -509,7 +442,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_6~2"></span><h3>private  subroutine d_linear_mix_6(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_5~2"></span> <h3>private  subroutine d_linear_mix_5(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -527,12 +460,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~414"></span>
+              <span class="anchor" id="variable-x~475"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:,:,:)
+              dimension(:,:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -542,12 +475,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~23"></span>
+              <span class="anchor" id="variable-fx~22"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -578,7 +511,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_7~2"></span><h3>private  subroutine d_linear_mix_7(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_6~2"></span> <h3>private  subroutine d_linear_mix_6(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -596,12 +529,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~415"></span>
+              <span class="anchor" id="variable-x~476"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:,:,:,:)
+              dimension(:,:,:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -611,12 +544,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~24"></span>
+              <span class="anchor" id="variable-fx~23"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6),size(x,7))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -647,7 +580,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_1~2"></span><h3>private  subroutine c_linear_mix_1(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-d_linear_mix_7~2"></span> <h3>private  subroutine d_linear_mix_7(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -665,12 +598,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~416"></span>
-              complex(kind=8),
+              <span class="anchor" id="variable-x~477"></span>
+              real(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:)
+              dimension(:,:,:,:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -680,12 +613,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~25"></span>
-              complex(kind=8),
+              <span class="anchor" id="variable-fx~24"></span>
+              real(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6),size(x,7))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -716,7 +649,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_2~2"></span><h3>private  subroutine c_linear_mix_2(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_1~2"></span> <h3>private  subroutine c_linear_mix_1(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -734,12 +667,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~417"></span>
+              <span class="anchor" id="variable-x~478"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:)
+              dimension(:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -749,12 +682,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~26"></span>
+              <span class="anchor" id="variable-fx~25"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2))
+              dimension(size(x))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -785,7 +718,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_3~2"></span><h3>private  subroutine c_linear_mix_3(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_2~2"></span> <h3>private  subroutine c_linear_mix_2(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -803,12 +736,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~418"></span>
+              <span class="anchor" id="variable-x~479"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:)
+              dimension(:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -818,12 +751,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~27"></span>
+              <span class="anchor" id="variable-fx~26"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3))
+              dimension(size(x,1),size(x,2))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -854,7 +787,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_4~2"></span><h3>private  subroutine c_linear_mix_4(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_3~2"></span> <h3>private  subroutine c_linear_mix_3(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -872,12 +805,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~419"></span>
+              <span class="anchor" id="variable-x~480"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:)
+              dimension(:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -887,12 +820,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~28"></span>
+              <span class="anchor" id="variable-fx~27"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4))
+              dimension(size(x,1),size(x,2),size(x,3))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -923,7 +856,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_5~2"></span><h3>private  subroutine c_linear_mix_5(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_4~2"></span> <h3>private  subroutine c_linear_mix_4(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -941,12 +874,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~420"></span>
+              <span class="anchor" id="variable-x~481"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:,:)
+              dimension(:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -956,12 +889,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~29"></span>
+              <span class="anchor" id="variable-fx~28"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -992,7 +925,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_6~2"></span><h3>private  subroutine c_linear_mix_6(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_5~2"></span> <h3>private  subroutine c_linear_mix_5(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -1010,12 +943,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~421"></span>
+              <span class="anchor" id="variable-x~482"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:,:,:)
+              dimension(:,:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -1025,12 +958,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~30"></span>
+              <span class="anchor" id="variable-fx~29"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -1061,7 +994,7 @@
   </div>
 
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_7~2"></span><h3>private  subroutine c_linear_mix_7(x, Fx, alpha)  
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_6~2"></span> <h3>private  subroutine c_linear_mix_6(x, Fx, alpha)  
 </h3></div>
     <div class="card-body">
         
@@ -1079,12 +1012,12 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~422"></span>
+              <span class="anchor" id="variable-x~483"></span>
               complex(kind=8),
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(:,:,:,:,:,:,:)
+              dimension(:,:,:,:,:,:)
             </td>
             <td>::</td>
             <td><strong>x</strong></td>
@@ -1094,12 +1027,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fx~31"></span>
+              <span class="anchor" id="variable-fx~30"></span>
               complex(kind=8),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6),size(x,7))
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6))
             </td>
             <td>::</td>
             <td><strong>Fx</strong></td>
@@ -1129,6 +1062,75 @@
     </div>
   </div>
 
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-c_linear_mix_7~2"></span> <h3>private  subroutine c_linear_mix_7(x, Fx, alpha)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~484"></span>
+              complex(kind=8),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(:,:,:,:,:,:,:)
+            </td>
+            <td>::</td>
+            <td><strong>x</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fx~31"></span>
+              complex(kind=8),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(size(x,1),size(x,2),size(x,3),size(x,4),size(x,5),size(x,6),size(x,7))
+            </td>
+            <td>::</td>
+            <td><strong>Fx</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-alpha~33"></span>
+              real(kind=8),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>alpha</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
 </div>
   </div>
       <hr>
@@ -1136,7 +1138,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

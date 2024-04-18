@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.3% of total for source files.">245 statements</a>
             </li>
 
@@ -122,7 +124,7 @@
       </a>
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../proc/quad_func.html">quad_func</a>
+            <a class="list-group-item" href="../proc/quad_func~2.html">quad_func</a>
         </div>
       </div>
     </div>
@@ -252,7 +254,7 @@
 <a id="ln-99" name="ln-99" href="#ln-99"></a><span class="w">     </span><span class="c">!QAWF: need omega + weight_func=1,2</span>
 <a id="ln-100" name="ln-100" href="#ln-100"></a><span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">inf</span><span class="p">))</span><span class="k">then</span>
 <a id="ln-101" name="ln-101" href="#ln-101"></a><span class="k">        </span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAGI&#39;</span>
-<a id="ln-102" name="ln-102" href="#ln-102"></a><span class="w">     </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">))</span><span class="k">then</span>
+<a id="ln-102" name="ln-102" href="#ln-102"></a><span class="w">     </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">))</span><span class="k">then</span>
 <a id="ln-103" name="ln-103" href="#ln-103"></a><span class="k">        </span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAWF&#39;</span>
 <a id="ln-104" name="ln-104" href="#ln-104"></a><span class="w">     </span><span class="k">else</span>
 <a id="ln-105" name="ln-105" href="#ln-105"></a><span class="k">        stop</span><span class="w"> </span><span class="s1">&#39;ERROR in quad: b not present but neither inf (QAGI) nor omega (QAWF) are given. stop.&#39;</span>
@@ -354,7 +356,7 @@
 <a id="ln-201" name="ln-201" href="#ln-201"></a><span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-202" name="ln-202" href="#ln-202"></a><span class="k">        if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-203" name="ln-203" href="#ln-203"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is cos(omega*x)&#39;</span>
-<a id="ln-204" name="ln-204" href="#ln-204"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-204" name="ln-204" href="#ln-204"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-205" name="ln-205" href="#ln-205"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is sin(omega*x)&#39;</span>
 <a id="ln-206" name="ln-206" href="#ln-206"></a><span class="w">        </span><span class="k">endif</span>
 <a id="ln-207" name="ln-207" href="#ln-207"></a><span class="k">     endif</span>
@@ -378,11 +380,11 @@
 <a id="ln-225" name="ln-225" href="#ln-225"></a><span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-226" name="ln-226" href="#ln-226"></a><span class="k">        if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-227" name="ln-227" href="#ln-227"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta         &#39;</span>
-<a id="ln-228" name="ln-228" href="#ln-228"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-228" name="ln-228" href="#ln-228"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-229" name="ln-229" href="#ln-229"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta*log(x-a)&#39;</span>
-<a id="ln-230" name="ln-230" href="#ln-230"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-230" name="ln-230" href="#ln-230"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-231" name="ln-231" href="#ln-231"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta*log(b-x) &#39;</span>
-<a id="ln-232" name="ln-232" href="#ln-232"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-232" name="ln-232" href="#ln-232"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-233" name="ln-233" href="#ln-233"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta*log(x-a)*log(b-x)&#39;</span>
 <a id="ln-234" name="ln-234" href="#ln-234"></a><span class="w">        </span><span class="k">endif</span>
 <a id="ln-235" name="ln-235" href="#ln-235"></a><span class="k">     endif</span>
@@ -407,9 +409,9 @@
 <a id="ln-254" name="ln-254" href="#ln-254"></a><span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-255" name="ln-255" href="#ln-255"></a><span class="k">        if</span><span class="p">(</span><span class="n">inf</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-256" name="ln-256" href="#ln-256"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Integration interval is (-infty:a)&#39;</span><span class="p">,</span><span class="n">a</span>
-<a id="ln-257" name="ln-257" href="#ln-257"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">inf</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-257" name="ln-257" href="#ln-257"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">inf</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-258" name="ln-258" href="#ln-258"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Integration interval is (a:infty) &#39;</span><span class="p">,</span><span class="n">a</span>
-<a id="ln-259" name="ln-259" href="#ln-259"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">inf</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-259" name="ln-259" href="#ln-259"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">inf</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-260" name="ln-260" href="#ln-260"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;Integration interval is (-infty:infty)&#39;</span>
 <a id="ln-261" name="ln-261" href="#ln-261"></a><span class="w">        </span><span class="k">endif</span>
 <a id="ln-262" name="ln-262" href="#ln-262"></a><span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
@@ -428,7 +430,7 @@
 <a id="ln-275" name="ln-275" href="#ln-275"></a><span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-276" name="ln-276" href="#ln-276"></a><span class="k">        if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-277" name="ln-277" href="#ln-277"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is cos(omega*x)&#39;</span>
-<a id="ln-278" name="ln-278" href="#ln-278"></a><span class="w">        </span><span class="n">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-278" name="ln-278" href="#ln-278"></a><span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-279" name="ln-279" href="#ln-279"></a><span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is sin(omega*x)&#39;</span>
 <a id="ln-280" name="ln-280" href="#ln-280"></a><span class="w">        </span><span class="k">endif</span>
 <a id="ln-281" name="ln-281" href="#ln-281"></a><span class="k">     endif</span>
@@ -460,7 +462,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

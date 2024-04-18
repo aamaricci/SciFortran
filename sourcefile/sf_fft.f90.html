@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 1.2% of total for source files.">946 statements</a>
             </li>
 
@@ -173,7 +175,7 @@
 <!-- sourcefile~sf_arrays.f90 -->
 <g id="sourcefile~~sf_fft.f90~~EfferentGraph_node2" class="node">
 <title>sourcefile~sf_arrays.f90</title>
-<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node2"><a xlink:href=".././sourcefile/sf_arrays.f90.html" xlink:title="SF_ARRAYS.f90">
+<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/sf_arrays.f90.html" xlink:title="SF_ARRAYS.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="287.5,-108 195.5,-108 195.5,-84 287.5,-84 287.5,-108"/>
 <text text-anchor="middle" x="241.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_ARRAYS.f90</text>
 </a>
@@ -188,7 +190,7 @@
 <!-- sourcefile~sf_constants.f90 -->
 <g id="sourcefile~~sf_fft.f90~~EfferentGraph_node3" class="node">
 <title>sourcefile~sf_constants.f90</title>
-<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node3"><a xlink:href=".././sourcefile/sf_constants.f90.html" xlink:title="SF_CONSTANTS.f90">
+<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/sf_constants.f90.html" xlink:title="SF_CONSTANTS.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="299,-66 184,-66 184,-42 299,-42 299,-66"/>
 <text text-anchor="middle" x="241.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_CONSTANTS.f90</text>
 </a>
@@ -203,7 +205,7 @@
 <!-- sourcefile~sf_integrate.f90 -->
 <g id="sourcefile~~sf_fft.f90~~EfferentGraph_node4" class="node">
 <title>sourcefile~sf_integrate.f90</title>
-<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node4"><a xlink:href=".././sourcefile/sf_integrate.f90.html" xlink:title="SF_INTEGRATE.f90">
+<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/sf_integrate.f90.html" xlink:title="SF_INTEGRATE.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="296,-24 187,-24 187,0 296,0 296,-24"/>
 <text text-anchor="middle" x="241.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_INTEGRATE.f90</text>
 </a>
@@ -218,7 +220,7 @@
 <!-- sourcefile~gauss_quadrature.f90 -->
 <g id="sourcefile~~sf_fft.f90~~EfferentGraph_node5" class="node">
 <title>sourcefile~gauss_quadrature.f90</title>
-<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node5"><a xlink:href=".././sourcefile/gauss_quadrature.f90.html" xlink:title="GAUSS_QUADRATURE.f90">
+<g id="a_sourcefile~~sf_fft.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/gauss_quadrature.f90.html" xlink:title="GAUSS_QUADRATURE.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="148,-24 0,-24 0,0 148,0 148,-24"/>
 <text text-anchor="middle" x="74" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GAUSS_QUADRATURE.f90</text>
 </a>
@@ -232,17 +234,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#EfferentGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#EfferentGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="EfferentGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -305,7 +307,7 @@ can be.
 <!-- sourcefile~scifor.f90 -->
 <g id="sourcefile~~sf_fft.f90~~AfferentGraph_node2" class="node">
 <title>sourcefile~scifor.f90</title>
-<g id="a_sourcefile~~sf_fft.f90~~AfferentGraph_node2"><a xlink:href=".././sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
+<g id="a_sourcefile~~sf_fft.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/scifor.f90.html" xlink:title="SCIFOR.f90">
 <polygon fill="#f0ad4e" stroke="#f0ad4e" points="175,-24 104,-24 104,0 175,0 175,-24"/>
 <text text-anchor="middle" x="139.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR.f90</text>
 </a>
@@ -319,17 +321,17 @@ can be.
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#AfferentGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -1599,7 +1601,10 @@ can be.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

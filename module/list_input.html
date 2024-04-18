@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,9 +75,8 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
-                 title=" 1.4% of total for modules and submodules.">584 statements</a>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.4% of total for modules and submodules.">585 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -205,7 +207,7 @@
 <!-- module~sf_parse_input -->
 <g id="module~~list_input~~UsedByGraph_node2" class="node">
 <title>module~sf_parse_input</title>
-<g id="a_module~~list_input~~UsedByGraph_node2"><a xlink:href=".././module/sf_parse_input.html" xlink:title="SF_PARSE_INPUT">
+<g id="a_module~~list_input~~UsedByGraph_node2"><a xlink:href="../module/sf_parse_input.html" xlink:title="SF_PARSE_INPUT">
 <polygon fill="#337ab7" stroke="#337ab7" points="208,-24 107,-24 107,0 208,0 208,-24"/>
 <text text-anchor="middle" x="157.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_PARSE_INPUT</text>
 </a>
@@ -220,7 +222,7 @@
 <!-- module~scifor -->
 <g id="module~~list_input~~UsedByGraph_node3" class="node">
 <title>module~scifor</title>
-<g id="a_module~~list_input~~UsedByGraph_node3"><a xlink:href=".././module/scifor.html" xlink:title="SCIFOR">
+<g id="a_module~~list_input~~UsedByGraph_node3"><a xlink:href="../module/scifor.html" xlink:title="SCIFOR">
 <polygon fill="#337ab7" stroke="#337ab7" points="298,-24 244,-24 244,0 298,0 298,-24"/>
 <text text-anchor="middle" x="271" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR</text>
 </a>
@@ -234,17 +236,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -343,7 +345,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~15"></span>
+              <span class="anchor" id="variable-variable"></span>
               integer,
             </td>
 <td></td>
@@ -358,7 +360,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~15"></span>
+              <span class="anchor" id="variable-name~2"></span>
               character(len=*)
             </td>
 <td></td>
@@ -373,7 +375,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~8"></span>
+              <span class="anchor" id="variable-comment~2"></span>
               character(len=*),
             </td>
 <td></td>
@@ -411,7 +413,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~16"></span>
+              <span class="anchor" id="variable-variable~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -426,7 +428,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~16"></span>
+              <span class="anchor" id="variable-name~3"></span>
               character(len=*)
             </td>
 <td></td>
@@ -441,7 +443,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~9"></span>
+              <span class="anchor" id="variable-comment~3"></span>
               character(len=*),
             </td>
 <td></td>
@@ -479,7 +481,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~17"></span>
+              <span class="anchor" id="variable-variable~3"></span>
               logical,
             </td>
 <td></td>
@@ -494,7 +496,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~17"></span>
+              <span class="anchor" id="variable-name~4"></span>
               character(len=*)
             </td>
 <td></td>
@@ -509,7 +511,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~10"></span>
+              <span class="anchor" id="variable-comment~4"></span>
               character(len=*),
             </td>
 <td></td>
@@ -547,7 +549,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~18"></span>
+              <span class="anchor" id="variable-variable~4"></span>
               integer,
             </td>
 <td></td>
@@ -562,7 +564,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~18"></span>
+              <span class="anchor" id="variable-name~5"></span>
               character(len=*)
             </td>
 <td></td>
@@ -577,7 +579,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~11"></span>
+              <span class="anchor" id="variable-comment~5"></span>
               character(len=*),
             </td>
 <td></td>
@@ -615,7 +617,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~19"></span>
+              <span class="anchor" id="variable-variable~5"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -630,7 +632,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~19"></span>
+              <span class="anchor" id="variable-name~6"></span>
               character(len=*)
             </td>
 <td></td>
@@ -645,7 +647,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~12"></span>
+              <span class="anchor" id="variable-comment~6"></span>
               character(len=*),
             </td>
 <td></td>
@@ -683,7 +685,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~20"></span>
+              <span class="anchor" id="variable-variable~6"></span>
               logical,
             </td>
 <td></td>
@@ -698,7 +700,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~20"></span>
+              <span class="anchor" id="variable-name~7"></span>
               character(len=*)
             </td>
 <td></td>
@@ -713,7 +715,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~13"></span>
+              <span class="anchor" id="variable-comment~7"></span>
               character(len=*),
             </td>
 <td></td>
@@ -751,7 +753,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-variable~21"></span>
+              <span class="anchor" id="variable-variable~7"></span>
               character(len=*),
             </td>
 <td></td>
@@ -766,7 +768,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~21"></span>
+              <span class="anchor" id="variable-name~8"></span>
               character(len=*)
             </td>
 <td></td>
@@ -781,7 +783,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-comment~14"></span>
+              <span class="anchor" id="variable-comment~8"></span>
               character(len=*),
             </td>
 <td></td>
@@ -833,7 +835,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-status~5"></span>
+              <span class="anchor" id="variable-status~3"></span>
               logical,
             </td>
               <td>public</td>
@@ -867,7 +869,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-root"></span>
+              <span class="anchor" id="variable-root~4"></span>
               type(input_node),
             </td>
               <td>public,</td>
@@ -897,57 +899,7 @@ modules which it uses.
         <section>
           <h2>Functions</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-size_input_list"></span><h3>public  function <a href='../proc/size_input_list.html'>size_input_list</a>(list) result(size)  
-</h3></div>
-    <div class="card-body">
-          
-  
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-list~2"></span>
-              type(<a href='../type/input_list.html'>input_list</a>),
-            </td>
-<td></td>
-              <td>optional</td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>list</strong></td>
-            <td>
-
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>integer</small>
-    </h4>
-    
-
-    </div>
-  </div>
-
-        </section>
-        <br>
-
-        <section>
-          <h2>Subroutines</h2>
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-init_input_list"></span><h3>public  subroutine <a href='../proc/init_input_list.html'>init_input_list</a>(list)  
+    <div class="card-header codesum"><span class="anchor" id="proc-size_input_list"></span> <h3>public  function <a href='../proc/size_input_list.html'>size_input_list</a>(list) result(size)  
 </h3></div>
     <div class="card-body">
           
@@ -982,12 +934,22 @@ modules which it uses.
     </tbody>
   </table>
 
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
 
     </div>
   </div>
 
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-delete_input_list"></span><h3>public  subroutine <a href='../proc/delete_input_list.html'>delete_input_list</a>(list)  
+    <div class="card-header codesum"><span class="anchor" id="proc-init_input_list"></span> <h3>public  subroutine <a href='../proc/init_input_list.html'>init_input_list</a>(list)  
 </h3></div>
     <div class="card-body">
           
@@ -1006,7 +968,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-list~4"></span>
+              <span class="anchor" id="variable-list"></span>
               type(<a href='../type/input_list.html'>input_list</a>),
             </td>
 <td></td>
@@ -1027,7 +989,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-print_input_list"></span><h3>public  subroutine <a href='../proc/print_input_list.html'>print_input_list</a>(file, list)  
+    <div class="card-header codesum"><span class="anchor" id="proc-delete_input_list"></span> <h3>public  subroutine <a href='../proc/delete_input_list.html'>delete_input_list</a>(list)  
 </h3></div>
     <div class="card-body">
           
@@ -1046,7 +1008,47 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-file~10"></span>
+              <span class="anchor" id="variable-list~2"></span>
+              type(<a href='../type/input_list.html'>input_list</a>),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>list</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-print_input_list"></span> <h3>public  subroutine <a href='../proc/print_input_list.html'>print_input_list</a>(file, list)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-file"></span>
               character(len=*),
             </td>
 <td></td>
@@ -1061,7 +1063,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-list"></span>
+              <span class="anchor" id="variable-list~4"></span>
               type(<a href='../type/input_list.html'>input_list</a>),
             </td>
 <td></td>
@@ -1094,7 +1096,10 @@ modules which it uses.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title="<p> 5.6% of total for derived types.</p>Including implementation: 3 statements,  5.6% of total for derived types.">3 statements</a>
             </li>
 
@@ -114,9 +116,9 @@
       </a>
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../type/rgb_color.html#variable-r~3">r</a>
-            <a class="list-group-item" href="../type/rgb_color.html#variable-g~3">g</a>
-            <a class="list-group-item" href="../type/rgb_color.html#variable-b">b</a>
+            <a class="list-group-item" href="../type/rgb_color.html#variable-r~60">r</a>
+            <a class="list-group-item" href="../type/rgb_color.html#variable-g~14">g</a>
+            <a class="list-group-item" href="../type/rgb_color.html#variable-b~54">b</a>
         </div>
       </div>
     </div>
@@ -152,7 +154,8 @@
     </div>
     
     <div class="col-md-9" id='text'>
-      <h2>type, public :: rgb_color</h2>
+      <h2 id="type-def-statement">
+        type, public :: rgb_color</h2>
     
     <br>
 
@@ -170,7 +173,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-r~3"></span>
+              <span class="anchor" id="variable-r~60"></span>
               integer,
             </td>
               <td>public</td>
@@ -187,7 +190,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g~3"></span>
+              <span class="anchor" id="variable-g~14"></span>
               integer,
             </td>
               <td>public</td>
@@ -204,7 +207,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b"></span>
+              <span class="anchor" id="variable-b~54"></span>
               integer,
             </td>
               <td>public</td>
@@ -245,7 +248,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

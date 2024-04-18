@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for source files.">56 statements</a>
             </li>
 
@@ -178,7 +180,7 @@
 <a id="ln-24" name="ln-24" href="#ln-24"></a><span class="w">  </span><span class="k">deallocate</span><span class="p">(</span><span class="n">ipvt</span><span class="p">,</span><span class="n">work</span><span class="p">)</span>
 <a id="ln-25" name="ln-25" href="#ln-25"></a><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;U&quot;</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-26" name="ln-26" href="#ln-26"></a><span class="k">     forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">i</span><span class="o">&gt;</span><span class="n">j</span><span class="p">)</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-28" name="ln-28" href="#ln-28"></a><span class="k">     forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">)</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
 <a id="ln-29" name="ln-29" href="#ln-29"></a><span class="w">  </span><span class="k">endif</span>
 <a id="ln-30" name="ln-30" href="#ln-30"></a><span class="w">  </span><span class="c">!</span>
@@ -206,7 +208,7 @@
 <a id="ln-52" name="ln-52" href="#ln-52"></a><span class="w">  </span><span class="k">deallocate</span><span class="p">(</span><span class="n">ipvt</span><span class="p">,</span><span class="n">work</span><span class="p">)</span>
 <a id="ln-53" name="ln-53" href="#ln-53"></a><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;U&quot;</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-54" name="ln-54" href="#ln-54"></a><span class="k">     forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">i</span><span class="o">&gt;</span><span class="n">j</span><span class="p">)</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-<a id="ln-55" name="ln-55" href="#ln-55"></a><span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-55" name="ln-55" href="#ln-55"></a><span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s2">&quot;L&quot;</span><span class="p">)</span><span class="k">then</span>
 <a id="ln-56" name="ln-56" href="#ln-56"></a><span class="k">     forall</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">)</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=</span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
 <a id="ln-57" name="ln-57" href="#ln-57"></a><span class="w">  </span><span class="k">endif</span>
 <a id="ln-58" name="ln-58" href="#ln-58"></a><span class="k">end subroutine </span><span class="n">Zinv_sym</span>
@@ -221,7 +223,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

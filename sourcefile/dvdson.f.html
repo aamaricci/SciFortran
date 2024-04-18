@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.5% of total for source files.">390 statements</a>
             </li>
 
@@ -455,7 +457,7 @@
 <a id="ln-283" name="ln-283" href="#ln-283"></a><span class="c">*     ..Check number of initial estimates NIV is lower than LIM.   </span>
 <a id="ln-284" name="ln-284" href="#ln-284"></a><span class="nl">     </span> <span class="w">   </span><span class="k">PRINT</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;WARNING: Too many initial estimates.?&#39;</span><span class="w">               </span>
 <a id="ln-285" name="ln-285" href="#ln-285"></a><span class="nl">     </span> <span class="w">   </span><span class="k">PRINT</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;The routine will pick the appropriate number&#39;</span><span class="w">        </span>
-<a id="ln-286" name="ln-286" href="#ln-286"></a><span class="nl">     </span> <span class="n">ELSEIF</span><span class="w"> </span><span class="p">((</span><span class="n">NIV</span><span class="p">.</span><span class="n">LT</span><span class="p">.</span><span class="n">NUME</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="n">NIV</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="k">THEN</span><span class="w">                      </span>
+<a id="ln-286" name="ln-286" href="#ln-286"></a><span class="nl">     </span> <span class="k">ELSEIF</span><span class="w"> </span><span class="p">((</span><span class="n">NIV</span><span class="p">.</span><span class="n">LT</span><span class="p">.</span><span class="n">NUME</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="n">NIV</span><span class="p">.</span><span class="n">GT</span><span class="p">.</span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="k">THEN</span><span class="w">                      </span>
 <a id="ln-287" name="ln-287" href="#ln-287"></a><span class="c">*     ..check if enough initial estimates.                         </span>
 <a id="ln-288" name="ln-288" href="#ln-288"></a><span class="c">*     ..(NIV&lt;1 =&gt; program chooses)                                 </span>
 <a id="ln-289" name="ln-289" href="#ln-289"></a><span class="nl">     </span> <span class="w">   </span><span class="k">PRINT</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;WARNING: Not enough initial estimates&#39;</span><span class="w">               </span>
@@ -717,7 +719,7 @@
 <a id="ln-545" name="ln-545" href="#ln-545"></a><span class="c">*     ..The following is to prevent an improbable infinite loop.   </span>
 <a id="ln-546" name="ln-546" href="#ln-546"></a><span class="nl">     </span> <span class="k">IF</span><span class="w"> </span><span class="p">(.</span><span class="nb">NOT</span><span class="p">.</span><span class="n">RESTART</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                       </span>
 <a id="ln-547" name="ln-547" href="#ln-547"></a><span class="nl">     </span> <span class="w">   </span><span class="n">FIRST</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">                                              </span>
-<a id="ln-548" name="ln-548" href="#ln-548"></a><span class="nl">     </span> <span class="n">ELSEIF</span><span class="w"> </span><span class="p">(</span><span class="n">FIRST</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                          </span>
+<a id="ln-548" name="ln-548" href="#ln-548"></a><span class="nl">     </span> <span class="k">ELSEIF</span><span class="w"> </span><span class="p">(</span><span class="n">FIRST</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                                          </span>
 <a id="ln-549" name="ln-549" href="#ln-549"></a><span class="nl">     </span> <span class="w">   </span><span class="n">FIRST</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">                                             </span>
 <a id="ln-550" name="ln-550" href="#ln-550"></a><span class="nl">     </span> <span class="w">   </span><span class="k">CALL </span><span class="n">MULTBC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="o">+</span><span class="n">NNCV</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">SCRA1</span><span class="p">,</span><span class="n">BASIS</span><span class="p">)</span><span class="w">           </span>
 <a id="ln-551" name="ln-551" href="#ln-551"></a><span class="nl">     </span> <span class="w">   </span><span class="k">CALL </span><span class="n">MULTBC</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">KPASS</span><span class="o">+</span><span class="n">NNCV</span><span class="p">,</span><span class="n">NUME</span><span class="p">,</span><span class="n">SVEC</span><span class="p">,</span><span class="n">SCRA1</span><span class="p">,</span><span class="n">AB</span><span class="p">)</span><span class="w">              </span>
@@ -1589,7 +1591,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

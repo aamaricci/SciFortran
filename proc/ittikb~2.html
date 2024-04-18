@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,22 +75,20 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for procedures.">43 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/special_functions.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">ittikb</li>
           </ol>
         </nav>
@@ -126,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/ittikb~2.html#src">ittikb</a>
+      </div>
+    </div>
 
 
   </div>
@@ -133,15 +140,15 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine ittikb(x, tti, ttk)  
+    <h2> subroutine ittikb(x, tti, ttk)  
 </h2>
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! ITTIKB integrates (I0(t)-1)/t from 0 to x, K0(t)/t from x to infinity.</p>
 <p>Licensing:</p>
-<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
-they give permission to incorporate this routine into a user program 
+<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However,
+they give permission to incorporate this routine into a user program
 provided that the copyright is acknowledged.
 </code></pre></div>
 
@@ -182,7 +189,7 @@ Output, real ( kind = 8 ) TTI, TTK, the integrals of
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~528"></span>
+              <span class="anchor" id="variable-x~607"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -240,6 +247,145 @@ Output, real ( kind = 8 ) TTI, TTK, the integrals of
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">ittikb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">tti</span><span class="p">,</span><span class="w"> </span><span class="n">ttk</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! ITTIKB integrates (I0(t)-1)/t from 0 to x, K0(t)/t from x to infinity.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
+<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
+<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    28 July 2012</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
+<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
+<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
+<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the integral limit.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) TTI, TTK, the integrals of</span>
+<span class="w">  </span><span class="c">!    [I0(t)-1]/t from 0 to x, and K0(t)/t from x to oo.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">e0</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">el</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">pi</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t1</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">tti</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ttk</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x1</span>
+
+<span class="w">  </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.141592653589793D+00</span>
+<span class="w">  </span><span class="n">el</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5772156649015329D+00</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">tti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+
+<span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">5.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">5.0D+00</span>
+<span class="w">     </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x1</span>
+<span class="w">     </span><span class="n">tti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((((((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.1263D-03</span><span class="w">       </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.96442D-03</span><span class="w"> </span><span class="p">)</span><span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.968217D-02</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.06615507D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.33116853D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">1.13027241D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">2.44140746D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">3.12499991D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span>
+
+<span class="w">  </span><span class="k">else</span>
+
+<span class="k">     </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">x</span>
+<span class="w">     </span><span class="n">tti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((((((((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">2.1945464D+00</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w">  </span><span class="mf">3.5195009D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="mf">1.9094395D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="mf">0.394734D+00</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="mf">8.0524115D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="mf">8.1221478D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w">  </span><span class="mf">8.6556013D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w">  </span><span class="mf">1.4780044D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w">  </span><span class="mf">0.0493843D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w">  </span><span class="mf">0.1332055D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w">  </span><span class="mf">0.3989314D+00</span>
+<span class="w">     </span><span class="n">tti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tti</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end if</span>
+
+<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+300</span>
+
+<span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span>
+<span class="w">     </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t1</span>
+<span class="w">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.77D-06</span><span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.1544D-04</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.48077D-03</span><span class="w"> </span><span class="p">)</span><span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.925821D-02</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.10937537D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.74999993D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span>
+<span class="w">     </span><span class="n">e0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">el</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="mf">4.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">e0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tti</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ttk</span>
+
+<span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">4.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">x</span>
+<span class="w">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.06084D+00</span><span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mf">0.280367D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.590944D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mf">0.850013D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">1.234684D+00</span>
+<span class="w">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ttk</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">else</span>
+
+<span class="k">     </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">x</span>
+<span class="w">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.02724D+00</span><span class="w">     </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mf">0.1110396D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2060126D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mf">0.2621446D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.3219184D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5091339D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">1.2533141D+00</span>
+<span class="w">     </span><span class="n">ttk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ttk</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end if</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">ittikb</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
@@ -249,7 +395,10 @@ Output, real ( kind = 8 ) TTI, TTK, the integrals of
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

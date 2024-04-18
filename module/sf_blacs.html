@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for modules and submodules.">55 statements</a>
             </li>
 
@@ -200,7 +202,7 @@
 <!-- module~scifor -->
 <g id="module~~sf_blacs~~UsedByGraph_node2" class="node">
 <title>module~scifor</title>
-<g id="a_module~~sf_blacs~~UsedByGraph_node2"><a xlink:href=".././module/scifor.html" xlink:title="SCIFOR">
+<g id="a_module~~sf_blacs~~UsedByGraph_node2"><a xlink:href="../module/scifor.html" xlink:title="SCIFOR">
 <polygon fill="#337ab7" stroke="#337ab7" points="383,-87 329,-87 329,-63 383,-63 383,-87"/>
 <text text-anchor="middle" x="356" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SCIFOR</text>
 </a>
@@ -215,7 +217,7 @@
 <!-- module~sf_linalg -->
 <g id="module~~sf_blacs~~UsedByGraph_node3" class="node">
 <title>module~sf_linalg</title>
-<g id="a_module~~sf_blacs~~UsedByGraph_node3"><a xlink:href=".././module/sf_linalg.html" xlink:title="SF_LINALG">
+<g id="a_module~~sf_blacs~~UsedByGraph_node3"><a xlink:href="../module/sf_linalg.html" xlink:title="SF_LINALG">
 <polygon fill="#337ab7" stroke="#337ab7" points="170,-108 101,-108 101,-84 170,-84 170,-108"/>
 <text text-anchor="middle" x="135.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_LINALG</text>
 </a>
@@ -231,7 +233,7 @@
 <!-- module~sf_optimize -->
 <g id="module~~sf_blacs~~UsedByGraph_node4" class="node">
 <title>module~sf_optimize</title>
-<g id="a_module~~sf_blacs~~UsedByGraph_node4"><a xlink:href=".././module/sf_optimize.html" xlink:title="SF_OPTIMIZE">
+<g id="a_module~~sf_blacs~~UsedByGraph_node4"><a xlink:href="../module/sf_optimize.html" xlink:title="SF_OPTIMIZE">
 <polygon fill="#337ab7" stroke="#337ab7" points="290,-108 209,-108 209,-84 290,-84 290,-108"/>
 <text text-anchor="middle" x="249.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_OPTIMIZE</text>
 </a>
@@ -246,7 +248,7 @@
 <!-- module~sf_sp_linalg -->
 <g id="module~~sf_blacs~~UsedByGraph_node5" class="node">
 <title>module~sf_sp_linalg</title>
-<g id="a_module~~sf_blacs~~UsedByGraph_node5"><a xlink:href=".././module/sf_sp_linalg.html" xlink:title="SF_SP_LINALG">
+<g id="a_module~~sf_blacs~~UsedByGraph_node5"><a xlink:href="../module/sf_sp_linalg.html" xlink:title="SF_SP_LINALG">
 <polygon fill="#337ab7" stroke="#337ab7" points="293,-66 206,-66 206,-42 293,-42 293,-66"/>
 <text text-anchor="middle" x="249.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SP_LINALG</text>
 </a>
@@ -261,7 +263,7 @@
 <!-- module~sf_stat -->
 <g id="module~~sf_blacs~~UsedByGraph_node6" class="node">
 <title>module~sf_stat</title>
-<g id="a_module~~sf_blacs~~UsedByGraph_node6"><a xlink:href=".././module/sf_stat.html" xlink:title="SF_STAT">
+<g id="a_module~~sf_blacs~~UsedByGraph_node6"><a xlink:href="../module/sf_stat.html" xlink:title="SF_STAT">
 <polygon fill="#337ab7" stroke="#337ab7" points="277,-24 222,-24 222,0 277,0 277,-24"/>
 <text text-anchor="middle" x="249.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_STAT</text>
 </a>
@@ -299,17 +301,17 @@
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#UsedByGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -504,7 +506,7 @@ modules which it uses.
         <section>
           <h2>Functions</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-get_master_blacs"></span><h3>public  function <a href='../proc/get_master_blacs.html'>get_master_BLACS</a>() result(master)  
+    <div class="card-header codesum"><span class="anchor" id="proc-get_master_blacs"></span> <h3>public  function <a href='../proc/get_master_blacs.html'>get_master_BLACS</a>() result(master)  
 </h3></div>
     <div class="card-body">
           
@@ -522,7 +524,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-get_rank_blacs"></span><h3>public  function <a href='../proc/get_rank_blacs.html'>get_rank_BLACS</a>() result(id)  
+    <div class="card-header codesum"><span class="anchor" id="proc-get_rank_blacs"></span> <h3>public  function <a href='../proc/get_rank_blacs.html'>get_rank_BLACS</a>() result(id)  
 </h3></div>
     <div class="card-body">
           
@@ -540,7 +542,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-get_size_blacs"></span><h3>public  function <a href='../proc/get_size_blacs.html'>get_size_BLACS</a>() result(numproc)  
+    <div class="card-header codesum"><span class="anchor" id="proc-get_size_blacs"></span> <h3>public  function <a href='../proc/get_size_blacs.html'>get_size_BLACS</a>() result(numproc)  
 </h3></div>
     <div class="card-body">
           
@@ -563,7 +565,7 @@ modules which it uses.
         <section>
           <h2>Subroutines</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-init_blacs"></span><h3>public  subroutine <a href='../proc/init_blacs.html'>init_BLACS</a>()  
+    <div class="card-header codesum"><span class="anchor" id="proc-init_blacs"></span> <h3>public  subroutine <a href='../proc/init_blacs.html'>init_BLACS</a>()  
 </h3></div>
     <div class="card-body">
           
@@ -576,7 +578,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-finalize_blacs"></span><h3>public  subroutine <a href='../proc/finalize_blacs.html'>finalize_BLACS</a>(blacs_end)  
+    <div class="card-header codesum"><span class="anchor" id="proc-finalize_blacs"></span> <h3>public  subroutine <a href='../proc/finalize_blacs.html'>finalize_BLACS</a>(blacs_end)  
 </h3></div>
     <div class="card-body">
           
@@ -628,7 +630,10 @@ modules which it uses.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

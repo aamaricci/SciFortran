@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,8 +75,7 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for procedures.">42 statements</a>
             </li>
 
@@ -157,7 +159,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-pname~6"></span>
+              <span class="anchor" id="variable-pname~128"></span>
               character(len=*)
             </td>
 <td></td>
@@ -172,7 +174,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~8"></span>
+              <span class="anchor" id="variable-x~97"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -187,7 +189,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y1~6"></span>
+              <span class="anchor" id="variable-y1~121"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -202,7 +204,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y2~6"></span>
+              <span class="anchor" id="variable-y2~42"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -217,7 +219,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y3~6"></span>
+              <span class="anchor" id="variable-y3~26"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -232,7 +234,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-y4~6"></span>
+              <span class="anchor" id="variable-y4~26"></span>
               complex(kind=8),
             </td>
 <td></td>
@@ -281,7 +283,7 @@
 <span class="w">     </span><span class="n">Y2</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">2</span><span class="p">,:),</span><span class="n">imY</span><span class="p">(</span><span class="mi">2</span><span class="p">,:),</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">     </span><span class="n">Y3</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">3</span><span class="p">,:),</span><span class="n">imY</span><span class="p">(</span><span class="mi">3</span><span class="p">,:),</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">     </span><span class="n">Y4</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">4</span><span class="p">,:),</span><span class="n">imY</span><span class="p">(</span><span class="mi">4</span><span class="p">,:),</span><span class="mi">8</span><span class="p">)</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y3</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y3</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     allocate</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">)),</span><span class="n">imY</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
 <span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Np</span>
 <span class="w">        </span><span class="k">read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(F21.12,6(F21.12))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">imY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">reY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">imY</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">reY</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">imY</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">reY</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
@@ -289,7 +291,7 @@
 <span class="k">     </span><span class="n">Y1</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">1</span><span class="p">,:),</span><span class="n">imY</span><span class="p">(</span><span class="mi">1</span><span class="p">,:),</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">     </span><span class="n">Y2</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">2</span><span class="p">,:),</span><span class="n">imY</span><span class="p">(</span><span class="mi">2</span><span class="p">,:),</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">     </span><span class="n">Y3</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">3</span><span class="p">,:),</span><span class="n">imY</span><span class="p">(</span><span class="mi">3</span><span class="p">,:),</span><span class="mi">8</span><span class="p">)</span>
-<span class="w">  </span><span class="n">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="k">then</span>
+<span class="w">  </span><span class="k">elseif</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="k">then</span>
 <span class="k">     allocate</span><span class="p">(</span><span class="n">reY</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">)),</span><span class="n">imY</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
 <span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Np</span>
 <span class="w">        </span><span class="k">read</span><span class="p">(</span><span class="mi">719</span><span class="p">,</span><span class="s2">&quot;(F21.12,4(F21.12))&quot;</span><span class="p">)</span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">imY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">reY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">imY</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">),</span><span class="n">reY</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
@@ -318,7 +320,10 @@
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">

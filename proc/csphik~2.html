@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +19,8 @@
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
@@ -72,22 +75,20 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
                  title=" 0.1% of total for procedures.">88 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/special_functions.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">csphik</li>
           </ol>
         </nav>
@@ -126,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/csphik~2.html#src">csphik</a>
+      </div>
+    </div>
 
 
   </div>
@@ -133,15 +140,15 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine csphik(n, z, nm, csi, cdi, csk, cdk)  
+    <h2> subroutine csphik(n, z, nm, csi, cdi, csk, cdk)  
 </h2>
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! CSPHIK: complex modified spherical Bessel functions and derivatives.</p>
 <p>Licensing:</p>
-<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
-they give permission to incorporate this routine into a user program 
+<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However,
+they give permission to incorporate this routine into a user program
 provided that the copyright is acknowledged.
 </code></pre></div>
 
@@ -186,7 +193,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~229"></span>
+              <span class="anchor" id="variable-n~428"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -201,7 +208,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-z~57"></span>
+              <span class="anchor" id="variable-z~88"></span>
               complex(kind=8)
             </td>
 <td></td>
@@ -216,7 +223,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nm~24"></span>
+              <span class="anchor" id="variable-nm~47"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -231,7 +238,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-csi~2"></span>
+              <span class="anchor" id="variable-csi~4"></span>
               complex(kind=8)
             </td>
 <td></td>
@@ -246,7 +253,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cdi~10"></span>
+              <span class="anchor" id="variable-cdi~12"></span>
               complex(kind=8)
             </td>
 <td></td>
@@ -261,7 +268,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-csk~2"></span>
+              <span class="anchor" id="variable-csk~8"></span>
               complex(kind=8)
             </td>
 <td></td>
@@ -276,7 +283,7 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-cdk~10"></span>
+              <span class="anchor" id="variable-cdk~12"></span>
               complex(kind=8)
             </td>
 <td></td>
@@ -304,81 +311,54 @@ the values of in(z), in&#39;(z), kn(z), kn&#39;(z).
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~csphik~2~~CallsGraph Pages: 1 -->
-<svg id="proccsphik2CallsGraph" width="414pt" height="74pt"
- viewBox="0.00 0.00 414.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="proccsphik2CallsGraph" width="152pt" height="74pt"
+ viewBox="0.00 0.00 152.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~csphik~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
 <title>proc~~csphik~2~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 410,-70 410,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 148,-70 148,4 -4,4"/>
 <!-- proc~csphik~2 -->
 <g id="proc~~csphik~2~~CallsGraph_node1" class="node">
 <title>proc~csphik~2</title>
-<polygon fill="none" stroke="black" points="115,-45 0,-45 0,-21 115,-21 115,-45"/>
-<text text-anchor="middle" x="57.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">SF_SPECIAL::csphik</text>
+<polygon fill="none" stroke="black" points="54,-45 0,-45 0,-21 54,-21 54,-45"/>
+<text text-anchor="middle" x="27" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">csphik</text>
 </g>
-<!-- proc~msta1~2 -->
+<!-- msta1 -->
 <g id="proc~~csphik~2~~CallsGraph_node2" class="node">
-<title>proc~msta1~2</title>
-<g id="a_proc~~csphik~2~~CallsGraph_node2"><a xlink:href=".././proc/msta1~2.html" xlink:title="SF_SPECIAL::msta1">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="266,-66 151,-66 151,-42 266,-42 266,-66"/>
-<text text-anchor="middle" x="208.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::msta1</text>
-</a>
+<title>msta1</title>
+<polygon fill="#777777" stroke="#777777" points="144,-66 90,-66 90,-42 144,-42 144,-66"/>
+<text text-anchor="middle" x="117" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">msta1</text>
 </g>
-</g>
-<!-- proc~csphik~2&#45;&gt;proc~msta1~2 -->
+<!-- proc~csphik~2&#45;&gt;msta1 -->
 <g id="proc~~csphik~2~~CallsGraph_edge1" class="edge">
-<title>proc~csphik~2&#45;&gt;proc~msta1~2</title>
-<path fill="none" stroke="#000000" d="M115.26,-41C123.65,-42.18 132.36,-43.41 140.93,-44.62"/>
-<polygon fill="#000000" stroke="#000000" points="140.51,-48.09 150.9,-46.02 141.49,-41.16 140.51,-48.09"/>
+<title>proc~csphik~2&#45;&gt;msta1</title>
+<path fill="none" stroke="#000000" d="M54.4,-39.3C62.48,-41.23 71.51,-43.38 80.1,-45.43"/>
+<polygon fill="#000000" stroke="#000000" points="79.38,-48.86 89.92,-47.78 81,-42.05 79.38,-48.86"/>
 </g>
-<!-- proc~msta2~2 -->
+<!-- msta2 -->
 <g id="proc~~csphik~2~~CallsGraph_node3" class="node">
-<title>proc~msta2~2</title>
-<g id="a_proc~~csphik~2~~CallsGraph_node3"><a xlink:href=".././proc/msta2~2.html" xlink:title="SF_SPECIAL::msta2">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="266,-24 151,-24 151,0 266,0 266,-24"/>
-<text text-anchor="middle" x="208.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::msta2</text>
-</a>
+<title>msta2</title>
+<polygon fill="#777777" stroke="#777777" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">msta2</text>
 </g>
-</g>
-<!-- proc~csphik~2&#45;&gt;proc~msta2~2 -->
+<!-- proc~csphik~2&#45;&gt;msta2 -->
 <g id="proc~~csphik~2~~CallsGraph_edge2" class="edge">
-<title>proc~csphik~2&#45;&gt;proc~msta2~2</title>
-<path fill="none" stroke="#000000" d="M115.26,-25C123.65,-23.82 132.36,-22.59 140.93,-21.38"/>
-<polygon fill="#000000" stroke="#000000" points="141.49,-24.84 150.9,-19.98 140.51,-17.91 141.49,-24.84"/>
-</g>
-<!-- proc~envj~2 -->
-<g id="proc~~csphik~2~~CallsGraph_node4" class="node">
-<title>proc~envj~2</title>
-<g id="a_proc~~csphik~2~~CallsGraph_node4"><a xlink:href=".././proc/envj~2.html" xlink:title="SF_SPECIAL::envj">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="406,-45 302,-45 302,-21 406,-21 406,-45"/>
-<text text-anchor="middle" x="354" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SF_SPECIAL::envj</text>
-</a>
-</g>
-</g>
-<!-- proc~msta1~2&#45;&gt;proc~envj~2 -->
-<g id="proc~~csphik~2~~CallsGraph_edge3" class="edge">
-<title>proc~msta1~2&#45;&gt;proc~envj~2</title>
-<path fill="none" stroke="#000000" d="M266.21,-45.7C274.57,-44.48 283.21,-43.21 291.65,-41.98"/>
-<polygon fill="#000000" stroke="#000000" points="292.43,-45.4 301.82,-40.49 291.42,-38.47 292.43,-45.4"/>
-</g>
-<!-- proc~msta2~2&#45;&gt;proc~envj~2 -->
-<g id="proc~~csphik~2~~CallsGraph_edge4" class="edge">
-<title>proc~msta2~2&#45;&gt;proc~envj~2</title>
-<path fill="none" stroke="#000000" d="M266.21,-20.3C274.57,-21.52 283.21,-22.79 291.65,-24.02"/>
-<polygon fill="#000000" stroke="#000000" points="291.42,-27.53 301.82,-25.51 292.43,-20.6 291.42,-27.53"/>
+<title>proc~csphik~2&#45;&gt;msta2</title>
+<path fill="none" stroke="#000000" d="M54.4,-26.7C62.48,-24.77 71.51,-22.62 80.1,-20.57"/>
+<polygon fill="#000000" stroke="#000000" points="81,-23.95 89.92,-18.22 79.38,-17.14 81,-23.95"/>
 </g>
 </g>
 </svg>
-</div>        <div><a type="button" class="graph-help" data-toggle="modal" href="#CallsGraph-help-text">Help</a></div>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
           <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
                   <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              <div class="modal-body">
+                <div class="modal-body">
 <p>Nodes of different colours represent the following: </p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -459,6 +439,155 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">csphik</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="n">csi</span><span class="p">,</span><span class="w"> </span><span class="n">cdi</span><span class="p">,</span><span class="w"> </span><span class="n">csk</span><span class="p">,</span><span class="w"> </span><span class="n">cdk</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! CSPHIK: complex modified spherical Bessel functions and derivatives.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
+<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
+<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    29 July 2012</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
+<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
+<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
+<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the order of in(z) and kn(z).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, complex ( kind = 8 ) Z, the argument.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) NM, the highest order computed.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, complex ( kind = 8 ) CSI(0:N), CDI(0:N), CSK(0:N), CDK(0:N),</span>
+<span class="w">  </span><span class="c">!    the values of in(z), in&#39;(z), kn(z), kn&#39;(z).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a0</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ccosh1</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cdi</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cdk</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cf</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cf0</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cf1</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ci</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cs</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">csi0</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">csi1</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">csinh1</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">csk</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span>
+<span class="w">    </span><span class="c">! integer ( kind = 4 ) msta1</span>
+<span class="w">  </span><span class="c">! integer ( kind = 4 ) msta2</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nm</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">pi</span>
+<span class="w">  </span><span class="kt">complex</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">z</span>
+
+<span class="w">  </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.141592653589793D+00</span>
+<span class="w">  </span><span class="n">a0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span><span class="w">    </span>
+<span class="w">  </span><span class="n">nm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1.0D-60</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">        </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="n">cdi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">        </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+300</span>
+<span class="w">        </span><span class="n">cdk</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0D+300</span>
+<span class="w">     </span><span class="k">end do</span>
+<span class="k">     </span><span class="n">csi</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
+<span class="w">     </span><span class="n">cdi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3333333333333333D+00</span>
+<span class="w">     </span><span class="k">return</span>
+<span class="k">  end if</span>
+
+<span class="k">  </span><span class="n">ci</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">cmplx</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">csinh1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ci</span>
+<span class="w">  </span><span class="n">ccosh1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">csi0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csinh1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span>
+<span class="w">  </span><span class="n">csi1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">csinh1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ccosh1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span>
+<span class="w">  </span><span class="n">csi</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csi0</span>
+<span class="w">  </span><span class="n">csi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csi1</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msta1</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">nm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msta2</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">     </span><span class="n">cf0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="n">cf1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="o">-</span><span class="mi">100</span>
+<span class="w">     </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+<span class="w">        </span><span class="n">cf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cf1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cf0</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">nm</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cf</span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">        </span><span class="n">cf0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cf1</span>
+<span class="w">        </span><span class="n">cf1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cf</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">csi0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">csi1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">cs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csi1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cf0</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        </span><span class="n">cs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csi0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cf</span>
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">     do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span>
+<span class="w">        </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end if</span>
+
+<span class="k">  </span><span class="n">cdi</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span>
+<span class="w">     </span><span class="n">cdi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span>
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  </span><span class="n">csk</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">csk</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csk</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">csi</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end if</span>
+<span class="k">  end do</span>
+
+<span class="k">  </span><span class="n">cdk</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">csk</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span>
+<span class="w">     </span><span class="n">cdk</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">csk</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">z</span>
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">csphik</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
@@ -468,7 +597,10 @@ implementation in a submodule of an interface in a parent module.
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>SciFortran was developed by QcmP Lab members<br>&copy; 2023 
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
 </p>
           </div>
           <div class="col">
