@@ -81,15 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_RANDOM.f90"> Source File</a>
+              <a href="../src/random_routines.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_random.f90.html'>SF_RANDOM.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_random.html'>SF_RANDOM</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/random_routines.f90.html'>random_routines.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">random_beta</li>
           </ol>
         </nav>
@@ -128,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/random_beta~2.html#src">random_beta</a>
+      </div>
+    </div>
 
 
   </div>
@@ -135,7 +140,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  function random_beta(aa, bb, first) result(fn_val)  
+    <h2> function random_beta(aa, bb, first) result(fn_val)  
 </h2>
     
 
@@ -184,7 +189,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-first~19"></span>
+              <span class="anchor" id="variable-first~24"></span>
               logical,
             </td>
 <td>intent(in)</td>
@@ -219,6 +224,77 @@
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">FUNCTION </span><span class="n">random_beta</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span><span class="w"> </span><span class="n">bb</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">)</span><span class="w"> </span><span class="k">RESULT</span><span class="p">(</span><span class="n">fn_val</span><span class="p">)</span>
+<span class="w">  </span><span class="c">! Adapted from Fortran 77 code from the book:</span>
+<span class="w">  </span><span class="c">!     Dagpunar, J. &#39;Principles of random variate generation&#39;</span>
+<span class="w">  </span><span class="c">!     Clarendon Press, Oxford, 1988.   ISBN 0-19-852202-9</span>
+<span class="w">  </span><span class="c">! FUNCTION GENERATES A RANDOM VARIATE IN [0,1]</span>
+<span class="w">  </span><span class="c">! FROM A BETA DISTRIBUTION WITH DENSITY</span>
+<span class="w">  </span><span class="c">! PROPORTIONAL TO BETA**(AA-1) * (1-BETA)**(BB-1).</span>
+<span class="w">  </span><span class="c">! USING CHENG&#39;S LOG LOGISTIC METHOD.</span>
+<span class="w">  </span><span class="c">!     AA = SHAPE PARAMETER FROM DISTRIBUTION (0 &lt; REAL)</span>
+<span class="w">  </span><span class="c">!     BB = SHAPE PARAMETER FROM DISTRIBUTION (0 &lt; REAL)</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="p">,</span><span class="w"> </span><span class="k">INTENT</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">aa</span><span class="p">,</span><span class="w"> </span><span class="n">bb</span>
+<span class="w">  </span><span class="kt">LOGICAL</span><span class="p">,</span><span class="w"> </span><span class="k">INTENT</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">first</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">fn_val</span>
+<span class="w">  </span><span class="c">!     Local variables</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="p">,</span><span class="w"> </span><span class="k">PARAMETER</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">aln4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.3862944</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="p">,</span><span class="w"> </span><span class="k">SAVE</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">c</span>
+<span class="w">  </span><span class="kt">LOGICAL</span><span class="p">,</span><span class="w"> </span><span class="k">SAVE</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">swap</span>
+<span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">aa</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">bb</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">zero</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">     WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;IMPERMISSIBLE SHAPE PARAMETER VALUE(S)&#39;</span>
+<span class="w">     </span><span class="k">STOP</span>
+<span class="k">  END IF</span>
+<span class="k">  IF</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">                        </span><span class="c">! Initialization, if necessary</span>
+<span class="w">     </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aa</span>
+<span class="w">     </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bb</span>
+<span class="w">     </span><span class="n">swap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span>
+<span class="w">     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">swap</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">        </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span>
+<span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span>
+<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span>
+<span class="w">     </span><span class="k">END IF</span>
+<span class="k">     </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">/</span><span class="n">b</span>
+<span class="w">     </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">+</span><span class="n">b</span>
+<span class="w">     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">one</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">SQRT</span><span class="p">((</span><span class="n">two</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">two</span><span class="p">))</span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">     </span><span class="k">ELSE</span>
+<span class="k">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span><span class="o">/</span><span class="p">(</span><span class="n">one</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="p">(</span><span class="n">vlarge</span><span class="o">*</span><span class="n">b</span><span class="p">))</span><span class="o">**</span><span class="n">b</span><span class="p">)</span>
+<span class="w">     </span><span class="k">END IF</span>
+<span class="k">     </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">+</span><span class="n">h</span>
+<span class="w">  </span><span class="k">END IF</span>
+<span class="k">  DO</span>
+<span class="k">     CALL </span><span class="nb">RANDOM_NUMBER</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="w">     </span><span class="k">CALL </span><span class="nb">RANDOM_NUMBER</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">     </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">x</span>
+<span class="w">     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">vsmall</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">zero</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span>
+<span class="k">     IF</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">LOG</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">one</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="p">))</span><span class="o">/</span><span class="n">h</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="o">*</span><span class="nb">EXP</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">f</span><span class="o">*</span><span class="nb">LOG</span><span class="p">((</span><span class="n">one</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">one</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">aln4</span>
+<span class="w">        </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">           IF</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="o">*</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">one</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span>
+<span class="k">           IF</span><span class="w"> </span><span class="p">(</span><span class="nb">LOG</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span>
+<span class="k">        END IF</span>
+<span class="k">        </span><span class="n">fn_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">/</span><span class="p">(</span><span class="n">one</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">     </span><span class="k">ELSE</span>
+<span class="k">        IF</span><span class="w"> </span><span class="p">(</span><span class="mf">4.0</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">one</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">one</span><span class="o">/</span><span class="n">d</span><span class="p">)</span><span class="o">**</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span>
+<span class="k">        </span><span class="n">fn_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span>
+<span class="w">     </span><span class="k">END IF</span>
+<span class="k">     EXIT</span>
+<span class="k">  END DO</span>
+<span class="k">  IF</span><span class="w"> </span><span class="p">(</span><span class="n">swap</span><span class="p">)</span><span class="w"> </span><span class="n">fn_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fn_val</span>
+<span class="w">  </span><span class="k">RETURN</span>
+<span class="k">END FUNCTION </span><span class="n">random_beta</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

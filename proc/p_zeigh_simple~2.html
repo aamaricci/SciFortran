@@ -1,0 +1,807 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A library of fortran modules and routines for scientific calculations (in a way just like scipy for python)">
+    <meta name="author" content="QcmP Lab members" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>p_zeigh_simple &ndash; SciFortran</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">SciFortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>p_zeigh_simple
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.2% of total for procedures.">144 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/linalg_p_eigh.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/linalg_p_eigh.f90.html'>linalg_p_eigh.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">p_zeigh_simple</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/p_zeigh_simple~2.html#src">p_zeigh_simple</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2> subroutine p_zeigh_simple(A, W, Nblock, method, jobz, uplo, vl, vu, il, iu, tol)  
+</h2>
+    
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~157"></span>
+              complex(kind=8),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(:,:)
+            </td>
+            <td>::</td>
+            <td><strong>A</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~9"></span>
+              real(kind=8),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(size(A,2))
+            </td>
+            <td>::</td>
+            <td><strong>W</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nblock~26"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Nblock</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-method~16"></span>
+              character(len=*),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>method</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-jobz~6"></span>
+              character(len=1),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>jobz</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-uplo~15"></span>
+              character(len=1),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>uplo</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-vl~21"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>vl</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-vu~7"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>vu</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-il~8"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>il</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iu~7"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iu</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tol~57"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~p_zeigh_simple~2~~CallsGraph Pages: 1 -->
+<svg id="procp_zeigh_simple2CallsGraph" width="234pt" height="452pt"
+ viewBox="0.00 0.00 234.00 452.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~p_zeigh_simple~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 448)">
+<title>proc~~p_zeigh_simple~2~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-448 230,-448 230,4 -4,4"/>
+<!-- proc~p_zeigh_simple~2 -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node1" class="node">
+<title>proc~p_zeigh_simple~2</title>
+<polygon fill="none" stroke="black" points="94,-234 0,-234 0,-210 94,-210 94,-234"/>
+<text text-anchor="middle" x="47" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50">p_zeigh_simple</text>
+</g>
+<!-- blacs_gridinfo -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node2" class="node">
+<title>blacs_gridinfo</title>
+<polygon fill="#777777" stroke="#777777" points="221.5,-444 134.5,-444 134.5,-420 221.5,-420 221.5,-444"/>
+<text text-anchor="middle" x="178" y="-429.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">blacs_gridinfo</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;blacs_gridinfo -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge1" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;blacs_gridinfo</title>
+<path fill="none" stroke="#000000" d="M50.14,-234.34C56.45,-267.28 77.93,-358.36 130,-411 131.06,-412.07 132.19,-413.09 133.36,-414.07"/>
+<polygon fill="#000000" stroke="#000000" points="131.51,-417.04 141.73,-419.82 135.47,-411.27 131.51,-417.04"/>
+</g>
+<!-- descinit -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node3" class="node">
+<title>descinit</title>
+<polygon fill="#777777" stroke="#777777" points="205,-402 151,-402 151,-378 205,-378 205,-402"/>
+<text text-anchor="middle" x="178" y="-387.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">descinit</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;descinit -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge2" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;descinit</title>
+<path fill="none" stroke="#000000" d="M51.87,-234.36C61.09,-262.02 86.88,-329.54 130,-369 133.43,-372.14 137.41,-374.87 141.57,-377.23"/>
+<polygon fill="#000000" stroke="#000000" points="140.31,-380.51 150.83,-381.81 143.42,-374.24 140.31,-380.51"/>
+</g>
+<!-- distribute_blacs -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node4" class="node">
+<title>distribute_blacs</title>
+<polygon fill="#777777" stroke="#777777" points="226,-360 130,-360 130,-336 226,-336 226,-360"/>
+<text text-anchor="middle" x="178" y="-345.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">distribute_blacs</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;distribute_blacs -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge3" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;distribute_blacs</title>
+<path fill="none" stroke="#000000" d="M54.84,-234.28C67.28,-255.67 95.57,-300.06 130,-327 131.77,-328.39 133.65,-329.7 135.6,-330.95"/>
+<polygon fill="#000000" stroke="#000000" points="134.03,-334.09 144.45,-335.98 137.49,-328 134.03,-334.09"/>
+</g>
+<!-- dlamch -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node5" class="node">
+<title>dlamch</title>
+<polygon fill="#777777" stroke="#777777" points="205,-318 151,-318 151,-294 205,-294 205,-318"/>
+<text text-anchor="middle" x="178" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dlamch</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;dlamch -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge4" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;dlamch</title>
+<path fill="none" stroke="#000000" d="M61.79,-234.23C77.52,-247.78 104.4,-269.74 130,-285 133.63,-287.16 137.52,-289.24 141.45,-291.2"/>
+<polygon fill="#000000" stroke="#000000" points="140.05,-294.41 150.59,-295.51 143.04,-288.08 140.05,-294.41"/>
+</g>
+<!-- free_unit -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node6" class="node">
+<title>free_unit</title>
+<polygon fill="#777777" stroke="#777777" points="207.5,-276 148.5,-276 148.5,-252 207.5,-252 207.5,-276"/>
+<text text-anchor="middle" x="178" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">free_unit</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;free_unit -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge5" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;free_unit</title>
+<path fill="none" stroke="#000000" d="M84.97,-234.04C101.77,-239.51 121.64,-245.98 138.61,-251.5"/>
+<polygon fill="#000000" stroke="#000000" points="137.63,-254.86 148.23,-254.63 139.8,-248.21 137.63,-254.86"/>
+</g>
+<!-- gather_blacs -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node7" class="node">
+<title>gather_blacs</title>
+<polygon fill="#777777" stroke="#777777" points="218.5,-234 137.5,-234 137.5,-210 218.5,-210 218.5,-234"/>
+<text text-anchor="middle" x="178" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">gather_blacs</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;gather_blacs -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge6" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;gather_blacs</title>
+<path fill="none" stroke="#000000" d="M94.21,-222C104.84,-222 116.19,-222 126.97,-222"/>
+<polygon fill="#000000" stroke="#000000" points="127.09,-225.5 137.09,-222 127.09,-218.5 127.09,-225.5"/>
+</g>
+<!-- numroc -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node8" class="node">
+<title>numroc</title>
+<polygon fill="#777777" stroke="#777777" points="205,-192 151,-192 151,-168 205,-168 205,-192"/>
+<text text-anchor="middle" x="178" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">numroc</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;numroc -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge7" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;numroc</title>
+<path fill="none" stroke="#000000" d="M84.97,-209.96C102.52,-204.25 123.42,-197.45 140.86,-191.77"/>
+<polygon fill="#000000" stroke="#000000" points="142.25,-194.99 150.68,-188.57 140.09,-188.34 142.25,-194.99"/>
+</g>
+<!-- pzheev -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node9" class="node">
+<title>pzheev</title>
+<polygon fill="#777777" stroke="#777777" points="205,-150 151,-150 151,-126 205,-126 205,-150"/>
+<text text-anchor="middle" x="178" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pzheev</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;pzheev -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge8" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;pzheev</title>
+<path fill="none" stroke="#000000" d="M61.79,-209.77C77.52,-196.22 104.4,-174.26 130,-159 133.63,-156.84 137.52,-154.76 141.45,-152.8"/>
+<polygon fill="#000000" stroke="#000000" points="143.04,-155.92 150.59,-148.49 140.05,-149.59 143.04,-155.92"/>
+</g>
+<!-- pzheevd -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node10" class="node">
+<title>pzheevd</title>
+<polygon fill="#777777" stroke="#777777" points="207,-108 149,-108 149,-84 207,-84 207,-108"/>
+<text text-anchor="middle" x="178" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pzheevd</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;pzheevd -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge9" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;pzheevd</title>
+<path fill="none" stroke="#000000" d="M54.84,-209.72C67.28,-188.33 95.57,-143.94 130,-117 132.99,-114.66 136.28,-112.52 139.7,-110.57"/>
+<polygon fill="#000000" stroke="#000000" points="141.57,-113.55 148.89,-105.88 138.39,-107.31 141.57,-113.55"/>
+</g>
+<!-- pzheevr -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node11" class="node">
+<title>pzheevr</title>
+<polygon fill="#777777" stroke="#777777" points="205.5,-66 150.5,-66 150.5,-42 205.5,-42 205.5,-66"/>
+<text text-anchor="middle" x="178" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pzheevr</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;pzheevr -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge10" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;pzheevr</title>
+<path fill="none" stroke="#000000" d="M51.87,-209.64C61.09,-181.98 86.88,-114.46 130,-75 133.35,-71.93 137.23,-69.25 141.29,-66.93"/>
+<polygon fill="#000000" stroke="#000000" points="142.96,-70.01 150.34,-62.4 139.83,-63.75 142.96,-70.01"/>
+</g>
+<!-- pzheevx -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_node12" class="node">
+<title>pzheevx</title>
+<polygon fill="#777777" stroke="#777777" points="206.5,-24 149.5,-24 149.5,0 206.5,0 206.5,-24"/>
+<text text-anchor="middle" x="178" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pzheevx</text>
+</g>
+<!-- proc~p_zeigh_simple~2&#45;&gt;pzheevx -->
+<g id="proc~~p_zeigh_simple~2~~CallsGraph_edge11" class="edge">
+<title>proc~p_zeigh_simple~2&#45;&gt;pzheevx</title>
+<path fill="none" stroke="#000000" d="M50.14,-209.66C56.45,-176.72 77.93,-85.64 130,-33 133.04,-29.93 136.61,-27.26 140.4,-24.97"/>
+<polygon fill="#000000" stroke="#000000" points="142.23,-27.96 149.5,-20.25 139.01,-21.75 142.23,-27.96"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">p_zeigh_simple</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Nblock</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">jobz</span><span class="p">,</span><span class="n">uplo</span><span class="p">,</span><span class="n">vl</span><span class="p">,</span><span class="n">vu</span><span class="p">,</span><span class="n">il</span><span class="p">,</span><span class="n">iu</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:,:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="c">! M v = E v/v(i,j) = ith component of jth vec.</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="c">! eigenvalues</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Nblock</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Nb</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">optional</span><span class="w">                  </span><span class="kd">::</span><span class="w"> </span><span class="n">method</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">optional</span><span class="w">                  </span><span class="kd">::</span><span class="w"> </span><span class="n">jobz</span><span class="p">,</span><span class="n">uplo</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">jobz_</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,</span><span class="nb">range</span>
+<span class="nb">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">method_</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">vl</span><span class="p">,</span><span class="n">vu</span><span class="p">,</span><span class="n">tol</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">il</span><span class="p">,</span><span class="n">iu</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">vL_</span><span class="p">,</span><span class="n">vU_</span><span class="p">,</span><span class="n">tol_</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">iL_</span><span class="p">,</span><span class="n">iU_</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Ns</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Qrows</span><span class="p">,</span><span class="n">Qcols</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">lda</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">ldz</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">lwork</span><span class="p">,</span><span class="n">liwork</span><span class="p">,</span><span class="n">lrwork</span><span class="p">,</span><span class="n">mW</span><span class="p">,</span><span class="n">mZ</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">Work</span><span class="p">,</span><span class="n">RRwork</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">Rwork</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">Iwork</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                                 </span><span class="kd">::</span><span class="w"> </span><span class="n">guess_lwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                                 </span><span class="kd">::</span><span class="w"> </span><span class="n">guess_lrrwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">guess_lrwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">guess_liwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">logical</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">boolV</span><span class="p">,</span><span class="n">boolI</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:,:),</span><span class="k">allocatable</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">Z</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">Isuppz</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">Ifail</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">Iclustr</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">Gap</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">external</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">numroc</span><span class="p">,</span><span class="n">indxG2L</span><span class="p">,</span><span class="n">indxL2G</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">external</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">dlamch</span><span class="w">      </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:,:),</span><span class="k">allocatable</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">A_loc</span><span class="p">,</span><span class="n">Z_loc</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">rankX</span><span class="p">,</span><span class="n">rankY</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">Nrow</span><span class="p">,</span><span class="n">Ncol</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">sendR</span><span class="p">,</span><span class="n">sendC</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">myi</span><span class="p">,</span><span class="n">myj</span><span class="p">,</span><span class="n">unit</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w">                       </span><span class="kd">::</span><span class="w"> </span><span class="n">descA</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">descZloc</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">t_stop</span><span class="p">,</span><span class="n">t_start</span>
+<span class="w">  </span><span class="kt">logical</span><span class="w">                                    </span><span class="kd">::</span><span class="w"> </span><span class="n">master</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">method_</span><span class="o">=</span><span class="s1">&#39;zheevr&#39;</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">method</span><span class="p">))</span><span class="n">method_</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">jobz_</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="w">      </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">jobz</span><span class="p">))</span><span class="n">jobz_</span><span class="o">=</span><span class="n">jobz</span>
+<span class="w">  </span><span class="n">uplo_</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="w">      </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">uplo</span><span class="p">))</span><span class="n">uplo_</span><span class="o">=</span><span class="n">uplo</span>
+<span class="w">  </span><span class="n">vl_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d0</span><span class="w">     </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">vL</span><span class="p">))</span><span class="n">vL_</span><span class="o">=</span><span class="n">vL</span>
+<span class="w">  </span><span class="n">vu_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d0</span><span class="w">     </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">vU</span><span class="p">))</span><span class="n">vU_</span><span class="o">=</span><span class="n">vU</span>
+<span class="w">  </span><span class="n">iL_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">       </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iL</span><span class="p">))</span><span class="n">iL_</span><span class="o">=</span><span class="n">iL</span>
+<span class="w">  </span><span class="n">iU_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">       </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iU</span><span class="p">))</span><span class="n">iU_</span><span class="o">=</span><span class="n">iU</span>
+<span class="w">  </span><span class="n">tol_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dlamch</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span><span class="w">     </span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span><span class="n">tol_</span><span class="o">=</span><span class="n">tol</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!&gt;DEBUG</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">method_</span><span class="o">==</span><span class="s2">&quot;zheev&quot;</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">method_</span><span class="o">==</span><span class="s2">&quot;zheevd&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;WARNING p_eigh: pzheev &amp; pzheevd are bugged. Fall on pzheevr.&quot;</span>
+<span class="w">     </span><span class="n">method_</span><span class="o">=</span><span class="s1">&#39;zheevr&#39;</span>
+<span class="w">  </span><span class="k">endif</span>
+<span class="k">  if</span><span class="p">(</span><span class="n">uplo_</span><span class="o">==</span><span class="s1">&#39;U&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;WARNING p_eigh: pzheevr OR pzheevx are bugged. Only work with with uplo=L&quot;</span>
+<span class="w">     </span><span class="n">uplo_</span><span class="w">  </span><span class="o">=</span><span class="s1">&#39;L&#39;</span>
+<span class="w">  </span><span class="k">endif</span>
+<span class="w">  </span><span class="c">!&lt;DEBUG</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">W</span><span class="o">=</span><span class="mi">0</span><span class="n">d0</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;A&#39;</span>
+<span class="w">  </span><span class="n">boolV</span><span class="o">=</span><span class="nb">present</span><span class="p">(</span><span class="n">vL</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">vU</span><span class="p">)</span>
+<span class="w">  </span><span class="n">boolI</span><span class="o">=</span><span class="nb">present</span><span class="p">(</span><span class="n">iL</span><span class="p">).</span><span class="nb">OR</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">iU</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">boolV</span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="n">boolI</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;vX and iX arguments both present. Can not set RANGE&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">boolV</span><span class="p">)</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;V&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">boolI</span><span class="p">)</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;I&#39;</span>
+<span class="w">  </span><span class="n">Ns</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="nb">shape</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">/=</span><span class="p">[</span><span class="n">Ns</span><span class="p">,</span><span class="n">Ns</span><span class="p">]))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;my_eighD error: A has illegal shape&quot;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!INIT SCALAPACK TREATMENT:</span>
+<span class="w">  </span><span class="c">!&lt; Get coordinate of the processes</span>
+<span class="w">  </span><span class="k">call </span><span class="n">blacs_gridinfo</span><span class="p">(</span><span class="w"> </span><span class="n">p_context</span><span class="p">,</span><span class="w"> </span><span class="n">p_Nx</span><span class="p">,</span><span class="w"> </span><span class="n">p_Ny</span><span class="p">,</span><span class="w"> </span><span class="n">rankX</span><span class="p">,</span><span class="w"> </span><span class="n">rankY</span><span class="p">)</span>
+<span class="w">  </span><span class="n">master</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rankX</span><span class="o">==</span><span class="mi">0</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="n">rankY</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">rankX</span><span class="o">&lt;</span><span class="mf">0.</span><span class="nb">AND</span><span class="p">.</span><span class="n">rankY</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="k">goto</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">Nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nblock</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">Qrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numroc</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="n">rankX</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p_Nx</span><span class="p">)</span>
+<span class="w">  </span><span class="n">Qcols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numroc</span><span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="n">rankY</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p_Ny</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">descinit</span><span class="p">(</span><span class="w"> </span><span class="n">descA</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p_context</span><span class="p">,</span><span class="w"> </span><span class="n">Qrows</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">descinit</span><span class="p">(</span><span class="w"> </span><span class="n">descAloc</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p_context</span><span class="p">,</span><span class="w"> </span><span class="n">Qrows</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">master</span><span class="p">)</span><span class="k">then</span>
+<span class="k">     </span><span class="n">unit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">free_unit</span><span class="p">()</span>
+<span class="w">     </span><span class="k">open</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="k">file</span><span class="o">=</span><span class="s2">&quot;p_eigh.info&quot;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(A20,I8,A5,I8)&quot;</span><span class="p">)</span><span class="s2">&quot;Grid=&quot;</span><span class="p">,</span><span class="n">p_Nx</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">p_Ny</span>
+<span class="w">     </span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(A20,I8,A5,I8)&quot;</span><span class="p">)</span><span class="s2">&quot;Qrows x Qcols=&quot;</span><span class="p">,</span><span class="n">Qrows</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">Qcols</span>
+<span class="w">  </span><span class="k">endif</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!&lt; allocate local distributed A</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">A_loc</span><span class="p">(</span><span class="n">Qrows</span><span class="p">,</span><span class="n">Qcols</span><span class="p">));</span><span class="n">A_loc</span><span class="o">=</span><span class="n">zero</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!&lt; Distribute A</span>
+<span class="w">  </span><span class="k">call </span><span class="n">Distribute_BLACS</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">unit</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!&lt; Allocate distributed eigenvector matrix</span>
+<span class="w">  </span><span class="k">allocate</span><span class="p">(</span><span class="n">Z_loc</span><span class="p">(</span><span class="n">Qrows</span><span class="p">,</span><span class="n">Qcols</span><span class="p">));</span><span class="n">Z_loc</span><span class="o">=</span><span class="n">zero</span>
+<span class="w">  </span><span class="k">call </span><span class="n">descinit</span><span class="p">(</span><span class="w"> </span><span class="n">descZloc</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="n">Nb</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p_context</span><span class="p">,</span><span class="w"> </span><span class="n">Qrows</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">master</span><span class="p">)</span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(A20,A21)&quot;</span><span class="p">)</span><span class="s2">&quot;Using Method:&quot;</span><span class="p">,</span><span class="n">method_</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">master</span><span class="p">)</span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">t_start</span><span class="p">)</span>
+<span class="w">  </span><span class="k">select case</span><span class="p">(</span><span class="n">method_</span><span class="p">)</span>
+<span class="w">  </span><span class="k">case </span><span class="n">default</span>
+<span class="w">     </span><span class="k">call  </span><span class="n">PZHEEVR</span><span class="p">(</span><span class="n">jobz_</span><span class="p">,</span><span class="nb">range</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">vl_</span><span class="p">,</span><span class="n">vu_</span><span class="p">,</span><span class="n">il_</span><span class="p">,</span><span class="n">iu_</span><span class="p">,</span><span class="n">mW</span><span class="p">,</span><span class="n">mZ</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">guess_lwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_lrwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_liwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="n">lwork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guess_lwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">lrwork</span><span class="o">=</span><span class="w"> </span><span class="n">guess_lrwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="n">liwork</span><span class="o">=</span><span class="w"> </span><span class="n">guess_liwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">rwork</span><span class="p">(</span><span class="n">lrwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">iwork</span><span class="p">(</span><span class="n">liwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">call  </span><span class="n">PZHEEVR</span><span class="p">(</span><span class="n">jobz_</span><span class="p">,</span><span class="nb">range</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">vl_</span><span class="p">,</span><span class="n">vu_</span><span class="p">,</span><span class="n">il_</span><span class="p">,</span><span class="n">iu_</span><span class="p">,</span><span class="n">mW</span><span class="p">,</span><span class="n">mZ</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">work</span><span class="p">,</span><span class="w"> </span><span class="n">lwork</span><span class="p">,</span><span class="w"> </span><span class="n">rwork</span><span class="p">,</span><span class="w"> </span><span class="n">lrwork</span><span class="p">,</span><span class="w"> </span><span class="n">iwork</span><span class="p">,</span><span class="w"> </span><span class="n">liwork</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;zheevx&quot;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">Ifail</span><span class="p">(</span><span class="n">Ns</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">Iclustr</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">p_Nx</span><span class="o">*</span><span class="n">p_Ny</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">Gap</span><span class="p">(</span><span class="n">p_Nx</span><span class="o">*</span><span class="n">p_Ny</span><span class="p">))</span>
+<span class="w">     </span><span class="k">call </span><span class="n">PZHEEVX</span><span class="p">(</span><span class="n">jobz_</span><span class="p">,</span><span class="nb">range</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">vl_</span><span class="p">,</span><span class="n">vu_</span><span class="p">,</span><span class="n">il_</span><span class="p">,</span><span class="n">iu_</span><span class="p">,</span><span class="mi">0</span><span class="n">d0</span><span class="p">,</span><span class="n">mW</span><span class="p">,</span><span class="w"> </span><span class="n">mZ</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="n">d0</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">guess_lwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_lrwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_liwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ifail</span><span class="p">,</span><span class="n">iclustr</span><span class="p">,</span><span class="n">gap</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="n">lwork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guess_lwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="n">lrwork</span><span class="o">=</span><span class="w"> </span><span class="n">guess_lrwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="n">liwork</span><span class="o">=</span><span class="w"> </span><span class="n">guess_liwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">rwork</span><span class="p">(</span><span class="n">lrwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">iwork</span><span class="p">(</span><span class="n">liwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">call </span><span class="n">PZHEEVX</span><span class="p">(</span><span class="n">jobz_</span><span class="p">,</span><span class="nb">range</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">vl_</span><span class="p">,</span><span class="n">vu_</span><span class="p">,</span><span class="n">il_</span><span class="p">,</span><span class="n">iu_</span><span class="p">,</span><span class="mi">0</span><span class="n">d0</span><span class="p">,</span><span class="n">mW</span><span class="p">,</span><span class="n">mZ</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="n">d0</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">lrwork</span><span class="p">,</span><span class="n">iwork</span><span class="p">,</span><span class="n">liwork</span><span class="p">,</span><span class="n">ifail</span><span class="p">,</span><span class="n">iclustr</span><span class="p">,</span><span class="n">gap</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">! &gt;&gt;&gt;ACTHUNG&lt;&lt; BUGGED DO NOT USE: --&gt; zheevr, w UPLO=&#39;L&#39;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;zheev&quot;</span><span class="p">)</span><span class="w">              </span><span class="c">!Bugged</span>
+<span class="w">     </span><span class="k">call </span><span class="n">PZHEEV</span><span class="p">(</span><span class="n">jobz_</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">guess_lwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_lrwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="n">lwork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guess_lwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">lrwork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guess_lrwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">rwork</span><span class="p">(</span><span class="n">lrwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">call </span><span class="n">PZHEEV</span><span class="p">(</span><span class="n">jobz_</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">lrwork</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">! &gt;&gt;&gt;ACTHUNG&lt;&lt; BUGGED DO NOT USE: --&gt; zheevr, w UPLO=&#39;L&#39;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;zheevd&quot;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">call </span><span class="n">PZHEEVD</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">guess_lwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_lrwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">guess_liwork</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span>
+<span class="w">     </span><span class="n">lwork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guess_lwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">lrwork</span><span class="o">=</span><span class="w"> </span><span class="n">guess_lrwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">liwork</span><span class="o">=</span><span class="w"> </span><span class="n">guess_liwork</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">rwork</span><span class="p">(</span><span class="n">lrwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">allocate</span><span class="p">(</span><span class="n">iwork</span><span class="p">(</span><span class="n">liwork</span><span class="p">))</span>
+<span class="w">     </span><span class="k">call </span><span class="n">PZHEEVD</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">,</span><span class="n">uplo_</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">Ns</span><span class="p">,</span><span class="n">A_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descAloc</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">Z_loc</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">descZloc</span><span class="p">,&amp;</span>
+<span class="w">          </span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">rwork</span><span class="p">,</span><span class="n">lrwork</span><span class="p">,</span><span class="n">iwork</span><span class="p">,</span><span class="n">liwork</span><span class="p">,</span><span class="n">info</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end select</span>
+<span class="k">  if</span><span class="p">(</span><span class="n">master</span><span class="p">)</span><span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">t_stop</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">master</span><span class="p">)</span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(A20,F21.12)&quot;</span><span class="p">)</span><span class="s2">&quot;Time diag:&quot;</span><span class="p">,</span><span class="n">t_stop</span><span class="o">-</span><span class="n">t_start</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">jobz_</span><span class="o">==</span><span class="s1">&#39;V&#39;</span><span class="p">)</span><span class="k">then</span>
+<span class="k">     </span><span class="n">A</span><span class="o">=</span><span class="n">zero</span>
+<span class="w">     </span><span class="k">call </span><span class="n">Gather_BLACS</span><span class="p">(</span><span class="n">Z_loc</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">descA</span><span class="p">,</span><span class="n">unit</span><span class="p">)</span>
+<span class="w">  </span><span class="k">endif</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">master</span><span class="p">)</span><span class="k">close</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+<span class="mi">200</span><span class="w"> </span><span class="k">continue</span>
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">p_zeigh_simple</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
