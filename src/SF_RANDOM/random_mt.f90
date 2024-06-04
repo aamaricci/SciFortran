@@ -115,7 +115,7 @@ subroutine d_grnd_2(A)
   real(8),dimension(:,:) :: A
   integer              :: i1,i2
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
+     do i2=1,size(A,2)
         A(i1,i2) = mersenne()
      enddo
   enddo
@@ -125,8 +125,8 @@ subroutine d_grnd_3(A)
   real(8),dimension(:,:,:) :: A
   integer                  :: i1,i2,i3
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            A(i1,i2,i3) = mersenne()
         enddo
      enddo
@@ -137,8 +137,8 @@ subroutine d_grnd_4(A)
   real(8),dimension(:,:,:,:) :: A
   integer                  :: i1,i2,i3,i4
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               A(i1,i2,i3,i4) = mersenne()
            enddo
@@ -151,8 +151,8 @@ subroutine d_grnd_5(A)
   real(8),dimension(:,:,:,:,:) :: A
   integer                  :: i1,i2,i3,i4,i5
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               do i5=1,size(A,5)
                  A(i1,i2,i3,i4,i5) = mersenne()
@@ -167,8 +167,8 @@ subroutine d_grnd_6(A)
   real(8),dimension(:,:,:,:,:,:) :: A
   integer                  :: i1,i2,i3,i4,i5,i6
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               do i5=1,size(A,5)
                  do i6=1,size(A,6)
@@ -186,8 +186,8 @@ subroutine d_grnd_7(A)
   real(8),dimension(:,:,:,:,:,:,:) :: A
   integer                  :: i1,i2,i3,i4,i5,i6,i7
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               do i5=1,size(A,5)
                  do i6=1,size(A,6)
@@ -223,7 +223,7 @@ subroutine c_grnd_2(A)
   complex(8),dimension(:,:) :: A
   integer                   :: i1,i2
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
+     do i2=1,size(A,2)
         A(i1,i2) = dcmplx(mersenne(),mersenne())
      enddo
   enddo
@@ -233,8 +233,8 @@ subroutine c_grnd_3(A)
   complex(8),dimension(:,:,:) :: A
   integer                     :: i1,i2,i3
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            A(i1,i2,i3) = dcmplx(mersenne(),mersenne())
         enddo
      enddo
@@ -245,8 +245,8 @@ subroutine c_grnd_4(A)
   complex(8),dimension(:,:,:,:) :: A
   integer                       :: i1,i2,i3,i4
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               A(i1,i2,i3,i4) = dcmplx(mersenne(),mersenne())
            enddo
@@ -259,8 +259,8 @@ subroutine c_grnd_5(A)
   complex(8),dimension(:,:,:,:,:) :: A
   integer                         :: i1,i2,i3,i4,i5
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               do i5=1,size(A,5)
                  A(i1,i2,i3,i4,i5) = dcmplx(mersenne(),mersenne())
@@ -275,8 +275,8 @@ subroutine c_grnd_6(A)
   complex(8),dimension(:,:,:,:,:,:) :: A
   integer                           :: i1,i2,i3,i4,i5,i6
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               do i5=1,size(A,5)
                  do i6=1,size(A,6)
@@ -294,8 +294,8 @@ subroutine c_grnd_7(A)
   complex(8),dimension(:,:,:,:,:,:,:) :: A
   integer                             :: i1,i2,i3,i4,i5,i6,i7
   do i1=1,size(A,1)
-     do i2=2,size(A,2)
-        do i3=2,size(A,3)
+     do i2=1,size(A,2)
+        do i3=1,size(A,3)
            do i4=1,size(A,4)
               do i5=1,size(A,5)
                  do i6=1,size(A,6)
