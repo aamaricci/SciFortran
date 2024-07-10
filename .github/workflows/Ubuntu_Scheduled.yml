@@ -1,9 +1,8 @@
 name: Scheduled CI SciFortran workflow for Ubuntu
 
 on:
-  schedule:
-#             min - hour - day of month - month - day of week
-    - cron:  '0 3 * * *' #Everyday at 3:00 A.M.
+  push:
+    - 'master'
 
 defaults:
   run:
@@ -11,7 +10,7 @@ defaults:
 
 jobs:
   test-QcmP:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
 
