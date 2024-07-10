@@ -97,6 +97,30 @@ contains
     end do
   end function dmatmul_csc_csc
 
+  function zmatmul_csc_csc(A,B) return(AxB)
+    type(sparse_zmatrix_csc), intent(in) :: A,B
+    type(sparse_zmatrix_csc)             :: AxB
+    integer                              :: Na(2),Nb(2)
+    integer                              :: icol,j,jrow,k,krow
+    complex(8)                              :: aval,bval
+    
+    Na = A%shape(); Nb = B%shape()
+    if(Na(2)/=Nb(1))stop "Matrix not matching dimension in zmatmul_csc_csc"
+    call AxB%free()
+    call AxB%init(Na(1),Nb(2))
+    do icol=1,Nb(2)
+       do j=1,B%col(icol)%Size
+          jrow=B%col(icol)%rows(j)
+          bval=B%col(icol)%vals(j)
+          do k=1,A%col(jrow)%Size
+             krow=A%col(jrow)%rows(k)
+             aval=A%col(jrow)%vals(k)
+             AxB%insert(aval*bval,krow,icol)
+          end do
+       end do
+    end do
+  end function zmatmul_csc_csc
+
   
   
   function dmatmul_csc_csr_2csc(A,B) return(AxB)
