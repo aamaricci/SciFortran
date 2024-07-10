@@ -81,15 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/special_functions.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">comelp</li>
           </ol>
         </nav>
@@ -128,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/comelp~2.html#src">comelp</a>
+      </div>
+    </div>
 
 
   </div>
@@ -135,15 +140,15 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine comelp(hk, ck, ce)  
+    <h2> subroutine comelp(hk, ck, ce)  
 </h2>
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! COMELP computes complete elliptic integrals K(k) and E(k).</p>
 <p>Licensing:</p>
-<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
-they give permission to incorporate this routine into a user program 
+<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However,
+they give permission to incorporate this routine into a user program
 provided that the copyright is acknowledged.
 </code></pre></div>
 
@@ -241,6 +246,101 @@ Output, real ( kind = 8 ) CK, CE, the values of K(HK) and E(HK).
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">comelp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">hk</span><span class="p">,</span><span class="w"> </span><span class="n">ck</span><span class="p">,</span><span class="w"> </span><span class="n">ce</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! COMELP computes complete elliptic integrals K(k) and E(k).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
+<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
+<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    07 July 2012</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
+<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
+<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
+<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) HK, the modulus.  0 &lt;= HK &lt;= 1.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) CK, CE, the values of K(HK) and E(HK).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ae</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ak</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">be</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bk</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ce</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ck</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">hk</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">pk</span>
+
+<span class="w">  </span><span class="n">pk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">hk</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hk</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">hk</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">ck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+300</span>
+<span class="w">     </span><span class="n">ce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
+
+<span class="w">  </span><span class="k">else</span>
+
+<span class="k">     </span><span class="n">ak</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.01451196212D+00</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.03742563713D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.03590092383D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.09666344259D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">1.38629436112D+00</span>
+
+<span class="w">     </span><span class="n">bk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.00441787012D+00</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.03328355346D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.06880248576D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.12498593597D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5D+00</span>
+
+<span class="w">     </span><span class="n">ck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ak</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">bk</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">ae</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.01736506451D+00</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.04757383546D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.0626060122D+00</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.44325141463D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">1.0D+00</span>
+
+<span class="w">     </span><span class="n">be</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="mf">0.00526449639D+00</span><span class="w">   </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.04069697526D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.09200180037D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2499836831D+00</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pk</span>
+
+<span class="w">     </span><span class="n">ce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ae</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end if</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">comelp</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">cwidth</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/cwidth~2.html#src">cwidth</a>
-      </div>
-    </div>
 
 
   </div>
@@ -158,7 +152,7 @@
 <span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="n">approximation</span><span class="o">.</span>
 </code></pre></div>
 
-<p>Block structure of A:</p>
+<p>Block structure of A:  </p>
 <div class="codehilite"><pre><span></span><code><span class="nv">The</span><span class="w"> </span><span class="nv">interesting</span><span class="w"> </span><span class="nv">part</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">A</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">taken</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">consist</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">NBLOKS</span>
 <span class="nv">consecutive</span><span class="w"> </span><span class="nv">blocks</span>,<span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">I</span><span class="o">-</span><span class="nv">th</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="nv">made</span><span class="w"> </span><span class="nv">up</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">NROWI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">INTEGS</span><span class="ss">(</span><span class="mi">1</span>,<span class="nv">I</span><span class="ss">)</span>
 <span class="nv">consecutive</span><span class="w"> </span><span class="nv">rows</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">NCOLS</span><span class="w"> </span><span class="nv">consecutive</span><span class="w"> </span><span class="nv">columns</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">A</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">with</span>
@@ -198,9 +192,9 @@
 <div class="codehilite"><pre><span></span><code><span class="n">Gauss</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">scaled</span><span class="w"> </span><span class="n">partial</span><span class="w"> </span><span class="n">pivoting</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">used</span><span class="p">,</span><span class="w"> </span><span class="n">but</span>
 <span class="n">multipliers</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">save</span><span class="w"> </span><span class="n">storage</span><span class="o">.</span><span class="w">  </span><span class="n">Rather</span><span class="p">,</span><span class="w"> </span><span class="n">the</span>
 <span class="n">right</span><span class="w"> </span><span class="n">hand</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">operated</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">during</span><span class="w"> </span><span class="n">elimination</span><span class="o">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">parameters</span>
-<span class="n">IPVTEQ</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">LASTEQ</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="n">track</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">action</span><span class="o">.</span><span class="w">  </span><span class="n">IPVTEQ</span>
-<span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">eliminated</span><span class="w"> </span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">equations</span>
-<span class="n">IPVTEQ</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">LASTEQ</span><span class="p">,</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">IPVTEQ</span><span class="p">,</span><span class="w"> </span><span class="n">possibly</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">an</span>
+<span class="n">IPVTEQ</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">LASTEQ</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="n">track</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">action</span><span class="o">.</span><span class="w">  </span><span class="n">IPVTEQ</span><span class="w"> </span>
+<span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">eliminated</span><span class="w"> </span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span>
+<span class="n">IPVTEQ</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">LASTEQ</span><span class="p">,</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">IPVTEQ</span><span class="p">,</span><span class="w"> </span><span class="n">possibly</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">an</span><span class="w"> </span>
 <span class="n">interchange</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="n">equation</span><span class="o">.</span>
 
 <span class="n">The</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="n">column</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">always</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">column</span>
@@ -208,7 +202,7 @@
 <span class="n">IPVTEQ</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">LASTEQ</span><span class="w"> </span><span class="n">revised</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">IPVTEQ</span><span class="o">-</span><span class="n">th</span>
 <span class="n">variable</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">W</span><span class="o">.</span><span class="w">  </span><span class="n">In</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">way</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span>
 <span class="n">equations</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">block</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">aligned</span><span class="w"> </span><span class="n">with</span>
-<span class="n">those</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">moment</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">equations</span>
+<span class="n">those</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">moment</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span>
 <span class="n">become</span><span class="w"> </span><span class="n">involved</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">process</span><span class="o">.</span>
 
 <span class="n">Thus</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">above</span><span class="w"> </span><span class="n">example</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">steps</span><span class="w"> </span><span class="n">proceed</span>
@@ -217,7 +211,7 @@
 <span class="o">*</span><span class="mi">11</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="mi">14</span><span class="w">    </span><span class="mi">11</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="mi">14</span><span class="w">    </span><span class="mi">11</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="mi">14</span><span class="w">    </span><span class="mi">11</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="mi">14</span>
 <span class="o">*</span><span class="mi">21</span><span class="w"> </span><span class="mi">22</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">24</span><span class="w">   </span><span class="o">*</span><span class="mi">22</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">24</span><span class="w">       </span><span class="mi">22</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">24</span><span class="w">       </span><span class="mi">22</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">24</span>
 <span class="o">*</span><span class="mi">31</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="mi">33</span><span class="w"> </span><span class="mi">34</span><span class="w">   </span><span class="o">*</span><span class="mi">32</span><span class="w"> </span><span class="mi">33</span><span class="w"> </span><span class="mi">34</span><span class="w">      </span><span class="o">*</span><span class="mi">33</span><span class="w"> </span><span class="mi">34</span><span class="w">          </span><span class="mi">33</span><span class="w"> </span><span class="mi">34</span>
-<span class="w"> </span><span class="mi">43</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">    </span><span class="mi">43</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">   </span><span class="o">*</span><span class="mi">43</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">   </span><span class="o">*</span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span>
+<span class="w"> </span><span class="mi">43</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">    </span><span class="mi">43</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">   </span><span class="o">*</span><span class="mi">43</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">   </span><span class="o">*</span><span class="mi">44</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">46</span><span class="w">        </span>
 <span class="w"> </span><span class="mi">53</span><span class="w"> </span><span class="mi">54</span><span class="w"> </span><span class="mi">55</span><span class="w"> </span><span class="mi">56</span><span class="w">    </span><span class="mi">53</span><span class="w"> </span><span class="mi">54</span><span class="w"> </span><span class="mi">55</span><span class="w"> </span><span class="mi">56</span><span class="w">   </span><span class="o">*</span><span class="mi">53</span><span class="w"> </span><span class="mi">54</span><span class="w"> </span><span class="mi">55</span><span class="w"> </span><span class="mi">56</span><span class="w">   </span><span class="o">*</span><span class="mi">54</span><span class="w"> </span><span class="mi">55</span><span class="w"> </span><span class="mi">56</span>
 <span class="w"> </span><span class="mi">66</span><span class="w"> </span><span class="mi">67</span><span class="w"> </span><span class="mi">68</span><span class="w"> </span><span class="mi">69</span><span class="w">    </span><span class="mi">66</span><span class="w"> </span><span class="mi">67</span><span class="w"> </span><span class="mi">68</span><span class="w"> </span><span class="mi">69</span><span class="w">    </span><span class="mi">66</span><span class="w"> </span><span class="mi">67</span><span class="w"> </span><span class="mi">68</span><span class="w"> </span><span class="mi">69</span><span class="w">    </span><span class="mi">66</span><span class="w"> </span><span class="mi">67</span><span class="w"> </span><span class="mi">68</span><span class="w"> </span><span class="mi">69</span>
 
@@ -249,10 +243,10 @@ Volume 9, Number 4, December 1976, pages 279-301.
 
 <p>Parameters:</p>
 <div class="codehilite"><pre><span></span><code>Input/output, real ( kind = 8 ) W(NEQU,NCOLS), on input, contains
-the interesting part of the almost block diagonal coefficient matrix
-A.  The array INTEGS describes the storage scheme.  On output, W
-contains the upper triangular factor U of the LU factorization of a
-possibly permuted version of A.  In particular, the determinant of
+the interesting part of the almost block diagonal coefficient matrix 
+A.  The array INTEGS describes the storage scheme.  On output, W 
+contains the upper triangular factor U of the LU factorization of a 
+possibly permuted version of A.  In particular, the determinant of 
 A could now be found as
   IFLAG <span class="gs">* W(1,1) *</span> W(2,1) <span class="gs">* ... *</span> W(NEQU,1).
 
@@ -262,21 +256,21 @@ other information.
 
 Input, integer ( kind = 4 ) NEQU, the number of equations.
 
-Input, integer ( kind = 4 ) NCOLS, the block width, that is, the number of
+Input, integer ( kind = 4 ) NCOLS, the block width, that is, the number of 
 columns in each block.
 
-Input, integer ( kind = 4 ) INTEGS(2,NEQU), describes the block structure
+Input, integer ( kind = 4 ) INTEGS(2,NEQU), describes the block structure 
 of A.
 INTEGS(1,I) = number of rows in block I = NROW.
-INTEGS(2,I) = number of elimination steps in block I = overhang over
+INTEGS(2,I) = number of elimination steps in block I = overhang over 
 next block = LAST.
 
 Input, integer ( kind = 4 ) NBOKS, the number of blocks.
 
-Workspace, real D(NEQU), used to contain row sizes.  If storage is
+Workspace, real D(NEQU), used to contain row sizes.  If storage is 
 scarce, the array X could be used in the calling sequence for D.
 
-Output, real ( kind = 8 ) X(NEQU), the computed solution, if
+Output, real ( kind = 8 ) X(NEQU), the computed solution, if 
 IFLAG is nonzero.
 
 Output, integer ( kind = 4 ) IFLAG, error flag.
@@ -298,7 +292,7 @@ Output, integer ( kind = 4 ) IFLAG, error flag.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-w~52"></span>
+              <span class="anchor" id="variable-w~78"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -313,7 +307,7 @@ Output, integer ( kind = 4 ) IFLAG, error flag.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~125"></span>
+              <span class="anchor" id="variable-b~213"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -388,7 +382,7 @@ Output, integer ( kind = 4 ) IFLAG, error flag.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~58"></span>
+              <span class="anchor" id="variable-d~87"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -403,7 +397,7 @@ Output, integer ( kind = 4 ) IFLAG, error flag.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~443"></span>
+              <span class="anchor" id="variable-x~674"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -418,7 +412,7 @@ Output, integer ( kind = 4 ) IFLAG, error flag.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iflag~35"></span>
+              <span class="anchor" id="variable-iflag~48"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -446,341 +440,6 @@ Output, integer ( kind = 4 ) IFLAG, error flag.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">cwidth</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">nequ</span><span class="p">,</span><span class="w"> </span><span class="n">ncols</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! CWIDTH solves an almost block diagonal linear system.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This routine is a variation of the theme in the algorithm</span>
-<span class="w">  </span><span class="c">!    by Martin and Wilkinson.  It solves the linear system</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      A * X = B</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    of NEQU equations in case A is almost block diagonal with all</span>
-<span class="w">  </span><span class="c">!    blocks having NCOLS columns using no more storage than it takes to</span>
-<span class="w">  </span><span class="c">!    store the interesting part of A.  Such systems occur in the determination</span>
-<span class="w">  </span><span class="c">!    of the B-spline coefficients of a spline approximation.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Block structure of A:  </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The interesting part of A is taken to consist of NBLOKS</span>
-<span class="w">  </span><span class="c">!    consecutive blocks, with the I-th block made up of NROWI = INTEGS(1,I)</span>
-<span class="w">  </span><span class="c">!    consecutive rows and NCOLS consecutive columns of A, and with</span>
-<span class="w">  </span><span class="c">!    the first LASTI = INTEGS(2,I) columns to the left of the next block.</span>
-<span class="w">  </span><span class="c">!    These blocks are stored consecutively in the work array W.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    For example, here is an 11th order matrix and its arrangement in</span>
-<span class="w">  </span><span class="c">!    the work array W.  (The interesting entries of A are indicated by</span>
-<span class="w">  </span><span class="c">!    their row and column index modulo 10.)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!                   ---   A   ---                          ---   W   ---</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!                      NROW1=3</span>
-<span class="w">  </span><span class="c">!           11 12 13 14                                     11 12 13 14</span>
-<span class="w">  </span><span class="c">!           21 22 23 24                                     21 22 23 24</span>
-<span class="w">  </span><span class="c">!           31 32 33 34      NROW2=2                        31 32 33 34</span>
-<span class="w">  </span><span class="c">!    LAST1=2      43 44 45 46                               43 44 45 46</span>
-<span class="w">  </span><span class="c">!                 53 54 55 56         NROW3=3               53 54 55 56</span>
-<span class="w">  </span><span class="c">!          LAST2=3         66 67 68 69                      66 67 68 69</span>
-<span class="w">  </span><span class="c">!                          76 77 78 79                      76 77 78 79</span>
-<span class="w">  </span><span class="c">!                          86 87 88 89   NROW4=1            86 87 88 89</span>
-<span class="w">  </span><span class="c">!                   LAST3=1   97 98 99 90   NROW5=2         97 98 99 90</span>
-<span class="w">  </span><span class="c">!                      LAST4=1   08 09 00 01                08 09 00 01</span>
-<span class="w">  </span><span class="c">!                                18 19 10 11                18 19 10 11</span>
-<span class="w">  </span><span class="c">!                         LAST5=4</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    For this interpretation of A as an almost block diagonal matrix,</span>
-<span class="w">  </span><span class="c">!    we have NBLOKS = 5, and the INTEGS array is</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!                          I = 1   2   3   4   5</span>
-<span class="w">  </span><span class="c">!                    K =</span>
-<span class="w">  </span><span class="c">!    INTEGS(K,I) =      1      3   2   3   1   2</span>
-<span class="w">  </span><span class="c">!                       2      2   3   1   1   4</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Method:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Gauss elimination with scaled partial pivoting is used, but</span>
-<span class="w">  </span><span class="c">!    multipliers are not saved in order to save storage.  Rather, the</span>
-<span class="w">  </span><span class="c">!    right hand side is operated on during elimination.  The two parameters</span>
-<span class="w">  </span><span class="c">!    IPVTEQ and LASTEQ are used to keep track of the action.  IPVTEQ </span>
-<span class="w">  </span><span class="c">!    is the index of the variable to be eliminated next, from equations </span>
-<span class="w">  </span><span class="c">!    IPVTEQ+1,...,LASTEQ, using equation IPVTEQ, possibly after an </span>
-<span class="w">  </span><span class="c">!    interchange, as the pivot equation.  </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The entries in the pivot column are always in column</span>
-<span class="w">  </span><span class="c">!    1 of W.  This is accomplished by putting the entries in rows</span>
-<span class="w">  </span><span class="c">!    IPVTEQ+1,...,LASTEQ revised by the elimination of the IPVTEQ-th</span>
-<span class="w">  </span><span class="c">!    variable one to the left in W.  In this way, the columns of the</span>
-<span class="w">  </span><span class="c">!    equations in a given block, as stored in W, will be aligned with</span>
-<span class="w">  </span><span class="c">!    those of the next block at the moment when these next equations </span>
-<span class="w">  </span><span class="c">!    become involved in the elimination process.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Thus, for the above example, the first elimination steps proceed</span>
-<span class="w">  </span><span class="c">!    as follows.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    *11 12 13 14    11 12 13 14    11 12 13 14    11 12 13 14</span>
-<span class="w">  </span><span class="c">!    *21 22 23 24   *22 23 24       22 23 24       22 23 24</span>
-<span class="w">  </span><span class="c">!    *31 32 33 34   *32 33 34      *33 34          33 34</span>
-<span class="w">  </span><span class="c">!     43 44 45 46    43 44 45 46   *43 44 45 46   *44 45 46        </span>
-<span class="w">  </span><span class="c">!     53 54 55 56    53 54 55 56   *53 54 55 56   *54 55 56</span>
-<span class="w">  </span><span class="c">!     66 67 68 69    66 67 68 69    66 67 68 69    66 67 68 69</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    In all other respects, the procedure is standard, including the</span>
-<span class="w">  </span><span class="c">!    scaled partial pivoting.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Roger Martin, James Wilkinson,</span>
-<span class="w">  </span><span class="c">!    Solution of Symmetric and Unsymmetric Band Equations and</span>
-<span class="w">  </span><span class="c">!    the Calculation of Eigenvectors of Band Matrices,</span>
-<span class="w">  </span><span class="c">!    Numerische Mathematik,</span>
-<span class="w">  </span><span class="c">!    Volume 9, Number 4, December 1976, pages 279-301.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) W(NEQU,NCOLS), on input, contains</span>
-<span class="w">  </span><span class="c">!    the interesting part of the almost block diagonal coefficient matrix </span>
-<span class="w">  </span><span class="c">!    A.  The array INTEGS describes the storage scheme.  On output, W </span>
-<span class="w">  </span><span class="c">!    contains the upper triangular factor U of the LU factorization of a </span>
-<span class="w">  </span><span class="c">!    possibly permuted version of A.  In particular, the determinant of </span>
-<span class="w">  </span><span class="c">!    A could now be found as</span>
-<span class="w">  </span><span class="c">!      IFLAG * W(1,1) * W(2,1) * ... * W(NEQU,1).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) B(NEQU); on input, the right hand</span>
-<span class="w">  </span><span class="c">!    side of the linear system.  On output, B has been overwritten by</span>
-<span class="w">  </span><span class="c">!    other information.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NEQU, the number of equations.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NCOLS, the block width, that is, the number of </span>
-<span class="w">  </span><span class="c">!    columns in each block.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) INTEGS(2,NEQU), describes the block structure </span>
-<span class="w">  </span><span class="c">!    of A.</span>
-<span class="w">  </span><span class="c">!    INTEGS(1,I) = number of rows in block I = NROW.</span>
-<span class="w">  </span><span class="c">!    INTEGS(2,I) = number of elimination steps in block I = overhang over </span>
-<span class="w">  </span><span class="c">!    next block = LAST.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NBOKS, the number of blocks.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Workspace, real D(NEQU), used to contain row sizes.  If storage is </span>
-<span class="w">  </span><span class="c">!    scarce, the array X could be used in the calling sequence for D.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) X(NEQU), the computed solution, if </span>
-<span class="w">  </span><span class="c">!    IFLAG is nonzero.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) IFLAG, error flag.</span>
-<span class="w">  </span><span class="c">!    = (-1)**(number of interchanges during elimination) if A is invertible;</span>
-<span class="w">  </span><span class="c">!    = 0 if A is singular.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbloks</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ncols</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nequ</span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">awi1od</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">nequ</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">colmax</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">nequ</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">icount</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ii</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">nbloks</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipvteq</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipvtp1</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">istar</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jmax</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lastcl</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lasteq</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lasti</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nexteq</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrowad</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ratio</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rowmax</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">sum1</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">temp</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nequ</span><span class="p">,</span><span class="n">ncols</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">nequ</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="n">ipvteq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">  </span><span class="n">lasteq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  The I loop runs over the blocks.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  The equations for the current block are added to those currently</span>
-<span class="w">     </span><span class="c">!  involved in the elimination process, by increasing LASTEQ</span>
-<span class="w">     </span><span class="c">!  by INTEGS(1,I) after the row size of these equations has been</span>
-<span class="w">     </span><span class="c">!  recorded in the array D.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="n">nrowad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrowad</span>
-
-<span class="w">        </span><span class="n">nexteq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasteq</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">icount</span>
-<span class="w">        </span><span class="n">rowmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nexteq</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ncols</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rowmax</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">           </span><span class="k">return</span>
-<span class="k">        end if</span>
-
-<span class="k">        </span><span class="n">d</span><span class="p">(</span><span class="n">nexteq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowmax</span>
-
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">     </span><span class="n">lasteq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasteq</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nrowad</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  There will be LASTI = INTEGS(2,I) elimination steps before</span>
-<span class="w">     </span><span class="c">!  the equations in the next block become involved.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Further, LASTCL records the number of columns involved in the current</span>
-<span class="w">     </span><span class="c">!  elimination step.  It starts equal to NCOLS when a block</span>
-<span class="w">     </span><span class="c">!  first becomes involved and then drops by one after each elimination</span>
-<span class="w">     </span><span class="c">!  step.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="n">lastcl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncols</span>
-<span class="w">     </span><span class="n">lasti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">lasti</span>
-
-<span class="w">        </span><span class="n">ipvteq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipvteq</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lasteq</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">ipvteq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">           if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              exit</span>
-<span class="k">           end if</span>
-
-<span class="k">           </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">           </span><span class="k">return</span>
-
-<span class="k">        end if</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Determine the smallest ISTAR in (IPVTEQ,LASTEQ) for</span>
-<span class="w">        </span><span class="c">!  which abs ( W(ISTAR,1) ) / D(ISTAR) is as large as possible, and</span>
-<span class="w">        </span><span class="c">!  interchange equations IPVTEQ and ISTAR in case  IPVTEQ &lt; ISTAR.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="n">colmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span>
-<span class="w">        </span><span class="n">istar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipvteq</span>
-<span class="w">        </span><span class="n">ipvtp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipvteq</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-
-<span class="w">        </span><span class="k">do </span><span class="n">ii</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipvtp1</span><span class="p">,</span><span class="w"> </span><span class="n">lasteq</span>
-<span class="w">           </span><span class="n">awi1od</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span>
-<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">colmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">awi1od</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">colmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">awi1od</span>
-<span class="w">              </span><span class="n">istar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ii</span>
-<span class="w">           </span><span class="k">end if</span>
-<span class="k">        end do</span>
-
-<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">istar</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">istar</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">istar</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">           </span><span class="k">return</span>
-<span class="k">        end if</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Rearrange data because of pivoting.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">istar</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">ipvteq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">           </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">iflag</span>
-
-<span class="w">           </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">istar</span><span class="p">)</span>
-<span class="w">           </span><span class="n">d</span><span class="p">(</span><span class="n">istar</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span>
-<span class="w">           </span><span class="n">d</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span>
-
-<span class="w">           </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">istar</span><span class="p">)</span>
-<span class="w">           </span><span class="n">b</span><span class="p">(</span><span class="n">istar</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span>
-<span class="w">           </span><span class="n">b</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span>
-
-<span class="w">           </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">lastcl</span>
-<span class="w">              </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">istar</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
-<span class="w">              </span><span class="n">w</span><span class="p">(</span><span class="n">istar</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
-<span class="w">              </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span>
-<span class="w">           </span><span class="k">end do</span>
-
-<span class="k">        end if</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Subtract the appropriate multiple of equation IPVTEQ from</span>
-<span class="w">        </span><span class="c">!  equations IPVTEQ+1,...,LASTEQ to make the coefficient of the</span>
-<span class="w">        </span><span class="c">!  IPVTEQ-th unknown (presently in column 1 of W) zero, but</span>
-<span class="w">        </span><span class="c">!  store the new coefficients in W one to the left from the old.</span>
-<span class="w">        </span><span class="c">!  </span>
-<span class="w">        </span><span class="k">do </span><span class="n">ii</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipvtp1</span><span class="p">,</span><span class="w"> </span><span class="n">lasteq</span>
-
-<span class="w">           </span><span class="n">ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">           </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">lastcl</span>
-<span class="w">              </span><span class="n">w</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
-<span class="w">           </span><span class="k">end do</span>
-<span class="k">           </span><span class="n">w</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">lastcl</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
-<span class="w">           </span><span class="n">b</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span>
-
-<span class="w">        </span><span class="k">end do</span>
-
-<span class="k">        </span><span class="n">lastcl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastcl</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
-
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">  end do</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  At this point, W and B contain an upper triangular linear system</span>
-<span class="w">  </span><span class="c">!  equivalent to the original one, with W(I,J) containing entry</span>
-<span class="w">  </span><span class="c">!  (I, I-1+J) of the coefficient matrix.  Solve this system by </span>
-<span class="w">  </span><span class="c">!  back substitution, taking into account its block structure.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  I-loop over the blocks, in reverse order.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nbloks</span>
-
-<span class="w">  </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">     </span><span class="n">lasti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-<span class="w">     </span><span class="n">jmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncols</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lasti</span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">lasti</span>
-
-<span class="w">        </span><span class="n">sum1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">ipvteq</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">ipvteq</span><span class="o">+</span><span class="n">jmax</span><span class="p">),</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">jmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">        </span><span class="n">x</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sum1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ipvteq</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">        </span><span class="n">jmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jmax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="n">ipvteq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipvteq</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
-
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">     </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
-
-<span class="w">  </span><span class="k">end do</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">cwidth</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
