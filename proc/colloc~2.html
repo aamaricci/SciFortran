@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">colloc</li>
           </ol>
         </nav>
@@ -140,6 +140,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/colloc~2.html#src">colloc</a>
+      </div>
+    </div>
 
 
   </div>
@@ -154,13 +160,13 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! COLLOC solves an ordinary differential equation by collocation.</p>
 <p>Method:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">ordinary</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span><span class="w"> </span>
-<span class="n">conditions</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">DIFEQU</span><span class="p">,</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">ordinary</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span>
+<span class="n">conditions</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">subroutine</span><span class="w"> </span><span class="n">DIFEQU</span><span class="p">,</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span>
 <span class="n">approximately</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">collocation</span><span class="o">.</span>
 
-<span class="n">The</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">order</span><span class="w"> </span>
-<span class="n">K</span><span class="o">+</span><span class="n">M</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">pieces</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">continuous</span><span class="w"> </span><span class="n">derivatives</span><span class="o">.</span><span class="w">   </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">determined</span><span class="w"> </span><span class="n">by</span><span class="w"> </span>
-<span class="n">the</span><span class="w"> </span><span class="n">requirement</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">satisfy</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">points</span><span class="w"> </span>
+<span class="n">The</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">order</span>
+<span class="n">K</span><span class="o">+</span><span class="n">M</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">pieces</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">continuous</span><span class="w"> </span><span class="n">derivatives</span><span class="o">.</span><span class="w">   </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">determined</span><span class="w"> </span><span class="n">by</span>
+<span class="n">the</span><span class="w"> </span><span class="n">requirement</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">satisfy</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">differential</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">points</span>
 <span class="n">per</span><span class="w"> </span><span class="n">interval</span><span class="w"> </span><span class="p">(</span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">COLPNT</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="n">conditions</span><span class="o">.</span>
 
 <span class="n">This</span><span class="w"> </span><span class="n">usually</span><span class="w"> </span><span class="n">nonlinear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="n">by</span>
@@ -172,7 +178,7 @@
 <span class="n">There</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">opportunity</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">attempt</span><span class="w"> </span><span class="n">improvement</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">breakpoint</span>
 <span class="n">sequence</span><span class="p">,</span><span class="w"> </span><span class="n">both</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">location</span><span class="p">,</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">NEWNOT</span><span class="o">.</span>
 
-<span class="n">Printed</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">consists</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span><span class="w"> </span>
+<span class="n">Printed</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">consists</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">piecewise</span><span class="w"> </span><span class="n">polynomial</span><span class="w"> </span><span class="n">representation</span>
 <span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">approximate</span><span class="w"> </span><span class="n">solution</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="n">points</span><span class="o">.</span>
 </code></pre></div>
 
@@ -192,25 +198,25 @@ ISBN: 0387953663,
 LC: QA1.A647.v27.
 </code></pre></div>
 
-<p>Parameters: </p>
+<p>Parameters:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">ALEFT</span><span class="p">,</span> <span class="n">ARIGHT</span><span class="p">,</span> <span class="n">the</span> <span class="n">endpoints</span> <span class="n">of</span> <span class="n">the</span> <span class="n">interval</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">LBEGIN</span><span class="p">,</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">number</span> <span class="n">of</span> <span class="n">polynomial</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">LBEGIN</span><span class="p">,</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">number</span> <span class="n">of</span> <span class="n">polynomial</span>
 <span class="n">pieces</span> <span class="n">in</span> <span class="n">the</span> <span class="n">approximation</span><span class="p">.</span>  <span class="n">A</span> <span class="n">uniform</span> <span class="n">breakpoint</span> <span class="n">sequence</span> <span class="n">will</span> <span class="n">be</span> <span class="n">chosen</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">IORDER</span><span class="p">,</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">polynomial</span> <span class="n">pieces</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">IORDER</span><span class="p">,</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">polynomial</span> <span class="n">pieces</span>
 <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">the</span> <span class="n">approximation</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">NTIMES</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">passes</span> <span class="n">to</span> <span class="n">be</span> <span class="n">made</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">integer</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">)</span> <span class="n">NTIMES</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">passes</span> <span class="n">to</span> <span class="n">be</span> <span class="n">made</span>
 <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">ADDBRK</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span><span class="p">,</span> <span class="n">possibly</span> <span class="n">fractional</span><span class="p">,</span> <span class="n">of</span> 
-<span class="n">breaks</span> <span class="n">to</span> <span class="n">be</span> <span class="n">added</span> <span class="n">per</span> <span class="n">pass</span> <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>  <span class="n">For</span> <span class="n">instance</span><span class="p">,</span> <span class="n">if</span> 
-<span class="n">ADDBRK</span> <span class="o">=</span> <span class="mf">0.33334</span><span class="p">,</span> <span class="n">then</span> <span class="n">a</span> <span class="n">breakpoint</span> <span class="n">will</span> <span class="n">be</span> <span class="n">added</span> <span class="n">at</span> <span class="n">every</span> <span class="n">third</span> <span class="n">pass</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">ADDBRK</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span><span class="p">,</span> <span class="n">possibly</span> <span class="n">fractional</span><span class="p">,</span> <span class="n">of</span>
+<span class="n">breaks</span> <span class="n">to</span> <span class="n">be</span> <span class="n">added</span> <span class="n">per</span> <span class="n">pass</span> <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>  <span class="n">For</span> <span class="n">instance</span><span class="p">,</span> <span class="n">if</span>
+<span class="n">ADDBRK</span> <span class="o">=</span> <span class="mf">0.33334</span><span class="p">,</span> <span class="n">then</span> <span class="n">a</span> <span class="n">breakpoint</span> <span class="n">will</span> <span class="n">be</span> <span class="n">added</span> <span class="n">at</span> <span class="n">every</span> <span class="n">third</span> <span class="n">pass</span>
 <span class="n">through</span> <span class="n">NEWNOT</span><span class="p">.</span>
 
-<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">RELERR</span><span class="p">,</span> <span class="n">a</span> <span class="n">tolerance</span><span class="p">.</span>  <span class="n">Newton</span> <span class="n">iteration</span> <span class="n">is</span> 
-<span class="n">stopped</span> <span class="n">if</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">the</span> <span class="n">B</span><span class="o">-</span><span class="n">coefficients</span> <span class="n">of</span> <span class="n">two</span> <span class="n">successive</span> 
+<span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">RELERR</span><span class="p">,</span> <span class="n">a</span> <span class="n">tolerance</span><span class="p">.</span>  <span class="n">Newton</span> <span class="n">iteration</span> <span class="n">is</span>
+<span class="n">stopped</span> <span class="n">if</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">the</span> <span class="n">B</span><span class="o">-</span><span class="n">coefficients</span> <span class="n">of</span> <span class="n">two</span> <span class="n">successive</span>
 <span class="n">iterates</span> <span class="n">is</span> <span class="n">no</span> <span class="n">more</span> <span class="n">than</span> <span class="n">RELERR</span><span class="o">*</span><span class="p">(</span><span class="n">absolute</span> <span class="n">largest</span> <span class="n">B</span><span class="o">-</span><span class="n">coefficient</span><span class="p">).</span>
 </code></pre></div>
 
@@ -463,7 +469,7 @@ LC: QA1.A647.v27.
 <!-- Title: Graph Key Pages: 1 -->
 <svg width="641pt" height="28pt"
  viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
 <title>Graph Key</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
@@ -591,7 +597,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~102"></span>
+              <span class="anchor" id="variable-l~78"></span>
               integer(kind=4)
             </td>
             <td>
@@ -678,7 +684,7 @@ implementation in a submodule of an interface in a parent module.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~392"></span>
+              <span class="anchor" id="variable-k~314"></span>
               integer(kind=4)
             </td>
             <td>
@@ -749,7 +755,7 @@ implementation in a submodule of an interface in a parent module.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~352"></span>
+              <span class="anchor" id="variable-m~213"></span>
               integer(kind=4)
             </td>
             <td>
@@ -818,6 +824,270 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">colloc</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">aleft</span><span class="p">,</span><span class="w"> </span><span class="n">aright</span><span class="p">,</span><span class="w"> </span><span class="n">lbegin</span><span class="p">,</span><span class="w"> </span><span class="n">iorder</span><span class="p">,</span><span class="w"> </span><span class="n">ntimes</span><span class="p">,</span><span class="w"> </span><span class="n">addbrk</span><span class="p">,</span><span class="w"> </span><span class="n">relerr</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! COLLOC solves an ordinary differential equation by collocation.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Method:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The M-th order ordinary differential equation with M side </span>
+<span class="w">  </span><span class="c">!    conditions, to be specified in subroutine DIFEQU, is solved </span>
+<span class="w">  </span><span class="c">!    approximately by collocation.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The approximation F to the solution G is piecewise polynomial of order </span>
+<span class="w">  </span><span class="c">!    K+M with L pieces and M-1 continuous derivatives.   F is determined by </span>
+<span class="w">  </span><span class="c">!    the requirement that it satisfy the differential equation at K points </span>
+<span class="w">  </span><span class="c">!    per interval (to be specified in COLPNT ) and the M side conditions.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This usually nonlinear system of equations for F is solved by</span>
+<span class="w">  </span><span class="c">!    Newton&#39;s method. the resulting linear system for the B-coefficients of an</span>
+<span class="w">  </span><span class="c">!    iterate is constructed appropriately in EQBLOK and then solved</span>
+<span class="w">  </span><span class="c">!    in SLVBLK, a program designed to solve almost block</span>
+<span class="w">  </span><span class="c">!    diagonal linear systems efficiently.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    There is an opportunity to attempt improvement of the breakpoint</span>
+<span class="w">  </span><span class="c">!    sequence, both in number and location, through the use of NEWNOT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Printed output consists of the piecewise polynomial representation </span>
+<span class="w">  </span><span class="c">!    of the approximate solution, and of the error at selected points.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters: </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) ALEFT, ARIGHT, the endpoints of the interval.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) LBEGIN, the initial number of polynomial </span>
+<span class="w">  </span><span class="c">!    pieces in the approximation.  A uniform breakpoint sequence will be chosen.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) IORDER, the order of the polynomial pieces </span>
+<span class="w">  </span><span class="c">!    to be used in the approximation</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NTIMES, the number of passes to be made </span>
+<span class="w">  </span><span class="c">!    through NEWNOT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) ADDBRK, the number, possibly fractional, of </span>
+<span class="w">  </span><span class="c">!    breaks to be added per pass through NEWNOT.  For instance, if </span>
+<span class="w">  </span><span class="c">!    ADDBRK = 0.33334, then a breakpoint will be added at every third pass </span>
+<span class="w">  </span><span class="c">!    through NEWNOT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) RELERR, a tolerance.  Newton iteration is </span>
+<span class="w">  </span><span class="c">!    stopped if the difference between the B-coefficients of two successive </span>
+<span class="w">  </span><span class="c">!    iterates is no more than RELERR*(absolute largest B-coefficient).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">npiece</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ndim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ncoef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lenblk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">addbrk</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">aleft</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">amax</span>
+<span class="nb">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">aright</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">asave</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bloks</span><span class="p">(</span><span class="n">lenblk</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coef</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dx</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">err</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ii</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">npiece</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iorder</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iside</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">itemps</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iter</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">itermx</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kpm</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lbegin</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lnew</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbloks</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nt</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ntimes</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">relerr</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rho</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">templ</span><span class="p">(</span><span class="n">lenblk</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xside</span>
+
+<span class="w">  </span><span class="k">equivalence</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="k">save</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="o">/</span>
+
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">approx</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">npiece</span><span class="p">),</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ncoef</span><span class="p">),</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">itermx</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+<span class="w">  </span><span class="k">common</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">iside</span><span class="p">,</span><span class="w"> </span><span class="n">xside</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">kpm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iorder</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ncoef</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lbegin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpm</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;COLLOC - Fatal error!&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The assigned dimension for COEF is too small.&#39;</span>
+<span class="w">     </span><span class="k">stop</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Set the various parameters concerning the particular differential</span>
+<span class="w">  </span><span class="c">!  equation, including a first approximation in case the differential</span>
+<span class="w">  </span><span class="c">!  equation is to be solved by iteration ( 0 &lt; ITERMX ).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">difequ</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">temps</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Obtain the K collocation points for the standard interval.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kpm</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="k">call </span><span class="n">colpnt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  The following five statements could be replaced by a read in</span>
+<span class="w">  </span><span class="c">!  order to obtain a nonuniform spacing of the breakpoints.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">aright</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">aleft</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lbegin</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">temps</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aleft</span>
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">lbegin</span>
+<span class="w">     </span><span class="n">temps</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span>
+<span class="w">  </span><span class="k">end do</span>
+<span class="k">  </span><span class="n">temps</span><span class="p">(</span><span class="n">lbegin</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aright</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Generate the required knots T(1:N+KPM).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">knots</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">lbegin</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">nt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Generate the almost block diagonal coefficient matrix BLOKS and</span>
+<span class="w">  </span><span class="c">!  right hand side B from collocation equations and side conditions.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Then solve via SLVBLK, obtaining the B-representation of the </span>
+<span class="w">  </span><span class="c">!  approximation in T, A, N, KPM.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do</span>
+
+<span class="k">     call </span><span class="n">eqblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">lenblk</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">slvblk</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">itemps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Save B-spline coefficients of current approximation in ASAVE, then </span>
+<span class="w">     </span><span class="c">!  get new approximation and compare with old. </span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  If coefficients are more than RELERR apart (relatively) or if number </span>
+<span class="w">     </span><span class="c">!  of iterations is less than ITERMX, continue iterating.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">do </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">itermx</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">bsplpp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="p">,</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">asave</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">eqblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">lenblk</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">slvblk</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">itemps</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="nb">amax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">asave</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">relerr</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">amax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           exit</span>
+<span class="k">        end if</span>
+
+<span class="k">     end do</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Iteration (if any) completed.  Print out approximation based on current</span>
+<span class="w">     </span><span class="c">!  breakpoint sequence, then try to improve the sequence.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,i3,a,i3,a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="s1">&#39;  Approximation from a space of splines of order &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="s1">&#39; on &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; intervals&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i4)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  of dimension &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Breakpoints:&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(5g14.6)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">l</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">itermx</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a,i8)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  Results on interation &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">iter</span>
+<span class="w">     </span><span class="k">end if</span>
+
+<span class="k">     call </span><span class="n">bsplpp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="p">,</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="s1">&#39;  The piecewise polynomial representation of the approximation:&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+
+<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">l</span>
+<span class="w">        </span><span class="n">ii</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpm</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(f9.3,2x,e12.4,10e11.3)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">ii</span><span class="o">+</span><span class="n">kpm</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  The following call is provided here for possible further analysis</span>
+<span class="w">     </span><span class="c">!  of the approximation specific to the problem being solved.</span>
+<span class="w">     </span><span class="c">!  It is, of course, easily omitted.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">call </span><span class="n">difequ</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">temps</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ntimes</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        exit</span>
+<span class="k">     end if</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  From the piecewise polynomial representation of the current approximation, </span>
+<span class="w">     </span><span class="c">!  obtain in NEWNOT a new, and possibly better, sequence of breakpoints, </span>
+<span class="w">     </span><span class="c">!  adding, on average, ADDBRK breakpoints per pass through NEWNOT.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="n">lnew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lbegin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nt</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">addbrk</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ncoef</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lnew</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kpm</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;COLLOC - Fatal error!&#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The assigned dimension for COEF is too small.&#39;</span>
+<span class="w">        </span><span class="k">stop</span>
+<span class="k">     end if</span>
+
+<span class="k">     call </span><span class="n">newnot</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">lnew</span><span class="p">,</span><span class="w"> </span><span class="n">templ</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">knots</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">temps</span><span class="p">,</span><span class="w"> </span><span class="n">lnew</span><span class="p">,</span><span class="w"> </span><span class="n">kpm</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">nt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return  </span>
+<span class="k">end subroutine </span><span class="n">colloc</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

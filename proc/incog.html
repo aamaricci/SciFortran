@@ -81,15 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/special_functions.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">incog</li>
           </ol>
         </nav>
@@ -128,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/incog.html#src">incog</a>
+      </div>
+    </div>
 
 
   </div>
@@ -135,15 +140,15 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine incog(a, x, gin, gim, gip)  
+    <h2> subroutine incog(a, x, gin, gim, gip)  
 </h2>
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! INCOG computes the incomplete gamma function r(a,x), Γ(a,x), P(a,x).</p>
 <p>Licensing:</p>
-<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
-they give permission to incorporate this routine into a user program 
+<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However,
+they give permission to incorporate this routine into a user program
 provided that the copyright is acknowledged.
 </code></pre></div>
 
@@ -186,7 +191,7 @@ r(a,x), Γ(a,x), P(a,x).
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~106"></span>
+              <span class="anchor" id="variable-a~25"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -201,7 +206,7 @@ r(a,x), Γ(a,x), P(a,x).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~213"></span>
+              <span class="anchor" id="variable-x~64"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -285,18 +290,15 @@ r(a,x), Γ(a,x), P(a,x).
 <polygon fill="none" stroke="black" points="54,-24 0,-24 0,0 54,0 54,-24"/>
 <text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">incog</text>
 </g>
-<!-- proc~gammaf -->
+<!-- gammaf -->
 <g id="proc~~incog~~CallsGraph_node2" class="node">
-<title>proc~gammaf</title>
-<g id="a_proc~~incog~~CallsGraph_node2"><a xlink:href="../proc/gammaf.html" xlink:title="gammaf">
-<polygon fill="#d9534f" stroke="#d9534f" points="148,-24 90,-24 90,0 148,0 148,-24"/>
+<title>gammaf</title>
+<polygon fill="#777777" stroke="#777777" points="148,-24 90,-24 90,0 148,0 148,-24"/>
 <text text-anchor="middle" x="119" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">gammaf</text>
-</a>
 </g>
-</g>
-<!-- proc~incog&#45;&gt;proc~gammaf -->
+<!-- proc~incog&#45;&gt;gammaf -->
 <g id="proc~~incog~~CallsGraph_edge1" class="edge">
-<title>proc~incog&#45;&gt;proc~gammaf</title>
+<title>proc~incog&#45;&gt;gammaf</title>
 <path fill="none" stroke="#000000" d="M54.03,-12C62,-12 70.95,-12 79.56,-12"/>
 <polygon fill="#000000" stroke="#000000" points="79.82,-15.5 89.82,-12 79.82,-8.5 79.82,-15.5"/>
 </g>
@@ -322,7 +324,7 @@ r(a,x), Γ(a,x), P(a,x).
 <!-- Title: Graph Key Pages: 1 -->
 <svg width="641pt" height="28pt"
  viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
 <title>Graph Key</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
@@ -393,6 +395,111 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">incog</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">gin</span><span class="p">,</span><span class="w"> </span><span class="n">gim</span><span class="p">,</span><span class="w"> </span><span class="n">gip</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! INCOG computes the incomplete gamma function r(a,x), Γ(a,x), P(a,x).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
+<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
+<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    22 July 2012</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
+<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
+<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
+<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) A, the parameter.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X, the argument.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) GIN, GIM, GIP, the values of</span>
+<span class="w">  </span><span class="c">!    r(a,x), Γ(a,x), P(a,x).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ga</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gim</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gin</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gip</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">r</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t0</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xam</span>
+
+<span class="w">  </span><span class="n">xam</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">70</span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">xam</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="mi">17</span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;INCOG - Fatal error!&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  A and/or X is too large!&#39;</span>
+<span class="w">     </span><span class="k">stop</span>
+<span class="k">  end if</span>
+
+<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">gin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="k">call </span><span class="n">gammaf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">gim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ga</span>
+<span class="w">     </span><span class="n">gip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+
+<span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">a</span>
+<span class="w">     </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span>
+<span class="w">     </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1.0D-15</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           exit</span>
+<span class="k">        end if</span>
+<span class="k">     end do</span>
+
+<span class="k">     </span><span class="n">gin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xam</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span>
+<span class="w">     </span><span class="k">call </span><span class="n">gammaf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">gip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gin</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ga</span>
+<span class="w">     </span><span class="n">gim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gin</span>
+
+<span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">     </span><span class="n">t0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+<span class="w">        </span><span class="n">t0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+<span class="k">     </span><span class="n">gim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xam</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t0</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="k">call </span><span class="n">gammaf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="n">gin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ga</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gim</span>
+<span class="w">     </span><span class="n">gip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gim</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ga</span>
+
+<span class="w">  </span><span class="k">end if</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">incog</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

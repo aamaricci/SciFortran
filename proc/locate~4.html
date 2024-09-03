@@ -81,15 +81,15 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_nr.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/interpolate_nr~2.html'>INTERPOLATE_NR</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_nr.f90.html'>interpolate_nr.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/interpolate_nr.html'>INTERPOLATE_NR</a></li>
             <li class="breadcrumb-item active" aria-current="page">locate</li>
           </ol>
         </nav>
@@ -128,6 +128,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/locate~4.html#src">locate</a>
+      </div>
+    </div>
 
 
   </div>
@@ -154,7 +160,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-xx~31"></span>
+              <span class="anchor" id="variable-xx~39"></span>
               real(kind=8),
             </td>
 <td>intent(in),</td>
@@ -169,7 +175,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~655"></span>
+              <span class="anchor" id="variable-x~639"></span>
               real(kind=8),
             </td>
 <td>intent(in)</td>
@@ -204,6 +210,39 @@
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">  </span><span class="k">function </span><span class="n">locate</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">REAL</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">DIMENSION</span><span class="p">(:),</span><span class="w"> </span><span class="k">INTENT</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xx</span>
+<span class="w">    </span><span class="kt">REAL</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">INTENT</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span>
+<span class="w">    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">locate</span>
+<span class="w">    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="n">jl</span><span class="p">,</span><span class="n">jm</span><span class="p">,</span><span class="n">ju</span>
+<span class="w">    </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ascnd</span>
+<span class="w">    </span><span class="n">n</span><span class="o">=</span><span class="n">size</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+<span class="w">    </span><span class="n">ascnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">xx</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="n">jl</span><span class="o">=</span><span class="mi">0</span>
+<span class="w">    </span><span class="n">ju</span><span class="o">=</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span>
+<span class="w">    </span><span class="k">do</span>
+<span class="k">       if</span><span class="w"> </span><span class="p">(</span><span class="n">ju</span><span class="o">-</span><span class="n">jl</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">       </span><span class="n">jm</span><span class="o">=</span><span class="p">(</span><span class="n">ju</span><span class="o">+</span><span class="n">jl</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ascnd</span><span class="w"> </span><span class="p">.</span><span class="n">eqv</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">xx</span><span class="p">(</span><span class="n">jm</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          </span><span class="n">jl</span><span class="o">=</span><span class="n">jm</span>
+<span class="w">       </span><span class="k">else</span>
+<span class="k">          </span><span class="n">ju</span><span class="o">=</span><span class="n">jm</span>
+<span class="w">       </span><span class="k">end if</span>
+<span class="k">    end do</span>
+<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">xx</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">       </span><span class="n">locate</span><span class="o">=</span><span class="mi">1</span>
+<span class="w">    </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">xx</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">       </span><span class="n">locate</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">       </span><span class="n">locate</span><span class="o">=</span><span class="n">jl</span>
+<span class="w">    </span><span class="k">end if</span>
+<span class="k">  END FUNCTION </span><span class="n">locate</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

@@ -81,15 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_RANDOM.f90"> Source File</a>
+              <a href="../src/random_routines.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_random.f90.html'>SF_RANDOM.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_random.html'>SF_RANDOM</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/random_routines.f90.html'>random_routines.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">random_Cauchy</li>
           </ol>
         </nav>
@@ -128,15 +127,20 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/random_cauchy.html#src">random_Cauchy</a>
+      </div>
+    </div>
 
-    <em>None</em>
 
   </div>
 
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  function random_Cauchy() result(fn_val)  
+    <h2> function random_Cauchy() result(fn_val)  
 </h2>
     
 
@@ -164,6 +168,26 @@
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">FUNCTION </span><span class="n">random_Cauchy</span><span class="p">()</span><span class="w"> </span><span class="k">RESULT</span><span class="p">(</span><span class="n">fn_val</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!     Generate a random deviate from the standard Cauchy distribution</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">fn_val</span>
+<span class="w">  </span><span class="c">!     Local variables</span>
+<span class="w">  </span><span class="kt">REAL</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">  </span><span class="k">DO</span>
+<span class="k">     CALL </span><span class="nb">RANDOM_NUMBER</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="w">     </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">two</span><span class="o">*</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">half</span><span class="p">)</span>
+<span class="w">     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="nb">ABS</span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">vsmall</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span><span class="w">               </span><span class="c">! Test for zero</span>
+<span class="w">     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">one</span><span class="p">)</span><span class="w"> </span><span class="k">EXIT</span>
+<span class="k">  END DO</span>
+<span class="k">  </span><span class="n">fn_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">  </span><span class="k">RETURN</span>
+<span class="k">END FUNCTION </span><span class="n">random_Cauchy</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

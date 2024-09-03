@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">bchfac</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/bchfac~2.html#src">bchfac</a>
+      </div>
+    </div>
 
 
   </div>
@@ -145,37 +151,37 @@
 
 <span class="w">  </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">L</span><span class="p">&#39;</span>
 
-<span class="n">with</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="n">diagonal</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">of</span><span class="w"> </span>
-<span class="n">order</span><span class="w"> </span><span class="n">NROW</span><span class="p">,</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">symmetric</span><span class="w"> </span><span class="n">positive</span><span class="w"> </span><span class="n">semidefinite</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">banded</span><span class="p">,</span><span class="w"> </span>
+<span class="n">with</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="n">diagonal</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">of</span>
+<span class="n">order</span><span class="w"> </span><span class="n">NROW</span><span class="p">,</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">symmetric</span><span class="w"> </span><span class="n">positive</span><span class="w"> </span><span class="n">semidefinite</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">banded</span><span class="p">,</span>
 <span class="n">having</span><span class="w"> </span><span class="n">NBANDS</span><span class="w"> </span><span class="n">diagonals</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="n">diagonal</span><span class="p">.</span>
 
 <span class="n">Gauss</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">used</span><span class="p">,</span><span class="w"> </span><span class="n">adapted</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">symmetry</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">bandedness</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">C</span><span class="p">.</span>
 
-<span class="n">Near</span><span class="o">-</span><span class="n">zero</span><span class="w"> </span><span class="n">pivots</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">handled</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">special</span><span class="w"> </span><span class="n">way</span><span class="p">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">diagonal</span><span class="w"> </span>
+<span class="n">Near</span><span class="o">-</span><span class="n">zero</span><span class="w"> </span><span class="n">pivots</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">handled</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">special</span><span class="w"> </span><span class="n">way</span><span class="p">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">diagonal</span>
 <span class="n">element</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">initially</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">N</span><span class="p">.</span>
 
-<span class="n">At</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">step</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="n">element</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="w"> </span>
-<span class="n">is</span><span class="w"> </span><span class="n">compared</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">).</span><span class="w">  </span><span class="n">If</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">result</span><span class="w"> </span>
-<span class="n">of</span><span class="w"> </span><span class="n">prior</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">steps</span><span class="p">,</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">reduced</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">about</span><span class="w"> </span>
-<span class="n">a</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span>
+<span class="n">At</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">step</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="n">element</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">),</span>
+<span class="n">is</span><span class="w"> </span><span class="n">compared</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">).</span><span class="w">  </span><span class="n">If</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">result</span>
+<span class="n">of</span><span class="w"> </span><span class="n">prior</span><span class="w"> </span><span class="n">elimination</span><span class="w"> </span><span class="n">steps</span><span class="p">,</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">reduced</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">about</span>
+<span class="n">a</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">pivot</span>
 <span class="n">is</span><span class="w"> </span><span class="n">declared</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">declared</span><span class="w"> </span><span class="n">to</span>
-<span class="n">be</span><span class="w"> </span><span class="n">linearly</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">preceding</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="w">  </span><span class="n">This</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">effect</span><span class="w"> </span>
+<span class="n">be</span><span class="w"> </span><span class="n">linearly</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">preceding</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="w">  </span><span class="n">This</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">effect</span>
 <span class="n">of</span><span class="w"> </span><span class="n">producing</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">solving</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">regardless</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">B</span><span class="p">.</span>
 
-<span class="n">Justification</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">follows</span><span class="p">.</span><span class="w">  </span><span class="n">In</span><span class="w"> </span><span class="n">contemplated</span><span class="w"> </span><span class="n">applications</span><span class="w"> </span>
-<span class="n">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">program</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">normal</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>
-<span class="n">some</span><span class="w"> </span><span class="n">least</span><span class="o">-</span><span class="n">squares</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">problem</span><span class="p">,</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">gives</span><span class="w"> </span>
-<span class="n">the</span><span class="w"> </span><span class="n">norm</span><span class="o">-</span><span class="n">square</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">basis</span><span class="w"> </span><span class="k">function</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">point</span><span class="p">,</span><span class="w"> </span>
-<span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">norm</span><span class="o">-</span><span class="n">square</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">least</span><span class="o">-</span><span class="n">squares</span><span class="w"> </span>
-<span class="n">approximation</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">basis</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">combinations</span><span class="w"> </span>
+<span class="n">Justification</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">follows</span><span class="p">.</span><span class="w">  </span><span class="n">In</span><span class="w"> </span><span class="n">contemplated</span><span class="w"> </span><span class="n">applications</span>
+<span class="n">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">program</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">normal</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="k">for</span>
+<span class="n">some</span><span class="w"> </span><span class="n">least</span><span class="o">-</span><span class="n">squares</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">problem</span><span class="p">,</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">gives</span>
+<span class="n">the</span><span class="w"> </span><span class="n">norm</span><span class="o">-</span><span class="n">square</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">basis</span><span class="w"> </span><span class="k">function</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">point</span><span class="p">,</span>
+<span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">norm</span><span class="o">-</span><span class="n">square</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">least</span><span class="o">-</span><span class="n">squares</span>
+<span class="n">approximation</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">basis</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">combinations</span>
 <span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="mf">1.</span>
 
-<span class="n">Having</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="o">+</span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">signifies</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="k">function</span><span class="w"> </span>
-<span class="n">is</span><span class="w"> </span><span class="n">linearly</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">machine</span><span class="w"> </span><span class="n">accuracy</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="w"> </span>
-<span class="n">functions</span><span class="p">,</span><span class="w"> </span><span class="n">therefore</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">safely</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">basis</span><span class="w"> </span><span class="n">of</span><span class="w"> </span>
+<span class="n">Having</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="o">+</span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">DIAG</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">signifies</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="k">function</span>
+<span class="n">is</span><span class="w"> </span><span class="n">linearly</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">machine</span><span class="w"> </span><span class="n">accuracy</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">N</span><span class="o">-</span><span class="mh">1</span>
+<span class="n">functions</span><span class="p">,</span><span class="w"> </span><span class="n">therefore</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">safely</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">basis</span><span class="w"> </span><span class="n">of</span>
 <span class="n">approximating</span><span class="w"> </span><span class="n">functions</span><span class="p">.</span>
 
-<span class="n">The</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">effected</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span>
+<span class="n">The</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">effected</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span>
 <span class="n">succession</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="nl">calls:</span>
 
 <span class="w">  </span><span class="n">call</span><span class="w"> </span><span class="n">bchfac</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">nbands</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">diag</span><span class="w"> </span><span class="p">)</span>
@@ -201,8 +207,8 @@ LC: QA1.A647.v27.
 
 <p>Parameters:</p>
 <div class="codehilite"><pre><span></span><code>Input/output, real ( kind = 8 ) W(NBANDS,NROW).
-On input, W contains the NBANDS diagonals in its rows, 
-with the main diagonal in row 1.  Precisely, W(I,J) 
+On input, W contains the NBANDS diagonals in its rows,
+with the main diagonal in row 1.  Precisely, W(I,J)
 contains C(I+J-1,J), I=1,...,NBANDS, J=1,...,NROW.
 For example, the interesting entries of a seven diagonal
 symmetric matrix C of order 9 would be stored in W as
@@ -214,8 +220,8 @@ symmetric matrix C of order 9 would be stored in W as
 
 Entries of the array not associated with an
 entry of C are never referenced.
-On output, W contains the Cholesky factorization 
-C = L*D*L&#39;, with W(1,I) containing 1/D(I,I) and W(I,J) 
+On output, W contains the Cholesky factorization
+C = L*D*L&#39;, with W(1,I) containing 1/D(I,I) and W(I,J)
 containing L(I-1+J,J), I=2,...,NBANDS.
 
 Input, integer ( kind = 4 ) NBANDS, indicates the bandwidth of the
@@ -240,7 +246,7 @@ Work array, real ( kind = 8 ) DIAG(NROW).
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-w~76"></span>
+              <span class="anchor" id="variable-w~45"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -285,7 +291,7 @@ Work array, real ( kind = 8 ) DIAG(NROW).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-diag~32"></span>
+              <span class="anchor" id="variable-diag~5"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -313,6 +319,162 @@ Work array, real ( kind = 8 ) DIAG(NROW).
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">bchfac</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">nbands</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">diag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! BCHFAC constructs a Cholesky factorization of a matrix.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The factorization has the form</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      C = L * D * L&#39;</span>
+<span class="w">  </span><span class="c">!  </span>
+<span class="w">  </span><span class="c">!    with L unit lower triangular and D diagonal, for a given matrix C of </span>
+<span class="w">  </span><span class="c">!    order NROW, where C is symmetric positive semidefinite and banded, </span>
+<span class="w">  </span><span class="c">!    having NBANDS diagonals at and below the main diagonal.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Gauss elimination is used, adapted to the symmetry and bandedness of C.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Near-zero pivots are handled in a special way.  The diagonal </span>
+<span class="w">  </span><span class="c">!    element C(N,N) = W(1,N) is saved initially in DIAG(N), all N. </span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    At the N-th elimination step, the current pivot element, W(1,N), </span>
+<span class="w">  </span><span class="c">!    is compared with its original value, DIAG(N).  If, as the result </span>
+<span class="w">  </span><span class="c">!    of prior elimination steps, this element has been reduced by about </span>
+<span class="w">  </span><span class="c">!    a word length, that is, if W(1,N) + DIAG(N) &lt;= DIAG(N), then the pivot </span>
+<span class="w">  </span><span class="c">!    is declared to be zero, and the entire N-th row is declared to</span>
+<span class="w">  </span><span class="c">!    be linearly dependent on the preceding rows.  This has the effect </span>
+<span class="w">  </span><span class="c">!    of producing X(N) = 0 when solving C * X = B for X, regardless of B.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Justification for this is as follows.  In contemplated applications </span>
+<span class="w">  </span><span class="c">!    of this program, the given equations are the normal equations for </span>
+<span class="w">  </span><span class="c">!    some least-squares approximation problem, DIAG(N) = C(N,N) gives </span>
+<span class="w">  </span><span class="c">!    the norm-square of the N-th basis function, and, at this point, </span>
+<span class="w">  </span><span class="c">!    W(1,N) contains the norm-square of the error in the least-squares </span>
+<span class="w">  </span><span class="c">!    approximation to the N-th basis function by linear combinations </span>
+<span class="w">  </span><span class="c">!    of the first N-1.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Having W(1,N)+DIAG(N) &lt;= DIAG(N) signifies that the N-th function </span>
+<span class="w">  </span><span class="c">!    is linearly dependent to machine accuracy on the first N-1 </span>
+<span class="w">  </span><span class="c">!    functions, therefore can safely be left out from the basis of </span>
+<span class="w">  </span><span class="c">!    approximating functions.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The solution of a linear system C * X = B is effected by the </span>
+<span class="w">  </span><span class="c">!    succession of the following two calls:</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!      call bchfac ( w, nbands, nrow, diag )</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      call bchslv ( w, nbands, nrow, b, x )</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) W(NBANDS,NROW).</span>
+<span class="w">  </span><span class="c">!    On input, W contains the NBANDS diagonals in its rows, </span>
+<span class="w">  </span><span class="c">!    with the main diagonal in row 1.  Precisely, W(I,J) </span>
+<span class="w">  </span><span class="c">!    contains C(I+J-1,J), I=1,...,NBANDS, J=1,...,NROW.</span>
+<span class="w">  </span><span class="c">!    For example, the interesting entries of a seven diagonal</span>
+<span class="w">  </span><span class="c">!    symmetric matrix C of order 9 would be stored in W as</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!      11 22 33 44 55 66 77 88 99</span>
+<span class="w">  </span><span class="c">!      21 32 43 54 65 76 87 98  *</span>
+<span class="w">  </span><span class="c">!      31 42 53 64 75 86 97  *  *</span>
+<span class="w">  </span><span class="c">!      41 52 63 74 85 96  *  *  *</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Entries of the array not associated with an</span>
+<span class="w">  </span><span class="c">!    entry of C are never referenced.</span>
+<span class="w">  </span><span class="c">!    On output, W contains the Cholesky factorization </span>
+<span class="w">  </span><span class="c">!    C = L*D*L&#39;, with W(1,I) containing 1/D(I,I) and W(I,J) </span>
+<span class="w">  </span><span class="c">!    containing L(I-1+J,J), I=2,...,NBANDS.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NBANDS, indicates the bandwidth of the</span>
+<span class="w">  </span><span class="c">!    matrix C, that is, C(I,J) = 0 for NBANDS &lt; abs(I-J).</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NROW, is the order of the matrix C.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Work array, real ( kind = 8 ) DIAG(NROW).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbands</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">diag</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">imax</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jmax</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ratio</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nbands</span><span class="p">,</span><span class="n">nrow</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end if</span>
+<span class="k">     return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Store the diagonal.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nrow</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Factorization.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diag</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">diag</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nbands</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="k">else</span>
+
+<span class="k">        </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">imax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nbands</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">jmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">imax</span>
+
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">imax</span>
+
+<span class="w">           </span><span class="n">ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">           </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jmax</span>
+<span class="w">              </span><span class="n">w</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ratio</span>
+<span class="w">           </span><span class="k">end do</span>
+
+<span class="k">           </span><span class="n">jmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jmax</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">           </span><span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ratio</span>
+
+<span class="w">        </span><span class="k">end do</span>
+
+<span class="k">     end if</span>
+
+<span class="k">  end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">bchfac</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
