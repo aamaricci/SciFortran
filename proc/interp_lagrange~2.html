@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pack.f90.html'>interpolate_pack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">interp_lagrange</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/interp_lagrange~2.html#src">interp_lagrange</a>
-      </div>
-    </div>
 
 
   </div>
@@ -452,101 +446,6 @@ implementation in a submodule of an interface in a parent module.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">interp_lagrange</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dim_num</span><span class="p">,</span><span class="w"> </span><span class="n">data_num</span><span class="p">,</span><span class="w"> </span><span class="n">t_data</span><span class="p">,</span><span class="w"> </span><span class="n">p_data</span><span class="p">,</span><span class="w"> </span><span class="n">interp_num</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">     </span><span class="n">t_interp</span><span class="p">,</span><span class="w"> </span><span class="n">p_interp</span><span class="w"> </span><span class="p">)</span>
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! INTERP_LAGRANGE applies Lagrange polynomial interpolation to data.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    From a space of DIM_NUM dimensions, we are given a sequence of</span>
-<span class="w">  </span><span class="c">!    DATA_NUM points, which are presumed to be successive samples</span>
-<span class="w">  </span><span class="c">!    from a curve of points P.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    We are also given a parameterization of this data, that is,</span>
-<span class="w">  </span><span class="c">!    an associated sequence of DATA_NUM values of a variable T.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Thus, we have a sequence of values P(T), where T is a scalar,</span>
-<span class="w">  </span><span class="c">!    and each value of P is of dimension DIM_NUM.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    We are then given INTERP_NUM values of T, for which values P</span>
-<span class="w">  </span><span class="c">!    are to be produced, by linear interpolation of the data we are given.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Note that the user may request extrapolation.  This occurs whenever</span>
-<span class="w">  </span><span class="c">!    a T_INTERP value is less than the minimum T_DATA or greater than the</span>
-<span class="w">  </span><span class="c">!    maximum T_DATA.  In that case, extrapolation is used.  </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Note that, for each spatial component, a polynomial of degree</span>
-<span class="w">  </span><span class="c">!    ( DATA_NUM - 1 ) is generated for the interpolation.  In most cases,</span>
-<span class="w">  </span><span class="c">!    such a polynomial interpolant begins to oscillate as DATA_NUM</span>
-<span class="w">  </span><span class="c">!    increases, even if the original data seems well behaved.  Typically,</span>
-<span class="w">  </span><span class="c">!    values of DATA_NUM should be no greater than 10!</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Licensing:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This code is distributed under the GNU LGPL license. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    03 December 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    John Burkardt</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) DIM_NUM, the spatial dimension.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) DATA_NUM, the number of data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T_DATA(DATA_NUM), the value of the</span>
-<span class="w">  </span><span class="c">!    independent variable at the sample points.  </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) P_DATA(DIM_NUM,DATA_NUM), the value of the</span>
-<span class="w">  </span><span class="c">!    dependent variables at the sample points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) INTERP_NUM, the number of points</span>
-<span class="w">  </span><span class="c">!    at which interpolation is to be done.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T_INTERP(INTERP_NUM), the value of the</span>
-<span class="w">  </span><span class="c">!    independent variable at the interpolation points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) P_INTERP(DIM_NUM,DATA_NUM), the interpolated</span>
-<span class="w">  </span><span class="c">!    values of the dependent variables at the interpolation points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">data_num</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dim_num</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">interp_num</span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l_interp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">data_num</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">p_data</span><span class="p">(</span><span class="n">dim_num</span><span class="p">,</span><span class="n">data_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">p_interp</span><span class="p">(</span><span class="n">dim_num</span><span class="p">,</span><span class="n">interp_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">data_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t_interp</span><span class="p">(</span><span class="n">interp_num</span><span class="p">)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Evaluate the DATA_NUM Lagrange polynomials associated with T_DATA(1:DATA_NUM)</span>
-<span class="w">  </span><span class="c">!  for the interpolation points T_INTERP(1:INTERP_NUM).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">call </span><span class="n">lagrange_value</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">data_num</span><span class="p">,</span><span class="w"> </span><span class="n">t_data</span><span class="p">,</span><span class="w"> </span><span class="n">interp_num</span><span class="p">,</span><span class="w"> </span><span class="n">t_interp</span><span class="p">,</span><span class="w"> </span><span class="n">l_interp</span><span class="w"> </span><span class="p">)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Multiply P_DATA(1:DIM_NUM,1:DATA_NUM) * L_INTERP(1:DATA_NUM,1:INTERP_NUM) to get</span>
-<span class="w">  </span><span class="c">!  P_INTERP(1:DIM_NUM,1:INTERP_NUM).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">p_interp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">dim_num</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">       </span><span class="nb">matmul</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p_data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">dim_num</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">data_num</span><span class="p">),</span><span class="w"> </span><span class="n">l_interp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">data_num</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="k">return</span>
-<span class="k">end subroutine </span><span class="n">interp_lagrange</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

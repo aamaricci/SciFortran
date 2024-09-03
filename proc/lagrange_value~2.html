@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pack.f90.html'>interpolate_pack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">lagrange_value</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/lagrange_value~2.html#src">lagrange_value</a>
-      </div>
-    </div>
 
 
   </div>
@@ -147,9 +141,9 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! LAGRANGE_VALUE evaluates the Lagrange polynomials.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">Given</span><span class="w"> </span><span class="nx">DATA_NUM</span><span class="w"> </span><span class="nx">distinct</span><span class="w"> </span><span class="nx">abscissas</span><span class="p">,</span><span class="w"> </span><span class="nx">T_DATA</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nx">DATA_NUM</span><span class="p">),</span>
-<span class="nx">the</span><span class="w"> </span><span class="nx">I</span><span class="o">-</span><span class="nx">th</span><span class="w"> </span><span class="nx">Lagrange</span><span class="w"> </span><span class="nx">polynomial</span><span class="w"> </span><span class="nx">L</span><span class="p">(</span><span class="nx">I</span><span class="p">)(</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">polynomial</span><span class="w"> </span><span class="nx">of</span>
-<span class="nx">degree</span><span class="w"> </span><span class="nx">DATA_NUM</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">T_DATA</span><span class="p">(</span><span class="nx">I</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">DATA_NUM</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">Given</span><span class="w"> </span><span class="nx">DATA_NUM</span><span class="w"> </span><span class="nx">distinct</span><span class="w"> </span><span class="nx">abscissas</span><span class="p">,</span><span class="w"> </span><span class="nx">T_DATA</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nx">DATA_NUM</span><span class="p">),</span><span class="w"> </span>
+<span class="nx">the</span><span class="w"> </span><span class="nx">I</span><span class="o">-</span><span class="nx">th</span><span class="w"> </span><span class="nx">Lagrange</span><span class="w"> </span><span class="nx">polynomial</span><span class="w"> </span><span class="nx">L</span><span class="p">(</span><span class="nx">I</span><span class="p">)(</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">polynomial</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span>
+<span class="nx">degree</span><span class="w"> </span><span class="nx">DATA_NUM</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">T_DATA</span><span class="p">(</span><span class="nx">I</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">DATA_NUM</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span>
 <span class="nx">other</span><span class="w"> </span><span class="nx">abscissas</span><span class="p">.</span>
 
 <span class="nx">A</span><span class="w"> </span><span class="nx">formal</span><span class="w"> </span><span class="nx">representation</span><span class="w"> </span><span class="k">is</span><span class="p">:</span>
@@ -164,7 +158,7 @@
 <span class="nx">Lagrange</span><span class="w"> </span><span class="nx">interpolating</span><span class="w"> </span><span class="nx">polynomial</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">each</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">interpolation</span><span class="w"> </span><span class="nx">points</span>
 <span class="k">is</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nx">simple</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">compute</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">matrix</span><span class="w"> </span><span class="nx">multiplication</span><span class="p">:</span>
 
-<span class="w">  </span><span class="nx">P_INTERP</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nx">INTERP_NUM</span><span class="p">)</span><span class="w"> </span><span class="p">=</span>
+<span class="w">  </span><span class="nx">P_INTERP</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nx">INTERP_NUM</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span>
 <span class="w">    </span><span class="nx">P_DATA</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nx">DATA_NUM</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">L_INTERP</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nx">DATA_NUM</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="nx">INTERP_NUM</span><span class="p">)</span>
 
 <span class="k">or</span><span class="p">,</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="nx">P</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">multidimensional</span><span class="p">:</span>
@@ -191,13 +185,13 @@ DATA_NUM must be at least 1.
 
 Input, real ( kind = 8 ) T_DATA(DATA_NUM), the data points.
 
-Input, integer ( kind = 4 ) INTERP_NUM, the number of
+Input, integer ( kind = 4 ) INTERP_NUM, the number of 
 interpolation points.
 
-Input, real ( kind = 8 ) T_INTERP(INTERP_NUM), the
+Input, real ( kind = 8 ) T_INTERP(INTERP_NUM), the 
 interpolation points.
 
-Output, real ( kind = 8 ) L_INTERP(DATA_NUM,INTERP_NUM), the values
+Output, real ( kind = 8 ) L_INTERP(DATA_NUM,INTERP_NUM), the values 
 of the Lagrange polynomials at the interpolation points.
 </code></pre></div>
 
@@ -303,105 +297,6 @@ of the Lagrange polynomials at the interpolation points.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">lagrange_value</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">data_num</span><span class="p">,</span><span class="w"> </span><span class="n">t_data</span><span class="p">,</span><span class="w"> </span><span class="n">interp_num</span><span class="p">,</span><span class="w"> </span><span class="n">t_interp</span><span class="p">,</span><span class="w"> </span><span class="n">l_interp</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! LAGRANGE_VALUE evaluates the Lagrange polynomials.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Given DATA_NUM distinct abscissas, T_DATA(1:DATA_NUM), </span>
-<span class="w">  </span><span class="c">!    the I-th Lagrange polynomial L(I)(T) is defined as the polynomial of </span>
-<span class="w">  </span><span class="c">!    degree DATA_NUM - 1 which is 1 at T_DATA(I) and 0 at the DATA_NUM - 1 </span>
-<span class="w">  </span><span class="c">!    other abscissas.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    A formal representation is:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      L(I)(T) = Product ( 1 &lt;= J &lt;= DATA_NUM, I /= J )</span>
-<span class="w">  </span><span class="c">!       ( T - T(J) ) / ( T(I) - T(J) )</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This routine accepts a set of INTERP_NUM values at which the Lagrange</span>
-<span class="w">  </span><span class="c">!    polynomials should be evaluated.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Given data values P_DATA at each of the abscissas, the value of the</span>
-<span class="w">  </span><span class="c">!    Lagrange interpolating polynomial at each of the interpolation points</span>
-<span class="w">  </span><span class="c">!    is then simple to compute by matrix multiplication:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      P_INTERP(1:INTERP_NUM) = </span>
-<span class="w">  </span><span class="c">!        P_DATA(1:DATA_NUM) * L_INTERP(1:DATA_NUM,1:INTERP_NUM)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    or, in the case where P is multidimensional:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!      P_INTERP(1:DIM_NUM,1:INTERP_NUM) =</span>
-<span class="w">  </span><span class="c">!        P_DATA(1:DIM_NUM,1:DATA_NUM) * L_INTERP(1:DATA_NUM,1:INTERP_NUM)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Licensing:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This code is distributed under the GNU LGPL license. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    03 December 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    John Burkardt</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) DATA_NUM, the number of data points.</span>
-<span class="w">  </span><span class="c">!    DATA_NUM must be at least 1.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T_DATA(DATA_NUM), the data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) INTERP_NUM, the number of </span>
-<span class="w">  </span><span class="c">!    interpolation points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T_INTERP(INTERP_NUM), the </span>
-<span class="w">  </span><span class="c">!    interpolation points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) L_INTERP(DATA_NUM,INTERP_NUM), the values </span>
-<span class="w">  </span><span class="c">!    of the Lagrange polynomials at the interpolation points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">data_num</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">interp_num</span>
-
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l_interp</span><span class="p">(</span><span class="n">data_num</span><span class="p">,</span><span class="n">interp_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">data_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t_interp</span><span class="p">(</span><span class="n">interp_num</span><span class="p">)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Evaluate the polynomial.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">l_interp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">data_num</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
-
-<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">data_num</span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">data_num</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">           </span><span class="n">l_interp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l_interp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">                </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t_interp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">interp_num</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">        </span><span class="k">end if</span>
-
-<span class="k">     end do</span>
-
-<span class="k">  end do</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">lagrange_value</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

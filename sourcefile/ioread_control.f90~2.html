@@ -76,7 +76,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 0.0% of total for source files.">13 statements</a>
+                 title=" 0.0% of total for source files.">8 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -117,18 +117,7 @@
   
   
   
-      <div class="card mb-4">
-      <a data-bs-toggle="collapse" href="#subs-0"
-         aria-expanded="false" aria-controls="subs-0">
-         <h4 class="card-header bg-primary text-white">Subroutines</h4>
-      </a>
-      <div id="subs-0" class="collapse">
-        <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../proc/ioread_control~2.html">ioread_control</a>
-        </div>
-      </div>
-    </div>
-
+  
   
   
   
@@ -153,21 +142,14 @@
 
       <section>
         <h2><span class="anchor" id="src"></span>Source Code</h2>
-        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">subroutine </span><span class="n">ioread_control</span><span class="p">(</span><span class="n">pname</span><span class="p">,</span><span class="n">control</span><span class="p">)</span>
-<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pname</span>
-<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">   </span><span class="kt">logical</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">control</span>
-<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="w">   </span><span class="c">!</span>
-<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="w">   </span><span class="k">inquire</span><span class="p">(</span><span class="k">file</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">),</span><span class="n">exist</span><span class="o">=</span><span class="n">control</span><span class="p">)</span>
-<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="w">   </span><span class="k">if</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">control</span><span class="p">)</span><span class="k">inquire</span><span class="p">(</span><span class="k">file</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span><span class="o">//</span><span class="s2">&quot;.gz&quot;</span><span class="p">,</span><span class="n">exist</span><span class="o">=</span><span class="n">control</span><span class="p">)</span>
-<a id="ln-7" name="ln-7" href="#ln-7"></a><span class="w">   </span><span class="k">if</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">control</span><span class="p">)</span><span class="k">then</span>
-<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="k">      write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;I can not read : +&quot;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span><span class="o">//</span><span class="s2">&quot; SKIP&quot;</span>
-<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="w">      </span><span class="k">call </span><span class="nb">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">      </span><span class="k">return</span>
-<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="k">   else</span>
-<a id="ln-12" name="ln-12" href="#ln-12"></a><span class="k">      write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,A)&quot;</span><span class="p">)</span><span class="s2">&quot;read:     &quot;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span>
-<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="w">   </span><span class="k">endif</span>
-<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">   </span><span class="c">!</span>
-<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="k">end subroutine </span><span class="n">ioread_control</span>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="w">  </span><span class="k">inquire</span><span class="p">(</span><span class="k">file</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">),</span><span class="n">exist</span><span class="o">=</span><span class="n">control</span><span class="p">)</span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">  </span><span class="k">if</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">control</span><span class="p">)</span><span class="k">inquire</span><span class="p">(</span><span class="k">file</span><span class="o">=</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span><span class="o">//</span><span class="s2">&quot;.gz&quot;</span><span class="p">,</span><span class="n">exist</span><span class="o">=</span><span class="n">control</span><span class="p">)</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">  </span><span class="k">if</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">control</span><span class="p">)</span><span class="k">then</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="k">     write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">)</span><span class="s2">&quot;I can not read : +&quot;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span><span class="o">//</span><span class="s2">&quot; SKIP&quot;</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="w">     </span><span class="k">return</span>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="k">  else</span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a><span class="k">     write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,A)&quot;</span><span class="p">)</span><span class="s2">&quot;read:     &quot;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span>
+<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="w">  </span><span class="k">endif</span>
 </pre></div>
 
       </section>
