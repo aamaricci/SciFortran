@@ -1,0 +1,678 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A library of fortran modules and routines for scientific calculations (in a way just like scipy for python)">
+    <meta name="author" content="QcmP Lab members" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>d_itfft &ndash; SciFortran</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">SciFortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>d_itfft
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.0% of total for procedures.">13 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/FFT_FFTPACK.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/fft_fftpack.f90.html'>FFT_FFTPACK.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/fft_fftpack.html'>FFT_FFTPACK</a></li>
+            <li class="breadcrumb-item active" aria-current="page">d_itfft</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/d_itfft~2.html#src">d_itfft</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine d_itfft(func_in, func_out)  
+</h2>
+    
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-func_in~7"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>func_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-func_out~7"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional,</td>            <td>
+              dimension(size(func_in))
+            </td>
+            <td>::</td>
+            <td><strong>func_out</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~d_itfft~2~~CallsGraph Pages: 1 -->
+<svg id="procd_itfft2CallsGraph" width="384pt" height="284pt"
+ viewBox="0.00 0.00 384.00 284.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~d_itfft~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 280)">
+<title>proc~~d_itfft~2~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-280 380,-280 380,4 -4,4"/>
+<!-- proc~d_itfft~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node1" class="node">
+<title>proc~d_itfft~2</title>
+<polygon fill="none" stroke="black" points="54,-171 0,-171 0,-147 54,-147 54,-171"/>
+<text text-anchor="middle" x="27" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50">d_itfft</text>
+</g>
+<!-- interface~fftex~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node2" class="node">
+<title>interface~fftex~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node2"><a xlink:href="../interface/fftex~2.html" xlink:title="fftex">
+<polygon fill="#a7506f" stroke="#a7506f" points="144,-234 90,-234 90,-210 144,-210 144,-234"/>
+<text text-anchor="middle" x="117" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fftex</text>
+</a>
+</g>
+</g>
+<!-- proc~d_itfft~2&#45;&gt;interface~fftex~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge1" class="edge">
+<title>proc~d_itfft~2&#45;&gt;interface~fftex~2</title>
+<path fill="none" stroke="#000000" d="M44.97,-171.15C57.99,-180.47 76.18,-193.49 90.89,-204.02"/>
+<polygon fill="#000000" stroke="#000000" points="88.92,-206.91 99.08,-209.89 92.99,-201.22 88.92,-206.91"/>
+</g>
+<!-- interface~ifftshift~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node3" class="node">
+<title>interface~ifftshift~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node3"><a xlink:href="../interface/ifftshift~2.html" xlink:title="ifftshift">
+<polygon fill="#a7506f" stroke="#a7506f" points="144,-171 90,-171 90,-147 144,-147 144,-171"/>
+<text text-anchor="middle" x="117" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ifftshift</text>
+</a>
+</g>
+</g>
+<!-- proc~d_itfft~2&#45;&gt;interface~ifftshift~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge2" class="edge">
+<title>proc~d_itfft~2&#45;&gt;interface~ifftshift~2</title>
+<path fill="none" stroke="#000000" d="M54.4,-159C62.39,-159 71.31,-159 79.82,-159"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-162.5 89.92,-159 79.92,-155.5 79.92,-162.5"/>
+</g>
+<!-- interface~ifft~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node4" class="node">
+<title>interface~ifft~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node4"><a xlink:href="../interface/ifft~2.html" xlink:title="ifft">
+<polygon fill="#a7506f" stroke="#a7506f" points="144,-108 90,-108 90,-84 144,-84 144,-108"/>
+<text text-anchor="middle" x="117" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ifft</text>
+</a>
+</g>
+</g>
+<!-- proc~d_itfft~2&#45;&gt;interface~ifft~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge3" class="edge">
+<title>proc~d_itfft~2&#45;&gt;interface~ifft~2</title>
+<path fill="none" stroke="#000000" d="M44.97,-146.85C57.99,-137.53 76.18,-124.51 90.89,-113.98"/>
+<polygon fill="#000000" stroke="#000000" points="92.99,-116.78 99.08,-108.11 88.92,-111.09 92.99,-116.78"/>
+</g>
+<!-- proc~cfft_1d_ex~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node6" class="node">
+<title>proc~cfft_1d_ex~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node6"><a xlink:href="../proc/cfft_1d_ex~2.html" xlink:title="cfft_1d_ex">
+<polygon fill="#d9534f" stroke="#d9534f" points="266,-276 200,-276 200,-252 266,-252 266,-276"/>
+<text text-anchor="middle" x="233" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cfft_1d_ex</text>
+</a>
+</g>
+</g>
+<!-- interface~fftex~2&#45;&gt;proc~cfft_1d_ex~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge4" class="edge">
+<title>interface~fftex~2&#45;&gt;proc~cfft_1d_ex~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.15,-231.64C157.74,-236.64 174.68,-242.88 190.04,-248.54"/>
+<polygon fill="#000000" stroke="#000000" points="189.27,-251.99 199.86,-252.16 191.69,-245.42 189.27,-251.99"/>
+</g>
+<!-- proc~rfft_1d_ex~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node9" class="node">
+<title>proc~rfft_1d_ex~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node9"><a xlink:href="../proc/rfft_1d_ex~2.html" xlink:title="rfft_1d_ex">
+<polygon fill="#d9534f" stroke="#d9534f" points="265,-234 201,-234 201,-210 265,-210 265,-234"/>
+<text text-anchor="middle" x="233" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rfft_1d_ex</text>
+</a>
+</g>
+</g>
+<!-- interface~fftex~2&#45;&gt;proc~rfft_1d_ex~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge5" class="edge">
+<title>interface~fftex~2&#45;&gt;proc~rfft_1d_ex~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.15,-222C157.83,-222 174.89,-222 190.33,-222"/>
+<polygon fill="#000000" stroke="#000000" points="190.7,-225.5 200.7,-222 190.7,-218.5 190.7,-225.5"/>
+</g>
+<!-- proc~cfft_1d_ishift~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node7" class="node">
+<title>proc~cfft_1d_ishift~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node7"><a xlink:href="../proc/cfft_1d_ishift~2.html" xlink:title="cfft_1d_ishift">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="272.5,-192 193.5,-192 193.5,-168 272.5,-168 272.5,-192"/>
+<text text-anchor="middle" x="233" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cfft_1d_ishift</text>
+</a>
+</g>
+</g>
+<!-- interface~ifftshift~2&#45;&gt;proc~cfft_1d_ishift~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge6" class="edge">
+<title>interface~ifftshift~2&#45;&gt;proc~cfft_1d_ishift~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.15,-163.82C155.78,-165.96 169.86,-168.55 183.31,-171.03"/>
+<polygon fill="#000000" stroke="#000000" points="182.95,-174.52 193.42,-172.89 184.22,-167.64 182.95,-174.52"/>
+</g>
+<!-- proc~rfft_1d_ishift~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node10" class="node">
+<title>proc~rfft_1d_ishift~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node10"><a xlink:href="../proc/rfft_1d_ishift~2.html" xlink:title="rfft_1d_ishift">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="272,-150 194,-150 194,-126 272,-126 272,-150"/>
+<text text-anchor="middle" x="233" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rfft_1d_ishift</text>
+</a>
+</g>
+</g>
+<!-- interface~ifftshift~2&#45;&gt;proc~rfft_1d_ishift~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge7" class="edge">
+<title>interface~ifftshift~2&#45;&gt;proc~rfft_1d_ishift~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.15,-154.18C155.89,-152.02 170.12,-149.4 183.68,-146.9"/>
+<polygon fill="#000000" stroke="#000000" points="184.66,-150.28 193.86,-145.03 183.39,-143.4 184.66,-150.28"/>
+</g>
+<!-- proc~cfft_1d_backward~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node5" class="node">
+<title>proc~cfft_1d_backward~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node5"><a xlink:href="../proc/cfft_1d_backward~2.html" xlink:title="cfft_1d_backward">
+<polygon fill="#d9534f" stroke="#d9534f" points="286,-108 180,-108 180,-84 286,-84 286,-108"/>
+<text text-anchor="middle" x="233" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cfft_1d_backward</text>
+</a>
+</g>
+</g>
+<!-- interface~ifft~2&#45;&gt;proc~cfft_1d_backward~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge8" class="edge">
+<title>interface~ifft~2&#45;&gt;proc~cfft_1d_backward~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.15,-96C151.89,-96 160.71,-96 169.71,-96"/>
+<polygon fill="#000000" stroke="#000000" points="169.9,-99.5 179.9,-96 169.9,-92.5 169.9,-99.5"/>
+</g>
+<!-- proc~rfft_1d_backward~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_node8" class="node">
+<title>proc~rfft_1d_backward~2</title>
+<g id="a_proc~~d_itfft~2~~CallsGraph_node8"><a xlink:href="../proc/rfft_1d_backward~2.html" xlink:title="rfft_1d_backward">
+<polygon fill="#d9534f" stroke="#d9534f" points="285,-66 181,-66 181,-42 285,-42 285,-66"/>
+<text text-anchor="middle" x="233" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rfft_1d_backward</text>
+</a>
+</g>
+</g>
+<!-- interface~ifft~2&#45;&gt;proc~rfft_1d_backward~2 -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge9" class="edge">
+<title>interface~ifft~2&#45;&gt;proc~rfft_1d_backward~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.15,-86.36C157.53,-81.44 174.14,-75.32 189.31,-69.73"/>
+<polygon fill="#000000" stroke="#000000" points="190.85,-72.89 199.02,-66.15 188.43,-66.32 190.85,-72.89"/>
+</g>
+<!-- cfft1b -->
+<g id="proc~~d_itfft~2~~CallsGraph_node11" class="node">
+<title>cfft1b</title>
+<polygon fill="#777777" stroke="#777777" points="376,-150 322,-150 322,-126 376,-126 376,-150"/>
+<text text-anchor="middle" x="349" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cfft1b</text>
+</g>
+<!-- proc~cfft_1d_backward~2&#45;&gt;cfft1b -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge10" class="edge">
+<title>proc~cfft_1d_backward~2&#45;&gt;cfft1b</title>
+<path fill="none" stroke="#000000" d="M266.67,-108.04C280.89,-113.27 297.59,-119.43 312.16,-124.79"/>
+<polygon fill="#000000" stroke="#000000" points="311.24,-128.19 321.84,-128.36 313.66,-121.62 311.24,-128.19"/>
+</g>
+<!-- cfft1i -->
+<g id="proc~~d_itfft~2~~CallsGraph_node12" class="node">
+<title>cfft1i</title>
+<polygon fill="#777777" stroke="#777777" points="376,-108 322,-108 322,-84 376,-84 376,-108"/>
+<text text-anchor="middle" x="349" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cfft1i</text>
+</g>
+<!-- proc~cfft_1d_backward~2&#45;&gt;cfft1i -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge11" class="edge">
+<title>proc~cfft_1d_backward~2&#45;&gt;cfft1i</title>
+<path fill="none" stroke="#000000" d="M286.33,-96C294.88,-96 303.56,-96 311.62,-96"/>
+<polygon fill="#000000" stroke="#000000" points="311.77,-99.5 321.77,-96 311.77,-92.5 311.77,-99.5"/>
+</g>
+<!-- rfft1b -->
+<g id="proc~~d_itfft~2~~CallsGraph_node13" class="node">
+<title>rfft1b</title>
+<polygon fill="#777777" stroke="#777777" points="376,-66 322,-66 322,-42 376,-42 376,-66"/>
+<text text-anchor="middle" x="349" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rfft1b</text>
+</g>
+<!-- proc~rfft_1d_backward~2&#45;&gt;rfft1b -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge12" class="edge">
+<title>proc~rfft_1d_backward~2&#45;&gt;rfft1b</title>
+<path fill="none" stroke="#000000" d="M285.33,-54C294.22,-54 303.3,-54 311.69,-54"/>
+<polygon fill="#000000" stroke="#000000" points="311.88,-57.5 321.88,-54 311.88,-50.5 311.88,-57.5"/>
+</g>
+<!-- rfft1i -->
+<g id="proc~~d_itfft~2~~CallsGraph_node14" class="node">
+<title>rfft1i</title>
+<polygon fill="#777777" stroke="#777777" points="376,-24 322,-24 322,0 376,0 376,-24"/>
+<text text-anchor="middle" x="349" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rfft1i</text>
+</g>
+<!-- proc~rfft_1d_backward~2&#45;&gt;rfft1i -->
+<g id="proc~~d_itfft~2~~CallsGraph_edge13" class="edge">
+<title>proc~rfft_1d_backward~2&#45;&gt;rfft1i</title>
+<path fill="none" stroke="#000000" d="M266.67,-41.96C280.89,-36.73 297.59,-30.57 312.16,-25.21"/>
+<polygon fill="#000000" stroke="#000000" points="313.66,-28.38 321.84,-21.64 311.24,-21.81 313.66,-28.38"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~d_itfft~2~~CalledByGraph Pages: 1 -->
+<svg id="procd_itfft2CalledByGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~d_itfft~2~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~d_itfft~2~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
+<!-- proc~d_itfft~2 -->
+<g id="proc~~d_itfft~2~~CalledByGraph_node1" class="node">
+<title>proc~d_itfft~2</title>
+<polygon fill="none" stroke="black" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">d_itfft</text>
+</g>
+<!-- interface~itfft~2 -->
+<g id="proc~~d_itfft~2~~CalledByGraph_node2" class="node">
+<title>interface~itfft~2</title>
+<g id="a_proc~~d_itfft~2~~CalledByGraph_node2"><a xlink:href="../interface/itfft~2.html" xlink:title="itfft">
+<polygon fill="#a7506f" stroke="#a7506f" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">itfft</text>
+</a>
+</g>
+</g>
+<!-- interface~itfft~2&#45;&gt;proc~d_itfft~2 -->
+<g id="proc~~d_itfft~2~~CalledByGraph_edge1" class="edge">
+<title>interface~itfft~2&#45;&gt;proc~d_itfft~2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">  </span><span class="k">subroutine </span><span class="n">d_itfft</span><span class="p">(</span><span class="n">func_in</span><span class="p">,</span><span class="n">func_out</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">func_in</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">func_in</span><span class="p">)),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">func_out</span>
+<span class="w">    </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">func_in</span><span class="p">))</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">ftmp</span>
+<span class="w">    </span><span class="n">ftmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func_in</span>
+<span class="w">    </span><span class="k">call </span><span class="n">ifft</span><span class="p">(</span><span class="n">ftmp</span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">fftex</span><span class="p">(</span><span class="n">ftmp</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">func_out</span><span class="p">))</span><span class="k">then</span>
+<span class="k">       </span><span class="n">func_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifftshift</span><span class="p">(</span><span class="n">ftmp</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="p">(</span><span class="n">ftmp</span><span class="p">)</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">       </span><span class="n">func_in</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ifftshift</span><span class="p">(</span><span class="n">ftmp</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="p">(</span><span class="n">ftmp</span><span class="p">)</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="k">  end subroutine </span><span class="n">d_itfft</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

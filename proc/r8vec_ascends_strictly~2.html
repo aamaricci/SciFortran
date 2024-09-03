@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pack.f90.html'>interpolate_pack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">r8vec_ascends_strictly</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/r8vec_ascends_strictly~2.html#src">r8vec_ascends_strictly</a>
+      </div>
+    </div>
 
 
   </div>
@@ -171,7 +177,7 @@
 
 <span class="n">Input</span><span class="p">,</span> <span class="n">real</span> <span class="p">(</span> <span class="n">kind</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="n">X</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">the</span> <span class="n">array</span> <span class="n">to</span> <span class="n">be</span> <span class="n">examined</span><span class="p">.</span>
 
-<span class="n">Output</span><span class="p">,</span> <span class="n">logical</span> <span class="n">R8VEC_ASCENDS_STRICTLY</span><span class="p">,</span> <span class="n">is</span> <span class="kc">TRUE</span> <span class="n">if</span> <span class="n">the</span> 
+<span class="n">Output</span><span class="p">,</span> <span class="n">logical</span> <span class="n">R8VEC_ASCENDS_STRICTLY</span><span class="p">,</span> <span class="n">is</span> <span class="kc">TRUE</span> <span class="n">if</span> <span class="n">the</span>
 <span class="n">entries</span> <span class="n">of</span> <span class="n">X</span> <span class="n">strictly</span> <span class="n">ascend</span><span class="p">.</span>
 </code></pre></div>
 
@@ -189,7 +195,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~349"></span>
+              <span class="anchor" id="variable-n~431"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -204,7 +210,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~426"></span>
+              <span class="anchor" id="variable-x~563"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -239,6 +245,73 @@
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">r8vec_ascends_strictly</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! R8VEC_ASCENDS_STRICTLY determines if an R8VEC is strictly ascending.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    An R8VEC is a vector of R8 values.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Notice the effect of entry number 6 in the following results:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      X = ( -8.1, 1.3, 2.2, 3.4, 7.5, 7.4, 9.8 )</span>
+<span class="w">  </span><span class="c">!      Y = ( -8.1, 1.3, 2.2, 3.4, 7.5, 7.5, 9.8 )</span>
+<span class="w">  </span><span class="c">!      Z = ( -8.1, 1.3, 2.2, 3.4, 7.5, 7.6, 9.8 )</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      R8VEC_ASCENDS_STRICTLY ( X ) = FALSE</span>
+<span class="w">  </span><span class="c">!      R8VEC_ASCENDS_STRICTLY ( Y ) = FALSE</span>
+<span class="w">  </span><span class="c">!      R8VEC_ASCENDS_STRICTLY ( Z ) = TRUE</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This code is distributed under the GNU LGPL license. </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    03 December 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    John Burkardt</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the size of the array.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) X(N), the array to be examined.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, logical R8VEC_ASCENDS_STRICTLY, is TRUE if the </span>
+<span class="w">  </span><span class="c">!    entries of X strictly ascend.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">logical </span><span class="n">r8vec_ascends_strictly</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">r8vec_ascends_strictly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">        </span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="n">i</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">     end if</span>
+<span class="k">  end do</span>
+
+<span class="k">  </span><span class="n">r8vec_ascends_strictly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end function </span><span class="n">r8vec_ascends_strictly</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

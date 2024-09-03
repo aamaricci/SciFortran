@@ -1,0 +1,958 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A library of fortran modules and routines for scientific calculations (in a way just like scipy for python)">
+    <meta name="author" content="QcmP Lab members" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>quad_sample &ndash; SciFortran</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">SciFortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>quad_sample
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.4% of total for procedures.">236 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/integrate_quad_sample.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/integrate_quad_sample.f90.html'>integrate_quad_sample.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">quad_sample</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/quad_sample~2.html#src">quad_sample</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2> subroutine quad_sample(fsample, a, b, epsabs, epsrel, key, singular_endpoint, singular_points, cpole, alfa, beta, omega, weight_func, verbose, Ninterp, result)  
+</h2>
+    
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fsample~4"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>fsample</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~347"></span>
+              real(kind=8)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~223"></span>
+              real(kind=8)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-epsabs~4"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>epsabs</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-epsrel~4"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>epsrel</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-key~4"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>key</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-singular_endpoint~4"></span>
+              logical,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>singular_endpoint</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-singular_points~4"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional,</td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>singular_points</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cpole~4"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cpole</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-alfa~20"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>alfa</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-beta~26"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>beta</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-omega~6"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>omega</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-weight_func~4"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>weight_func</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-verbose~4"></span>
+              logical,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>verbose</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ninterp~4"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ninterp</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-result~6"></span>
+              real(kind=8)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>result</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~quad_sample~2~~CallsGraph Pages: 1 -->
+<svg id="procquad_sample2CallsGraph" width="185pt" height="326pt"
+ viewBox="0.00 0.00 185.00 326.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~quad_sample~2~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 322)">
+<title>proc~~quad_sample~2~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-322 181,-322 181,4 -4,4"/>
+<!-- proc~quad_sample~2 -->
+<g id="proc~~quad_sample~2~~CallsGraph_node1" class="node">
+<title>proc~quad_sample~2</title>
+<polygon fill="none" stroke="black" points="84,-171 0,-171 0,-147 84,-147 84,-171"/>
+<text text-anchor="middle" x="42" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50">quad_sample</text>
+</g>
+<!-- linspace -->
+<g id="proc~~quad_sample~2~~CallsGraph_node2" class="node">
+<title>linspace</title>
+<polygon fill="#777777" stroke="#777777" points="177,-318 120,-318 120,-294 177,-294 177,-318"/>
+<text text-anchor="middle" x="148.5" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">linspace</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;linspace -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge1" class="edge">
+<title>proc~quad_sample~2&#45;&gt;linspace</title>
+<path fill="none" stroke="#000000" d="M48.5,-171.09C59.65,-194.75 86.7,-248.06 120,-285 120.62,-285.68 121.26,-286.36 121.92,-287.03"/>
+<polygon fill="#000000" stroke="#000000" points="119.71,-289.75 129.5,-293.8 124.37,-284.53 119.71,-289.75"/>
+</g>
+<!-- qag -->
+<g id="proc~~quad_sample~2~~CallsGraph_node3" class="node">
+<title>qag</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-276 121.5,-276 121.5,-252 175.5,-252 175.5,-276"/>
+<text text-anchor="middle" x="148.5" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qag</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qag -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge2" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qag</title>
+<path fill="none" stroke="#000000" d="M52.85,-171.03C66.93,-187.91 94.01,-219.24 120,-243 120.82,-243.75 121.67,-244.5 122.53,-245.25"/>
+<polygon fill="#000000" stroke="#000000" points="120.58,-248.18 130.54,-251.8 125.01,-242.76 120.58,-248.18"/>
+</g>
+<!-- qagp -->
+<g id="proc~~quad_sample~2~~CallsGraph_node4" class="node">
+<title>qagp</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-234 121.5,-234 121.5,-210 175.5,-210 175.5,-234"/>
+<text text-anchor="middle" x="148.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qagp</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qagp -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge3" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qagp</title>
+<path fill="none" stroke="#000000" d="M63.15,-171.15C78.91,-180.65 101.02,-193.98 118.66,-204.61"/>
+<polygon fill="#000000" stroke="#000000" points="117.04,-207.72 127.41,-209.89 120.66,-201.73 117.04,-207.72"/>
+</g>
+<!-- qags -->
+<g id="proc~~quad_sample~2~~CallsGraph_node5" class="node">
+<title>qags</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-192 121.5,-192 121.5,-168 175.5,-168 175.5,-192"/>
+<text text-anchor="middle" x="148.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qags</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qags -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge4" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qags</title>
+<path fill="none" stroke="#000000" d="M84,-167.24C93.04,-169.06 102.56,-170.97 111.39,-172.74"/>
+<polygon fill="#000000" stroke="#000000" points="110.88,-176.21 121.37,-174.75 112.26,-169.35 110.88,-176.21"/>
+</g>
+<!-- qawc -->
+<g id="proc~~quad_sample~2~~CallsGraph_node6" class="node">
+<title>qawc</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-150 121.5,-150 121.5,-126 175.5,-126 175.5,-150"/>
+<text text-anchor="middle" x="148.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qawc</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qawc -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge5" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qawc</title>
+<path fill="none" stroke="#000000" d="M84,-150.76C93.04,-148.94 102.56,-147.03 111.39,-145.26"/>
+<polygon fill="#000000" stroke="#000000" points="112.26,-148.65 121.37,-143.25 110.88,-141.79 112.26,-148.65"/>
+</g>
+<!-- qawo -->
+<g id="proc~~quad_sample~2~~CallsGraph_node7" class="node">
+<title>qawo</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-108 121.5,-108 121.5,-84 175.5,-84 175.5,-108"/>
+<text text-anchor="middle" x="148.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qawo</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qawo -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge6" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qawo</title>
+<path fill="none" stroke="#000000" d="M63.15,-146.85C78.91,-137.35 101.02,-124.02 118.66,-113.39"/>
+<polygon fill="#000000" stroke="#000000" points="120.66,-116.27 127.41,-108.11 117.04,-110.28 120.66,-116.27"/>
+</g>
+<!-- qaws -->
+<g id="proc~~quad_sample~2~~CallsGraph_node8" class="node">
+<title>qaws</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-66 121.5,-66 121.5,-42 175.5,-42 175.5,-66"/>
+<text text-anchor="middle" x="148.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qaws</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qaws -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge7" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qaws</title>
+<path fill="none" stroke="#000000" d="M52.85,-146.97C66.93,-130.09 94.01,-98.76 120,-75 120.82,-74.25 121.67,-73.5 122.53,-72.75"/>
+<polygon fill="#000000" stroke="#000000" points="125.01,-75.24 130.54,-66.2 120.58,-69.82 125.01,-75.24"/>
+</g>
+<!-- qng -->
+<g id="proc~~quad_sample~2~~CallsGraph_node9" class="node">
+<title>qng</title>
+<polygon fill="#777777" stroke="#777777" points="175.5,-24 121.5,-24 121.5,0 175.5,0 175.5,-24"/>
+<text text-anchor="middle" x="148.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qng</text>
+</g>
+<!-- proc~quad_sample~2&#45;&gt;qng -->
+<g id="proc~~quad_sample~2~~CallsGraph_edge8" class="edge">
+<title>proc~quad_sample~2&#45;&gt;qng</title>
+<path fill="none" stroke="#000000" d="M48.5,-146.91C59.65,-123.25 86.7,-69.94 120,-33 120.62,-32.32 121.26,-31.64 121.92,-30.97"/>
+<polygon fill="#000000" stroke="#000000" points="124.37,-33.47 129.5,-24.2 119.71,-28.25 124.37,-33.47"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">quad_sample</span><span class="p">(</span><span class="n">fsample</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">epsabs</span><span class="p">,</span><span class="n">epsrel</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">key</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">singular_endpoint</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">singular_points</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">cpole</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">alfa</span><span class="p">,</span><span class="n">beta</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">omega</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">weight_func</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">verbose</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="n">Ninterp</span><span class="p">,&amp;</span>
+<span class="w">     </span><span class="k">result</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">fsample</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">b</span>
+<span class="w">  </span><span class="c">!optional variables</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">epsabs</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">epsrel</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">key</span><span class="w">               </span><span class="c">!order of GK rule in QAG</span>
+<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">singular_endpoint</span><span class="w"> </span><span class="c">!T if singular_endpoint exists (QAGS)</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">optional</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">singular_points</span><span class="w">   </span><span class="c">!location of singular points in QAGP</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">cpole</span><span class="w">             </span><span class="c">!location of the pole in QAWC f(x)/x-cpole</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">alfa</span><span class="p">,</span><span class="n">beta</span><span class="w">         </span><span class="c">!parameters for QAWS</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">omega</span><span class="w">             </span><span class="c">!frequency of the weight funcion in QAWO</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">weight_func</span><span class="w">       </span><span class="c">!if(QAWF)then</span>
+<span class="w">  </span><span class="c">!                                                  !  weight_func=1,2 -&gt; cos(omega*x),sin(omega*x)</span>
+<span class="w">  </span><span class="c">!                                                  !if(QAWS)then</span>
+<span class="w">  </span><span class="c">!                                                  !  weight_func = 1  (x-a)**alfa*(b-x)**beta</span>
+<span class="w">  </span><span class="c">!                                                  !  weight_func = 2  (x-a)**alfa*(b-x)**beta*log(x-a)</span>
+<span class="w">  </span><span class="c">!                                                  !  weight_func = 3  (x-a)**alfa*(b-x)**beta*log(b-x)</span>
+<span class="w">  </span><span class="c">!                                                  !  weight_func = 4  (x-a)**alfa*(b-x)**beta*log(x-a)*log(b-x)</span>
+<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">verbose</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">Ninterp</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="k">result</span>
+<span class="w">  </span><span class="c">!actual default variables</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">epsabs_</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">epsrel_</span>
+<span class="w">  </span><span class="kt">logical</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">verbose_</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">fsample</span><span class="p">))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xsample</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Neval</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ier</span><span class="p">,</span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Nsingular_points</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ninterp_</span><span class="p">,</span><span class="n">Lin</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">routine_name</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">type </span><span class="n">finter_type</span>
+<span class="w">     </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">X</span><span class="p">(:)</span>
+<span class="w">     </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">F</span><span class="p">(:)</span>
+<span class="w">     </span><span class="kt">integer</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">Imin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">Imax</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">0</span>
+<span class="w">     </span><span class="kt">logical</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">  </span><span class="k">end type </span><span class="n">finter_type</span>
+<span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">finter_type</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">Finterp</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">epsabs_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">epsabs</span><span class="p">))</span><span class="n">epsabs_</span><span class="o">=</span><span class="n">epsabs</span>
+<span class="w">  </span><span class="n">epsrel_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">d</span><span class="o">-</span><span class="mi">6</span><span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">epsrel</span><span class="p">))</span><span class="n">epsrel_</span><span class="o">=</span><span class="n">epsrel</span>
+<span class="w">  </span><span class="n">verbose_</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">verbose</span><span class="p">))</span><span class="n">verbose_</span><span class="o">=</span><span class="n">verbose</span>
+<span class="w">  </span><span class="n">Ninterp_</span><span class="o">=</span><span class="mi">3</span><span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">Ninterp</span><span class="p">))</span><span class="n">Ninterp_</span><span class="o">=</span><span class="n">Ninterp</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!Build the interpolating function to be integrated:</span>
+<span class="w">  </span><span class="n">Lin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">fsample</span><span class="p">)</span>
+<span class="w">  </span><span class="n">xsample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">Lin</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">init_finter</span><span class="p">(</span><span class="n">Finterp</span><span class="p">,</span><span class="n">xsample</span><span class="p">,</span><span class="n">fsample</span><span class="p">,</span><span class="n">Ninterp_</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="nb">present</span><span class="p">(</span><span class="n">alfa</span><span class="p">).</span><span class="nb">OR</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: key &amp; alfa,beta&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">cpole</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: key &amp; cpole&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_points</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: key &amp; singular_points&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_endpoint</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: key &amp; singular_endpoint&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: key &amp; omega&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_endpoint</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="nb">present</span><span class="p">(</span><span class="n">alfa</span><span class="p">).</span><span class="nb">OR</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: singular_endpoint &amp; alfa,beta&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_endpoint</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">cpole</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: singular_endpoint &amp; cpole&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_endpoint</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_points</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: singular_endpoint &amp; singular_points&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_endpoint</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: singular_endpoint &amp; omega&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">cpole</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="nb">present</span><span class="p">(</span><span class="n">alfa</span><span class="p">).</span><span class="nb">OR</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: cpole &amp; alfa,beta&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">cpole</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_points</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: cpole &amp; singular_points&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">cpole</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: cpole &amp; omega&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="nb">present</span><span class="p">(</span><span class="n">alfa</span><span class="p">).</span><span class="nb">OR</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: omega &amp; alfa,beta&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_points</span><span class="p">))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: omega &amp; singular_points&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_points</span><span class="p">).</span><span class="nb">AND</span><span class="p">.(</span><span class="nb">present</span><span class="p">(</span><span class="n">alfa</span><span class="p">).</span><span class="nb">OR</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: singular_points &amp; alfa,beta&quot;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!QNG:  no need</span>
+<span class="w">  </span><span class="c">!QAGS: need singular_endpoint=T</span>
+<span class="w">  </span><span class="c">!QAG : need key=1,6</span>
+<span class="w">  </span><span class="c">!QAGP: need singular_points</span>
+<span class="w">  </span><span class="c">!QAWC: need cpole</span>
+<span class="w">  </span><span class="c">!QAWO: need omega + weight_func=1,2</span>
+<span class="w">  </span><span class="c">!QAWS: need alfa + beta + weight_func=1,2,3,4</span>
+<span class="w">  </span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QNG&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_endpoint</span><span class="p">))</span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAGS&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAG&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">singular_points</span><span class="p">))</span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAGP&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">cpole</span><span class="p">))</span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAWC&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">omega</span><span class="p">))</span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAWO&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">alfa</span><span class="p">).</span><span class="nb">AND</span><span class="p">.</span><span class="nb">present</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span><span class="n">routine_name</span><span class="o">=</span><span class="s1">&#39;QAWS&#39;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,A)&quot;</span><span class="p">)</span><span class="s2">&quot;QUAD: selected procedure =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">routine_name</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">select case</span><span class="p">(</span><span class="n">routine_name</span><span class="p">)</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QNG&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">call </span><span class="n">QNG</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Endpoints (a,b)                             =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QAGS&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">call </span><span class="n">QAGS</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;(Singular) endpoints (a*,b*)                =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QAG&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">key</span><span class="o">&lt;</span><span class="mf">1.</span><span class="nb">OR</span><span class="p">.</span><span class="n">key</span><span class="o">&gt;</span><span class="mi">6</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: use QAG, key !=[1:6]&quot;</span>
+<span class="w">     </span><span class="k">call </span><span class="n">QAG</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Endpoints (a,b)                             =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Approximation or                            =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">key</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QAGP&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="n">Nsingular_points</span><span class="o">=</span><span class="n">size</span><span class="p">(</span><span class="n">singular_points</span><span class="p">)</span>
+<span class="w">     </span><span class="k">call </span><span class="n">QAGP</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">Nsingular_points</span><span class="p">,</span><span class="n">singular_points</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Endpoints (a,b)                             =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="s1">&#39;N_singular_points                           =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Nsingular_points</span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Nsingular_points</span>
+<span class="w">           </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,I6,F14.6)&quot;</span><span class="p">)</span><span class="s1">&#39;I_singular_point                            =&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">singular_points</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="k">enddo</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QAWC&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">call </span><span class="n">QAWC</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">cpole</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Endpoints (a,b)                             =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;C_pole                                      =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">cpole</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QAWO&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">&lt;</span><span class="mf">1.</span><span class="nb">OR</span><span class="p">.</span><span class="n">weight_func</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: use QAWO, weight_func !=[1,2]&quot;</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is cos(omega*x)&#39;</span>
+<span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is sin(omega*x)&#39;</span>
+<span class="w">        </span><span class="k">endif</span>
+<span class="k">     endif</span>
+<span class="k">     call </span><span class="n">QAWO</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">omega</span><span class="p">,</span><span class="n">weight_func</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then </span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Endpoints (a,b)                             =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Omega                                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">omega</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;QAWS&#39;</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">&lt;</span><span class="mf">1.</span><span class="nb">OR</span><span class="p">.</span><span class="n">weight_func</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">)</span><span class="k">stop</span><span class="w"> </span><span class="s2">&quot;ERROR in quad: use QAWS, weight_func !=[1,..,4]&quot;</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta         &#39;</span>
+<span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta*log(x-a)&#39;</span>
+<span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta*log(b-x) &#39;</span>
+<span class="w">        </span><span class="k">elseif</span><span class="p">(</span><span class="n">weight_func</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A)&#39;</span><span class="p">)</span><span class="s1">&#39;W(x) function is (x-a)**alfa*(b-x)**beta*log(x-a)*log(b-x)&#39;</span>
+<span class="w">        </span><span class="k">endif</span>
+<span class="k">     endif</span>
+<span class="k">     call </span><span class="n">QAWS</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">alfa</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">weight_func</span><span class="p">,</span><span class="n">epsabs_</span><span class="p">,</span><span class="n">epsrel_</span><span class="p">,</span><span class="k">result</span><span class="p">,</span><span class="n">abserr</span><span class="p">,</span><span class="n">neval</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">verbose_</span><span class="p">)</span><span class="k">then</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Endpoints (a,b)                             =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,2F14.6)&#39;</span><span class="p">)</span><span class="s1">&#39;Parameters (alfa,beta)                      =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">alfa</span><span class="p">,</span><span class="n">beta</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral                          =&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">result</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,F14.6)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Estimated integral error                    =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">abserr</span>
+<span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w">    </span><span class="s1">&#39;Error return code IER                       =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="k">        if</span><span class="p">(</span><span class="n">ier</span><span class="o">/=</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<span class="k">           write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I8)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error return code IER =&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ier</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        endif</span>
+<span class="k">     endif</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">  </span><span class="k">end select</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">delete_finter</span><span class="p">(</span><span class="n">finterp</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="k">contains</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">subroutine </span><span class="n">init_finter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">Xin</span><span class="p">,</span><span class="n">Fin</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">finter_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">func</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">xin</span><span class="p">(:)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">fin</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xin</span><span class="p">))</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="n">Lin</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">status</span><span class="p">)</span><span class="k">deallocate</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">x</span><span class="p">,</span><span class="n">func</span><span class="p">%</span><span class="n">f</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Lin</span><span class="o">=</span><span class="n">size</span><span class="p">(</span><span class="n">xin</span><span class="p">)</span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">x</span><span class="p">(</span><span class="n">Lin</span><span class="p">),</span><span class="n">func</span><span class="p">%</span><span class="n">f</span><span class="p">(</span><span class="n">Lin</span><span class="p">))</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">X</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">Xin</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">F</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">Fin</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">Imax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lin</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">Imin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">N</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">N</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">status</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">init_finter</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">subroutine </span><span class="n">delete_finter</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">finter_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">func</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">x</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">f</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">func</span><span class="p">%</span><span class="n">f</span><span class="p">)</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">imax</span><span class="o">=</span><span class="mi">0</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">imin</span><span class="o">=</span><span class="mi">0</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">N</span><span class="w">   </span><span class="o">=</span><span class="mi">0</span>
+<span class="w">    </span><span class="n">func</span><span class="p">%</span><span class="n">status</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">delete_finter</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">function </span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">func</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">dy</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k0</span><span class="p">,</span><span class="n">k1</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span>
+<span class="w">    </span><span class="n">N</span><span class="o">=</span><span class="n">finterp</span><span class="p">%</span><span class="n">N</span><span class="w">    </span><span class="c">!order of polynomial interpolation</span>
+<span class="w">    </span><span class="n">func</span><span class="o">=</span><span class="mi">0</span><span class="n">d0</span>
+<span class="w">    </span><span class="n">j</span><span class="o">=</span><span class="n">locate</span><span class="p">(</span><span class="n">finterp</span><span class="p">%</span><span class="n">X</span><span class="p">(</span><span class="n">finterp</span><span class="p">%</span><span class="n">Imin</span><span class="p">:</span><span class="n">finterp</span><span class="p">%</span><span class="n">Imax</span><span class="p">),</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="c">!</span>
+<span class="w">    </span><span class="n">k</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="n">k0</span><span class="o">=</span><span class="n">k</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">k0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">finterp</span><span class="p">%</span><span class="n">Imin</span><span class="p">)</span><span class="n">k0</span><span class="o">=</span><span class="n">finterp</span><span class="p">%</span><span class="n">Imin</span>
+<span class="w">    </span><span class="n">k1</span><span class="o">=</span><span class="n">k</span><span class="o">+</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">k1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">finterp</span><span class="p">%</span><span class="n">Imax</span><span class="p">)</span><span class="k">then</span>
+<span class="k">       </span><span class="n">k1</span><span class="o">=</span><span class="n">finterp</span><span class="p">%</span><span class="n">Imax</span>
+<span class="w">       </span><span class="n">k0</span><span class="o">=</span><span class="n">k1</span><span class="o">-</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="k">    call </span><span class="n">polint</span><span class="p">(</span><span class="n">finterp</span><span class="p">%</span><span class="n">X</span><span class="p">(</span><span class="n">k0</span><span class="p">:</span><span class="n">k1</span><span class="p">),</span><span class="n">finterp</span><span class="p">%</span><span class="n">F</span><span class="p">(</span><span class="n">k0</span><span class="p">:</span><span class="n">k1</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="n">dy</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end function </span><span class="n">func</span>
+<span class="k">end subroutine </span><span class="n">quad_sample</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              SciFortran
+ was developed by QcmP Lab members<br>              &copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

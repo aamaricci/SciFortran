@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/interpolate_cubspl_routines.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_cubspl_routines.f90.html'>interpolate_cubspl_routines.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">cubspl</li>
           </ol>
         </nav>
@@ -144,70 +144,12 @@
 </h2>
     
 
-    <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
-<p>! CUBSPL defines an interpolatory cubic spline.</p>
-<p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">A</span><span class="w"> </span><span class="nv">tridiagonal</span><span class="w"> </span><span class="nv">linear</span><span class="w"> </span><span class="nv">system</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">unknown</span><span class="w"> </span><span class="nv">slopes</span><span class="w"> </span><span class="nv">S</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span><span class="w"> </span><span class="nv">of</span>
-<span class="nv">F</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">TAU</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">I</span><span class="o">=</span><span class="mi">1</span>,...,<span class="w"> </span><span class="nv">N</span>,<span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">generated</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">solved</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">Gauss</span>
-<span class="nv">elimination</span>,<span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">S</span><span class="ss">(</span><span class="nv">I</span><span class="ss">)</span><span class="w"> </span><span class="nv">ending</span><span class="w"> </span><span class="nv">up</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">C</span><span class="ss">(</span><span class="mi">2</span>,<span class="nv">I</span><span class="ss">)</span>,<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">I</span>.
-</code></pre></div>
-
-<p>Modified:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">14</span><span class="w"> </span><span class="n">February</span><span class="w"> </span><span class="mf">2007</span>
-</code></pre></div>
-
-<p>Author:</p>
-<div class="codehilite"><pre><span></span><code>Carl DeBoor
-</code></pre></div>
-
-<p>Reference:</p>
-<div class="codehilite"><pre><span></span><code>Carl DeBoor,
-A Practical Guide to Splines,
-Springer, 2001,
-ISBN: 0387953663,
-LC: QA1.A647.v27.
-</code></pre></div>
-
-<p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">Input</span><span class="nv">,</span><span class="w"> </span><span class="nb">real </span><span class="p">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="nv">N</span><span class="p">)</span><span class="nv">,</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">abscissas</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="nb">X</span><span class="w"> </span><span class="nb">values</span><span class="w"> </span><span class="nb">of</span>
-<span class="nv">the</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">points</span><span class="p">.</span><span class="w">  </span><span class="nv">The</span><span class="w"> </span><span class="nv">entries</span><span class="w"> </span><span class="nb">of</span><span class="w"> </span><span class="nv">TAU</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">assumed</span><span class="w"> </span><span class="nb">to</span><span class="w"> </span><span class="nv">be</span>
-<span class="nv">strictly</span><span class="w"> </span><span class="nv">increasing</span><span class="p">.</span>
-
-<span class="nb">Input</span><span class="nv">,</span><span class="w"> </span><span class="kt">integer </span><span class="p">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nv">N,</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="nb">of</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">points</span><span class="p">.</span><span class="w">  </span><span class="nv">N</span><span class="w"> </span><span class="nb">is</span>
-<span class="nv">assumed</span><span class="w"> </span><span class="nb">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nb">at</span><span class="w"> </span><span class="nv">least</span><span class="w"> </span><span class="mi">2</span><span class="p">.</span>
-
-<span class="nb">Input</span><span class="o">/</span><span class="nb">output</span><span class="nv">,</span><span class="w"> </span><span class="nb">real </span><span class="p">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nv">C</span><span class="p">(</span><span class="mi">4</span><span class="nv">,N</span><span class="p">).</span>
-<span class="nb">On</span><span class="w"> </span><span class="nb">input</span><span class="nv">,</span><span class="w"> </span><span class="nb">if</span><span class="w"> </span><span class="nv">IBCBEG</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="nv">IBCBEG</span><span class="w"> </span><span class="nb">is</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="mi">2</span><span class="nv">,</span><span class="w"> </span><span class="nb">then</span><span class="w"> </span><span class="nv">C</span><span class="p">(</span><span class="mi">2</span><span class="nv">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">or</span><span class="w"> </span><span class="nv">C</span><span class="p">(</span><span class="mi">2</span><span class="nv">,N</span><span class="p">)</span><span class="w"> </span><span class="nv">should</span><span class="w"> </span><span class="nv">have</span><span class="w"> </span><span class="nv">been</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nb">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">desired</span><span class="w"> </span><span class="nv">derivative</span>
-<span class="nb">values</span><span class="nv">,</span><span class="w"> </span><span class="nb">as</span><span class="w"> </span><span class="nv">described</span><span class="w"> </span><span class="nv">further</span><span class="w"> </span><span class="nv">under</span><span class="w"> </span><span class="nv">IBCBEG</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="nv">IBCEND</span><span class="p">.</span>
-<span class="nb">On</span><span class="w"> </span><span class="nb">output</span><span class="nv">,</span><span class="w"> </span><span class="nv">C</span><span class="w"> </span><span class="nb">contains</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">coefficients</span><span class="w"> </span><span class="nb">of</span>
-<span class="nv">the</span><span class="w"> </span><span class="nv">cubic</span><span class="w"> </span><span class="nv">interpolating</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nb">with</span><span class="w"> </span><span class="nv">interior</span><span class="w"> </span><span class="nv">knots</span>
-<span class="nv">TAU</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nb">through</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="nv">N</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span>
-<span class="nb">In</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">interval</span><span class="w"> </span><span class="nv">interval</span><span class="w"> </span><span class="p">(</span><span class="nv">TAU</span><span class="p">(</span><span class="nv">I</span><span class="p">)</span><span class="nv">,</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="nv">I</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="nv">,</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span>
-<span class="nv">F</span><span class="w"> </span><span class="nb">is</span><span class="w"> </span><span class="nv">given</span><span class="w"> </span><span class="nb">by</span>
-<span class="nb"> </span><span class="w"> </span><span class="nv">F</span><span class="p">(</span><span class="nb">X</span><span class="p">)</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="nv">C</span><span class="p">(</span><span class="mi">1</span><span class="nv">,I</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
-<span class="w">    </span><span class="nv">C</span><span class="p">(</span><span class="mi">2</span><span class="nv">,I</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">H</span><span class="w"> </span><span class="o">+</span>
-<span class="w">    </span><span class="nv">C</span><span class="p">(</span><span class="mi">3</span><span class="nv">,I</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">H</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span>
-<span class="w">    </span><span class="nv">C</span><span class="p">(</span><span class="mi">4</span><span class="nv">,I</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">H</span><span class="o">**</span><span class="mi">3</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>
-<span class="nb">where</span><span class="w"> </span><span class="nv">H</span><span class="o">=</span><span class="nv">X</span><span class="o">-</span><span class="nv">TAU</span><span class="p">(</span><span class="nv">I</span><span class="p">).</span><span class="w">  </span><span class="nv">The</span><span class="w"> </span><span class="nv">routine</span><span class="w"> </span><span class="nv">PPVALU</span><span class="w"> </span><span class="nv">may</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">used</span><span class="w"> </span><span class="nb">to</span>
-<span class="nv">evaluate</span><span class="w"> </span><span class="nv">F</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="nv">its</span><span class="w"> </span><span class="nv">derivatives</span><span class="w"> </span><span class="nb">from</span><span class="w"> </span><span class="nv">TAU,</span><span class="w"> </span><span class="nv">C,</span><span class="w"> </span><span class="nv">L</span><span class="o">=</span><span class="nv">N</span><span class="o">-</span><span class="mi">1</span><span class="nv">,</span>
-<span class="nb">and</span><span class="w"> </span><span class="nv">K</span><span class="o">=</span><span class="mi">4</span><span class="p">.</span>
-
-<span class="nb">Input</span><span class="nv">,</span><span class="w"> </span><span class="kt">integer </span><span class="p">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nv">IBCBEG,</span><span class="w"> </span><span class="nv">IBCEND,</span><span class="w"> </span><span class="nv">boundary</span><span class="w"> </span><span class="nv">condition</span><span class="w"> </span><span class="nv">indicators</span><span class="p">.</span>
-<span class="nv">IBCBEG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nv">means</span><span class="w"> </span><span class="nb">no</span><span class="w"> </span><span class="nv">boundary</span><span class="w"> </span><span class="nv">condition</span><span class="w"> </span><span class="nb">at</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="nb">is</span><span class="w"> </span><span class="nv">given</span><span class="p">.</span>
-<span class="nb">In</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nb">case</span><span class="nv">,</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="s2">&quot;not-a-knot condition&quot;</span><span class="w"> </span><span class="nb">is</span><span class="w"> </span><span class="nv">used</span><span class="p">.</span><span class="w">  </span><span class="nv">That</span>
-<span class="nb">is</span><span class="nv">,</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">jump</span><span class="w"> </span><span class="nb">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">third</span><span class="w"> </span><span class="nv">derivative</span><span class="w"> </span><span class="nv">across</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nb">is</span>
-<span class="nv">forced</span><span class="w"> </span><span class="nb">to</span><span class="w"> </span><span class="nv">zero</span><span class="p">.</span><span class="w">  </span><span class="nv">Thus</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">cubic</span>
-<span class="nv">polynomial</span><span class="w"> </span><span class="nv">pieces</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">made</span><span class="w"> </span><span class="nb">to</span><span class="w"> </span><span class="nv">coincide</span><span class="p">.</span>
-<span class="nv">IBCBEG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">means</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">slope</span><span class="w"> </span><span class="nb">at</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="nb">is</span><span class="w"> </span><span class="nb">to</span><span class="w"> </span><span class="nv">equal</span><span class="w"> </span><span class="nv">the</span>
-<span class="nb">input</span><span class="w"> </span><span class="nb">value</span><span class="w"> </span><span class="nv">C</span><span class="p">(</span><span class="mi">2</span><span class="nv">,</span><span class="mi">1</span><span class="p">).</span>
-<span class="nv">IBCBEG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">means</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">derivative</span><span class="w"> </span><span class="nb">at</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="nb">is</span>
-<span class="nb">to</span><span class="w"> </span><span class="nv">equal</span><span class="w"> </span><span class="nv">C</span><span class="p">(</span><span class="mi">2</span><span class="nv">,</span><span class="mi">1</span><span class="p">).</span>
-<span class="nv">IBCEND</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="nv">,</span><span class="w"> </span><span class="mi">1</span><span class="nv">,</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">has</span><span class="w"> </span><span class="nv">analogous</span><span class="w"> </span><span class="nv">meaning</span><span class="w"> </span><span class="nv">concerning</span><span class="w"> </span><span class="nv">the</span>
-<span class="nv">boundary</span><span class="w"> </span><span class="nv">condition</span><span class="w"> </span><span class="nb">at</span><span class="w"> </span><span class="nv">TAU</span><span class="p">(</span><span class="nv">N</span><span class="p">)</span><span class="nv">,</span><span class="w"> </span><span class="nb">with</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">additional</span>
-<span class="nb">information</span><span class="w"> </span><span class="nv">taken</span><span class="w"> </span><span class="nb">from</span><span class="w"> </span><span class="nv">C</span><span class="p">(</span><span class="mi">2</span><span class="nv">,N</span><span class="p">).</span>
-</code></pre></div>
+    <hr>
+<p>! CUBSPL defines an interpolatory cubic spline.
+  Discussion:
+    A tridiagonal linear system for the unknown slopes S(I) of
+    F at TAU(I), I=1,..., N, is generated and then solved by Gauss
+    elimination, with S(I) ending up in C(2,I), for all I.</p>
 
 
     <h3>Arguments</h3>
@@ -238,7 +180,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-c~95"></span>
+              <span class="anchor" id="variable-c~94"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -253,7 +195,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~377"></span>
+              <span class="anchor" id="variable-n~269"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -314,33 +256,13 @@ LC: QA1.A647.v27.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">cubspl</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">ibcbeg</span><span class="p">,</span><span class="w"> </span><span class="n">ibcend</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!***********************************************************************</span>
 <span class="w">  </span><span class="c">!! CUBSPL defines an interpolatory cubic spline.</span>
-<span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!    A tridiagonal linear system for the unknown slopes S(I) of</span>
 <span class="w">  </span><span class="c">!    F at TAU(I), I=1,..., N, is generated and then solved by Gauss</span>
 <span class="w">  </span><span class="c">!    elimination, with S(I) ending up in C(2,I), for all I.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
+
 <span class="w">  </span><span class="c">!  Parameters:</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) TAU(N), the abscissas or X values of</span>
@@ -368,7 +290,7 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!    evaluate F or its derivatives from TAU, C, L=N-1,</span>
 <span class="w">  </span><span class="c">!    and K=4.</span>
 <span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) IBCBEG, IBCEND, boundary condition indicators.</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) IBCBEG, IBCEND, boundary condition indicators</span>
 <span class="w">  </span><span class="c">!    IBCBEG = 0 means no boundary condition at TAU(1) is given.</span>
 <span class="w">  </span><span class="c">!    In this case, the &quot;not-a-knot condition&quot; is used.  That</span>
 <span class="w">  </span><span class="c">!    is, the jump in the third derivative across TAU(2) is</span>
@@ -383,9 +305,7 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!    information taken from C(2,N).</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="k">implicit none</span>
-
 <span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
-
 <span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 <span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">divdf1</span>
 <span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">divdf3</span>
@@ -405,7 +325,6 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">  </span><span class="k">end do</span>
-
 <span class="k">  do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
 <span class="w">  </span><span class="k">end do</span>
@@ -418,14 +337,12 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!  IBCBEG = 0: Not-a-knot</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ibcbeg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
 <span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
 <span class="w">        </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
 <span class="w">        </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="w">        </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">120</span>
 <span class="w">     </span><span class="k">end if</span>
-
 <span class="k">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
@@ -434,10 +351,8 @@ LC: QA1.A647.v27.
 <span class="w">     </span><span class="c">!  IBCBEG = 1: derivative specified.</span>
 <span class="w">     </span><span class="c">!</span>
 <span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ibcbeg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
 <span class="k">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
-
 <span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">120</span>
 <span class="w">     </span><span class="k">end if</span>
@@ -445,15 +360,12 @@ LC: QA1.A647.v27.
 <span class="w">     </span><span class="c">!  Second derivative prescribed at left end.</span>
 <span class="w">     </span><span class="c">!</span>
 <span class="w">  </span><span class="k">else</span>
-
 <span class="k">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-
 <span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">120</span>
 <span class="w">     </span><span class="k">end if</span>
-
 <span class="k">  end if</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  If there are interior knots, generate the corresponding</span>
@@ -480,11 +392,9 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ibcend</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">160</span>
 <span class="w">  </span><span class="k">end if</span>
-
 <span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ibcend</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">110</span>
 <span class="w">  </span><span class="k">end if</span>
-
 <span class="mi">90</span><span class="w"> </span><span class="k">continue</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  Not-a-knot and 3 &lt;= N, and either 3 &lt; N or also not-a-knot</span>
@@ -504,7 +414,6 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!  N = 3 and not-a-knot also at left.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="mi">100</span><span class="w"> </span><span class="k">continue</span>
-
 <span class="k">  </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 <span class="w">  </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
 <span class="w">  </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -515,7 +424,6 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!  IBCEND = 2: Second derivative prescribed at right endpoint.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="mi">110</span><span class="w"> </span><span class="k">continue</span>
-
 <span class="k">  </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 <span class="w">  </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span>
 <span class="w">  </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -526,27 +434,20 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!  N = 2.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="mi">120</span><span class="w"> </span><span class="k">continue</span>
-
 <span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ibcend</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
 <span class="k">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span>
 <span class="w">     </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-
 <span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ibcend</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">ibcbeg</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
 <span class="k">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
 <span class="w">     </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0D+00</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-
 <span class="w">  </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ibcend</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">ibcbeg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
 <span class="k">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-
 <span class="w">  </span><span class="k">end if</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  Back solve the upper triangular system </span>
@@ -556,7 +457,6 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!  for the slopes C(2,I), given that S(N) is already known.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="mi">160</span><span class="w"> </span><span class="k">continue</span>
-
 <span class="k">  do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
 <span class="w">  </span><span class="k">end do</span>
@@ -572,7 +472,6 @@ LC: QA1.A647.v27.
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">divdf1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">divdf3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dtau</span>
 <span class="w">     </span><span class="n">c</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6.0D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">divdf3</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dtau</span><span class="o">**</span><span class="mi">2</span>
 <span class="w">  </span><span class="k">end do</span>
-
 <span class="k">  return</span>
 <span class="k">end subroutine </span><span class="n">cubspl</span>
 </pre></div>
