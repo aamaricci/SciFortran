@@ -64,13 +64,15 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,ive
   !
   maxn   = Ns
   maxnev = Neigen
-  !
+  !  
   maxncv = 10*Neigen ; if(present(Nblock))maxncv = Nblock
   maxitr = 512       ; if(present(Nitermax))maxitr = Nitermax
   which_ = 'SA'     ! ; if(present(which))which_=which
   tol_   = 0d0       ; if(present(tol))tol_=tol
   verb   = .false.   ; if(present(iverbose))verb=iverbose
   vran   = .true.    ; if(present(vrandom))vran=vrandom
+
+  
   if(verb)then
      ndigit=-4
      logfil = 6
@@ -81,9 +83,9 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,ive
   if(maxncv>Ns)then
      maxncv=Ns
      print*,"PARPACK WARNING Ncv > Ns: reset block size to ",Ns
+     !BUG FIX FOR THE BLOCK RESIZE STUCK BEHAVIOR, from Xuanyu Long
+     call MPI_ALLREDUCE(MPI_IN_PLACE,maxncv,1,MPI_INTEGER,MPI_MIN,MpiComm,ierr)
   endif
-  !BUG FIX FOR THE BLOCK RESIZE STUCK BEHAVIOR, from Xuanyu Long
-  call MPI_ALLREDUCE(MPI_IN_PLACE,maxncv,1,MPI_INTEGER,MPI_MIN,MpiComm,ierr)
   !
   ldv    = maxn
   n      = maxn
@@ -125,13 +127,6 @@ subroutine lanczos_parpack_d(MpiComm,MatVec,eval,evec,Nblock,Nitermax,v0,tol,ive
   else
      allocate(vec(ldv))
      if(vran)then
-        ! call random_seed(size=nrandom)
-        ! if(allocated(seed_random))deallocate(seed_random)
-        ! allocate(seed_random(nrandom))
-        ! seed_random=1234567
-        ! call random_seed(put=seed_random)
-        ! deallocate(seed_random)
-        ! call random_number(vec)
         call mt_random(vec)
      else
         vec = 1d0              !start with unitary vector 1/sqrt(Ndim)

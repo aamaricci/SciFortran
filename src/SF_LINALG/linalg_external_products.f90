@@ -116,6 +116,7 @@ function cross_2d_c(a,b) result(c)
   complex(8)              :: c
   c = a(1)*b(2) - a(2)*b(1)
 end function cross_2d_c
+!
 function cross_3d_d(a,b) result(c)
   real(8),dimension(3) :: a,b
   real(8),dimension(3) :: c

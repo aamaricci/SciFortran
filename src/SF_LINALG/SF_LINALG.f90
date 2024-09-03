@@ -316,13 +316,13 @@ module SF_LINALG
   end interface outerprod
   !
   interface cross_product
-     module procedure cross_3d_d
-     module procedure cross_3d_c
+     module procedure :: cross_3d_d
+     module procedure :: cross_3d_c
   end interface cross_product
   !
   interface s3_product
-     module procedure s3_product_d
-     module procedure s3_product_c
+     module procedure :: s3_product_d
+     module procedure :: s3_product_c
   end interface s3_product
 
 
