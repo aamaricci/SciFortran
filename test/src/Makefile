@@ -13,7 +13,12 @@ OBJS=ASSERTING.o
 all: $(OBJS) init integrate parse_input iotools derivate fft interpolate optimize
 
 init:
-	make -C ./SF_INIT
+	make -C ./SF_ARRAYS
+	make -C ./SF_COLORS
+	make -C ./SF_CONSTANTS
+	make -C ./SF_FONTS
+	make -C ./SF_TIMER
+	make -C ./SF_MISC
 
 integrate:
 	make -C ./SF_INTEGRATE

@@ -2,6 +2,10 @@ module SF_TIMER
   implicit none
   private
 
+  character(len=9),parameter,dimension(12) :: month = (/ &
+       'January  ', 'February ', 'March    ', 'April    ', &
+       'May      ', 'June     ', 'July     ', 'August   ', &
+       'September', 'October  ', 'November ', 'December ' /)
   integer(4),dimension(8),save             :: data
   integer(4),save                          :: year
   integer(4),save                          :: mese
@@ -10,25 +14,20 @@ module SF_TIMER
   integer(4),save                          :: m
   integer(4),save                          :: s
   integer(4),save                          :: ms
-  character(len=9),parameter,dimension(12) :: month = (/ &
-       'January  ', 'February ', 'March    ', 'April    ', &
-       'May      ', 'June     ', 'July     ', 'August   ', &
-       'September', 'October  ', 'November ', 'December ' /)
-
   integer,save                             :: timer_index=0
-  integer(4),dimension(100,8),save         :: timer_start,timer_stop,timer0,timer1
-
+  real,dimension(100),save                 :: timer_start,timer_stop,timer0,timer1
   real,save                                :: time,old_time,dtime,elapsed_time,eta_time
+  integer,parameter                        :: secs_in_one_day=86400
+  integer,parameter                        :: secs_in_one_hour=3600
+  integer,parameter                        :: secs_in_one_min=60
+  integer                                  :: Funit
 
-  integer,parameter :: secs_in_one_day=86400
-  integer,parameter :: secs_in_one_hour=3600
-  integer,parameter :: secs_in_one_min=60
-
-  integer  :: Funit
-
-  public :: start_timer,stop_timer
-  public :: start_progress,stop_progress
+  public :: start_timer
   public :: eta
+  public :: stop_timer
+  !
+  public :: start_progress
+  public :: stop_progress
   public :: progress
   public :: progress_bar
   public :: progress_bar_eta
@@ -45,8 +44,9 @@ contains
     if(timer_index>size(timer_start,1))then
        stop "Error in cronograph: too many timers started"
     endif
-    call date_and_time(values=timer_start(timer_index,:))
-    timer0(timer_index,:)=timer_start(timer_index,:)
+    call cpu_time(timer_start(timer_index)) !time in seconds
+    timer0(timer_index)=timer_start(timer_index)
+    !
     !init variables for ETA:
     elapsed_time =0.0
     old_time     =0.0
@@ -54,13 +54,16 @@ contains
     !
   end subroutine start_timer
   !
-  subroutine start_progress(unit)
-    integer,optional :: unit
+  subroutine start_progress(title,unit)
+    character(len=*),optional :: title
+    integer,optional          :: unit
     funit=6;if(present(unit))funit=unit
+    if(present(title))write(funit,"(A)")trim(title)//":"
     !open(funit,carriagecontrol='fortran')
-    open(funit)
+    if(funit/=6)open(funit)
     call start_timer
   end subroutine start_progress
+
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : stop the timer and get the partial time
@@ -69,17 +72,18 @@ contains
     character(len=*),optional :: title
     integer,optional          :: unit
     integer                   :: unit_
-    integer,dimension(8)      :: itimer
+    ! integer,dimension(8)    :: itimer
+    real                      :: itimer
     unit_=6;if(present(unit))unit_=unit
-    call date_and_time(values=timer_stop(timer_index,:))
-    itimer=time_difference(timer_stop(timer_index,:),timer_start(timer_index,:))
+    call cpu_time(timer_stop(timer_index))
+    itimer=timer_stop(timer_index)-timer_start(timer_index)
     if(present(title))then
        call print_total_time(itimer,unit,title)
     else
        call print_total_time(itimer,unit)
     endif
-    timer_start(timer_index,:)=0
-    timer_stop(timer_index,:)=0
+    timer_start(timer_index)=0
+    timer_stop(timer_index)=0
     if(timer_index>1)then
        timer_index=timer_index-1
     else
@@ -87,25 +91,26 @@ contains
     endif
   end subroutine stop_timer
   !
-  subroutine stop_progress
-    close(funit)
+  subroutine stop_progress(title)
+    character(len=*),optional :: title
+    if(present(title))write(funit,"(A)")trim(title)//":"
+    if(funit/=6)close(funit)
     call stop_timer
   end subroutine stop_progress
 
 
   subroutine print_total_time(dummy,unit,title)
+    ! integer(4),dimension(8)   :: dummy
+    real                      :: dummy
     integer,optional          :: unit
     character(len=*),optional :: title
     integer                   :: unit_
-    integer(4),dimension(8)   :: dummy
     unit_=6;if(present(unit))unit_=unit
-    year = dummy(1)
-    mese = dummy(2)
-    day  = dummy(3)
-    h    = dummy(5)
-    m    = dummy(6)
-    s    = dummy(7)
-    ms   = dummy(8)
+    ms=int(fraction(dummy)*1000.0)
+    h =int(dummy/secs_in_one_hour)
+    m =int((dummy - h*secs_in_one_hour)/secs_in_one_min)
+    s =int(dummy - h*secs_in_one_hour - m*secs_in_one_min)
+    !
     if(present(title))then
        write(unit_,"(a,i3,a1,i2.2,a1,i2.2,a1,i3.3,A2,A)")"Total time [h:m:s.ms]: ",h,":",m,":",s,".",ms," :",trim(title)
     else
@@ -116,65 +121,23 @@ contains
 
 
 
-
-
-  !+-------------------------------------------------------------------+
-  !PURPOSE  : get time difference between two events
-  !+-------------------------------------------------------------------+
-  function time_difference(data1,data0)
-    integer(4),dimension(8) :: data1,data0,dummy,time_difference
-    dummy =data1-data0
-    year = dummy(1)
-    mese = dummy(2)
-    day  = dummy(3)
-    h    = dummy(5)
-    m    = dummy(6)
-    s    = dummy(7)
-    ms   = dummy(8)
-    if(h<0)then
-       day=day-1
-       h=24+h
-    endif
-    if(m<0)then
-       h=h-1
-       m=60+m
-    endif
-    if(s<0)then
-       m=m-1
-       s=60+s
-    endif
-    if(ms<0)then
-       s=s-1
-       ms=1000+ms
-    endif
-    time_difference(1)=year
-    time_difference(2)=mese
-    time_difference(3)=day
-    time_difference(5)=h
-    time_difference(6)=m
-    time_difference(7)=s
-    time_difference(8)=ms
-  end function time_difference
-
-
-
   !+-------------------------------------------------------------------+
   !PURPOSE  : get Expected Time of Arrival
   !+-------------------------------------------------------------------+
   subroutine eta(i,L,unit,file,step)
-    integer                 :: i,L!,k
-    integer,optional        :: step
-    integer,save            :: mod_print
-    integer                 :: percent,iprint
-    integer,save            :: older=0,oldiprint=0
-    logical                 :: esc,fullprint
-    integer(4),dimension(8) :: dummy
-    integer,optional        :: unit
-    integer,save            :: unit_
+    integer                   :: i,L
+    integer,optional          :: step
+    integer,save              :: mod_print
+    integer                   :: percent,iprint
+    integer,save              :: older=0,oldiprint=0
+    logical                   :: esc,fullprint
+    integer(4),dimension(8)   :: dummy
+    integer,optional          :: unit
+    integer,save              :: unit_
     character(len=*),optional :: file
-    character(len=16)      :: string
-    character(len=80)      :: message
-    logical,save            :: lentry=.true.
+    character(len=16)         :: string
+    character(len=80)         :: message
+    logical,save              :: lentry=.true.
     !Preambolo:
     if(lentry)then
        unit_=6 ; if(present(unit))unit_=unit
@@ -183,12 +146,12 @@ contains
        if(present(file))then
           unit_=719
           open(unit_,file=trim(adjustl(trim(file))))
-          write(unit_,*)
           write(*,"(2x,A)")"+ETA --> "//trim(adjustl(trim(file)))
        else
-          write(string,"(I4)")unit_
-          write(unit_,*)""
-          write(*,"(2x,A,I3)")"+ETA --> fort."//trim(adjustl(trim(string)))
+          if(unit_/=6)then
+             write(string,"(I4)")unit_
+             write(*,"(2x,A,I3)")"+ETA --> fort."//trim(adjustl(trim(string)))
+          endif
        endif
        lentry=.false.
     endif
@@ -213,8 +176,8 @@ contains
     !check if fullprint (date) is needed
     fullprint=.false.;if(percent<=1 .OR. percent==10 .OR. percent==50)fullprint=.true.
     !
-    old_time=time
-    time=total_time()
+    old_time     = time
+    time         = total_time() !time since the start of the clock
     dtime        = time-old_time     
     elapsed_time = elapsed_time + dtime
     dtime        = elapsed_time/real(i,4)
@@ -242,22 +205,10 @@ contains
   !PURPOSE  : a total_time
   !+-------------------------------------------------------------------+
   function total_time()
-    real(4)                 :: total_time
-    integer(4),dimension(8) :: dummy
-    call date_and_time(values=timer1(timer_index,:))
-    dummy= time_difference(timer1(timer_index,:),timer0(timer_index,:))
-    year = dummy(1)
-    mese = dummy(2)
-    day  = dummy(3)
-    h    = dummy(5)
-    m    = dummy(6)
-    s    = dummy(7)
-    ms   = dummy(8)
-    total_time= real(dble(ms)/1000.d0 &
-         + dble(s)               &
-         + dble(m)*60.d0         &
-         + dble(h)*60.d0**2      &
-         + dble(day)*24.d0*60.d0**2,4)
+    real                      :: total_time
+    real                      :: dummy
+    call cpu_time(timer1(timer_index))
+    total_time = timer1(timer_index) - timer0(timer_index)
   end function total_time
 
 

@@ -3,7 +3,7 @@ FFLAG = -O2 -ffree-line-length-none
 FPPMPI=-cpp -D_MPI
 FFLAGS= ${FFLAG} ${FPPMPI}
 
-TSTBIN=../../bin/SF_INIT
+TSTBIN=../../bin/SF_MISC
 
 GLOB_INC:=$(shell pkg-config --cflags scifor)
 GLOB_LIB:=$(shell pkg-config --libs scifor | sed  "s/;/ /g"  | sed 's/\\/  /g' )

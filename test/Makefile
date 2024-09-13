@@ -6,7 +6,12 @@ all: bin
 
 bin:
 	mkdir $(TSTBIN)
-	mkdir $(TSTBIN)/SF_INIT
+	mkdir $(TSTBIN)/SF_ARRAYS
+	mkdir $(TSTBIN)/SF_COLORS
+	mkdir $(TSTBIN)/SF_CONSTANTS
+	mkdir $(TSTBIN)/SF_FONTS
+	mkdir $(TSTBIN)/SF_MISC
+	mkdir $(TSTBIN)/SF_TIMER
 	mkdir $(TSTBIN)/SF_INTEGRATE
 	mkdir $(TSTBIN)/SF_PARSE_INPUT
 	mkdir $(TSTBIN)/SF_IOTOOLS
@@ -19,7 +24,12 @@ bin:
 # mkdir $(TSTBIN)/SF_RANDOM
 # mkdir $(TSTBIN)/SF_SPECIAL
 # mkdir $(TSTBIN)/SF_SP_LINALG
-	echo SF_INIT > $(TSTBIN)/list_dir
+	echo SF_ARRAYS > $(TSTBIN)/list_dir
+	echo SF_COLORS > $(TSTBIN)/list_dir
+	echo SF_CONTANTS > $(TSTBIN)/list_dir
+	echo SF_FONTS > $(TSTBIN)/list_dir
+	echo SF_MISC > $(TSTBIN)/list_dir
+	echo SF_TIMER > $(TSTBIN)/list_dir
 	echo SF_INTEGRATE >> $(TSTBIN)/list_dir
 	echo SF_PARSE_INPUT >> $(TSTBIN)/list_dir
 	echo SF_IOTOOLS >> $(TSTBIN)/list_dir
