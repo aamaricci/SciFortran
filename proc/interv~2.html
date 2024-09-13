@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_cubspl_routines.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_cubspl_routines.f90.html'>interpolate_cubspl_routines.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">interv</li>
           </ol>
         </nav>
@@ -144,7 +144,7 @@
 </h2>
     
 
-    <hr>
+    <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! INTERV brackets a real value in an ascending vector of values.</p>
 <p>Discussion:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">XT</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">increasing</span><span class="w"> </span><span class="n">values</span><span class="o">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">goal</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">routine</span>
@@ -225,7 +225,7 @@ LC: QA1.A647.v27.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-xt~11"></span>
+              <span class="anchor" id="variable-xt~8"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -255,7 +255,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~327"></span>
+              <span class="anchor" id="variable-x~308"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -270,7 +270,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-left~16"></span>
+              <span class="anchor" id="variable-left~11"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -316,7 +316,8 @@ LC: QA1.A647.v27.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">interv</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">,</span><span class="w"> </span><span class="n">lxt</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">mflag</span><span class="w"> </span><span class="p">)</span>
-<span class="w">  </span><span class="c">!********************************************************************</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!! INTERV brackets a real value in an ascending vector of values.</span>
 <span class="w">  </span><span class="c">!</span>
@@ -386,7 +387,9 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!    +1: XT(LXT) &lt;= X</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="k">implicit none</span>
+
 <span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lxt</span>
+
 <span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">left</span>
 <span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">mflag</span>
 <span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ihi</span>
@@ -395,22 +398,30 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">middle</span>
 <span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span>
 <span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">lxt</span><span class="p">)</span>
+
 <span class="w">  </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lxt</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">ihi</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
 <span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">lxt</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">110</span>
 <span class="w">     </span><span class="k">end if</span>
+
 <span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lxt</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        </span><span class="n">mflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
 <span class="w">        </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">        </span><span class="k">return</span>
 <span class="k">     end if</span>
+
 <span class="k">     </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lxt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">     </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lxt</span>
+
 <span class="w">  </span><span class="k">end if</span>
+
 <span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">20</span>
 <span class="w">  </span><span class="k">end if</span>
+
 <span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     </span><span class="n">mflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span>
@@ -419,10 +430,13 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  Now X &lt; XT(ILO).  Decrease ILO to capture X.</span>
 <span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">istep</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">istep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
 <span class="mi">10</span><span class="w"> </span><span class="k">continue</span>
+
 <span class="k">  </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span>
 <span class="w">  </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ihi</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">istep</span>
+
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">50</span>
@@ -430,28 +444,39 @@ LC: QA1.A647.v27.
 <span class="k">     </span><span class="n">istep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">istep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 <span class="w">     </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">10</span>
 <span class="w">  </span><span class="k">end if</span>
+
 <span class="k">  </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     </span><span class="n">mflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
 <span class="w">     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">     </span><span class="k">return</span>
 <span class="k">  end if</span>
+
 <span class="k">  go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">50</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  Now XT(IHI) &lt;= X.  Increase IHI to capture X.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="mi">20</span><span class="w"> </span><span class="k">continue</span>
+
 <span class="k">  </span><span class="n">istep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
 <span class="mi">30</span><span class="w"> </span><span class="k">continue</span>
+
 <span class="k">  </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ihi</span>
 <span class="w">  </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">istep</span>
+
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ihi</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lxt</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+
 <span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">50</span>
 <span class="w">     </span><span class="k">end if</span>
+
 <span class="k">     </span><span class="n">istep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">istep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 <span class="w">     </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">30</span>
+
 <span class="w">  </span><span class="k">end if</span>
+
 <span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">lxt</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">110</span>
 <span class="w">  </span><span class="k">end if</span>
@@ -459,9 +484,13 @@ LC: QA1.A647.v27.
 <span class="w">  </span><span class="c">!  Now XT(ILO) &lt; = X &lt; XT(IHI).  Narrow the interval.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lxt</span>
+
 <span class="mi">50</span><span class="w"> </span><span class="k">continue</span>
+
 <span class="k">  do</span>
+
 <span class="k">     </span><span class="n">middle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ihi</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span>
+
 <span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">middle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ilo</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        </span><span class="n">mflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">        </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilo</span>
@@ -475,20 +504,25 @@ LC: QA1.A647.v27.
 <span class="w">     </span><span class="k">else</span>
 <span class="k">        </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">middle</span>
 <span class="w">     </span><span class="k">end if</span>
+
 <span class="k">  end do</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="c">!  Set output and return.</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="mi">110</span><span class="w"> </span><span class="k">continue</span>
+
 <span class="k">  </span><span class="n">mflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">lxt</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">     </span><span class="n">mflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">  </span><span class="k">end if</span>
+
 <span class="k">  do </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lxt</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
 <span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">xt</span><span class="p">(</span><span class="n">lxt</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        return</span>
 <span class="k">     end if</span>
 <span class="k">  end do</span>
+
 <span class="k">  return</span>
 <span class="k">end subroutine </span><span class="n">interv</span>
 </pre></div>

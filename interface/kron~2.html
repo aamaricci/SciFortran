@@ -76,20 +76,20 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title="<p> 0.0% of total for procedures.</p>Including implementation: 84 statements,  0.1% of total for procedures.">7 statements</a>
+                 title="<p> 0.0% of total for procedures.</p>Including implementation: 124 statements,  0.2% of total for procedures.">6 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_LINALG.f90"> Source File</a>
+              <a href="../src/SF_SPARSE_ARRAY_CSR.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_linalg.f90.html'>SF_LINALG.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_linalg.html'>SF_LINALG</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_sparse_array_csr.f90.html'>SF_SPARSE_ARRAY_CSR.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_sparse_array_csr.html'>SF_SPARSE_ARRAY_CSR</a></li>
             <li class="breadcrumb-item active" aria-current="page">kron</li>
           </ol>
         </nav>
@@ -133,11 +133,10 @@
       </a>
       <div id="modprocs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-i_kronecker_product">i_kronecker_product</a>
-            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-d_kronecker_product">d_kronecker_product</a>
-            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-dc_kronecker_product">dc_kronecker_product</a>
-            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-cd_kronecker_product">cd_kronecker_product</a>
-            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-c_kronecker_product">c_kronecker_product</a>
+            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-kron_dmatrix_csr~2">kron_dmatrix_csr</a>
+            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-kron_zmatrix_csr~2">kron_zmatrix_csr</a>
+            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-restricted_kron_dmatrix_csr">restricted_kron_dmatrix_csr</a>
+            <a class="list-group-item" href="../interface/kron~2.html#moduleprocedure-restricted_kron_zmatrix_csr">restricted_kron_zmatrix_csr</a>
         </div>
       </div>
     </div>
@@ -157,7 +156,7 @@
 
         <h2>Module Procedures</h2>
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-i_kronecker_product~2"></span> <h3>private  function i_kronecker_product(A, B) result(AxB)  
+    <div class="card-header codesum"><span class="anchor" id="proc-kron_dmatrix_csr"></span> <h3>private  function kron_dmatrix_csr(A, B) result(AxB)  
 </h3></div>
     <div class="card-body">
         
@@ -175,30 +174,237 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~111"></span>
+              <span class="anchor" id="variable-a~88"></span>
+              type(<a href='../type/sparse_dmatrix_csr.html'>sparse_dmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>A</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~28"></span>
+              type(<a href='../type/sparse_dmatrix_csr.html'>sparse_dmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/sparse_dmatrix_csr.html'>sparse_dmatrix_csr</a>)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-kron_zmatrix_csr"></span> <h3>private  function kron_zmatrix_csr(A, B) result(AxB)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~90"></span>
+              type(<a href='../type/sparse_zmatrix_csr.html'>sparse_zmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>A</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~30"></span>
+              type(<a href='../type/sparse_zmatrix_csr.html'>sparse_zmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/sparse_zmatrix_csr.html'>sparse_zmatrix_csr</a>)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-restricted_kron_dmatrix_csr"></span> <h3>private  function restricted_kron_dmatrix_csr(A, B, states) result(AxB)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~89"></span>
+              type(<a href='../type/sparse_dmatrix_csr.html'>sparse_dmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>A</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~29"></span>
+              type(<a href='../type/sparse_dmatrix_csr.html'>sparse_dmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-states"></span>
               integer,
             </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>states</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/sparse_dmatrix_csr.html'>sparse_dmatrix_csr</a>)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-restricted_kron_zmatrix_csr"></span> <h3>private  function restricted_kron_zmatrix_csr(A, B, states) result(AxB)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~91"></span>
+              type(<a href='../type/sparse_zmatrix_csr.html'>sparse_zmatrix_csr</a>),
+            </td>
 <td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>A</strong>(:,:)</td>
+            <td><strong>A</strong></td>
             <td>
                 
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~41"></span>
+              <span class="anchor" id="variable-b~31"></span>
+              type(<a href='../type/sparse_zmatrix_csr.html'>sparse_zmatrix_csr</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-states~2"></span>
               integer,
             </td>
-<td>intent(in)</td>
+<td>intent(in),</td>
               <td></td>            <td>
-              
+              dimension(:)
             </td>
             <td>::</td>
-            <td><strong>B</strong>(:,:)</td>
+            <td><strong>states</strong></td>
             <td>
                 
             </td>
@@ -208,243 +414,7 @@
 
     <h4>
     Return Value
-    <small>integer, (size(A,1)*size(B,1),size(A,2)*size(B,2))</small>
-    </h4>
-    
-
-    </div>
-  </div>
-
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-d_kronecker_product~2"></span> <h3>private  function d_kronecker_product(A, B) result(AxB)  
-</h3></div>
-    <div class="card-body">
-        
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-a~112"></span>
-              real(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>A</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-b~42"></span>
-              real(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>B</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>real(kind=8), (size(A,1)*size(B,1),size(A,2)*size(B,2))</small>
-    </h4>
-    
-
-    </div>
-  </div>
-
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-dc_kronecker_product~2"></span> <h3>private  function dc_kronecker_product(A, B) result(AxB)  
-</h3></div>
-    <div class="card-body">
-        
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-a~113"></span>
-              real(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>A</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-b~43"></span>
-              complex(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>B</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>complex(kind=8), (size(A,1)*size(B,1),size(A,2)*size(B,2))</small>
-    </h4>
-    
-
-    </div>
-  </div>
-
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-cd_kronecker_product~2"></span> <h3>private  function cd_kronecker_product(A, B) result(AxB)  
-</h3></div>
-    <div class="card-body">
-        
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-a~114"></span>
-              complex(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>A</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-b~44"></span>
-              real(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>B</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>complex(kind=8), (size(A,1)*size(B,1),size(A,2)*size(B,2))</small>
-    </h4>
-    
-
-    </div>
-  </div>
-
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-c_kronecker_product~2"></span> <h3>private  function c_kronecker_product(A, B) result(AxB)  
-</h3></div>
-    <div class="card-body">
-        
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-a~115"></span>
-              complex(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>A</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-b~45"></span>
-              complex(kind=8),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>B</strong>(:,:)</td>
-            <td>
-                
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>complex(kind=8), (size(A,1)*size(B,1),size(A,2)*size(B,2))</small>
+    <small>type(<a href='../type/sparse_zmatrix_csr.html'>sparse_zmatrix_csr</a>)</small>
     </h4>
     
 

@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">spli2d</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/spli2d.html#src">spli2d</a>
+      </div>
+    </div>
 
 
   </div>
@@ -143,26 +149,26 @@
 <p>Discussion:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">SPLI2D</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">extended</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">SPLINT</span><span class="o">.</span>
 
-<span class="n">SPLI2D</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="n">BCOEF</span><span class="p">(</span><span class="n">J</span><span class="p">,</span><span class="o">.</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span>
-<span class="n">spline</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">knots</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="n">on</span><span class="w"> </span>
+<span class="n">SPLI2D</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="n">BCOEF</span><span class="p">(</span><span class="n">J</span><span class="p">,</span><span class="o">.</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span>
+<span class="n">spline</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">knots</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="n">on</span>
 <span class="n">the</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">GTAU</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="n">J</span><span class="p">)</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">J</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">M</span><span class="o">.</span>
 
 <span class="n">The</span><span class="w"> </span><span class="n">I</span><span class="o">-</span><span class="n">th</span><span class="w"> </span><span class="n">equation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span>
 
 <span class="w">  </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BCOEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span>
 
-<span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">interpolant</span><span class="w"> </span><span class="n">enforces</span><span class="w"> </span>
-<span class="n">interpolation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">N</span><span class="o">.</span><span class="w">  </span><span class="n">Hence</span><span class="p">,</span><span class="w">  </span><span class="n">B</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GTAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="w"> </span>
-<span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">I</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">band</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">bands</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span>
+<span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">interpolant</span><span class="w"> </span><span class="n">enforces</span>
+<span class="n">interpolation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">N</span><span class="o">.</span><span class="w">  </span><span class="n">Hence</span><span class="p">,</span><span class="w">  </span><span class="n">B</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GTAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span>
+<span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">I</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">band</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="n">bands</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span>
 <span class="n">invertible</span><span class="o">.</span>
 
 <span class="n">The</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">generated</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">stored</span><span class="p">,</span><span class="w"> </span><span class="n">diagonal</span><span class="w"> </span><span class="n">by</span>
 <span class="n">diagonal</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="n">diagonal</span>
 <span class="n">going</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="n">K</span><span class="o">.</span>
 
-<span class="n">The</span><span class="w"> </span><span class="n">banded</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">BANFAC</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span>
-<span class="n">constructs</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="n">factorization</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">stores</span><span class="w"> </span><span class="n">it</span><span class="w"> </span>
-<span class="n">again</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">followed</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">BANSLV</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">obtains</span><span class="w"> </span>
+<span class="n">The</span><span class="w"> </span><span class="n">banded</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">BANFAC</span><span class="p">,</span><span class="w"> </span><span class="n">which</span>
+<span class="n">constructs</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="n">factorization</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">stores</span><span class="w"> </span><span class="n">it</span>
+<span class="n">again</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">followed</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">BANSLV</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">obtains</span>
 <span class="n">the</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="n">BCOEF</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">substitution</span><span class="o">.</span>
 
 <span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">theoretically</span><span class="w"> </span><span class="n">invertible</span><span class="w"> </span><span class="k">if</span>
@@ -197,7 +203,7 @@ LC: QA1.A647.v27.
 
 <span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">knot</span><span class="w"> </span><span class="n">sequence</span><span class="o">.</span>
 
-<span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">points</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span>
+<span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">points</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">the</span>
 <span class="n">dimension</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="n">space</span><span class="w"> </span><span class="n">SPLINE</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
 
 <span class="n">Input</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">spline</span><span class="o">.</span>
@@ -206,13 +212,13 @@ LC: QA1.A647.v27.
 
 <span class="n">Work</span><span class="w"> </span><span class="n">space</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">WORK</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span>
 
-<span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Q</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span>
-<span class="n">factorization</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">coefficient</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span>
+<span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Q</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">triangular</span>
+<span class="n">factorization</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">coefficient</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span>
 <span class="n">system</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">spline</span><span class="w"> </span><span class="n">interpolant</span><span class="o">.</span>
-<span class="n">The</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">interpolant</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">additional</span><span class="w"> </span>
-<span class="n">data</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="w"> </span><span class="n">HTAU</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">N</span><span class="w">  </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">data</span><span class="w"> </span>
-<span class="n">abscissae</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">obtained</span><span class="w"> </span><span class="n">without</span><span class="w"> </span><span class="n">going</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">the</span><span class="w"> </span>
-<span class="n">calculations</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">routine</span><span class="p">,</span><span class="w"> </span><span class="n">simply</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">HTAU</span><span class="w"> </span><span class="n">into</span><span class="w"> </span>
+<span class="n">The</span><span class="w"> </span><span class="n">B</span><span class="o">-</span><span class="n">spline</span><span class="w"> </span><span class="n">coefficients</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">interpolant</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">additional</span>
+<span class="n">data</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="bp">TAU</span><span class="p">(</span><span class="n">I</span><span class="p">),</span><span class="w"> </span><span class="n">HTAU</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">N</span><span class="w">  </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">data</span>
+<span class="n">abscissae</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">obtained</span><span class="w"> </span><span class="n">without</span><span class="w"> </span><span class="n">going</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">the</span>
+<span class="n">calculations</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">routine</span><span class="p">,</span><span class="w"> </span><span class="n">simply</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">HTAU</span><span class="w"> </span><span class="n">into</span>
 <span class="n">BCOEF</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">statement</span>
 <span class="w">  </span><span class="n">CALL</span><span class="w"> </span><span class="n">BANSLV</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">BCOEF</span><span class="w"> </span><span class="p">)</span>
 
@@ -220,8 +226,8 @@ LC: QA1.A647.v27.
 <span class="n">the</span><span class="w"> </span><span class="n">interpolant</span><span class="o">.</span>
 
 <span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">IFLAG</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">indicator</span><span class="o">.</span>
-<span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">error</span><span class="o">.</span><span class="w">   </span>
-<span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">occurred</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">caused</span><span class="w"> </span><span class="n">by</span><span class="w"> </span>
+<span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">error</span><span class="o">.</span>
+<span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">occurred</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">caused</span><span class="w"> </span><span class="n">by</span>
 <span class="w">   </span><span class="n">singularity</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">system</span><span class="o">.</span>
 </code></pre></div>
 
@@ -239,7 +245,7 @@ LC: QA1.A647.v27.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-tau~4"></span>
+              <span class="anchor" id="variable-tau~6"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -269,7 +275,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~35"></span>
+              <span class="anchor" id="variable-t~50"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -284,7 +290,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~113"></span>
+              <span class="anchor" id="variable-n~254"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -299,7 +305,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~147"></span>
+              <span class="anchor" id="variable-k~213"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -314,7 +320,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~100"></span>
+              <span class="anchor" id="variable-m~182"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -329,7 +335,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-work~3"></span>
+              <span class="anchor" id="variable-work~53"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -344,7 +350,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-q~19"></span>
+              <span class="anchor" id="variable-q~31"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -374,7 +380,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iflag~10"></span>
+              <span class="anchor" id="variable-iflag~21"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -542,6 +548,240 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">spli2d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="n">gtau</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">bcoef</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! SPLI2D produces a interpolatory tensor product spline.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    SPLI2D is an extended version of SPLINT.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    SPLI2D produces the B-spline coefficients BCOEF(J,.) of the </span>
+<span class="w">  </span><span class="c">!    spline of order K with knots T(1:N+K), which takes on </span>
+<span class="w">  </span><span class="c">!    the value GTAU(I,J) at TAU(I), I=1,..., N, J=1,...,M.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    The I-th equation of the linear system </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      A * BCOEF = B  </span>
+<span class="w">  </span><span class="c">!  </span>
+<span class="w">  </span><span class="c">!    for the B-spline coefficients of the interpolant enforces </span>
+<span class="w">  </span><span class="c">!    interpolation at TAU(I), I=1,...,N.  Hence,  B(I) = GTAU(I), </span>
+<span class="w">  </span><span class="c">!    for all I, and A is a band matrix with 2*K-1 bands, if it is </span>
+<span class="w">  </span><span class="c">!    invertible.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    The matrix A is generated row by row and stored, diagonal by</span>
+<span class="w">  </span><span class="c">!    diagonal, in the rows of the array Q, with the main diagonal</span>
+<span class="w">  </span><span class="c">!    going into row K.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    The banded system is then solved by a call to BANFAC, which </span>
+<span class="w">  </span><span class="c">!    constructs the triangular factorization for A and stores it </span>
+<span class="w">  </span><span class="c">!    again in Q, followed by a call to BANSLV, which then obtains </span>
+<span class="w">  </span><span class="c">!    the solution BCOEF by substitution.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!     The linear system to be solved is theoretically invertible if</span>
+<span class="w">  </span><span class="c">!     and only if </span>
+<span class="w">  </span><span class="c">!       </span>
+<span class="w">  </span><span class="c">!       T(I) &lt; TAU(I) &lt; TAU(I+K), for all I.</span>
+<span class="w">  </span><span class="c">!         </span>
+<span class="w">  </span><span class="c">!     Violation of this condition is certain to lead to IFLAG = 2.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) TAU(N), contains the data point abscissas.</span>
+<span class="w">  </span><span class="c">!    TAU must be strictly increasing</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) GTAU(N,M), contains the data point ordinates.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T(N+K), the knot sequence.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the number of data points and the </span>
+<span class="w">  </span><span class="c">!    dimension of the spline space SPLINE(K,T)</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) K, the order of the spline.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) M, the number of data sets.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Work space, real ( kind = 8 ) WORK(N).</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) Q(2*K-1)*N, the triangular </span>
+<span class="w">  </span><span class="c">!    factorization of the coefficient matrix of the linear </span>
+<span class="w">  </span><span class="c">!    system for the B-spline coefficients of the spline interpolant.</span>
+<span class="w">  </span><span class="c">!    The B-spline coefficients for the interpolant of an additional </span>
+<span class="w">  </span><span class="c">!    data set ( TAU(I), HTAU(I) ), I=1,...,N  with the same data </span>
+<span class="w">  </span><span class="c">!    abscissae can be obtained without going through all the </span>
+<span class="w">  </span><span class="c">!    calculations in this routine, simply by loading HTAU into </span>
+<span class="w">  </span><span class="c">!    BCOEF and then using the statement</span>
+<span class="w">  </span><span class="c">!      CALL BANSLV ( Q, 2*K-1, N, K-1, K-1, BCOEF )</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) BCOEF(N), the B-spline coefficients of</span>
+<span class="w">  </span><span class="c">!    the interpolant.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) IFLAG, error indicator.</span>
+<span class="w">  </span><span class="c">!    1, no error.   </span>
+<span class="w">  </span><span class="c">!    2, an error occurred, which may have been caused by </span>
+<span class="w">  </span><span class="c">!       singularity of the linear system.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gtau</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ilp1mx</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jj</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">left</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">taui</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">work</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span>
+
+<span class="w">  </span><span class="n">q</span><span class="p">(</span><span class="mi">1</span><span class="p">:(</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Construct the N interpolation equations.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">     </span><span class="n">taui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="n">ilp1mx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Find the index LEFT in the closed interval (I,I+K-1) such that:</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!    T(LEFT) &lt; = TAU(I) &lt; T(LEFT+1)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  The matrix will be singular if this is not possible.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">taui</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLI2D - Fatal error!&#39;</span>
+<span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The TAU array is not strictly increasing.&#39;</span>
+<span class="w">        </span><span class="k">stop</span>
+<span class="k">     end if</span>
+
+<span class="k">     do while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">taui</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ilp1mx</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           cycle</span>
+<span class="k">        end if</span>
+
+<span class="k">        </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">taui</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">           </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">           </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLI2D - Fatal error!&#39;</span>
+<span class="w">           </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  The TAU array is not strictly increasing.&#39;</span>
+<span class="w">           </span><span class="k">stop</span>
+<span class="k">        end if</span>
+
+<span class="k">        exit</span>
+
+<span class="k">     end do</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  The I-th equation enforces interpolation at TAUI, hence</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!    A(I,J) = B(J,K,T)(TAUI), for all J. </span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  Only the K entries with J = LEFT-K+1, ..., LEFT actually might be </span>
+<span class="w">     </span><span class="c">!  nonzero.  These K numbers are returned, in WORK (used for </span>
+<span class="w">     </span><span class="c">!  temporary storage here), by the following call:</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="k">call </span><span class="n">bsplvb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">taui</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="p">)</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  We therefore want  </span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!    WORK(J) = B(LEFT-K+J)(TAUI) </span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  to go into</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!    A(I,LEFT-K+J),</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  that is, into  Q(I-(LEFT+J)+2*K,(LEFT+J)-K) since</span>
+<span class="w">     </span><span class="c">!  A(I+J,J) is to go into Q(I+K,J), for all I, J, if we consider Q</span>
+<span class="w">     </span><span class="c">!  as a two-dimensional array, with  2*K-1 rows.  See comments in</span>
+<span class="w">     </span><span class="c">!  BANFAC.</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  In the present program, we treat Q as an equivalent one-dimensional </span>
+<span class="w">     </span><span class="c">!  array, because of fortran restrictions on dimension statements.  </span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="c">!  We therefore want WORK(J) to go into the entry of Q with index:</span>
+<span class="w">     </span><span class="c">!    I -(LEFT+J)+2*K + ((LEFT+J)-K-1)*(2*K-1)</span>
+<span class="w">     </span><span class="c">!    = I-LEFT+1+(LEFT -K)*(2*K-1) + (2*K-2)*J</span>
+<span class="w">     </span><span class="c">!</span>
+<span class="w">     </span><span class="n">jj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span>
+<span class="w">        </span><span class="n">jj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jj</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">        </span><span class="n">q</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">work</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Factor A, stored again in Q.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">banfac</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;SPLI2D - Fatal error!&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  BANFAC reports that the matrix is singular.&#39;</span>
+<span class="w">     </span><span class="k">stop</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Solve </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    A * BCOEF = GTAU </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  by back substitution.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">m</span>
+
+<span class="w">     </span><span class="n">work</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtau</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">banslv</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">bcoef</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">work</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">spli2d</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

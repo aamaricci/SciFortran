@@ -76,7 +76,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 0.6% of total for modules and submodules.">244 statements</a>
+                 title=" 0.6% of total for modules and submodules.">258 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -115,7 +115,19 @@
   
   
   
-  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#inters-0"
+         aria-expanded="false" aria-controls="inters-0">
+         <h4 class="card-header bg-primary text-white">Interfaces</h4>
+      </a>
+      <div id="inters-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/sf_timer.html#interface-start_progress">start_progress</a>
+            <a class="list-group-item" href="../module/sf_timer.html#interface-stop_progress">stop_progress</a>
+        </div>
+      </div>
+    </div>
+
   
   
   
@@ -127,13 +139,9 @@
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/sf_timer.html#proc-start_timer">start_timer</a>
-            <a class="list-group-item" href="../module/sf_timer.html#proc-start_progress">start_progress</a>
             <a class="list-group-item" href="../module/sf_timer.html#proc-stop_timer">stop_timer</a>
-            <a class="list-group-item" href="../module/sf_timer.html#proc-stop_progress">stop_progress</a>
             <a class="list-group-item" href="../module/sf_timer.html#proc-eta">eta</a>
             <a class="list-group-item" href="../module/sf_timer.html#proc-progress">progress</a>
-            <a class="list-group-item" href="../module/sf_timer.html#proc-progress_bar">progress_bar</a>
-            <a class="list-group-item" href="../module/sf_timer.html#proc-progress_bar_eta">progress_bar_eta</a>
         </div>
       </div>
     </div>
@@ -273,6 +281,123 @@ modules which it uses.
 
 
 
+        <section>
+          <h2>Interfaces</h2>
+              <div class="card">
+    <div class="card-header bg-light codesum">
+      <span class="anchor" id="interface-start_progress"></span>
+      <h3>public        interface <a href='../interface/start_progress.html'>start_progress</a> 
+      </h3>
+    </div>
+    <ul class="list-group">
+          <li class="list-group-item">
+                <h3>
+    public  subroutine <a href='../proc/start_timer.html'>start_timer</a>(title, unit)  
+
+    </h3>
+    
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-title"></span>
+              character(len=*),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>title</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-unit~52"></span>
+              integer,
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>unit</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+    </ul>
+  </div>
+
+              <div class="card">
+    <div class="card-header bg-light codesum">
+      <span class="anchor" id="interface-stop_progress"></span>
+      <h3>public        interface <a href='../interface/stop_progress.html'>stop_progress</a> 
+      </h3>
+    </div>
+    <ul class="list-group">
+          <li class="list-group-item">
+                <h3>
+    public  subroutine <a href='../proc/stop_timer.html'>stop_timer</a>(msg)  
+
+    </h3>
+    
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-msg~3"></span>
+              character(len=*),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>msg</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+    </ul>
+  </div>
+
+        </section>
+        <br>
 
 
 
@@ -280,7 +405,7 @@ modules which it uses.
         <section>
           <h2>Subroutines</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-start_timer"></span> <h3>public  subroutine <a href='../proc/start_timer.html'>start_timer</a>(title)  
+    <div class="card-header codesum"><span class="anchor" id="proc-start_timer"></span> <h3>public  subroutine <a href='../proc/start_timer.html'>start_timer</a>(title, unit)  
 </h3></div>
     <div class="card-body">
           
@@ -312,34 +437,9 @@ modules which it uses.
 
             </td>
         </tr>
-    </tbody>
-  </table>
-
-
-    </div>
-  </div>
-
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-start_progress"></span> <h3>public  subroutine <a href='../proc/start_progress.html'>start_progress</a>(unit)  
-</h3></div>
-    <div class="card-body">
-          
-  
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-unit~36"></span>
+              <span class="anchor" id="variable-unit~52"></span>
               integer,
             </td>
 <td></td>
@@ -360,7 +460,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-stop_timer"></span> <h3>public  subroutine <a href='../proc/stop_timer.html'>stop_timer</a>(title, unit)  
+    <div class="card-header codesum"><span class="anchor" id="proc-stop_timer"></span> <h3>public  subroutine <a href='../proc/stop_timer.html'>stop_timer</a>(msg)  
 </h3></div>
     <div class="card-body">
           
@@ -379,7 +479,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-title~2"></span>
+              <span class="anchor" id="variable-msg~3"></span>
               character(len=*),
             </td>
 <td></td>
@@ -387,22 +487,7 @@ modules which it uses.
               
             </td>
             <td>::</td>
-            <td><strong>title</strong></td>
-            <td>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-unit~37"></span>
-              integer,
-            </td>
-<td></td>
-              <td>optional</td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>unit</strong></td>
+            <td><strong>msg</strong></td>
             <td>
 
             </td>
@@ -415,20 +500,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-stop_progress"></span> <h3>public  subroutine <a href='../proc/stop_progress.html'>stop_progress</a>()  
-</h3></div>
-    <div class="card-body">
-          
-  
-
-  <h4>Arguments</h4>
-    <em>None</em>
-
-    </div>
-  </div>
-
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-eta"></span> <h3>public  subroutine <a href='../proc/eta.html'>eta</a>(i, L, unit, file, step)  
+    <div class="card-header codesum"><span class="anchor" id="proc-eta"></span> <h3>public  subroutine <a href='../proc/eta.html'>eta</a>(i, L, step, method)  
 </h3></div>
     <div class="card-body">
           
@@ -447,7 +519,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-i~423"></span>
+              <span class="anchor" id="variable-i~521"></span>
               integer
             </td>
 <td></td>
@@ -462,7 +534,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~25"></span>
+              <span class="anchor" id="variable-l~43"></span>
               integer
             </td>
 <td></td>
@@ -477,37 +549,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-unit~39"></span>
-              integer,
-            </td>
-<td></td>
-              <td>optional</td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>unit</strong></td>
-            <td>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-file~2"></span>
-              character(len=*),
-            </td>
-<td></td>
-              <td>optional</td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>file</strong></td>
-            <td>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-step~9"></span>
+              <span class="anchor" id="variable-step~6"></span>
               integer,
             </td>
 <td></td>
@@ -520,6 +562,21 @@ modules which it uses.
 
             </td>
         </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-method~21"></span>
+              character(len=*),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>method</strong></td>
+            <td>
+
+            </td>
+        </tr>
     </tbody>
   </table>
 
@@ -528,7 +585,7 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-progress"></span> <h3>public  subroutine <a href='../proc/progress.html'>progress</a>(i, imax)  
+    <div class="card-header codesum"><span class="anchor" id="proc-progress"></span> <h3>public  subroutine <a href='../proc/progress.html'>progress</a>(i, imax, method)  
 </h3></div>
     <div class="card-body">
           
@@ -547,7 +604,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-i~424"></span>
+              <span class="anchor" id="variable-i~522"></span>
               integer
             </td>
 <td></td>
@@ -562,7 +619,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imax~3"></span>
+              <span class="anchor" id="variable-imax~2"></span>
               integer
             </td>
 <td></td>
@@ -575,112 +632,17 @@ modules which it uses.
 
             </td>
         </tr>
-    </tbody>
-  </table>
-
-
-    </div>
-  </div>
-
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-progress_bar"></span> <h3>public  subroutine <a href='../proc/progress_bar.html'>progress_bar</a>(i, imax)  
-</h3></div>
-    <div class="card-body">
-          
-  
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-i~425"></span>
-              integer
+              <span class="anchor" id="variable-method~22"></span>
+              character(len=*),
             </td>
 <td></td>
-              <td></td>            <td>
+              <td>optional</td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>i</strong></td>
-            <td>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-imax~4"></span>
-              integer
-            </td>
-<td></td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>imax</strong></td>
-            <td>
-
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-    </div>
-  </div>
-
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-progress_bar_eta"></span> <h3>public  subroutine <a href='../proc/progress_bar_eta.html'>progress_bar_eta</a>(i, imax)  
-</h3></div>
-    <div class="card-body">
-          
-  
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-i~426"></span>
-              integer
-            </td>
-<td></td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>i</strong></td>
-            <td>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-imax~5"></span>
-              integer
-            </td>
-<td></td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>imax</strong></td>
+            <td><strong>method</strong></td>
             <td>
 
             </td>
