@@ -34,7 +34,7 @@ while read DIR; do
 	    for exe in *.x
 	    do
 		echo "Running $exe:"
-		./$exe
+		time ./$exe
 		echo ""
 	    done
 	    cd $HERE
