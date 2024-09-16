@@ -1,7 +1,13 @@
 module SF_TIMER
+#ifdef _MPI
+  USE SF_MPI
+#endif
   implicit none
+#ifdef _MPI
+  include "mpif.h"
+#endif
   private
-
+  !
   !The months of the year:
   character(len=9),parameter,dimension(12) :: month = (/ &
        'January  ', &
@@ -38,8 +44,8 @@ module SF_TIMER
   real,save                                :: dtime
   real,save                                :: elapsed_time
   real,save                                :: eta_time
-  integer                                  :: Funit
-  integer(8)                               :: st_rate
+  integer(8),dimension(Tmax)               :: Funit
+  integer(8)                               :: st_rate=1
   !
   !Using Date and Time:
   integer,dimension(Tmax,8),save           :: dt_T_start, dt_T_stop, dt_T0, dt_T1
@@ -48,7 +54,9 @@ module SF_TIMER
   !Using System_clock
   integer(8),dimension(Tmax),save          :: st_T_start, st_T_stop, st_T0, st_T1
 
-
+  integer                                  :: mpi_id
+  integer                                  :: mpi_size
+  logical                                  :: mpi_master
 
   interface start_progress
      module procedure :: start_timer
@@ -74,17 +82,29 @@ contains
     character(len=*),optional :: title
     integer,optional          :: unit
     !
-    funit=6;if(present(unit))funit=unit
-    if(funit==5)funit=6 !do not write to stdin
-    !
-    if(present(title))write(funit,"(1x,A)")trim(title)
-    !
     Tindex=Tindex+1
     if(Tindex>Tmax)stop "start_timer error: too many timers started"
     !
-    call system_clock(count_rate=st_rate)
+    mpi_id = 0
+#ifdef _MPI    
+    if(check_MPI())mpi_id = get_Rank_MPI()
+#endif
+    funit(Tindex)=6+mpi_id;if(present(unit))funit(Tindex)=unit
+    if(funit(Tindex)==5)funit(Tindex)=6
     !
+    if(present(title))write(funit(Tindex),"(1x,A)")trim(title)
+    !
+#ifdef _MPI    
+    if(check_MPI())then
+       st_T_start(Tindex) = MPI_Wtime()
+    else
+       call system_clock(count_rate=st_rate)
+       call system_clock(count=st_T_start(Tindex))
+    endif
+#else
+    call system_clock(count_rate=st_rate)
     call system_clock(count=st_T_start(Tindex))
+#endif
     call cpu_time(ct_T_start(Tindex))
     call date_and_time(values=dt_T_start(Tindex,:))
     st_T0 = st_T_start
@@ -109,7 +129,15 @@ contains
     integer,dimension(8)      :: dt_T
     !
     !
+#ifdef _MPI    
+    if(check_MPI())then
+       st_T_stop(Tindex) = MPI_Wtime()
+    else
+       call system_clock(count=st_T_stop(Tindex))
+    endif
+#else
     call system_clock(count=st_T_stop(Tindex))
+#endif
     call cpu_time(ct_T_stop(Tindex))
     call date_and_time(values=dt_T_stop(Tindex,:))
     ct_T = ct_time_difference(ct_T_stop(Tindex),ct_T_start(Tindex))
@@ -127,6 +155,8 @@ contains
     ct_T_stop(Tindex)    = 0
     st_T_stop(Tindex)    = 0
     dt_T_stop(Tindex,:)  = 0
+    !
+    funit(Tindex)        = 6
     !
     if(Tindex>1)then
        Tindex=Tindex-1
@@ -165,8 +195,8 @@ contains
     !Preambolo:
     if(lentry)then
        mod_print=10;if(present(step))mod_print=step
-       if(funit/=6)then
-          write(string,"(I4)")funit
+       if(funit(Tindex)/=6)then
+          write(string,"(I4)")funit(Tindex)
           write(*,"(2x,A,I3)")"+ETA --> unit:"//trim(adjustl(trim(string)))
        endif
        lentry=.false.
@@ -205,13 +235,13 @@ contains
     s            = int(eta_time - h*secs_in_one_hour - m*secs_in_one_min)
     !
 
-    write(funit,"(1x,1i3,1a7,i3.3,a1,i2.2,a1,i2.2,a1,i3.3)",advance='no')percent,"% |ETA: ",h,":",m,":",s,".",ms
+    write(funit(Tindex),"(1x,1i3,1a7,i3.3,a1,i2.2,a1,i2.2,a1,i3.3)",advance='no')percent,"% |ETA: ",h,":",m,":",s,".",ms
     if(fullprint)then
        call date_and_time(values=dummy)
-       write(funit,"(a2,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2)")&
+       write(funit(Tindex),"(a2,i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2)")&
             " @",dummy(3),trim(month(dummy(2))),dummy(1),dummy(5),':',dummy(6),':',dummy(7)
     else
-       write(funit,"(1X)")
+       write(funit(Tindex),"(1X)")
     endif
   end subroutine eta
 
@@ -251,8 +281,8 @@ contains
     do k=1,jmax
        bar(6+k:6+k)="*"
     enddo
-    write(unit=funit,fmt="(A1,A1,A62,I2,A1,I2.2,A1,I2.2,A1,I3.3,$)")'+',char(13), bar,h,":",m,":",s,".",ms
-    if(i==imax)write(funit,*)
+    write(unit=funit(Tindex),fmt="(A1,A1,A62,I2,A1,I2.2,A1,I2.2,A1,I3.3,$)")'+',char(13), bar,h,":",m,":",s,".",ms
+    if(i==imax)write(funit(Tindex),*)
   end subroutine progress
 
 
@@ -270,11 +300,19 @@ contains
   !+-------------------------------------------------------------------+
   function total_time(method)
     character(len=*)        :: method
-    real                    :: total_time
+    real(8)                 :: total_time
     integer(4),dimension(8) :: dummy
     select case(trim(method))
     case default
+#ifdef _MPI    
+       if(check_MPI())then
+          st_T1(Tindex) = MPI_Wtime()
+       else
+          call system_clock(count=st_T1(Tindex))
+       endif
+#else
        call system_clock(count=st_T1(Tindex))
+#endif              
        total_time = st_time_difference(st_T1(Tindex),st_T0(Tindex))
     case("c","ct","cpu","cpu_time")
        call cpu_time(ct_T1(Tindex))
@@ -289,11 +327,11 @@ contains
        m    = dummy(6)
        s    = dummy(7)
        ms   = dummy(8)
-       total_time= real(ms)/1000        &
-            + real(s)                   &
-            + real(m)*secs_in_one_min   &
-            + real(h)*secs_in_one_hour  &
-            + real(day)*secs_in_one_day
+       total_time= dble(ms)/1000        &
+            + dble(s)                   &
+            + dble(m)*secs_in_one_min   &
+            + dble(h)*secs_in_one_hour  &
+            + dble(day)*secs_in_one_day
     end select
   end function total_time
 
@@ -304,14 +342,15 @@ contains
   !PURPOSE  : get time difference between two events
   !+-------------------------------------------------------------------+
   function ct_time_difference(data1,data0) result(time_difference)
-    real :: data1,data0,time_difference
-    time_difference =data1-data0
+    real    :: data1,data0
+    real(8) :: time_difference
+    time_difference =dble(data1-data0)
   end function ct_time_difference
 
   function st_time_difference(data1,data0) result(time_difference)
     integer(8):: data1,data0
-    real      :: time_difference
-    time_difference = real(data1-data0)/real(st_rate)
+    real(8)   :: time_difference
+    time_difference = dble(data1-data0)/st_rate
   end function st_time_difference
 
   function dt_time_difference(data1,data0) result(time_difference)
@@ -362,21 +401,21 @@ contains
     integer                   :: dt_T(8)
     character(len=*),optional :: title
     !
-    write(funit,"(a)",advance="no")"CPU time (wall time): "
+    write(funit(Tindex),"(a)",advance="no")"CPU time (wall time): "
     ms=int(fraction(ct_T)*1000.0)
     h =int(ct_T/secs_in_one_hour)
     m =int((ct_T - h*secs_in_one_hour)/secs_in_one_min)
     s =int(ct_T  - h*secs_in_one_hour - m*secs_in_one_min)
-    write(funit,"(i3.3,a1,i2.2,a1,i2.2,a1,i3.3,3x)",advance="no")h,":",m,":",s,".",ms
+    write(funit(Tindex),"(i3.3,a1,i2.2,a1,i2.2,a1,i3.3,3x)",advance="no")h,":",m,":",s,".",ms
     ms=int(fraction(real(st_T))*1000.0)
     h =int(st_T/secs_in_one_hour)
     m =int((st_T - h*secs_in_one_hour)/secs_in_one_min)
     s =int(st_T  - h*secs_in_one_hour - m*secs_in_one_min)
-    write(funit,"(a1,i3.3,a1,i2.2,a1,i2.2,a1,i3.3,a1)",advance="no")"(",h,":",m,":",s,".",ms,")"
+    write(funit(Tindex),"(a1,i3.3,a1,i2.2,a1,i2.2,a1,i3.3,a1)",advance="no")"(",h,":",m,":",s,".",ms,")"
     if(present(title))then
-       write(funit,"(A3,A)",advance="yes")" : ",trim(title)
+       write(funit(Tindex),"(A3,A)",advance="yes")" : ",trim(title)
     else
-       write(funit,"(1x)",advance="yes")
+       write(funit(Tindex),"(1x)",advance="yes")
     endif
   end subroutine print_total_time
 

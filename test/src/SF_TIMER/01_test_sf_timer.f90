@@ -2,33 +2,35 @@ program test_SF_TIMER
   USE SF_CONSTANTS
   USE SF_TIMER
   USE ASSERTING
+  USE SF_MPI
   implicit none
 
   integer :: i
-  integer(8) :: rate,t0,t1
-
+  integer :: rank,size
+  
+  call init_MPI()
+  rank = get_rank_MPI()
+  size = get_size_MPI()
+  
   call start_timer()
 
-  call system_clock(count_rate=rate);print*,rate
-  call system_clock(t0)
-  call start_timer("Loop 100x30ms")
-  do i=1,100
-     call wait(1)
+  call start_timer("Loop 100x30ms = 3s",unit=6+2*rank)
+  do i=1+rank,100,size
+     call wait(30)
      call eta(i,100)
   enddo
   call stop_timer("timer + ETA example")
-  print*,""
-  call system_clock(t1)
-  print*,real(t1-t0)/rate
 
+  
   call start_progress("Loop 100x25ms")
   do i=1,100
      call wait(25)
      call progress(i,100)
   enddo
   call stop_progress("progress + ETA example")
-  print*,""
 
-  call stop_timer("total time CFR w/ time")
+
+  call stop_timer("Total time")
   
+  call finalize_MPI()
 end program test_SF_TIMER
