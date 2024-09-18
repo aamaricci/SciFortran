@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pack.f90.html'>interpolate_pack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">cc_abscissas</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/cc_abscissas.html#src">cc_abscissas</a>
+      </div>
+    </div>
 
 
   </div>
@@ -143,7 +149,7 @@
 <p>Discussion:</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">The</span><span class="w"> </span><span class="nx">interval</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">].</span>
 
-<span class="nx">The</span><span class="w"> </span><span class="nx">abscissas</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">cosines</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">equally</span><span class="w"> </span><span class="nx">spaced</span><span class="w"> </span><span class="nx">angles</span><span class="w"> </span><span class="nx">between</span><span class="w"> </span>
+<span class="nx">The</span><span class="w"> </span><span class="nx">abscissas</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">cosines</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">equally</span><span class="w"> </span><span class="nx">spaced</span><span class="w"> </span><span class="nx">angles</span><span class="w"> </span><span class="nx">between</span>
 <span class="mi">180</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nx">degrees</span><span class="p">,</span><span class="w"> </span><span class="nx">including</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">endpoints</span><span class="p">.</span>
 
 <span class="w">  </span><span class="nx">X</span><span class="p">(</span><span class="nx">I</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nx">ORDER</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">I</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nx">ORDER</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
@@ -211,7 +217,7 @@ Output, real ( kind = 8 ) X(N), the abscissas.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~371"></span>
+              <span class="anchor" id="variable-n~41"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -226,7 +232,7 @@ Output, real ( kind = 8 ) X(N), the abscissas.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~445"></span>
+              <span class="anchor" id="variable-x~94"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -254,6 +260,104 @@ Output, real ( kind = 8 ) X(N), the abscissas.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">cc_abscissas</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! CC_ABSCISSAS computes the Clenshaw Curtis abscissas.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The interval is [ -1, 1 ].</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The abscissas are the cosines of equally spaced angles between </span>
+<span class="w">  </span><span class="c">!    180 and 0 degrees, including the endpoints.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      X(I) = cos ( ( ORDER - I ) * PI / ( ORDER - 1 ) )</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    except for the basic case ORDER = 1, when</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      X(1) = 0.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    If the value of ORDER is increased in a sensible way, then</span>
+<span class="w">  </span><span class="c">!    the new set of abscissas will include the old ones.  One such</span>
+<span class="w">  </span><span class="c">!    sequence would be ORDER(K) = 2*K+1 for K = 0, 1, 2, ...</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    When doing interpolation with Lagrange polynomials, the Clenshaw Curtis</span>
+<span class="w">  </span><span class="c">!    abscissas can be a better choice than regularly spaced abscissas.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This code is distributed under the GNU LGPL license. </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    04 December 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    John Burkardt</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Charles Clenshaw, Alan Curtis,</span>
+<span class="w">  </span><span class="c">!    A Method for Numerical Integration on an Automatic Computer,</span>
+<span class="w">  </span><span class="c">!    Numerische Mathematik,</span>
+<span class="w">  </span><span class="c">!    Volume 2, Number 1, December 1960, pages 197-205.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Philip Davis, Philip Rabinowitz,</span>
+<span class="w">  </span><span class="c">!    Methods of Numerical Integration,</span>
+<span class="w">  </span><span class="c">!    Second Edition,</span>
+<span class="w">  </span><span class="c">!    Dover, 2007,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0486453391,</span>
+<span class="w">  </span><span class="c">!    LC: QA299.3.D28.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Joerg Waldvogel,</span>
+<span class="w">  </span><span class="c">!    Fast Construction of the Fejer and Clenshaw-Curtis Quadrature Rules,</span>
+<span class="w">  </span><span class="c">!    BIT Numerical Mathematics,</span>
+<span class="w">  </span><span class="c">!    Volume 43, Number 1, 2003, pages 1-18.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the order of the rule.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) X(N), the abscissas.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.141592653589793D+00</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39; &#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;CC_ABSCISSA - Fatal error!&#39;</span>
+<span class="w">     </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;  N &lt; 1.&#39;</span>
+<span class="w">     </span><span class="k">stop</span>
+<span class="k">  end if</span>
+
+<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
+<span class="w">     </span><span class="k">return</span>
+<span class="k">  end if</span>
+
+<span class="k">  do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+<span class="w">     </span><span class="n">theta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">cos</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end subroutine </span><span class="n">cc_abscissas</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

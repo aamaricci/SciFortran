@@ -43,7 +43,7 @@ subroutine z_matmul(A,B,C,alfa,beta)
   if(any(shape(B)/=[K,M]))stop "z_matmul error: B has illegal shape"
   if(any(shape(C)/=[N,M]))stop "z_matmul error: C has illegal shape"
   !
-  call ZGEMM('N', 'N', N, M, K, alfa_, A, N, B, K, beta_, C, M)
+  call ZGEMM('N', 'N', N, M, K, alfa_, A, N, B, K, beta_, C, N)
   !
   return
 end subroutine z_matmul
@@ -87,7 +87,7 @@ function z_matmul_(A,B) result(C)
   if(any(shape(B)/=[K,M]))stop "d_matmul error: B has illegal shape"
   if(any(shape(C)/=[N,M]))stop "d_matmul error: C has illegal shape"
   !
-  call ZGEMM('N', 'N', N, M, K, dcmplx(1d0,0d0), A, N, B, K, dcmplx(0d0,0d0), C, M)
+  call ZGEMM('N', 'N', N, M, K, dcmplx(1d0,0d0), A, N, B, K, dcmplx(0d0,0d0), C, N)
   !
   return
 end function z_matmul_

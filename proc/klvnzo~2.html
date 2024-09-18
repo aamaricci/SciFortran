@@ -81,15 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/special_functions.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/special_functions.f90.html'>special_functions.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">klvnzo</li>
           </ol>
         </nav>
@@ -128,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/klvnzo~2.html#src">klvnzo</a>
+      </div>
+    </div>
 
 
   </div>
@@ -135,15 +140,15 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine klvnzo(nt, kd, zo)  
+    <h2> subroutine klvnzo(nt, kd, zo)  
 </h2>
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! KLVNZO computes zeros of the Kelvin functions.</p>
 <p>Licensing:</p>
-<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
-they give permission to incorporate this routine into a user program 
+<div class="codehilite"><pre><span></span><code>This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However,
+they give permission to incorporate this routine into a user program
 provided that the copyright is acknowledged.
 </code></pre></div>
 
@@ -167,13 +172,13 @@ LC: QA351.C45.
 <div class="codehilite"><pre><span></span><code><span class="nv">Input</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">NT</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">zeros</span>.
 
 <span class="nv">Input</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">KD</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="nv">code</span>.
-<span class="mi">1</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ber</span><span class="w"> </span><span class="nv">x</span>,<span class="w"> </span>
+<span class="mi">1</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ber</span><span class="w"> </span><span class="nv">x</span>,
 <span class="mi">2</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">bei</span><span class="w"> </span><span class="nv">x</span>,
-<span class="mi">3</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ker</span><span class="w"> </span><span class="nv">x</span>,<span class="w"> </span>
+<span class="mi">3</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ker</span><span class="w"> </span><span class="nv">x</span>,
 <span class="mi">4</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">kei</span><span class="w"> </span><span class="nv">x</span>,
-<span class="mi">5</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ber</span><span class="err">&#39; x, </span>
+<span class="mi">5</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ber</span><span class="err">&#39; x,</span>
 <span class="mi">6</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">bei</span><span class="err">&#39; x,</span>
-<span class="mi">7</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ker</span><span class="err">&#39; x, </span>
+<span class="mi">7</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">ker</span><span class="err">&#39; x,</span>
 <span class="mi">8</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">kei</span><span class="err">&#39; x.</span>
 
 <span class="err">Output, real ( kind = 8 ) ZO(NT), the zeros of the given Kelvin function.</span>
@@ -262,18 +267,15 @@ LC: QA351.C45.
 <polygon fill="none" stroke="black" points="54,-24 0,-24 0,0 54,0 54,-24"/>
 <text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">klvnzo</text>
 </g>
-<!-- proc~klvna~2 -->
+<!-- klvna -->
 <g id="proc~~klvnzo~2~~CallsGraph_node2" class="node">
-<title>proc~klvna~2</title>
-<g id="a_proc~~klvnzo~2~~CallsGraph_node2"><a xlink:href="../proc/klvna~2.html" xlink:title="klvna">
-<polygon fill="#d9534f" stroke="#d9534f" points="144,-24 90,-24 90,0 144,0 144,-24"/>
+<title>klvna</title>
+<polygon fill="#777777" stroke="#777777" points="144,-24 90,-24 90,0 144,0 144,-24"/>
 <text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">klvna</text>
-</a>
 </g>
-</g>
-<!-- proc~klvnzo~2&#45;&gt;proc~klvna~2 -->
+<!-- proc~klvnzo~2&#45;&gt;klvna -->
 <g id="proc~~klvnzo~2~~CallsGraph_edge1" class="edge">
-<title>proc~klvnzo~2&#45;&gt;proc~klvna~2</title>
+<title>proc~klvnzo~2&#45;&gt;klvna</title>
 <path fill="none" stroke="#000000" d="M54.4,-12C62.39,-12 71.31,-12 79.82,-12"/>
 <polygon fill="#000000" stroke="#000000" points="79.92,-15.5 89.92,-12 79.92,-8.5 79.92,-15.5"/>
 </g>
@@ -370,6 +372,132 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">klvnzo</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nt</span><span class="p">,</span><span class="w"> </span><span class="n">kd</span><span class="p">,</span><span class="w"> </span><span class="n">zo</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! KLVNZO computes zeros of the Kelvin functions.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Licensing:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, </span>
+<span class="w">  </span><span class="c">!    they give permission to incorporate this routine into a user program </span>
+<span class="w">  </span><span class="c">!    provided that the copyright is acknowledged.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    15 July 2012</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Shanjie Zhang, Jianming Jin,</span>
+<span class="w">  </span><span class="c">!    Computation of Special Functions,</span>
+<span class="w">  </span><span class="c">!    Wiley, 1996,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0-471-11963-6,</span>
+<span class="w">  </span><span class="c">!    LC: QA351.C45.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NT, the number of zeros.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) KD, the function code.</span>
+<span class="w">  </span><span class="c">!    1 for ber x, </span>
+<span class="w">  </span><span class="c">!    2 for bei x,</span>
+<span class="w">  </span><span class="c">!    3 for ker x, </span>
+<span class="w">  </span><span class="c">!    4 for kei x,</span>
+<span class="w">  </span><span class="c">!    5 for ber&#39; x, </span>
+<span class="w">  </span><span class="c">!    6 for bei&#39; x,</span>
+<span class="w">  </span><span class="c">!    7 for ker&#39; x, </span>
+<span class="w">  </span><span class="c">!    8 for kei&#39; x.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) ZO(NT), the zeros of the given Kelvin function.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nt</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bei</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ber</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ddi</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ddr</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dei</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">der</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gdi</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gdr</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">gei</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ger</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">hei</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">her</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">kd</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">m</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rt</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rt0</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">zo</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.84891D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5.02622D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.71854D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.91467D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6.03871D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.77268D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.66584D+00</span>
+<span class="w">  </span><span class="n">rt0</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.93181D+00</span>
+
+<span class="w">  </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt0</span><span class="p">(</span><span class="n">kd</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nt</span>
+
+<span class="w">     </span><span class="k">do</span>
+
+<span class="k">        call </span><span class="n">klvna</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rt</span><span class="p">,</span><span class="w"> </span><span class="n">ber</span><span class="p">,</span><span class="w"> </span><span class="n">bei</span><span class="p">,</span><span class="w"> </span><span class="n">ger</span><span class="p">,</span><span class="w"> </span><span class="n">gei</span><span class="p">,</span><span class="w"> </span><span class="n">der</span><span class="p">,</span><span class="w"> </span><span class="n">dei</span><span class="p">,</span><span class="w"> </span><span class="n">her</span><span class="p">,</span><span class="w"> </span><span class="n">hei</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ber</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">der</span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">bei</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dei</span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ger</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">her</span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gei</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">hei</span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">ddr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">bei</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">der</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rt</span>
+<span class="w">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">der</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ddr</span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">ddi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ber</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dei</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rt</span>
+<span class="w">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dei</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ddi</span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           </span><span class="n">gdr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">gei</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">her</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rt</span>
+<span class="w">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">her</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">gdr</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="k">           </span><span class="n">gdi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ger</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">hei</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rt</span>
+<span class="w">           </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">hei</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">gdi</span>
+<span class="w">        </span><span class="k">end if</span>
+
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">abs</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rt0</span><span class="p">(</span><span class="n">kd</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">5.0D-10</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">           exit</span>
+<span class="k">        end if</span>
+
+<span class="k">        </span><span class="n">rt0</span><span class="p">(</span><span class="n">kd</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span>
+
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">     </span><span class="n">zo</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span>
+<span class="w">     </span><span class="n">rt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">4.44D+00</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">klvnzo</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
