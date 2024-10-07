@@ -58,14 +58,14 @@ MODULE SF_SPIN
        zero, one,zero   &
        ],[3,3])/sqrt2
   complex(8),dimension(3,3),parameter,public :: spin1_y=reshape([&
-       zero, xi ,zero,  &
-       -xi ,zero, xi ,  &
-       zero,-xi ,zero   &
+       zero, -xi ,zero,  &
+       xi  ,zero , -xi,  &
+       zero,xi   ,zero   &
        ], [3,3])/sqrt2
   complex(8),dimension(3,3),parameter,public :: spin1_z=reshape([&
        one ,zero,zero, &
        zero,zero,zero, &
-       zero,zero, one  &
+       zero,zero,-one  &
        ],[3,3])
   complex(8),dimension(3,3),parameter,public :: spin1_plus  = spin1_x+xi*spin1_y
   complex(8),dimension(3,3),parameter,public :: spin1_minus = spin1_x-xi*spin1_y
@@ -92,10 +92,10 @@ MODULE SF_SPIN
        zero , zero,  s3  , zero    &
        ],[4,4])/2d0
   complex(8),dimension(4,4),parameter,public :: spin3half_y=reshape([&
-       zero ,  c3 , zero , zero ,  &
-       -c3   , zero, c2  , zero ,  &
-       zero ,  -c2 , zero , c3  ,  &
-       zero , zero, -c3   , zero    &
+       zero , -c3 , zero , zero ,  &
+       c3   , zero, -c2  , zero ,  &
+       zero ,  c2 , zero , -c3  ,  &
+       zero , zero, c3   , zero    &
        ],[4,4])/2d0
   complex(8),dimension(4,4),parameter,public :: spin3half_z=reshape([&
        h32,zero,zero,zero,  &
