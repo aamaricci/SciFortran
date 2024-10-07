@@ -81,14 +81,15 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/random_routines.f90"> Source File</a>
+              <a href="../src/SF_RANDOM.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/random_routines.f90.html'>random_routines.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_random.f90.html'>SF_RANDOM.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_random.html'>SF_RANDOM</a></li>
             <li class="breadcrumb-item active" aria-current="page">random_Weibull</li>
           </ol>
         </nav>
@@ -127,12 +128,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/random_weibull~2.html#src">random_Weibull</a>
-      </div>
-    </div>
 
 
   </div>
@@ -140,7 +135,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2> function random_Weibull(a) result(fn_val)  
+    <h2>public  function random_Weibull(a) result(fn_val)  
 </h2>
     
 
@@ -159,7 +154,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~316"></span>
+              <span class="anchor" id="variable-a~187"></span>
               real,
             </td>
 <td>intent(in)</td>
@@ -205,15 +200,18 @@
 <polygon fill="none" stroke="black" points="99,-24 0,-24 0,0 99,0 99,-24"/>
 <text text-anchor="middle" x="49.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">random_Weibull</text>
 </g>
-<!-- random_exponential -->
+<!-- proc~random_exponential~2 -->
 <g id="proc~~random_weibull~2~~CallsGraph_node2" class="node">
-<title>random_exponential</title>
-<polygon fill="#777777" stroke="#777777" points="257,-24 135,-24 135,0 257,0 257,-24"/>
+<title>proc~random_exponential~2</title>
+<g id="a_proc~~random_weibull~2~~CallsGraph_node2"><a xlink:href="../proc/random_exponential~2.html" xlink:title="random_exponential">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="257,-24 135,-24 135,0 257,0 257,-24"/>
 <text text-anchor="middle" x="196" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">random_exponential</text>
+</a>
 </g>
-<!-- proc~random_weibull~2&#45;&gt;random_exponential -->
+</g>
+<!-- proc~random_weibull~2&#45;&gt;proc~random_exponential~2 -->
 <g id="proc~~random_weibull~2~~CallsGraph_edge1" class="edge">
-<title>proc~random_weibull~2&#45;&gt;random_exponential</title>
+<title>proc~random_weibull~2&#45;&gt;proc~random_exponential~2</title>
 <path fill="none" stroke="#000000" d="M99.02,-12C107.27,-12 115.98,-12 124.66,-12"/>
 <polygon fill="#000000" stroke="#000000" points="124.8,-15.5 134.8,-12 124.8,-8.5 124.8,-15.5"/>
 </g>
@@ -310,24 +308,6 @@ implementation in a submodule of an interface in a parent module.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">FUNCTION </span><span class="n">random_Weibull</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="k">RESULT</span><span class="p">(</span><span class="n">fn_val</span><span class="p">)</span>
-<span class="w">  </span><span class="c">!     Generates a random variate from the Weibull distribution with</span>
-<span class="w">  </span><span class="c">!     probability density:</span>
-<span class="w">  </span><span class="c">!                      a</span>
-<span class="w">  </span><span class="c">!               a-1  -x</span>
-<span class="w">  </span><span class="c">!     f(x) = a.x    e</span>
-<span class="w">  </span><span class="kt">REAL</span><span class="p">,</span><span class="w"> </span><span class="k">INTENT</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">a</span>
-<span class="w">  </span><span class="kt">REAL</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">fn_val</span>
-<span class="w">  </span><span class="c">!     For speed, there is no checking that a is not zero or very small.</span>
-<span class="w">  </span><span class="n">fn_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random_exponential</span><span class="p">()</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="p">(</span><span class="n">one</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
-<span class="w">  </span><span class="k">RETURN</span>
-<span class="k">END FUNCTION </span><span class="n">random_Weibull</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
