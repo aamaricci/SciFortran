@@ -81,14 +81,15 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/histogram.f90"> Source File</a>
+              <a href="../src/SF_STAT.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/histogram.f90.html'>histogram.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_stat.f90.html'>SF_STAT.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_stat.html'>SF_STAT</a></li>
             <li class="breadcrumb-item active" aria-current="page">histogram_print</li>
           </ol>
         </nav>
@@ -127,12 +128,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/histogram_print~2.html#src">histogram_print</a>
-      </div>
-    </div>
 
 
   </div>
@@ -140,7 +135,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2> subroutine histogram_print(h, unit)  
+    <h2>public  subroutine histogram_print(h, unit)  
 </h2>
     
 
@@ -159,8 +154,8 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-h~82"></span>
-              type(histogram),
+              <span class="anchor" id="variable-h~53"></span>
+              type(<a href='../type/histogram.html'>histogram</a>),
             </td>
 <td>intent(in)</td>
               <td></td>            <td>
@@ -174,7 +169,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-unit~54"></span>
+              <span class="anchor" id="variable-unit~46"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -213,27 +208,33 @@
 <polygon fill="none" stroke="black" points="97,-45 0,-45 0,-21 97,-21 97,-45"/>
 <text text-anchor="middle" x="48.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">histogram_print</text>
 </g>
-<!-- histogram_get_range -->
+<!-- proc~histogram_get_range~2 -->
 <g id="proc~~histogram_print~2~~CallsGraph_node2" class="node">
-<title>histogram_get_range</title>
-<polygon fill="#777777" stroke="#777777" points="259,-66 133,-66 133,-42 259,-42 259,-66"/>
+<title>proc~histogram_get_range~2</title>
+<g id="a_proc~~histogram_print~2~~CallsGraph_node2"><a xlink:href="../proc/histogram_get_range~2.html" xlink:title="histogram_get_range">
+<polygon fill="#d9534f" stroke="#d9534f" points="259,-66 133,-66 133,-42 259,-42 259,-66"/>
 <text text-anchor="middle" x="196" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">histogram_get_range</text>
+</a>
 </g>
-<!-- proc~histogram_print~2&#45;&gt;histogram_get_range -->
+</g>
+<!-- proc~histogram_print~2&#45;&gt;proc~histogram_get_range~2 -->
 <g id="proc~~histogram_print~2~~CallsGraph_edge1" class="edge">
-<title>proc~histogram_print~2&#45;&gt;histogram_get_range</title>
+<title>proc~histogram_print~2&#45;&gt;proc~histogram_get_range~2</title>
 <path fill="none" stroke="#000000" d="M97.14,-39.88C105.36,-41.06 114.07,-42.32 122.77,-43.57"/>
 <polygon fill="#000000" stroke="#000000" points="122.55,-47.08 132.95,-45.04 123.55,-40.15 122.55,-47.08"/>
 </g>
-<!-- histogram_get_value -->
+<!-- proc~histogram_get_value~2 -->
 <g id="proc~~histogram_print~2~~CallsGraph_node3" class="node">
-<title>histogram_get_value</title>
-<polygon fill="#777777" stroke="#777777" points="258,-24 134,-24 134,0 258,0 258,-24"/>
+<title>proc~histogram_get_value~2</title>
+<g id="a_proc~~histogram_print~2~~CallsGraph_node3"><a xlink:href="../proc/histogram_get_value~2.html" xlink:title="histogram_get_value">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="258,-24 134,-24 134,0 258,0 258,-24"/>
 <text text-anchor="middle" x="196" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">histogram_get_value</text>
+</a>
 </g>
-<!-- proc~histogram_print~2&#45;&gt;histogram_get_value -->
+</g>
+<!-- proc~histogram_print~2&#45;&gt;proc~histogram_get_value~2 -->
 <g id="proc~~histogram_print~2~~CallsGraph_edge2" class="edge">
-<title>proc~histogram_print~2&#45;&gt;histogram_get_value</title>
+<title>proc~histogram_print~2&#45;&gt;proc~histogram_get_value~2</title>
 <path fill="none" stroke="#000000" d="M97.14,-26.12C105.69,-24.89 114.77,-23.58 123.82,-22.27"/>
 <polygon fill="#000000" stroke="#000000" points="124.59,-25.7 133.99,-20.81 123.59,-18.77 124.59,-25.7"/>
 </g>
@@ -330,28 +331,6 @@ implementation in a submodule of an interface in a parent module.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">histogram_print</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">unit</span><span class="p">)</span>
-<span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">histogram</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">h</span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">unit</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">n</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="n">upper</span><span class="p">,</span><span class="n">bin_value</span>
-<span class="w">  </span><span class="n">n</span><span class="o">=</span><span class="n">h</span><span class="p">%</span><span class="n">n</span>
-<span class="w">  </span><span class="k">call </span><span class="n">histogram_get_range</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">lower</span><span class="p">,</span><span class="n">upper</span><span class="p">)</span>
-<span class="w">  </span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(2F12.7)&quot;</span><span class="p">)</span><span class="n">lower</span><span class="p">,</span><span class="mf">0.d0</span>
-<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span>
-<span class="w">     </span><span class="k">call </span><span class="n">histogram_get_range</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">lower</span><span class="p">,</span><span class="n">upper</span><span class="p">)</span>
-<span class="w">     </span><span class="n">bin_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">histogram_get_value</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-<span class="w">     </span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(2F12.7)&quot;</span><span class="p">)</span><span class="n">lower</span><span class="p">,</span><span class="n">bin_value</span>
-<span class="w">     </span><span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(2F12.7)&quot;</span><span class="p">)</span><span class="n">upper</span><span class="p">,</span><span class="n">bin_value</span>
-<span class="w">  </span><span class="k">enddo</span>
-<span class="k">  write</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="s2">&quot;(2F12.7)&quot;</span><span class="p">)</span><span class="n">upper</span><span class="p">,</span><span class="mf">0.d0</span>
-<span class="k">end subroutine </span><span class="n">histogram_print</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

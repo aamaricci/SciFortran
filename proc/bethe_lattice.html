@@ -81,15 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_SPECIAL.f90"> Source File</a>
+              <a href="../src/functions_bethe.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_special.f90.html'>SF_SPECIAL.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/sf_special.html'>SF_SPECIAL</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/functions_bethe.f90.html'>functions_bethe.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">bethe_lattice</li>
           </ol>
         </nav>
@@ -128,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/bethe_lattice.html#src">bethe_lattice</a>
+      </div>
+    </div>
 
 
   </div>
@@ -135,7 +140,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine bethe_lattice(dos, ome, Lk, D)  
+    <h2> subroutine bethe_lattice(dos, ome, Lk, D)  
 </h2>
     
 
@@ -199,7 +204,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-d~2"></span>
+              <span class="anchor" id="variable-d"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -238,18 +243,15 @@
 <polygon fill="none" stroke="black" points="82,-24 0,-24 0,0 82,0 82,-24"/>
 <text text-anchor="middle" x="41" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">bethe_lattice</text>
 </g>
-<!-- proc~dens_bethe -->
+<!-- dens_bethe -->
 <g id="proc~~bethe_lattice~~CallsGraph_node2" class="node">
-<title>proc~dens_bethe</title>
-<g id="a_proc~~bethe_lattice~~CallsGraph_node2"><a xlink:href="../proc/dens_bethe.html" xlink:title="dens_bethe">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="192,-24 118,-24 118,0 192,0 192,-24"/>
+<title>dens_bethe</title>
+<polygon fill="#777777" stroke="#777777" points="192,-24 118,-24 118,0 192,0 192,-24"/>
 <text text-anchor="middle" x="155" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dens_bethe</text>
-</a>
 </g>
-</g>
-<!-- proc~bethe_lattice&#45;&gt;proc~dens_bethe -->
+<!-- proc~bethe_lattice&#45;&gt;dens_bethe -->
 <g id="proc~~bethe_lattice~~CallsGraph_edge1" class="edge">
-<title>proc~bethe_lattice&#45;&gt;proc~dens_bethe</title>
+<title>proc~bethe_lattice&#45;&gt;dens_bethe</title>
 <path fill="none" stroke="#000000" d="M82.12,-12C90.42,-12 99.23,-12 107.73,-12"/>
 <polygon fill="#000000" stroke="#000000" points="107.88,-15.5 117.88,-12 107.88,-8.5 107.88,-15.5"/>
 </g>
@@ -346,6 +348,31 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">bethe_lattice</span><span class="p">(</span><span class="n">dos</span><span class="p">,</span><span class="n">ome</span><span class="p">,</span><span class="n">Lk</span><span class="p">,</span><span class="n">D</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">dos</span><span class="p">(</span><span class="n">Lk</span><span class="p">),</span><span class="n">ome</span><span class="p">(</span><span class="n">Lk</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">Lk</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">D</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">ie</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">de</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">D_</span>
+<span class="w">  </span><span class="kt">complex</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">gf</span><span class="p">,</span><span class="n">zeta</span>
+<span class="w">  </span><span class="n">D_</span><span class="o">=</span><span class="mf">1.d0</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">D</span><span class="p">))</span><span class="n">D_</span><span class="o">=</span><span class="n">D</span>
+<span class="w">  </span><span class="n">de</span><span class="o">=</span><span class="w"> </span><span class="mf">2.d0</span><span class="o">*</span><span class="n">D</span><span class="o">/</span><span class="nb">dble</span><span class="p">(</span><span class="n">Lk</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,I8,A)&quot;</span><span class="p">)</span><span class="s2">&quot;Bethe Lattice with:&quot;</span><span class="p">,</span><span class="n">Lk</span><span class="p">,</span><span class="s2">&quot; e-points&quot;</span>
+<span class="w">  </span><span class="k">open</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="k">file</span><span class="o">=</span><span class="s2">&quot;DOSbethe.lattice&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">do </span><span class="n">ie</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">Lk</span>
+<span class="w">     </span><span class="n">e</span><span class="o">=-</span><span class="n">D_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">dble</span><span class="p">(</span><span class="n">ie</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">de</span>
+<span class="w">     </span><span class="n">dos</span><span class="p">(</span><span class="n">ie</span><span class="p">)</span><span class="o">=</span><span class="n">dens_bethe</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">D_</span><span class="p">)</span><span class="o">*</span><span class="n">de</span>
+<span class="w">     </span><span class="n">ome</span><span class="p">(</span><span class="n">ie</span><span class="p">)</span><span class="o">=</span><span class="n">e</span>
+<span class="w">     </span><span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">e</span><span class="p">,</span><span class="n">dos</span><span class="p">(</span><span class="n">ie</span><span class="p">)</span><span class="o">/</span><span class="n">de</span>
+<span class="w">  </span><span class="k">enddo</span>
+<span class="k">  close</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">end subroutine </span><span class="n">bethe_lattice</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

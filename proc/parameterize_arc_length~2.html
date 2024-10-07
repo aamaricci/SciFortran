@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pack.f90.html'>interpolate_pack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">parameterize_arc_length</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/parameterize_arc_length~2.html#src">parameterize_arc_length</a>
-      </div>
-    </div>
 
 
   </div>
@@ -264,66 +258,6 @@
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">parameterize_arc_length</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dim_num</span><span class="p">,</span><span class="w"> </span><span class="n">data_num</span><span class="p">,</span><span class="w"> </span><span class="n">p_data</span><span class="p">,</span><span class="w"> </span><span class="n">t_data</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! PARAMETERIZE_ARC_LENGTH parameterizes data by pseudo-arclength.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    A parameterization is required for the interpolation.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This routine provides a parameterization by computing the</span>
-<span class="w">  </span><span class="c">!    pseudo-arclength of the data, that is, the Euclidean distance</span>
-<span class="w">  </span><span class="c">!    between successive points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Licensing:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    This code is distributed under the GNU LGPL license. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    19 May 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    John Burkardt</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) DIM_NUM, the spatial dimension.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) DATA_NUM, the number of data points.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) P_DATA(DIM_NUM,DATA_NUM), the data values.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) T_DATA(DATA_NUM), parameter values</span>
-<span class="w">  </span><span class="c">!    assigned to the data.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">data_num</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">dim_num</span>
-
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">p_data</span><span class="p">(</span><span class="n">dim_num</span><span class="p">,</span><span class="n">data_num</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">data_num</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">t_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
-<span class="w">  </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">data_num</span>
-<span class="w">     </span><span class="n">t_data</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_data</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">          </span><span class="o">+</span><span class="w"> </span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p_data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">dim_num</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p_data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">dim_num</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-<span class="w">  </span><span class="k">end do</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">parameterize_arc_length</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>
