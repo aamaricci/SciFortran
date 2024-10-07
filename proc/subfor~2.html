@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">subfor</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/subfor~2.html#src">subfor</a>
+      </div>
+    </div>
 
 
   </div>
@@ -141,14 +147,14 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! SUBFOR carries out the forward pass of substitution for the current block.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">The</span><span class="w"> </span><span class="nv">forward</span><span class="w"> </span><span class="nv">pass</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">action</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="nv">corresponding</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="nv">The</span><span class="w"> </span><span class="nv">forward</span><span class="w"> </span><span class="nv">pass</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">action</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="nv">corresponding</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span>
 <span class="nv">elimination</span><span class="w"> </span><span class="nv">carried</span><span class="w"> </span><span class="nv">out</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">FACTRB</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">block</span>.
 
 <span class="nv">At</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="k">end</span>,<span class="w"> </span><span class="nv">X</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NROW</span><span class="ss">)</span><span class="w"> </span><span class="nv">contains</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">transformed</span>
 <span class="nv">IPIVOT</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NROW</span><span class="ss">)</span><span class="o">-</span><span class="nv">th</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">block</span>.
 
-<span class="k">Then</span>,<span class="w"> </span><span class="nv">since</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">I</span><span class="o">=</span><span class="mi">1</span>,...,<span class="nv">NROW</span><span class="o">-</span><span class="nv">LAST</span>,<span class="w"> </span><span class="nv">B</span><span class="ss">(</span><span class="nv">NROW</span><span class="o">+</span><span class="nv">I</span><span class="ss">)</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">going</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">used</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span>
-<span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">I</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="k">next</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="ss">(</span><span class="nv">shifted</span><span class="w"> </span><span class="nv">over</span><span class="w"> </span><span class="nv">there</span><span class="w"> </span>
+<span class="k">Then</span>,<span class="w"> </span><span class="nv">since</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">I</span><span class="o">=</span><span class="mi">1</span>,...,<span class="nv">NROW</span><span class="o">-</span><span class="nv">LAST</span>,<span class="w"> </span><span class="nv">B</span><span class="ss">(</span><span class="nv">NROW</span><span class="o">+</span><span class="nv">I</span><span class="ss">)</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">going</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">used</span><span class="w"> </span><span class="nv">as</span>
+<span class="nv">the</span><span class="w"> </span><span class="nv">right</span><span class="w"> </span><span class="nv">hand</span><span class="w"> </span><span class="nv">side</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">I</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="k">next</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="ss">(</span><span class="nv">shifted</span><span class="w"> </span><span class="nv">over</span><span class="w"> </span><span class="nv">there</span>
 <span class="nv">from</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">block</span><span class="w"> </span><span class="nv">during</span><span class="w"> </span><span class="nv">factorization</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="nv">equal</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">X</span><span class="ss">(</span><span class="nv">LAST</span><span class="o">+</span><span class="nv">I</span><span class="ss">)</span><span class="w"> </span><span class="nv">here</span>.
 </code></pre></div>
 
@@ -169,7 +175,7 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) W(NROW,LAST), integer IPIVOT(NROW), 
+<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) W(NROW,LAST), integer IPIVOT(NROW),
 integer ( kind = 4 ) NROW, integer LAST, are as on return from FACTRB.
 
 Output, real ( kind = 8 ) B(2*NROW-LAST).  On input, B(1:NROW)
@@ -195,7 +201,7 @@ right hand sides of equations IPIVOT(1:NROW).
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-w~38"></span>
+              <span class="anchor" id="variable-w~69"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -240,7 +246,7 @@ right hand sides of equations IPIVOT(1:NROW).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-last~18"></span>
+              <span class="anchor" id="variable-last~22"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -255,7 +261,7 @@ right hand sides of equations IPIVOT(1:NROW).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~87"></span>
+              <span class="anchor" id="variable-b~187"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -270,7 +276,7 @@ right hand sides of equations IPIVOT(1:NROW).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~284"></span>
+              <span class="anchor" id="variable-x~561"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -298,6 +304,92 @@ right hand sides of equations IPIVOT(1:NROW).
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">subfor</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! SUBFOR carries out the forward pass of substitution for the current block.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The forward pass is the action on the right hand side corresponding to the </span>
+<span class="w">  </span><span class="c">!    elimination carried out in FACTRB for this block.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    At the end, X(1:NROW) contains the right hand side of the transformed</span>
+<span class="w">  </span><span class="c">!    IPIVOT(1:NROW)-th equation in this block.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Then, since for I=1,...,NROW-LAST, B(NROW+I) is going to be used as </span>
+<span class="w">  </span><span class="c">!    the right hand side of equation I in the next block (shifted over there </span>
+<span class="w">  </span><span class="c">!    from this block during factorization), it is set equal to X(LAST+I) here.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) W(NROW,LAST), integer IPIVOT(NROW), </span>
+<span class="w">  </span><span class="c">!    integer ( kind = 4 ) NROW, integer LAST, are as on return from FACTRB.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) B(2*NROW-LAST).  On input, B(1:NROW)</span>
+<span class="w">  </span><span class="c">!    contains the right hand sides for this block.  On output,</span>
+<span class="w">  </span><span class="c">!    B(NROW+1:2*NROW-LAST) contains the appropriately modified right</span>
+<span class="w">  </span><span class="c">!    hand sides for the next block.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real X(NROW), contains, on output, the appropriately modified</span>
+<span class="w">  </span><span class="c">!    right hand sides of equations IPIVOT(1:NROW).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">last</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">nrow</span><span class="o">+</span><span class="n">nrow</span><span class="o">-</span><span class="n">last</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ip</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jhi</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nrow</span><span class="p">,</span><span class="n">last</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">     </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">jhi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">jhi</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">jhi</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Transfer modified right hand sides of equations IPIVOT(LAST+1:NROW) </span>
+<span class="w">  </span><span class="c">!  to next block.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">b</span><span class="p">(</span><span class="n">nrow</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">nrow</span><span class="o">-</span><span class="n">last</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">last</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">nrow</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end subroutine </span><span class="n">subfor</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

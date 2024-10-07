@@ -76,7 +76,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 0.1% of total for procedures.">83 statements</a>
+                 title=" 0.1% of total for procedures.">85 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -140,7 +140,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2> subroutine fmin_cg_df(p, f, df, iter, fret, ftol, itmax, istop, iverbose)  
+    <h2> subroutine fmin_cg_df(p, f, df, iter, fret, ftol, itmax, istop, iverbose, err)  
 </h2>
     
 
@@ -159,7 +159,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-p~25"></span>
+              <span class="anchor" id="variable-p~5"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -174,7 +174,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~81"></span>
+              <span class="anchor" id="variable-f~20"></span>
               procedure(cgfit_func)
             </td>
 <td></td>
@@ -189,7 +189,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-df~14"></span>
+              <span class="anchor" id="variable-df~9"></span>
               procedure(cgfit_fjac)
             </td>
 <td></td>
@@ -204,7 +204,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iter~19"></span>
+              <span class="anchor" id="variable-iter~16"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -219,7 +219,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fret~6"></span>
+              <span class="anchor" id="variable-fret"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -234,7 +234,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ftol~3"></span>
+              <span class="anchor" id="variable-ftol"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -249,7 +249,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-itmax~5"></span>
+              <span class="anchor" id="variable-itmax"></span>
               integer,
             </td>
 <td></td>
@@ -279,7 +279,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iverbose~5"></span>
+              <span class="anchor" id="variable-iverbose~11"></span>
               logical,
             </td>
 <td></td>
@@ -288,6 +288,21 @@
             </td>
             <td>::</td>
             <td><strong>iverbose</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-err~2"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional,</td>            <td>
+              dimension(2)
+            </td>
+            <td>::</td>
+            <td><strong>err</strong></td>
             <td>
                 
             </td>
@@ -449,7 +464,7 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">fmin_cg_df</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">fret</span><span class="p">,</span><span class="n">ftol</span><span class="p">,</span><span class="n">itmax</span><span class="p">,</span><span class="n">istop</span><span class="p">,</span><span class="n">iverbose</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">fmin_cg_df</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">fret</span><span class="p">,</span><span class="n">ftol</span><span class="p">,</span><span class="n">itmax</span><span class="p">,</span><span class="n">istop</span><span class="p">,</span><span class="n">iverbose</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
 <span class="w">  </span><span class="k">procedure</span><span class="p">(</span><span class="n">cgfit_func</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span>
 <span class="w">  </span><span class="k">procedure</span><span class="p">(</span><span class="n">cgfit_fjac</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">df</span>
 <span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span>
@@ -464,6 +479,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">xi</span><span class="p">,</span><span class="n">p_prev</span>
 <span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="k">optional</span><span class="w">                     </span><span class="kd">::</span><span class="w"> </span><span class="n">iverbose</span>
 <span class="w">  </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">iverbose_</span><span class="p">,</span><span class="n">converged</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="k">optional</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">err</span>
 <span class="w">  </span><span class="c">!</span>
 <span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">func</span><span class="p">))</span><span class="k">nullify</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">func</span><span class="o">=&gt;</span><span class="n">f</span>
 <span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">fjac</span><span class="p">))</span><span class="k">nullify</span><span class="p">(</span><span class="n">fjac</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">fjac</span><span class="o">=&gt;</span><span class="n">df</span>
@@ -496,6 +512,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">     </span><span class="k">call </span><span class="n">dlinmin</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">xi</span><span class="p">,</span><span class="n">fret</span><span class="p">,</span><span class="n">ftol_</span><span class="p">,</span><span class="n">itmax_</span><span class="p">)</span>
 <span class="w">     </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">fret</span><span class="o">-</span><span class="n">fp</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="n">d0</span><span class="o">+</span><span class="nb">abs</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
 <span class="w">     </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot_product</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="n">p_prev</span><span class="p">,</span><span class="n">p</span><span class="o">-</span><span class="n">p_prev</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="n">d0</span><span class="o">+</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">err</span><span class="p">))</span><span class="n">err</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>
 <span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">iverbose_</span><span class="p">)</span><span class="k">then</span>
 <span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;Iter,F_n =&quot;</span><span class="p">,</span><span class="n">iter</span><span class="p">,</span><span class="n">fp</span>
 <span class="w">        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A10)&quot;</span><span class="p">)</span><span class="s2">&quot;    gradF:&quot;</span>
@@ -507,13 +524,13 @@ implementation in a submodule of an interface in a parent module.
 <span class="k">     select case</span><span class="p">(</span><span class="n">istop_</span><span class="p">)</span>
 <span class="w">     </span><span class="k">case </span><span class="n">default</span>
 <span class="w">        </span><span class="n">converged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">&lt;</span><span class="n">ftol_</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="o">&lt;</span><span class="n">ftol_</span><span class="p">)</span>
-<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">)</span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;Converged with (|F_n-F_n-1|/1+|F_n|), ||a_n - a_n-1||^2/1+||a_n||^2 &lt; ftol_:&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">iverbose_</span><span class="w"> </span><span class="p">)</span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;Converged with (|F_n-F_n-1|/1+|F_n|), ||a_n - a_n-1||^2/1+||a_n||^2 &lt; ftol_:&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span>
 <span class="w">     </span><span class="k">case</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">        </span><span class="n">converged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">&lt;</span><span class="n">ftol_</span>
-<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">)</span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;Converged with (|F_n-F_n-1|/1+|F_n|)&lt; ftol_:&quot;</span><span class="p">,</span><span class="n">a</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">iverbose_</span><span class="w"> </span><span class="p">)</span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;Converged with (|F_n-F_n-1|/1+|F_n|)&lt; ftol_:&quot;</span><span class="p">,</span><span class="n">a</span>
 <span class="w">     </span><span class="k">case</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="w">        </span><span class="n">converged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="o">&lt;</span><span class="n">ftol_</span>
-<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">)</span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;Converged with ||a_n - a_n-1||^2/1+||a_n||^2 &lt; ftol_:&quot;</span><span class="p">,</span><span class="n">b</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">iverbose_</span><span class="w"> </span><span class="p">)</span><span class="k">print</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;Converged with ||a_n - a_n-1||^2/1+||a_n||^2 &lt; ftol_:&quot;</span><span class="p">,</span><span class="n">b</span>
 <span class="w">     </span><span class="k">end select</span>
 <span class="k">     if</span><span class="p">(</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="p">)</span><span class="k">return</span>
 <span class="k">     if</span><span class="p">(</span><span class="w"> </span><span class="n">iverbose_</span><span class="p">)</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;&quot;</span>

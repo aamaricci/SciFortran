@@ -76,7 +76,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title="<p> 0.0% of total for procedures.</p>Including implementation: 174 statements,  0.3% of total for procedures.">3 statements</a>
+                 title="<p> 0.0% of total for procedures.</p>Including implementation: 176 statements,  0.3% of total for procedures.">3 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -154,7 +154,7 @@
 
         <h2>Module Procedures</h2>
             <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-fmin_cg_df~2"></span> <h3>private  subroutine fmin_cg_df(p, f, df, iter, fret, ftol, itmax, istop, iverbose)  
+    <div class="card-header codesum"><span class="anchor" id="proc-fmin_cg_df~2"></span> <h3>private  subroutine fmin_cg_df(p, f, df, iter, fret, ftol, itmax, istop, iverbose, err)  
 </h3></div>
     <div class="card-body">
         
@@ -172,7 +172,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-p~41"></span>
+              <span class="anchor" id="variable-p~12"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -187,7 +187,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~123"></span>
+              <span class="anchor" id="variable-f~29"></span>
               procedure(<a href='cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
@@ -202,7 +202,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-df~32"></span>
+              <span class="anchor" id="variable-df~14"></span>
               procedure(<a href='cgfit_fjac.html'>cgfit_fjac</a>)
             </td>
 <td></td>
@@ -217,7 +217,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iter~42"></span>
+              <span class="anchor" id="variable-iter~27"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -232,7 +232,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fret~11"></span>
+              <span class="anchor" id="variable-fret~6"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -247,7 +247,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ftol~5"></span>
+              <span class="anchor" id="variable-ftol~3"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -262,7 +262,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-itmax~9"></span>
+              <span class="anchor" id="variable-itmax~5"></span>
               integer,
             </td>
 <td></td>
@@ -292,7 +292,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iverbose~16"></span>
+              <span class="anchor" id="variable-iverbose~15"></span>
               logical,
             </td>
 <td></td>
@@ -301,6 +301,21 @@
             </td>
             <td>::</td>
             <td><strong>iverbose</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-err~5"></span>
+              real(kind=8),
+            </td>
+<td></td>
+              <td>optional,</td>            <td>
+              dimension(2)
+            </td>
+            <td>::</td>
+            <td><strong>err</strong></td>
             <td>
                 
             </td>
@@ -331,7 +346,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-p~42"></span>
+              <span class="anchor" id="variable-p~13"></span>
               real(kind=8),
             </td>
 <td>intent(inout),</td>
@@ -346,7 +361,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-f~124"></span>
+              <span class="anchor" id="variable-f~30"></span>
               procedure(<a href='cgfit_func.html'>cgfit_func</a>)
             </td>
 <td></td>
@@ -361,7 +376,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iter~43"></span>
+              <span class="anchor" id="variable-iter~28"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -376,7 +391,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fret~12"></span>
+              <span class="anchor" id="variable-fret~7"></span>
               real(kind=8),
             </td>
 <td>intent(out)</td>
@@ -391,7 +406,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-ftol~6"></span>
+              <span class="anchor" id="variable-ftol~4"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -406,7 +421,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-itmax~10"></span>
+              <span class="anchor" id="variable-itmax~6"></span>
               integer,
             </td>
 <td></td>
@@ -436,7 +451,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-deps~3"></span>
+              <span class="anchor" id="variable-deps~2"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -451,7 +466,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iverbose~17"></span>
+              <span class="anchor" id="variable-iverbose~16"></span>
               logical,
             </td>
 <td></td>

@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">evnnot</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/evnnot.html#src">evnnot</a>
-      </div>
-    </div>
 
 
   </div>
@@ -147,7 +141,7 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! EVNNOT is a version of NEWNOT returning uniform knots.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">EVNNOT</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span><span class="nv">LNEW</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="nv">knots</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">BRKNEW</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">evenly</span><span class="w"> </span><span class="nv">spaced</span><span class="w"> </span><span class="nv">between</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">EVNNOT</span><span class="w"> </span><span class="nv">returns</span><span class="w"> </span><span class="nv">LNEW</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="nv">knots</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">BRKNEW</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">evenly</span><span class="w"> </span><span class="nv">spaced</span><span class="w"> </span><span class="nv">between</span><span class="w"> </span>
 <span class="k">BREAK</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="k">BREAK</span><span class="ss">(</span><span class="nv">L</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>.
 </code></pre></div>
 
@@ -168,19 +162,19 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) BREAK(L+1), real ( kind = 8 ) COEF(K,L),
-integer ( kind = 4 ) L, integer K, the piecewise polynomial representation
+<div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) BREAK(L+1), real ( kind = 8 ) COEF(K,L), 
+integer ( kind = 4 ) L, integer K, the piecewise polynomial representation 
 of a certain function F of order K.  Specifically,
   d**(K-1) F(X) = COEF(K,I) for BREAK(I) &lt;= X &lt; BREAK(I+1).
 
-Input, integer ( kind = 4 ) LNEW, the number of subintervals into which
+Input, integer ( kind = 4 ) LNEW, the number of subintervals into which 
 the interval (A,B) is to be sectioned by the new breakpoint
 sequence BRKNEW.
 
 Output, real ( kind = 8 ) BRKNEW(LNEW+1), the new breakpoints.
 
-Output, real (kind = 8 ) COEFG(2,L), the coefficient part of the
-piecewise polynomial representation BREAK, COEFG, L, 2 for the monotone
+Output, real (kind = 8 ) COEFG(2,L), the coefficient part of the 
+piecewise polynomial representation BREAK, COEFG, L, 2 for the monotone 
 piecewise linear function G with respect to which BRKNEW will
 be equidistributed.
 </code></pre></div>
@@ -229,7 +223,7 @@ be equidistributed.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~8"></span>
+              <span class="anchor" id="variable-l~7"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -244,7 +238,7 @@ be equidistributed.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~11"></span>
+              <span class="anchor" id="variable-k~24"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -317,87 +311,6 @@ be equidistributed.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">evnnot</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">brknew</span><span class="p">,</span><span class="w"> </span><span class="n">lnew</span><span class="p">,</span><span class="w"> </span><span class="n">coefg</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! EVNNOT is a version of NEWNOT returning uniform knots.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    EVNNOT returns LNEW+1 knots in BRKNEW which are evenly spaced between </span>
-<span class="w">  </span><span class="c">!    BREAK(1) and BREAK(L+1).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) BREAK(L+1), real ( kind = 8 ) COEF(K,L), </span>
-<span class="w">  </span><span class="c">!    integer ( kind = 4 ) L, integer K, the piecewise polynomial representation </span>
-<span class="w">  </span><span class="c">!    of a certain function F of order K.  Specifically,</span>
-<span class="w">  </span><span class="c">!      d**(K-1) F(X) = COEF(K,I) for BREAK(I) &lt;= X &lt; BREAK(I+1).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) LNEW, the number of subintervals into which </span>
-<span class="w">  </span><span class="c">!    the interval (A,B) is to be sectioned by the new breakpoint</span>
-<span class="w">  </span><span class="c">!    sequence BRKNEW.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) BRKNEW(LNEW+1), the new breakpoints.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Output, real (kind = 8 ) COEFG(2,L), the coefficient part of the </span>
-<span class="w">  </span><span class="c">!    piecewise polynomial representation BREAK, COEFG, L, 2 for the monotone </span>
-<span class="w">  </span><span class="c">!    piecewise linear function G with respect to which BRKNEW will</span>
-<span class="w">  </span><span class="c">!    be equidistributed.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lnew</span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">brknew</span><span class="p">(</span><span class="n">lnew</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coefg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">l</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
-
-<span class="w">  </span><span class="n">coefg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0D+00</span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lnew</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-
-<span class="k">     </span><span class="n">brknew</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D+00</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="k">else</span>
-
-<span class="k">     do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">lnew</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="n">brknew</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lnew</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">             </span><span class="o">+</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">             </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lnew</span><span class="p">,</span><span class="w">         </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">  end if</span>
-
-<span class="k">  return</span>
-<span class="k">end subroutine </span><span class="n">evnnot</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

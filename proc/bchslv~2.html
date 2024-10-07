@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">bchslv</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/bchslv~2.html#src">bchslv</a>
+      </div>
+    </div>
 
 
   </div>
@@ -145,21 +151,21 @@
 
 <span class="w">  </span><span class="n">C</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span>
 
-<span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Cholesky</span><span class="w"> </span><span class="n">factorization</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span>
+<span class="ow">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Cholesky</span><span class="w"> </span><span class="n">factorization</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">constructed</span>
 <span class="n">by</span><span class="w"> </span><span class="n">BCHFAC</span><span class="o">.</span>
 
 <span class="n">With</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">factorization</span>
 
 <span class="w">  </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">L</span><span class="s1">&#39;</span>
 
-<span class="n">available</span><span class="p">,</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">diagonal</span><span class="p">,</span><span class="w"> </span>
+<span class="n">available</span><span class="p">,</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">unit</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">diagonal</span><span class="p">,</span>
 <span class="n">the</span><span class="w"> </span><span class="n">triangular</span><span class="w"> </span><span class="n">system</span>
 
 <span class="w">  </span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span>
 
-<span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">(</span><span class="n">forward</span><span class="w"> </span><span class="n">substitution</span><span class="p">),</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span>
-<span class="n">vector</span><span class="w"> </span><span class="n">D</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">computed</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">the</span><span class="w"> </span>
-<span class="n">triangular</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">L</span><span class="s1">&#39;*X = D**(-1)*Y is solved for X </span>
+<span class="k">is</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">(</span><span class="n">forward</span><span class="w"> </span><span class="n">substitution</span><span class="p">),</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">the</span>
+<span class="n">vector</span><span class="w"> </span><span class="n">D</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">computed</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">the</span>
+<span class="n">triangular</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">L</span><span class="s1">&#39;*X = D**(-1)*Y is solved for X</span>
 <span class="p">(</span><span class="n">back</span><span class="w"> </span><span class="n">substitution</span><span class="p">)</span><span class="o">.</span>
 </code></pre></div>
 
@@ -180,7 +186,7 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">W</span><span class="ss">(</span><span class="nv">NBANDS</span>,<span class="nv">NROW</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">Cholesky</span><span class="w"> </span><span class="nv">factorization</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">C</span>,<span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="nv">Input</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">W</span><span class="ss">(</span><span class="nv">NBANDS</span>,<span class="nv">NROW</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">Cholesky</span><span class="w"> </span><span class="nv">factorization</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">C</span>,
 <span class="nv">as</span><span class="w"> </span><span class="nv">computed</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">BCHFAC</span>.
 
 <span class="nv">Input</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">NBANDS</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">bandwidth</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">C</span>.
@@ -206,7 +212,7 @@ LC: QA1.A647.v27.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-w~34"></span>
+              <span class="anchor" id="variable-w~65"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -251,7 +257,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~80"></span>
+              <span class="anchor" id="variable-b~180"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -279,6 +285,111 @@ LC: QA1.A647.v27.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">bchslv</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">nbands</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! BCHSLV solves a banded symmetric positive definite system.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The system is of the form:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      C * X = B </span>
+<span class="w">  </span><span class="c">!  </span>
+<span class="w">  </span><span class="c">!    and the Cholesky factorization of C has been constructed </span>
+<span class="w">  </span><span class="c">!    by BCHFAC.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    With the factorization </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      C = L * D * L&#39;</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    available, where L is unit lower triangular and D is diagonal, </span>
+<span class="w">  </span><span class="c">!    the triangular system </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      L * Y = B </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    is solved for Y (forward substitution), Y is stored in B, the </span>
+<span class="w">  </span><span class="c">!    vector D**(-1)*Y is computed and stored in B, then the </span>
+<span class="w">  </span><span class="c">!    triangular system L&#39;*X = D**(-1)*Y is solved for X </span>
+<span class="w">  </span><span class="c">!    (back substitution).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) W(NBANDS,NROW), the Cholesky factorization for C, </span>
+<span class="w">  </span><span class="c">!    as computed by BCHFAC.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NBANDS, the bandwidth of C.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NROW, the order of the matrix C.</span>
+<span class="w">  </span><span class="c">! </span>
+<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) B(NROW).</span>
+<span class="w">  </span><span class="c">!    On input, the right hand side.</span>
+<span class="w">  </span><span class="c">!    On output, the solution.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbands</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">nrow</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">nbands</span><span class="p">,</span><span class="n">nrow</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     </span><span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">     </span><span class="k">return</span>
+<span class="k">  end if</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Forward substitution. </span>
+<span class="w">  </span><span class="c">!  Solve L*Y = B.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span>
+
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nbands</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">b</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Back substitution. </span>
+<span class="w">  </span><span class="c">!  Solve L&#39;*X = D**(-1)*Y.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">do </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+
+<span class="w">     </span><span class="n">b</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">min</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nbands</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">b</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">n</span><span class="p">)</span>
+<span class="w">     </span><span class="k">end do</span>
+
+<span class="k">  end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">bchslv</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

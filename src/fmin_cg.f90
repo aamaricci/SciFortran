@@ -17,7 +17,7 @@
 !     with routines contained elsewhere. an easier way would be to include
 !     the routines inside each of the two following fmin_cg routines. 
 !+-------------------------------------------------------------------+
-subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
+subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose,err)
   procedure(cgfit_func)                :: f
   procedure(cgfit_fjac)                :: df
   real(8), dimension(:), intent(inout) :: p
@@ -32,6 +32,7 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
   real(8), dimension(size(p))          :: g,h,xi,p_prev
   logical,optional                     :: iverbose
   logical                              :: iverbose_,converged
+  real(8),dimension(2),optional        :: err
   !
   if(associated(func))nullify(func) ; func=>f
   if(associated(fjac))nullify(fjac) ; fjac=>df
@@ -64,6 +65,7 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
      call dlinmin(p,xi,fret,ftol_,itmax_)
      a = abs(fret-fp)/(1d0+abs(fp))
      b = dot_product(p-p_prev,p-p_prev)/(1d0+dot_product(p,p))
+     if(present(err))err=[a,b]
      if(iverbose_)then
         write(*,*)"Iter,F_n =",iter,fp
         write(*,"(A10)")"    gradF:"
@@ -75,13 +77,13 @@ subroutine fmin_cg_df(p,f,df,iter,fret,ftol,itmax,istop,iverbose)
      select case(istop_)
      case default
         converged = (a<ftol_) .AND. (b<ftol_)
-        if( converged )print*,"Converged with (|F_n-F_n-1|/1+|F_n|), ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",a,b
+        if( converged .AND. iverbose_ )print*,"Converged with (|F_n-F_n-1|/1+|F_n|), ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",a,b
      case(1)
         converged = a<ftol_
-        if( converged )print*,"Converged with (|F_n-F_n-1|/1+|F_n|)< ftol_:",a
+        if( converged .AND. iverbose_ )print*,"Converged with (|F_n-F_n-1|/1+|F_n|)< ftol_:",a
      case(2)
         converged = b<ftol_
-        if( converged )print*,"Converged with ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",b
+        if( converged .AND. iverbose_ )print*,"Converged with ||a_n - a_n-1||^2/1+||a_n||^2 < ftol_:",b
      end select
      if( converged )return
      if( iverbose_)write(*,*)""
