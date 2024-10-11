@@ -638,10 +638,10 @@ contains
   function scan_comment(buffer) result(pos)
     character(len=255),intent(in)           :: buffer
     integer                                 :: pos
-    character(len=1),dimension(4),parameter :: comments=["!","c","#","%"]
+    character(len=1),dimension(3),parameter :: comments=["!","#","%"]
     integer :: i
     pos=0
-    do i=1,4
+    do i=1,3
        pos=scan(buffer,comments(i))
        if(pos/=0)return
     end do
