@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">sbblok</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/sbblok.html#src">sbblok</a>
+      </div>
+    </div>
 
 
   </div>
@@ -141,7 +147,7 @@
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
 <p>! SBBLOK solves a linear system that was factored by FCBLOK.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code>The routine supervises the solution, by forward and backward 
+<div class="codehilite"><pre><span></span><code>The routine supervises the solution, by forward and backward
 substitution, of the linear system
 
   A * x = b
@@ -170,7 +176,7 @@ LC: QA1.A647.v27.
 <div class="codehilite"><pre><span></span><code>Input, real ( kind = 8 ) BLOKS(*), integer INTEGS(3,NBLOKS), integer
 NBLOKS, integer IPIVOT(*), are as on return from FCBLOK.
 
-Input, real ( kind = 8 ) B(*), the right hand side, stored corresponding 
+Input, real ( kind = 8 ) B(*), the right hand side, stored corresponding
 to the storage of the equations.  See comments in SLVBLK for details.
 
 Output, real ( kind = 8 ) X(*), the solution vector.
@@ -250,7 +256,7 @@ Output, real ( kind = 8 ) X(*), the solution vector.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~101"></span>
+              <span class="anchor" id="variable-b~7"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -265,7 +271,7 @@ Output, real ( kind = 8 ) X(*), the solution vector.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~336"></span>
+              <span class="anchor" id="variable-x~17"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -421,6 +427,113 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">sbblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! SBBLOK solves a linear system that was factored by FCBLOK.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The routine supervises the solution, by forward and backward </span>
+<span class="w">  </span><span class="c">!    substitution, of the linear system </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      A * x = b</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    for X, with the PLU factorization of A already generated in FCBLOK.</span>
+<span class="w">  </span><span class="c">!    Individual blocks of equations are solved via SUBFOR and SUBBAK.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) BLOKS(*), integer INTEGS(3,NBLOKS), integer</span>
+<span class="w">  </span><span class="c">!    NBLOKS, integer IPIVOT(*), are as on return from FCBLOK.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) B(*), the right hand side, stored corresponding </span>
+<span class="w">  </span><span class="c">!    to the storage of the equations.  See comments in SLVBLK for details.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) X(*), the solution vector.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbloks</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bloks</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nb">index</span>
+<span class="nb">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">indexb</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">indexx</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">nbloks</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">last</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbp1</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ncol</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nrow</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Forward substitution:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="nb">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">indexb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="n">indexx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span>
+
+<span class="w">     </span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">subfor</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">(</span><span class="nb">index</span><span class="p">),</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">indexb</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">indexb</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">          </span><span class="n">x</span><span class="p">(</span><span class="n">indexx</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">     </span><span class="nb">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">index</span>
+<span class="nb">     </span><span class="n">indexb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">indexb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nrow</span>
+<span class="w">     </span><span class="n">indexx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">indexx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">last</span>
+
+<span class="w">  </span><span class="k">end do</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Back substitution.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="n">nbp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nbloks</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">  </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span>
+
+<span class="w">     </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nbp1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span>
+<span class="w">     </span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="w">     </span><span class="nb">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ncol</span>
+<span class="w">     </span><span class="n">indexb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">indexb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nrow</span>
+<span class="w">     </span><span class="n">indexx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">indexx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">last</span>
+
+<span class="w">     </span><span class="k">call </span><span class="n">subbak</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">(</span><span class="nb">index</span><span class="p">),</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="n">indexb</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">indexx</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">end do</span>
+
+<span class="k">  return</span>
+<span class="k">end subroutine </span><span class="n">sbblok</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

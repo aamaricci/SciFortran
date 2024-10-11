@@ -81,14 +81,15 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/fmin_Nelder_Mead.f90"> Source File</a>
+              <a href="../src/SF_OPTIMIZE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/fmin_nelder_mead.f90.html'>fmin_Nelder_Mead.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_optimize.f90.html'>SF_OPTIMIZE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/sf_optimize.html'>SF_OPTIMIZE</a></li>
             <li class="breadcrumb-item active" aria-current="page">fmin</li>
           </ol>
         </nav>
@@ -127,12 +128,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/fmin~2.html#src">fmin</a>
-      </div>
-    </div>
 
 
   </div>
@@ -140,7 +135,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2> subroutine fmin(fn, start, lambda, tol, conv_check, max_fun_calls, fun_calls, num_restart, ierr)  
+    <h2>public  subroutine fmin(fn, start, lambda, tol, conv_check, max_fun_calls, fun_calls, num_restart, ierr)  
 </h2>
     
 
@@ -160,7 +155,7 @@
         <tr>
             <td colspan="7">
               <small>    <h5>
-     function fn(x)  
+    private  function fn(x)  
 
     </h5>
   
@@ -178,7 +173,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~715"></span>
+              <span class="anchor" id="variable-x~541"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -234,7 +229,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-tol~76"></span>
+              <span class="anchor" id="variable-tol~68"></span>
               real(kind=8),
             </td>
 <td></td>
@@ -337,281 +332,6 @@
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">fmin</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span><span class="n">start</span><span class="p">,&amp;</span>
-<span class="w">     </span><span class="n">lambda</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">conv_check</span><span class="p">,</span><span class="n">max_fun_calls</span><span class="p">,</span><span class="n">fun_calls</span><span class="p">,</span><span class="n">num_restart</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span>
-<span class="w">  </span><span class="k">interface</span>
-<span class="k">     function </span><span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="w">       </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span>
-<span class="w">       </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">fn</span>
-<span class="w">     </span><span class="k">end function </span><span class="n">fn</span>
-<span class="w">  </span><span class="k">end interface</span>
-<span class="k">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">start</span><span class="p">(:)</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">lambda</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">))</span><span class="w"> </span><span class="c">!--&gt; step</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">tol</span><span class="w">                 </span><span class="c">!--&gt; reqmin </span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">conv_check</span><span class="w">          </span><span class="c">!--&gt; konvge</span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">max_fun_calls</span><span class="w">       </span><span class="c">!--&gt; kcount</span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">fun_calls</span><span class="w">           </span><span class="c">!--&gt; icount</span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">num_restart</span><span class="w">         </span><span class="c">!--&gt; numres</span>
-<span class="w">  </span><span class="kt">integer</span><span class="p">,</span><span class="k">optional</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">ierr</span><span class="w">                </span><span class="c">!--&gt; ifault</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">step</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">reqmin</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">konvge</span><span class="w">   </span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">kcount</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">icount</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">numres</span><span class="w">    </span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ifault</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">xmin</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ccoeff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D+00</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">del</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ecoeff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0D+00</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.001D+00</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ihi</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ilo</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">j</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">jcount</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">),</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">p2star</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">pstar</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="k">parameter</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">rcoeff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">rq</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">y2star</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ylo</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ynewlo</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">ystar</span>
-<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">            </span><span class="kd">::</span><span class="w"> </span><span class="n">z</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="n">d0</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">lambda</span><span class="p">))</span><span class="n">step</span><span class="o">=</span><span class="n">lambda</span>
-<span class="w">  </span><span class="n">reqmin</span><span class="o">=</span><span class="mi">1</span><span class="n">d</span><span class="o">-</span><span class="mi">8</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span><span class="n">reqmin</span><span class="o">=</span><span class="n">tol</span>
-<span class="w">  </span><span class="n">konvge</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">conv_check</span><span class="p">))</span><span class="n">konvge</span><span class="o">=</span><span class="n">conv_check</span>
-<span class="w">  </span><span class="n">kcount</span><span class="o">=</span><span class="mi">500</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">max_fun_calls</span><span class="p">))</span><span class="n">kcount</span><span class="o">=</span><span class="n">max_fun_calls</span><span class="w">    </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Check the input parameters.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">reqmin</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">     </span><span class="k">return</span>
-<span class="k">  end if</span>
-<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">     </span><span class="k">return</span>
-<span class="k">  end if</span>
-<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">konvge</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">     </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">     </span><span class="k">return</span>
-<span class="k">  end if</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Initialization.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">  </span><span class="n">numres</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">  </span><span class="n">jcount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">konvge</span>
-<span class="w">  </span><span class="n">del</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0D+00</span>
-<span class="w">  </span><span class="n">rq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reqmin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Initial or restarted loop.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">do</span>
-<span class="k">     </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">     </span><span class="n">y</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="p">)</span>
-<span class="w">     </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Define the initial simplex.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-<span class="w">        </span><span class="n">start</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">step</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">del</span>
-<span class="w">        </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">        </span><span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="n">start</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span>
-<span class="w">     </span><span class="k">end do</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Find highest and lowest Y values.  YNEWLO = Y(IHI) indicates</span>
-<span class="w">     </span><span class="c">!  the vertex of the simplex to be replaced.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">minloc</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span>
-<span class="w">     </span><span class="n">ylo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Inner loop.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">kcount</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  YNEWLO is, of course, the HIGHEST value???</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="n">ihi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxloc</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="n">ynewlo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Calculate PBAR, the centroid of the simplex vertices</span>
-<span class="w">        </span><span class="c">!  excepting the vertex with Y value YNEWLO.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
-<span class="w">           </span><span class="n">pbar</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="k">end do</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Reflection through the centroid.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="n">pstar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rcoeff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="n">ystar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pstar</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Successful reflection, so extension.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ystar</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ylo</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">p2star</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ecoeff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pstar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-<span class="w">           </span><span class="n">y2star</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p2star</span><span class="w"> </span><span class="p">)</span>
-<span class="w">           </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">           </span><span class="c">!</span>
-<span class="w">           </span><span class="c">!  Retain extension or contraction.</span>
-<span class="w">           </span><span class="c">!</span>
-<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ystar</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y2star</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">              </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ystar</span>
-<span class="w">           </span><span class="k">else</span>
-<span class="k">              </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2star</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">              </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2star</span>
-<span class="w">           </span><span class="k">end if</span>
-<span class="w">           </span><span class="c">!</span>
-<span class="w">           </span><span class="c">!  No extension.</span>
-<span class="w">           </span><span class="c">!</span>
-<span class="w">        </span><span class="k">else</span>
-<span class="k">           </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">           </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ystar</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                 </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">              </span><span class="k">end if</span>
-<span class="k">           end do</span>
-<span class="k">           if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">              </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ystar</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">              </span><span class="c">!  Contraction on the Y(IHI) side of the centroid.</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">           </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">p2star</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ccoeff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-<span class="w">              </span><span class="n">y2star</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p2star</span><span class="w"> </span><span class="p">)</span>
-<span class="w">              </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">              </span><span class="c">!  Contract the whole simplex.</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y2star</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                 do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                    </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ilo</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.5D+00</span>
-<span class="w">                    </span><span class="n">xmin</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
-<span class="w">                    </span><span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="p">)</span>
-<span class="w">                    </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                 </span><span class="k">end do</span>
-<span class="k">                 </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">minloc</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span>
-<span class="w">                 </span><span class="n">ylo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span>
-<span class="w">                 </span><span class="k">cycle</span>
-<span class="w">                 </span><span class="c">!</span>
-<span class="w">                 </span><span class="c">!  Retain contraction.</span>
-<span class="w">                 </span><span class="c">!</span>
-<span class="w">              </span><span class="k">else</span>
-<span class="k">                 </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2star</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">                 </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2star</span>
-<span class="w">              </span><span class="k">end if</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">              </span><span class="c">!  Contraction on the reflection side of the centroid.</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">           </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">p2star</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ccoeff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">pstar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pbar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-<span class="w">              </span><span class="n">y2star</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">p2star</span><span class="w"> </span><span class="p">)</span>
-<span class="w">              </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">              </span><span class="c">!  Retain reflection?</span>
-<span class="w">              </span><span class="c">!</span>
-<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y2star</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">ystar</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                 </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2star</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">                 </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2star</span>
-<span class="w">              </span><span class="k">else</span>
-<span class="k">                 </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstar</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">                 </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ystar</span>
-<span class="w">              </span><span class="k">end if</span>
-<span class="k">           end if</span>
-<span class="k">        end if</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Check if YLO improved.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ylo</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">ylo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ihi</span><span class="p">)</span>
-<span class="w">           </span><span class="n">ilo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ihi</span>
-<span class="w">        </span><span class="k">end if</span>
-<span class="k">        </span><span class="n">jcount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jcount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jcount</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           cycle</span>
-<span class="k">        end if</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="c">!  Check to see if minimum reached.</span>
-<span class="w">        </span><span class="c">!</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">kcount</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">jcount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">konvge</span>
-<span class="w">           </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
-<span class="w">           </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span>
-<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">rq</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              exit</span>
-<span class="k">           end if</span>
-<span class="k">        end if</span>
-<span class="k">     end do</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Factorial tests to check that YNEWLO is a local minimum.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="n">xmin</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">,</span><span class="n">ilo</span><span class="p">)</span>
-<span class="w">     </span><span class="n">ynewlo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">ilo</span><span class="p">)</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">kcount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">        </span><span class="k">exit</span>
-<span class="k">     end if</span>
-<span class="k">     </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
-<span class="w">        </span><span class="n">del</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">step</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">eps</span>
-<span class="w">        </span><span class="n">xmin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">del</span>
-<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ynewlo</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">           </span><span class="k">exit</span>
-<span class="k">        end if</span>
-<span class="k">        </span><span class="n">xmin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">del</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">del</span>
-<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fn</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ynewlo</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">           </span><span class="n">ifault</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">           </span><span class="k">exit</span>
-<span class="k">        end if</span>
-<span class="k">        </span><span class="n">xmin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">del</span>
-<span class="w">     </span><span class="k">end do</span>
-<span class="k">     if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ifault</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        exit</span>
-<span class="k">     end if</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Restart the procedure.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="n">start</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span>
-<span class="w">     </span><span class="n">del</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eps</span>
-<span class="w">     </span><span class="n">numres</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numres</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="k">end do</span>
-<span class="k">  if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">fun_calls</span><span class="p">))</span><span class="n">fun_calls</span><span class="o">=</span><span class="n">icount</span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">num_restart</span><span class="p">))</span><span class="n">num_restart</span><span class="o">=</span><span class="n">numres</span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">ierr</span><span class="p">))</span><span class="n">ierr</span><span class="o">=</span><span class="n">ifault</span>
-<span class="w">  </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span>
-<span class="w">  </span><span class="k">return</span>
-<span class="k">end subroutine </span><span class="n">fmin</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

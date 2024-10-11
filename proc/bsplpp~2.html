@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/interpolate_pppack.f90"> Source File</a>
+              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">bsplpp</li>
           </ol>
         </nav>
@@ -127,12 +127,6 @@
   
   
   
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/bsplpp~2.html#src">bsplpp</a>
-      </div>
-    </div>
 
 
   </div>
@@ -148,16 +142,16 @@
 <p>! BSPLPP converts from B-spline to piecewise polynomial form.</p>
 <p>Discussion:</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">The</span><span class="w"> </span><span class="nv">B</span><span class="o">-</span><span class="nv">spline</span><span class="w"> </span><span class="nv">representation</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">T</span>,<span class="w"> </span><span class="nv">BCOEF</span>,<span class="w"> </span><span class="nv">N</span>,<span class="w"> </span><span class="nv">K</span><span class="w"> </span><span class="ss">)</span>,
-<span class="k">while</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">piecewise</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">representation</span><span class="w"> </span><span class="nv">is</span>
+<span class="k">while</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">piecewise</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">representation</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span>
 <span class="ss">(</span><span class="w"> </span><span class="k">BREAK</span>,<span class="w"> </span><span class="nv">COEF</span>,<span class="w"> </span><span class="nv">L</span>,<span class="w"> </span><span class="nv">K</span><span class="w"> </span><span class="ss">)</span>.
 
-<span class="k">For</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">breakpoint</span><span class="w"> </span><span class="nv">interval</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">K</span><span class="w"> </span><span class="nv">relevant</span><span class="w"> </span><span class="nv">B</span><span class="o">-</span><span class="nv">spline</span><span class="w"> </span><span class="nv">coefficients</span>
-<span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">found</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">differenced</span><span class="w"> </span><span class="nv">repeatedly</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">get</span><span class="w"> </span><span class="nv">the</span>
-<span class="nv">B</span><span class="o">-</span><span class="nv">spline</span><span class="w"> </span><span class="nv">coefficients</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">derivatives</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">that</span>
+<span class="k">For</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">breakpoint</span><span class="w"> </span><span class="nv">interval</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">K</span><span class="w"> </span><span class="nv">relevant</span><span class="w"> </span><span class="nv">B</span><span class="o">-</span><span class="nv">spline</span><span class="w"> </span><span class="nv">coefficients</span><span class="w"> </span>
+<span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">found</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">differenced</span><span class="w"> </span><span class="nv">repeatedly</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">get</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span>
+<span class="nv">B</span><span class="o">-</span><span class="nv">spline</span><span class="w"> </span><span class="nv">coefficients</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">derivatives</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span>
 <span class="nv">interval</span>.
 
-<span class="nv">The</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">its</span><span class="w"> </span><span class="nv">first</span><span class="w"> </span><span class="nv">K</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="nv">derivatives</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">evaluated</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">the</span>
-<span class="nv">left</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="nv">point</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">interval</span>,<span class="w"> </span><span class="nv">using</span><span class="w"> </span><span class="nv">BSPLVB</span><span class="w"> </span><span class="nv">repeatedly</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">obtain</span>
+<span class="nv">The</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">its</span><span class="w"> </span><span class="nv">first</span><span class="w"> </span><span class="nv">K</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="nv">derivatives</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">evaluated</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span>
+<span class="nv">left</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="nv">point</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">interval</span>,<span class="w"> </span><span class="nv">using</span><span class="w"> </span><span class="nv">BSPLVB</span><span class="w"> </span><span class="nv">repeatedly</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">obtain</span><span class="w"> </span>
 <span class="nv">the</span><span class="w"> </span><span class="nv">values</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">B</span><span class="o">-</span><span class="nv">splines</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">appropriate</span><span class="w"> </span><span class="nv">order</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">point</span>.
 </code></pre></div>
 
@@ -188,13 +182,13 @@ LC: QA1.A647.v27.
 
 <span class="nv">Work</span><span class="w"> </span><span class="nv">array</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">SCRTCH</span><span class="ss">(</span><span class="nv">K</span>,<span class="nv">K</span><span class="ss">)</span>.
 
-<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="k">BREAK</span><span class="ss">(</span><span class="nv">L</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">piecewise</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">breakpoint</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="k">BREAK</span><span class="ss">(</span><span class="nv">L</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">piecewise</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">breakpoint</span><span class="w"> </span>
 <span class="nv">sequence</span>.<span class="w">  </span><span class="k">BREAK</span><span class="w"> </span><span class="nv">contains</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">distinct</span><span class="w"> </span><span class="nv">points</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">sequence</span><span class="w"> </span><span class="nv">T</span><span class="ss">(</span><span class="nv">K</span>:<span class="nv">N</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>
 
-<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">COEF</span><span class="ss">(</span><span class="nv">K</span>,<span class="nv">N</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">COEF</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="ss">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">(</span><span class="nv">I</span><span class="o">-</span><span class="mi">1</span><span class="ss">)</span><span class="nv">st</span><span class="w"> </span><span class="nv">derivative</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">real</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">COEF</span><span class="ss">(</span><span class="nv">K</span>,<span class="nv">N</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">COEF</span><span class="ss">(</span><span class="nv">I</span>,<span class="nv">J</span><span class="ss">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">(</span><span class="nv">I</span><span class="o">-</span><span class="mi">1</span><span class="ss">)</span><span class="nv">st</span><span class="w"> </span><span class="nv">derivative</span><span class="w"> </span>
 <span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="k">BREAK</span><span class="ss">(</span><span class="nv">J</span><span class="ss">)</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">right</span>.
 
-<span class="nv">Output</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">L</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">pieces</span><span class="w"> </span><span class="nv">which</span>
+<span class="nv">Output</span>,<span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="ss">)</span><span class="w"> </span><span class="nv">L</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">polynomial</span><span class="w"> </span><span class="nv">pieces</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span>
 <span class="nv">make</span><span class="w"> </span><span class="nv">up</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">spline</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">interval</span><span class="w"> </span><span class="ss">(</span><span class="w"> </span><span class="nv">T</span><span class="ss">(</span><span class="nv">K</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">T</span><span class="ss">(</span><span class="nv">N</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="w"> </span><span class="ss">)</span>.
 </code></pre></div>
 
@@ -212,7 +206,7 @@ LC: QA1.A647.v27.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~89"></span>
+              <span class="anchor" id="variable-t~68"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -242,7 +236,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~508"></span>
+              <span class="anchor" id="variable-n~353"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -257,7 +251,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-k~389"></span>
+              <span class="anchor" id="variable-k~253"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -317,7 +311,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l~99"></span>
+              <span class="anchor" id="variable-l~65"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -461,156 +455,6 @@ implementation in a submodule of an interface in a parent module.
 
 
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">bsplpp</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">bcoef</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">scrtch</span><span class="p">,</span><span class="w"> </span><span class="n">break</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="c">!*****************************************************************************80</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!! BSPLPP converts from B-spline to piecewise polynomial form.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Discussion:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The B-spline representation of a spline is ( T, BCOEF, N, K ),</span>
-<span class="w">  </span><span class="c">!    while the piecewise polynomial representation is </span>
-<span class="w">  </span><span class="c">!    ( BREAK, COEF, L, K ).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    For each breakpoint interval, the K relevant B-spline coefficients </span>
-<span class="w">  </span><span class="c">!    of the spline are found and then differenced repeatedly to get the </span>
-<span class="w">  </span><span class="c">!    B-spline coefficients of all the derivatives of the spline on that </span>
-<span class="w">  </span><span class="c">!    interval. </span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    The spline and its first K-1 derivatives are then evaluated at the </span>
-<span class="w">  </span><span class="c">!    left end point of that interval, using BSPLVB repeatedly to obtain </span>
-<span class="w">  </span><span class="c">!    the values of all B-splines of the appropriate order at that point.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Modified:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    14 February 2007</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Author:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Reference:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
-<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
-<span class="w">  </span><span class="c">!    Springer, 2001,</span>
-<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
-<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!  Parameters:</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) T(N+K), the knot sequence.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) BCOEF(N), the B spline coefficient sequence.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) N, the number of B spline coefficients.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) K, the order of the spline.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Work array, real ( kind = 8 ) SCRTCH(K,K).</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) BREAK(L+1), the piecewise polynomial breakpoint </span>
-<span class="w">  </span><span class="c">!    sequence.  BREAK contains the distinct points in the sequence T(K:N+1)</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) COEF(K,N), with COEF(I,J) = (I-1)st derivative </span>
-<span class="w">  </span><span class="c">!    of the spline at BREAK(J) from the right.</span>
-<span class="w">  </span><span class="c">! </span>
-<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) L, the number of polynomial pieces which </span>
-<span class="w">  </span><span class="c">!    make up the spline in the interval ( T(K), T(N+1) ).</span>
-<span class="w">  </span><span class="c">!</span>
-<span class="w">  </span><span class="k">implicit none</span>
-
-<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">k</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">l</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
-
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">biatx</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">diff</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">j</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">jp1</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">left</span>
-<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lsofar</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w">      </span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">sum1</span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">lsofar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">  </span><span class="n">break</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-
-<span class="w">  </span><span class="k">do </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Find the next nontrivial knot interval.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        cycle</span>
-<span class="k">     end if</span>
-
-<span class="k">     </span><span class="n">lsofar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lsofar</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">     </span><span class="n">break</span><span class="p">(</span><span class="n">lsofar</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">coef</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">lsofar</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
-<span class="w">        </span><span class="k">cycle</span>
-<span class="k">     end if</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  Store the K B-spline coefficients relevant to current knot </span>
-<span class="w">     </span><span class="c">!  interval in SCRTCH(*,1).</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span>
-<span class="w">        </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bcoef</span><span class="p">(</span><span class="n">left</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
-<span class="w">     </span><span class="k">end do</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  For J=1,...,K-1, compute the  K-J  B-spline coefficients relevant to</span>
-<span class="w">     </span><span class="c">!  the current knot interval for the J-th derivative by differencing</span>
-<span class="w">     </span><span class="c">!  those for the (J-1)st derivative, and store in SCRTCH(.,J+1).</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">do </span><span class="n">jp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">k</span>
-<span class="w">        </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jp1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span>
-<span class="w">           </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="n">j</span><span class="p">))</span>
-<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mf">0.0D+00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">              </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">jp1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">                   </span><span class="o">*</span><span class="w"> </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span>
-<span class="w">           </span><span class="k">end if</span>
-<span class="k">        end do</span>
-<span class="k">     end do</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="c">!  For J=0, ..., K-1, find the values at T(left) of the J+1</span>
-<span class="w">     </span><span class="c">!  B-splines of order J+1 whose support contains the current</span>
-<span class="w">     </span><span class="c">!  knot interval from those of order J (in  BIATX ), then combine</span>
-<span class="w">     </span><span class="c">!  with the B-spline coefficients (in SCRTCH(.,K-J) ) found earlier</span>
-<span class="w">     </span><span class="c">!  to compute the (K-J-1)st derivative at  T(LEFT) of the given</span>
-<span class="w">     </span><span class="c">!  spline.</span>
-<span class="w">     </span><span class="c">!</span>
-<span class="w">     </span><span class="k">call </span><span class="n">bsplvb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="p">),</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">biatx</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">     </span><span class="n">coef</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">lsofar</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
-
-<span class="w">     </span><span class="k">do </span><span class="n">jp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">k</span>
-
-<span class="w">        </span><span class="k">call </span><span class="n">bsplvb</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">jp1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">left</span><span class="p">),</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">biatx</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">        </span><span class="n">coef</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">jp1</span><span class="p">,</span><span class="n">lsofar</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot_product</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">biatx</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">jp1</span><span class="p">),</span><span class="w"> </span><span class="n">scrtch</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">jp1</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">jp1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">     </span><span class="k">end do</span>
-
-<span class="k">  end do</span>
-
-<span class="k">  </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lsofar</span>
-
-<span class="w">  </span><span class="k">return</span>
-<span class="k">end subroutine </span><span class="n">bsplpp</span>
-</pre></div>
-
-    </section>
-    <br>
     
     </div>
   </div>

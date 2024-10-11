@@ -81,14 +81,14 @@
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/SF_INTERPOLATE.f90"> Source File</a>
+              <a href="../src/interpolate_pppack.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/sf_interpolate.f90.html'>SF_INTERPOLATE.f90</a></li>
+                <li class="breadcrumb-item"><a href='../sourcefile/interpolate_pppack.f90.html'>interpolate_pppack.f90</a></li>
             <li class="breadcrumb-item active" aria-current="page">slvblk</li>
           </ol>
         </nav>
@@ -127,6 +127,12 @@
   
   
   
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/slvblk.html#src">slvblk</a>
+      </div>
+    </div>
 
 
   </div>
@@ -139,23 +145,23 @@
     
 
     <p><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*80</p>
-<p>! SLVBLK solves the almost block diagonal linear system A * x = b.  </p>
+<p>! SLVBLK solves the almost block diagonal linear system A * x = b.</p>
 <p>Discussion:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">Such</span><span class="w"> </span><span class="nx">almost</span><span class="w"> </span><span class="nx">block</span><span class="w"> </span><span class="nx">diagonal</span><span class="w"> </span><span class="nx">matrices</span><span class="w"> </span><span class="nx">arise</span><span class="w"> </span><span class="nx">naturally</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">piecewise</span><span class="w"> </span>
-<span class="nx">polynomial</span><span class="w"> </span><span class="nx">interpolation</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">approximation</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">finite</span><span class="w"> </span><span class="nx">element</span><span class="w"> </span>
-<span class="nx">methods</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">two</span><span class="o">-</span><span class="nx">point</span><span class="w"> </span><span class="nx">boundary</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">problems</span><span class="p">.</span><span class="w">  </span><span class="nx">The</span><span class="w"> </span><span class="nx">PLU</span><span class="w"> </span><span class="nx">factorization</span><span class="w"> </span>
-<span class="nx">method</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">implemented</span><span class="w"> </span><span class="nx">here</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">take</span><span class="w"> </span><span class="nx">advantage</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">special</span><span class="w"> </span><span class="nx">structure</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="nx">Such</span><span class="w"> </span><span class="nx">almost</span><span class="w"> </span><span class="nx">block</span><span class="w"> </span><span class="nx">diagonal</span><span class="w"> </span><span class="nx">matrices</span><span class="w"> </span><span class="nx">arise</span><span class="w"> </span><span class="nx">naturally</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">piecewise</span>
+<span class="nx">polynomial</span><span class="w"> </span><span class="nx">interpolation</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">approximation</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">finite</span><span class="w"> </span><span class="nx">element</span>
+<span class="nx">methods</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">two</span><span class="o">-</span><span class="nx">point</span><span class="w"> </span><span class="nx">boundary</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">problems</span><span class="p">.</span><span class="w">  </span><span class="nx">The</span><span class="w"> </span><span class="nx">PLU</span><span class="w"> </span><span class="nx">factorization</span>
+<span class="nx">method</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">implemented</span><span class="w"> </span><span class="nx">here</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">take</span><span class="w"> </span><span class="nx">advantage</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">special</span><span class="w"> </span><span class="nx">structure</span>
 <span class="nx">of</span><span class="w"> </span><span class="nx">such</span><span class="w"> </span><span class="nx">systems</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">savings</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">computing</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">storage</span><span class="w"> </span><span class="nx">requirements</span><span class="p">.</span>
 
 <span class="nx">SLVBLK</span><span class="w"> </span><span class="nx">relies</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">several</span><span class="w"> </span><span class="nx">auxiliary</span><span class="w"> </span><span class="nx">programs</span><span class="p">:</span>
 
-<span class="nx">FCBLOK</span><span class="w"> </span><span class="p">(</span><span class="nx">BLOKS</span><span class="p">,</span><span class="nx">INTEGS</span><span class="p">,</span><span class="nx">NBLOKS</span><span class="p">,</span><span class="nx">IPIVOT</span><span class="p">,</span><span class="nx">SCRTCH</span><span class="p">,</span><span class="nx">IFLAG</span><span class="p">)</span><span class="w">  </span>
+<span class="nx">FCBLOK</span><span class="w"> </span><span class="p">(</span><span class="nx">BLOKS</span><span class="p">,</span><span class="nx">INTEGS</span><span class="p">,</span><span class="nx">NBLOKS</span><span class="p">,</span><span class="nx">IPIVOT</span><span class="p">,</span><span class="nx">SCRTCH</span><span class="p">,</span><span class="nx">IFLAG</span><span class="p">)</span>
 <span class="nx">factors</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">matrix</span><span class="w"> </span><span class="nx">A</span><span class="p">.</span>
 
 <span class="nx">SBBLOK</span><span class="w"> </span><span class="p">(</span><span class="nx">BLOKS</span><span class="p">,</span><span class="nx">INTEGS</span><span class="p">,</span><span class="nx">NBLOKS</span><span class="p">,</span><span class="nx">IPIVOT</span><span class="p">,</span><span class="nx">B</span><span class="p">,</span><span class="nx">X</span><span class="p">)</span>
 <span class="nx">solves</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">system</span><span class="w"> </span><span class="nx">A</span><span class="o">*</span><span class="nx">X</span><span class="p">=</span><span class="nx">B</span><span class="w"> </span><span class="nx">once</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">factored</span><span class="p">.</span>
 
-<span class="nx">DTBLOK</span><span class="w"> </span><span class="p">(</span><span class="nx">BLOKS</span><span class="p">,</span><span class="nx">INTEGS</span><span class="p">,</span><span class="nx">NBLOKS</span><span class="p">,</span><span class="nx">IPIVOT</span><span class="p">,</span><span class="nx">IFLAG</span><span class="p">,</span><span class="nx">DETSGN</span><span class="p">,</span><span class="nx">DETLOG</span><span class="p">)</span><span class="w"> </span>
+<span class="nx">DTBLOK</span><span class="w"> </span><span class="p">(</span><span class="nx">BLOKS</span><span class="p">,</span><span class="nx">INTEGS</span><span class="p">,</span><span class="nx">NBLOKS</span><span class="p">,</span><span class="nx">IPIVOT</span><span class="p">,</span><span class="nx">IFLAG</span><span class="p">,</span><span class="nx">DETSGN</span><span class="p">,</span><span class="nx">DETLOG</span><span class="p">)</span>
 <span class="nx">computes</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">determinant</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="nx">once</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="nx">been</span><span class="w"> </span><span class="nx">factored</span><span class="p">.</span>
 </code></pre></div>
 
@@ -176,15 +182,15 @@
 <span class="n">A:</span> <span class="n">every</span> <span class="nb">block</span> <span class="n">starts</span> <span class="n">on</span> <span class="n">the</span> <span class="n">diagonal</span> <span class="nb">of</span> <span class="n">A</span>.
 
 <span class="n">B:</span> <span class="n">the</span> <span class="n">blocks</span> <span class="n">overlap</span> (<span class="n">usually</span>). <span class="n">the</span> <span class="n">rows</span> <span class="nb">of</span> <span class="n">the</span> (<span class="n">I</span><span class="o">+</span><span class="mi">1</span>)<span class="n">st</span> <span class="nb">block</span>
-   <span class="n">which</span> <span class="n">are</span> <span class="n">overlapped</span> <span class="n">by</span> <span class="n">the</span> <span class="n">I-th</span> <span class="nb">block</span> <span class="n">may</span> <span class="n">be</span> <span class="n">arbitrarily</span> 
+   <span class="n">which</span> <span class="n">are</span> <span class="n">overlapped</span> <span class="n">by</span> <span class="n">the</span> <span class="n">I-th</span> <span class="nb">block</span> <span class="n">may</span> <span class="n">be</span> <span class="n">arbitrarily</span>
    <span class="nb">defined</span> <span class="n">initially</span>.  <span class="n">They</span> <span class="n">are</span> <span class="n">overwritten</span> <span class="n">during</span> <span class="n">elimination</span>.
 
 <span class="n">The</span> <span class="nb">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="k">for</span> <span class="n">the</span> <span class="n">equations</span> <span class="nb">in</span> <span class="n">the</span> <span class="n">I-th</span> <span class="nb">block</span> <span class="n">are</span> <span class="n">stored</span>
 <span class="n">correspondingly</span> <span class="n">as</span> <span class="n">the</span> <span class="nb">last</span> <span class="n">entries</span> <span class="nb">of</span> <span class="n">a</span> <span class="n">piece</span> <span class="nb">of</span> <span class="n">B</span> <span class="nb">of</span> <span class="n">length</span> <span class="n">NROW</span>
 (= <span class="n">INTEGS</span>(<span class="mi">1</span>,<span class="n">I</span>)) <span class="o">and</span> <span class="n">following</span> <span class="n">immediately</span> <span class="nb">in</span> <span class="n">B</span> <span class="n">the</span> <span class="n">corresponding</span>
-<span class="n">piece</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="nb">of</span> <span class="n">the</span> <span class="n">preceding</span> <span class="nb">block</span>, <span class="k">with</span> <span class="n">the</span> <span class="nb">right</span> 
-<span class="n">hand</span> <span class="n">side</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">first</span> <span class="nb">block</span> <span class="n">starting</span> <span class="nb">at</span> <span class="n">B</span>(<span class="mi">1</span>).  <span class="n">In</span> <span class="n">this</span>, <span class="n">the</span> <span class="nb">right</span> 
-<span class="n">hand</span> <span class="n">side</span> <span class="k">for</span> <span class="n">an</span> <span class="n">equation</span> <span class="k">need</span> <span class="n">only</span> <span class="n">be</span> <span class="n">specified</span> <span class="n">once</span> <span class="n">on</span> <span class="n">input</span>, 
+<span class="n">piece</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="nb">of</span> <span class="n">the</span> <span class="n">preceding</span> <span class="nb">block</span>, <span class="k">with</span> <span class="n">the</span> <span class="nb">right</span>
+<span class="n">hand</span> <span class="n">side</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">first</span> <span class="nb">block</span> <span class="n">starting</span> <span class="nb">at</span> <span class="n">B</span>(<span class="mi">1</span>).  <span class="n">In</span> <span class="n">this</span>, <span class="n">the</span> <span class="nb">right</span>
+<span class="n">hand</span> <span class="n">side</span> <span class="k">for</span> <span class="n">an</span> <span class="n">equation</span> <span class="k">need</span> <span class="n">only</span> <span class="n">be</span> <span class="n">specified</span> <span class="n">once</span> <span class="n">on</span> <span class="n">input</span>,
 <span class="nb">in</span> <span class="n">the</span> <span class="nb">first</span> <span class="nb">block</span> <span class="nb">in</span> <span class="n">which</span> <span class="n">the</span> <span class="n">equation</span> <span class="n">appears</span>.
 </code></pre></div>
 
@@ -244,15 +250,15 @@ LC: QA1.A647.v27.
 </code></pre></div>
 
 <p>Parameters:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">Input</span><span class="o">/</span><span class="nt">output</span><span class="o">,</span><span class="w"> </span><span class="nt">real</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">BLOKS</span><span class="o">(*),</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">one-dimenional</span><span class="w"> </span><span class="nt">array</span><span class="o">,</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="nt">Input</span><span class="o">/</span><span class="nt">output</span><span class="o">,</span><span class="w"> </span><span class="nt">real</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">BLOKS</span><span class="o">(*),</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">one-dimenional</span><span class="w"> </span><span class="nt">array</span><span class="o">,</span>
 <span class="nt">of</span><span class="w"> </span><span class="nt">length</span><span class="w"> </span><span class="nt">sum</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">INTEGS</span><span class="o">(</span><span class="nt">1</span><span class="o">,</span><span class="nt">1</span><span class="p">:</span><span class="nd">NBLOKS</span><span class="o">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nt">INTEGS</span><span class="o">(</span><span class="nt">2</span><span class="o">,</span><span class="nt">1</span><span class="p">:</span><span class="nd">NBLOKS</span><span class="o">)</span><span class="w"> </span><span class="o">).</span>
-<span class="nt">On</span><span class="w"> </span><span class="nt">input</span><span class="o">,</span><span class="w"> </span><span class="nt">contains</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">blocks</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">almost</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span><span class="nt">diagonal</span><span class="w"> </span><span class="nt">matrix</span><span class="w"> </span><span class="nt">A</span><span class="o">.</span><span class="w">  </span>
+<span class="nt">On</span><span class="w"> </span><span class="nt">input</span><span class="o">,</span><span class="w"> </span><span class="nt">contains</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">blocks</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">almost</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span><span class="nt">diagonal</span><span class="w"> </span><span class="nt">matrix</span><span class="w"> </span><span class="nt">A</span><span class="o">.</span>
 <span class="nt">The</span><span class="w"> </span><span class="nt">array</span><span class="w"> </span><span class="nt">INTEGS</span><span class="w"> </span><span class="nt">describes</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span><span class="nt">structure</span><span class="o">.</span>
 <span class="nt">On</span><span class="w"> </span><span class="nt">output</span><span class="o">,</span><span class="w"> </span><span class="nt">contains</span><span class="w"> </span><span class="nt">correspondingly</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">PLU</span><span class="w"> </span><span class="nt">factorization</span>
-<span class="nt">of</span><span class="w"> </span><span class="nt">A</span><span class="o">,</span><span class="w"> </span><span class="nt">if</span><span class="w"> </span><span class="nt">IFLAG</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nt">0</span><span class="o">.</span><span class="w">  </span><span class="nt">Certain</span><span class="w"> </span><span class="nt">entries</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">BLOKS</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">arbitrary</span><span class="o">,</span><span class="w"> </span>
+<span class="nt">of</span><span class="w"> </span><span class="nt">A</span><span class="o">,</span><span class="w"> </span><span class="nt">if</span><span class="w"> </span><span class="nt">IFLAG</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nt">0</span><span class="o">.</span><span class="w">  </span><span class="nt">Certain</span><span class="w"> </span><span class="nt">entries</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">BLOKS</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">arbitrary</span><span class="o">,</span>
 <span class="nt">where</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">blocks</span><span class="w"> </span><span class="nt">overlap</span><span class="o">.</span>
 
-<span class="nt">Input</span><span class="o">,</span><span class="w"> </span><span class="nt">integer</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">INTEGS</span><span class="o">(</span><span class="nt">3</span><span class="o">,</span><span class="nt">NBLOKS</span><span class="o">),</span><span class="w"> </span><span class="nt">description</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span>
+<span class="nt">Input</span><span class="o">,</span><span class="w"> </span><span class="nt">integer</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">INTEGS</span><span class="o">(</span><span class="nt">3</span><span class="o">,</span><span class="nt">NBLOKS</span><span class="o">),</span><span class="w"> </span><span class="nt">description</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">block</span>
 <span class="nt">structure</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">A</span><span class="o">.</span>
 <span class="nt">integs</span><span class="o">(</span><span class="nt">1</span><span class="o">,</span><span class="nt">I</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">number</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">rows</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span><span class="nt">I</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">nrow</span><span class="o">;</span>
 <span class="nt">integs</span><span class="o">(</span><span class="nt">2</span><span class="o">,</span><span class="nt">I</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">number</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">colums</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span><span class="nt">I</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">ncol</span><span class="o">;</span>
@@ -263,8 +269,8 @@ LC: QA1.A647.v27.
 
 <span class="nt">Input</span><span class="o">,</span><span class="w"> </span><span class="nt">integer</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">NBLOKS</span><span class="o">,</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">number</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">blocks</span><span class="o">.</span>
 
-<span class="nt">Input</span><span class="o">,</span><span class="w"> </span><span class="nt">real</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">B</span><span class="o">(</span><span class="nt">NBROWS</span><span class="o">),</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">right</span><span class="w"> </span><span class="nt">hand</span><span class="w"> </span><span class="nt">side</span><span class="o">.</span><span class="w">  </span><span class="nt">Certain</span><span class="w"> </span><span class="nt">entries</span><span class="w"> </span>
-<span class="nt">are</span><span class="w"> </span><span class="nt">arbitrary</span><span class="o">,</span><span class="w"> </span><span class="nt">corresponding</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">rows</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">blocks</span><span class="w"> </span><span class="nt">which</span><span class="w"> </span><span class="nt">overlap</span><span class="o">.</span><span class="w">  </span><span class="nt">See</span><span class="w"> </span>
+<span class="nt">Input</span><span class="o">,</span><span class="w"> </span><span class="nt">real</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">B</span><span class="o">(</span><span class="nt">NBROWS</span><span class="o">),</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">right</span><span class="w"> </span><span class="nt">hand</span><span class="w"> </span><span class="nt">side</span><span class="o">.</span><span class="w">  </span><span class="nt">Certain</span><span class="w"> </span><span class="nt">entries</span>
+<span class="nt">are</span><span class="w"> </span><span class="nt">arbitrary</span><span class="o">,</span><span class="w"> </span><span class="nt">corresponding</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">rows</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">blocks</span><span class="w"> </span><span class="nt">which</span><span class="w"> </span><span class="nt">overlap</span><span class="o">.</span><span class="w">  </span><span class="nt">See</span>
 <span class="nt">the</span><span class="w"> </span><span class="nt">block</span><span class="w"> </span><span class="nt">structure</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">example</span><span class="o">.</span>
 
 <span class="nt">Output</span><span class="o">,</span><span class="w"> </span><span class="nt">integer</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="nt">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="nt">IPIVOT</span><span class="o">(</span><span class="nt">NBROWS</span><span class="o">),</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">pivoting</span><span class="w"> </span><span class="nt">sequence</span><span class="w"> </span><span class="nt">used</span><span class="o">.</span>
@@ -335,7 +341,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~102"></span>
+              <span class="anchor" id="variable-b~8"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -365,7 +371,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~338"></span>
+              <span class="anchor" id="variable-x~19"></span>
               real(kind=8)
             </td>
 <td></td>
@@ -380,7 +386,7 @@ LC: QA1.A647.v27.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iflag~38"></span>
+              <span class="anchor" id="variable-iflag~7"></span>
               integer(kind=4)
             </td>
 <td></td>
@@ -536,6 +542,177 @@ implementation in a submodule of an interface in a parent module.
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">slvblk</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">!*****************************************************************************80</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!! SLVBLK solves the almost block diagonal linear system A * x = b.  </span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Discussion:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Such almost block diagonal matrices arise naturally in piecewise </span>
+<span class="w">  </span><span class="c">!    polynomial interpolation or approximation and in finite element </span>
+<span class="w">  </span><span class="c">!    methods for two-point boundary value problems.  The PLU factorization </span>
+<span class="w">  </span><span class="c">!    method is implemented here to take advantage of the special structure </span>
+<span class="w">  </span><span class="c">!    of such systems for savings in computing time and storage requirements.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    SLVBLK relies on several auxiliary programs:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    FCBLOK (BLOKS,INTEGS,NBLOKS,IPIVOT,SCRTCH,IFLAG)  </span>
+<span class="w">  </span><span class="c">!    factors the matrix A.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    SBBLOK (BLOKS,INTEGS,NBLOKS,IPIVOT,B,X)</span>
+<span class="w">  </span><span class="c">!    solves the system A*X=B once A is factored.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    DTBLOK (BLOKS,INTEGS,NBLOKS,IPIVOT,IFLAG,DETSGN,DETLOG) </span>
+<span class="w">  </span><span class="c">!    computes the determinant of A once it has been factored.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Block structure of A:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The NBLOKS blocks are stored consecutively in the array BLOKS.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The first block has its (1,1)-entry at BLOKS(1), and, if the I-th</span>
+<span class="w">  </span><span class="c">!    block has its (1,1)-entry at BLOKS(INDEX(I)), then</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      INDEX(I+1) = INDEX(I) + NROW(I) * NCOL(I).</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The blocks are pieced together to give the interesting part of A</span>
+<span class="w">  </span><span class="c">!    as follows.  For I=1,2,..., NBLOKS-1, the (1,1)-entry of the next</span>
+<span class="w">  </span><span class="c">!    block (the (I+1)st block) corresponds to the (LAST+1,LAST+1)-entry</span>
+<span class="w">  </span><span class="c">!    of the current I-th block.  Recall LAST = INTEGS(3,I) and note that</span>
+<span class="w">  </span><span class="c">!    this means that</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    A: every block starts on the diagonal of A.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    B: the blocks overlap (usually). the rows of the (I+1)st block</span>
+<span class="w">  </span><span class="c">!       which are overlapped by the I-th block may be arbitrarily </span>
+<span class="w">  </span><span class="c">!       defined initially.  They are overwritten during elimination.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The right hand side for the equations in the I-th block are stored</span>
+<span class="w">  </span><span class="c">!    correspondingly as the last entries of a piece of B of length NROW</span>
+<span class="w">  </span><span class="c">!    (= INTEGS(1,I)) and following immediately in B the corresponding</span>
+<span class="w">  </span><span class="c">!    piece for the right hand side of the preceding block, with the right </span>
+<span class="w">  </span><span class="c">!    hand side for the first block starting at B(1).  In this, the right </span>
+<span class="w">  </span><span class="c">!    hand side for an equation need only be specified once on input, </span>
+<span class="w">  </span><span class="c">!    in the first block in which the equation appears.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Example:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    The test driver for this package contains an example, a linear</span>
+<span class="w">  </span><span class="c">!    system of order 11, whose nonzero entries are indicated in the</span>
+<span class="w">  </span><span class="c">!    following diagram by their row and column index modulo 10.  Next to it</span>
+<span class="w">  </span><span class="c">!    are the contents of the INTEGS arrray when the matrix is taken to</span>
+<span class="w">  </span><span class="c">!    be almost block diagonal with NBLOKS = 5, and below it are the five</span>
+<span class="w">  </span><span class="c">!    blocks.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!                        NROW1 = 3, NCOL1 = 4</span>
+<span class="w">  </span><span class="c">!             11 12 13 14</span>
+<span class="w">  </span><span class="c">!             21 22 23 24   NROW2 = 3, NCOL2 = 3</span>
+<span class="w">  </span><span class="c">!             31 32 33 34</span>
+<span class="w">  </span><span class="c">!    LAST1 = 2      43 44 45</span>
+<span class="w">  </span><span class="c">!                   53 54 55            NROW3 = 3, NCOL3 = 4</span>
+<span class="w">  </span><span class="c">!          LAST2 = 3         66 67 68 69   NROW4 = 3, NCOL4 = 4</span>
+<span class="w">  </span><span class="c">!                            76 77 78 79      NROW5 = 4, NCOL5 = 4</span>
+<span class="w">  </span><span class="c">!                            86 87 88 89</span>
+<span class="w">  </span><span class="c">!                   LAST3 = 1   97 98 99 90</span>
+<span class="w">  </span><span class="c">!                      LAST4 = 1   08 09 00 01</span>
+<span class="w">  </span><span class="c">!                                  18 19 10 11</span>
+<span class="w">  </span><span class="c">!                         LAST5 = 4</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Actual input to BLOKS shown by rows of blocks of A.</span>
+<span class="w">  </span><span class="c">!    The ** items are arbitrary.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    11 12 13 14  / ** ** **  / 66 67 68 69  / ** ** ** **  / ** ** ** **</span>
+<span class="w">  </span><span class="c">!    21 22 23 24 /  43 44 45 /  76 77 78 79 /  ** ** ** ** /  ** ** ** **</span>
+<span class="w">  </span><span class="c">!    31 32 33 34/   53 54 55/   86 87 88 89/   97 98 99 90/   08 09 00 01</span>
+<span class="w">  </span><span class="c">!                                                             18 19 10 11</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    INDEX = 1      INDEX = 13  INDEX = 22     INDEX = 34     INDEX = 46</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Actual right hand side values with ** for arbitrary values:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!      B1 B2 B3 ** B4 B5 B6 B7 B8 ** ** B9 ** ** B10 B11</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    It would have been more efficient to combine block 3 with block 4.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Modified:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    14 February 2007</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Author:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Reference:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Carl DeBoor,</span>
+<span class="w">  </span><span class="c">!    A Practical Guide to Splines,</span>
+<span class="w">  </span><span class="c">!    Springer, 2001,</span>
+<span class="w">  </span><span class="c">!    ISBN: 0387953663,</span>
+<span class="w">  </span><span class="c">!    LC: QA1.A647.v27.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  Parameters:</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input/output, real ( kind = 8 ) BLOKS(*), a one-dimenional array, </span>
+<span class="w">  </span><span class="c">!    of length sum ( INTEGS(1,1:NBLOKS) * INTEGS(2,1:NBLOKS) ).</span>
+<span class="w">  </span><span class="c">!    On input, contains the blocks of the almost block diagonal matrix A.  </span>
+<span class="w">  </span><span class="c">!    The array INTEGS describes the block structure.</span>
+<span class="w">  </span><span class="c">!    On output, contains correspondingly the PLU factorization</span>
+<span class="w">  </span><span class="c">!    of A, if IFLAG /= 0.  Certain entries in BLOKS are arbitrary, </span>
+<span class="w">  </span><span class="c">!    where the blocks overlap.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) INTEGS(3,NBLOKS), description of the block </span>
+<span class="w">  </span><span class="c">!    structure of A.</span>
+<span class="w">  </span><span class="c">!    integs(1,I) = number of rows of block I = nrow;</span>
+<span class="w">  </span><span class="c">!    integs(2,I) = number of colums of block I = ncol;</span>
+<span class="w">  </span><span class="c">!    integs(3,I) = number of elimination steps in block I = last.</span>
+<span class="w">  </span><span class="c">!    The linear system is of order n = sum ( integs(3,i), i=1,...,nbloks ),</span>
+<span class="w">  </span><span class="c">!    but the total number of rows in the blocks is</span>
+<span class="w">  </span><span class="c">!    nbrows=sum( integs(1,i) ; i = 1,...,nbloks)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, integer ( kind = 4 ) NBLOKS, the number of blocks.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Input, real ( kind = 8 ) B(NBROWS), the right hand side.  Certain entries </span>
+<span class="w">  </span><span class="c">!    are arbitrary, corresponding to rows of the blocks which overlap.  See </span>
+<span class="w">  </span><span class="c">!    the block structure in the example.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) IPIVOT(NBROWS), the pivoting sequence used.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, real ( kind = 8 ) X(N), the computed solution, if iflag /= 0.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!    Output, integer ( kind = 4 ) IFLAG.</span>
+<span class="w">  </span><span class="c">!    = (-1)**(number of interchanges during factorization) if A is invertible;</span>
+<span class="w">  </span><span class="c">!    = 0 if A is singular.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">nbloks</span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bloks</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iflag</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">integs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">nbloks</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ipivot</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="c">!  In the call to FCBLOK, X is used for temporary storage.</span>
+<span class="w">  </span><span class="c">!</span>
+<span class="w">  </span><span class="k">call </span><span class="n">fcblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iflag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">     return</span>
+<span class="k">  end if</span>
+
+<span class="k">  call </span><span class="n">sbblok</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">bloks</span><span class="p">,</span><span class="w"> </span><span class="n">integs</span><span class="p">,</span><span class="w"> </span><span class="n">nbloks</span><span class="p">,</span><span class="w"> </span><span class="n">ipivot</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span>
+<span class="k">end subroutine </span><span class="n">slvblk</span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
