@@ -10,7 +10,7 @@ echo "cmake .."
 cmake ..
 
 echo "make"
-make
+make -j
 
 echo "make install"
 make install

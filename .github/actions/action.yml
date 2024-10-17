@@ -1,0 +1,45 @@
+name: 'QcmPlab setup action'
+description: 'This is meant to be an OS & package independent action that contains the initial setup for the CI/CD workflows employed in QcmPlab repositories'
+
+inputs:
+  pack-type: 
+    description: 'This input differentiate between MKL (mkl) and OpenBLAS (open) install'
+    required: true
+    default: 'open'
+
+runs:
+  using: "composite" 
+  steps:
+
+#Linux
+# openmpi_4_linux
+    - run: |
+        sudo apt-get install -y gfortran
+        sudo apt-get install -y libopenmpi-dev libopenmpi3 openmpi-bin openmpi-common openmpi-doc
+      if: ${{ runner.os == 'Linux' }}
+      shell: bash
+      
+# mkl_4_linux
+    - run: sudo apt-get install intel-mkl-full
+      if: ${{ runner.os == 'Linux' && inputs.pack-type == 'mkl' }}
+      shell: bash
+
+# open_4_linux
+    - run: sudo apt-get install libblas-dev liblapack-dev libopenblas-openmp-dev
+      if: ${{ runner.os == 'Linux' && inputs.pack-type == 'open' }}
+      shell: bash
+
+
+#MacOS
+# openmpi_4_macos
+    - run: |
+        brew reinstall gcc
+        brew install openmpi
+        brew install pkg-config
+      if: ${{ runner.os == 'macOS' }}
+      shell: bash
+
+# open_4_macos
+    - run: brew install lapack openblas scalapack
+      if: ${{ runner.os == 'macOS' && inputs.pack-type == 'open' }}
+      shell: bash

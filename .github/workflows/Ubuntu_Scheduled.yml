@@ -1,3 +1,5 @@
+#Author: Samuele Giuli
+#Revised by: Adriano Amaricci
 name: Scheduled CI SciFortran workflow for Ubuntu
 
 on:
@@ -22,8 +24,8 @@ jobs:
 # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@main
 
-# QcmPlab setup
-      - uses: aamaricci/TestSetup@master
+# Setup OS
+      - uses: ./.github/actions
         with:
           pack-type: open
 
