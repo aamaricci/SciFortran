@@ -9,7 +9,7 @@ cd build
 echo "cmake .."
 cmake ..
 
-echo "make"
+echo "make -j"
 make -j
 
 echo "make install"
