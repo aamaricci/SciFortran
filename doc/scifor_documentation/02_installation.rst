@@ -16,7 +16,7 @@ Clone the repo:
 
 .. code-block:: bash
 		
-   git clone https://github.com/aamaricci/SciFortran scifor
+   git clone https://github.com/SciFortran/SciFortran scifor
 
    
 Optionally [1]_ define the fortran compiler:

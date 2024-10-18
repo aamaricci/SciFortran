@@ -1,8 +1,8 @@
 # SciFortran
 
-[![Ubuntu](https://img.shields.io/github/actions/workflow/status/QcmPlab/SciFortran/Ubuntu_Scheduled.yml?label=Ubuntu&logo=ubuntu&style=flat-square)](https://github.com/aamaricci/SciFortran/actions/workflows/Scheduled.yml) 
-[![MacOS](https://img.shields.io/github/actions/workflow/status/QcmPlab/SciFortran/MacOS_Scheduled.yml?label=macOS&logo=apple&style=flat-square)](https://github.com/aamaricci/SciFortran/actions/workflows/Scheduled.yml) 
-[![api docs](https://img.shields.io/static/v1?label=API&message=documentation&color=734f96&logo=read-the-docs&logoColor=white&style=flat-square)](https://aamaricci.github.io/SciFortran)
+[![Ubuntu](https://img.shields.io/github/actions/workflow/status/QcmPlab/SciFortran/Ubuntu_Scheduled.yml?label=Ubuntu&logo=ubuntu&style=flat-square)](https://github.com/SciFortran/SciFortran/actions/workflows/Scheduled.yml) 
+[![MacOS](https://img.shields.io/github/actions/workflow/status/QcmPlab/SciFortran/MacOS_Scheduled.yml?label=macOS&logo=apple&style=flat-square)](https://github.com/SciFortran/SciFortran/actions/workflows/Scheduled.yml) 
+[![api docs](https://img.shields.io/static/v1?label=API&message=documentation&color=734f96&logo=read-the-docs&logoColor=white&style=flat-square)](https://SciFortran.github.io/SciFortran)
 
 
 ## An open-source Fortran library for mathematics, science and engineering.
@@ -19,13 +19,13 @@ Anyone is welcome to contribute or to test the software.
 * [Make](https://www.gnu.org/software/make/) **OR** [Ninja](https://ninja-build.org/) ≥ 1.10 
 
 See documentation for further details:
-[aamaricci.github.io/SciFortran](https://aamaricci.github.io/SciFortran/scifor_documentation/01_dependencies.html)
+[SciFortran.github.io/SciFortran](https://SciFortran.github.io/SciFortran/scifor_documentation/01_dependencies.html)
 
 
 ## BUILD & INSTALL 
 
 Detailed instructions for building and installing `SciFor` please read the documentation:
-[aamaricci.github.io/SciFortran](https://aamaricci.github.io/SciFortran/scifor_documentation/02_installation.html)
+[SciFortran.github.io/SciFortran](https://SciFortran.github.io/SciFortran/scifor_documentation/02_installation.html)
 
 
 
@@ -37,7 +37,7 @@ Detailed instructions for building and installing `SciFor` please read the docum
 [Giacomo Mazza](https://github.com/GiacMazza)
 
 
-If you encounter bugs or difficulties, please [file an issue](https://github.com/aamaricci/SciFortran/issues/new/choose). For any other communication, please reach out any of the contributors or developers:         
+If you encounter bugs or difficulties, please [file an issue](https://github.com/SciFortran/SciFortran/issues/new/choose). For any other communication, please reach out any of the contributors or developers:         
 
 
 --
