@@ -203,7 +203,6 @@ contains
   !           AUXILIARY JACOBIAN/GRADIENT CALCULATIONS
   !
   !          1 x N Jacobian (df_i/dx_j for i=1;j=1,...,N)
-  !-----------------------------------------------------------------------
   subroutine fdjac_1n_func(funcv,x,fjac,epsfcn)
     implicit none
     interface 

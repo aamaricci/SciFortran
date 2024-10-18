@@ -1,4 +1,3 @@
-!+-----------------------------------------------------------------+
 !PURPOSE:
 ! Trapezoidal rule for 1d data function integration between a and b
 ! or with respect to a given dh
@@ -6,7 +5,6 @@
 ! + _ab: given a,b and f(:) integrate f(:)
 ! + _dh: given dh=(b-a)/L-1/2 integrate f(:)
 ! + _nonlin: integrate f(:) using given x(:)
-!+-----------------------------------------------------------------+
 function d_trapz_ab_sample(f,a,b) result(sum)
   real(8) :: f(:)
   real(8) :: a,b,dh

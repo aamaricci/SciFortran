@@ -1,4 +1,3 @@
-!PURPOSE:  working procedures:
 function d_trapz2d_func(func,xrange,yrange,Nx,Ny) result(int)
   interface
      function func(x)

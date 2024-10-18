@@ -1,7 +1,5 @@
-!+-----------------------------------------------------------------+
 !PURPOSE:
 ! Trapezoidal rule for 1d function integration between a and b.
-!+-----------------------------------------------------------------+
 function d_trapz_ab_func(f,a,b,N) result(int)
   interface
      function f(x)

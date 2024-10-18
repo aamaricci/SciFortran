@@ -1,7 +1,5 @@
-!+-----------------------------------------------------------------+
 !PURPOSE: Trapezoidal rule for 2d data function integration
 ! + _std: integrate f(:) between a and b. a,b default are 0,1
-!+-----------------------------------------------------------------+
 function d_trapz2d_sample(func,dhx,dhy,xrange,yrange) result(int)
   real(8),dimension(:,:)        :: func
   real(8),optional              :: dhx,dhy

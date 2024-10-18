@@ -150,14 +150,12 @@ contains
 
 
 
-  !------------------------------------------------------------------------------
   ! Purpose: estimates an N/M/1 by N jacobian matrix using forward differences.
   !   computes a forward-difference approximation
   !   to the N by N jacobian matrix associated with a specified
   !   problem of N functions in N variables. If the jacobian has
   !   a banded form, then function evaluations are saved by only
   !   approximating the nonzero terms.
-  ! Arguments:
   !    -Input FCN: the name of the user-supplied function which
   !    calculates the functions. The routines accept functions/routines.
   !    Check out their explicit form in the interfaces of the subroutines
@@ -171,14 +169,7 @@ contains
   !    EPSFCN.  If EPSFCN is less than the machine precision, it is assumed that
   !    the relative errors in the functions are of the order of the machine
   !    precision.
-  !------------------------------------------------------------------------------
-
-  !  DOUBLE PRECISION
-  !------------------------
   include 'derivate_fjacobian_d.f90'
-
-  !  DOUBLE COMPLEX
-  !------------------------
   include 'derivate_fjacobian_c.f90'
 
 

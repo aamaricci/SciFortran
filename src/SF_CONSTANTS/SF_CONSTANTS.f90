@@ -175,7 +175,6 @@ contains
 
   !+-------------------------------------------------------------------+
   !PURPOSE  : prints the current YMDHMS date as a time stamp.
-  ! Example: 31 May 2001   9:45:54.872 AM
   !+-------------------------------------------------------------------+
   subroutine timestamp(unit)
     integer,optional        :: unit
@@ -227,8 +226,6 @@ contains
     ! stop_error() uses the statement "stop 1" which returns an exit code
     ! 1 and a print statement to print the message.
     !
-    ! Example
-    ! -------
     ! call stop_error("Invalid argument")
     character(len=*) :: msg ! Message to print on stderr
     write(0,*) msg

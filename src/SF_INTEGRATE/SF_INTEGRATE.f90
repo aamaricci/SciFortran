@@ -34,27 +34,26 @@ module SF_INTEGRATE
 
   !TRAPEZIODAL RULE:
   interface trapz
-     !SAMPLE:
-     module procedure d_trapz_ab_sample
-     module procedure c_trapz_ab_sample
-     module procedure d_trapz_dh_sample
-     module procedure c_trapz_dh_sample
-     module procedure d_trapz_nonlin_sample
-     module procedure c_trapz_nonlin_sample
-     !FUNCTION:
-     module procedure d_trapz_ab_func
-     module procedure c_trapz_ab_func
-     module procedure d_trapz_nonlin_func
-     module procedure c_trapz_nonlin_func
+     module procedure :: d_trapz_ab_sample
+     module procedure :: c_trapz_ab_sample
+     module procedure :: d_trapz_dh_sample
+     module procedure :: c_trapz_dh_sample
+     module procedure :: d_trapz_nonlin_sample
+     module procedure :: c_trapz_nonlin_sample
+     module procedure :: d_trapz_ab_func
+     module procedure :: c_trapz_ab_func
+     module procedure :: d_trapz_nonlin_func
+     module procedure :: c_trapz_nonlin_func
   end interface trapz
-  !
+
+  
   interface trapz2d
-     module procedure d_trapz2d_func
-     module procedure c_trapz2d_func
-     module procedure d_trapz2d_func_recursive
-     module procedure c_trapz2d_func_recursive
-     module procedure d_trapz2d_sample
-     module procedure c_trapz2d_sample
+     module procedure :: d_trapz2d_func
+     module procedure :: c_trapz2d_func
+     module procedure :: d_trapz2d_func_recursive
+     module procedure :: c_trapz2d_func_recursive
+     module procedure :: d_trapz2d_sample
+     module procedure :: c_trapz2d_sample
   end interface trapz2d
 
 
@@ -64,26 +63,26 @@ module SF_INTEGRATE
   !SIMPSON'S RULE
   interface simps
      !SAMPLE:
-     module procedure d_simpson_dh_sample
-     module procedure c_simpson_dh_sample
-     module procedure d_simpson_ab_sample
-     module procedure c_simpson_ab_sample
-     module procedure d_simpson_nonlin_sample
-     module procedure c_simpson_nonlin_sample
+     module procedure :: d_simpson_dh_sample
+     module procedure :: c_simpson_dh_sample
+     module procedure :: d_simpson_ab_sample
+     module procedure :: c_simpson_ab_sample
+     module procedure :: d_simpson_nonlin_sample
+     module procedure :: c_simpson_nonlin_sample
      !FUNCTION:
-     module procedure d_simps_ab_func
-     module procedure c_simps_ab_func
-     module procedure d_simps_nonlin_func
-     module procedure c_simps_nonlin_func
+     module procedure :: d_simps_ab_func
+     module procedure :: c_simps_ab_func
+     module procedure :: d_simps_nonlin_func
+     module procedure :: c_simps_nonlin_func
   end interface simps
   !
   interface simps2d
-     module procedure d_simps2d_func
-     module procedure c_simps2d_func
-     module procedure d_simps2d_func_recursive
-     module procedure c_simps2d_func_recursive
-     module procedure d_simps2d_sample
-     module procedure c_simps2d_sample
+     module procedure :: d_simps2d_func
+     module procedure :: c_simps2d_func
+     module procedure :: d_simps2d_func_recursive
+     module procedure :: c_simps2d_func_recursive
+     module procedure :: d_simps2d_sample
+     module procedure :: c_simps2d_sample
   end interface simps2d
   !
 
@@ -128,10 +127,8 @@ contains
 
 
 
-  !+-----------------------------------------------------------------------------+!
   !PURPOSE:
   ! evaluate 1D and 2D integrals using trapz (2nd order) and simps (4th order) rule.
-  !+-----------------------------------------------------------------------------+!
   include "integrate_func_1d.f90"
   include "integrate_sample_1d.f90"
   include "integrate_func_2d.f90"
@@ -140,7 +137,6 @@ contains
 
 
 
-  !+-----------------------------------------------------------------------------+!
   !PURPOSE: 
   !generic interface to QUADPACK routines:
   !non-automatic integrator:
@@ -168,15 +164,12 @@ contains
   ! !              ! where v(x) = 1 or log(x-a) or log(b-x)
   ! !              !              or log(x-a)*log(b-x)
   ! !              ! and   -1 < alfa, -1 < beta.
-  !+-----------------------------------------------------------------------------+!
   include "integrate_quad_func.f90"
   include "integrate_quad_sample.f90"
 
 
 
-  !+-----------------------------------------------------------------+
   !PURPOSE  : Perform a fast Kramers-K\"onig integration: 
-  !+-----------------------------------------------------------------+
   function kronig(fi,wr,M) result(fr)
     integer :: i,j,M
     real(8),dimension(M) :: fi,wr,fr
@@ -220,19 +213,7 @@ contains
 
 
 
-
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-  !*******************************************************************
-
-
-
-  !+-----------------------------------------------------------------+
   !PURPOSE: obtain quadrature weights for higher order integration (2,4)
-  !+-----------------------------------------------------------------+
   subroutine get_quadrature_weights(wt,nrk)
     real(8),dimension(:) :: wt
     integer,optional     :: nrk
@@ -439,60 +420,3 @@ end module SF_INTEGRATE
 
 
 
-
-! !+-----------------------------------------------------------------+
-! !PURPOSE  : A slower (but possibly more accurate) Kramers-Kr\"onig 
-! ! integral, using local interpolation w/ polynomial of order-5
-! !+-----------------------------------------------------------------+
-! function kramers_kronig(fi,x,L) result(fr)
-!   integer                 :: i,L
-!   real(8),dimension(L)    :: fi,fr,x
-!   real(8)                 :: dx
-!   integer, parameter :: LIMIT = 500
-!   integer            :: IERSUM,NEVAL,IER,LAST
-!   real(8)            :: EPSABS,EPSREL,A,B,C,ABSERR
-!   real(8)            :: ALIST(LIMIT),BLIST(LIMIT),ELIST(LIMIT),RLIST(LIMIT)
-!   integer            :: IORD(limit)
-!   if(allocated(finterX))deallocate(finterX)
-!   if(allocated(finterF))deallocate(finterF)
-!   allocate(finterX(1:L),finterF(1:L))
-!   finterX    = x
-!   finterF    = fi/pi
-!   finterImin = 1
-!   finterImax = L
-!   finterN    = 5
-!   EPSABS = 0.0d0
-!   EPSREL = 1.d-12
-!   IERSUM = 0
-!   A      = x(1)             !minval(x)      
-!   B      = x(L)             !maxval(x)
-!   do i=1,L
-!      C = x(i)
-!      CALL QAWCE(kkfinter,A,B,C,EPSABS,EPSREL,LIMIT,fr(i),ABSERR,NEVAL,&
-!           IER,alist,blist,rlist,elist,iord,last)
-!      IERSUM=IERSUM+IER
-!   enddo
-!   !Some regularization at the borders: (thanks Jan Tomczak)
-!   dx=x(2)-x(1)
-!   fr(L) =(fr(L-2) - fr(L-1))*dx  + fr(L-1)
-!   fr(1)=(fr(1+1)- fr(1+2))*dx + fr(1+1)
-! end function kramers_kronig
-! !
-! function kkfinter(x) result(finter)
-!   real(8) :: finter
-!   real(8) :: x,y,dy
-!   integer :: itmp,k
-!   integer :: n
-!   n=finterN    !order of polynomial interpolation
-!   finter=0.d0
-!   itmp=locate(finterX(FinterImin:finterImax),x)
-!   k=max(itmp-(N-1)/2,1)
-!   if (k < finterImin)k=finterImin
-!   if(k+n+1 <= finterImax)then
-!      call polint(finterX(k:k+n+1),finterF(k:k+n+1),x,y,dy)
-!   else
-!      call polint(finterX(k:finterImax),finterF(k:finterImax),x,y,dy)
-!   endif
-!   finter=y
-!   return
-! end function kkfinter
