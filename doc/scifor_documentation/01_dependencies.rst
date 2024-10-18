@@ -1,5 +1,5 @@
 Dependencies
-============
+#################
 
 **SciFortran** requires a number of third party software and, quite
 obviously, a modern Fortran compiler. A restricted number of
@@ -15,7 +15,7 @@ performance and access all SciFortran features.
 
 
 Optional
------------
+============
 * `MPI <https://github.com/open-mpi/ompi>`_  
 * `LAPACK <https://github.com/Reference-LAPACK/lapack>`_  / `BLAS
   <https://netlib.org/blas>`_ [if not present in your system

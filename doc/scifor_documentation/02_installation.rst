@@ -119,7 +119,20 @@ or
 
 
 
-   
+Known issues
+======================
+`SciFortran` has been tested with success on several Unix/Linux
+platforms. Support for Windows, through `WSL <https://learn.microsoft.com/en-us/windows/wsl/install>`_, is still experimental, although few people reported successful installation with minimal efforts. 
+
+Some have reported issues concerning the wrong setup for the library `pkg-config` file, contained in  `$PREFIX/<PLAT>/<VERSION>/etc/scifor.pc`. The variable `Libs=-L${libdir} -lscifor <blas/lapack/scalapack>` produced by `cmake` during the configuration and installation process can be not properly defined for the part corresponding to third parties libraries such as Blas/Lapack/Scalapack. This breaks compilation against `scifor` whenever `pkg-config` is used to generate the linking options. 
+
+FIX: edit the `scifor.pc` file manually, overwriting the definition of the variable `Libs`, as appropriate for your system. 
+
+
+
+
+
+
 
 .. rubric:: Footnotes
 
