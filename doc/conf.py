@@ -96,6 +96,7 @@ fortran_src=[
     os.path.abspath('../src/SCIFOR.f90'),
     os.path.abspath('../src/scifor_version.in'),
     os.path.abspath('../src/SF_ARRAYS'),
+    os.path.abspath('../src/SF_CHEBYCHEV'),
     os.path.abspath('../src/SF_COLORS'),
     os.path.abspath('../src/SF_CONSTANTS'),
     os.path.abspath('../src/SF_DERIVATE'),
