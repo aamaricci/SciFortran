@@ -55,7 +55,8 @@ extensions = [
     'myst_parser',
     'sphinx_rtd_theme',
     'sphinxfortran_ng.fortran_domain',
-    'sphinxfortran_ng.fortran_autodoc'
+    'sphinxfortran_ng.fortran_autodoc',
+    'sparse_autodoc'
 ]
 
 # MyST configuration
@@ -111,7 +112,13 @@ fortran_src=[
     os.path.abspath('../src/SF_OPTIMIZE'),
     os.path.abspath('../src/SF_PARSE_INPUT'),
     os.path.abspath('../src/SF_RANDOM'),
-    #os.path.abspath('../src/SF_SPARSE'), this is not even built yet
+    # Explicit files exclude the archived implementations in SF_SPARSE/repo.
+    os.path.abspath('../src/SF_SPARSE/SF_SPARSE.f90'),
+    os.path.abspath('../src/SF_SPARSE/SF_SPARSE_COMMON.f90'),
+    os.path.abspath('../src/SF_SPARSE/SF_SPARSE_CSR_D.f90'),
+    os.path.abspath('../src/SF_SPARSE/SF_SPARSE_CSR_Z.f90'),
+    os.path.abspath('../src/SF_SPARSE/SF_SPARSE_CSC_D.f90'),
+    os.path.abspath('../src/SF_SPARSE/SF_SPARSE_CSC_Z.f90'),
     os.path.abspath('../src/SF_SPECIAL'),
     os.path.abspath('../src/SF_SP_LINALG'),
     os.path.abspath('../src/SF_TIMER'),
