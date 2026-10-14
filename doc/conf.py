@@ -33,9 +33,9 @@ copyright = u'2026, Adriano Amaricci, Lorenzo Crippa, Samuele Giuli, Gabriele Be
 author = u'Adriano Amaricci, Lorenzo Crippa, Samuele Giuli, Gabriele Bellomia, Giacomo Mazza'
 
 # The short X.Y version
-version = u'4.25'
+version = u'4.26'
 # The full version, including alpha/beta/rc tags
-release = u'4.25.0'
+release = u'4.26.0'
 
 
 # -- General configuration ---------------------------------------------------
