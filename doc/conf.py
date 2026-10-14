@@ -55,8 +55,7 @@ extensions = [
     'myst_parser',
     'sphinx_rtd_theme',
     'sphinxfortran_ng.fortran_domain',
-    'sphinxfortran_ng.fortran_autodoc',
-    'sparse_autodoc'
+    'sphinxfortran_ng.fortran_autodoc'
 ]
 
 # MyST configuration
