@@ -226,13 +226,12 @@ contains
     !
     !Real version: the function and the coefficients are ``real(8)``.
     !
-    !@param fun: Real function of one real variable, sampled on :math:`[b - a,\, b + a]`
     !
     !:callto: cheb_set
     interface
-      function fun(x) result(y)
+      function fun(x) !Real/complex function of one real variable, sampled on :math:`[b - a,\, b + a]`
         real(8), intent(in) :: x
-        real(8)             :: y
+        real(8)             :: fun
       end function fun
     end interface
     logical, optional, intent(in) :: activate  !If :code:`.true.`, :f:var:`a`, :f:var:`b` and :f:var:`coeff` are stored in the
@@ -308,13 +307,11 @@ contains
     !
     !Complex version: the function and the coefficients are ``complex(8)``.
     !
-    !@param fun: Complex function of one real variable, sampled on :math:`[b - a,\, b + a]`
-    !
     !:callto: cheb_set
     interface
-      function fun(x) result(y)
+      function fun(x)              !Real/complex function of one real variable, sampled on :math:`[b - a,\, b + a]`
         real(8), intent(in)         :: x
-        complex(8)                  :: y
+        complex(8)                  :: fun
       end function fun
     end interface
     logical, optional, intent(in) :: activate  !If :code:`.true.`, :f:var:`a`, :f:var:`b` and :f:var:`coeff` are stored in the
@@ -500,9 +497,8 @@ contains
     !
     !Used by all the implementations of :f:func:`cheb_projection` and :f:func:`cheb_moments`.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)   !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer :: Nloc
         real(8) :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -613,9 +609,8 @@ contains
     !coefficients may be real or complex. For complex vectors the columns of :f:var:`u` are conjugated
     !in the scalar products, :math:`u_k^\dagger T_m v`.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)    !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer                     :: Nloc
         complex(8)                  :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -730,11 +725,9 @@ contains
     !
     !Real version: ``real(8)`` vectors, and real stored coefficients.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
-    !
     !:callto: recurrence_d
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)   !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer :: Nloc
         real(8) :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -758,11 +751,10 @@ contains
     !
     !Complex version: ``complex(8)`` vectors, and real or complex stored coefficients.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     !
     !:callto: recurrence_c
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)   !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer                     :: Nloc
         complex(8)                  :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -791,11 +783,10 @@ contains
     !
     !Real version: ``real(8)`` vectors, and real stored coefficients.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     !
     !:callto: recurrence_d
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)   !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer :: Nloc
         real(8) :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -820,11 +811,10 @@ contains
     !Complex version: ``complex(8)`` vectors, and real or complex stored coefficients. The columns of
     !:f:var:`u` are conjugated in the scalar products.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     !
     !:callto: recurrence_c
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)     !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer                     :: Nloc
         complex(8)                  :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -855,11 +845,10 @@ contains
     !
     !Real version: ``real(8)`` vectors. The coefficients are not needed, but the scale and the shift are.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     !
     !:callto: recurrence_d
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)   !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer :: Nloc
         real(8) :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -885,13 +874,11 @@ contains
   subroutine moments_rows_c(MatVec, Vseed, rows, moments, info, NumOp)
     !Chebyshev moments of selected components, complex version, see :f:func:`cheb_moments`.
     !
-    !Complex version: ``complex(8)`` vectors. The coefficients are not needed, but the scale and the shift are.
-    !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
+    !Complex version: ``complex(8)`` vectors. The coefficients are not needed, but the scale and the shift are.  
     !
     !:callto: recurrence_c
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)    ! Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer                     :: Nloc
         complex(8)                  :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -923,11 +910,10 @@ contains
     !
     !Real version: ``real(8)`` vectors. The coefficients are not needed, but the scale and the shift are.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     !
     !:callto: recurrence_d
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)    !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer :: Nloc
         real(8) :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
@@ -956,11 +942,10 @@ contains
     !Complex version: ``complex(8)`` vectors. The coefficients are not needed, but the scale and the
     !shift are. The columns of :f:var:`u` are conjugated in the scalar products.
     !
-    !@param MatVec: Matrix-vector product, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
     !
     !:callto: recurrence_c
     interface
-      subroutine MatVec(Nloc, vin, vout)
+      subroutine MatVec(Nloc, vin, vout)    !Matrix-vector product subroutine, :code:`vout = A*vin`, on vectors of length :code:`Nloc`
         integer                     :: Nloc
         complex(8)                  :: vin(Nloc), vout(Nloc)
       end subroutine MatVec
