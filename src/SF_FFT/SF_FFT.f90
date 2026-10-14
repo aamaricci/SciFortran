@@ -453,10 +453,10 @@ contains
     enddo
   end function D_FT_Direct
   function c_FT_direct(ft,t,w) result(fw)
-    complex(8),dimension(:),intent(in)     :: ft
-    real(8),dimension(size(ft)),intent(in) :: t
-    real(8),dimension(:),intent(in)        :: w
-    complex(8),dimension(size(w))          :: fw
+    complex(8),dimension(:),intent(in)     :: ft  !Discretized function to transform (time domain)
+    real(8),dimension(size(ft)),intent(in) :: t  !Discretized time points
+    real(8),dimension(:),intent(in)        :: w  !Discretized frequency points
+    complex(8),dimension(size(w))          :: fw  !Discretized Fourier-transform function (frequency domain)
     real(8)                                :: a,b
     integer                                :: i
     a = t(1);b = t(size(t))
@@ -479,10 +479,10 @@ contains
     enddo
   end function D_FT_Inverse
   function c_FT_inverse(fw,t,w) result(ft)
-    complex(8),dimension(:),intent(in)     :: fw
-    real(8),dimension(:),intent(in)        :: t
-    real(8),dimension(size(fw)),intent(in) :: w
-    complex(8),dimension(size(t))          :: ft
+    complex(8),dimension(:),intent(in)     :: fw  !Discretized function to transform (frequency domain)
+    real(8),dimension(:),intent(in)        :: t  !Discretized time points
+    real(8),dimension(size(fw)),intent(in) :: w  !Discretized frequency points
+    complex(8),dimension(size(t))          :: ft  !Discretized Fourier-transform function (time domain)
     real(8)                                :: a,b
     integer                                :: i
     a = w(1) ; b = w(size(w))
@@ -501,9 +501,9 @@ contains
     fw = ft*dt
   end function d_FFT_signal
   function c_FFT_signal(ft,dt) result(fw)
-    complex(8),dimension(:)        :: ft
-    real(8)                        :: dt
-    complex(8),dimension(size(ft)) :: fw
+    complex(8),dimension(:)        :: ft  !Time-domain function
+    real(8)                        :: dt  !Time step
+    complex(8),dimension(size(ft)) :: fw  !Frequency-domain function
     call tfft(ft)
     fw = ft*dt
   end function c_FFT_signal
@@ -517,17 +517,20 @@ contains
     ft=fw/dt
   end function d_iFFT_signal
   function c_iFFT_signal(fw,dt) result(ft)
-    complex(8),dimension(:)        :: fw
-    real(8)                        :: dt
-    complex(8),dimension(size(fw)) :: ft
+    complex(8),dimension(:)        :: fw  !Frequency-domain function
+    real(8)                        :: dt  !Time step
+    complex(8),dimension(size(fw)) :: ft  !Time-domain function
     call itfft(fw)
     ft=fw/dt
   end function c_iFFT_signal
 
 
   subroutine d_tfft(func_in,func_out)
-    real(8),dimension(:)                         :: func_in
-    real(8),dimension(size(func_in)),optional    :: func_out
+    real(8),dimension(:)                         :: func_in  !Array of length :code:`N` to transform, with the zero of the time
+                                                             ! domain at the center. Overwritten by the transform if
+                                                             ! :f:var:`func_out` is absent
+    real(8),dimension(size(func_in)),optional    :: func_out  !If present, receives the transform and :f:var:`func_in` is left
+                                                              ! untouched
     complex(8),dimension(size(func_in))             :: ftmp
     ftmp = ifftshift(func_in)  
     call fft(ftmp)
@@ -539,8 +542,11 @@ contains
   end subroutine d_tfft
   !
   subroutine c_tfft(func_in,func_out)
-    complex(8),dimension(:)                         :: func_in
-    complex(8),dimension(size(func_in)),optional    :: func_out
+    complex(8),dimension(:)                         :: func_in  !Array of length :code:`N` to transform, with the zero of the
+                                                                ! time domain at the center. Overwritten by the transform if
+                                                                ! :f:var:`func_out` is absent
+    complex(8),dimension(size(func_in)),optional    :: func_out  !If present, receives the transform and :f:var:`func_in` is
+                                                                 ! left untouched
     complex(8),dimension(size(func_in))             :: ftmp
     ftmp = ifftshift(func_in)  
     call fft(ftmp)
@@ -553,8 +559,11 @@ contains
 
 
   subroutine d_itfft(func_in,func_out)
-    real(8),dimension(:)                      :: func_in
-    real(8),dimension(size(func_in)),optional :: func_out
+    real(8),dimension(:)                      :: func_in  !Array of length :code:`N` to transform, with the zero of the
+                                                          ! frequency domain at the center. Overwritten by the inverse
+                                                          ! transform if :f:var:`func_out` is absent
+    real(8),dimension(size(func_in)),optional :: func_out  !If present, receives the inverse transform and :f:var:`func_in` is
+                                                           ! left untouched
     complex(8),dimension(size(func_in))          :: ftmp
     ftmp = func_in
     call ifft(ftmp)
@@ -567,8 +576,11 @@ contains
   end subroutine d_itfft
   !
   subroutine c_itfft(func_in,func_out)
-    complex(8),dimension(:)                      :: func_in
-    complex(8),dimension(size(func_in)),optional :: func_out
+    complex(8),dimension(:)                      :: func_in  !Array of length :code:`N` to transform, with the zero of the
+                                                             ! frequency domain at the center. Overwritten by the inverse
+                                                             ! transform if :f:var:`func_out` is absent
+    complex(8),dimension(size(func_in)),optional :: func_out  !If present, receives the inverse transform and :f:var:`func_in`
+                                                              ! is left untouched
     complex(8),dimension(size(func_in))          :: ftmp
     ftmp = func_in
     call ifft(ftmp)
@@ -661,7 +673,7 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    complex(8),dimension(:),intent(inout) :: func
+    complex(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, overwritten by its transform
     real(8),dimension(:),allocatable      :: wsave,work
     integer                               :: N,lenwrk,lensav,lenc,inc,ier
     N      = size(func)
@@ -708,7 +720,8 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:,:),intent(inout) :: func
+    real(8),dimension(:,:),intent(inout) :: func  !Input/output array of size :code:`(L,M)`, overwritten by the FFTPACK packed
+                                                  ! form of its transform
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,M,lenwrk,lensav,ldim,ier
     L      = size(func,1)
@@ -755,7 +768,7 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    complex(8),dimension(:,:),intent(inout) :: func
+    complex(8),dimension(:,:),intent(inout) :: func  !Input/output array of size :code:`(L,M)`, overwritten by its transform
     real(8),dimension(:),allocatable      :: wsave,work
     integer                               :: L,M,lenwrk,lensav,ldim,inc,ier
     L      = size(func,1)
@@ -809,8 +822,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                 :: N,lot
+    real(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                ! consecutively, overwritten by their transforms (FFTPACK packed form)
+    integer,intent(in)                 :: N  !Length of each sequence
+    integer,intent(in)                 :: lot  !Number of sequences
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,lenwrk,lensav,lenr,ier,inc,jump
     L=size(func)
@@ -864,8 +879,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    complex(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                    :: n,lot
+    complex(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                   ! consecutively, overwritten by their transforms
+    integer,intent(in)                    :: n  !Length of each sequence
+    integer,intent(in)                    :: lot  !Number of sequences
     real(8),dimension(:),allocatable      :: wsave,work
     integer                               :: L,lenwrk,lensav,lenc,ier,inc,jump
     L=size(func)
@@ -917,7 +934,7 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
+    real(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, overwritten by its cosine transform
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: N,lenwrk,lensav,lenr,inc,ier
     N      = size(func)
@@ -968,7 +985,7 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
+    real(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, overwritten by its sine transform
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: N,lenwrk,lensav,lenr,inc,ier
     N      = size(func)
@@ -1018,8 +1035,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                 :: N,lot
+    real(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                ! consecutively, overwritten by their cosine transforms
+    integer,intent(in)                 :: N  !Length of each sequence
+    integer,intent(in)                 :: lot  !Number of sequences
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,lenwrk,lensav,lenr,inc,ier,jump
     L=size(func)
@@ -1073,8 +1092,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                 :: N,lot
+    real(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                ! consecutively, overwritten by their sine transforms
+    integer,intent(in)                 :: N  !Length of each sequence
+    integer,intent(in)                 :: lot  !Number of sequences
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,lenwrk,lensav,lenr,inc,ier,jump
     L=size(func)
@@ -1133,7 +1154,8 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
+    real(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, in the FFTPACK packed form on input,
+                                                ! overwritten by the real sequence
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: N,lenwrk,lensav,lenr,inc,ier
     N      = size(func)
@@ -1186,7 +1208,7 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    complex(8),dimension(:),intent(inout) :: func
+    complex(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, overwritten by its backward transform
     real(8),dimension(:),allocatable      :: wsave,work
     integer                               :: N,lenwrk,lensav,lenc,inc,ier
     N      = size(func)
@@ -1235,7 +1257,8 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:,:),intent(inout) :: func
+    real(8),dimension(:,:),intent(inout) :: func  !Input/output array of size :code:`(L,M)`, in the FFTPACK packed form on
+                                                  ! input, overwritten by the real array
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,M,lenwrk,lensav,ldim,ier
     L      = size(func,1)
@@ -1283,7 +1306,8 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    complex(8),dimension(:,:),intent(inout) :: func
+    complex(8),dimension(:,:),intent(inout) :: func  !Input/output array of size :code:`(L,M)`, overwritten by its backward
+                                                     ! transform
     real(8),dimension(:),allocatable      :: wsave,work
     integer                               :: L,M,lenwrk,lensav,ldim,inc,ier
     L      = size(func,1)
@@ -1339,8 +1363,11 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                 :: N,lot
+    real(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                ! consecutively, in the FFTPACK packed form on input, overwritten by the real
+                                                ! sequences
+    integer,intent(in)                 :: N  !Length of each sequence
+    integer,intent(in)                 :: lot  !Number of sequences
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,lenwrk,lensav,lenr,ier,inc,jump
     L=size(func)
@@ -1398,8 +1425,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    complex(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                    :: n,lot
+    complex(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                   ! consecutively, overwritten by their backward transforms
+    integer,intent(in)                    :: n  !Length of each sequence
+    integer,intent(in)                    :: lot  !Number of sequences
     real(8),dimension(:),allocatable      :: wsave,work
     integer                               :: L,lenwrk,lensav,lenc,ier,inc,jump
     L=size(func)
@@ -1454,7 +1483,8 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
+    real(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, overwritten by its backward cosine
+                                                ! transform
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: N,lenwrk,lensav,lenr,inc,ier
     N      = size(func)
@@ -1505,7 +1535,8 @@ contains
   !
   !The program stops if the FFTPACK routines return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
+    real(8),dimension(:),intent(inout) :: func  !Input/output array of size :code:`N`, overwritten by its backward sine
+                                                ! transform
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: N,lenwrk,lensav,lenr,inc,ier
     N      = size(func)
@@ -1555,8 +1586,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                 :: N,lot
+    real(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                ! consecutively, overwritten by their backward cosine transforms
+    integer,intent(in)                 :: N  !Length of each sequence
+    integer,intent(in)                 :: lot  !Number of sequences
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,lenwrk,lensav,lenr,inc,ier,jump
     L=size(func)
@@ -1610,8 +1643,10 @@ contains
   !The program stops if :code:`mod(N*lot,size(func))/=0`, or if the FFTPACK routines 
   !return an error code.
   !
-    real(8),dimension(:),intent(inout) :: func
-    integer,intent(in)                 :: N,lot
+    real(8),dimension(:),intent(inout) :: func  !Input/output array storing :code:`lot` sequences of length :code:`N`
+                                                ! consecutively, overwritten by their backward sine transforms
+    integer,intent(in)                 :: N  !Length of each sequence
+    integer,intent(in)                 :: lot  !Number of sequences
     real(8),dimension(:),allocatable   :: wsave,work
     integer                            :: L,lenwrk,lensav,lenr,inc,ier,jump
     L=size(func)
@@ -1677,8 +1712,10 @@ contains
   !
   !where :code:`y(N/2)` and :code:`y(-N/2)` are the same element for even :code:`N`.
   !
-    real(8),dimension(:)         :: fin
-    real(8),dimension(size(fin)) :: fout
+    real(8),dimension(:)         :: fin  !Array to shift, of size :code:`N`, in the aliased order returned by
+                                         ! :f:func_inline:`fft`
+    real(8),dimension(size(fin)) :: fout  !Shifted array, of the same size as :f:var:`fin`, with the zero-frequency component
+                                          ! at the center
     integer                      :: L,p2
     L  = size(fin)
     p2 = floor(dble(L+1)/2.d0)
@@ -1690,8 +1727,10 @@ contains
   !of length :code:`N` to the center of the array, and returns the result as an array 
   !of the same size. It acts as :f:func_inline:`rfft_1d_shift` on complex data.
   !
-    complex(8),dimension(:)          :: fin
-    complex(8),dimension(size(fin))  :: fout
+    complex(8),dimension(:)          :: fin  !Array to shift, of size :code:`N`, in the aliased order returned by
+                                             ! :f:func_inline:`fft`
+    complex(8),dimension(size(fin))  :: fout  !Shifted array, of the same size as :f:var:`fin`, with the zero-frequency
+                                              ! component at the center
     integer                          :: L,p2
     L  = size(fin)
     p2 = floor(dble(L+1)/2.d0)
@@ -1715,8 +1754,9 @@ contains
   !
   !that is, the aliased order returned by :f:func_inline:`fft`.
   !
-    real(8),dimension(:)         :: fin
-    real(8),dimension(size(fin)) :: fout
+    real(8),dimension(:)         :: fin  !Array of size :code:`N` with the zero-frequency component at the center
+    real(8),dimension(size(fin)) :: fout  !Array in the aliased order returned by :f:func_inline:`fft`, of the same size as
+                                          ! :f:var:`fin`
     integer                      :: L,p2
     L  = size(fin)
     p2 = L-floor(dble(L+1)/2.d0)
@@ -1729,8 +1769,9 @@ contains
   !center of the array back to the first position, and returns the result as an array 
   !of the same size. It acts as :f:func_inline:`rfft_1d_ishift` on complex data.
   !
-    complex(8),dimension(:)          :: fin
-    complex(8),dimension(size(fin))  :: fout
+    complex(8),dimension(:)          :: fin  !Array of size :code:`N` with the zero-frequency component at the center
+    complex(8),dimension(size(fin))  :: fout  !Array in the aliased order returned by :f:func_inline:`fft`, of the same size as
+                                              ! :f:var:`fin`
     integer                          :: L,p2
     L  = size(fin)
     p2 = L-floor(dble(L+1)/2.d0)
@@ -1746,7 +1787,7 @@ contains
   !for :math:`i \in [1,N]`, where :code:`N=size(func)`. Applying it twice returns 
   !the original array.
   !
-    real(8),dimension(:)    :: func
+    real(8),dimension(:)    :: func  !Input/output array, overwritten by :math:`(-1)^{i-1} f(i)`
     real(8)                 :: ex
     integer                 :: i
     ex=-1.d0
@@ -1765,7 +1806,7 @@ contains
   !for :math:`i \in [1,N]`, where :code:`N=size(func)`. Applying it twice returns 
   !the original array.
   !
-    complex(8),dimension(:) :: func
+    complex(8),dimension(:) :: func  !Input/output array, overwritten by :math:`(-1)^{i-1} f(i)`
     real(8)                 :: ex
     integer                 :: i
     ex=-1.d0
@@ -1787,9 +1828,9 @@ contains
   !
   !:math:`t_{max} = L \cdot dt / 2`
   !
-    integer :: L
-    real(8) :: dt
-    real(8) :: fft_tmax
+    integer :: L  !Number of points of the time array
+    real(8) :: dt  !Time step
+    real(8) :: fft_tmax  !Maximum time :math:`t_{max}`
     fft_tmax = L*dt/2
   end function fft_tmax
 
@@ -1801,9 +1842,9 @@ contains
   !
   !The argument :f:var:`L` is not used, and is kept for symmetry with :f:func_inline:`fft_tmax`.
   !
-    integer :: L
-    real(8) :: dt
-    real(8) :: fft_fmax
+    integer :: L  !Number of points (not used)
+    real(8) :: dt  !Time step
+    real(8) :: fft_fmax  !Maximum frequency :math:`\omega_{max}`
     fft_fmax = pi/dt
   end function fft_fmax
 
@@ -1815,10 +1856,10 @@ contains
   !in :math:`[-t_{max}, t_{max}]`, with :math:`t_{max}` = :f:func_inline:`fft_tmax` ( :f:var:`L` , :f:var:`dt` ) .
   !The endpoint is included, so the actual spacing is :math:`2 t_{max}/(L-1)`.
   !
-    real(8)              :: dt
-    integer              :: L
+    real(8)              :: dt  !Time step
+    integer              :: L  !Number of points
     real(8)              :: tmax
-    real(8),dimension(L) :: time
+    real(8),dimension(L) :: time  !Time array of :code:`L` points in :math:`[-t_{max}, t_{max}]`
     tmax = fft_tmax(L,dt)
     time = linspace(-tmax,tmax,L)
   end function fft_tarray
@@ -1829,11 +1870,11 @@ contains
   !The upper endpoint is excluded, so the spacing is :math:`2 \omega_{max}/L`.
   !If the optional argument :f:var:`df` is present, it returns this spacing.
   !
-    integer              :: L
-    real(8)              :: dt
-    real(8),optional     :: df
+    integer              :: L  !Number of points
+    real(8)              :: dt  !Time step
+    real(8),optional     :: df  !If present, it returns the frequency spacing
     real(8)              :: wmax,dw
-    real(8),dimension(L) :: freq
+    real(8),dimension(L) :: freq  !Frequency array of :code:`L` points in :math:`[-\omega_{max}, \omega_{max})`
     wmax = fft_fmax(L,dt)
     freq = linspace(-wmax,wmax,L,iend=.false.,mesh=dw)
     if(present(df))df=dw
