@@ -1,5 +1,5 @@
 module SF_CONSTANTS
-!Synopsis: contsins mathematical, numerical and physical constants
+!:synopsis: contains mathematical, numerical and physical constants
 !SciFortran module for physical and mathematical constants, 
 !the latter expressed in SI units and in agreement with
 !`NIST CODATA 2022 <https://physics.nist.gov/constants>`_ recommended values.
